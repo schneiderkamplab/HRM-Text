@@ -18,7 +18,7 @@ python -m evaluation.main ckpt_path="allenai/Olmo-3-1025-7B" config="evaluation/
 
 # Qwen-3.5 2B
 python -m evaluation.main ckpt_path="Qwen/Qwen3.5-2B" config="evaluation/config/vllm_benchmarking.yaml"
-lm-eval run --model vllm --model_args pretrained=Qwen/Qwen3.5-0.8B,max_model_len=3072 --tasks minerva_math --gen_kwargs temperature=0.0 --batch_size auto
+lm-eval run --model vllm --model_args pretrained=Qwen/Qwen3.5-2B,max_model_len=3072 --tasks minerva_math --gen_kwargs temperature=0.0 --batch_size auto
 
 # Ouro 1.4B
 python -m evaluation.main ckpt_path="ByteDance/Ouro-1.4B" config="evaluation/config/vllm_benchmarking.yaml" trust_remote_code=True gpu_memory_utilization=0.8
