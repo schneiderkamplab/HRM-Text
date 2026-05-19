@@ -115,7 +115,7 @@ For the **L**-size reference run on one 8xH100 node:
 
 ```bash
 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
-torchrun --nproc_per_node=8 pretrain.py arch/size@arch=L
+torchrun --nproc_per_node=8 pretrain.py arch/size@arch=L lr=2.5e-4 global_batch_size=172032
 ```
 
 For the **XL**-size reference run on two 8xH100 nodes, run this on each node:
