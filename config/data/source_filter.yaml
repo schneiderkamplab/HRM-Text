@@ -1,0 +1,107 @@
+# Source filtering for downloaded training datasets.
+#
+# Paths are matched relative to the download root, typically:
+#   data/downloads/datasets
+#
+# Build a filtered symlink tree with:
+#   python scripts/build_filtered_source_tree.py
+#
+# Keep high-risk Sapient sources out of tokenization entirely. The remaining
+# non-commercial datasets can be kept for academic/non-commercial use, but
+# should still be handled with attribution and PII review where appropriate.
+
+input_root: data/downloads/datasets
+output_root: data/filtered_sources
+
+include:
+  - "**/*"
+
+allow_overrides:
+  # Local DBC instruction-style sources. Other DBC raw/crawl/continuation files
+  # stay denied until we intentionally expand raw text policy.
+  - "dbc/dbc-abstracts_*.jsonl.gz"
+  - "dbc/dbc-reviews.jsonl.gz"
+  - "dbc/dbc-faktalink.jsonl.gz"
+  - "dbc/dbc-farfatterweb.jsonl.gz"
+
+  # Local Danish encyclopedic and OPUS translation sources.
+  - "lexdk/lexdk_articles.jsonl.gz"
+  - "opus/opus_da_en.jsonl.gz"
+  - "opus/opus-da_*.jsonl.gz"
+  - "opus/opus-en_*.jsonl.gz"
+
+  # Narrow FLAN allowlist: math/science reasoning and standard commonsense
+  # benchmarks with clearer provenance than the broad FLAN aggregate.
+  - "sapient_cleaned/data_clustered/flan/*gsm8k*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*mathqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*aqua*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*qasc*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*openbookqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*sciq*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*strategyqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*quartz*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*copa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*xcopa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*piqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*hellaswag*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*story_cloze*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*winogrande*.parquet"
+
+  # Narrow Tasksource allowlist: NLI, logic, reasoning, citation/science, and
+  # selected medical QA. Social-media, conversation, NER, and unclear text
+  # corpora remain denied.
+  - "sapient_cleaned/data_clustered/tasksource/fracas.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/conj_nli.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/temporal-nli.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/robust_nli_*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/monotonicity-entailment.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/balanced-copa.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/nli_fever.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/ruletaker.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/WANLI.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/probability_words_nli_*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/ConTRoL-nli.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/e-CARE.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/vitaminc_*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/commonsense_qa_2.0.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/folio.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/naturallogic.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/add_one_rte.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/fig-qa.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/PARARULE-Plus.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/logiqa*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/tomi-nli.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/scicite.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/scifact*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/scinli.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/citation_intent.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/scientific-exaggeration-detection.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/MedQA-USMLE-4-options-hf.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/medmcqa.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/wikimedqa_medwiki.parquet"
+
+deny:
+  # Local DBC drop-in contains many raw/crawl corpora. Include only the
+  # instruction-like allow_overrides above for now.
+  - "dbc/**"
+
+  # ReClor: upstream terms are non-commercial research only and passages come
+  # from websites/books not owned by the dataset authors.
+  - "sapient_cleaned/data/Platypus/reclor.jsonl"
+
+  # SciBench: textbook-derived provenance; keep out unless rights are reviewed.
+  - "sapient_cleaned/data/Platypus/scibench.jsonl"
+
+  # ScienceQA: CC-BY-NC-SA and benchmark contamination; exclude by default.
+  - "sapient_cleaned/data/Platypus/scienceqa.jsonl"
+
+  # FLAN/Open-Orca: component-dataset licenses vary; broad aggregator.
+  - "sapient_cleaned/data_clustered/flan/**"
+
+  # Tasksource: recasts many upstream datasets with mixed provenance/licenses.
+  - "sapient_cleaned/data_clustered/tasksource/**"
+
+  # Downloader metadata/cache should never enter conversion/tokenization.
+  - "**/.cache/**"
+  - "**/.git/**"
+  - "**/.gitattributes"

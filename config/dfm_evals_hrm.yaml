@@ -1,0 +1,35 @@
+sets:
+  hrm_danish:
+    description: HRM-compatible Danish dfm-evals suite.
+    tasks:
+      - name: dfm_evals/danish-citizen-tests
+        args:
+          - -T
+          - dataset_id=alexandrainst/danish-citizen-tests
+      - dfm_evals/dala
+      - dfm_evals/gec_dala
+      - name: dfm_evals/wmt24pp-en-da
+        args:
+          - -T
+          - max_gen_toks=512
+      - name: dfm_evals/multi_wiki_qa
+        args:
+          - -T
+          - max_gen_toks=32
+      - dfm_evals/piqa
+      - dfm_evals/ifeval-da
+      - name: dfm_evals/generative-talemaader
+        args:
+          - -T
+          - judge_model={{judge_model}}
+          - -T
+          - judge_base_url={{judge_base_url}}
+          - -T
+          - max_gen_toks=128
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"

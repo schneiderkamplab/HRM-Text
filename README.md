@@ -43,14 +43,14 @@ HRM-Text trains from sampled, tokenized data produced by the companion `data_io`
 
 Recommended setups:
 
-1. **Single node:** run the data pipeline and pretraining on the same node. After tokenization, stratified-sample into that node's shared memory at `/dev/shm/sampled`.
+1. **Single node:** run the data pipeline and pretraining on the same node. After tokenization, stratified-sample into this repo's ignored `data/sampled` directory.
 2. **Multi-node:** keep `data_io` and the tokenized data on shared storage. Mount or expose that directory on every pretraining node, then run stratified sampling independently on each node. Sampling is fast and deterministic, so every node produces the same in-memory training data.
 
 Please first setup `data_io`, then run the pipeline. After tokenization, run stratified sampling on each training node.
 
 ```bash
 cd <DATA_IO_PATH>
-python sample_tokenized.py epochs=4 output_path=/dev/shm/sampled > show_analytics.md
+python sample_tokenized.py epochs=4 output_path=<HRM_TEXT_PATH>/data/sampled > show_analytics.md
 ```
 
 HRM-Text uses 4 training epochs by default. If you change `epochs` in the training config, change the sampling command to match.

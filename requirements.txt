@@ -1,7 +1,7 @@
 coolname
 datasets
 einops
-flash_attn_3
+flash-attn-4[cu13] @ git+https://github.com/Dao-AILab/flash-attention.git#subdirectory=flash_attn/cute
 hydra-core
 lm-eval[hf,vllm]
 math-verify

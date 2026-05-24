@@ -1,0 +1,21 @@
+sets:
+  hrm_danish_new_tasks_only:
+    description: Temporary HRM Danish suite for tasks added after the first dfm-evals run.
+    tasks:
+      - dfm_evals/piqa
+      - dfm_evals/ifeval-da
+      - name: dfm_evals/generative-talemaader
+        args:
+          - -T
+          - judge_model={{judge_model}}
+          - -T
+          - judge_base_url={{judge_base_url}}
+          - -T
+          - max_gen_toks=128
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"

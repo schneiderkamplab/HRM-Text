@@ -11,7 +11,7 @@ import torch.utils._pytree as pytree
 import numpy as np
 import torch.distributed.checkpoint as dcp
 from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict
-from transformers import AutoTokenizer, PreTrainedTokenizer
+from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from pretrain import Carry, PretrainConfig, V1DatasetMeta, load_model_class, AdamATan2
 
@@ -81,7 +81,11 @@ def inference_load_checkpoint(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_us
     model = model.to(getattr(torch, model_cfg.fwd_bwd_dtype)).eval()
 
     # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(train_metadata.tokenizer_info["tokenizer_path"], use_fast=True)
+    tokenizer_path = train_metadata.tokenizer_info["tokenizer_path"]
+    if os.path.isfile(tokenizer_path):
+        tokenizer = PreTrainedTokenizerFast(tokenizer_file=tokenizer_path)
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, use_fast=True)
     return InferenceCheckpoint(
         model=model,
         carry=carry,
@@ -102,12 +106,17 @@ def _sample(logits: Tensor, temp: float) -> Tensor:
     return _sample_gumbel(logits, torch.tensor(temp, dtype=torch.float32))
 
 
-@torch.compile(fullgraph=True)
+@torch.compiler.disable
 def _prefill(model: nn.Module, carry: Carry, inputs: Tensor, cache: Any) -> Tensor:
-    return model(carry=carry, batch={"inputs": inputs.unsqueeze(0), "position_ids": torch.arange(inputs.shape[0]), "cache": cache, "cache_lengths": 0})[-1][..., -1, :]
+    return model(carry=carry, batch={
+        "inputs": inputs.unsqueeze(0),
+        "position_ids": torch.arange(inputs.shape[0], device=inputs.device),
+        "cache": cache,
+        "cache_lengths": torch.zeros(1, dtype=torch.int32, device=inputs.device),
+    })[-1][..., -1, :]
 
 
-@torch.compile(dynamic=False, fullgraph=True)
+@torch.compiler.disable
 def _batched_decode(model: nn.Module, carry: Carry, inputs: Tensor, cache: Any, cache_lengths: Tensor) -> Tensor:
     return model(carry=carry, batch={"inputs": inputs.unsqueeze(-1), "position_ids": cache_lengths.unsqueeze(-1), "cache": cache, "cache_lengths": cache_lengths})[-1][..., -1, :]
 

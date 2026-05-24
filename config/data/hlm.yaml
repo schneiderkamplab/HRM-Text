@@ -1,1 +1,1 @@
-path: /dev/shm/sampled  # In-memory
+path: data/sampled  # Repo-local sampled data output

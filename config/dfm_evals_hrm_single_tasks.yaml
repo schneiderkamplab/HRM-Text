@@ -1,0 +1,112 @@
+sets:
+  hrm_danish_danish_citizen_tests:
+    description: "Single-task HRM Danish suite: Danish citizen tests."
+    tasks:
+      - name: dfm_evals/danish-citizen-tests
+        args:
+          - -T
+          - dataset_id=alexandrainst/danish-citizen-tests
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_dala:
+    description: "Single-task HRM Danish suite: DALA."
+    tasks:
+      - dfm_evals/dala
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_gec_dala:
+    description: "Single-task HRM Danish suite: GEC DALA."
+    tasks:
+      - dfm_evals/gec_dala
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_wmt24pp_en_da:
+    description: "Single-task HRM Danish suite: WMT24++ English-Danish."
+    tasks:
+      - name: dfm_evals/wmt24pp-en-da
+        args:
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_multi_wiki_qa:
+    description: "Single-task HRM Danish suite: Multi Wiki QA."
+    tasks:
+      - name: dfm_evals/multi_wiki_qa
+        args:
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_piqa:
+    description: "Single-task HRM Danish suite: PIQA."
+    tasks:
+      - dfm_evals/piqa
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_ifeval_da:
+    description: "Single-task HRM Danish suite: IFEval DA."
+    tasks:
+      - dfm_evals/ifeval-da
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_generative_talemaader:
+    description: "Single-task HRM Danish suite: generative Talemaader."
+    tasks:
+      - name: dfm_evals/generative-talemaader
+        args:
+          - -T
+          - judge_model={{judge_model}}
+          - -T
+          - judge_base_url={{judge_base_url}}
+          - -T
+          - max_gen_toks=128
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"

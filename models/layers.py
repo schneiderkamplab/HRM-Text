@@ -8,7 +8,6 @@ from einops import rearrange
 
 from models.common import trunc_normal_init_, unwrap_tensor
 from models.flash_attention_prefixlm_v2 import flash_attn_varlen_prefixlm
-from flash_attn_interface import flash_attn_with_kvcache
 
 
 Carry = dict[str, Any]
@@ -126,6 +125,40 @@ class Attention(nn.Module):
         self.o_proj = LinearInit(head_dim * num_heads, hidden_size,
                                  bias=False, init_std=init_std_out, **kwargs)
 
+    def _attention_with_cache(self, query: Tensor, key: Tensor, value: Tensor, cache: Cache, cache_lengths: Tensor, causal: bool) -> Tensor:
+        batch_size, seqlen = query.shape[:2]
+        positions = cache_lengths[:, None] + torch.arange(seqlen, device=query.device, dtype=cache_lengths.dtype)
+        batch_idx = torch.arange(batch_size, device=query.device)[:, None]
+        cache.keys[batch_idx, positions] = key
+        cache.values[batch_idx, positions] = value
+
+        kv_len = cache_lengths + seqlen
+        max_kv_len = kv_len.max().item()
+        keys = cache.keys[:batch_size, :max_kv_len]
+        values = cache.values[:batch_size, :max_kv_len]
+
+        if self.num_heads != self.num_key_value_heads:
+            repeat = self.num_heads // self.num_key_value_heads
+            keys = keys.repeat_interleave(repeat, dim=2)
+            values = values.repeat_interleave(repeat, dim=2)
+
+        q = query.transpose(1, 2)
+        k = keys.transpose(1, 2)
+        v = values.transpose(1, 2)
+
+        key_positions = torch.arange(max_kv_len, device=query.device)
+        valid = key_positions[None, :] < kv_len[:, None]
+        if causal:
+            query_positions = positions
+            valid = valid[:, None, :] & (key_positions[None, None, :] <= query_positions[:, :, None])
+        else:
+            valid = valid[:, None, :]
+        attn_mask = torch.zeros((batch_size, seqlen, max_kv_len), dtype=query.dtype, device=query.device)
+        attn_mask = attn_mask.masked_fill(~valid, torch.finfo(query.dtype).min)
+
+        out = F.scaled_dot_product_attention(q, k, v, attn_mask=attn_mask[:, None], enable_gqa=False)
+        return out.transpose(1, 2)
+
     def forward(self, hidden_states: Tensor, cos_sin: Optional[CosSin], cache: Optional[Cache] = None, cache_lengths: Optional[Tensor] = None, **seq_info) -> Tensor:
         # hidden_states, gqkv: [..., seq_len, hidden_size]
         gqkv = self.gqkv_proj(hidden_states)
@@ -145,10 +178,7 @@ class Attention(nn.Module):
             attn_output = flash_attn_varlen_prefixlm(query, key, value, is_causal, **{name: unwrap_tensor(tensor) for name, tensor in seq_info.items()})
         else:
             # Regardless of auto / non-autoregressive, apply attention based on current concatenated with cache.
-            attn_output = flash_attn_with_kvcache(q=query, k=key, v=value,
-                                                  k_cache=cache.keys, v_cache=cache.values, cache_seqlens=cache_lengths,
-                                                  num_splits=1,  # Must set to support torch.compile tracing.
-                                                  causal=is_causal)  # causal can always be False for PrefixLM. during AR generation seqlen is 1, so causal masking won't matter.
+            attn_output = self._attention_with_cache(query, key, value, cache, cache_lengths, is_causal)
 
         # attn_output: [..., seq_len, num_heads, head_dim]
         attn_output = rearrange(torch.sigmoid(gate) * attn_output, "... h hd -> ... (h hd)")  # type: ignore
