@@ -131,6 +131,34 @@ Verified on 2026-05-21:
 
 Operational consequence: the failed `/tmp/tokenize` staging attempt was not a good test of a clean local disk. Until a real local NVMe scratch mount is provided by UCloud/admin, run tokenization from `/work/dfm/HRM-Text` with a small worker count and `nice`/`ionice`.
 
+## Possible `data_io` Relocation
+
+Verified on 2026-05-24. Confidence: high.
+
+`data_io` is currently an untracked nested git checkout at `/work/dfm/HRM-Text/data_io`. Moving it to `/work/dfm/HRM-Text/external/data_io` is mostly a path refactor. Required updates include:
+
+- root docs and agent notes that say `data_io/tokenizer` must be run from `data_io/tokenizer`;
+- runnable scripts with hard-coded `REPO_ROOT / "data_io"` or `${REPO_ROOT}/data_io`, especially `scripts/prepare_40b_sapient_plus_danish.py` and `scripts/reproduce_original_sapient_l.sh`;
+- cleanup safety guards in `scripts/cleanup_failed_training_run.sh`;
+- wiki commands under `wiki/pages/*` and `wiki/entities/*`;
+- any shell commands copied from prior notes that reference `data_io/trained_tokenizers/bpe/tokenizer.json`, `data_io/tokenizer`, or `data_io/sample_tokenized.py`.
+
+Prefer adding one canonical variable such as `DATA_IO_DIR=${DATA_IO_DIR:-${REPO_ROOT}/external/data_io}` in scripts rather than scattering the new path.
+
+## `dfm-evals` Location
+
+Verified on 2026-05-24. Confidence: high.
+
+`dfm-evals` is an untracked nested git checkout at `/work/dfm/HRM-Text/dfm-evals`. It was moved from `/work/dfm/HRM-Text/external/dfm-evals` with its local `.venv` intact. The nested checkout's git status remained unchanged by the move; it still has local task patches in `dfm_evals/tasks/danish_citizen_tests.py` and `dfm_evals/tasks/talemaader/task.py`.
+
+The main runnable reference is `scripts/run_dfm_evals_on_checkpoints.sh`, whose default is:
+
+```bash
+DFM_EVALS_DIR="${DFM_EVALS_DIR:-${REPO_ROOT}/dfm-evals}"
+```
+
+No model training configs depend on the path directly. Existing logs under `logs/dfm_evals/...` remain where they are.
+
 ## Mixed Corpus Next Commands
 
 Convert filtered sources:

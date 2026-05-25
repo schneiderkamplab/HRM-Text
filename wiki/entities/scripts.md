@@ -305,7 +305,7 @@ End-to-end wrapper for dfm-evals on HRM checkpoints.
 
 Responsibilities:
 
-- use or clone `external/dfm-evals`
+- use or clone `dfm-evals`
 - start `scripts/hrm_openai_server.py` for each requested checkpoint epoch
 - run a dfm-evals suite against the shim as an `openai/<model>` endpoint
 - pass `--max-connections` to Inspect so concurrent sample requests can be micro-batched by the shim

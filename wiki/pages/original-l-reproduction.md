@@ -347,7 +347,7 @@ Post-sync verification showed `state=finished`, summary `_step=325933`, `train/l
 
 ## dfm-evals
 
-Prepared on 2026-05-24, not yet run end-to-end: `external/dfm-evals` was cloned from `https://github.com/danish-foundation-models/dfm-evals`, and three local scripts were added:
+Prepared on 2026-05-24, not yet run end-to-end: `dfm-evals` was cloned from `https://github.com/danish-foundation-models/dfm-evals`, and three local scripts were added:
 
 ```text
 scripts/hrm_openai_server.py
@@ -426,9 +426,9 @@ W&B workspace panel update, verified on 2026-05-24: the `dfm_eval` workspace sec
 
 Superseded/context update, 2026-05-24: W&B reported success when mutating the personal default workspace view, but the UI and a later API read showed only the user's manually changed WMT panel persisted. The public Workspace API also refuses personal user views. A new saved workspace view named `dfm_eval epoch x-axis` was created instead, with all non-axis `dfm_eval` panels keyed and set to `xAxis=dfm_eval/epoch`. URL: `https://wandb.ai/peter-sk-sdu/Original%20Plus%20Mixed%20Danish%20Instruction%20Rich%20L?nw=oi8yv6lpmkn`. Backup spec: `logs/wandb_workspace_specs/20260524T123312Z_saved_view_dfm_eval_epoch_axis.json`. Confidence: high.
 
-Additional dfm-evals task inventory, verified on 2026-05-24: local `external/dfm-evals` is at upstream `main` commit `9b6cf828ccffdbde54dd8ed2e4d06a37f979cd2a`. Registered local task names are `dfm_evals/bfcl-v1`, `dfm_evals/bfcl-v1-da`, `dfm_evals/dala`, `dfm_evals/danish-citizen-tests`, `dfm_evals/gec_dala`, `dfm_evals/generative-talemaader`, `dfm_evals/ifeval-da`, `dfm_evals/multi_wiki_qa`, `dfm_evals/piqa`, `dfm_evals/ruler`, and `dfm_evals/wmt24pp-en-da`. No task named `daisy` exists in this checkout. The HRM-compatible suite already ran the non-judge Danish tasks except `piqa` and `ifeval-da`; `generative-talemaader` requires a judge model, `ruler` needs a <=4096-token configuration for these checkpoints, and BFCL/agentic tasks need tool/calling behavior that the current simple HRM OpenAI shim is not expected to handle well. Confidence: high.
+Additional dfm-evals task inventory, verified on 2026-05-24: local `dfm-evals` is at upstream `main` commit `9b6cf828ccffdbde54dd8ed2e4d06a37f979cd2a`. Registered local task names are `dfm_evals/bfcl-v1`, `dfm_evals/bfcl-v1-da`, `dfm_evals/dala`, `dfm_evals/danish-citizen-tests`, `dfm_evals/gec_dala`, `dfm_evals/generative-talemaader`, `dfm_evals/ifeval-da`, `dfm_evals/multi_wiki_qa`, `dfm_evals/piqa`, `dfm_evals/ruler`, and `dfm_evals/wmt24pp-en-da`. No task named `daisy` exists in this checkout. The HRM-compatible suite already ran the non-judge Danish tasks except `piqa` and `ifeval-da`; `generative-talemaader` requires a judge model, `ruler` needs a <=4096-token configuration for these checkpoints, and BFCL/agentic tasks need tool/calling behavior that the current simple HRM OpenAI shim is not expected to handle well. Confidence: high.
 
-Suite update, verified on 2026-05-24: `config/dfm_evals_hrm.yaml:hrm_danish` now includes `dfm_evals/piqa`, `dfm_evals/ifeval-da`, and `dfm_evals/generative-talemaader` in the same suite as the existing Danish tasks. `uv sync --project external/dfm-evals --extra ifeval` was run successfully, installing `instruction-following-eval`, `nltk`, `langdetect`, `immutabledict`, and `joblib` for `ifeval-da`. `scripts/run_dfm_evals_on_checkpoints.sh` now accepts `JUDGE_MODEL` and `JUDGE_BASE_URL` and forwards them to `evals suite`; `JUDGE_MODEL` is required when running `generative-talemaader`, because that task uses a model-graded scorer. Confidence: high.
+Suite update, verified on 2026-05-24: `config/dfm_evals_hrm.yaml:hrm_danish` now includes `dfm_evals/piqa`, `dfm_evals/ifeval-da`, and `dfm_evals/generative-talemaader` in the same suite as the existing Danish tasks. `uv sync --project dfm-evals --extra ifeval` was run successfully, installing `instruction-following-eval`, `nltk`, `langdetect`, `immutabledict`, and `joblib` for `ifeval-da`. `scripts/run_dfm_evals_on_checkpoints.sh` now accepts `JUDGE_MODEL` and `JUDGE_BASE_URL` and forwards them to `evals suite`; `JUDGE_MODEL` is required when running `generative-talemaader`, because that task uses a model-graded scorer. Confidence: high.
 
 New-task dfm-evals run, verified on 2026-05-24: the three newly added tasks were run for all four original Sapient L checkpoints without rerunning the older dfm-evals tasks. A temporary suite file, `config/dfm_evals_hrm_new_tasks_only.yaml`, contains only `dfm_evals/piqa`, `dfm_evals/ifeval-da`, and `dfm_evals/generative-talemaader`. `generative-talemaader` used a local Transformers OpenAI-compatible server for `unsloth/gemma-4-E4B-it`, served as `openai/gemma-4-e4b-judge` at `http://127.0.0.1:8099/v1`. vLLM was not used for this judge because its Gemma 4 path required `flash_attn.ops`, which is absent in the local FA4/B200 environment. Completed Inspect logs and W&B sync markers exist for all three new tasks across epochs 1, 2, 3, and 4 under `logs/dfm_evals/original_sapient_L_new_tasks_gemma4_judge/epoch_{1..4}`. Confidence: high.
 
@@ -470,7 +470,7 @@ Manual sync command pattern:
 
 ```bash
 cd /work/dfm/HRM-Text
-uv run --project external/dfm-evals evals eee inspect \
+uv run --project dfm-evals evals eee inspect \
   --log-path logs/dfm_evals/original_sapient_L/epoch_${epoch}/manual_sync_completed_20260524_1216/eval_logs \
   --output-dir logs/dfm_evals/original_sapient_L/epoch_${epoch}/manual_sync_completed_20260524_1216/eee \
   --source-organization-name "schneiderkamplab" \
@@ -523,6 +523,111 @@ Full default command:
 cd /work/dfm/HRM-Text
 scripts/run_dfm_evals_on_checkpoints.sh
 ```
+
+Original+mixed checkpoint eval launch, verified on 2026-05-25. Confidence: high.
+
+The first checkpoint of the ongoing `original_plus_mixed_danish_instruction_rich` L run is available as `checkpoints/original_plus_mixed_danish_instruction_rich/L/fsdp2_epoch_1` plus `carry_epoch_1.{0..7}.pt`. Eight single-task dfm-evals jobs were launched in parallel, one per GPU, using `config/dfm_evals_hrm_single_tasks.yaml` and logging to the active W&B run id `es1od1in` in project `Original Plus Mixed Danish Instruction Rich L`.
+
+Log root:
+
+```text
+logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_parallel
+```
+
+GPU/task mapping:
+
+```text
+GPU 0: hrm_danish_danish_citizen_tests, port 8411
+GPU 1: hrm_danish_dala, port 8421
+GPU 2: hrm_danish_gec_dala, port 8431
+GPU 3: hrm_danish_wmt24pp_en_da, port 8441
+GPU 4: hrm_danish_multi_wiki_qa, port 8451
+GPU 5: hrm_danish_piqa, port 8461
+GPU 6: hrm_danish_ifeval_da, port 8471
+GPU 7: hrm_danish_generative_talemaader, port 8481
+```
+
+`generative_talemaader` requires a judge. The judge was launched on the same GPU 7:
+
+```text
+model: unsloth/gemma-4-E4B-it
+served name: gemma-4-e4b-judge
+base URL: http://127.0.0.1:8499/v1
+log: logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_parallel/judge_gemma4_e4b_gpu7/server.log
+```
+
+At launch verification, all task wrappers were active except `piqa`, which had already completed successfully with `accuracy = 0.194`. The remaining HRM shim health ports responded; the judge health endpoint can time out during active generation on GPU 7, but it started successfully before the judged task was launched.
+
+W&B sync caveat for active original+mixed run, verified on 2026-05-25. Confidence: high.
+
+The per-task sidecar W&B sync processes reported successful `wandb.init(..., resume=...)` logging to active run id `es1od1in`, and local sidecar run directories contained the expected `dfm_eval/...` keys. However, the W&B public API initially showed no `dfm_eval/...` summary keys for that active run. The likely cause is concurrent sidecar resumes while the training process owns the same live run. DaLA and GEC-DaLA were patched into the online run summary directly with the W&B API:
+
+```text
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1 = 0.06285135215101485
+dfm_eval/dala/linguistic-acceptability/dfm_evals_mcc = -0.015338488073023071
+dfm_eval/gec_dala/exact_match/mean = 0.1435546875
+dfm_eval/epoch = 1
+dfm_eval/last_epoch = 1
+```
+
+For future evals against a live training run, prefer either direct API summary updates or logging to a separate eval run and merging after training, rather than relying on multiple short-lived processes resuming the live training run.
+
+Follow-up on 2026-05-25. Confidence: high. GEC-DaLA became visible in the UI, but DaLA did not. DaLA was re-logged with `wandb.log()` under both the original dfm-evals keys and simpler aliases:
+
+```text
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1 = 0.06285135215101485
+dfm_eval/dala/linguistic-acceptability/dfm_evals_mcc = -0.015338488073023071
+dfm_eval/dala/macro_f1/mean = 0.06285135215101485
+dfm_eval/dala/mcc/mean = -0.015338488073023071
+```
+
+The re-log process reported a successful W&B sync and run summary containing all four DaLA keys.
+
+Superseded on 2026-05-25. Confidence: high. The user could see the correct original DaLA keys, so the simpler DaLA aliases were no longer wanted. The online W&B summary no longer contained the alias keys:
+
+```text
+dfm_eval/dala/macro_f1/mean
+dfm_eval/dala/mcc/mean
+dfm_eval/dala/f1/mean
+```
+
+W&B history rows are append-only, so alias keys that were logged once may still appear in the run's metric browser or auto-generated workspace panels. They should not be used for reporting; use only the original dfm-evals DaLA keys.
+
+PIQA scorer correction, verified on 2026-05-25. Confidence: high.
+
+The local `dfm-evals` checkout remotes are:
+
+```text
+origin:   https://github.com/schneiderkamplab/dfm-evals.git
+upstream: https://github.com/danish-foundation-models/dfm-evals
+```
+
+`dfm_evals/tasks/piqa.py` was patched so PIQA outputs that contain both standalone `A` and standalone `B` are treated as invalid. Previously, the scorer searched for the first standalone `A` or `B` anywhere in the completion. This made prompt/instruction echoes like `Svar kun med A eller B.` score as `A`, which inflated scores because PIQA-da has a strong label skew toward `A`.
+
+Existing PIQA EEE JSONL outputs were rescored without rerunning generation using:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/rescore_piqa_evals.py \
+  logs/dfm_evals/original_sapient_L_new_tasks_gemma4_judge/epoch_1/eee/PIQA-da/openai/hrm-original-sapient-L-epoch-1/dfa50a05c3b23d8609cd.jsonl \
+  logs/dfm_evals/original_sapient_L_new_tasks_gemma4_judge/epoch_2/eee/PIQA-da/openai/hrm-original-sapient-L-epoch-2/839f2ca592f63c907898.jsonl \
+  logs/dfm_evals/original_sapient_L_new_tasks_gemma4_judge/epoch_3/eee/PIQA-da/openai/hrm-original-sapient-L-epoch-3/7c3e7067c63b3396c133.jsonl \
+  logs/dfm_evals/original_sapient_L_new_tasks_gemma4_judge/epoch_4/eee/PIQA-da/openai/hrm-original-sapient-L-epoch-4/aa0255714ba09be35e8f.jsonl \
+  logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_parallel/piqa/epoch_1/eee/PIQA-da/openai/hrm-original-plus-mixed-L-piqa-epoch-1/203b5a01f3cab150e4a7.jsonl \
+  --output logs/dfm_evals/piqa_strict_rescore_20260525.json
+```
+
+Strict rescore results:
+
+```text
+original_sapient epoch 1: accuracy 0.0000, invalid 108/108
+original_sapient epoch 2: accuracy 0.0000, invalid 108/108
+original_sapient epoch 3: accuracy 0.0000, invalid 108/108
+original_sapient epoch 4: accuracy 0.0000, invalid 106/108
+original+mixed epoch 1:  accuracy 0.1667, invalid 3/108
+```
+
+The old original Sapient PIQA scores were therefore scorer artifacts, not genuine PIQA performance. The original+mixed checkpoint mostly predicted `B` on an `A`-skewed set and remains low under the stricter scorer.
 
 ## Caveat
 
