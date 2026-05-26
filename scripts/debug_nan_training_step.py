@@ -5,14 +5,20 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
+import time
+from pathlib import Path
 from typing import Iterable
 
 import torch
 import torch.distributed as dist
 from hydra import compose, initialize
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from models.common import wrap_tensor
-from pretrain import PretrainConfig, init_train, train_batch, update_lr
+from models.accelerator import set_accelerator_type, torch_device_for_accelerator
+from pretrain import PretrainConfig, init_train, move_batch_to_device, train_accumulated_batches, train_batch, train_batch_uncompiled, update_lr
 
 
 def parse_args() -> argparse.Namespace:
@@ -35,10 +41,18 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Use pretrain.train_batch, including its torch.compile wrapper.",
     )
+    parser.add_argument(
+        "--allow-mps-cpu-fallback",
+        action="store_true",
+        help="For development on non-Apple-GPU hosts, run the mps attention path on CPU tensors.",
+    )
     return parser.parse_args()
 
 
-def setup_dist() -> tuple[int, int, int]:
+def setup_dist(accelerator_type: str) -> tuple[int, int, int]:
+    if accelerator_type in ("mps", "cpu", "none"):
+        return 0, 1, 0
+
     if "LOCAL_RANK" not in os.environ:
         raise RuntimeError("Run this script with torchrun, even for --nproc_per_node=1.")
 
@@ -75,6 +89,23 @@ def first_nonfinite_named(named_tensors: Iterable[tuple[str, torch.Tensor | None
     return None
 
 
+def format_mib(value: int) -> str:
+    return f"{value / 1024 / 1024:.3f} MiB"
+
+
+def print_mps_memory(rank: int, label: str, device: torch.device) -> None:
+    if rank != 0 or device.type != "mps":
+        return
+    torch.mps.synchronize()
+    current = torch.mps.current_allocated_memory()
+    driver = torch.mps.driver_allocated_memory()
+    print(
+        f"[rank {rank}] mps_memory {label}: "
+        f"current={format_mib(current)} driver={format_mib(driver)}",
+        flush=True,
+    )
+
+
 def check_batch(batch: dict[str, torch.Tensor], rank: int, step: int) -> None:
     for name in ("inputs", "labels", "position_ids", "prefix_lens", "causal_lens", "cu_seqlens"):
         tensor = batch[name]
@@ -87,33 +118,58 @@ def check_batch(batch: dict[str, torch.Tensor], rank: int, step: int) -> None:
 
 def main() -> None:
     args = parse_args()
-    rank, world_size, _device_id = setup_dist()
 
     with initialize(config_path="../config", version_base=None):
         hydra_config = compose(config_name=args.config_name, overrides=args.override)
     config = PretrainConfig(**hydra_config)
+    if config.accelerator_type in ("mps", "cpu", "none") and config.fwd_bwd_dtype == "bfloat16":
+        config.fwd_bwd_dtype = "float32"
+    set_accelerator_type(config.accelerator_type)
+    rank, world_size, device_id = setup_dist(config.accelerator_type)
+    device = torch_device_for_accelerator(
+        config.accelerator_type,
+        local_rank=device_id,
+        validate=not args.allow_mps_cpu_fallback,
+    )
+    if device.type == "mps" and not torch.backends.mps.is_available():
+        if not args.allow_mps_cpu_fallback:
+            raise RuntimeError("accelerator_type=mps was requested, but torch.backends.mps.is_available() is false.")
+        device = torch.device("cpu")
 
     if rank == 0:
         print(f"config: data={config.data.path} arch={config.arch.name} global_batch_size={config.global_batch_size}", flush=True)
-        print(f"world_size={world_size} local_batch_size={config.global_batch_size // world_size}", flush=True)
+        print(f"world_size={world_size} local_microbatch_size={config.global_batch_size // world_size // config.gradient_accumulation_steps}", flush=True)
+        print(f"gradient_accumulation_steps={config.gradient_accumulation_steps}", flush=True)
+    print_mps_memory(rank, "startup", device)
 
     torch.random.manual_seed(config.seed + rank)
-    train_state, train_loader, _train_metadata = init_train(config, rank=rank, world_size=world_size)
+    train_state, train_loader, _train_metadata = init_train(config, rank=rank, world_size=world_size, device=device)
     train_iter = iter(train_loader)
+    print_mps_memory(rank, "after_init", device)
 
     for step in range(1, args.steps + 1):
-        batch, batch_info = next(train_iter)
-        check_batch(batch, rank, step)
+        accumulated_batches = []
+        for micro_step in range(config.gradient_accumulation_steps):
+            batch, batch_info = next(train_iter)
+            batch = move_batch_to_device(batch, device)
+            check_batch(batch, rank, step)
+            accumulated_batches.append(batch | {k: wrap_tensor(torch.tensor(v, device="cpu")) for k, v in batch_info.items()})
 
         train_state.step += 1
         lr = update_lr(config, train_state)
         train_extra_args = train_state.model.compute_train_extra_args(train_state)  # pyright: ignore[reportCallIssue]
-        wrapped_batch = batch | {k: wrap_tensor(torch.tensor(v, device="cpu")) for k, v in batch_info.items()}
 
         train_state.model.train()
-        train_state.optim.zero_grad()
+        print_mps_memory(rank, f"step_{step}_before_train", device)
+        if device.type == "mps":
+            torch.mps.synchronize()
+        step_start = time.perf_counter()
         if args.compiled_train_batch:
-            metrics = train_batch(train_state, wrapped_batch, **train_extra_args)
+            if config.gradient_accumulation_steps == 1:
+                train_step = train_batch if config.compile_train_batch else train_batch_uncompiled
+                metrics = train_step(train_state, accumulated_batches[0], **train_extra_args)
+            else:
+                metrics = train_accumulated_batches(train_state, accumulated_batches, config.compile_train_batch, zero_grad_after_step=False, **train_extra_args)
             metric_tensors = [value for pair in metrics.values() for value in pair]
             metrics_ok, metrics_min, metrics_max = finite_status(metric_tensors)
             params_ok, params_min, params_max = finite_status(p for p in train_state.model.parameters())
@@ -127,18 +183,22 @@ def main() -> None:
                 break
             continue
 
-        train_state.carry, loss, metrics = train_state.model(batch=wrapped_batch, carry=train_state.carry, **train_extra_args)
-        loss_is_finite = bool(torch.isfinite(loss.detach()).item())
-        print(f"[rank {rank}] step {step}: loss={float(loss.detach().item())} finite={loss_is_finite} lr={lr} extra={train_extra_args}", flush=True)
-
-        metric_tensors = [value for pair in metrics.values() for value in pair]
-        metrics_ok, metrics_min, metrics_max = finite_status(metric_tensors)
-        print(f"[rank {rank}] step {step}: metric_tensors_finite={metrics_ok} range=[{metrics_min}, {metrics_max}]", flush=True)
-
-        loss.backward()
+        metrics = train_accumulated_batches(train_state, accumulated_batches, use_compiled=False, zero_grad_after_step=False, **train_extra_args)
+        if device.type == "mps":
+            torch.mps.synchronize()
+        step_ms = (time.perf_counter() - step_start) * 1000
+        if rank == 0:
+            print(f"[rank {rank}] step {step}: train_step_wall_ms={step_ms:.3f}", flush=True)
+        print_mps_memory(rank, f"step_{step}_after_train", device)
 
         params_ok, params_min, params_max = finite_status(p for p in train_state.model.parameters())
         grads_ok, grads_min, grads_max = finite_status(p.grad for p in train_state.model.parameters())
+        metric_tensors = [value for pair in metrics.values() for value in pair]
+        metrics_ok, metrics_min, metrics_max = finite_status(metric_tensors)
+        loss_value = metrics["loss"][0] / metrics["loss"][1].clamp_min(1)
+        loss_is_finite = bool(torch.isfinite(loss_value.detach()).item())
+        print(f"[rank {rank}] step {step}: loss={float(loss_value.detach().item())} finite={loss_is_finite} lr={lr} extra={train_extra_args}", flush=True)
+        print(f"[rank {rank}] step {step}: metric_tensors_finite={metrics_ok} range=[{metrics_min}, {metrics_max}]", flush=True)
         print(f"[rank {rank}] step {step}: params_finite={params_ok} range=[{params_min}, {params_max}]", flush=True)
         print(f"[rank {rank}] step {step}: grads_finite={grads_ok} range=[{grads_min}, {grads_max}]", flush=True)
 
@@ -149,8 +209,6 @@ def main() -> None:
 
         if not loss_is_finite or not metrics_ok or not grads_ok or not params_ok:
             break
-
-        train_state.optim.step()
         opt_params_ok, opt_params_min, opt_params_max = finite_status(p for p in train_state.model.parameters())
         print(f"[rank {rank}] step {step}: post_optim_params_finite={opt_params_ok} range=[{opt_params_min}, {opt_params_max}]", flush=True)
         if not opt_params_ok:
@@ -158,8 +216,11 @@ def main() -> None:
                 bad_param = first_nonfinite_named(train_state.model.named_parameters())
                 print(f"[rank {rank}] step {step}: first_bad_post_optim_param={bad_param}", flush=True)
             break
+        train_state.optim.zero_grad()
+        print_mps_memory(rank, f"step_{step}_after_zero_grad", device)
 
-    dist.destroy_process_group()
+    if dist.is_available() and dist.is_initialized():
+        dist.destroy_process_group()
 
 
 if __name__ == "__main__":

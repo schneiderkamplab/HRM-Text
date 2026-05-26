@@ -7,9 +7,11 @@ defaults:
 hydra:
   output_subdir: null
 
-global_batch_size: 196608  # Batch size (tokens)
+global_batch_size: 196608  # Effective optimizer batch size (tokens)
+gradient_accumulation_steps: 1  # Physical per-rank microbatch is global_batch_size / world_size / gradient_accumulation_steps
 epochs: 4
 checkpoint_interval: 1
+log_interval: 5
 
 lr: 2.2e-4
 lr_min_ratio: 1.0
@@ -20,3 +22,6 @@ beta1: 0.9
 beta2: 0.95
 
 ema: 0.9999
+fwd_bwd_dtype: bfloat16
+accelerator_type: sm100
+compile_train_batch: true

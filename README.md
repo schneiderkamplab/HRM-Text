@@ -195,6 +195,10 @@ Sizes live under [`config/arch/size`](config/arch/size):
 
 | Config | Layers | Hidden | Heads |
 | --- | ---: | ---: | ---: |
+| `XXS` | 6 | 256 | 2 |
+| `XXS_wide` | 4 | 384 | 3 |
+| `XS` | 6 | 512 | 4 |
+| `S` | 8 | 768 | 6 |
 | `B` | 12 | 1024 | 8 |
 | `L` | 24 | 1280 | 10 |
 | `XL` | 32 | 1536 | 12 |

@@ -1,6 +1,6 @@
 # Download, Convert, Tokenize, Sample
 
-Last updated: 2026-05-23  
+Last updated: 2026-05-25  
 Confidence: high  
 Scope: Concrete commands for the local data pipeline.
 
@@ -100,6 +100,22 @@ cargo run --release --bin tokenizer -- \
 
 Use an absolute tokenizer path. If the tokenizer path is wrong, the `tokenizers` library treats it as a Hugging Face repo id and may try a URL like `https://huggingface.co/data_io/...`.
 
+For the MPS branch partial original-Sapient smoke work on 2026-05-25, the release binary was already built and could be run from the repo root against the partially downloaded completed Sapient files:
+
+```bash
+cd /Users/petersk/Nobackup/HRM-Text-mps
+data_io/tokenizer/target/release/tokenizer \
+  data/downloads/datasets/sapient_cleaned/data_clustered \
+  data/downloads/datasets/sapient_cleaned/data \
+  --tokenizer-path data_io/trained_tokenizers/bpe/tokenizer.json \
+  -o data/tokenized_original_sapient_partial \
+  --workers 12
+```
+
+Verified result: after stopping a still-running background downloader, `490` completed input files produced `490` `metadata.json` files under `data/tokenized_original_sapient_partial`, about `83G` total. A final tokenizer validation scan reported `Processing 0 files on 11 threads...`. The tokenizer skipped already-completed output directories across restarts, so it is safe to resume the same output path when increasing or lowering worker count. Confidence: high.
+
+Rust build note: the tokenizer crate uses Rust edition 2024, so Cargo/Rust 1.83 was too old. Updating stable Rust to 1.95.0 allowed `cargo build --release --bin tokenizer` to complete. Confidence: high.
+
 ## Sample
 
 Do not jump straight from tokenization into final training data for the mixed corpus. The current working sequence after tokenization completes is:
@@ -131,6 +147,26 @@ python sample_tokenized.py \
   epochs=4 \
   > ../data/show_analytics.md
 ```
+
+Partial original-Sapient smoke sample, verified on 2026-05-25:
+
+```text
+Tokenized subset view: data/tokenized_original_sapient_partial_smoke
+Sampled output:        data/sampled_original_sapient_partial_smoke
+```
+
+The subset view symlinks three small completed tokenized SYNTH task directories and copies `tokenizer_info.json`. Sampling command:
+
+```bash
+cd /Users/petersk/Nobackup/HRM-Text-mps/data_io
+conda run -n hrm python sample_tokenized.py \
+  tokenized_path=../data/tokenized_original_sapient_partial_smoke \
+  output_path=../data/sampled_original_sapient_partial_smoke \
+  epochs=1 \
+  concat_workers=2
+```
+
+Verified result: `data/sampled_original_sapient_partial_smoke` is about `519M`, with `metadata.total_length=21,359,878`, `max_seq_len=4097`, and one epoch covering `60,000` rows. Confidence: high.
 
 ## Config Path
 

@@ -1,12 +1,14 @@
 # Open Issues
 
-Last updated: 2026-05-21  
+Last updated: 2026-05-25  
 Confidence: medium  
 Scope: Known blockers, risks, and future improvements.
 
 ## Full Training Validation
 
 The attention code was smoke-tested, but a real training step remains unverified until tokenized/sampled data exists.
+
+Superseded in part on 2026-05-25: tiny 3-step training diagnostics now verify the dense PrefixLM backend with finite loss/gradients/parameters, using `scripts/create_tiny_sampled_dataset.py` and `scripts/debug_nan_training_step.py`. The explicit `cpu` backend was verified in a fresh Python 3.13 `hrm` conda env with `torch==2.13.0.dev20260524`. Actual Apple GPU MPS execution was also verified outside the sandbox on the same M2 Max machine; the earlier `torch.backends.mps.is_available() == False` result was caused by sandbox device visibility. Confidence: high.
 
 ## Conversion Coverage
 

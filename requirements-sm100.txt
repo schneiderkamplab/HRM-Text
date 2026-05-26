@@ -1,0 +1,1 @@
+flash-attn-4[cu13] @ git+https://github.com/Dao-AILab/flash-attention.git#subdirectory=flash_attn/cute

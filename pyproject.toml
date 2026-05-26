@@ -8,11 +8,7 @@ dependencies = [
     "coolname",
     "datasets",
     "einops",
-    "fastapi",
-    "flash-attn-4[cu13]",
     "hydra-core",
-    "lm-eval[hf,vllm]",
-    "math-verify",
     "numba",
     "numpy",
     "omegaconf",
@@ -20,22 +16,39 @@ dependencies = [
     "pyyaml",
     "safetensors",
     "sympy",
-    "torch",
     "tqdm",
     "transformers",
-    "uvicorn",
-    "vllm",
     "wandb",
+]
+
+[project.optional-dependencies]
+cpu = [
+    "torch",
+]
+mps = [
+    "torch",
+]
+sm90 = [
+    "torch",
+    "flash_attn_3 @ git+https://github.com/Dao-AILab/flash-attention.git#subdirectory=hopper",
+]
+sm100 = [
+    "torch",
+    "flash-attn-4[cu13] @ git+https://github.com/Dao-AILab/flash-attention.git#subdirectory=flash_attn/cute",
+]
+eval = [
+    "lm-eval[hf,vllm]",
+    "math-verify",
+    "vllm",
+]
+server = [
+    "fastapi",
+    "uvicorn",
 ]
 
 [tool.uv]
 package = false
 
-[[tool.uv.index]]
-name = "pytorch-cu130"
-url = "https://download.pytorch.org/whl/cu130"
-explicit = true
-
 [tool.uv.sources]
+flash_attn_3 = { git = "https://github.com/Dao-AILab/flash-attention.git", subdirectory = "hopper" }
 flash-attn-4 = { git = "https://github.com/Dao-AILab/flash-attention.git", subdirectory = "flash_attn/cute" }
-torch = { index = "pytorch-cu130" }

@@ -52,7 +52,8 @@ class LMHead(nn.Module):
             loss = F.cross_entropy(logits.to(torch.float32), labels.to(torch.long), ignore_index=IGNORE_LABEL_ID, reduction="sum")
             # AllReduce loss divisor. Divide by mean of valid tokens across all processes, as gradient will be averaged.
             loss_divisor = masks.sum().to(torch.float32)
-            dist.all_reduce(loss_divisor, op=dist.ReduceOp.AVG)
+            if dist.is_available() and dist.is_initialized():
+                dist.all_reduce(loss_divisor, op=dist.ReduceOp.AVG)
 
             # Accuracy
             with torch.no_grad():

@@ -1,6 +1,6 @@
 # Current State
 
-Last updated: 2026-05-24  
+Last updated: 2026-05-25  
 Confidence: high  
 Scope: Local repo state and verified commands from this session.
 
@@ -60,6 +60,19 @@ data/downloads/datasets/sapient_cleaned/data
 ```
 
 See [[original-l-reproduction]] for the run plan.
+
+MPS branch update on 2026-05-25:
+
+- Repo path: `/Users/petersk/Nobackup/HRM-Text-mps`.
+- After stopping a still-running background Sapient downloader, the partial Sapient download has `490` completed `.parquet`/`.jsonl` inputs under `data/downloads/datasets/sapient_cleaned` and `1` incomplete cache file.
+- Completed local inputs were tokenized into `data/tokenized_original_sapient_partial`.
+- Verification: `490` tokenized `metadata.json` files, about `83G`; a final tokenizer validation scan reported `Processing 0 files`.
+- A small symlinked tokenized view was built at `data/tokenized_original_sapient_partial_smoke`.
+- Sampling produced `data/sampled_original_sapient_partial_smoke`, about `519M`, with `metadata.total_length=21,359,878`.
+- Two MPS debug training steps against this smoke sample passed with finite loss, metrics, gradients, parameters, and post-optimizer parameters.
+- Gradient accumulation is implemented with `global_batch_size` as the effective optimizer token batch. Verified B-size MPS diagnostic: `global_batch_size=131072`, `gradient_accumulation_steps=8`, derived `local_microbatch_size=16384`, one optimizer step finite. Because epochs drop their own partial final effective batch, the smoke sample runs `162` optimizer steps per epoch, or `648` steps for `epochs=4`.
+
+See [[original-l-reproduction]] and [[download-convert-tokenize]] for commands. Confidence: high.
 
 Update on 2026-05-24:
 

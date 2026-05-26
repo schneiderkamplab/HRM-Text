@@ -17,6 +17,7 @@ class HierarchicalReasoningModelConfig(TransformerConfig):
     bp_warmup_ratio: float = 0.0
     bp_min_steps: int = 2
     bp_max_steps: int = 5
+    fwd_bwd_dtype: str = "bfloat16"
 
     # Change some Transformer config of H-level
     # TODO: Try asymmetric H and L module, such as different size, hidden dims, architecture, attention type, etc.
@@ -66,7 +67,7 @@ class HierarchicalReasoningModel(nn.Module):
         self.hidden_size = config.hidden_size
         self.head_hint = self.H_level.core.head_hint  # Hint for LMHead init (inherit from H)
         
-        self.zL_init = nn.Buffer(trunc_normal_init_(torch.empty(config.hidden_size, dtype=torch.bfloat16), std=1.0), persistent=True)  # NOTE: hardcoded dtype.
+        self.zL_init = nn.Buffer(trunc_normal_init_(torch.empty(config.hidden_size, dtype=getattr(torch, config.fwd_bwd_dtype)), std=1.0), persistent=True)
         
         # Create cache function
         self.create_cache = lambda **kwargs: dict(H=[self.H_level.create_cache(**kwargs) for _i in range(self.H_cycles)],
