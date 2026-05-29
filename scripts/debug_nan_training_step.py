@@ -17,7 +17,7 @@ from hydra import compose, initialize
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from models.common import wrap_tensor
-from models.accelerator import set_accelerator_type, torch_device_for_accelerator
+from models.accelerator import memory_stats_for_device, set_accelerator_type, synchronize_device, torch_device_for_accelerator
 from pretrain import PretrainConfig, init_train, move_batch_to_device, train_accumulated_batches, train_batch, train_batch_uncompiled, update_lr
 
 
@@ -93,15 +93,15 @@ def format_mib(value: int) -> str:
     return f"{value / 1024 / 1024:.3f} MiB"
 
 
-def print_mps_memory(rank: int, label: str, device: torch.device) -> None:
-    if rank != 0 or device.type != "mps":
+def print_device_memory(rank: int, label: str, device: torch.device) -> None:
+    if rank != 0:
         return
-    torch.mps.synchronize()
-    current = torch.mps.current_allocated_memory()
-    driver = torch.mps.driver_allocated_memory()
+    stats = memory_stats_for_device(device)
+    if not stats:
+        return
+    stats_text = " ".join(f"{name}={format_mib(value)}" for name, value in stats.items())
     print(
-        f"[rank {rank}] mps_memory {label}: "
-        f"current={format_mib(current)} driver={format_mib(driver)}",
+        f"[rank {rank}] {device.type}_memory {label}: {stats_text}",
         flush=True,
     )
 
@@ -122,8 +122,6 @@ def main() -> None:
     with initialize(config_path="../config", version_base=None):
         hydra_config = compose(config_name=args.config_name, overrides=args.override)
     config = PretrainConfig(**hydra_config)
-    if config.accelerator_type in ("mps", "cpu", "none") and config.fwd_bwd_dtype == "bfloat16":
-        config.fwd_bwd_dtype = "float32"
     set_accelerator_type(config.accelerator_type)
     rank, world_size, device_id = setup_dist(config.accelerator_type)
     device = torch_device_for_accelerator(
@@ -140,12 +138,12 @@ def main() -> None:
         print(f"config: data={config.data.path} arch={config.arch.name} global_batch_size={config.global_batch_size}", flush=True)
         print(f"world_size={world_size} local_microbatch_size={config.global_batch_size // world_size // config.gradient_accumulation_steps}", flush=True)
         print(f"gradient_accumulation_steps={config.gradient_accumulation_steps}", flush=True)
-    print_mps_memory(rank, "startup", device)
+    print_device_memory(rank, "startup", device)
 
     torch.random.manual_seed(config.seed + rank)
     train_state, train_loader, _train_metadata = init_train(config, rank=rank, world_size=world_size, device=device)
     train_iter = iter(train_loader)
-    print_mps_memory(rank, "after_init", device)
+    print_device_memory(rank, "after_init", device)
 
     for step in range(1, args.steps + 1):
         accumulated_batches = []
@@ -160,9 +158,8 @@ def main() -> None:
         train_extra_args = train_state.model.compute_train_extra_args(train_state)  # pyright: ignore[reportCallIssue]
 
         train_state.model.train()
-        print_mps_memory(rank, f"step_{step}_before_train", device)
-        if device.type == "mps":
-            torch.mps.synchronize()
+        print_device_memory(rank, f"step_{step}_before_train", device)
+        synchronize_device(device)
         step_start = time.perf_counter()
         if args.compiled_train_batch:
             if config.gradient_accumulation_steps == 1:
@@ -184,12 +181,11 @@ def main() -> None:
             continue
 
         metrics = train_accumulated_batches(train_state, accumulated_batches, use_compiled=False, zero_grad_after_step=False, **train_extra_args)
-        if device.type == "mps":
-            torch.mps.synchronize()
+        synchronize_device(device)
         step_ms = (time.perf_counter() - step_start) * 1000
         if rank == 0:
             print(f"[rank {rank}] step {step}: train_step_wall_ms={step_ms:.3f}", flush=True)
-        print_mps_memory(rank, f"step_{step}_after_train", device)
+        print_device_memory(rank, f"step_{step}_after_train", device)
 
         params_ok, params_min, params_max = finite_status(p for p in train_state.model.parameters())
         grads_ok, grads_min, grads_max = finite_status(p.grad for p in train_state.model.parameters())
@@ -217,7 +213,7 @@ def main() -> None:
                 print(f"[rank {rank}] step {step}: first_bad_post_optim_param={bad_param}", flush=True)
             break
         train_state.optim.zero_grad()
-        print_mps_memory(rank, f"step_{step}_after_zero_grad", device)
+        print_device_memory(rank, f"step_{step}_after_zero_grad", device)
 
     if dist.is_available() and dist.is_initialized():
         dist.destroy_process_group()

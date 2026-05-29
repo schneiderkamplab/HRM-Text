@@ -84,6 +84,28 @@ After regenerating `/private/tmp/hrm_tiny_sampled`, a one-step `scripts/debug_na
 
 Later on 2026-05-26, the SM100/FA4 implementation moved out of `models/flash_attention_prefixlm_v2.py` into `models/flash_attention_prefixlm_fa4.py`, and the dense fallback moved into `models/flash_attention_prefixlm_dense.py`, leaving `v2` primarily as the accelerator dispatcher. Re-ran the same `py_compile`, dispatcher dense PrefixLM forward/backward smoke, and one-step CPU training smoke successfully. Confidence: high.
 
+MPS bf16 update on 2026-05-26: `pretrain.py` no longer rewrites `fwd_bwd_dtype=bfloat16` to `float32` for `mps`/`cpu`/`none`. Instead, `TrainState` records the resolved forward/backward dtype and non-CUDA train steps use `torch.autocast(device_type=..., dtype=...)` when that dtype is not float32. This keeps parameters in fp32 while allowing bf16 forward/backward activations on supported CPU/MPS operations. Verified outside the sandbox on the M2 Max with `torch==2.13.0.dev20260524`: bf16 MPS matmul works, dense PrefixLM bf16 forward/backward on `mps:0` works, and a 3-step MPS training smoke with `fwd_bwd_dtype=bfloat16` completed with finite losses, metric tensors, gradients, parameters, and post-optimizer parameters. Confidence: high for the tiny smoke; larger XS/S/B runs still need memory/performance validation.
+
+MPS memory diagnostic update on 2026-05-26: a user float32 run grew from about `18 GB` to `44 GB` Activity Monitor memory by step 33. Because this happened in float32, bf16/autocast caching is not the primary explanation for that run. `pretrain.py` initially supported `mps_memory_log_interval` and `mps_empty_cache_interval` config fields; those names are now superseded by backend-neutral `memory_log_interval` and `empty_cache_interval`. If MPS `allocated` stays bounded while `reserved` rises, this is likely MPS allocator/driver high-water or fragmentation from dense attention temporaries; if `allocated` rises monotonically after zero-grad, investigate real tensor retention. Use `empty_cache_interval=10` or `25` as a mitigation/experiment, expecting some throughput cost. Confidence: medium until a long real XS/S/B run reports allocated-vs-reserved numbers.
+
+Memory diagnostic update on 2026-05-29: memory logging and cache clearing were generalized across supported backends. Use `memory_log_interval` and `empty_cache_interval`; the older `mps_memory_log_interval` and `mps_empty_cache_interval` aliases were removed. Backend behavior:
+
+```text
+CUDA / sm90 / sm100:
+  memory: allocated, reserved, max_allocated, max_reserved from torch.cuda
+  empty cache: torch.cuda.empty_cache()
+
+MPS:
+  memory: allocated/current and reserved/driver from torch.mps
+  empty cache: torch.mps.empty_cache()
+
+CPU / none:
+  memory: process RSS
+  empty cache: no-op
+```
+
+The shared helpers live in `models/accelerator.py` as `memory_stats_for_device`, `synchronize_device`, and `empty_accelerator_cache`. `scripts/debug_nan_training_step.py` now uses the same backend-neutral memory reporting. Verified with `py_compile`, Hydra override composition for the new interval names, and a one-step CPU diagnostic on `/private/tmp/hrm_tiny_sampled` showing sane RSS values around `402-485 MiB`. Confidence: high.
+
 Verified locally on 2026-05-25:
 
 ```bash
@@ -1354,6 +1376,237 @@ custom run, steps 1201-1220:
 ```
 
 This makes the experimental custom MPS attention kernel the leading suspect. The failure is probably cumulative numerical or backward-gradient error rather than an immediate forward mismatch, because early training matches dense closely and the divergence appears only after more than one thousand optimizer steps. Confidence: high for the dense-vs-custom metric comparison; medium for the suspected mechanism.
+
+Follow-up diagnostic on 2026-05-26: added `scripts/compare_dense_custom_mps_attention.py` to compare dense MPS attention and the experimental custom MPS attention with identical model weights, carry, batches, and gradient accumulation. The script reports logits, microbatch losses, normalized metrics, and per-parameter gradient differences.
+
+Results with current on-disk code:
+
+```text
+initial weights, optimizer_step=1:
+  logits max_abs diff on first 512 tokens: 5.48362732e-06
+  all four microbatch losses exactly matched at printed precision
+  metric loss/accuracy/exact_accuracy matched
+  largest gradient max_abs diff: 7.45058060e-09
+
+initial weights, optimizer_step=1161:
+  logits max_abs diff on first 512 tokens: 5.06639481e-06
+  metric loss diff: 1.90734863e-06
+  largest gradient max_abs diff: 1.86264515e-08
+
+dense epoch-1 checkpoint, optimizer_step=1:
+  metric loss/accuracy/exact_accuracy matched
+  largest gradient max_abs diff: 6.05359674e-09
+
+custom epoch-1 checkpoint, optimizer_step=1:
+  metric loss diff: -4.76837158e-07
+  metric accuracy/exact_accuracy matched
+  largest gradient max_abs diff: 9.77888703e-09
+```
+
+Interpretation: the current on-disk custom kernel passes single-step dense equivalence at initial weights, at the bad batch index with initial weights, and at both dense-trained and custom-trained epoch-1 checkpoints. This does not clear the custom kernel used by the bad run, because that run imported `models/flash_attention_prefixlm_mps.py` at startup (`01:06`) and the file was edited later (`03:43`). Current diagnostics therefore test the latest file contents, not necessarily the exact in-memory Metal code that produced `smoke-xxs-custom-mps-bs16384-ga4`. Confidence: high for the diagnostic results; medium for the conclusion that the current file is single-step-correct but the bad run may have used an older in-memory kernel.
+
+Full rerun on 2026-05-26: `smoke-xxs-custom-mps-bs16384-ga4-rerun` in `wandb/run-20260526_041126-tbtcaqxu` used the same XXS custom MPS settings after the on-disk kernel diagnostics. It did not reproduce the loss/accuracy spike:
+
+```text
+rerun custom, steps 1120-1160:
+  mean train/loss:     4.862339
+  mean train/accuracy: 0.309331
+rerun custom, steps 1161-1200:
+  mean train/loss:     4.816304
+  mean train/accuracy: 0.312102
+rerun custom, steps 1201-1220:
+  mean train/loss:     4.818233
+  mean train/accuracy: 0.308371
+rerun custom, steps 1300-1410:
+  mean train/loss:     4.769467
+  mean train/accuracy: 0.313416
+```
+
+Conclusion: the spike in `smoke-xxs-custom-mps-bs16384-ga4` is not reproducible with the current custom MPS kernel. The most likely explanation is that the bad run used an older in-memory version of the experimental MPS kernel from before the later edits, or some other transient run-specific state, rather than a persistent issue in the current on-disk kernel. Confidence: high for the rerun comparison; medium for the causal explanation.
+
+XXS_wide custom rerun on 2026-05-26: `smoke-xxs-wide-custom-mps-bs16384-ga4-rerun` in `wandb/run-20260526_065719-k1sjdsw2` used `arch/size@arch=XXS_wide` (`hidden_size=384`, `num_heads=3`, `head_dim=128`) with `HRM_EXPERIMENTAL_MPS_MAX_HEADS=3`. The run was still alive when inspected, but had already diverged by step `153`; no epoch checkpoint had been written yet.
+
+```text
+custom XXS_wide, steps 1-20:
+  mean train/loss:     10.853374
+  mean train/accuracy: 0.061030
+custom XXS_wide, steps 100-140:
+  mean train/loss:     6.313171
+  mean train/accuracy: 0.213356
+custom XXS_wide, last logged rows 153-172:
+  loss range: roughly 6.47 -> 7.73 -> 7.36
+  accuracy range: roughly 0.18-0.23
+```
+
+The earlier dense `XXS_wide` run `smoke-xxs-wide-mps-bs16384-ga4` in `wandb/run-20260525_201730-e75a2o1u` had identical metrics through early training (`1-20` and `100-140`) but remained stable later (`steps 1120-1200` loss about `4.64-4.68`, accuracy about `0.317-0.321`). Interpretation: the current custom MPS kernel appears stable for `XXS` with 2 heads but unstable for `XXS_wide` with 3 heads, or for some interaction exposed by the wider geometry. Confidence: high for metric comparison; medium for attributing specifically to `num_heads=3`.
+
+Tighter dense-vs-custom comparison for `XXS_wide`: the dense run `wandb/run-20260525_201730-e75a2o1u` and custom run `wandb/run-20260526_065719-k1sjdsw2` are identical through step `149`; custom begins to diverge at steps `150-152` and then clearly fails from step `153`.
+
+```text
+dense XXS_wide:
+  steps 141-152: loss 6.093142, accuracy 0.234157
+  steps 153-172: loss 6.061670, accuracy 0.234757
+  steps 173-192: loss 5.967895, accuracy 0.242694
+
+custom XXS_wide:
+  steps 141-152: loss 6.122311, accuracy 0.233062
+  steps 153-172: loss 7.309322, accuracy 0.197355
+  steps 173-192: loss 7.846729, accuracy 0.165831
+```
+
+Confidence: high.
+
+Single-step `XXS_wide` dense-vs-custom diagnostic on 2026-05-26: `scripts/compare_dense_custom_mps_attention.py --optimizer-step 153` with `arch/size@arch=XXS_wide`, `global_batch_size=16384`, `gradient_accumulation_steps=4`, and custom caps `tokens=4096`, `heads=3`, `head_dim=128` showed no immediate per-batch kernel mismatch from initial weights:
+
+```text
+logits first 512 tokens max_abs diff: 5.48362732e-06
+all four microbatch losses matched at printed precision
+metric loss/accuracy/exact_accuracy matched
+largest gradient max_abs diff: 1.49011612e-08
+```
+
+Interpretation: the visible `XXS_wide` training divergence is not explained by a simple single-batch forward/backward indexing failure at step `153` from initial weights. The next likely causes are cumulative trajectory sensitivity from small numerical differences, a stateful/runtime issue across repeated MPS kernel launches, or a bug that only appears after weights/optimizer state have evolved. Confidence: high for the diagnostic result; medium for interpretation.
+
+XXS FLOP estimate on 2026-05-29: with `arch/size@arch=XXS`, HRM uses `hidden_size=256`, `num_heads=2`, `head_dim=128`, `n_layers=6`, and `half_layers=true`, so the H and L modules each have 3 transformer layers. `H_cycles=2`, `L_cycles=3`, for 8 recurrent transformer-stack calls per forward pass. At `global_batch_size=16384`, linear/LM-head FLOPs are approximately:
+
+```text
+bp_steps=2: 2.73e12 FLOPs before attention
+bp_steps=5: 3.27e12 FLOPs before attention
+```
+
+For the first smoke optimizer step (`gradient_accumulation_steps=4`), the actual packed microbatches contained 15,882 tokens and 7,345,463 allowed PrefixLM query-key pairs, about 462 attended keys/token. Scaling to the nominal 16,384-token step gives an attention term of roughly `0.28e12` FLOPs at `bp_steps=2` and `0.42e12` FLOPs at `bp_steps=5`. Total expected forward+backward FLOPs per XXS optimizer step are therefore roughly:
+
+```text
+bp_steps=2: ~3.0e12 FLOPs
+bp_steps=3: ~3.24e12 FLOPs
+bp_steps=4: ~3.47e12 FLOPs
+bp_steps=5: ~3.69e12 FLOPs
+```
+
+The simpler dense-transformer back-of-envelope `6 * num_params * tokens` with `num_params=39,059,456` and `tokens=16,384` gives `3.84e12` FLOPs/step, but it overcounts embedding lookup work and does not model HRM recurrence explicitly. Confidence: medium; exact attention FLOPs vary with packing/sequence lengths.
+
+General HRM FLOP formula used for this estimate:
+
+```text
+T       = supervised/packed tokens per optimizer step, usually global_batch_size
+A       = allowed PrefixLM query-key pairs per optimizer step, before multiplying by heads
+D       = hidden_size
+h       = num_heads
+d       = head_dim = D / h
+hk      = num_key_value_heads, currently h
+I       = intermediate_size
+V       = vocab_size
+NH, NL  = number of transformer layers in the H and L stacks
+HC, LC  = H_cycles and L_cycles
+b       = bp_steps
+Hbp     = min(HC, max(0, b - 1))
+Lbp     = min(HC * LC, max(0, b - Hbp))
+
+QKVout          = (2h + 2hk) * d
+F_linear_fwd    = T * (2D * QKVout + 2D^2 + 6DI)
+F_linear_bwd    = 2 * F_linear_fwd
+F_attn_fwd      = 4h d A
+F_attn_bwd      = 10h d A + 2h d T
+F_layer_fwd     = F_linear_fwd + F_attn_fwd
+F_layer_bwd     = F_linear_bwd + F_attn_bwd
+F_recurrent     = (HC * NH + HC * LC * NL) * F_layer_fwd
+                + (Hbp * NH + Lbp * NL) * F_layer_bwd
+F_lm_head       = 6T D V
+F_step          = F_recurrent + F_lm_head
+```
+
+This counts multiply-add matmul/attention FLOPs and intentionally excludes most elementwise ops; using `A = T * max_seq_len` gives a conservative attention upper bound. Confidence: medium-high for matmul/attention accounting; low for exact hardware instruction count.
+
+XL full-run worked example on 2026-05-29: for `arch/size@arch=XL`, use `T=196608`, `D=1536`, `h=12`, `d=128`, `I=4096`, `V=65536`, `NH=NL=16` after `half_layers=true`, `HC=2`, `LC=3`, `bp_min=2`, `bp_max=5`, `bp_warmup_ratio=0.2`, and `steps=325925`. The HRM bp schedule gives:
+
+```text
+bp_steps=2: 21,728 steps
+bp_steps=3: 21,728 steps
+bp_steps=4: 21,728 steps
+bp_steps=5: 260,741 steps
+```
+
+Using conservative worst-case attention `A = T * max_seq_len = 196608 * 4096 = 805,306,368` allowed query-key pairs per step:
+
+```text
+bp_steps=2: 3.463 PFLOPs/step
+bp_steps=3: 4.047 PFLOPs/step
+bp_steps=4: 4.631 PFLOPs/step
+bp_steps=5: 5.215 PFLOPs/step
+total:      1.624e21 FLOPs = 1.624 ZFLOPs
+```
+
+Using the first-smoke-batch observed average allowed attention density (`~462.5` keys/token) scaled to XL gives `A ~= 90,931,670` and a less conservative estimate:
+
+```text
+bp_steps=2: 2.551 PFLOPs/step
+bp_steps=3: 2.959 PFLOPs/step
+bp_steps=4: 3.367 PFLOPs/step
+bp_steps=5: 3.775 PFLOPs/step
+total:      1.177e21 FLOPs = 1.177 ZFLOPs
+```
+
+Confidence: medium. The conservative number intentionally overestimates attention; exact attention cost depends on the original Sapient packing distribution.
+
+XXL doubled-dataset worked example on 2026-05-29: for `arch/size@arch=XXL`, use `T=262144`, `D=1792`, `h=14`, `d=128`, `I=4864`, `V=65536`, `NH=NL=36` after `half_layers=true`, `HC=2`, `LC=3`, and the same HRM bp schedule. Starting from the XL reference `325925` steps at `196608` tokens/step, doubling the dataset and using `262144` tokens/step gives:
+
+```text
+steps = floor(2 * 325925 * 196608 / 262144) = 488887
+
+bp_steps=2:  32,592 steps
+bp_steps=3:  32,592 steps
+bp_steps=4:  32,593 steps
+bp_steps=5: 391,110 steps
+```
+
+Using conservative worst-case attention `A = T * max_seq_len = 262144 * 4096 = 1,073,741,824`:
+
+```text
+bp_steps=2: 13.346 PFLOPs/step
+bp_steps=3: 15.632 PFLOPs/step
+bp_steps=4: 17.918 PFLOPs/step
+bp_steps=5: 20.204 PFLOPs/step
+total:      9.430e21 FLOPs = 9.430 ZFLOPs
+```
+
+Using the first-smoke-batch observed average allowed attention density (`~462.5` keys/token) scaled to `T=262144` gives `A ~= 121,242,227`:
+
+```text
+bp_steps=2: 10.151 PFLOPs/step
+bp_steps=3: 11.822 PFLOPs/step
+bp_steps=4: 13.494 PFLOPs/step
+bp_steps=5: 15.165 PFLOPs/step
+total:      7.087e21 FLOPs = 7.087 ZFLOPs
+```
+
+Confidence: medium. The conservative number is the planning upper estimate; exact attention cost depends on packing.
+
+Size-ladder update on 2026-05-29: added only the non-wide branch above `XXL`:
+
+```text
+XXXL:  n_layers=96,  hidden_size=2048, num_heads=16, head_dim=128
+XXXXL: n_layers=128, hidden_size=2560, num_heads=20, head_dim=128
+```
+
+No new `*_wide` configs were kept. Hydra config composition was checked successfully for both `arch/size@arch=XXXL` and `arch/size@arch=XXXXL`. Confidence: high.
+
+Parameter and FLOP estimates for the new non-wide sizes on 2026-05-29, assuming HRM `half_layers=true`, `H_cycles=2`, `L_cycles=3`, `bp_warmup_ratio=0.2`, and a 50B-token dataset iterated for 4 epochs (`200B` token presentations):
+
+```text
+XXXL:
+  physical params:          5.604B
+  effective forward params: 21.609B
+  smoke-density training:   19.223 ZFLOPs
+  worst-attention training: 24.796 ZFLOPs
+
+XXXXL:
+  physical params:          11.325B
+  effective forward params: 44.292B
+  smoke-density training:   39.186 ZFLOPs
+  worst-attention training: 48.473 ZFLOPs
+```
+
+Here “effective forward params” means transformer-stack parameters counted once per recurrent stack call plus embeddings/LM head once; it is not additional stored parameters. “Smoke-density” uses the observed first-smoke-batch average of about `462.5` allowed attention keys per token; “worst-attention” uses `max_seq_len=4096`. Confidence: medium.
 
 Follow-up on 2026-05-26: several attention/model support files were edited during the wall-clock window of this run, overlapping the metric dip. The run started at `2026-05-26 01:06:20` local time; the dip started around step `1161`, roughly `03:40`. File mtimes showed `models/flash_attention_prefixlm_common.py` at `03:41:09`, `models/flash_attention_prefixlm_fa3.py` at `03:42:16`, `models/flash_attention_prefixlm_mps.py` at `03:43:54`, `models/flash_attention_prefixlm_fa4.py` at `03:46:53`, `models/flash_attention_prefixlm_dense.py` at `03:47:15`, and `models/flash_attention_prefixlm_v2.py` at `03:47:59`; core model files such as `models/layers.py`, `models/transformer.py`, `models/lm_head.py`, and `models/baselines/hrm_nocarry_bp_warmup.py` had older mtimes from 2026-05-24/25. A normal running Python process does not pick up `.py` file changes after import unless code explicitly reloads modules, and this training path does not do that. The attention dispatcher lazily imports the backend on first use, but by step `1161` the XXS run had already executed many attention calls, so the active module/function objects and Metal shader source were already resident in memory. Conclusion: the overlapping file rewrites can affect later runs, but they are not a plausible cause of the active run's loss/accuracy dip unless some external process forced dynamic module reloads, for which there is no evidence. Confidence: high for file timestamps; medium-high for non-causality based on Python import semantics and inspected dispatcher code.
 

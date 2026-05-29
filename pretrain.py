@@ -23,7 +23,14 @@ from omegaconf import DictConfig, OmegaConf
 
 from models.layers import Carry
 from models.common import IGNORE_LABEL_ID, wrap_tensor
-from models.accelerator import AcceleratorType, set_accelerator_type, torch_device_for_accelerator
+from models.accelerator import (
+    AcceleratorType,
+    empty_accelerator_cache,
+    memory_stats_for_device,
+    set_accelerator_type,
+    synchronize_device,
+    torch_device_for_accelerator,
+)
 from models.transformer import TransformerBlock
 from models.adam_atan2 import AdamATan2
 from utils.functions import load_model_class, get_model_source_path
@@ -65,6 +72,8 @@ class PretrainConfig(pydantic.BaseModel):
     fwd_bwd_dtype: str = "bfloat16"
     accelerator_type: AcceleratorType = "sm100"
     compile_train_batch: bool = True
+    memory_log_interval: int = 0
+    empty_cache_interval: int = 0
 
     # Names
     project_name: Optional[str] = None
@@ -86,6 +95,7 @@ class TrainState:
 
     step: int
     total_steps: int
+    fwd_bwd_dtype: torch.dtype
 
 
 def create_dataloader(config: PretrainConfig, local_batch_size: int, drop_last_batch: bool, rank: int, world_size: int):
@@ -182,6 +192,7 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
 
     # Model
     model, carry, optim = create_model_and_carry(config, train_metadata, local_batch_size, device)
+    fwd_bwd_dtype = getattr(torch, config.fwd_bwd_dtype)
 
     # Train state
     # Estimated optimizer steps. Each epoch is iterated separately and drops its
@@ -193,7 +204,8 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
         optim=optim,
         
         step=0,
-        total_steps=total_steps
+        total_steps=total_steps,
+        fwd_bwd_dtype=fwd_bwd_dtype,
     )
     return train_state, train_loader, train_metadata
 
@@ -214,13 +226,19 @@ def update_lr(config: PretrainConfig, train_state: TrainState) -> float:
 
 @torch.compile(dynamic=False)
 def forward_backward_batch(train_state: TrainState, batch: dict[str, Tensor], loss_scale: Tensor, **kwargs):
-    train_state.carry, loss, metrics = train_state.model(batch=batch, carry=train_state.carry, **kwargs)
+    device_type = batch["inputs"].device.type
+    use_autocast = device_type in ("mps", "cpu") and train_state.fwd_bwd_dtype != torch.float32
+    with torch.autocast(device_type=device_type, dtype=train_state.fwd_bwd_dtype, enabled=use_autocast, cache_enabled=False):
+        train_state.carry, loss, metrics = train_state.model(batch=batch, carry=train_state.carry, **kwargs)
     (loss * loss_scale).backward()
     return metrics
 
 
 def forward_backward_batch_uncompiled(train_state: TrainState, batch: dict[str, Tensor], loss_scale: Tensor, **kwargs):
-    train_state.carry, loss, metrics = train_state.model(batch=batch, carry=train_state.carry, **kwargs)
+    device_type = batch["inputs"].device.type
+    use_autocast = device_type in ("mps", "cpu") and train_state.fwd_bwd_dtype != torch.float32
+    with torch.autocast(device_type=device_type, dtype=train_state.fwd_bwd_dtype, enabled=use_autocast, cache_enabled=False):
+        train_state.carry, loss, metrics = train_state.model(batch=batch, carry=train_state.carry, **kwargs)
     (loss * loss_scale).backward()
     return metrics
 
@@ -343,6 +361,38 @@ def move_batch_to_device(batch: dict[str, Tensor], device: torch.device) -> dict
     return {name: tensor.to(device, non_blocking=device.type == "cuda") for name, tensor in batch.items()}
 
 
+def format_mib(value: int) -> str:
+    return f"{value / 1024 / 1024:.3f} MiB"
+
+
+def format_memory_stats(stats: dict[str, int]) -> str:
+    return " ".join(f"{name}={format_mib(value)}" for name, value in stats.items())
+
+
+def maybe_log_memory(step: int, label: str, device: torch.device, enabled: bool) -> None:
+    if not enabled:
+        return
+    stats = memory_stats_for_device(device)
+    if not stats:
+        return
+    print(f"[{device.type} memory] step={step} {label}: {format_memory_stats(stats)}", flush=True)
+
+
+def maybe_empty_cache(step: int, device: torch.device, interval: int) -> None:
+    if interval <= 0 or step % interval != 0:
+        return
+    before = memory_stats_for_device(device)
+    empty_accelerator_cache(device)
+    synchronize_device(device)
+    after = memory_stats_for_device(device)
+    if not before and not after:
+        return
+    changes = []
+    for name in sorted(before.keys() | after.keys()):
+        changes.append(f"{name} {format_mib(before.get(name, 0))}->{format_mib(after.get(name, 0))}")
+    print(f"[{device.type} empty_cache] step={step}: {' '.join(changes)}", flush=True)
+
+
 @hydra.main(config_path="config", config_name="cfg_pretrain", version_base=None)
 def launch(hydra_config: DictConfig):
     WORLD_SIZE = 1
@@ -365,8 +415,6 @@ def launch(hydra_config: DictConfig):
 
     # Load sync'ed config
     config = load_synced_config(hydra_config, rank=RANK)
-    if config.accelerator_type in ("mps", "cpu", "none") and config.fwd_bwd_dtype == "bfloat16":
-        config.fwd_bwd_dtype = "float32"
     set_accelerator_type(config.accelerator_type)
     device = torch_device_for_accelerator(config.accelerator_type, local_rank=DEVICE_ID)
 
@@ -403,8 +451,21 @@ def launch(hydra_config: DictConfig):
             lr = update_lr(config, train_state)
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = train_state.model.compute_train_extra_args(train_state)  # pyright: ignore[reportCallIssue]
+            maybe_log_memory(
+                train_state.step,
+                "before_train",
+                device,
+                config.memory_log_interval > 0 and train_state.step % config.memory_log_interval == 0,
+            )
             metrics = train_accumulated_batches(train_state, accumulation_batches, config.compile_train_batch, **train_extra_args)
             accumulation_batches = []
+            maybe_log_memory(
+                train_state.step,
+                "after_train",
+                device,
+                config.memory_log_interval > 0 and train_state.step % config.memory_log_interval == 0,
+            )
+            maybe_empty_cache(train_state.step, device, config.empty_cache_interval)
 
             if train_state.step % config.log_interval == 0:
                 metrics = reduce_metrics(metrics, prefix="train/")

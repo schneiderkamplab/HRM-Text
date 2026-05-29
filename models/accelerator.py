@@ -9,9 +9,12 @@ _accelerator_type: AcceleratorType = "sm100"
 
 __all__ = [
     "AcceleratorType",
+    "empty_accelerator_cache",
     "get_accelerator_type",
     "is_accelerator_available",
+    "memory_stats_for_device",
     "set_accelerator_type",
+    "synchronize_device",
     "torch_device_for_accelerator",
     "validate_accelerator_available",
 ]
@@ -88,3 +91,53 @@ def torch_device_for_accelerator(
     if accelerator_type in ("cpu", "none"):
         return torch.device("cpu")
     raise ValueError(f"Unsupported accelerator_type: {accelerator_type}")
+
+
+def synchronize_device(device: torch.device) -> None:
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
+    elif device.type == "mps":
+        torch.mps.synchronize()
+
+
+def _cpu_memory_stats() -> dict[str, int]:
+    try:
+        import psutil  # type: ignore[import-not-found]
+
+        rss = int(psutil.Process().memory_info().rss)
+    except Exception:
+        import platform
+        import resource
+
+        rss = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+        if platform.system() == "Linux":
+            # Linux reports KiB; macOS reports bytes.
+            rss *= 1024
+    return {"rss": rss}
+
+
+def memory_stats_for_device(device: torch.device) -> dict[str, int]:
+    if device.type == "cuda":
+        synchronize_device(device)
+        return {
+            "allocated": torch.cuda.memory_allocated(device),
+            "reserved": torch.cuda.memory_reserved(device),
+            "max_allocated": torch.cuda.max_memory_allocated(device),
+            "max_reserved": torch.cuda.max_memory_reserved(device),
+        }
+    if device.type == "mps":
+        synchronize_device(device)
+        return {
+            "allocated": torch.mps.current_allocated_memory(),
+            "reserved": torch.mps.driver_allocated_memory(),
+        }
+    if device.type == "cpu":
+        return _cpu_memory_stats()
+    return {}
+
+
+def empty_accelerator_cache(device: torch.device) -> None:
+    if device.type == "cuda":
+        torch.cuda.empty_cache()
+    elif device.type == "mps":
+        torch.mps.empty_cache()

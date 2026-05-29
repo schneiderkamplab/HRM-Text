@@ -204,6 +204,8 @@ Sizes live under [`config/arch/size`](config/arch/size):
 | `XL` | 32 | 1536 | 12 |
 | `XXL` | 72 | 1792 | 14 |
 | `XXL_wide` | 32 | 2560 | 20 |
+| `XXXL` | 96 | 2048 | 16 |
+| `XXXXL` | 128 | 2560 | 20 |
 
 For HRM and RINS, `half_layers: true` splits the configured layer count evenly between the H and L modules.
 
