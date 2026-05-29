@@ -1,6 +1,6 @@
 # Download, Convert, Tokenize, Sample
 
-Last updated: 2026-05-23  
+Last updated: 2026-05-27  
 Confidence: high  
 Scope: Concrete commands for the local data pipeline.
 
@@ -19,6 +19,16 @@ Download all manifest entries including gated sources when `HF_TOKEN` has access
 cd /work/dfm/HRM-Text
 export HF_TOKEN='...'
 python scripts/download_training_datasets.py --groups all --download
+```
+
+Download only the newly approved DFM gated additions:
+
+```bash
+cd /work/dfm/HRM-Text
+export HF_TOKEN='...'
+python scripts/download_training_datasets.py \
+  --only laerebogen_with_followups,synquid_wiki_instruct_da,oliverkinch_instruct_bt,synquid_mt_da_deepseek,synquid_wildchat_100k_qwen_messages \
+  --download
 ```
 
 Download only Danish raw continuation:
@@ -53,6 +63,40 @@ Use `--force` only for an intentional full rebuild.
 condition, instruction, response
 ```
 
+Chat data support, verified on 2026-05-26. Confidence: high.
+
+`scripts/convert_filtered_sources.py` already supports Parquet/JSONL datasets
+with a `messages` column/key. It normalizes message lists and expands each
+assistant turn into one PrefixLM row:
+
+```text
+condition = direct
+instruction = serialized prior history, with System/User/Assistant/Tool labels
+response = current assistant message
+```
+
+If a message has `reasoning_content`, the converter prepends it to the
+assistant `response` before the visible assistant content. The downstream Rust
+tokenizer still only reads `condition`, `instruction`, and `response`; it wraps
+the instruction with BOQ/condition/EOQ tokens and the response with EOA.
+Training then applies target-only loss to the response span when configured,
+not to the serialized chat history. This means the current chat path is
+flattened PrefixLM chat, not native multi-turn chat-format training.
+
+Implementation provenance, checked with `git blame` on 2026-05-27. Confidence:
+high. The message conversion functions were introduced in commit `45a297f6`
+dated `2026-05-24 22:48:35 +0200`.
+
+Tool-calling support is only superficial. Messages with role `tool` are
+serialized into the prior history as `Tool:\n...`, so tool results can appear
+as context before a later assistant answer. However, the converter only keeps
+`role`, `content`, and `reasoning_content`; it drops fields such as
+`tool_calls`, `function_call`, `name`, and `tool_call_id`. Assistant messages
+with tool calls but empty `content` are not emitted as supervised responses and
+are effectively lost except for any non-empty content that exists. There are no
+tool-call special tokens or native tool-call loss masks in the tokenizer/model
+path.
+
 Convert filtered sources:
 
 ```bash
@@ -60,6 +104,40 @@ python scripts/convert_filtered_sources.py --copy-ready --workers 32
 ```
 
 Use `--workers 64` only if storage I/O can keep up.
+
+Both `oliverkinch/instruct-bt` and
+`synquid/wildchat-100k-qwen-messages` were verified on 2026-05-27 to expose a
+`messages` column/key, so they use the existing message conversion path.
+
+Important tokenizer safety note, discovered on 2026-05-27. Confidence: high.
+The Rust tokenizer prunes "orphan" output directories from `-o` when they are
+not present under the current input root. Therefore, do not run it against a
+subset of inputs while writing to the shared `data/tokenized_mixed` output. A
+subset run against `data/converted_sources_dfm_new` removed existing
+`data/tokenized_mixed` task directories. Recovery is to run the tokenizer
+against the full `data/converted_sources` tree:
+
+```bash
+cd /work/dfm/HRM-Text
+ionice -c2 -n7 nice -n 10 ./data_io/tokenizer/target/release/tokenizer \
+  data/converted_sources \
+  --tokenizer-path /work/dfm/HRM-Text/data_io/trained_tokenizers/bpe/tokenizer.json \
+  --workers 1 \
+  -o data/tokenized_mixed
+```
+
+After that full tokenizer run completes with `Done.`, sample the DFM mix:
+
+```bash
+cd /work/dfm/HRM-Text/data_io
+ionice -c2 -n7 nice -n 10 python sample_tokenized.py \
+  tokenized_path=../data/tokenized_mixed \
+  output_path=../data/sampled_dfm \
+  epochs=4 \
+  concat_workers=4 \
+  prefix_config_path=prefix_config_dfm.yaml \
+  > ../data/show_analytics_dfm.md
+```
 
 `convert_filtered_sources.py` is incremental by default. It skips current outputs and writes `.convert_meta.json` sidecars for new conversions. Outputs created before sidecars existed are skipped when their output mtime is newer than or equal to the source mtime.
 

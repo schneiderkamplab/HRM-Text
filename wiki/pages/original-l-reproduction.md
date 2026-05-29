@@ -1,6 +1,6 @@
 # Original L Reproduction
 
-Last updated: 2026-05-24  
+Last updated: 2026-05-27  
 Confidence: high  
 Scope: Reproduce the README L-size HRM-Text run with the original Sapient data mix.
 
@@ -223,6 +223,12 @@ Gradient accumulation: none
 
 ## Evaluate Checkpoints
 
+Original-plus-mixed checkpoint 3 standard-eval incremental sync, 2026-05-26: `MMLU` completed and was manually synced to W&B run `original-plus-mixed-danish-instruction-rich-L` (`es1od1in`) under `eval/*` at `eval/epoch=3`. The synced aggregate values were `eval/MMLU/acc=0.5012`, `eval/MMLU/invalid=0.0`, and `eval/MMLU/n=57`; per-subject `acc_*`, `invalid_*`, and `n_*` keys were also logged. The local sync log is `logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/sync_mmlu_20260526T143619.log`. Confidence: high.
+
+Original-plus-mixed checkpoint 3 standard-eval incremental sync, 2026-05-26: `GSM8k` completed and was manually synced to the same W&B run under `eval/*` at `eval/epoch=3`. The synced values were `eval/GSM8k/acc=0.7703`, `eval/GSM8k/invalid=0.0190`, and `eval/GSM8k/n=1319`. The local sync log is `logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/sync_gsm8k_20260526T151211.log`. Confidence: high.
+
+Original-plus-mixed checkpoint 3 partial sync, 2026-05-26: all completed CP3 results except IFEval-DA were manually synced while IFEval-DA shards were still running. The 8 MATH shards were merged and synced under `eval/MATH/*` at `eval/epoch=3`: `acc=0.4594`, `invalid=0.0872`, `n=5000`. The completed non-IFEval dfm-evals tasks were synced under `dfm_eval/*` at `dfm_eval/epoch=3`: `danish-citizen-tests`, `dala`, `gec_dala`, `wmt24pp-en-da`, `multi_wiki_qa`, `piqa`, and `generative-talemaader`. The local sync logs are `logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/sync_all_but_ifeval_20260526T164746.log` and `logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/sync_dfm_all_but_ifeval_20260526T164843.log`. Confidence: high.
+
 Verified from `evaluation/main.py`, `evaluation/engines.py`, and `simple_inference_engine.py` on 2026-05-23: HRM evaluation uses `python -m evaluation.main`, loads `evaluation/config/hrm_benchmarking.yaml` by default, and evaluates the latest epoch if `ckpt_epoch` is omitted. To evaluate all four original-L checkpoints, pass `ckpt_epoch=1`, `2`, `3`, and `4` explicitly.
 
 Run all default benchmarks sequentially on one visible GPU:
@@ -259,6 +265,58 @@ Pass extra Hydra overrides through the script, for example:
 ```bash
 GPUS=0,1,2,3 scripts/evaluate_original_sapient_l_checkpoints.sh generation_config.batch_size=16
 ```
+
+Verified on 2026-05-25 from `logs/eval/original_sapient_L/epoch_{1,2,3,4}.log`: all four original Sapient L checkpoints completed the full standard eval suite with no tracebacks. Each checkpoint generated `45,648` samples: `1,319` GSM8k, `5,000` MATH, `9,536` DROP, `14,042` MMLU, `1,172` ARC, `10,042` HellaSwag, `1,267` Winogrande, and `3,270` BoolQ. The first grouped generation batch was `6,319` samples, which is `GSM8k + MATH`, so MATH did run on all `5,000` samples. Confidence: high.
+
+## Standard Evals For Original Plus Mixed
+
+Status, 2026-05-25: standard HRM evals for the active `original_plus_mixed_danish_instruction_rich` L run are run with one independent `evaluation.main` process per GPU and one benchmark per process. The active training job still occupies all eight GPUs, so eval processes share GPUs with training. Use `setsid` plus stdin redirected from `/dev/null` for detached eval jobs; a plain background `nohup` launch from the command runner can exit early with an empty log even though the same foreground command works. Confidence: high.
+
+The checkpoint-1 standard eval fan-out uses:
+
+```bash
+cd /work/dfm/HRM-Text
+CUDA_VISIBLE_DEVICES=<gpu> OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONUNBUFFERED=1 \
+python -u -m evaluation.main \
+  config=evaluation/config/hrm_benchmarking.yaml \
+  ckpt_path=checkpoints/original_plus_mixed_danish_instruction_rich/L \
+  ckpt_epoch=1 \
+  'run_only=[<BENCHMARK>]' \
+  generation_config.batch_size=8
+```
+
+Live log roots from the 2026-05-25 launch:
+
+```text
+CP1 GSM8k:        logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_direct_epoch1/GSM8k.log
+CP1 Winogrande:   logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_direct_epoch1_probe/Winogrande_setsid.log
+CP1 other tasks:  logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_direct_epoch1_setsid/*.log
+CP2 follow-ons:   logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_direct_epoch2_setsid/*.log
+Watcher status:   logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_watchers/status.tsv
+```
+
+The 2026-05-25 run uses eight lanes for `GSM8k`, `MATH`, `DROP`, `MMLU`, `ARC`, `HellaSwag`, `Winogrande`, and `BoolQ`. Watchers start the same benchmark on checkpoint 2 as soon as checkpoint 1 for that benchmark finishes and has an `EVALUATION SUMMARY`. Confidence: high.
+
+Update, 2026-05-25: full unsharded MATH evals for checkpoint 1 and checkpoint 2 were stopped because MATH was the bottleneck. `evaluation.benchmarks.MATH` now supports `num_shards` and `shard_index` using the same modulo sharding strategy as `dfm-evals` IFEval-DA: a sample belongs to a shard when `index % num_shards == shard_index`. For 8 shards, local verification showed exactly `625` samples per shard and `5,000` total samples. Confidence: high.
+
+MATH shard logs for the active run are under:
+
+```text
+logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_math_shards_v2/epoch_1/MATH_shard_<0-7>_of_8.log
+logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_math_shards_v2/epoch_2/MATH_shard_<0-7>_of_8.log
+```
+
+Merge completed MATH shards with:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/merge_standard_math_shards.py \
+  logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_math_shards_v2/epoch_1/MATH_shard_*_of_8.log \
+  --epoch 1 \
+  --output logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_math_shards_v2/epoch_1/merged_math_metrics.json
+```
+
+Use `--log-wandb --project ... --run-id ... --run-name ...` to log the merged `eval/MATH/{n,acc,invalid}` row to W&B using `eval/epoch` as the step metric. Confidence: high.
 
 Restrict benchmark names with `run_only=[GSM8k,MATH,DROP,MMLU,ARC,HellaSwag,Winogrande,BoolQ]` syntax. Lower `generation_config.batch_size` if a benchmark runs out of memory.
 
@@ -425,6 +483,8 @@ Completion update, verified on 2026-05-24: dfm-evals finished for all four origi
 W&B workspace panel update, verified on 2026-05-24: the `dfm_eval` workspace section in project `Original Plus Mixed Danish Instruction Rich L` was updated so every non-axis dfm-eval line plot uses `dfm_eval/epoch` as its x-axis. The user had already changed `dfm_eval/wmt24pp-en-da/chrf3pp/mean`; the remaining panels were changed programmatically via the W&B workspace view spec after installing `wandb[workspaces]` in the `hrm` environment. Backup specs were written under `logs/wandb_workspace_specs/20260524T122220Z_before_nw-nwuserpetersk-w.json` and `logs/wandb_workspace_specs/20260524T122220Z_after_nw-nwuserpetersk-w.json`. Confidence: high.
 
 Superseded/context update, 2026-05-24: W&B reported success when mutating the personal default workspace view, but the UI and a later API read showed only the user's manually changed WMT panel persisted. The public Workspace API also refuses personal user views. A new saved workspace view named `dfm_eval epoch x-axis` was created instead, with all non-axis `dfm_eval` panels keyed and set to `xAxis=dfm_eval/epoch`. URL: `https://wandb.ai/peter-sk-sdu/Original%20Plus%20Mixed%20Danish%20Instruction%20Rich%20L?nw=oi8yv6lpmkn`. Backup spec: `logs/wandb_workspace_specs/20260524T123312Z_saved_view_dfm_eval_epoch_axis.json`. Confidence: high.
+
+W&B workspace cleanup, verified on 2026-05-26: deleting panels from the personal default workspace view again returned a successful `upsertView` response but readback showed the personal view unchanged. The requested cleanup was therefore materialized as a saved workspace view named `eval cleaned: no MMLU n/invalid`, with `96` panels removed from the `eval` section: `45` `eval/MMLU/n_*` panels and `51` `eval/MMLU/invalid_*` panels. API readback of the saved view shows `34` eval panels and `0` matching panels, but the user reported the URL still showed the old panels in the web UI. A follow-up attempt to use the separate `upsertUserProfileView` mutation for the personal view failed with a W&B HTTP 500. URL: `https://wandb.ai/peter-sk-sdu/Original%20Plus%20Mixed%20Danish%20Instruction%20Rich%20L?nw=boh5wwabbfc7`. Backup/spec files: `logs/wandb_workspace_specs/20260526T151707Z_before_delete_mmlu_n_invalid_nw-nwuserpetersk-w.json`, `logs/wandb_workspace_specs/20260526T151707Z_after_delete_mmlu_n_invalid_nw-nwuserpetersk-w.json`, and `logs/wandb_workspace_specs/20260526T151840Z_saved_view_delete_mmlu_n_invalid.json`. Confidence: high.
 
 Additional dfm-evals task inventory, verified on 2026-05-24: local `dfm-evals` is at upstream `main` commit `9b6cf828ccffdbde54dd8ed2e4d06a37f979cd2a`. Registered local task names are `dfm_evals/bfcl-v1`, `dfm_evals/bfcl-v1-da`, `dfm_evals/dala`, `dfm_evals/danish-citizen-tests`, `dfm_evals/gec_dala`, `dfm_evals/generative-talemaader`, `dfm_evals/ifeval-da`, `dfm_evals/multi_wiki_qa`, `dfm_evals/piqa`, `dfm_evals/ruler`, and `dfm_evals/wmt24pp-en-da`. No task named `daisy` exists in this checkout. The HRM-compatible suite already ran the non-judge Danish tasks except `piqa` and `ifeval-da`; `generative-talemaader` requires a judge model, `ruler` needs a <=4096-token configuration for these checkpoints, and BFCL/agentic tasks need tool/calling behavior that the current simple HRM OpenAI shim is not expected to handle well. Confidence: high.
 
@@ -628,6 +688,683 @@ original+mixed epoch 1:  accuracy 0.1667, invalid 3/108
 ```
 
 The old original Sapient PIQA scores were therefore scorer artifacts, not genuine PIQA performance. The original+mixed checkpoint mostly predicted `B` on an `A`-skewed set and remains low under the stricter scorer.
+
+W&B sync update, verified on 2026-05-25. Confidence: high. The strict original Sapient PIQA values were logged to run `origLclean` under:
+
+```text
+dfm_eval/piqa/piqa_scorer/accuracy
+dfm_eval/piqa/piqa_scorer/invalid_rate
+```
+
+with `dfm_eval/epoch` values 1 through 4.
+
+IFEval-DA sharding update, verified on 2026-05-25. Confidence: high.
+
+The original single-GPU original+mixed IFEval-DA run was stopped at about `66/541` completed samples because it was dominated by multi-minute generations. `dfm-evals/dfm_evals/tasks/ifeval_da.py` now accepts:
+
+```text
+num_shards
+shard_index
+```
+
+and filters samples by `index % num_shards == shard_index` after the normal dataset load/shuffle/limit path.
+
+Eight shard suites were added in:
+
+```text
+config/dfm_evals_hrm_ifeval_da_shards.yaml
+```
+
+The safe merge path is:
+
+```text
+1. Run each shard as its own Inspect eval on one GPU.
+2. Do not log per-shard metrics to W&B.
+3. Merge completed shard `.eval` zip files by reading all `samples/*.json`.
+4. Recompute IFEval metrics over the union of per-sample `instruction_following` scores.
+5. Log only the merged metrics to W&B.
+```
+
+Merger script:
+
+```text
+scripts/merge_ifeval_da_shards.py
+```
+
+Shard launch root:
+
+```text
+logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_ifeval_da_sharded
+```
+
+Superseded on 2026-05-25: the first eight-shard launch used `BATCH_SIZE=8` and
+`INSPECT_MAX_CONNECTIONS=8`. It started successfully but provided poor progress
+behavior because a long sample could hold a whole batch open before Inspect
+flushed any completed sample records. The run was stopped before metrics were
+logged.
+
+Current launch root:
+
+```text
+logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_ifeval_da_sharded_b1
+```
+
+Current launch mode:
+
+```text
+BATCH_SIZE=1
+INSPECT_MAX_CONNECTIONS=1
+INCREMENTAL_WANDB_SYNC=0
+FINAL_WANDB_SYNC=0
+```
+
+This still uses one shard per GPU, but logs only the merged metrics after all
+shards complete. While the original+mixed training job is active, each eval
+server shares a GPU with one training rank, so throughput is expected to be
+uneven and lower than a dedicated eval run. Confidence: high.
+
+Completed on 2026-05-25 at 14:02 local time. All eight shards completed and
+the merged metrics were logged to W&B run `es1od1in`. The merged union covered
+541 samples. Metrics:
+
+```text
+dfm_eval/ifeval-da/instruction_following/final_acc: 0.3185721627463338
+dfm_eval/ifeval-da/instruction_following/final_stderr: 0.015870416956780143
+dfm_eval/ifeval-da/instruction_following/inst_loose_acc: 0.4073226544622426
+dfm_eval/ifeval-da/instruction_following/inst_loose_stderr: 0.015647363066797922
+dfm_eval/ifeval-da/instruction_following/inst_strict_acc: 0.39931350114416475
+dfm_eval/ifeval-da/instruction_following/inst_strict_stderr: 0.01553497876043891
+dfm_eval/ifeval-da/instruction_following/prompt_loose_acc: 0.2365988909426987
+dfm_eval/ifeval-da/instruction_following/prompt_loose_stderr: 0.018288827582625598
+dfm_eval/ifeval-da/instruction_following/prompt_strict_acc: 0.23105360443622922
+dfm_eval/ifeval-da/instruction_following/prompt_strict_stderr: 0.018138757170523406
+```
+
+Confidence: high.
+
+Original+mixed epoch-2 dfm-evals launch, verified on 2026-05-25. Confidence:
+high.
+
+Epoch 2 checkpoint files are present under:
+
+```text
+checkpoints/original_plus_mixed_danish_instruction_rich/L/fsdp2_epoch_2
+checkpoints/original_plus_mixed_danish_instruction_rich/L/carry_epoch_2.{0..7}.pt
+```
+
+The seven non-IFEval Danish tasks were launched first, with GPU 7 reserved for
+the Gemma judge:
+
+```text
+log root: logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch2_parallel_then_ifeval
+judge: unsloth/gemma-4-E4B-it as openai/gemma-4-e4b-judge
+judge URL: http://127.0.0.1:8799/v1
+GPU 0: hrm_danish_danish_citizen_tests, port 8702
+GPU 1: hrm_danish_dala, port 8712
+GPU 2: hrm_danish_gec_dala, port 8722
+GPU 3: hrm_danish_wmt24pp_en_da, port 8732
+GPU 4: hrm_danish_multi_wiki_qa, port 8742
+GPU 5: hrm_danish_piqa, port 8752
+GPU 6: hrm_danish_generative_talemaader, port 8762
+GPU 7: Gemma judge, port 8799
+```
+
+As non-IFEval tasks finish, IFEval-DA shards are scheduled onto freed GPUs with
+`BATCH_SIZE=1`, `INSPECT_MAX_CONNECTIONS=1`, no per-shard W&B logging, and a
+final merged W&B sync.
+
+Correction note: the first scheduler version accidentally reused port `8872`
+for shard 1 because a Bash local-assignment expression used a stale `shard`
+variable while calculating `port_base`. The invalid shard-1 attempt was killed
+and moved aside as:
+
+```text
+logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch2_parallel_then_ifeval/ifeval_shard_1_invalid_port_*
+```
+
+The valid shard layout is:
+
+```text
+shard 0: port 8872, launched before the correction
+shard 1+: ports 8912, 8922, 8932, 8942, 8952, 8962, 8972 as scheduled by the corrected supervisor
+```
+
+Corrected supervisor log:
+
+```text
+logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch2_parallel_then_ifeval/supervisor_remaining.log
+```
+
+When all shards complete, the corrected supervisor merges:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/merge_ifeval_da_shards.py \
+  logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch2_parallel_then_ifeval/ifeval_shard_{0,1,2,3,4,5,6,7}/epoch_2/inspect/*.eval \
+  --epoch 2 \
+  --output logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch2_parallel_then_ifeval/merged_ifeval_da_metrics.json \
+  --log-wandb \
+  --project "Original Plus Mixed Danish Instruction Rich L" \
+  --run-id es1od1in \
+  --run-name "original-plus-mixed-danish-instruction-rich-L"
+```
+
+Epoch-2 completion, verified locally and through W&B sync logs on 2026-05-25.
+Confidence: high.
+
+All seven non-IFEval tasks completed and were re-synced as one consolidated
+CP2 W&B history row at `dfm_eval/epoch=2`. The eight IFEval-DA shards also
+completed, were merged into `merged_ifeval_da_metrics.json`, and were re-synced
+as part of the same consolidated CP2 row after the initial per-task summaries
+did not reliably remain visible through the W&B API while the training run was
+active.
+
+```text
+dfm_eval/danish-citizen-tests/knowledge/accuracy: 0.5229357798165137
+dfm_eval/danish-citizen-tests/knowledge/dfm_evals_mcc: 0.32175001283952764
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1: 0.024884792626728113
+dfm_eval/dala/linguistic-acceptability/dfm_evals_mcc: -0.012718920251333386
+dfm_eval/gec_dala/exact_match/mean: 0.005859375
+dfm_eval/wmt24pp-en-da/chrf3pp/mean: 0.4914474618118289
+dfm_eval/multi_wiki_qa/exact_match/mean: 0.82763671875
+dfm_eval/multi_wiki_qa/f1/mean: 0.9187239022284758
+dfm_eval/piqa/piqa_scorer/accuracy: 0.46296296296296297
+dfm_eval/generative-talemaader/model_graded_fact/accuracy: 0.050742574257425746
+dfm_eval/ifeval-da/instruction_following/final_acc: 0.35019213931316273
+dfm_eval/ifeval-da/instruction_following/final_stderr: 0.016554524344104274
+dfm_eval/ifeval-da/instruction_following/inst_loose_acc: 0.4405034324942792
+dfm_eval/ifeval-da/instruction_following/inst_loose_stderr: 0.015728631269252082
+dfm_eval/ifeval-da/instruction_following/inst_strict_acc: 0.4279176201372998
+dfm_eval/ifeval-da/instruction_following/inst_strict_stderr: 0.015753402406761055
+dfm_eval/ifeval-da/instruction_following/prompt_loose_acc: 0.2698706099815157
+dfm_eval/ifeval-da/instruction_following/prompt_loose_stderr: 0.019102087526494387
+dfm_eval/ifeval-da/instruction_following/prompt_strict_acc: 0.26247689463955637
+dfm_eval/ifeval-da/instruction_following/prompt_strict_stderr: 0.0189337428760446
+```
+
+Launched mapping:
+
+```text
+shard 0: GPU 0, port 8601
+shard 1: GPU 1, port 8611
+shard 2: GPU 2, port 8621
+shard 3: GPU 3, port 8631
+shard 4: GPU 4, port 8641
+shard 5: GPU 5, port 8651
+shard 6: GPU 6, port 8661
+shard 7: GPU 7, port 8671
+```
+
+Merge command after all eight shards complete:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/merge_ifeval_da_shards.py \
+  logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_ifeval_da_sharded_b1/shard_{0,1,2,3,4,5,6,7}/epoch_1/inspect/*.eval \
+  --epoch 1 \
+  --output logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch1_ifeval_da_sharded_b1/merged_ifeval_da_metrics.json \
+  --log-wandb \
+  --project "Original Plus Mixed Danish Instruction Rich L" \
+  --run-id es1od1in \
+  --run-name "original-plus-mixed-danish-instruction-rich-L"
+```
+
+Standard eval W&B sync, verified on 2026-05-25. Confidence: high.
+
+The current original+mixed L run's standard HRM evals are logged under the
+`eval/...` prefix, separate from the Danish `dfm_eval/...` suite. Because the
+standard eval jobs were split across per-task logs and sharded MATH logs,
+`scripts/log_original_plus_mixed_standard_eval_to_wandb.py` composes exactly:
+
+```text
+epoch 1: ARC, BoolQ, DROP, GSM8k, HellaSwag, MATH, MMLU, Winogrande
+epoch 2: ARC, BoolQ, DROP, GSM8k, HellaSwag, MMLU, Winogrande
+```
+
+CP2 MATH is intentionally omitted until all epoch-2 MATH shards complete and
+are merged.
+
+Command used:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/log_original_plus_mixed_standard_eval_to_wandb.py
+```
+
+The sidecar W&B sync reported success for run `es1od1in`, but the active
+training run again showed the known live-run sidecar issue where remote summary
+keys did not appear through the public API immediately. The same parsed metrics
+were therefore patched into the remote run summary through the W&B API. A
+post-patch API check returned `777` `eval/*` summary keys, with:
+
+```text
+eval/standard_eval_last_synced_epoch: 2
+eval/standard_eval_cp2_math_synced: False
+eval/MATH/acc/epoch_1: 0.3658
+eval/MATH/acc/epoch_2: <missing>
+eval/GSM8k/acc/epoch_2: 0.7301
+eval/Winogrande/acc/epoch_2: 0.5951
+```
+
+At that check, the only active standard eval work left was CP2 MATH shard 6
+and shard 7. Confidence: high.
+
+CP2 standard MATH completion, verified on 2026-05-26. Confidence: high.
+
+All eight epoch-2 MATH shards completed and no standard-eval processes remained.
+The shards were merged and synced with:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/merge_standard_math_shards.py \
+  logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_math_shards_v2/epoch_2/MATH_shard_*_of_8.log \
+  --epoch 2 \
+  --output logs/eval/original_plus_mixed_danish_instruction_rich_L_standard_math_shards_v2/epoch_2/merged_math_metrics.json \
+  --log-wandb \
+  --project "Original Plus Mixed Danish Instruction Rich L" \
+  --run-id es1od1in \
+  --run-name "original-plus-mixed-danish-instruction-rich-L"
+```
+
+Merged epoch-2 MATH metrics:
+
+```text
+eval/MATH/n: 5000
+eval/MATH/acc: 0.4412
+eval/MATH/invalid: 0.0928
+```
+
+The active training process continues to overwrite the remote W&B summary back
+to a small training-only summary, so direct summary patching did not persist.
+However, W&B history verification returned both standard MATH rows:
+
+```text
+epoch 1: eval/MATH/acc = 0.3658, eval/MATH/invalid = 0.1100, eval/MATH/n = 5000
+epoch 2: eval/MATH/acc = 0.4412, eval/MATH/invalid = 0.0928, eval/MATH/n = 5000
+```
+
+Use `eval/epoch` as the x-axis for these plots. Confidence: high.
+
+Original+mixed CP3 queued-eval scheduler, launched on 2026-05-26. Confidence:
+high for local queue state; medium for runtime until jobs complete.
+
+The user requested one 8-GPU queue covering all CP3 standard eval tasks, all
+8 standard MATH shards, all Danish dfm-eval tasks, and 4 IFEval-DA shards. The
+following files were added:
+
+```text
+scripts/schedule_original_plus_mixed_cp3_evals.sh
+config/dfm_evals_hrm_ifeval_da_4_shards.yaml
+```
+
+The scheduler is detached and running as:
+
+```text
+PID: 2007215
+log root: logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all
+dfm log root: logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all
+status: logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/status.tsv
+queue: logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/jobs.tsv
+```
+
+At launch, `fsdp2_epoch_3` and `carry_epoch_3.{0..7}.pt` were not yet visible
+under `checkpoints/original_plus_mixed_danish_instruction_rich/L`, so the
+scheduler is in `WAIT_CHECKPOINT` state and will not start workers until the
+checkpoint files exist. The check interval is `CHECKPOINT_WAIT_SECONDS=300`.
+
+Queued jobs, `26` total:
+
+```text
+standard: GSM8k, DROP, MMLU, ARC, HellaSwag, Winogrande, BoolQ
+standard_math: shard 0..7 of 8
+dfm: danish_citizen_tests, dala, gec_dala, wmt24pp_en_da, multi_wiki_qa, piqa, generative_talemaader
+dfm_ifeval: shard 0..3 of 4
+```
+
+Each worker owns one GPU and takes the next job from the shared queue when its
+current job exits. `generative_talemaader` starts the Gemma judge
+`unsloth/gemma-4-E4B-it` as `openai/gemma-4-e4b-judge` on the same GPU as that
+job. Standard MATH and IFEval-DA are merged and synced after all workers finish.
+
+Monitor:
+
+```bash
+cd /work/dfm/HRM-Text
+tail -f logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/status.tsv
+```
+
+Stop if needed:
+
+```bash
+cd /work/dfm/HRM-Text
+kill "$(cat logs/eval/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/scheduler.pid)"
+```
+
+Incremental CP3 standard eval sync, verified on 2026-05-26. Confidence: high.
+
+After the CP3 scheduler started, the first completed standard evals were synced
+to W&B run `es1od1in` at `eval/epoch=3`:
+
+```text
+eval/ARC/acc: 0.5904
+eval/ARC/invalid: 0.0
+eval/ARC/n: 1172
+eval/BoolQ/acc: 0.8294
+eval/BoolQ/invalid: 0.0
+eval/BoolQ/n: 3270
+eval/Winogrande/acc: 0.6464
+eval/Winogrande/invalid: 0.0
+eval/Winogrande/n: 1267
+```
+
+W&B history verification returned epoch-3 values for all three tasks. At that
+time, no dfm-evals had completed and MATH was still partial. Confidence: high.
+
+Original+mixed CP3 IFEval-DA completion, verified on 2026-05-26. Confidence:
+high.
+
+The four CP3 IFEval-DA shards completed, were merged, and were synced to W&B
+run `es1od1in` at `dfm_eval/epoch=3`. Evidence:
+
+```text
+merged metrics: logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/merged_ifeval_da_metrics.json
+sync log: logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_epoch3_queued_all/merge_ifeval_da_wandb.log
+W&B log line: Synced 4 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+```
+
+Merged epoch-3 IFEval-DA metrics:
+
+```text
+num_samples: 541
+dfm_eval/ifeval-da/instruction_following/final_acc: 0.35809184618703394
+dfm_eval/ifeval-da/instruction_following/final_stderr: 0.016830669337024047
+dfm_eval/ifeval-da/instruction_following/inst_loose_acc: 0.4462242562929062
+dfm_eval/ifeval-da/instruction_following/inst_loose_stderr: 0.015684688759299244
+dfm_eval/ifeval-da/instruction_following/inst_strict_acc: 0.4279176201372998
+dfm_eval/ifeval-da/instruction_following/inst_strict_stderr: 0.015609094571451737
+dfm_eval/ifeval-da/instruction_following/prompt_loose_acc: 0.2846580406654344
+dfm_eval/ifeval-da/instruction_following/prompt_loose_stderr: 0.0194187691064861
+dfm_eval/ifeval-da/instruction_following/prompt_strict_acc: 0.2735674676524954
+dfm_eval/ifeval-da/instruction_following/prompt_strict_stderr: 0.019183727107392846
+```
+
+For future checkpoints, prefer 8 IFEval-DA shards instead of 4 to reduce the
+tail runtime. Confidence: medium.
+
+English summarization eval, added on 2026-05-27. Confidence: high for local
+implementation and smoke tests; medium for source-card metadata.
+
+`GovReport` was added to the standard `eval/*` path in
+`evaluation/benchmarks.py` and `evaluation/config/hrm_benchmarking.yaml`.
+It uses the parquet-converted Hugging Face dataset
+`ccdv/govreport-summarization`, config `document`, split `test`, with `report`
+as the source document and `summary` as the reference. The originally considered
+`launch/gov_report` source is CC-BY-4.0 and has simple `document`/`summary`
+fields, but local smoke testing showed it still includes a dataset script and
+this environment's `datasets` version refuses script-backed datasets:
+`RuntimeError: Dataset scripts are no longer supported, but found gov_report.py`.
+
+`GovReport` generation overrides are `condition=direct`, `max_context=4096`,
+`max_tokens=512`, and `batch_size=2`. Metrics are `n`, `rouge1`, `rouge2`,
+`rougeL`, `rougeLsum`, `bleu`, `chrf3`, and `chrf3pp`. ROUGE uses
+`rouge_score` F1; BLEU and chrF use `sacrebleu` corpus scores, with `chrf3`
+using `beta=3, word_order=0` and `chrf3pp` using `beta=3, word_order=2`.
+Local smoke tests verified that `GovReport(split="test[:2]")` loads, computes
+all metrics as plain Python floats, and resolves through
+`load_model_class("benchmarks@GovReport", prefix="evaluation.")`. Run with:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m evaluation.main ckpt_path="<CHECKPOINT_PATH>" "run_only=[GovReport]"
+```
+
+It is less obviously contaminated by the original Sapient/FLAN summarization
+task set than CNN/DailyMail, XSum, SAMSum, Gigaword, BillSum, Reddit TIFU,
+Multi-News, or EUR-Lex summarization, all of which appear by name in the
+original Sapient analytics. Source pages:
+https://huggingface.co/datasets/launch/gov_report and
+https://huggingface.co/datasets/ccdv/govreport-summarization.
+
+Danish summarization eval, added on 2026-05-27. Confidence: high.
+
+`NordjyllandNews` was added to the standard `eval/*` path in
+`evaluation/benchmarks.py` and `evaluation/config/hrm_benchmarking.yaml`. It
+uses the local DynaWord parquet file:
+
+```text
+data/downloads/datasets/danish_dynaword/data/nordjyllandnews/nordjyllandnews.parquet
+```
+
+The source file has `75,215` rows with a single `text` field. The benchmark uses
+the `37,522` rows that contain an explicit `Referat:` reference. If the source
+starts with `Lav et referat af nedenstående tekst:\n\nTekst:\n`, that wrapper is
+removed before prompting. By default the eval uses an evenly spaced `1,000`
+example subset to keep runtime practical; pass `max_samples=null` only when a
+full 37k-example run is intended.
+
+`NordjyllandNews` generation overrides are `condition=direct`,
+`max_context=4096`, `max_tokens=128`, and `batch_size=8`. It uses the same
+summarization metrics as `GovReport`: `n`, ROUGE F1, BLEU, `chrf3`, and
+`chrf3pp`. Local smoke tests verified `NordjyllandNews(max_samples=3)` loads and
+computes all metrics as plain Python values. Run with:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m evaluation.main ckpt_path="<CHECKPOINT_PATH>" "run_only=[NordjyllandNews]"
+```
+
+Summarization eval scheduler launch, verified on 2026-05-27. Confidence: high.
+
+`scripts/schedule_summarization_evals_all_checkpoints.sh` queues only the
+English/Danish summarization benchmarks:
+
+```text
+GovReport
+NordjyllandNews
+```
+
+Default checkpoint coverage:
+
+```text
+original_sapient: epochs 1,2,3,4 under checkpoints/original_sapient/L
+original_plus_mixed_danish_instruction_rich: epochs 1,2,3 under checkpoints/original_plus_mixed_danish_instruction_rich/L
+```
+
+The scheduler uses eight GPU lanes by default (`GPUS=0,1,2,3,4,5,6,7`) and a
+shared `jobs.tsv` protected by `flock`, so each lane takes one job at a time.
+The 2026-05-27 launch queued `14` jobs and started all eight initial original
+Sapient summarization jobs:
+
+```text
+log root: logs/eval/summarization_all_checkpoints_20260527T085348
+scheduler PID: 480235
+worker PIDs: 480243 480244 480245 480246 480247 480248 480249 480250
+status: logs/eval/summarization_all_checkpoints_20260527T085348/status.tsv
+```
+
+Launch command:
+
+```bash
+cd /work/dfm/HRM-Text
+LOG_ROOT="logs/eval/summarization_all_checkpoints_$(date +%Y%m%dT%H%M%S)"
+mkdir -p "$LOG_ROOT"
+setsid scripts/schedule_summarization_evals_all_checkpoints.sh \
+  > "$LOG_ROOT/scheduler.log" 2>&1 < /dev/null &
+echo $! > "$LOG_ROOT/scheduler.pid"
+```
+
+Generation retention for summarization vs translation evals, verified on
+2026-05-27. Confidence: high.
+
+The repo's standard `evaluation.main` path used for `eval/GovReport/*` and
+`eval/NordjyllandNews/*` does not persist per-sample generations. It keeps
+generated strings in memory, passes them into `benchmark.compute_metrics(...)`,
+and prints only progress bars plus the final `EVALUATION SUMMARY` to stdout.
+The summarization logs under
+`logs/eval/summarization_all_checkpoints_20260527T085348/**/{GovReport,NordjyllandNews}.log`
+therefore contain metrics but not prompt/prediction/reference triples.
+
+The Danish translation evals run through `dfm-evals`/Inspect do persist
+per-sample records. Each `wmt24pp-en-da` `.eval` zip contains `samples/*.json`
+entries with `input`, `target`, `messages`, `output.completion`, `scores`, and
+metadata. The Every Eval Ever exports also write `.json` and `.jsonl` copies
+under each task's `eee/` directory.
+
+BERTScore note, updated on 2026-05-27. Confidence: high for local dependency
+state, inspected Inspect archives, and generation-retention caveat; medium for
+metric usefulness by task. `bert-score` is installed in the main HRM environment
+and in the nested `dfm-evals` environment, with `xlm-roberta-large` selected as
+the shared multilingual scorer model.
+
+BERTScore is appropriate as an auxiliary metric for tasks with natural-language
+predictions and reference text: `wmt24pp-en-da`, `generative-talemaader`,
+`gec_dala`, and the new dfm-evals summarization tasks `govreport` and
+`nordjyllandnews`. It is less informative but possible for `multi_wiki_qa`
+because many answers are only one to three words. It should not be used for
+classification/constraint-only tasks such as `danish-citizen-tests`, `dala`,
+`piqa`, or `ifeval-da`.
+
+The already completed standard summarization evals cannot be rescored with
+BERTScore unless they are rerun, because `evaluation.main` did not persist
+prompt/prediction/reference triples. Translation and other dfm-evals tasks can
+be rescored from stored Inspect samples because those archives contain
+`output.completion` and references. IFEval-DA archives were inspected locally:
+samples have an empty `target`, the output is the model's free-form constrained
+response, and scoring records instruction-following booleans/counts
+(`prompt_level_strict`, `inst_level_strict`, `prompt_level_loose`,
+`inst_level_loose`, `num_instructions`) rather than reference similarity.
+
+Stored-generation BERTScore run, verified on 2026-05-27. Confidence: high.
+
+`scripts/score_stored_dfm_eval_bertscore.py` computes offline BERTScore from
+stored Inspect `.eval` archives without rerunning model inference. It uses
+`bert-score` with `xlm-roberta-large`, chooses the best reference by F1 when a
+sample has multiple references, and deduplicates repeated archives by
+`family/epoch/task`, keeping the complete archive with the largest sample
+count/newest mtime. The full command was:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/score_stored_dfm_eval_bertscore.py \
+  --batch-size 32 \
+  --output logs/dfm_evals/bertscore_xlm_roberta_large/stored_metrics.json \
+  2>&1 | tee logs/dfm_evals/bertscore_xlm_roberta_large/stored_metrics.log
+```
+
+The run completed for 28 stored checkpoint/eval combinations:
+
+```text
+original_sapient epoch 1: gec-dala 0.898468, generative-talemaader 0.839199, multi-wiki-qa 0.794420, wmt24pp-en-da 0.857832
+original_sapient epoch 2: gec-dala 0.965995, generative-talemaader 0.841373, multi-wiki-qa 0.801824, wmt24pp-en-da 0.866615
+original_sapient epoch 3: gec-dala 0.968691, generative-talemaader 0.844272, multi-wiki-qa 0.815243, wmt24pp-en-da 0.873644
+original_sapient epoch 4: gec-dala 0.982645, generative-talemaader 0.839617, multi-wiki-qa 0.831438, wmt24pp-en-da 0.876078
+original_plus_mixed_danish_instruction_rich epoch 1: gec-dala 0.971922, generative-talemaader 0.857760, multi-wiki-qa 0.988429, wmt24pp-en-da 0.934503
+original_plus_mixed_danish_instruction_rich epoch 2: gec-dala 0.807852, generative-talemaader 0.858760, multi-wiki-qa 0.982432, wmt24pp-en-da 0.937346
+original_plus_mixed_danish_instruction_rich epoch 3: gec-dala 0.862708, generative-talemaader 0.859533, multi-wiki-qa 0.978532, wmt24pp-en-da 0.939909
+```
+
+Stored-generation BERTScore W&B sync, verified on 2026-05-27. Confidence:
+high for upload logs and original clean API summary visibility; medium for the
+active original-plus-mixed run summary because that live run has repeatedly
+overwritten sidecar summary values.
+
+`scripts/log_stored_bertscore_to_wandb.py` logs
+`logs/dfm_evals/bertscore_xlm_roberta_large/stored_metrics.json` to W&B under
+metric keys such as:
+
+```text
+dfm_eval/wmt24pp-en-da/bertscore_xlm_roberta_large/f1
+dfm_eval/gec-dala/bertscore_xlm_roberta_large/precision
+dfm_eval/generative-talemaader/bertscore_xlm_roberta_large/recall
+dfm_eval/multi-wiki-qa/bertscore_xlm_roberta_large/n
+```
+
+The sync command was:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/log_stored_bertscore_to_wandb.py \
+  2>&1 | tee logs/dfm_evals/bertscore_xlm_roberta_large/wandb_sync.log
+```
+
+W&B reported upload success for `origLclean` with history steps `65227-65230`
+and for `es1od1in`. The public API summary check confirmed representative
+`origLclean` keys, for example
+`dfm_eval/wmt24pp-en-da/bertscore_xlm_roberta_large/f1/epoch_1 =
+0.857831776017944`. The active `es1od1in` run did not retain these values in
+the public summary immediately after sync, matching prior active-run summary
+overwrite behavior; the W&B client still reported a successful history upload.
+
+Summarization under dfm-evals, added on 2026-05-27. Confidence: high for local
+registration and shell/compile checks; medium until the full scheduler is run.
+
+`dfm-evals/dfm_evals/tasks/summarization.py` adds `dfm_evals/govreport` and
+`dfm_evals/nordjyllandnews` as Inspect tasks. They use the same data/prompt
+policy as the standard `evaluation.main` summarization tasks but persist
+per-sample generations in Inspect `.eval` archives. Their scorer logs ROUGE,
+BLEU, chrF3, chrF3++, and BERTScore precision/recall/F1 with
+`xlm-roberta-large` by default.
+
+`config/dfm_evals_hrm_single_tasks.yaml` now exposes:
+
+```text
+hrm_summarization_govreport
+hrm_summarization_nordjyllandnews
+```
+
+`scripts/schedule_dfm_summarization_bertscore_all_checkpoints.sh` queues the
+two summarization tasks over the seven existing L checkpoints: original Sapient
+epochs 1-4 and original-plus-mixed epochs 1-3. It runs up to 8 independent jobs
+in parallel using `GPUS=0,1,2,3,4,5,6,7`; each job sets
+`CUDA_VISIBLE_DEVICES` for both the HRM checkpoint server and the dfm-evals
+process, so a single eval is not distributed across GPUs. The launch command is:
+
+```bash
+cd /work/dfm/HRM-Text
+export LOG_ROOT="logs/dfm_evals/summarization_bertscore_all_checkpoints_$(date +%Y%m%dT%H%M%S)"
+mkdir -p "$LOG_ROOT"
+setsid scripts/schedule_dfm_summarization_bertscore_all_checkpoints.sh \
+  > "$LOG_ROOT/scheduler.log" 2>&1 < /dev/null &
+echo $! > "$LOG_ROOT/scheduler.pid"
+```
+
+To get BERTScore for the summarization tasks, rerun these CP x eval pairs under
+dfm-evals because the previous standard `eval/*` summarization run did not store
+generations:
+
+```text
+original_sapient epochs 1,2,3,4: govreport, nordjyllandnews
+original_plus_mixed_danish_instruction_rich epochs 1,2,3: govreport, nordjyllandnews
+```
+
+Summarization W&B sync, verified on 2026-05-27. Confidence: high for W&B upload
+logs and original clean summary visibility; medium for active-run summary
+visibility because the live original+mixed training run has previously
+overwritten sidecar summaries.
+
+`scripts/log_summarization_evals_to_wandb.py` parses
+`logs/eval/summarization_all_checkpoints_20260527T085348` and logs
+`GovReport`/`NordjyllandNews` metrics under the standard `eval/*` prefix with
+`eval/epoch` as the step metric. It maps:
+
+```text
+original_sapient -> project "Original Plus Mixed Danish Instruction Rich L", run "origLclean"
+original_plus_mixed_danish_instruction_rich -> same project, run "es1od1in"
+```
+
+The sync command was:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/log_summarization_evals_to_wandb.py \
+  2>&1 | tee logs/eval/summarization_all_checkpoints_20260527T085348/wandb_sync.log
+```
+
+W&B reported successful uploads for both runs. The original clean run API
+summary shows `eval/summarization_last_synced_epoch=4`. The active
+original+mixed sidecar run reported upload success for `history_lines=3` at
+`status="200 OK"`, but its public summary did not retain the summarization keys,
+matching the known active-run summary overwrite behavior.
 
 ## Caveat
 

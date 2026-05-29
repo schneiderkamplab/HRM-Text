@@ -1,6 +1,6 @@
 # Data Mix Policy
 
-Last updated: 2026-05-24  
+Last updated: 2026-05-27  
 Confidence: high  
 Scope: Dataset inclusion policy for academic/non-commercial HRM-Text training.
 
@@ -54,7 +54,8 @@ Good instruction/reasoning sources:
 - `synquid/translation-100k`
 - `synquid/ifbench-train`
 - Oliver Kinch Danish instruction/backtranslation, QA, summarization, and translation sources with public/OPUS provenance:
-  - `oliverkinch/instruct-bt` remains gated and optional.
+  - `oliverkinch/instruct-bt` is now approved for the DFM mix after row-level
+    access and schema verification on 2026-05-27.
   - Added open sources: `multi-wiki-qa-high-quality-subset`, `eur-lex-sum-instruct`, `machine-translation-da-{en,uk,ar}`, `danmarks-statistik-bt`, `tidsskrift-dk-bt`, `doab-da-bt`, `danish-university-portals-bt`, `eur-lex-bt`, `dynaword-bt`, and `dst-table-prompts-bt`.
 - AllenAI Dolci SFT variants
 - AllenAI Tulu SFT/persona/reasoning variants
@@ -62,13 +63,15 @@ Good instruction/reasoning sources:
 - DynaWord as the only raw continuation source
 - Local DBC/LexDK/OPUS instruction-style additions under `data/downloads/datasets`: DBC abstracts/reviews/Faktalink/Forfatterweb, LexDK articles, and OPUS Danish-English translation shards when both language sides are present. These are converted to supervised bibliographic/article-writing/translation tasks, not empty-instruction raw continuation.
 
-Gated sources not downloaded in the current `--exclude-gated` run:
+Gated sources not downloaded in the earlier `--exclude-gated` run, but intended
+for the DFM mix once explicitly downloaded with an authorized token:
 
 - `danish-foundation-models/laerebogen`
 - `synquid/wiki-instruct-da`
 - `oliverkinch/instruct-bt`
 - `synquid/mt-da-deepseek`
-- Synquid WildChat variants
+- `synquid/wildchat-100k-qwen-messages`, tightly capped because it is generated
+  answers to WildChat prompts.
 
 ## Oliver Kinch Source Policy
 
@@ -108,6 +111,30 @@ For a 40B-token target, a reasonable target allocation remains:
 - 0-10% Danish raw continuation
 
 Use token-budgeted sampling rather than row-count caps alone.
+
+## DFM Mix
+
+Decision on 2026-05-27. Confidence: high for local schema/access checks and
+manifest/config edits; medium for the exact caps until sampled analytics are
+measured.
+
+The DFM mix is the next mixed-corpus target:
+
+- Name: `dfm`
+- Sampling config: `data_io/prefix_config_dfm.yaml`
+- Intended output: `data/sampled_dfm`
+- Training data config: `config/data/dfm.yaml`
+- Target size: about 28B tokens per epoch
+- Content: safe filtered Sapient sources plus all approved additional sources,
+  including gated Danish instruction sources where access is available.
+
+`synquid/wildchat-100k-qwen` is superseded by
+`synquid/wildchat-100k-qwen-messages`. The messages variant was row-accessible
+with an explicit HF token on 2026-05-27 and uses a `messages` JSONL schema that
+the existing converter supports. It is included only with a tight
+`50,000`-row cap per file. `oliverkinch/instruct-bt` was also row-accessible on
+2026-05-27 and uses a `messages` Parquet schema supported by the existing
+converter.
 
 ## Original Plus Mixed Danish Instruction Rich
 

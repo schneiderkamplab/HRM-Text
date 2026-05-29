@@ -1,6 +1,6 @@
 # Dataset Entities
 
-Last updated: 2026-05-23  
+Last updated: 2026-05-27  
 Confidence: medium  
 Scope: Dataset inventory and conversion policy.
 
@@ -30,14 +30,47 @@ Scope: Dataset inventory and conversion policy.
   - Status: include
   - Conversion: message rows to assistant-turn examples
 - Gated Synquid datasets are not present in the `--exclude-gated` download run.
+- Access recheck on 2026-05-27: Hub metadata was visible for the previously
+  gated datasets, but the local shell had no configured HF token
+  (`HF_TOKEN`/cached token absent), so `datasets.load_dataset(...,
+  streaming=True)` still failed with gated-dataset authentication errors.
+  Export `HF_TOKEN` in the shell before downloading or schema sampling.
+  Confidence: high for local token state and metadata visibility.
+- `synquid/wildchat-100k-qwen`
+  - Status: superseded by `synquid/wildchat-100k-qwen-messages`; do not use.
+  - Access recheck on 2026-05-27 with an explicit user-provided HF token still
+    failed at row level: Hugging Face reported the dataset is gated and access
+    must be requested/approved. Hub metadata remains visible, including
+    `data/train.jsonl`, but the row schema cannot be verified until access is
+    actually granted.
+  - Confidence: high for access failure and supersession.
+- `synquid/wildchat-100k-qwen-messages`
+  - Status: include in the DFM mix, tightly capped.
+  - Access recheck on 2026-05-27 with an explicit HF token succeeded. Schema:
+    `messages` plus generation/source metadata such as `model`,
+    `source_record`, `system_prompt_leak`, and `followup_system_prompt_leak`.
+  - Conversion: existing `messages` JSONL converter expands assistant turns into
+    PrefixLM instruction/response rows.
+  - Policy note: if access is granted, include only with a tight cap because the
+    source is generated answers to WildChat prompts, and WildChat provenance has
+    higher PII/provenance risk than synthetic or curated instruction datasets.
+  - Sampling: `data_io/prefix_config_dfm.yaml` caps
+    `synquid_wildchat_100k_qwen_messages__` at `50,000` rows per file.
+  - Confidence: high for access/schema and local manifest support; medium for
+    cap size.
 
 ## Oliver Kinch
 
 Included in `scripts/download_training_datasets.py`:
 
 - `oliverkinch/instruct-bt`
-  - Status: optional gated include
-  - Conversion: `prompt` -> instruction; `target` -> response
+  - Status: include in the DFM mix.
+  - Conversion: existing `messages` Parquet converter expands assistant turns
+    into PrefixLM instruction/response rows.
+  - Access recheck 2026-05-27 with an explicit HF token succeeded. Schema:
+    `messages`, `prompt_id`, `section_heading`, `subset`, `title`, `url`.
+  - Sampling: `data_io/prefix_config_dfm.yaml` repeats
+    `oliverkinch_instruct_bt__` 5 times because the dataset is small.
 - `oliverkinch/multi-wiki-qa-high-quality-subset`
   - Status: include
   - Conversion: `context + question` -> instruction; first answer text -> response

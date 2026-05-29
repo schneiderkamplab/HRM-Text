@@ -5,6 +5,7 @@ description = "HRM-Text pretraining, evaluation, and checkpoint conversion tooli
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "bert-score",
     "coolname",
     "datasets",
     "einops",

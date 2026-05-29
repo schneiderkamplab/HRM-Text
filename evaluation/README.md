@@ -6,6 +6,13 @@ Evaluation takes 1 GPU (assmuing 80 GiB VRAM). Lower batch_size when OOM issues 
 python -m evaluation.main ckpt_path="<CHECKPOINT_PATH>"
 ```
 
+Run a single benchmark:
+
+```bash
+python -m evaluation.main ckpt_path="<CHECKPOINT_PATH>" "run_only=[GovReport]"
+python -m evaluation.main ckpt_path="<CHECKPOINT_PATH>" "run_only=[NordjyllandNews]"
+```
+
 ## Baseline evaluation
 
 ```bash

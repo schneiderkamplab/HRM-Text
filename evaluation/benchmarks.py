@@ -2,10 +2,14 @@ from typing import Any, Optional, Callable
 import re
 from collections import defaultdict, Counter
 from dataclasses import dataclass
+from pathlib import Path
 
 from datasets import load_dataset, get_dataset_config_names
 from math_verify import parse, verify
 from lm_eval.tasks.drop.utils import process_results as drop_process_results, process_docs as drop_process_docs
+import pandas as pd
+from rouge_score import rouge_scorer, scoring
+from sacrebleu.metrics import BLEU, CHRF
 
 from utils.functions import last_boxed_only_string, compute_benchmark_micro_macro_avg
 
@@ -63,8 +67,10 @@ class GSM8k(BaseBenchmark):
         }
 
 class MATH(BaseBenchmark):
-    def __init__(self, split: str = "test"):
+    def __init__(self, split: str = "test", num_shards: int = 1, shard_index: int = 0):
         super().__init__()
+        assert num_shards >= 1, "num_shards must be >= 1"
+        assert 0 <= shard_index < num_shards, "shard_index must be in [0, num_shards)"
 
         for subset in get_dataset_config_names("EleutherAI/hendrycks_math"):
             dataset = load_dataset("EleutherAI/hendrycks_math", subset, split=split)
@@ -74,6 +80,16 @@ class MATH(BaseBenchmark):
 
                 self.prompts.append(item["problem"])  # type: ignore
                 self.ground_truths.append(label)
+
+        if num_shards > 1:
+            shard_prompts = []
+            shard_ground_truths = []
+            for index, (prompt, ground_truth) in enumerate(zip(self.prompts, self.ground_truths, strict=True)):
+                if index % num_shards == shard_index:
+                    shard_prompts.append(prompt)
+                    shard_ground_truths.append(ground_truth)
+            self.prompts = shard_prompts
+            self.ground_truths = shard_ground_truths
 
     def compute_metrics(self, generations: list[str]) -> dict:
         correct, invalid, total = 0, 0, len(generations)
@@ -128,6 +144,111 @@ class DROP(BaseBenchmark):
             "em": total_em / max(1, total),
             "f1": total_f1 / max(1, total)
         }
+
+# --- Summarization ---
+
+def _evenly_spaced(items: list[tuple[str, str]], max_samples: Optional[int]) -> list[tuple[str, str]]:
+    if max_samples is None or len(items) <= max_samples:
+        return items
+    assert max_samples > 0, "max_samples must be positive or None"
+    if max_samples == 1:
+        return [items[0]]
+
+    last_index = len(items) - 1
+    return [items[round(i * last_index / (max_samples - 1))] for i in range(max_samples)]
+
+
+def _summarization_metrics(generations: list[str], references: list[str]) -> dict:
+    scorer = rouge_scorer.RougeScorer(["rouge1", "rouge2", "rougeL", "rougeLsum"], use_stemmer=True)
+    aggregator = scoring.BootstrapAggregator()
+    predictions = [generation.strip() for generation in generations]
+
+    for prediction, reference in zip(predictions, references, strict=True):
+        aggregator.add_scores(scorer.score(reference, prediction))
+
+    rouge_result = aggregator.aggregate()
+    sacrebleu_references = [references]
+    bleu = BLEU(effective_order=True).corpus_score(predictions, sacrebleu_references).score
+    chrf3 = CHRF(beta=3, word_order=0).corpus_score(predictions, sacrebleu_references).score
+    chrf3pp = CHRF(beta=3, word_order=2).corpus_score(predictions, sacrebleu_references).score
+    return {
+        "n": len(generations),
+        "rouge1": float(rouge_result["rouge1"].mid.fmeasure),
+        "rouge2": float(rouge_result["rouge2"].mid.fmeasure),
+        "rougeL": float(rouge_result["rougeL"].mid.fmeasure),
+        "rougeLsum": float(rouge_result["rougeLsum"].mid.fmeasure),
+        "bleu": float(bleu),
+        "chrf3": float(chrf3),
+        "chrf3pp": float(chrf3pp),
+    }
+
+
+class GovReport(BaseBenchmark):
+    def __init__(self, split: str = "test"):
+        super().__init__()
+
+        dataset = load_dataset("ccdv/govreport-summarization", "document", split=split)
+        self.prompts = [
+            "Summarize the following government report.\n\n"
+            f"Report:\n{row['report']}\n\nSummary:"
+            for row in dataset
+        ]
+        self.ground_truths = [row["summary"] for row in dataset]
+
+    @property
+    def generation_overrides(self) -> dict:
+        return {
+            "condition": "direct",
+            "max_context": 4096,
+            "max_tokens": 512,
+            "batch_size": 2,
+        }
+
+    def compute_metrics(self, generations: list[str]) -> dict:
+        return _summarization_metrics(generations, self.ground_truths)
+
+
+class NordjyllandNews(BaseBenchmark):
+    def __init__(
+        self,
+        data_path: str = "data/downloads/datasets/danish_dynaword/data/nordjyllandnews/nordjyllandnews.parquet",
+        max_samples: Optional[int] = 1000,
+    ):
+        super().__init__()
+
+        pairs: list[tuple[str, str]] = []
+        for text in pd.read_parquet(Path(data_path), columns=["text"])["text"]:
+            if not isinstance(text, str) or "\n\nReferat:\n" not in text:
+                continue
+
+            article, summary = text.split("\n\nReferat:\n", 1)
+            if article.startswith("Lav et referat af nedenstående tekst:\n\nTekst:\n"):
+                article = article.split("\n\nTekst:\n", 1)[1]
+
+            article = article.strip()
+            summary = summary.strip()
+            if article and summary:
+                pairs.append((article, summary))
+
+        pairs = _evenly_spaced(pairs, max_samples)
+        self.prompts = [
+            "Lav et kort referat af nedenstående nyhedsartikel.\n\n"
+            f"Artikel:\n{article}\n\nReferat:"
+            for article, _ in pairs
+        ]
+        self.ground_truths = [summary for _, summary in pairs]
+
+    @property
+    def generation_overrides(self) -> dict:
+        return {
+            "condition": "direct",
+            "max_context": 4096,
+            "max_tokens": 128,
+            "batch_size": 8,
+        }
+
+    def compute_metrics(self, generations: list[str]) -> dict:
+        return _summarization_metrics(generations, self.ground_truths)
 
 # --- MMLU-Pro ---
 

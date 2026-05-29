@@ -1,0 +1,34 @@
+sets:
+  hrm_danish_ifeval_da_shard_0_of_4:
+    description: "IFEval DA shard 0/4."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=4, -T, shard_index=0]
+    args: &ifeval_args
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_ifeval_da_shard_1_of_4:
+    description: "IFEval DA shard 1/4."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=4, -T, shard_index=1]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_2_of_4:
+    description: "IFEval DA shard 2/4."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=4, -T, shard_index=2]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_3_of_4:
+    description: "IFEval DA shard 3/4."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=4, -T, shard_index=3]
+    args: *ifeval_args
