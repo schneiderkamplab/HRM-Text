@@ -1,0 +1,11 @@
+name: baselines.hrm1_nocarry_bp_warmup@OneLevelHierarchicalReasoningModel
+head: lm_head@LMHead
+
+half_layers: True  # Divide layers by 2 to match HRM2 recurrent-block depth.
+
+# HRM1 config. One token-aligned recurrent Transformer state; no hierarchy.
+cycles: 8
+
+bp_warmup_ratio: 0.2
+bp_min_steps: 1
+bp_max_steps: 8

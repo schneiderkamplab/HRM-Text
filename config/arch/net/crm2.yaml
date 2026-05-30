@@ -1,0 +1,16 @@
+name: baselines.crm2_latent_nocarry_bp_warmup@CompressedHierarchicalReasoningModel
+head: lm_head@LMHead
+
+half_layers: True
+
+# CRM2 config. Token-level L state plus compressed learned latent H slots.
+H_cycles: 2
+L_cycles: 3
+num_latents: 256
+latent_cross_attn_heads: 8
+H_override: {}
+L_override: {}
+
+bp_warmup_ratio: 0.2
+bp_min_steps: 2
+bp_max_steps: 5

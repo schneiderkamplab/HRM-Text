@@ -1,0 +1,19 @@
+name: baselines.crm3_latent_nocarry_bp_warmup@CompressedThreeLevelReasoningModel
+head: lm_head@LMHead
+
+third_layers: True  # Requires n_layers divisible by 3; use B/L/XXL or override n_layers.
+
+# CRM3 config. Token-level S plus compressed M/H latent slots.
+H_cycles: 2
+M_cycles: 2
+S_cycles: 2
+num_m_latents: 256
+num_h_latents: 64
+latent_cross_attn_heads: 8
+H_override: {}
+M_override: {}
+S_override: {}
+
+bp_warmup_ratio: 0.2
+bp_min_steps: 3
+bp_max_steps: 7

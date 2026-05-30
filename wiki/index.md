@@ -11,6 +11,7 @@ This wiki is the durable memory for the HRM-Text adaptation and data-preparation
 - [[pages/source-filtering]]: source filter policy and allow/deny patterns.
 - [[pages/download-convert-tokenize]]: concrete pipeline commands.
 - [[pages/original-l-reproduction]]: Sapient original-mix L-size reproduction run plan.
+- [[pages/model-architecture]]: current HRM two-level architecture and scheduling.
 - [[pages/open-issues]]: known blockers and unresolved decisions.
 
 ## Session Digests
