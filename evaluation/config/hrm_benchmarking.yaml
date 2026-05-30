@@ -16,6 +16,8 @@ benchmarks:
   - name: DROP
     generation_config:
       condition: "direct"
+  - name: GovReport
+  - name: NordjyllandNews
 
   # Few-shot MCQ
   - name: MMLU

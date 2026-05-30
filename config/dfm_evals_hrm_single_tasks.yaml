@@ -110,3 +110,71 @@ sets:
       - "4242"
       - --temperature
       - "0"
+
+  hrm_summarization_govreport:
+    description: "Single-task HRM summarization suite: GovReport."
+    tasks:
+      - name: dfm_evals/govreport
+        args:
+          - -T
+          - max_gen_toks=512
+          - -T
+          - include_bertscore=True
+          - -T
+          - bertscore_model=xlm-roberta-large
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_summarization_nordjyllandnews:
+    description: "Single-task HRM summarization suite: NordjyllandNews."
+    tasks:
+      - name: dfm_evals/nordjyllandnews
+        args:
+          - -T
+          - max_gen_toks=128
+          - -T
+          - include_bertscore=True
+          - -T
+          - bertscore_model=xlm-roberta-large
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_code_humaneval:
+    description: "Single-task HRM code suite: HumanEval."
+    tasks:
+      - name: dfm_evals/humaneval
+        args:
+          - -T
+          - sandbox=docker
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_code_humaneval_local:
+    description: "Single-task HRM code suite: HumanEval with local sandbox fallback."
+    tasks:
+      - name: dfm_evals/humaneval
+        args:
+          - -T
+          - sandbox=local
+    args:
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"

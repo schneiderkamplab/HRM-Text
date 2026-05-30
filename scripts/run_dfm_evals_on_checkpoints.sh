@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DFM_EVALS_DIR="${DFM_EVALS_DIR:-${REPO_ROOT}/external/dfm-evals}"
+DFM_EVALS_DIR="${DFM_EVALS_DIR:-${REPO_ROOT}/dfm-evals}"
 CKPT_PATH="${CKPT_PATH:-${REPO_ROOT}/checkpoints/original_sapient/L}"
 EPOCHS="${EPOCHS:-1 2 3 4}"
 GPU="${GPU:-0}"
@@ -33,7 +33,7 @@ usage() {
 Run dfm-evals against HRM checkpoints through the local OpenAI-compatible shim.
 
 Environment overrides:
-  DFM_EVALS_DIR     default: external/dfm-evals
+  DFM_EVALS_DIR     default: dfm-evals
   CKPT_PATH         default: checkpoints/original_sapient/L
   EPOCHS            default: "1 2 3 4"
   GPU               default: 0
@@ -53,7 +53,7 @@ Environment overrides:
   FINAL_WANDB_SYNC  default: 0; set 1 to log all epoch metrics again at the end
   JUDGE_MODEL       optional; required by judge-scored tasks such as generative-talemaader
   JUDGE_BASE_URL    optional; base URL for judge model when needed
-  INSTALL=1         run `uv sync --project external/dfm-evals` first
+  INSTALL=1         run `uv sync --project dfm-evals` first
 
 Extra arguments after -- are forwarded to `evals suite`.
 

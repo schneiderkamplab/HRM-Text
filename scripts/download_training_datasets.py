@@ -199,11 +199,11 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         gated=True,
     ),
     HFDataset(
-        name="synquid_wildchat_100k_qwen",
-        repo_id="synquid/wildchat-100k-qwen",
+        name="synquid_wildchat_100k_qwen_messages",
+        repo_id="synquid/wildchat-100k-qwen-messages",
         groups=("danish", "instruction", "synquid"),
-        allow_patterns=("data/train.jsonl", "README.md"),
-        note="Gated generated responses for WildChat prompts.",
+        allow_patterns=("data/train.jsonl", "README.md", "metadata/**/*.json"),
+        note="Gated generated responses for WildChat prompts in messages format; include with a tight cap.",
         gated=True,
     ),
 

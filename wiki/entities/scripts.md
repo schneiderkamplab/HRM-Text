@@ -301,11 +301,39 @@ python -m py_compile scripts/sync_completed_dfm_evals.py
 
 ## `scripts/run_dfm_evals_on_checkpoints.sh`
 
+DFM eval runner for HRM checkpoints.
+
+Current task note, 2026-05-28:
+
+- `hrm_code_humaneval` is available in `config/dfm_evals_hrm_single_tasks.yaml`.
+- It routes to `dfm_evals/humaneval`, which uses `inspect-evals` HumanEval and
+  executes generated Python in a Docker sandbox by default.
+
+Example command shape:
+
+```bash
+cd /work/dfm/HRM-Text
+CKPT_PATH=checkpoints/original_plus_mixed_danish_instruction_rich/L \
+EPOCHS="4" \
+GPU=0 \
+MODEL_PREFIX=hrm-original-plus-mixed-L \
+SUITE_FILE=config/dfm_evals_hrm_single_tasks.yaml \
+SUITE=hrm_code_humaneval \
+LOG_ROOT=logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_humaneval \
+WANDB_RUN_ID=es1od1in \
+WANDB_RUN_NAME=original-plus-mixed-danish-instruction-rich-L \
+FINAL_WANDB_SYNC=1 \
+scripts/run_dfm_evals_on_checkpoints.sh
+```
+
+Confidence: high for registration and command shape; medium for full execution
+until Docker/sandbox availability is verified on the target node.
+
 End-to-end wrapper for dfm-evals on HRM checkpoints.
 
 Responsibilities:
 
-- use or clone `external/dfm-evals`
+- use or clone `dfm-evals`
 - start `scripts/hrm_openai_server.py` for each requested checkpoint epoch
 - run a dfm-evals suite against the shim as an `openai/<model>` endpoint
 - pass `--max-connections` to Inspect so concurrent sample requests can be micro-batched by the shim
