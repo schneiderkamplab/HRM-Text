@@ -1,4 +1,3 @@
-import os
 from dataclasses import dataclass
 
 import torch
@@ -6,7 +5,6 @@ from torch import Tensor
 
 __all__ = [
     "PrefixLMSeqInfo",
-    "env_int",
     "prefixlm_seq_info_from_tensors",
     "prefixlm_sequence_indices",
 ]
@@ -23,19 +21,6 @@ class PrefixLMSeqInfo:
     causal_lens: Tensor
     cu_seqlens: Tensor
     cu_seqlens_shifted: Tensor
-
-
-def env_int(name: str, default: int) -> int:
-    value = os.environ.get(name)
-    if value is None:
-        return default
-    try:
-        parsed = int(value)
-    except ValueError as exc:
-        raise ValueError(f"{name} must be an integer, got {value!r}.") from exc
-    if parsed <= 0:
-        raise ValueError(f"{name} must be positive, got {parsed}.")
-    return parsed
 
 
 def prefixlm_seq_info_from_tensors(

@@ -5,7 +5,7 @@ from typing import Any
 import torch
 from torch import Tensor
 
-from models.flash_attention_prefixlm_common import env_int, prefixlm_seq_info_from_tensors
+from models.flash_attention_prefixlm_common import prefixlm_seq_info_from_tensors
 
 __all__ = [
     "flash_attn_varlen_prefixlm_mps",
@@ -20,12 +20,6 @@ __all__ = [
     "flash_attn_varlen_prefixlm_mps_simd32_forward",
     "flash_attn_varlen_prefixlm_mps_tiled_forward",
 ]
-
-
-_DEFAULT_MAX_TEST_TOKENS = 256
-_DEFAULT_MAX_TEST_SEQS = 8
-_DEFAULT_MAX_TEST_HEADS = 4
-_DEFAULT_MAX_TEST_HEAD_DIM = 64
 
 
 _MPS_PREFIXLM_SHADER = r"""
@@ -1379,27 +1373,6 @@ def _matmulblock_forward_hdim128_q2_k8_l32_geometry(total_seqlen: int, num_heads
     return (groups * dot_lanes, k_block, q_block), (dot_lanes, k_block, q_block)
 
 
-def _validate_test_shape(total_seqlen: int, numseqs: int, num_heads: int, head_dim: int) -> None:
-    max_tokens = env_int("HRM_EXPERIMENTAL_MPS_MAX_TOKENS", _DEFAULT_MAX_TEST_TOKENS)
-    max_seqs = env_int("HRM_EXPERIMENTAL_MPS_MAX_SEQS", _DEFAULT_MAX_TEST_SEQS)
-    max_heads = env_int("HRM_EXPERIMENTAL_MPS_MAX_HEADS", _DEFAULT_MAX_TEST_HEADS)
-    max_head_dim = env_int("HRM_EXPERIMENTAL_MPS_MAX_HEAD_DIM", _DEFAULT_MAX_TEST_HEAD_DIM)
-
-    limits = {
-        "tokens": (total_seqlen, max_tokens),
-        "sequences": (numseqs, max_seqs),
-        "heads": (num_heads, max_heads),
-        "head_dim": (head_dim, max_head_dim),
-    }
-    exceeded = [f"{name}={actual} > {limit}" for name, (actual, limit) in limits.items() if actual > limit]
-    if exceeded:
-        raise RuntimeError(
-            "Experimental MPS PrefixLM kernel is limited to tiny standalone tests by default; "
-            f"shape exceeds configured caps: {', '.join(exceeded)}. "
-            "Increase HRM_EXPERIMENTAL_MPS_MAX_* only for isolated kernel tests, not full training."
-        )
-
-
 class _MPSPrefixLMAttention(torch.autograd.Function):
     @staticmethod
     def forward(
@@ -1418,7 +1391,6 @@ class _MPSPrefixLMAttention(torch.autograd.Function):
             raise TypeError("MPS PrefixLM attention currently supports float32 tensors only.")
         if q.shape != k.shape or q.shape != v.shape:
             raise ValueError("MPS PrefixLM attention currently requires q, k, and v to have identical shapes.")
-        _validate_test_shape(total_seqlen, numseqs, q.shape[1], q.shape[2])
 
         q = q.contiguous()
         k = k.contiguous()

@@ -229,7 +229,12 @@ HRM-Text/
 
 - [`dataset_new.py`](dataset_new.py) loads sampled `tokens.npy` and per-epoch index arrays, builds PrefixLM batches, masks instruction tokens by default, and emits FlashAttention sequence metadata.
 - [`multipack_sampler.py`](multipack_sampler.py) implements distributed multipack batching with LPT allocation to improve token-slot utilization and balance quadratic attention work.
-- [`models/flash_attention_prefixlm_v2.py`](models/flash_attention_prefixlm_v2.py) implements the two-pass PrefixLM attention path: one bidirectional pass over the prefix region and one causal pass over the response region.
+- [`models/flash_attention_prefixlm_v2.py`](models/flash_attention_prefixlm_v2.py) keeps the original SM90/H100 two-pass PrefixLM attention implementation, with one bidirectional pass over the prefix region and one causal pass over the response region, and dispatches non-SM90 accelerators through `models/flash_attention_prefixlm_dispatch.py`.
+- [`models/flash_attention_prefixlm_dispatch.py`](models/flash_attention_prefixlm_dispatch.py) routes PrefixLM attention to the SM100, MPS, CPU, or dense backend when `flash_attention_prefixlm_v2.py` is not using its local SM90 path.
+- [`models/flash_attention_prefixlm_fa4.py`](models/flash_attention_prefixlm_fa4.py) implements the SM100/B200 FlashAttention 4 PrefixLM backend.
+- [`models/flash_attention_prefixlm_dense.py`](models/flash_attention_prefixlm_dense.py) implements the dense PyTorch SDPA PrefixLM fallback for CPU and unsupported MPS tensor shapes.
+- [`models/flash_attention_prefixlm_mps.py`](models/flash_attention_prefixlm_mps.py) implements the custom Metal PrefixLM attention kernels used for supported MPS float32 tensors.
+- [`models/flash_attention_prefixlm_common.py`](models/flash_attention_prefixlm_common.py) contains shared PrefixLM sequence metadata helpers used by the backend implementations.
 - [`models/layers.py`](models/layers.py) contains RoPE, gated multi-head attention, SwiGLU MLPs, static KV cache helpers, and initialization utilities.
 - [`models/baselines/hrm_nocarry_bp_warmup.py`](models/baselines/hrm_nocarry_bp_warmup.py) contains the main HRM-Text architecture.
 - [`models/lm_head.py`](models/lm_head.py) attaches scaled embeddings, the output head, cross-entropy loss, token accuracy, and sequence exact accuracy.

@@ -45,15 +45,17 @@ Base `pyproject.toml` dependencies no longer install `torch`, FlashAttention, `v
 - `models/accelerator.py`
   - owns the process-local accelerator selector.
 - `models/flash_attention_prefixlm_v2.py`
-  - dispatches PrefixLM attention to backend modules and keeps the public `compute_aux_seq_tensors_scalars` entrypoint used by the dataset.
-- `models/flash_attention_prefixlm_fa3.py`
-  - preserves the original H100/FA3 custom-op implementation from commit `00b4fe5`.
+  - keeps the original SM90/H100 FA3 PrefixLM implementation from commit `00b4fe5` in the historical public module.
+  - adds only a thin accelerator check at the public `flash_attn_varlen_prefixlm` entrypoint; non-SM90 backends are delegated to `models/flash_attention_prefixlm_dispatch.py`.
+  - keeps the `compute_aux_seq_tensors_scalars` entrypoint used by the dataset.
+- `models/flash_attention_prefixlm_dispatch.py`
+  - owns accelerator dispatch for SM100, MPS, CPU, and dense fallback implementations.
 - `models/flash_attention_prefixlm_fa4.py`
   - owns the SM100/B200 FlashAttention 4/CUTE PrefixLM implementation.
 - `models/flash_attention_prefixlm_dense.py`
-  - owns the dense PyTorch SDPA PrefixLM fallback used by `mps`, `cpu`, and `none` unless the experimental MPS kernel is explicitly enabled.
+  - owns the dense PyTorch SDPA PrefixLM fallback used by `mps`, `cpu`, and `none` when the Metal kernel does not support the current tensors.
 - `models/flash_attention_prefixlm_common.py`
-  - owns shared PrefixLM sequence metadata unpacking, active tensor slicing, shifted cu-seqlens construction, sequence-index construction, and positive integer environment parsing.
+  - owns shared PrefixLM sequence metadata unpacking, active tensor slicing, shifted cu-seqlens construction, and sequence-index construction.
 
 - `models/layers.py`
   - removed `flash_attn_with_kvcache`
@@ -75,14 +77,32 @@ Earlier verified:
 Refactor verification on 2026-05-26:
 
 ```bash
-python -m py_compile models/flash_attention_prefixlm_common.py models/flash_attention_prefixlm_v2.py models/flash_attention_prefixlm_fa3.py models/flash_attention_prefixlm_fa4.py models/flash_attention_prefixlm_dense.py models/flash_attention_prefixlm_mps.py
+python -m py_compile models/flash_attention_prefixlm_common.py models/flash_attention_prefixlm_v2.py models/flash_attention_prefixlm_fa4.py models/flash_attention_prefixlm_dense.py models/flash_attention_prefixlm_mps.py
 ```
 
 Also verified a tiny CPU dense PrefixLM forward/backward smoke through `models.flash_attention_prefixlm_v2.flash_attn_varlen_prefixlm`; outputs and gradients were finite. Confidence: high.
 
 After regenerating `/private/tmp/hrm_tiny_sampled`, a one-step `scripts/debug_nan_training_step.py` CPU smoke also completed with finite loss, metric tensors, gradients, parameters, and post-optimizer parameters. Confidence: high.
 
-Later on 2026-05-26, the SM100/FA4 implementation moved out of `models/flash_attention_prefixlm_v2.py` into `models/flash_attention_prefixlm_fa4.py`, and the dense fallback moved into `models/flash_attention_prefixlm_dense.py`, leaving `v2` primarily as the accelerator dispatcher. Re-ran the same `py_compile`, dispatcher dense PrefixLM forward/backward smoke, and one-step CPU training smoke successfully. Confidence: high.
+Later on 2026-05-26, the SM100/FA4 implementation moved out of `models/flash_attention_prefixlm_v2.py` into `models/flash_attention_prefixlm_fa4.py`, and the dense fallback moved into `models/flash_attention_prefixlm_dense.py`.
+
+Refactor update on 2026-05-29: accelerator selection moved from `models/flash_attention_prefixlm_v2.py` into `models/flash_attention_prefixlm_dispatch.py`. `v2` now remains a stable public compatibility module for `dataset_new.py`, `models/layers.py`, and debug scripts, while backend policy lives in the dispatcher. Verified with:
+
+```bash
+python -m py_compile models/flash_attention_prefixlm_v2.py models/flash_attention_prefixlm_dispatch.py models/flash_attention_prefixlm_fa4.py models/flash_attention_prefixlm_dense.py
+```
+
+Also verified a tiny CPU dense PrefixLM forward/backward smoke through `models.flash_attention_prefixlm_v2.flash_attn_varlen_prefixlm`; outputs and gradients were finite. Confidence: high.
+
+SM90 layout update on 2026-05-29: the original H100/FA3 implementation was moved back into `models/flash_attention_prefixlm_v2.py` to minimize drift from commit `00b4fe5`. The separate `models/flash_attention_prefixlm_fa3.py` backend file was removed. `v2` now dispatches to `models.flash_attention_prefixlm_dispatch.flash_attn_varlen_prefixlm` only when `accelerator_type != "sm90"`. The FA3 import is lazy-safe so CPU/MPS/SM100 environments without `flash_attn_interface` can still import `v2`; attempting the SM90 path without FlashAttention 3 raises an explicit ImportError. Verified with:
+
+```bash
+python -m py_compile models/flash_attention_prefixlm_v2.py models/flash_attention_prefixlm_dispatch.py models/flash_attention_prefixlm_fa4.py models/flash_attention_prefixlm_dense.py models/flash_attention_prefixlm_mps.py
+```
+
+Also verified a tiny CPU dense PrefixLM forward/backward smoke through the `v2` public entrypoint; outputs and gradients were finite. Confidence: high.
+
+MPS dispatch update on 2026-05-29: the Metal PrefixLM path no longer uses environment variables for opt-in or shape caps. For `accelerator_type=mps`, the dispatcher now chooses the Metal kernel dynamically when the actual attention tensors are on MPS, are `float32`, and have matching `q/k/v` shapes; otherwise it falls back to dense SDPA. The raw MPS kernel still validates dtype and shape internally. Debug scripts compare dense vs custom by temporarily switching the process-local `accelerator_type`, not by mutating environment variables. Confidence: high.
 
 MPS bf16 update on 2026-05-26: `pretrain.py` no longer rewrites `fwd_bwd_dtype=bfloat16` to `float32` for `mps`/`cpu`/`none`. Instead, `TrainState` records the resolved forward/backward dtype and non-CUDA train steps use `torch.autocast(device_type=..., dtype=...)` when that dtype is not float32. This keeps parameters in fp32 while allowing bf16 forward/backward activations on supported CPU/MPS operations. Verified outside the sandbox on the M2 Max with `torch==2.13.0.dev20260524`: bf16 MPS matmul works, dense PrefixLM bf16 forward/backward on `mps:0` works, and a 3-step MPS training smoke with `fwd_bwd_dtype=bfloat16` completed with finite losses, metric tensors, gradients, parameters, and post-optimizer parameters. Confidence: high for the tiny smoke; larger XS/S/B runs still need memory/performance validation.
 
@@ -254,6 +274,8 @@ HRM_EXPERIMENTAL_MPS_MAX_HEAD_DIM=64
 ```
 
 Only raise these caps in isolated kernel tests, not full training runs. A tiny standalone parity harness was added:
+
+Superseded on 2026-05-29: this environment-variable cap mechanism was removed. Current MPS dispatch is tensor-driven as described in the 2026-05-29 MPS dispatch update above. Confidence: high.
 
 ```bash
 /Users/petersk/Nobackup/miniconda3/bin/conda run -n hrm python scripts/debug_mps_prefixlm_kernel.py --seqs 2 --prefix-len 4 --causal-len 4 --heads 2 --head-dim 32

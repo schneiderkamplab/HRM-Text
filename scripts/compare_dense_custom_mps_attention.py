@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 import sys
 from contextlib import contextmanager
 from pathlib import Path
@@ -15,7 +14,7 @@ from hydra import compose, initialize
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from models.accelerator import set_accelerator_type, torch_device_for_accelerator
+from models.accelerator import get_accelerator_type, set_accelerator_type, torch_device_for_accelerator
 from models.common import IGNORE_LABEL_ID, wrap_tensor
 from pretrain import (
     PretrainConfig,
@@ -39,19 +38,13 @@ def parse_args() -> argparse.Namespace:
 
 
 @contextmanager
-def experimental_mps_kernel(enabled: bool) -> Iterator[None]:
-    previous = os.environ.get("HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL")
-    if enabled:
-        os.environ["HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL"] = "1"
-    else:
-        os.environ.pop("HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL", None)
+def attention_backend(use_custom_mps: bool) -> Iterator[None]:
+    previous = get_accelerator_type()
+    set_accelerator_type("mps" if use_custom_mps else "cpu")
     try:
         yield
     finally:
-        if previous is None:
-            os.environ.pop("HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL", None)
-        else:
-            os.environ["HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL"] = previous
+        set_accelerator_type(previous)
 
 
 def clone_state_dict(module: torch.nn.Module) -> dict[str, torch.Tensor]:
@@ -100,7 +93,7 @@ def run_forward_backward(
     total_supervised = torch.stack(counts).sum().clamp_min(1.0)
     metrics: dict[str, tuple[torch.Tensor, torch.Tensor]] = {}
     losses = []
-    with experimental_mps_kernel(use_custom):
+    with attention_backend(use_custom):
         for batch, count in zip(batches, counts):
             train_state.carry, loss, batch_metrics = train_state.model(batch=batch, carry=train_state.carry, **extra_args)
             (loss * (count / total_supervised)).backward()
@@ -117,7 +110,7 @@ def run_forward_backward(
 @torch.no_grad()
 def run_logits(train_state: TrainState, batch: dict[str, torch.Tensor], extra_args: dict, use_custom: bool) -> torch.Tensor:
     batch_without_labels = {name: value for name, value in batch.items() if name != "labels"}
-    with experimental_mps_kernel(use_custom):
+    with attention_backend(use_custom):
         _carry, logits = train_state.model(batch=batch_without_labels, carry=train_state.carry, **extra_args)
     return logits.detach()
 

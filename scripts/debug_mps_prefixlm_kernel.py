@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import gc
-import os
 import sys
 import time
 from pathlib import Path
@@ -16,7 +15,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from models.accelerator import set_accelerator_type
+from models.accelerator import get_accelerator_type, set_accelerator_type
 from models.flash_attention_prefixlm_mps import (
     flash_attn_varlen_prefixlm_mps,
     flash_attn_varlen_prefixlm_mps_backward_context,
@@ -88,14 +87,14 @@ def _run_dense(
     q = _clone_for_grad(q_base)
     k = _clone_for_grad(k_base)
     v = _clone_for_grad(v_base)
-    old_enabled = os.environ.pop("HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL", None)
+    old_accelerator = get_accelerator_type()
+    set_accelerator_type("cpu")
     try:
         out = flash_attn_varlen_prefixlm(q, k, v, is_causal, **aux)
         loss = out.square().mean()
         loss.backward()
     finally:
-        if old_enabled is not None:
-            os.environ["HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL"] = old_enabled
+        set_accelerator_type(old_accelerator)
     return out, q.grad, k.grad, v.grad
 
 
@@ -106,13 +105,13 @@ def _run_dense_forward(
     is_causal: bool,
     aux: dict[str, torch.Tensor],
 ) -> torch.Tensor:
-    old_enabled = os.environ.pop("HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL", None)
+    old_accelerator = get_accelerator_type()
+    set_accelerator_type("cpu")
     try:
         with torch.no_grad():
             return flash_attn_varlen_prefixlm(q_base, k_base, v_base, is_causal, **aux)
     finally:
-        if old_enabled is not None:
-            os.environ["HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL"] = old_enabled
+        set_accelerator_type(old_accelerator)
 
 
 def _prepare_dense_backward(
@@ -125,13 +124,13 @@ def _prepare_dense_backward(
     q = _clone_for_grad(q_base)
     k = _clone_for_grad(k_base)
     v = _clone_for_grad(v_base)
-    old_enabled = os.environ.pop("HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL", None)
+    old_accelerator = get_accelerator_type()
+    set_accelerator_type("cpu")
     try:
         out = flash_attn_varlen_prefixlm(q, k, v, is_causal, **aux)
         return out.square().mean()
     finally:
-        if old_enabled is not None:
-            os.environ["HRM_ENABLE_EXPERIMENTAL_MPS_KERNEL"] = old_enabled
+        set_accelerator_type(old_accelerator)
 
 
 def _run_kernel(
@@ -365,11 +364,6 @@ def main() -> None:
     prefix_lens = np.full(args.seqs, args.prefix_len, dtype=np.int32)
     causal_lens = np.full(args.seqs, args.causal_len, dtype=np.int32)
     total_tokens = int((prefix_lens + causal_lens).sum())
-
-    os.environ["HRM_EXPERIMENTAL_MPS_MAX_TOKENS"] = str(max(total_tokens, 1))
-    os.environ["HRM_EXPERIMENTAL_MPS_MAX_SEQS"] = str(args.seqs)
-    os.environ["HRM_EXPERIMENTAL_MPS_MAX_HEADS"] = str(args.heads)
-    os.environ["HRM_EXPERIMENTAL_MPS_MAX_HEAD_DIM"] = str(args.head_dim)
 
     device = torch.device("mps")
     generator = torch.Generator(device="cpu").manual_seed(args.seed)
