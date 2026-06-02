@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Literal, Optional
 from dataclasses import dataclass
 from pathlib import Path
 import json
@@ -11,7 +11,13 @@ import shutil
 import torch
 import torch.distributed as dist
 import torch.distributed.checkpoint as dcp
-from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict, set_state_dict
+from torch.distributed.checkpoint.state_dict import (
+    StateDictOptions,
+    get_model_state_dict,
+    get_optimizer_state_dict,
+    set_state_dict,
+)
+from torch.nn.parallel import DistributedDataParallel
 from torch.distributed.fsdp import fully_shard, FSDPModule, MixedPrecisionPolicy
 from torch import Tensor, nn
 from torch.utils.data import DataLoader
@@ -73,6 +79,8 @@ class PretrainConfig(pydantic.BaseModel):
     ema: Optional[float] = None
     fwd_bwd_dtype: str = "bfloat16"
     accelerator_type: AcceleratorType = "sm100"
+    distributed_strategy: Literal["fsdp", "ddp", "none"] = "fsdp"
+    ddp_find_unused_parameters: bool = True
     compile_train_batch: bool = True
     memory_log_interval: int = 0
     empty_cache_interval: int = 0
@@ -83,6 +91,7 @@ class PretrainConfig(pydantic.BaseModel):
     wandb_run_id: Optional[str] = None
     wandb_resume: Optional[str] = None
     checkpoint_path: Optional[str] = None
+    checkpoint_format: Literal["sharded", "unsharded"] = "sharded"
     resume_checkpoint_path: Optional[str] = None
     resume_checkpoint_tag: Optional[str] = None
     resume_epoch: Optional[int] = None
@@ -167,6 +176,16 @@ def apply_fsdp(module: nn.Module, param_dtype: torch.dtype):
     module.set_force_sum_reduction_for_comms(True)
 
 
+def unwrap_model(model: nn.Module) -> nn.Module:
+    if isinstance(model, DistributedDataParallel):
+        return model.module
+    return model
+
+
+def compute_train_extra_args(model: nn.Module, train_state: TrainState) -> dict:
+    return unwrap_model(model).compute_train_extra_args(train_state)  # pyright: ignore[reportCallIssue, reportAttributeAccessIssue]
+
+
 def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta, local_batch_size: int, device: torch.device):
     model_cfg = config.arch.model_dump() | train_metadata.model_dump() | config.data.model_dump() | {"fwd_bwd_dtype": config.fwd_bwd_dtype}
     fwd_bwd_dtype = getattr(torch, config.fwd_bwd_dtype)
@@ -181,18 +200,34 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
         # Attach loss head
         model = head_cls(model, model_cfg)
 
-    # ----FSDP----
     if dist.is_available() and dist.is_initialized():
-        # Broadcast buffers
-        for buffer in model.buffers():
-            dist.broadcast(buffer, src=0)
+        if config.distributed_strategy == "fsdp":
+            # Broadcast buffers
+            for buffer in model.buffers():
+                dist.broadcast(buffer, src=0)
 
-        # Detect TransformerBlock recursively and apply FSDP
-        for module in model.modules():
-            if isinstance(module, TransformerBlock):
-                apply_fsdp(module, fwd_bwd_dtype)
+            # Detect TransformerBlock recursively and apply FSDP
+            for module in model.modules():
+                if isinstance(module, TransformerBlock):
+                    apply_fsdp(module, fwd_bwd_dtype)
 
-        apply_fsdp(model, fwd_bwd_dtype)
+            apply_fsdp(model, fwd_bwd_dtype)
+        elif config.distributed_strategy == "ddp":
+            if device.type != "cuda":
+                raise RuntimeError("distributed_strategy=ddp is currently only supported for CUDA torchrun jobs")
+            model = model.to(dtype=fwd_bwd_dtype)
+            model = DistributedDataParallel(
+                model,
+                device_ids=[device.index],
+                output_device=device.index,
+                find_unused_parameters=config.ddp_find_unused_parameters,
+            )
+        elif config.distributed_strategy == "none":
+            pass
+        else:
+            raise ValueError(f"Unsupported distributed_strategy: {config.distributed_strategy}")
+    elif config.distributed_strategy not in ("fsdp", "none"):
+        raise RuntimeError(f"distributed_strategy={config.distributed_strategy} requires torchrun/distributed training")
 
     # ----Create optimizer----
     optim = AdamATan2(model.parameters(),
@@ -255,6 +290,8 @@ def update_lr(config: PretrainConfig, train_state: TrainState) -> float:
 def normalize_checkpoint_tag(tag: str) -> str:
     if tag.startswith("fsdp2_"):
         tag = tag.removeprefix("fsdp2_")
+    elif tag.startswith("unsharded_"):
+        tag = tag.removeprefix("unsharded_")
     elif tag.startswith("carry_"):
         tag = tag.removeprefix("carry_")
     if os.path.basename(tag) != tag:
@@ -309,22 +346,17 @@ def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank:
         return None
 
     assert config.resume_checkpoint_path is not None
-    checkpoint_id = os.path.join(config.resume_checkpoint_path, f"fsdp2_{resume_state.tag}")
     carry_path = os.path.join(config.resume_checkpoint_path, f"carry_{resume_state.tag}.{rank}.pt")
-    if not os.path.isdir(checkpoint_id):
-        raise ValueError(f"Checkpoint directory not found: {checkpoint_id}")
     if not os.path.isfile(carry_path):
         raise ValueError(f"Carry file not found: {carry_path}")
 
-    model_state = train_state.model.state_dict()
-    optim_state = get_optimizer_state_dict(train_state.model, train_state.optim)  # pyright: ignore[reportPrivateImportUsage]
-    dcp.load({"model": model_state, "optim": optim_state}, checkpoint_id=checkpoint_id)
-    set_state_dict(
-        train_state.model,
-        train_state.optim,
-        model_state_dict=model_state,
-        optim_state_dict=optim_state,
-    )
+    if config.checkpoint_format == "sharded":
+        load_sharded_train_state(config, train_state, resume_state.tag)
+    elif config.checkpoint_format == "unsharded":
+        load_unsharded_train_state(config, train_state, resume_state.tag, rank)
+    else:
+        raise ValueError(f"Unsupported checkpoint_format: {config.checkpoint_format}")
+
     train_state.carry = torch.load(carry_path, map_location="cuda")
     if resume_state.step >= 0:
         train_state.step = resume_state.step
@@ -335,6 +367,84 @@ def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank:
     else:
         raise ValueError(f"Cannot infer resume step for checkpoint tag {resume_state.tag}")
     return resume_state
+
+
+def sharded_checkpoint_id(checkpoint_path: str, tag: str) -> str:
+    return os.path.join(checkpoint_path, f"fsdp2_{tag}")
+
+
+def unsharded_checkpoint_path(checkpoint_path: str, tag: str) -> str:
+    return os.path.join(checkpoint_path, f"unsharded_{tag}.pt")
+
+
+def load_sharded_train_state(config: PretrainConfig, train_state: TrainState, tag: str):
+    assert config.resume_checkpoint_path is not None
+    checkpoint_id = sharded_checkpoint_id(config.resume_checkpoint_path, tag)
+    if not os.path.isdir(checkpoint_id):
+        raise ValueError(f"Checkpoint directory not found: {checkpoint_id}")
+
+    model_state = train_state.model.state_dict()
+    optim_state = get_optimizer_state_dict(train_state.model, train_state.optim)  # pyright: ignore[reportPrivateImportUsage]
+    dcp.load({"model": model_state, "optim": optim_state}, checkpoint_id=checkpoint_id)
+    set_state_dict(
+        train_state.model,
+        train_state.optim,
+        model_state_dict=model_state,
+        optim_state_dict=optim_state,
+    )
+
+
+def load_unsharded_train_state(config: PretrainConfig, train_state: TrainState, tag: str, rank: int):
+    assert config.resume_checkpoint_path is not None
+    checkpoint_path = unsharded_checkpoint_path(config.resume_checkpoint_path, tag)
+    if not os.path.isfile(checkpoint_path):
+        raise ValueError(f"Checkpoint file not found: {checkpoint_path}")
+
+    if dist.is_available() and dist.is_initialized():
+        checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False) if rank == 0 else {}
+        options = StateDictOptions(
+            full_state_dict=True,
+            cpu_offload=True,
+            broadcast_from_rank0=True,
+        )
+        set_state_dict(
+            train_state.model,
+            train_state.optim,
+            model_state_dict=checkpoint.get("model", {}),
+            optim_state_dict=checkpoint.get("optim", {}),
+            options=options,
+        )
+    else:
+        checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+        train_state.model.load_state_dict(checkpoint["model"])
+        train_state.optim.load_state_dict(checkpoint["optim"])
+
+
+def save_sharded_train_state(config: PretrainConfig, train_state: TrainState, tag: str):
+    assert config.checkpoint_path is not None
+    if dist.is_available() and dist.is_initialized():
+        dcp.save({"model": train_state.model.state_dict(), "optim": get_optimizer_state_dict(train_state.model, train_state.optim)},  # pyright: ignore[reportPrivateImportUsage]
+                 checkpoint_id=sharded_checkpoint_id(config.checkpoint_path, tag))
+    else:
+        torch.save({"model": train_state.model.state_dict(), "optim": train_state.optim.state_dict()}, os.path.join(config.checkpoint_path, f"{tag}.pt"))
+
+
+def save_unsharded_train_state(config: PretrainConfig, train_state: TrainState, tag: str, rank: int):
+    assert config.checkpoint_path is not None
+    if dist.is_available() and dist.is_initialized():
+        options = StateDictOptions(full_state_dict=True, cpu_offload=True)
+        model_state = get_model_state_dict(train_state.model, options=options)
+        optim_state = get_optimizer_state_dict(train_state.model, train_state.optim, options=options)  # pyright: ignore[reportPrivateImportUsage]
+        if rank == 0:
+            torch.save(
+                {"model": model_state, "optim": optim_state},
+                unsharded_checkpoint_path(config.checkpoint_path, tag),
+            )
+    else:
+        torch.save(
+            {"model": train_state.model.state_dict(), "optim": train_state.optim.state_dict()},
+            unsharded_checkpoint_path(config.checkpoint_path, tag),
+        )
 
 
 @torch.compile(dynamic=False)
@@ -456,6 +566,7 @@ def save_checkpoint_metadata(config: PretrainConfig, train_state: TrainState, ta
 
     metadata = {
         "tag": tag,
+        "checkpoint_format": config.checkpoint_format,
         "step": train_state.step,
         "epoch": epoch,
         "batch_in_epoch": batch_in_epoch,
@@ -472,11 +583,13 @@ def save_train_checkpoint(config: PretrainConfig, train_state: TrainState, tag: 
     if config.checkpoint_path is None:
         return
 
-    if dist.is_available() and dist.is_initialized():
-        dcp.save({"model": train_state.model.state_dict(), "optim": get_optimizer_state_dict(train_state.model, train_state.optim)},  # pyright: ignore[reportPrivateImportUsage]
-                 checkpoint_id=os.path.join(config.checkpoint_path, f"fsdp2_{tag}"))
+    if config.checkpoint_format == "sharded":
+        save_sharded_train_state(config, train_state, tag)
+    elif config.checkpoint_format == "unsharded":
+        save_unsharded_train_state(config, train_state, tag, rank)
     else:
-        torch.save({"model": train_state.model.state_dict(), "optim": train_state.optim.state_dict()}, os.path.join(config.checkpoint_path, f"{tag}.pt"))
+        raise ValueError(f"Unsupported checkpoint_format: {config.checkpoint_format}")
+
     # Save carry on all ranks
     torch.save(train_state.carry, os.path.join(config.checkpoint_path, f"carry_{tag}.{rank}.pt"))
     if dist.is_available() and dist.is_initialized():
@@ -579,7 +692,7 @@ def launch(hydra_config: DictConfig):
         train_loader.dataset.set_epoch(start_epoch - 1)
         if RANK == 0:
             print(
-                f"Resumed from {config.resume_checkpoint_path}/fsdp2_{resume_state.tag}: "
+                f"Resumed from {config.resume_checkpoint_path} ({config.checkpoint_format}:{resume_state.tag}): "
                 f"step={train_state.step}, start_epoch={start_epoch}, skip_batches={skip_batches}",
                 flush=True,
             )
@@ -622,7 +735,7 @@ def launch(hydra_config: DictConfig):
             train_state.step += 1            
             lr = update_lr(config, train_state)
             # Extra train arguments (such as BP warmup etc.)
-            train_extra_args = train_state.model.compute_train_extra_args(train_state)  # pyright: ignore[reportCallIssue]
+            train_extra_args = compute_train_extra_args(train_state.model, train_state)
             maybe_log_memory(
                 train_state.step,
                 "before_train",

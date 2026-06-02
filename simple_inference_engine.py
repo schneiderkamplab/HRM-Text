@@ -10,7 +10,7 @@ from torch import Tensor, nn
 import torch.utils._pytree as pytree
 import numpy as np
 import torch.distributed.checkpoint as dcp
-from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict
+from torch.distributed.checkpoint.state_dict import StateDictOptions, get_optimizer_state_dict, set_state_dict
 from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
 
 from pretrain import Carry, PretrainConfig, V1DatasetMeta, load_model_class, AdamATan2
@@ -37,6 +37,10 @@ class InferenceCheckpoint:
 def normalize_checkpoint_tag(ckpt_tag: str) -> str:
     if ckpt_tag.startswith("fsdp2_"):
         ckpt_tag = ckpt_tag.removeprefix("fsdp2_")
+    elif ckpt_tag.startswith("unsharded_"):
+        ckpt_tag = ckpt_tag.removeprefix("unsharded_")
+        if ckpt_tag.endswith(".pt"):
+            ckpt_tag = ckpt_tag.removesuffix(".pt")
     elif ckpt_tag.startswith("carry_"):
         ckpt_tag = ckpt_tag.removeprefix("carry_")
 
@@ -47,7 +51,19 @@ def normalize_checkpoint_tag(ckpt_tag: str) -> str:
     return ckpt_tag
 
 
-def resolve_checkpoint_tag(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_tag: Optional[str]) -> str:
+def checkpoint_format_for_tag(ckpt_path: str, tag: str) -> str:
+    sharded_dir = os.path.join(ckpt_path, f"fsdp2_{tag}")
+    unsharded_file = os.path.join(ckpt_path, f"unsharded_{tag}.pt")
+    if os.path.isdir(sharded_dir):
+        return "sharded"
+    if os.path.isfile(unsharded_file):
+        return "unsharded"
+    raise ValueError(
+        f"Checkpoint not found for tag {tag}: expected {sharded_dir} or {unsharded_file}"
+    )
+
+
+def resolve_checkpoint_tag(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_tag: Optional[str]) -> tuple[str, str]:
     if ckpt_epoch is not None and ckpt_tag is not None:
         raise ValueError("Specify only one of ckpt_epoch and ckpt_tag")
 
@@ -57,6 +73,7 @@ def resolve_checkpoint_tag(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_tag: 
         resolved = f"epoch_{ckpt_epoch}"
     else:
         ckpt_files = glob(os.path.join(ckpt_path, "fsdp2_epoch_*"))
+        ckpt_files.extend(glob(os.path.join(ckpt_path, "unsharded_epoch_*.pt")))
         if len(ckpt_files) == 0:
             raise ValueError(f"No epoch checkpoint files found in {ckpt_path}")
 
@@ -64,13 +81,30 @@ def resolve_checkpoint_tag(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_tag: 
         resolved = f"epoch_{latest_epoch}"
         print(f"Detected latest checkpoint tag: {resolved}")
 
-    checkpoint_dir = os.path.join(ckpt_path, f"fsdp2_{resolved}")
+    checkpoint_format = checkpoint_format_for_tag(ckpt_path, resolved)
     carry_file = os.path.join(ckpt_path, f"carry_{resolved}.0.pt")
-    if not os.path.isdir(checkpoint_dir):
-        raise ValueError(f"Checkpoint directory not found: {checkpoint_dir}")
     if not os.path.isfile(carry_file):
         raise ValueError(f"Carry file not found: {carry_file}")
-    return resolved
+    return resolved, checkpoint_format
+
+
+def load_sharded_checkpoint(ckpt_path: str, tag: str, model: nn.Module, optim: AdamATan2):
+    dcp.load({"model": model.state_dict(), "optim": get_optimizer_state_dict(model, optim)},  # pyright: ignore[reportPrivateImportUsage]
+        checkpoint_id=os.path.join(ckpt_path, f"fsdp2_{tag}"),
+        no_dist=True  # <--- Critical for single rank loading
+    )
+
+
+def load_unsharded_checkpoint(ckpt_path: str, tag: str, model: nn.Module, optim: AdamATan2):
+    checkpoint_file = os.path.join(ckpt_path, f"unsharded_{tag}.pt")
+    checkpoint = torch.load(checkpoint_file, map_location="cpu", weights_only=False)
+    set_state_dict(
+        model,
+        optim,
+        model_state_dict=checkpoint["model"],
+        optim_state_dict=checkpoint["optim"],
+        options=StateDictOptions(full_state_dict=True, cpu_offload=True),
+    )
 
 
 def inference_load_checkpoint(
@@ -102,13 +136,15 @@ def inference_load_checkpoint(
                         weight_decay=model_cfg.weight_decay,
                         ema=model_cfg.ema)
     
-    resolved_tag = resolve_checkpoint_tag(ckpt_path, ckpt_epoch, ckpt_tag)
+    resolved_tag, checkpoint_format = resolve_checkpoint_tag(ckpt_path, ckpt_epoch, ckpt_tag)
 
     # Load checkpoint
-    dcp.load({"model": model.state_dict(), "optim": get_optimizer_state_dict(model, optim)},  # pyright: ignore[reportPrivateImportUsage]
-        checkpoint_id=os.path.join(ckpt_path, f"fsdp2_{resolved_tag}"),
-        no_dist=True  # <--- Critical for single rank loading
-    )
+    if checkpoint_format == "sharded":
+        load_sharded_checkpoint(ckpt_path, resolved_tag, model, optim)
+    elif checkpoint_format == "unsharded":
+        load_unsharded_checkpoint(ckpt_path, resolved_tag, model, optim)
+    else:
+        raise ValueError(f"Unsupported checkpoint format: {checkpoint_format}")
     carry = torch.load(os.path.join(ckpt_path, f"carry_{resolved_tag}.0.pt"), map_location="cuda")
 
     # Use EMA weights

@@ -8,6 +8,8 @@ EPOCH="${EPOCH:-1}"
 CKPT_PATH="${CKPT_PATH:-checkpoints/dfm/L}"
 CKPT_TAG="${CKPT_TAG:-epoch_${EPOCH}}"
 CKPT_TAG="${CKPT_TAG#fsdp2_}"
+CKPT_TAG="${CKPT_TAG#unsharded_}"
+CKPT_TAG="${CKPT_TAG%.pt}"
 CKPT_TAG="${CKPT_TAG#carry_}"
 EVAL_EPOCH="${EVAL_EPOCH:-${EPOCH}}"
 GPUS_CSV="${GPUS:-0,1,2,3,4,5,6,7}"
@@ -45,7 +47,8 @@ usage() {
   cat <<'USAGE'
 Queue standard HRM evals and dfm-evals onto a single 8-GPU worker pool.
 
-The scheduler waits for fsdp2_${CKPT_TAG} and carry_${CKPT_TAG}.{0..7}.pt.
+The scheduler waits for fsdp2_${CKPT_TAG} or unsharded_${CKPT_TAG}.pt, plus
+carry_${CKPT_TAG}.{0..7}.pt.
 It runs at most one eval job per GPU. The generative-talemaader job starts a
 Gemma judge on the same GPU. MATH and IFEval-DA are sharded and merged after all
 workers finish.
@@ -88,8 +91,13 @@ log_status() {
 }
 
 checkpoint_ready() {
-  [[ -d "${CKPT_PATH}/fsdp2_${CKPT_TAG}" ]] || return 1
-  [[ -f "${CKPT_PATH}/fsdp2_${CKPT_TAG}/.metadata" ]] || return 1
+  if [[ -d "${CKPT_PATH}/fsdp2_${CKPT_TAG}" ]]; then
+    [[ -f "${CKPT_PATH}/fsdp2_${CKPT_TAG}/.metadata" ]] || return 1
+  elif [[ -f "${CKPT_PATH}/unsharded_${CKPT_TAG}.pt" ]]; then
+    true
+  else
+    return 1
+  fi
   local rank
   for rank in 0 1 2 3 4 5 6 7; do
     [[ -f "${CKPT_PATH}/carry_${CKPT_TAG}.${rank}.pt" ]] || return 1

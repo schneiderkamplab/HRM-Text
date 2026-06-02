@@ -1371,3 +1371,295 @@ train `_step` values plus eval and dfm_eval metrics. The
 `train/dfm_*` metrics are duplicated aliases intended to make the DFM L
 backfilled train curves easy to distinguish from any older partial `train/*`
 history in the target project.
+
+Checkpoint format update on 2026-06-02. Confidence: high.
+
+`pretrain.py` now has an explicit `checkpoint_format` config field with
+default `sharded`. The default path is intentionally the existing FSDP2/PyTorch
+DCP checkpointing path and writes model/optimizer state under `fsdp2_{tag}` plus
+rank-local carry files named `carry_{tag}.{rank}.pt`. This is the path to use
+for current FSDP training unless a specific experiment needs otherwise.
+
+An opt-in `checkpoint_format=unsharded` path was added. It writes a full
+model/optimizer checkpoint from global rank 0 to `unsharded_{tag}.pt`, while
+still writing rank-local carry files for every rank. In distributed/FSDP runs it
+uses `StateDictOptions(full_state_dict=True, cpu_offload=True)` when saving and
+`broadcast_from_rank0=True` when loading, so it is multi-node aware in the sense
+that only global rank 0 owns the serialized full checkpoint and all ranks load
+through the distributed state-dict API. This path is not the default and may
+have much higher CPU RAM and filesystem pressure than the sharded DCP path.
+
+Checkpoint sidecar metadata now records `checkpoint_format` alongside `tag`,
+`step`, `epoch`, `batch_in_epoch`, `global_batch_size`, `data_path`, and
+`seed`. Validation performed after the change: `python -m py_compile
+pretrain.py`, `git diff --check`, and loading `config/cfg_pretrain.yaml` to
+verify that the default is `sharded`.
+
+DDP benchmark path update on 2026-06-02. Confidence: high.
+
+`pretrain.py` now has `distributed_strategy` with default `fsdp`. The default
+FSDP behavior is unchanged. An opt-in `distributed_strategy=ddp` wraps the model
+in `torch.nn.parallel.DistributedDataParallel` after construction and before
+optimizer creation. This path is intended for memory/speed experiments on
+large-memory GPUs, not as the default training path. Custom model methods used
+by the loop are called through a small unwrap helper so DDP-wrapped models can
+still provide `compute_train_extra_args`.
+
+For a DDP L-size DFM4 memory/speed probe, use `data=dfm4`,
+`arch/size@arch=L`, `distributed_strategy=ddp`, and strongly consider
+`checkpoint_format=unsharded` with a separate checkpoint directory. DDP keeps a
+full model, gradients, optimizer state, and EMA state on every GPU, so it is
+expected to use far more memory than the FSDP sharded path. Validation performed
+after the change: `python -m py_compile pretrain.py` and loading
+`config/cfg_pretrain.yaml` verified defaults of `distributed_strategy=fsdp` and
+`checkpoint_format=sharded`.
+
+DDP benchmark failure/fix on 2026-06-02. Confidence: high.
+
+The first `dfm4-L-ddp` launch failed before completing the first step with FA4:
+
+```text
+AssertionError: inputs must be float16, bfloat16, fp8 e4m3fn, or fp8 e5m2
+```
+
+The cause was that the new DDP path left the model in fp32. The FSDP path uses
+FSDP mixed precision to provide bf16 parameters/activations, but DDP has no such
+policy here. The DDP branch in `create_model_and_carry` now casts the model to
+`fwd_bwd_dtype` before wrapping it in `DistributedDataParallel` and before
+creating AdamATan2. Validation after the fix: `python -m py_compile
+pretrain.py` and `git diff --check`.
+
+Second DDP benchmark failure/fix on 2026-06-02. Confidence: high.
+
+After the dtype fix, DDP failed with:
+
+```text
+RuntimeError: Expected to have finished reduction in the prior iteration before starting a new one.
+Parameter indices which did not receive grad for rank 0: 96
+```
+
+This is expected for HRM BP warmup/control flow: early steps deliberately run
+only a subset of H/L cycles under grad, so some parameters are unused on a given
+iteration. `pretrain.py` now exposes `ddp_find_unused_parameters`, defaulting to
+`true`, and passes it to `DistributedDataParallel(...)`. The flag only affects
+`distributed_strategy=ddp`; FSDP remains the default and is unchanged.
+Validation after the fix: `python -m py_compile pretrain.py`, `git diff
+--check`, and loading `config/cfg_pretrain.yaml` showed
+`ddp_find_unused_parameters: true`.
+
+DDP XL memory observation on 2026-06-02. Confidence: high.
+
+The user reported, and local `nvidia-smi` confirmed, that an HRM XL DDP run on
+DFM4 fits on 8 B200 GPUs at roughly `78-81GB` used per GPU with active GPU
+utilization around `89-91%`. This is after the DDP bf16 cast and
+`find_unused_parameters=True` fixes. The observed memory is much lower than the
+earlier worst-case expectation for full DDP state, so DDP is a viable benchmark
+path for at least XL on these 180GB GPUs. Current live query showed:
+
+```text
+GPU0 77696 MiB, GPU1 78348 MiB, GPU2 80778 MiB, GPU3 81224 MiB,
+GPU4 81030 MiB, GPU5 81358 MiB, GPU6 79026 MiB, GPU7 81364 MiB
+```
+
+This observation is hardware/config specific and should not be generalized to
+H100-80 without a separate run.
+
+DFM L epoch 4 eval queue on 2026-06-02. Confidence: high.
+
+The completed DFM L checkpoint `checkpoints/dfm/L/fsdp2_epoch_4` plus
+`carry_epoch_4.{0..7}.pt` is present locally. A full eval queue for epoch 4 was
+prepared with `scripts/schedule_checkpoint_evals.sh` using all 8 GPUs,
+`QUEUE_ORDER=heavy_first`, `MAX_RETRIES=3`, project `DFM L`, and run id
+`kgnbdmwf`. The dry-run queue contained `168` jobs:
+
+- `32` DFM IFEval-DA shards
+- `64` MATH shards
+- sharded GSM8k, DROP, MMLU, HellaSwag, GovReport, WMT24++ EN-DA,
+  generative-talemaader, NordjyllandNews, HumanEval, GEC-DALA, Multi Wiki QA
+- single ARC, Winogrande, BoolQ, Danish citizen tests, DALA, and PIQA jobs
+
+Superseded: Because all GPUs were occupied by the DDP XL run at launch time, a
+tmux watcher was started in `hrm-1:7` (`dfmL-cp4-evals`) to wait until all GPUs
+dropped below `20GB` used.
+
+The user then requested immediate launch despite GPU occupancy. A fresh tmux
+window `hrm-1:7` (`dfmL-cp4-evals-now`) launched the scheduler immediately at
+`2026-06-02T13:27:03+02:00`. It queued `168` jobs, confirmed checkpoint
+readiness for `epoch_4`, and started 8 worker processes:
+`3767743 3767744 3767745 3767746 3767747 3767748 3767749 3767750`.
+The command was:
+
+```bash
+EPOCH=4 CKPT_TAG=epoch_4 CKPT_PATH=checkpoints/dfm/L \
+GPUS=0,1,2,3,4,5,6,7 \
+WANDB_PROJECT="DFM L" WANDB_RUN_ID=kgnbdmwf WANDB_RUN_NAME=dfm-L \
+LOG_ROOT=logs/eval/dfm_L_epoch4_queued_all \
+DFM_LOG_ROOT=logs/dfm_evals/dfm_L_epoch4_queued_all \
+QUEUE_ORDER=heavy_first MAX_RETRIES=3 \
+scripts/schedule_checkpoint_evals.sh
+```
+
+A live progress monitor was added at `scripts/watch_eval_progress.py`.
+Confidence: high. It periodically scans scheduler status plus standard/DFM eval
+logs, normalizes tqdm carriage-return output, prints aggregate scheduler counts,
+GPU memory/utilization, recent scheduler events, and the latest progress-like
+lines from active logs. It intentionally ignores binary Inspect `.eval` archives.
+
+The monitor was launched as a split pane in the scheduler window:
+
+```text
+hrm-1:7.1  scheduler
+hrm-1:7.2  python scripts/watch_eval_progress.py ...
+```
+
+Command:
+
+```bash
+python scripts/watch_eval_progress.py \
+  --log-root logs/eval/dfm_L_epoch4_queued_all \
+  --dfm-log-root logs/dfm_evals/dfm_L_epoch4_queued_all \
+  --interval 10 \
+  --max-logs 24
+```
+
+Monitor refinement on 2026-06-02. Confidence: high. The first monitor version
+showed misleading IFEval lines such as `generation: 0% ... 0/1` because the HRM
+OpenAI shim emits a fresh one-request tqdm bar for each request. The monitor now
+suppresses reset-only `generation: 0/1` lines and, for `server.log`, reports
+compact completion counters by counting chat-completion HTTP responses. For
+IFEval-DA it verifies the HF train split length as `541` and combines that with
+the shard args in `inspect/eval-set.json`, so 32-way shards show counters like
+`completion=11/17 failed=0` instead of raw tqdm output.
+
+Later refinement on 2026-06-02. Confidence: high. The monitor now parses
+`START`/`END` scheduler status lines to infer the active job per GPU and prints
+a GPU-ordered table such as `GPU0: ifeval-da shard 0 13/17 ETA 4.6m`. ETA is
+estimated from elapsed wall time since the job's scheduler `START` and the
+current completed/total request count when a denominator is known.
+
+DFM L epoch 4 eval completion/sync on 2026-06-02. Confidence: high.
+
+All `168` CP4 eval jobs completed. One `generative_talemaader` shard initially
+stalled after a port collision (`127.0.0.1:9602` already in use), was forced
+through the scheduler retry path, and then completed successfully:
+
+```text
+2026-06-02T20:58:33+02:00 RETRY dfm generative_talemaader shard_4_of_8 gpu_1 status_2 next_attempt_2
+2026-06-02T20:58:43+02:00 START dfm generative_talemaader shard_4_of_8 gpu_1 attempt_2_of_4
+2026-06-02T21:05:38+02:00 END dfm generative_talemaader shard_4_of_8 gpu_1 status_0
+```
+
+The user asked to stop scheduler/monitor processes just as final merge started.
+The eval computation itself was already complete. The final merge/W&B sync was
+then rerun with `RESUME_EXISTING_QUEUE=1`, reaching:
+
+```text
+2026-06-02T21:09:37+02:00 FINAL_MERGE_START
+2026-06-02T21:11:28+02:00 FINAL_MERGE_END
+```
+
+Local merged metrics were present for representative standard/DFM tasks,
+including MATH, IFEval-DA, and generative-talemaader. W&B API verification for
+`peter-sk-sdu/DFM L/kgnbdmwf` found representative CP4 metrics:
+
+```text
+eval/MATH/acc/epoch_4 = 0.48119616
+eval/GSM8k/acc/epoch_4 = 0.7998448066717211
+dfm_eval/ifeval-da/instruction_following/final_acc/epoch_4 = 0.46285377109091136
+dfm_eval/generative-talemaader/model_graded_fact/accuracy/epoch_4 = 0.08168316831683169
+dfm_eval/wmt24pp-en-da/chrf3pp/mean/epoch_4 = 0.5068738652893814
+```
+
+Superseded: the CP4 metrics above were synced to the wrong W&B target for the
+comparison view. The intended target is
+`peter-sk-sdu/Original Plus Mixed Danish Instruction Rich L/dfm-l-resume-epoch3`.
+Confidence: high.
+
+Corrected CP4 eval sync on 2026-06-02. Confidence: high.
+
+The same local merged CP4 artifacts under
+`logs/eval/dfm_L_epoch4_queued_all` and
+`logs/dfm_evals/dfm_L_epoch4_queued_all` were resynced with:
+
+```bash
+EPOCH=4 CKPT_TAG=epoch_4 CKPT_PATH=checkpoints/dfm/L \
+GPUS=0,1,2,3,4,5,6,7 \
+WANDB_PROJECT="Original Plus Mixed Danish Instruction Rich L" \
+WANDB_RUN_ID=dfm-l-resume-epoch3 \
+WANDB_RUN_NAME=dfm-L-resume-epoch3 \
+LOG_ROOT=logs/eval/dfm_L_epoch4_queued_all \
+DFM_LOG_ROOT=logs/dfm_evals/dfm_L_epoch4_queued_all \
+QUEUE_ORDER=heavy_first MAX_RETRIES=3 RESUME_EXISTING_QUEUE=1 \
+scripts/schedule_checkpoint_evals.sh
+```
+
+This reached:
+
+```text
+2026-06-02T21:19:46+02:00 FINAL_MERGE_START
+2026-06-02T21:24:52+02:00 FINAL_MERGE_END
+```
+
+W&B API verification for
+`peter-sk-sdu/Original Plus Mixed Danish Instruction Rich L/dfm-l-resume-epoch3`
+found representative CP4 metrics:
+
+```text
+eval/MATH/acc/epoch_4 = 0.48119616
+eval/GSM8k/acc/epoch_4 = 0.7998448066717211
+eval/MMLU/acc/epoch_4 = 0.28052499999999997
+dfm_eval/ifeval-da/instruction_following/final_acc/epoch_4 = 0.46285377109091136
+dfm_eval/generative-talemaader/model_graded_fact/accuracy/epoch_4 = 0.08168316831683169
+dfm_eval/wmt24pp-en-da/chrf3pp/mean/epoch_4 = 0.5068738652893814
+dfm_eval/humaneval/verify/accuracy/epoch_4 = 0.2195121951219512
+```
+
+Superseded: Unsharded checkpoint compatibility check on 2026-06-02. Confidence: high.
+
+The current eval/export path does not yet load `checkpoint_format=unsharded`
+checkpoints. `evaluation/engines.py`, `scripts/hrm_openai_server.py`, and
+`conversion/convert_to_hf.py` all go through `simple_inference_engine.py`.
+That loader currently resolves latest checkpoints by scanning
+`fsdp2_epoch_*`, checks for `fsdp2_{tag}` plus `carry_{tag}.0.pt`, and calls
+`torch.distributed.checkpoint.load(...)` on `fsdp2_{tag}`. Therefore standard
+evals and HF export currently require sharded `fsdp2_{tag}` checkpoints unless
+`simple_inference_engine.py` is extended to detect/load `unsharded_{tag}.pt`.
+
+Unsharded eval/export support update on 2026-06-02. Confidence: high.
+
+`simple_inference_engine.py` now supports both checkpoint layouts:
+
+- sharded: `fsdp2_{tag}` plus `carry_{tag}.0.pt`
+- unsharded: `unsharded_{tag}.pt` plus `carry_{tag}.0.pt`
+
+This shared loader is used by standard evals (`evaluation/engines.py`), the
+OpenAI-compatible HRM server (`scripts/hrm_openai_server.py`), and HF export
+(`conversion/convert_to_hf.py`), so those paths can now load unsharded
+checkpoints. Latest-checkpoint auto-detection scans both `fsdp2_epoch_*` and
+`unsharded_epoch_*.pt`; explicit tags may be passed as `epoch_1`,
+`fsdp2_epoch_1`, `unsharded_epoch_1`, or `unsharded_epoch_1.pt`.
+
+The generic eval scheduler `scripts/schedule_checkpoint_evals.sh` now also
+accepts either `fsdp2_${CKPT_TAG}` or `unsharded_${CKPT_TAG}.pt` when waiting
+for a checkpoint. It still requires `carry_${CKPT_TAG}.{0..7}.pt` because the
+training code stores carry state rank-locally. Validation performed after the
+change: `python -m py_compile simple_inference_engine.py
+conversion/convert_to_hf.py evaluation/engines.py`, `bash -n
+scripts/schedule_checkpoint_evals.sh`, `git diff --check`, and a toy
+state-dict smoke test confirming that model weights and AdamATan2 EMA optimizer
+state restore through the unsharded `set_state_dict` path.
+
+Carry state with FSDP vs DDP, 2026-06-02. Confidence: high.
+
+Carry is not managed by FSDP or DDP. It is explicit `TrainState.carry` owned by
+each process. The model receives it on every forward pass and returns the next
+carry via `train_state.carry, loss, metrics = model(...)`. Checkpointing saves
+it separately as `carry_{tag}.{rank}.pt` on every rank and resume reloads the
+file matching the current global rank. This is the same mechanism for FSDP and
+DDP; only the model/optimizer checkpoint format differs.
+
+For current L-size HRM runs using `baselines.hrm_nocarry_bp_warmup`,
+`initial_carry(...)` returns `None`, so the carry files are effectively saved
+`None` placeholders. For any future carryful model, resuming should preserve
+the same world-size/rank mapping and physical local batch shape unless the carry
+implementation is explicitly made reshapeable or reinitializable.
