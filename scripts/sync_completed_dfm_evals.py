@@ -16,7 +16,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--inspect-dir", type=Path, required=True)
     parser.add_argument("--sync-root", type=Path, required=True)
     parser.add_argument("--dfm-evals-dir", type=Path, required=True)
-    parser.add_argument("--epoch", type=int, required=True)
+    parser.add_argument("--epoch", type=float, required=True)
     parser.add_argument("--project", required=True)
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--run-name", required=True)

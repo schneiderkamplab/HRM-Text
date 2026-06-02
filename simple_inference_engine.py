@@ -34,7 +34,51 @@ class InferenceCheckpoint:
         return self.tokenizer.decode(tokens)  # pyright: ignore[reportReturnType]
 
 
-def inference_load_checkpoint(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_use_ema: bool):
+def normalize_checkpoint_tag(ckpt_tag: str) -> str:
+    if ckpt_tag.startswith("fsdp2_"):
+        ckpt_tag = ckpt_tag.removeprefix("fsdp2_")
+    elif ckpt_tag.startswith("carry_"):
+        ckpt_tag = ckpt_tag.removeprefix("carry_")
+
+    if os.path.basename(ckpt_tag) != ckpt_tag:
+        raise ValueError(f"Checkpoint tag must be a name, not a path: {ckpt_tag}")
+    if not (ckpt_tag.startswith("epoch_") or ckpt_tag.startswith("step_")):
+        raise ValueError(f"Checkpoint tag must start with 'epoch_' or 'step_': {ckpt_tag}")
+    return ckpt_tag
+
+
+def resolve_checkpoint_tag(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_tag: Optional[str]) -> str:
+    if ckpt_epoch is not None and ckpt_tag is not None:
+        raise ValueError("Specify only one of ckpt_epoch and ckpt_tag")
+
+    if ckpt_tag is not None:
+        resolved = normalize_checkpoint_tag(ckpt_tag)
+    elif ckpt_epoch is not None:
+        resolved = f"epoch_{ckpt_epoch}"
+    else:
+        ckpt_files = glob(os.path.join(ckpt_path, "fsdp2_epoch_*"))
+        if len(ckpt_files) == 0:
+            raise ValueError(f"No epoch checkpoint files found in {ckpt_path}")
+
+        latest_epoch = max(int(Path(f).stem.split("_")[-1]) for f in ckpt_files)
+        resolved = f"epoch_{latest_epoch}"
+        print(f"Detected latest checkpoint tag: {resolved}")
+
+    checkpoint_dir = os.path.join(ckpt_path, f"fsdp2_{resolved}")
+    carry_file = os.path.join(ckpt_path, f"carry_{resolved}.0.pt")
+    if not os.path.isdir(checkpoint_dir):
+        raise ValueError(f"Checkpoint directory not found: {checkpoint_dir}")
+    if not os.path.isfile(carry_file):
+        raise ValueError(f"Carry file not found: {carry_file}")
+    return resolved
+
+
+def inference_load_checkpoint(
+    ckpt_path: str,
+    ckpt_epoch: Optional[int],
+    ckpt_use_ema: bool,
+    ckpt_tag: Optional[str] = None,
+):
     # Load Checkpoint
     # Load config
     with open(os.path.join(ckpt_path, "all_config.yaml"), "r") as f:
@@ -58,21 +102,14 @@ def inference_load_checkpoint(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_us
                         weight_decay=model_cfg.weight_decay,
                         ema=model_cfg.ema)
     
-    # Detect checkpoint epoch if not specified
-    if ckpt_epoch is None:
-        ckpt_files = glob(os.path.join(ckpt_path, "fsdp2_epoch_*"))
-        if len(ckpt_files) == 0:
-            raise ValueError(f"No checkpoint files found in {ckpt_path}")
-
-        ckpt_epoch = max(int(Path(f).stem.split("_")[-1]) for f in ckpt_files)
-        print(f"Detected latest checkpoint epoch: {ckpt_epoch}")
+    resolved_tag = resolve_checkpoint_tag(ckpt_path, ckpt_epoch, ckpt_tag)
 
     # Load checkpoint
     dcp.load({"model": model.state_dict(), "optim": get_optimizer_state_dict(model, optim)},  # pyright: ignore[reportPrivateImportUsage]
-        checkpoint_id=os.path.join(ckpt_path, f"fsdp2_epoch_{ckpt_epoch}"),
+        checkpoint_id=os.path.join(ckpt_path, f"fsdp2_{resolved_tag}"),
         no_dist=True  # <--- Critical for single rank loading
     )
-    carry = torch.load(os.path.join(ckpt_path, f"carry_epoch_{ckpt_epoch}.0.pt"), map_location="cuda")
+    carry = torch.load(os.path.join(ckpt_path, f"carry_{resolved_tag}.0.pt"), map_location="cuda")
 
     # Use EMA weights
     if ckpt_use_ema:

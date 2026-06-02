@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
-"""Merge sharded standard MATH evaluation logs and optionally log to W&B."""
+"""Merge sharded standard evaluation logs and optionally log to W&B."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any
-
-
-METRIC_PREFIX = "eval/MATH"
 
 
 def epoch_label(epoch: float) -> str:
     return str(int(epoch)) if epoch.is_integer() else str(epoch).replace(".", "p")
 
 
-def parse_math_metrics(path: Path) -> dict[str, float]:
+def parse_metrics(path: Path, benchmark: str) -> dict[str, float]:
     text = path.read_text(encoding="utf-8", errors="ignore")
-    match = re.search(r"--- MATH ---\n(?P<body>.*?)(?:\n--- |\Z)", text, re.S)
+    match = re.search(rf"--- {re.escape(benchmark)} ---\n(?P<body>.*?)(?:\n--- |\Z)", text, re.S)
     if match is None:
-        raise ValueError(f"Missing MATH summary in {path}")
+        raise ValueError(f"Missing {benchmark} summary in {path}")
 
     metrics: dict[str, float] = {}
     for line in match.group("body").splitlines():
@@ -32,30 +30,44 @@ def parse_math_metrics(path: Path) -> dict[str, float]:
         value = value.strip()
         if not key:
             continue
-        metrics[key] = float(value)
+        try:
+            parsed = float(value)
+        except ValueError:
+            continue
+        if math.isfinite(parsed):
+            metrics[key] = parsed
 
-    required = {"n", "acc", "invalid"}
-    missing = required - metrics.keys()
-    if missing:
-        raise ValueError(f"Missing MATH metric(s) in {path}: {sorted(missing)}")
+    if "n" not in metrics:
+        raise ValueError(f"Missing {benchmark} n metric in {path}")
     return metrics
 
 
-def compute_merged(paths: list[Path]) -> dict[str, float]:
-    parsed = [parse_math_metrics(path) for path in paths]
+def compute_merged(paths: list[Path], benchmark: str) -> dict[str, float]:
+    parsed = [parse_metrics(path, benchmark) for path in paths]
     total_n = int(sum(int(metrics["n"]) for metrics in parsed))
     if total_n <= 0:
-        raise ValueError("No MATH samples found.")
+        raise ValueError(f"No {benchmark} samples found.")
 
+    keys = sorted(set().union(*(metrics.keys() for metrics in parsed)) - {"n"})
     merged = {"n": float(total_n)}
-    for key in ("acc", "invalid"):
-        merged[key] = sum(metrics[key] * int(metrics["n"]) for metrics in parsed) / total_n
+    for key in keys:
+        numer = 0.0
+        denom = 0
+        for metrics in parsed:
+            if key not in metrics:
+                continue
+            n = int(metrics["n"])
+            numer += metrics[key] * n
+            denom += n
+        if denom:
+            merged[key] = numer / denom
     return merged
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("logs", nargs="+", type=Path, help="Shard evaluation log files.")
+    parser.add_argument("--benchmark", required=True)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--epoch", type=float, required=True)
     parser.add_argument("--project")
@@ -65,8 +77,8 @@ def main() -> None:
     parser.add_argument("--log-wandb", action="store_true")
     args = parser.parse_args()
 
-    metrics = compute_merged(args.logs)
-    metric_prefix = f"{args.prefix}/MATH"
+    metrics = compute_merged(args.logs, args.benchmark)
+    metric_prefix = f"{args.prefix}/{args.benchmark}"
     logged_metrics = {f"{metric_prefix}/{key}": value for key, value in metrics.items()}
     payload: dict[str, Any] = {
         "epoch": args.epoch,

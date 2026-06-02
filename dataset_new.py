@@ -65,6 +65,13 @@ class V1Dataset(IterableDataset):
 
             return metadata
 
+    def set_epoch(self, epoch: int):
+        if epoch < 0:
+            raise ValueError(f"Dataset epoch must be non-negative, got {epoch}")
+        if self._sampler is not None:
+            raise RuntimeError("Cannot change dataset epoch after iteration has started")
+        self._epoch = epoch
+
     def _load_dataset_before_epoch_begin(self):
         # Load tokens (only if not loaded)
         if self._data is None:

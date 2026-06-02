@@ -21,8 +21,14 @@ class VLLMEngine(BaseEngine):
         return [out.outputs[0].text for out in outputs]
 
 class SimpleEngine(BaseEngine):
-    def __init__(self, ckpt_path: str, ckpt_epoch: Optional[int] = None, ckpt_use_ema: bool = True):
-        self.ckpt = inference_load_checkpoint(ckpt_path, ckpt_epoch, ckpt_use_ema)
+    def __init__(
+        self,
+        ckpt_path: str,
+        ckpt_epoch: Optional[int] = None,
+        ckpt_use_ema: bool = True,
+        ckpt_tag: Optional[str] = None,
+    ):
+        self.ckpt = inference_load_checkpoint(ckpt_path, ckpt_epoch, ckpt_use_ema, ckpt_tag=ckpt_tag)
 
     def generate(self, prompts: list[str], batch_size: int = 100, max_context: int = 1024, max_tokens: Optional[int] = None, temperature: float = 0.0, condition: str = "direct") -> list[str]:
         if max_tokens is None:

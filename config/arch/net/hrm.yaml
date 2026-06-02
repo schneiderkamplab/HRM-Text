@@ -10,3 +10,10 @@ H_override: {}
 
 bp_warmup_ratio: 0.2
 bp_max_steps: 5
+
+# Goldfish loss is disabled by default. Set goldfish_strategy=hash to drop a
+# deterministic content-dependent subset of supervised labels.
+goldfish_strategy: null
+goldfish_k: 50
+goldfish_context_width: 50
+goldfish_seed: 0

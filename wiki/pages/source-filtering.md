@@ -1,6 +1,6 @@
 # Source Filtering
 
-Last updated: 2026-05-20  
+Last updated: 2026-06-01
 Confidence: high  
 Scope: Filtering downloaded sources before conversion/tokenization.
 
@@ -22,18 +22,30 @@ This creates a symlink tree. The Rust tokenizer should not consume this tree dir
 
 ## Denied Sapient Sources
 
-Denied by exact/broad patterns:
+Current policy: for EU academic/non-commercial research by a qualifying
+research organisation, the working copyright basis is the DSM Directive Article
+3 text-and-data-mining exception when dataset access is lawful. Licensing,
+ShareAlike, and benchmark adjacency are not blockers by themselves. GDPR/PII
+risk involving non-public persons remains the hard exclusion criterion.
+
+Denied by exact/pattern rules:
 
 - `sapient_cleaned/data/Platypus/reclor.jsonl`
 - `sapient_cleaned/data/Platypus/scibench.jsonl`
-- `sapient_cleaned/data/Platypus/scienceqa.jsonl`
-- `sapient_cleaned/data_clustered/flan/**`
-- `sapient_cleaned/data_clustered/tasksource/**`
+- high-GDPR/PII-risk Sapient FLAN user/chat/social/review/toxicity patterns,
+  including tweet/twitter, dialog/persona/chat, hate/toxicity/offensive,
+  SMS/email, Amazon/Yelp/IMDb/review-style sources, and similar user-generated
+  text families.
+- high-GDPR/PII-risk Sapient Tasksource user/chat/social/review/toxicity
+  patterns, including tweet/twitter, WNUT, SMS/spam, hate/offensive/toxicity,
+  dialogue/switchboard/MRDA/mutual/persona, and review-style sources.
 - cache/git metadata
 
 ## Allow Overrides
 
-Allow overrides run before deny patterns.
+Allow overrides run before deny patterns. They remain in the config for
+documentation and for exact source recovery, but broad FLAN/Tasksource are no
+longer denied solely because they are aggregators.
 
 FLAN allow back:
 
@@ -47,16 +59,29 @@ Tasksource allow back:
 
 ## Latest Reported Build
 
-User reported:
+Latest rebuild after the 2026-06-01 harsh-robots exclusion update:
 
 ```text
-Allowed files:      1,525
-Denied files:       4,073
-Allowed bytes:      248,502,793,134
+Allowed files:      9,780
+Denied files:       389
+Allowed bytes:      806,841,101,662
 ```
 
-Earlier allow overrides recovered approximately:
+Denied data files now split into:
 
-- FLAN: 280 files, about 789 MB
-- Tasksource: 40 files, about 99 MB
+- Sapient FLAN PII/social/chat/review/opinion/spam and harsh-robots residual:
+  `364`
+- Sapient Tasksource PII/social/chat/review/ReClor residual: `23`
+- Sapient Platypus eval-only exclusions: `2` (`reclor`, `scibench`)
 
+Harsh-robots FLAN exclusions added on 2026-06-01:
+
+- `natural_questions_open` / `naturalquestion`, because Google disallows search
+  endpoints and these are treated as search-derived.
+- `msmarco`, because Bing disallows many search endpoints and these are treated
+  as search-derived.
+- `wmt` and `newscomm`, because `data.statmt.org` disallows `User-agent: *` at
+  `/`.
+
+`synquid/wildchat-100k-qwen-messages` remains included with a tight cap by
+project decision, despite user-prompt PII risk, and should be scrubbed later.

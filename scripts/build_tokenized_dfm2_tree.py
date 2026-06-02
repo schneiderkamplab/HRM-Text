@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Build a symlinked tokenized tree for DFM2.
+
+DFM2 reuses the existing tokenized DFM/mixed tasks and adds tokenized
+self-supervised DynaWord tasks. The sampler expects a single tokenized root, so
+this script creates a symlink union without copying token arrays.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import shutil
+from pathlib import Path
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base-tokenized", type=Path, default=Path("data/tokenized_mixed"))
+    parser.add_argument("--extra-tokenized", type=Path, default=Path("data/tokenized_dfm2_dynaword_tasks"))
+    parser.add_argument("--output", type=Path, default=Path("data/tokenized_dfm2"))
+    parser.add_argument("--force", action="store_true")
+    return parser.parse_args()
+
+
+def task_dirs(root: Path) -> list[Path]:
+    return sorted(p.parent for p in root.rglob("metadata.json"))
+
+
+def link_task(src: Path, src_root: Path, dst_root: Path) -> None:
+    rel = src.relative_to(src_root)
+    dst = dst_root / rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if dst.exists() or dst.is_symlink():
+        raise FileExistsError(dst)
+    dst.symlink_to(src.resolve(), target_is_directory=True)
+
+
+def main() -> None:
+    args = parse_args()
+    if args.output.exists():
+        if not args.force:
+            raise SystemExit(f"{args.output} exists; pass --force to rebuild")
+        shutil.rmtree(args.output)
+    args.output.mkdir(parents=True)
+
+    linked_base = 0
+    linked_extra = 0
+    tokenizer_info = args.base_tokenized / "tokenizer_info.json"
+    if tokenizer_info.exists():
+        (args.output / "tokenizer_info.json").symlink_to(tokenizer_info.resolve())
+    for src in task_dirs(args.base_tokenized):
+        link_task(src, args.base_tokenized, args.output)
+        linked_base += 1
+    for src in task_dirs(args.extra_tokenized):
+        link_task(src, args.extra_tokenized, args.output)
+        linked_extra += 1
+
+    manifest = {
+        "base_tokenized": str(args.base_tokenized),
+        "extra_tokenized": str(args.extra_tokenized),
+        "output": str(args.output),
+        "linked_base_tasks": linked_base,
+        "linked_extra_tasks": linked_extra,
+        "total_tasks": linked_base + linked_extra,
+    }
+    (args.output / "union_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
+    print(json.dumps(manifest, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

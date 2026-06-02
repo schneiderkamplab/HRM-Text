@@ -1,5 +1,6 @@
 engine: SimpleEngine
 ckpt_path: null
+ckpt_tag: null
 
 generation_config:
   batch_size: 25

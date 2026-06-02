@@ -1,15 +1,17 @@
 from typing import Optional
 from dataclasses import dataclass
 from pathlib import Path
+import json
 import math
 import os
+import re
 import yaml
 import shutil
 
 import torch
 import torch.distributed as dist
 import torch.distributed.checkpoint as dcp
-from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict
+from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict, set_state_dict
 from torch.distributed.fsdp import fully_shard, FSDPModule, MixedPrecisionPolicy
 from torch import Tensor, nn
 from torch.utils.data import DataLoader
@@ -78,12 +80,30 @@ class PretrainConfig(pydantic.BaseModel):
     # Names
     project_name: Optional[str] = None
     run_name: Optional[str] = None
+    wandb_run_id: Optional[str] = None
+    wandb_resume: Optional[str] = None
     checkpoint_path: Optional[str] = None
+    resume_checkpoint_path: Optional[str] = None
+    resume_checkpoint_tag: Optional[str] = None
+    resume_epoch: Optional[int] = None
+    resume_step: Optional[int] = None
+    resume_batch_in_epoch: Optional[int] = None
 
     # Extras
     seed: int = 0
     checkpoint_interval: int = 1
+    checkpoint_step_interval: Optional[int] = None
     log_interval: int = 5
+
+    @pydantic.model_validator(mode='after')
+    def check_intervals(self):
+        if self.checkpoint_interval < 1:
+            raise ValueError("checkpoint_interval must be >= 1")
+        if self.checkpoint_step_interval is not None and self.checkpoint_step_interval < 1:
+            raise ValueError("checkpoint_step_interval must be >= 1 when set")
+        if self.log_interval < 1:
+            raise ValueError("log_interval must be >= 1")
+        return self
 
 
 @dataclass
@@ -96,6 +116,14 @@ class TrainState:
     step: int
     total_steps: int
     fwd_bwd_dtype: torch.dtype
+
+
+@dataclass
+class ResumeState:
+    tag: str
+    step: int
+    start_epoch: int
+    skip_batches: int
 
 
 def create_dataloader(config: PretrainConfig, local_batch_size: int, drop_last_batch: bool, rank: int, world_size: int):
@@ -224,6 +252,91 @@ def update_lr(config: PretrainConfig, train_state: TrainState) -> float:
     return lr
 
 
+def normalize_checkpoint_tag(tag: str) -> str:
+    if tag.startswith("fsdp2_"):
+        tag = tag.removeprefix("fsdp2_")
+    elif tag.startswith("carry_"):
+        tag = tag.removeprefix("carry_")
+    if os.path.basename(tag) != tag:
+        raise ValueError(f"Checkpoint tag must be a name, not a path: {tag}")
+    if not (tag.startswith("epoch_") or tag.startswith("step_")):
+        raise ValueError(f"Checkpoint tag must start with 'epoch_' or 'step_': {tag}")
+    return tag
+
+
+def load_checkpoint_metadata(checkpoint_path: str, tag: str) -> dict:
+    metadata_path = os.path.join(checkpoint_path, f"checkpoint_state_{tag}.json")
+    if not os.path.isfile(metadata_path):
+        return {}
+    with open(metadata_path, "rt") as f:
+        return json.load(f)
+
+
+def resolve_resume_state(config: PretrainConfig) -> Optional[ResumeState]:
+    if config.resume_checkpoint_path is None and config.resume_checkpoint_tag is None:
+        return None
+    if config.resume_checkpoint_path is None or config.resume_checkpoint_tag is None:
+        raise ValueError("Both resume_checkpoint_path and resume_checkpoint_tag must be set to resume training")
+
+    tag = normalize_checkpoint_tag(config.resume_checkpoint_tag)
+    metadata = load_checkpoint_metadata(config.resume_checkpoint_path, tag)
+
+    step = metadata.get("step", config.resume_step)
+    epoch = metadata.get("epoch", config.resume_epoch)
+    batch_in_epoch = metadata.get("batch_in_epoch", config.resume_batch_in_epoch)
+
+    if tag.startswith("epoch_"):
+        tag_epoch = int(tag.removeprefix("epoch_"))
+        epoch = tag_epoch if epoch is None else int(epoch)
+        step = -1 if step is None else int(step)
+        return ResumeState(tag=tag, step=step, start_epoch=tag_epoch + 1, skip_batches=0)
+
+    step_match = re.fullmatch(r"step_(\d+)", tag)
+    if step_match is None:
+        raise ValueError(f"Unsupported checkpoint tag: {tag}")
+    step = int(step_match.group(1)) if step is None else int(step)
+    if epoch is None or batch_in_epoch is None:
+        raise ValueError(
+            f"Step checkpoint {tag} needs checkpoint_state_{tag}.json or explicit "
+            "resume_epoch and resume_batch_in_epoch overrides"
+        )
+    return ResumeState(tag=tag, step=step, start_epoch=int(epoch), skip_batches=int(batch_in_epoch))
+
+
+def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank: int) -> Optional[ResumeState]:
+    resume_state = resolve_resume_state(config)
+    if resume_state is None:
+        return None
+
+    assert config.resume_checkpoint_path is not None
+    checkpoint_id = os.path.join(config.resume_checkpoint_path, f"fsdp2_{resume_state.tag}")
+    carry_path = os.path.join(config.resume_checkpoint_path, f"carry_{resume_state.tag}.{rank}.pt")
+    if not os.path.isdir(checkpoint_id):
+        raise ValueError(f"Checkpoint directory not found: {checkpoint_id}")
+    if not os.path.isfile(carry_path):
+        raise ValueError(f"Carry file not found: {carry_path}")
+
+    model_state = train_state.model.state_dict()
+    optim_state = get_optimizer_state_dict(train_state.model, train_state.optim)  # pyright: ignore[reportPrivateImportUsage]
+    dcp.load({"model": model_state, "optim": optim_state}, checkpoint_id=checkpoint_id)
+    set_state_dict(
+        train_state.model,
+        train_state.optim,
+        model_state_dict=model_state,
+        optim_state_dict=optim_state,
+    )
+    train_state.carry = torch.load(carry_path, map_location="cuda")
+    if resume_state.step >= 0:
+        train_state.step = resume_state.step
+    elif resume_state.tag.startswith("epoch_"):
+        completed_epoch = int(resume_state.tag.removeprefix("epoch_"))
+        train_state.step = int(completed_epoch * train_state.total_steps // config.epochs)
+        resume_state.step = train_state.step
+    else:
+        raise ValueError(f"Cannot infer resume step for checkpoint tag {resume_state.tag}")
+    return resume_state
+
+
 @torch.compile(dynamic=False)
 def forward_backward_batch(train_state: TrainState, batch: dict[str, Tensor], loss_scale: Tensor, **kwargs):
     device_type = batch["inputs"].device.type
@@ -337,6 +450,40 @@ def save_code_and_config(config: PretrainConfig, train_metadata: V1DatasetMeta):
     wandb.run.log_code(config.checkpoint_path)
 
 
+def save_checkpoint_metadata(config: PretrainConfig, train_state: TrainState, tag: str, epoch: int, batch_in_epoch: int, rank: int):
+    if config.checkpoint_path is None or rank != 0:
+        return
+
+    metadata = {
+        "tag": tag,
+        "step": train_state.step,
+        "epoch": epoch,
+        "batch_in_epoch": batch_in_epoch,
+        "global_batch_size": config.global_batch_size,
+        "data_path": config.data.path,
+        "seed": config.seed,
+    }
+    with open(os.path.join(config.checkpoint_path, f"checkpoint_state_{tag}.json"), "wt") as f:
+        json.dump(metadata, f, indent=2, sort_keys=True)
+        f.write("\n")
+
+
+def save_train_checkpoint(config: PretrainConfig, train_state: TrainState, tag: str, epoch: int, batch_in_epoch: int, rank: int):
+    if config.checkpoint_path is None:
+        return
+
+    if dist.is_available() and dist.is_initialized():
+        dcp.save({"model": train_state.model.state_dict(), "optim": get_optimizer_state_dict(train_state.model, train_state.optim)},  # pyright: ignore[reportPrivateImportUsage]
+                 checkpoint_id=os.path.join(config.checkpoint_path, f"fsdp2_{tag}"))
+    else:
+        torch.save({"model": train_state.model.state_dict(), "optim": train_state.optim.state_dict()}, os.path.join(config.checkpoint_path, f"{tag}.pt"))
+    # Save carry on all ranks
+    torch.save(train_state.carry, os.path.join(config.checkpoint_path, f"carry_{tag}.{rank}.pt"))
+    if dist.is_available() and dist.is_initialized():
+        dist.barrier()
+    save_checkpoint_metadata(config, train_state, tag, epoch, batch_in_epoch, rank)
+
+
 def load_synced_config(hydra_config: DictConfig, rank: int) -> PretrainConfig:
     objects = [None]
     if rank == 0:
@@ -423,25 +570,50 @@ def launch(hydra_config: DictConfig):
 
     # --- Training
     train_state, train_loader, train_metadata = init_train(config, rank=RANK, world_size=WORLD_SIZE, device=device)
+    resume_state = load_train_checkpoint(config, train_state, rank=RANK)
+    start_epoch = 1
+    skip_batches = 0
+    if resume_state is not None:
+        start_epoch = resume_state.start_epoch
+        skip_batches = resume_state.skip_batches
+        train_loader.dataset.set_epoch(start_epoch - 1)
+        if RANK == 0:
+            print(
+                f"Resumed from {config.resume_checkpoint_path}/fsdp2_{resume_state.tag}: "
+                f"step={train_state.step}, start_epoch={start_epoch}, skip_batches={skip_batches}",
+                flush=True,
+            )
 
     # Progress bar and logger
     progress_bar = None
     if RANK == 0:
-        progress_bar = tqdm.tqdm(total=train_state.total_steps)
+        progress_bar = tqdm.tqdm(total=train_state.total_steps, initial=train_state.step)
 
-        wandb.init(project=config.project_name, name=config.run_name, config=config.model_dump() | {"train_metadata": train_metadata.model_dump()},
-                   settings=wandb.Settings(_disable_stats=True))  # type: ignore
-        wandb.log({"num_params": sum(x.numel() for x in train_state.model.parameters())}, step=0)
+        wandb.init(
+            project=config.project_name,
+            name=config.run_name,
+            id=config.wandb_run_id,
+            resume=config.wandb_resume,
+            config=config.model_dump() | {"train_metadata": train_metadata.model_dump()},
+            settings=wandb.Settings(_disable_stats=True),
+        )  # type: ignore
+        num_params = sum(x.numel() for x in train_state.model.parameters())
+        if resume_state is None:
+            wandb.log({"num_params": num_params}, step=0)
+        else:
+            wandb.run.summary["num_params"] = num_params  # type: ignore[union-attr]
         save_code_and_config(config, train_metadata)
 
     # Training Loop
-    for epoch in range(1, config.epochs + 1):
+    for epoch in range(start_epoch, config.epochs + 1):
         print (f"[Rank {RANK}, World Size {WORLD_SIZE}]: Epoch {epoch}")
 
         # ############ Train Iter
         train_state.model.train()
         accumulation_batches: list[dict[str, Tensor]] = []
-        for batch, batch_info in train_loader:
+        for batch_in_epoch, (batch, batch_info) in enumerate(train_loader, start=1):
+            if skip_batches > 0 and batch_in_epoch <= skip_batches:
+                continue
             batch = move_batch_to_device(batch, device)
             accumulation_batches.append(batch | {k: wrap_tensor(torch.tensor(v, device="cpu")) for k, v in batch_info.items()})
             if len(accumulation_batches) < config.gradient_accumulation_steps:
@@ -475,19 +647,16 @@ def launch(hydra_config: DictConfig):
 
             del metrics
 
+            if config.checkpoint_step_interval is not None and train_state.step % config.checkpoint_step_interval == 0:
+                save_train_checkpoint(config, train_state, f"step_{train_state.step}", epoch, batch_in_epoch, RANK)
+
+        skip_batches = 0
+
         ############ EVAL STACK: TBD TODO
 
         ############ Checkpointing
         if (epoch % config.checkpoint_interval == 0) or (epoch == config.epochs):
-            if config.checkpoint_path is not None:
-                # Save checkpoint
-                if dist.is_available() and dist.is_initialized():
-                    dcp.save({"model": train_state.model.state_dict(), "optim": get_optimizer_state_dict(train_state.model, train_state.optim)},  # pyright: ignore[reportPrivateImportUsage]
-                             checkpoint_id=os.path.join(config.checkpoint_path, f"fsdp2_epoch_{epoch}"))
-                else:
-                    torch.save({"model": train_state.model.state_dict(), "optim": train_state.optim.state_dict()}, os.path.join(config.checkpoint_path, f"epoch_{epoch}.pt"))
-                # Save carry on all ranks
-                torch.save(train_state.carry, os.path.join(config.checkpoint_path, f"carry_epoch_{epoch}.{RANK}.pt"))
+            save_train_checkpoint(config, train_state, f"epoch_{epoch}", epoch, 0, RANK)
 
     # finalize
     if dist.is_initialized():

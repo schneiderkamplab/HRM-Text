@@ -1,7 +1,7 @@
 # Current State
 
-Last updated: 2026-05-28  
-Confidence: high  
+Last updated: 2026-06-01
+Confidence: high
 Scope: Local repo state and verified commands from this session.
 
 ## Environment
@@ -25,6 +25,125 @@ Scope: Local repo state and verified commands from this session.
 - Py-compile and CUDA smoke tests passed earlier for PrefixLM attention and cache attention.
 
 ## Data State
+
+Update on 2026-05-31:
+
+- DFM3 data-prep scaffolding was added for English evaluation recovery. DFM3
+  is DFM2 plus selected Common Pile raw-text objectives and raised caps for
+  approved English/multilingual instruction data.
+- New files:
+  - `scripts/generate_dfm3_common_pile_tasks.py`
+  - `scripts/build_tokenized_dfm3_tree.py`
+  - `scripts/prepare_dfm3_english_recovery.sh`
+  - `data_io/prefix_config_dfm3.yaml`
+  - `config/data/dfm3.yaml`
+- `scripts/download_training_datasets.py` now has an explicit `common_pile`
+  group with selected filtered/public/open Common Pile components. A dry-run
+  inventory resolved `480` selected files and `275.1 GB` compressed/download
+  size.
+- `scripts/convert_filtered_sources.py` now converts selected Common Pile
+  `.json.gz`, `.jsonl.gz`, and Parquet rows with a `text` field into raw
+  continuation rows.
+- Validation passed:
+  - `python -m py_compile` for modified/new Python scripts.
+  - `bash -n scripts/prepare_dfm3_english_recovery.sh`.
+  - `data_io/prefix_config_dfm3.yaml` parses as YAML with `84` rules.
+- Later on 2026-05-31, the selected Common Pile download/filter/convert
+  stages completed and DFM3 task generation finished. The generator wrote
+  `2,862` Parquet task files under
+  `data/converted_sources_dfm3_common_pile_tasks`, with approximately
+  `19,043,38x` rows in each of the six DFM3 objective families:
+  direct continuation, prefix continuation, denoising, and three span-fill
+  variants. Confidence: high.
+- DFM3 Common Pile tokenization was launched with one worker:
+
+```bash
+ionice -c2 -n7 nice -n 10 ./data_io/tokenizer/target/release/tokenizer \
+  data/converted_sources_dfm3_common_pile_tasks \
+  --tokenizer-path /work/dfm/HRM-Text/data_io/trained_tokenizers/bpe/tokenizer.json \
+  --workers 1 \
+  -o data/tokenized_dfm3_common_pile_tasks
+```
+
+  At `2026-05-31 12:07 CEST`, the reliable progress signal was `484 / 2862`
+  completed tokenized task directories, measured by top-level output dirs or
+  `metadata.json` files, and about `100G` written. Do not estimate tokenizer
+  completion from raw file count under the output tree, because each completed
+  tokenized task directory contains multiple array files. Confidence: high.
+
+Update on 2026-06-01:
+
+- DFM3 Common Pile tokenization completed: `2862 / 2862` generated task dirs
+  have `metadata.json`, matching the `2862` generated Parquet inputs.
+  `data/tokenized_dfm3_common_pile_tasks` is `448G`. Confidence: high.
+- The DFM3 tokenized union was built at `data/tokenized_dfm3` with `4690`
+  top-level symlinks. Confidence: high.
+- DFM3 sampling completed at `data/sampled_dfm3`; it contains `metadata.json`
+  and `tokens.npy` and is `1.2T`. `data/sampled_dfm3/metadata.json` reports
+  `max_seq_len=4097` and `total_length=174,204,067,350`. The analytics file
+  `data/show_analytics_dfm3.md` reports `192,508,795,135` unique sampled tokens
+  out of `214,239,617,633` available unique tokens (`89.86%`). Confidence: high.
+- DFM4 source downloads completed. No DFM4 downloader process remains. Local
+  sizes are `436M` for `govreport_summarization`, `5.5G` for `wiki_cat_sum`,
+  and `143G` for `laion_scientific_summaries`. The selected LAION arXiv slice
+  has `4006` Parquet files plus selected repository docs, matching the `4008`
+  selected-file inventory. GovReport has `2` train Parquet shards plus README;
+  WikiCatSum has `3` train JSONL files plus README. Confidence: high.
+- Superseded: the first DFM4 sample used four epochs and the original
+  paragraph-reorder tokenization.
+- Current DFM4 generation, tokenization, union build, and five-epoch sampling
+  completed. The current union keeps the full DFM3 tree, regenerated DynaWord
+  paragraph-window tasks, the previously complete Common Pile paragraph tasks,
+  and DFM4 summarization tasks. `data/tokenized_dfm4/union_manifest.json`
+  reports roots of `4689` DFM3 tasks, `25` regenerated DynaWord paragraph
+  tasks, `425` Common Pile paragraph tasks, `4019` summarization tasks, and
+  `9158` total tasks. Confidence: high.
+- Current DFM4 sampling completed at `data/sampled_dfm4` with `epochs=5`.
+  `metadata.json` reports `max_seq_len=4097` and
+  `total_length=72,007,089,569` tokens per epoch. `tokens.npy` is
+  `1,225,441,020,536` bytes. Per-epoch arrays exist under `epoch_0` through
+  `epoch_4`; all epoch array files were rewritten at `20:32-20:33 CEST` on
+  2026-06-01. `data/show_analytics_dfm4.md` reports
+  `360,035,447,845` covered tokens across five epochs. Confidence: high.
+- Superseded: before pulling `origin/main` on 2026-06-02, the local
+  `global_batch_size` path had no gradient accumulation.
+- Pull/merge update on 2026-06-02. Confidence: high. `main` was
+  fast-forwarded to `origin/main` after a dry run in
+  `/work/dfm/HRM-Text-pull-sim`. Local tracked changes were stashed,
+  reapplied, and conflicts were resolved using the same resolutions as the temp
+  worktree. Conflicted files were `config/cfg_pretrain.yaml`, `pretrain.py`,
+  `wiki/pages/download-convert-tokenize.md`, and `wiki/pages/open-issues.md`.
+  Validation passed with `python scripts/check_goldfish_loss.py`,
+  `python -m py_compile pretrain.py models/lm_head.py models/goldfish_loss.py
+  scripts/check_goldfish_loss.py`, and `git diff --check`.
+- Current batch-size implementation after the pull, verified from
+  `pretrain.py`, `dataset_new.py`, and `multipack_sampler.py` on 2026-06-02.
+  Confidence: high. `global_batch_size` is now the effective optimizer token
+  batch and `gradient_accumulation_steps` controls the physical microbatch:
+  `local_batch_size = global_batch_size / (world_size *
+  gradient_accumulation_steps)`. Each optimizer step accumulates that many
+  microbatches before `optim.step()`, with loss scaled by supervised-token
+  counts across the accumulated microbatches.
+
+Update on 2026-05-30:
+
+- DFM2 data preparation completed. `scripts/generate_dfm2_dynaword_tasks.py`
+  produced DynaWord-derived self-supervised tasks, tokenized with one tokenizer
+  worker into `data/tokenized_dfm2_dynaword_tasks`.
+- `scripts/build_tokenized_dfm2_tree.py --force` built `data/tokenized_dfm2`
+  as a symlink union with `1377` base mixed tasks plus `450` generated DFM2
+  tasks, for `1827` total task dirs.
+- DFM2 sampling completed at `data/sampled_dfm2`; `config/data/dfm2.yaml`
+  points training at this sample.
+- `data/sampled_dfm2/metadata.json` reports `total_length=42,317,252,803`
+  tokens per epoch and `max_seq_len=4097`.
+- `data/show_analytics_dfm2.md` reports generated DynaWord self-supervised
+  additions of `56,253,792,196` covered tokens across four epochs, or
+  `14,063,448,049` per epoch. The retained direct DynaWord slice is
+  `2,813,942,923` covered tokens per epoch, so the generated additions are
+  `4.998X`.
+- DFM2 generated tasks do not use sampler `repeat: 2`; the generator creates
+  unique variants instead.
 
 Update on 2026-05-27:
 
@@ -66,6 +185,170 @@ Allowed bytes:      248,502,793,134
 ```
 
 ## Active Work
+
+Update on 2026-06-01:
+
+- W&B native `_step` history cannot be repaired in-place after later eval/log
+  rows have advanced the run step. An attempted same-run backfill of DFM L train
+  rows into `Original Plus Mixed Danish Instruction Rich L/kgnbdmwf` was
+  rejected by W&B for old `_step` values; a later custom-step replay polluted
+  the visible train curves and should not be used as the clean comparison run.
+  Confidence: high.
+- A clean comparison run was created at
+  `Original Plus Mixed Danish Instruction Rich L/dfmlfull0601`
+  (`dfm-L-full-train-backfill`). It backfilled DFM L train history from
+  `DFM L/kgnbdmwf` before adding eval metrics, preserving native train `_step`
+  values. The train backfill logged `118,775` rows, source steps `5` through
+  `592,395`; W&B summary verifies `train/source_step=592395`,
+  `train/loss=1.1001414060592651`, and
+  `train/accuracy=0.7316066026687622`. Confidence: high.
+- The same clean run now has standard `eval/*` and Danish `dfm_eval/*` metrics
+  for DFM L epochs `1`, `2`, and `3`, replayed from local merged metric JSONs.
+  Each epoch logged `195` standard metrics and `74` DFM metrics using
+  `eval/epoch` and `dfm_eval/epoch` as the W&B plot axes. Spot-checked summary
+  values include `eval/MATH/acc/epoch_1=0.3854`,
+  `eval/MATH/acc/epoch_2=0.45380217999999994`,
+  `eval/MATH/acc/epoch_3=0.47639826`,
+  `dfm_eval/ifeval-da/instruction_following/final_acc/epoch_1=0.393870787633715`,
+  `dfm_eval/ifeval-da/instruction_following/final_acc/epoch_2=0.41204577082020327`,
+  and
+  `dfm_eval/ifeval-da/instruction_following/final_acc/epoch_3=0.4760777566757044`.
+  Confidence: high.
+
+Update on 2026-05-31:
+
+- Superseded: earlier on 2026-05-31, `pretrain.py` only saved checkpoints at
+  epoch boundaries via `checkpoint_interval`.
+- Step-based checkpointing is now implemented. `config/cfg_pretrain.yaml` has
+  `checkpoint_step_interval: null` by default; setting it to a positive integer
+  saves additional checkpoints during training at `fsdp2_step_{step}` and
+  `carry_step_{step}.{rank}.pt`. Epoch checkpoints are still saved as
+  `fsdp2_epoch_{epoch}` and `carry_epoch_{epoch}.{rank}.pt`. Confidence: high.
+- Checkpoint loading now supports explicit tags. Standard/eval code can pass
+  `ckpt_tag=step_10000` or `ckpt_tag=epoch_1`; the OpenAI shim accepts
+  `--ckpt-tag step_10000`, and HF conversion accepts `--ckpt_tag step_10000`.
+  Existing `ckpt_epoch=...` and `--ckpt-epoch ...` paths still work, and when no
+  epoch/tag is passed, loading still defaults to the latest epoch checkpoint.
+  Confidence: high.
+- `scripts/schedule_checkpoint_evals.sh` now accepts `CKPT_TAG`, defaulting to
+  `epoch_${EPOCH}`. For intra-epoch evals use, for example,
+  `EPOCH=1 CKPT_TAG=step_10000 ... scripts/schedule_checkpoint_evals.sh`; the
+  `EPOCH` value remains the W&B x-axis/merge epoch unless those logging scripts
+  are extended separately. Confidence: high.
+- Fractional eval epochs are now supported for intra-epoch checkpoints.
+  `scripts/schedule_checkpoint_evals.sh` accepts `EVAL_EPOCH`, defaulting to
+  `EPOCH`, and passes it to the standard/DFM/IFEval merge scripts. The merge
+  and incremental DFM logging scripts parse `--epoch` as `float`, so W&B rows
+  can use values such as `eval/epoch=1.234` and `dfm_eval/epoch=1.234`.
+  Per-checkpoint summary aliases sanitize fractional labels with `p`, for
+  example `epoch_1p234`, while integer epochs keep `epoch_1`. Confidence: high.
+- Superseded: training resume was previously not implemented in `pretrain.py`.
+  It is now implemented for current epoch checkpoints and new metadata-backed
+  step checkpoints. `config/cfg_pretrain.yaml` exposes
+  `wandb_run_id`, `wandb_resume`, `resume_checkpoint_path`,
+  `resume_checkpoint_tag`, `resume_epoch`, `resume_step`, and
+  `resume_batch_in_epoch`. `pretrain.py` loads DCP model and optimizer state
+  from `fsdp2_{tag}`, loads rank-local carry from `carry_{tag}.{rank}.pt`,
+  restores `train_state.step`, and calls `V1Dataset.set_epoch(...)` so epoch
+  checkpoints continue on the next dataset epoch instead of replaying epoch 0.
+  On resume, `num_params` is written to W&B summary rather than logged at step
+  `0`, so a backfilled run can continue without violating W&B monotonic step
+  ordering. Confidence: high.
+- New checkpoints write sidecar metadata files named
+  `checkpoint_state_{tag}.json` with `tag`, `step`, `epoch`,
+  `batch_in_epoch`, `global_batch_size`, `data_path`, and `seed`. Step
+  checkpoints such as `step_500000` use this metadata to resume inside an epoch
+  by replay-skipping already completed batches. Existing old epoch checkpoints
+  do not have sidecars; for them resume infers the step as
+  `completed_epoch * total_steps // config.epochs`. Confidence: high.
+- Example resume from an existing DFM epoch checkpoint:
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 torchrun --nproc_per_node=8 pretrain.py \
+  data=dfm \
+  arch/size@arch=L \
+  lr=2.5e-4 \
+  global_batch_size=172032 \
+  project_name="DFM L" \
+  run_name=dfm-L-resume-epoch3 \
+  checkpoint_path=checkpoints/dfm/L-resume \
+  resume_checkpoint_path=checkpoints/dfm/L \
+  resume_checkpoint_tag=epoch_3
+```
+
+  For new step checkpoints, use `resume_checkpoint_tag=step_500000`; if the
+  sidecar JSON is missing, also provide `resume_epoch`, `resume_step`, and
+  `resume_batch_in_epoch`. Confidence: high.
+- The original DFM L epoch checkpoints were reconstructed with exact step
+  sidecars by comparing raw local W&B train history timestamps from
+  `wandb/run-20260528_234406-kgnbdmwf/run-kgnbdmwf.wandb` against checkpoint
+  mtimes. The verified last logged train steps before checkpoint writes are:
+  `epoch_1=164670`, `epoch_2=329380`, and `epoch_3=494080`. Sidecars
+  `checkpoints/dfm/L/checkpoint_state_epoch_{1,2,3}.json` were written with
+  those steps, so `resume_checkpoint_tag=epoch_3` now resolves to
+  `step=494080`, `start_epoch=4`, and `skip_batches=0`. Confidence: high.
+  The terminal progress-bar lines around `20840` at epoch transitions are not a
+  reliable global W&B step boundary by themselves.
+- W&B run `Original Plus Mixed Danish Instruction Rich L/dfm-l-resume-epoch3`
+  was prepared for resuming DFM L from `epoch_3`. It contains `98,816` train
+  rows backfilled from local DFM L history through step `494080`, plus standard
+  `eval/*` and Danish `dfm_eval/*` metrics for epochs `1`, `2`, and `3`.
+  Verified summary values include `resume_prepared_max_train_step=494080`,
+  `train/loss=1.1266595125198364`, `train/accuracy=0.7248556613922119`,
+  `eval/MATH/acc/epoch_3=0.47639826`, and
+  `dfm_eval/ifeval-da/instruction_following/final_acc/epoch_3=0.4760777566757044`.
+  Resume training should use `wandb_run_id=dfm-l-resume-epoch3` and
+  `wandb_resume=allow` so it appends step `494085+` train metrics to the
+  prepared run. Confidence: high.
+- Caveat observed after launching the resumed run: because eval and dfm_eval
+  rows were logged after the train backfill, W&B advanced the internal run step
+  a few steps beyond `494080` before training resumed. The first resumed train
+  log at step `494085` was warned/dropped because W&B's current internal step
+  was `494087`. Subsequent train logs above that point are accepted; W&B API
+  showed the run as `running` and train summary values updating. For future
+  prepared resume runs, either log eval rows with explicit non-advancing/merged
+  steps or expect the first one or two train logs after resume to be skipped.
+  Confidence: high.
+- The first DFM L epoch-3 resume attempt failed at `step_500000` while saving
+  the step checkpoint because `save_train_checkpoint()` still referenced an
+  old global `RANK` variable. `pretrain.py` was fixed to pass `rank` explicitly
+  into checkpoint save helpers. The DCP model/optimizer checkpoint
+  `checkpoints/dfm/L/fsdp2_step_500000` had already been written before the
+  crash. Because `baselines.hrm_nocarry_bp_warmup` has `initial_carry() -> None`,
+  the missing carry files were safely recovered as `torch.save(None, ...)` for
+  ranks `0..7`, and `checkpoint_state_step_500000.json` was written with
+  `step=500000`, `epoch=4`, and `batch_in_epoch=5920`. Resume now resolves
+  `step_500000` to `ResumeState(tag='step_500000', step=500000, start_epoch=4,
+  skip_batches=5920)`. Confidence: high.
+- Goldfish loss integration assessment, 2026-06-01. Goldfish loss is a
+  label-masking modification to next-token cross entropy: drop a deterministic
+  or randomized subset of target tokens from loss computation by setting labels
+  to the ignore index before CE. In this repo the correct integration point is
+  `models/lm_head.py`, immediately before `F.cross_entropy(...)`, because
+  `dataset_new.py` already emits packed `labels` with `IGNORE_LABEL_ID` and
+  `LMHead` already computes masks, CE, and metrics centrally. A minimal optional
+  implementation needs config fields on `LMHeadConfig`/arch config such as
+  `goldfish_strategy`, `goldfish_k`, `goldfish_start_position`, and
+  `goldfish_context_width`; default `goldfish_strategy: null` preserves current
+  behavior. Confidence: high for integration point; medium for preferred
+  strategy defaults.
+- Goldfish loss is now implemented behind an explicit opt-in. Main code lives
+  in `models/goldfish_loss.py`; `models/lm_head.py` applies it only when
+  `arch.goldfish_strategy` is set. `config/arch/net/hrm.yaml` defaults to
+  `goldfish_strategy: null`, `goldfish_k: 50`, `goldfish_context_width: 50`,
+  and `goldfish_seed: 0`, so existing runs are unchanged unless the option is
+  enabled. Enable Apertus-style settings with
+  `arch.goldfish_strategy=hash arch.goldfish_k=50 arch.goldfish_context_width=50`.
+  Validation passed with `python scripts/check_goldfish_loss.py`,
+  `python -m py_compile`, and Hydra composition of the Goldfish overrides.
+  Confidence: high.
+- Hydra override compatibility for the resume command was fixed on 2026-06-01.
+  `config/cfg_pretrain.yaml` now declares `project_name`, `run_name`,
+  `checkpoint_path`, `seed`, `log_interval`, `fwd_bwd_dtype`,
+  `checkpoint_step_interval`, W&B resume fields, and checkpoint resume fields.
+  `config/data/dfm.yaml` now declares `target_only: true`. The DFM L
+  epoch-3 resume command was checked with `python pretrain.py --cfg job ...`
+  and composes without `Could not override ...` errors. Confidence: high.
 
 Update on 2026-05-27 20:45 Europe/Berlin:
 
@@ -363,3 +646,728 @@ wandb sync --include-online --no-mark-synced --project "Original Plus Mixed Dani
 ```
 
 W&B reported the target as `peter-sk-sdu/Original Plus Mixed Danish Instruction Rich L/runs/kgnbdmwf` and completed with `done.`.
+
+## DFM L CP1 Evaluation Queue
+
+Updated on 2026-05-29. Confidence: high.
+
+`scripts/schedule_checkpoint_evals.sh` is a generic 8-GPU checkpoint eval
+scheduler derived from the original+mixed CP3/CP4 scheduler. For DFM L CP1 it
+targets:
+
+- `CKPT_PATH=checkpoints/dfm/L`
+- `EPOCH=1`
+- `WANDB_PROJECT="DFM L"`
+- `WANDB_RUN_ID=kgnbdmwf`
+- `WANDB_RUN_NAME=dfm-L`
+
+Superseded on 2026-05-29: the initial dry-run used 16 MATH shards and 16
+IFEval-DA shards.
+
+Current sharding policy on 2026-05-29. Confidence: high for implemented
+standard and DFM behavior.
+
+Runtime buckets:
+
+- `<10m`: 1 shard.
+- `10-20m`: 2 shards.
+- `20-40m`: 4 shards.
+- `40-80m`: 8 shards.
+- `80-160m`: 16 shards.
+- `160-320m`: 32 shards.
+
+Implemented in `scripts/schedule_checkpoint_evals.sh`:
+
+- Standard evals are generically shardable through `evaluation/main.py`, which
+  now accepts `num_shards` and `shard_index` in each benchmark config and slices
+  prompts/targets after benchmark construction.
+- Standard shard metrics are merged with `scripts/merge_standard_eval_shards.py`
+  before W&B logging.
+- IFEval-DA defaults to 32 shards via
+  `config/dfm_evals_hrm_ifeval_da_32_shards.yaml`.
+- DFM eval tasks now accept `num_shards` and `shard_index` through a shared
+  `dfm-evals/dfm_evals/tasks/_sharding.py` helper.
+- Sharded DFM task metrics are merged from Inspect `.eval` sample records with
+  `scripts/merge_dfm_eval_shards.py` before W&B logging. Shards do not log
+  partial metrics as full metrics.
+
+Superseded on 2026-05-29: the DFM CP1 dry-run queue had `112` jobs with
+`MATH` split into `8` shards. Observed CP1 MATH shard runtime was about an hour
+or more for `625` samples, which violates the target of roughly ten minutes per
+shard.
+
+Current future-run queue policy on 2026-05-29. Confidence: high.
+
+- `GSM8k`: 8 shards.
+- `DROP`: 4 shards.
+- `MMLU`: 4 shards.
+- `ARC`: 1 shard.
+- `HellaSwag`: 2 shards.
+- `Winogrande`: 1 shard.
+- `BoolQ`: 1 shard.
+- `MATH`: 64 shards.
+- `danish_citizen_tests`: 1 shard.
+- `dala`: 1 shard.
+- `gec_dala`: 2 shards.
+- `wmt24pp_en_da`: 8 shards.
+- `multi_wiki_qa`: 2 shards.
+- `piqa`: 1 shard.
+- `generative_talemaader`: 8 shards.
+- `govreport`: 16 shards.
+- `nordjyllandnews`: 8 shards.
+- `humaneval`: 4 shards.
+- `ifeval-da`: 32 shards.
+
+Prior status logs show the longest tails were IFEval-DA, MATH, GSM8k,
+WMT24++ en-da, generative-talemaader, and summarization tasks with BERTScore.
+
+Validation:
+
+- `python -m py_compile` passed for the scheduler helpers and patched eval
+  task files.
+- `bash -n scripts/schedule_checkpoint_evals.sh` passed.
+- `DRY_RUN=1 ... scripts/schedule_checkpoint_evals.sh` produced the 112-job
+  CP1 queue.
+- A zero-sample Inspect probe for `hrm_danish_multi_wiki_qa` with
+  `-T num_shards=2 -T shard_index=0` resolved to
+  `dataset: MultiWikiQA-da-shard-0-of-2`.
+- A zero-sample Inspect probe for `hrm_code_humaneval_local` with
+  `-T num_shards=4 -T shard_index=0` resolved to
+  `dataset: humaneval-shard-0-of-4`.
+- A dry run after the MATH adjustment confirmed that
+  `scripts/schedule_checkpoint_evals.sh` queues `64` standard `MATH` shards.
+
+Launch state on 2026-05-29. Confidence: high.
+
+Superseded: the DFM L CP1 112-job eval scheduler was initially queued behind a
+watcher because the active DFM L training run still occupied all 8 GPUs with
+high utilization.
+
+Updated later on 2026-05-29: the user confirmed the GPUs had enough headroom,
+so the watcher was stopped and the scheduler was launched immediately while the
+DFM L training run was still active. Command:
+
+```bash
+EPOCH=1 CKPT_PATH=checkpoints/dfm/L GPUS=0,1,2,3,4,5,6,7 \
+LOG_ROOT=logs/eval/dfm_L_epoch1_queued_all \
+DFM_LOG_ROOT=logs/dfm_evals/dfm_L_epoch1_queued_all \
+WANDB_PROJECT="DFM L" WANDB_RUN_ID=kgnbdmwf WANDB_RUN_NAME=dfm-L \
+MODEL_PREFIX=hrm-dfm-L scripts/schedule_checkpoint_evals.sh
+```
+
+Files:
+
+- Scheduler PID file: `logs/eval/dfm_L_epoch1_queued_all/scheduler.pid`
+- Launcher log: `logs/eval/dfm_L_epoch1_queued_all.launcher.log`
+- Status log: `logs/eval/dfm_L_epoch1_queued_all/status.tsv`
+- Queue file: `logs/eval/dfm_L_epoch1_queued_all/jobs.tsv`
+
+Verified immediately after launch:
+
+- Scheduler PID: `2285914`.
+- Queue: `112` jobs.
+- Checkpoint readiness passed for `checkpoints/dfm/L` epoch 1.
+- Workers started, with staggered first jobs beginning on `GSM8k` shards.
+
+Completion inspection on 2026-05-29. Confidence: high.
+
+The DFM L CP1 scheduler exited after all `112` queued jobs reached `END`
+status, but final aggregation reported two failures:
+
+```text
+FINAL_MERGE_STANDARD_MATH_FAILED
+FINAL_MERGE_DFM_generative_talemaader_FAILED
+FINAL_MERGE_END
+```
+
+Successful synced aggregates include standard `ARC`, `BoolQ`, `DROP`,
+`GSM8k`, `HellaSwag`, `MMLU`, and `Winogrande`, plus DFM `dala`,
+`danish_citizen_tests`, `gec_dala`, `govreport`, `humaneval`,
+`multi_wiki_qa`, `nordjyllandnews`, `piqa`, `wmt24pp_en_da`, and merged
+`ifeval-da`. The merged IFEval-DA file is
+`logs/dfm_evals/dfm_L_epoch1_queued_all/merged_ifeval_da_metrics.json` and
+contains `541` samples with
+`dfm_eval/ifeval-da/instruction_following/final_acc=0.393870787633715`.
+
+`MATH` failed only for shard `4` of `8`. Its log is
+`logs/eval/dfm_L_epoch1_queued_all/standard_shards/MATH/MATH_shard_4_of_8.log`
+and shows an HF Hub `504 Gateway Time-out` while loading
+`EleutherAI/hendrycks_math` `precalculus`; the scheduler correctly recorded
+`END standard MATH shard_4_of_8 gpu_0 status_1`. The other seven MATH shards
+have summaries and do not need to be rerun.
+
+`generative_talemaader` failed at merge time because the wrapper task did not
+forward `num_shards` and `shard_index`; each of the eight launched jobs ran the
+full `808` samples and therefore produced duplicate sample IDs such as `dtm_0`.
+`dfm-evals/dfm_evals/tasks/talemaader/task.py` was patched so
+`generative_talemaader()` accepts and forwards `num_shards` and `shard_index`.
+`python -m py_compile` passes, and a zero-sample probe now resolves to
+`dataset: generative-talemaader-shard-0-of-8` without unused-parameter
+warnings:
+
+```bash
+OPENAI_API_KEY=inspectai uv run --project dfm-evals evals suite hrm_danish_generative_talemaader \
+  --file config/dfm_evals_hrm_single_tasks.yaml \
+  --target-model openai/dummy \
+  --target-base-url http://127.0.0.1:9/v1 \
+  --judge-model openai/dummy \
+  --judge-base-url http://127.0.0.1:9/v1 \
+  --mode set -- -T num_shards=8 -T shard_index=0 --limit 0 \
+  --log-dir /tmp/hrm_talemaader_shard_probe --log-dir-allow-dirty
+```
+
+The already completed `generative_talemaader` shard `0` is actually a full run
+over all `808` samples, so it can be logged as the full CP1 talemaader result
+without rerunning judge inference. Verified local merge from only that `.eval`
+produces
+`dfm_eval/generative-talemaader/model_graded_fact/accuracy=0.07920792079207921`,
+`accuracy_stderr=0.008161235917216217`, and `n=808`.
+
+Repair update on 2026-05-29. Confidence: high.
+
+The complete `generative_talemaader` shard `0` `.eval` was merged and synced to
+W&B run `kgnbdmwf` in project `DFM L` using:
+
+```bash
+python scripts/merge_dfm_eval_shards.py \
+  logs/dfm_evals/dfm_L_epoch1_queued_all/generative_talemaader/shard_0_of_8/epoch_1/inspect/*.eval \
+  --task generative_talemaader \
+  --epoch 1 \
+  --output logs/dfm_evals/dfm_L_epoch1_queued_all/generative_talemaader/merged_metrics.json \
+  --log-wandb \
+  --project "DFM L" \
+  --run-id kgnbdmwf \
+  --run-name dfm-L
+```
+
+Future scheduler runs are guarded against the same talemaader failure mode:
+`scripts/schedule_checkpoint_evals.sh` now checks each dfm-evals shard log for
+Inspect warnings that `num_shards` or `shard_index` were not used and fails that
+job instead of treating it as valid shard output. The scheduler also defaults to
+`MAX_RETRIES=3`, meaning each failed job can be attempted four total times, and
+DFM/IFEval shard output directories are cleared before each attempt so partial
+failed `.eval` files do not contaminate the final merge.
+
+`MATH` shard `4` of `8` was restarted manually on GPU `0` with:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 PYTHONUNBUFFERED=1 python -u -m evaluation.main \
+  config=evaluation/config/hrm_benchmarking.yaml \
+  ckpt_path=checkpoints/dfm/L \
+  ckpt_epoch=1 \
+  "benchmarks=[{name: MATH, num_shards: 8, shard_index: 4}]" \
+  generation_config.batch_size=8 \
+  > logs/eval/dfm_L_epoch1_queued_all/standard_shards/MATH/MATH_shard_4_of_8.log 2>&1
+```
+
+For this already-started CP1 repair, keep the running `shard_4_of_8` and merge
+it with the seven completed `of_8` shard logs. Switching CP1 repair to `64`
+shards would require either rerunning all MATH under the new layout or adding a
+one-off range slicer for only the missing eighth.
+
+Final CP1 eval repair result on 2026-05-29. Confidence: high.
+
+The restarted `MATH` shard `4` finished successfully with `n=625`,
+`acc=0.3952`, and `invalid=0.1200`. All eight `MATH` shards were then merged
+and synced to W&B run `kgnbdmwf` in project `DFM L`:
+
+```text
+eval/MATH/acc: 0.3854
+eval/MATH/invalid: 0.1106
+eval/MATH/n: 5000
+```
+
+The final local aggregate is
+`logs/eval/dfm_L_epoch1_queued_all/standard_shards/MATH/merged_metrics.json`.
+The sync log is
+`logs/eval/dfm_L_epoch1_queued_all/standard_shards/MATH/merge_and_wandb_sync.log`.
+
+A final scan of CP1 merge logs showed `OK` for all standard merge/sync logs,
+all DFM task merge/sync logs, and `merge_ifeval_da_wandb.log`; no remaining
+failed aggregate logs were found.
+
+Cross-project W&B sync note, 2026-05-29. Confidence: high.
+
+Syncing only the original active training directory does not include all later
+manual eval metrics:
+
+```bash
+wandb sync --include-online --no-mark-synced \
+  --project "Original Plus Mixed Danish Instruction Rich L" \
+  wandb/run-20260528_234406-kgnbdmwf
+```
+
+The eval merge scripts resumed run id `kgnbdmwf` and created separate local
+W&B directories such as `wandb/run-20260529_221506-kgnbdmwf` and
+`wandb/run-20260529_233116-kgnbdmwf`. A multi-directory `wandb sync` reported
+success, but the target project summary still lacked the new keys when checked
+through the W&B API. The reliable repair was to backfill the merged aggregate
+JSON/logs directly into the target project run with `wandb.init(project=...,
+id="kgnbdmwf", resume="allow")` by rerunning the local merge scripts with:
+
+```bash
+--project "Original Plus Mixed Danish Instruction Rich L" \
+--run-id kgnbdmwf \
+--run-name dfm-L \
+--log-wandb
+```
+
+The backfill log is
+`logs/wandb_backfill_kgnbdmwf_to_original_plus_mixed_20260529T234727.log`.
+W&B API verification after the backfill showed the target project run contains
+representative new metrics:
+
+```text
+eval/MATH/acc: 0.3854
+eval/MATH/invalid: 0.1106
+eval/MATH/n: 5000
+dfm_eval/generative-talemaader/model_graded_fact/accuracy: 0.07920792079207921
+dfm_eval/generative-talemaader/model_graded_fact/n: 808
+dfm_eval/nordjyllandnews/rougeL/mean: 0.22148837256342324
+dfm_eval/ifeval-da/instruction_following/final_acc: 0.393870787633715
+```
+
+DALA metric-name compatibility note, 2026-05-30. Confidence: high.
+
+Earlier DALA runs logged the linguistic-acceptability macro-F1 and MCC metrics
+with flattened scorer names:
+
+```text
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1
+dfm_eval/dala/linguistic-acceptability/dfm_evals_mcc
+```
+
+The first DFM L CP1 merge emitted slash-form keys
+`dfm_eval/dala/linguistic-acceptability/dfm_evals/macro_f1` and
+`dfm_eval/dala/linguistic-acceptability/dfm_evals/mcc`, which did not line up
+with older W&B panels. The target run `kgnbdmwf` in project
+`Original Plus Mixed Danish Instruction Rich L` was backfilled with the
+flattened aliases:
+
+```text
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1: 0.4906548270682793
+dfm_eval/dala/linguistic-acceptability/dfm_evals_mcc: 0.03368421246821112
+dfm_eval/dala/linguistic-acceptability/n: 2048
+```
+
+`scripts/merge_dfm_eval_shards.py` now emits the flattened DALA key names for
+future runs. A local probe against the CP1 DALA `.eval` confirmed the updated
+merge output.
+
+## DFM L CP2 Evaluation Queue
+
+Updated on 2026-05-30. Confidence: high.
+
+CP2 exists locally under `checkpoints/dfm/L`: `fsdp2_epoch_2/.metadata` and all
+eight `carry_epoch_2.{0..7}.pt` files were present before scheduling.
+
+The CP2 all-evals scheduler was launched on all eight GPUs with:
+
+```bash
+EPOCH=2 CKPT_PATH=checkpoints/dfm/L GPUS=0,1,2,3,4,5,6,7 \
+LOG_ROOT=logs/eval/dfm_L_epoch2_queued_all \
+DFM_LOG_ROOT=logs/dfm_evals/dfm_L_epoch2_queued_all \
+WANDB_PROJECT="DFM L" WANDB_RUN_ID=kgnbdmwf WANDB_RUN_NAME=dfm-L \
+MODEL_PREFIX=hrm-dfm-L MAX_RETRIES=3 scripts/schedule_checkpoint_evals.sh
+```
+
+Launcher PID:
+
+```text
+3530318
+```
+
+Files:
+
+- Scheduler PID file: `logs/eval/dfm_L_epoch2_queued_all/scheduler.pid`
+- Launcher log: `logs/eval/dfm_L_epoch2_queued_all.launcher.log`
+- Status log: `logs/eval/dfm_L_epoch2_queued_all/status.tsv`
+- Queue file: `logs/eval/dfm_L_epoch2_queued_all/jobs.tsv`
+
+Dry run and launch both reported `168` jobs. Current future-run sharding is in
+effect, including `MATH=64` shards and `IFEval-DA=32` shards. The scheduler
+started with all eight `GSM8k` shards across GPUs `0..7`.
+
+`scripts/report_eval_progress.py` was patched on 2026-05-30 so CP2 progress
+reports infer the epoch from `--log-root` and scale the MATH ETA from the old
+8-shard measurement to the current 64-shard schedule. Use:
+
+```bash
+python scripts/report_eval_progress.py \
+  --log-root logs/eval/dfm_L_epoch2_queued_all \
+  --dfm-log-root logs/dfm_evals/dfm_L_epoch2_queued_all
+```
+
+Initial progress report at `2026-05-30T15:04:23+02:00` showed
+`completed=0`, `active=8`, `queued=160`, `total_visible=168`, with an early
+full ETA of about `3h03m`.
+
+CP2 partial sync and cross-project backfill, 2026-05-30. Confidence: high.
+
+While CP2 IFEval-DA was still running, all completed CP2 standard evals and
+non-IFEval DFM tasks were merged and synced. The first direct backfill into
+`DFM L` wrote local W&B summaries, but the remote `DFM L` run did not expose the
+new keys through the API while the active training writer was still online. A
+second explicit backfill from the merged JSON files fixed this; W&B API
+verification showed representative keys in `DFM L`:
+
+```text
+eval/MATH/acc: 0.45380217999999994
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1: 0.3776531672364676
+dfm_eval/humaneval/verify/accuracy: 0.14634146341463414
+dfm_eval/ifeval-da/instruction_following/final_acc: 0.393870787633715
+```
+
+The IFEval-DA value above is the already-completed CP1 value; CP2 IFEval-DA was
+not yet complete at the time of this sync. The CP2 backfill log explicitly
+reported:
+
+```text
+epoch 2 project DFM L dfm ifeval-da skipped: 16/32 eval files available
+epoch 2 project Original Plus Mixed Danish Instruction Rich L dfm ifeval-da skipped: 16/32 eval files available
+```
+
+CP2 was also backfilled to project
+`Original Plus Mixed Danish Instruction Rich L`. W&B API verification showed:
+
+```text
+eval/MATH/acc: 0.45380217999999994
+dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1: 0.3776531672364676
+dfm_eval/humaneval/verify/accuracy: 0.14634146341463414
+dfm_eval/ifeval-da/instruction_following/final_acc: None
+```
+
+Backfill log:
+
+```text
+logs/eval/dfm_L_backfill_cp1_cp2_to_projects_20260530T181143.log
+```
+
+The second DFM-L visibility repair read merged JSON files and logged CP1/CP2
+aggregate rows in one W&B run session. It skipped
+`logs/dfm_evals/dfm_L_epoch2_queued_all/merged_ifeval_da_metrics.json` because
+that file did not exist yet.
+
+Final CP2 completion/sync, 2026-05-30. Confidence: high.
+
+CP2 IFEval-DA finished all `32/32` shards and the scheduler reached
+`FINAL_MERGE_END` at `2026-05-30T20:05:50+02:00`. All CP2 merge/sync logs under
+`logs/eval/dfm_L_epoch2_queued_all` and
+`logs/dfm_evals/dfm_L_epoch2_queued_all` were scanned and reported `OK`.
+
+Merged CP2 IFEval-DA metrics:
+
+```text
+dfm_eval/ifeval-da/instruction_following/final_acc: 0.41158366361133086
+dfm_eval/ifeval-da/instruction_following/final_stderr: 0.017495304869788196
+dfm_eval/ifeval-da/instruction_following/inst_loose_acc: 0.5045766590389016
+dfm_eval/ifeval-da/instruction_following/inst_strict_acc: 0.4874141876430206
+dfm_eval/ifeval-da/instruction_following/prompt_loose_acc: 0.3345656192236599
+dfm_eval/ifeval-da/instruction_following/prompt_strict_acc: 0.3197781885397412
+```
+
+The final merged file is
+`logs/dfm_evals/dfm_L_epoch2_queued_all/merged_ifeval_da_metrics.json`.
+The scheduler's merge log is
+`logs/dfm_evals/dfm_L_epoch2_queued_all/merge_ifeval_da_wandb.log`.
+
+The CP2 IFEval-DA aggregate was backfilled to both W&B projects:
+`DFM L` and `Original Plus Mixed Danish Instruction Rich L`, run id
+`kgnbdmwf`. The `Original Plus Mixed Danish Instruction Rich L` project exposed
+the values through the normal W&B API immediately. For `DFM L`, the active
+training writer again hid/overwrote the summary keys, so the run summary was
+patched directly through the W&B API. Verification after the direct summary
+patch showed:
+
+```text
+DFM L :: dfm_eval/ifeval-da/instruction_following/final_acc = 0.41158366361133086
+DFM L :: dfm_eval/ifeval-da/instruction_following/inst_strict_acc = 0.4874141876430206
+DFM L :: dfm_eval/ifeval-da/instruction_following/prompt_strict_acc = 0.3197781885397412
+```
+
+CP2 heavy-first rerun, 2026-05-31. Confidence: high.
+
+`scripts/schedule_checkpoint_evals.sh` now supports `QUEUE_ORDER=heavy_first`.
+That queue order starts with IFEval-DA shards, then MATH shards, then the other
+longer shard groups before the short single-shard tasks. A dry run with
+`QUEUE_ORDER=heavy_first` queued `168` jobs and showed the expected leading
+tasks.
+
+The first CP2 heavy-first background launch at
+`logs/eval/dfm_L_epoch2_heavy_first_20260531T1059` exited before workers
+started, leaving an empty status log and a partial queue. It was superseded by a
+detached `setsid` launch.
+
+Active launch:
+
+```bash
+EPOCH=2 EVAL_EPOCH=2 CKPT_TAG=epoch_2 CKPT_PATH=checkpoints/dfm/L \
+GPUS=0,1,2,3,4,5,6,7 QUEUE_ORDER=heavy_first \
+LOG_ROOT=logs/eval/dfm_L_epoch2_heavy_first_20260531T1102 \
+DFM_LOG_ROOT=logs/dfm_evals/dfm_L_epoch2_heavy_first_20260531T1102 \
+WANDB_PROJECT="DFM L" WANDB_RUN_ID=kgnbdmwf WANDB_RUN_NAME=dfm-L \
+MODEL_PREFIX=hrm-dfm-L MAX_RETRIES=3 scripts/schedule_checkpoint_evals.sh
+```
+
+Scheduler PID: `2557293`.
+
+Files:
+
+- Scheduler PID file:
+  `logs/eval/dfm_L_epoch2_heavy_first_20260531T1102/scheduler.pid`
+- Launcher log:
+  `logs/eval/dfm_L_epoch2_heavy_first_20260531T1102.launcher.log`
+- Status log:
+  `logs/eval/dfm_L_epoch2_heavy_first_20260531T1102/status.tsv`
+- DFM log root:
+  `logs/dfm_evals/dfm_L_epoch2_heavy_first_20260531T1102`
+
+Initial verification showed checkpoint readiness for `epoch_2`, all eight
+workers started on IFEval-DA shards `0..7`, and `nvidia-smi` reported all eight
+GPUs at `100%` utilization with roughly `101-125 GB` memory in use. Confidence:
+high.
+
+Final heavy-first CP2 sync, 2026-05-31. Confidence: high.
+
+The heavy-first CP2 scheduler completed all `168/168` jobs and reached
+`FINAL_MERGE_END` at `2026-05-31T15:52:04+02:00`. The built-in final merge
+synced the aggregates to project `DFM L`, run id `kgnbdmwf`.
+
+The same merged aggregates were then backfilled to project
+`Original Plus Mixed Danish Instruction Rich L`, run id `kgnbdmwf`, run name
+`dfm-L`. The successful backfill log is:
+
+```text
+logs/eval/dfm_L_epoch2_heavy_first_backfill_to_original_plus_mixed_20260531T174752.log
+```
+
+It logged `195` standard `eval/*` metrics from `8` merged standard files and
+`74` `dfm_eval/*` metrics from `11` merged DFM files. W&B API verification
+against
+`https://wandb.ai/peter-sk-sdu/Original%20Plus%20Mixed%20Danish%20Instruction%20Rich%20L/runs/kgnbdmwf`
+returned representative values:
+
+```text
+eval/MATH/acc = 0.45380217999999994
+eval/GSM8k/acc = 0.7665051554207735
+eval/MMLU/acc = 0.33975000000000005
+dfm_eval/ifeval-da/instruction_following/final_acc = 0.41204577082020327
+dfm_eval/generative-talemaader/model_graded_fact/accuracy = 0.13923267326732677
+dfm_eval/humaneval/verify/accuracy = 0.14634146341463414
+dfm_eval/nordjyllandnews/rougeL/mean = 0.20810562203119595
+```
+
+Follow-up visibility check on 2026-05-31. Confidence: high.
+
+The CP2 heavy-first metrics are present in W&B history, not only in summary.
+API checks with one metric family at a time returned history rows for run
+`kgnbdmwf` in project `Original Plus Mixed Danish Instruction Rich L`,
+including:
+
+```text
+eval/MATH/acc at _step 900103 with eval/epoch = 2
+dfm_eval/ifeval-da/instruction_following/final_acc at _step 900104 with dfm_eval/epoch = 2
+```
+
+If the W&B UI does not show them, likely causes are workspace/run filters that
+exclude the `dfm-L` run, stale panel state, or plots using `_step` as x-axis.
+For standard eval panels use `eval/epoch` as x-axis; for DFM eval panels use
+`dfm_eval/epoch`.
+
+DFM L CP3 full eval launch, 2026-05-31. Confidence: high.
+
+Before scheduling CP3, W&B history for run `kgnbdmwf` in project
+`Original Plus Mixed Danish Instruction Rich L` was checked for
+`eval/MATH/acc` and contained only DFM CP1/CP2 rows. The local DFM CP3
+checkpoint was complete under `checkpoints/dfm/L` with `fsdp2_epoch_3` and all
+eight `carry_epoch_3.{0..7}.pt` files.
+
+CP3 full evals were launched with heavy-first ordering:
+
+```bash
+EPOCH=3 EVAL_EPOCH=3 CKPT_TAG=epoch_3 CKPT_PATH=checkpoints/dfm/L \
+GPUS=0,1,2,3,4,5,6,7 QUEUE_ORDER=heavy_first \
+LOG_ROOT=logs/eval/dfm_L_epoch3_heavy_first_20260531T2227 \
+DFM_LOG_ROOT=logs/dfm_evals/dfm_L_epoch3_heavy_first_20260531T2227 \
+WANDB_PROJECT="DFM L" WANDB_RUN_ID=kgnbdmwf WANDB_RUN_NAME=dfm-L \
+MODEL_PREFIX=hrm-dfm-L MAX_RETRIES=3 scripts/schedule_checkpoint_evals.sh
+```
+
+Scheduler PID: `3527439`.
+
+Files:
+
+- Scheduler PID file:
+  `logs/eval/dfm_L_epoch3_heavy_first_20260531T2227/scheduler.pid`
+- Launcher log:
+  `logs/eval/dfm_L_epoch3_heavy_first_20260531T2227.launcher.log`
+- Status log:
+  `logs/eval/dfm_L_epoch3_heavy_first_20260531T2227/status.tsv`
+- DFM log root:
+  `logs/dfm_evals/dfm_L_epoch3_heavy_first_20260531T2227`
+
+Initial verification showed `168` jobs queued, checkpoint readiness for
+`epoch_3`, workers started on IFEval-DA shards, and all eight GPUs active.
+
+DFM L CP3 eval resume/GovReport recovery, 2026-06-01. Confidence: high.
+
+The CP3 scheduler was later stopped and resumed from
+`logs/eval/dfm_L_epoch3_heavy_first_20260531T2227` with
+`RESUME_EXISTING_QUEUE=1`. The resumed queue reached the GovReport shards after
+finishing the standard eval shards. GovReport initially left all GPUs idle
+because `scripts/hrm_openai_server.py` model-server processes were crashing
+before serving `/health`, while dfm-evals clients waited on localhost ports.
+Two import issues were fixed:
+
+- `scripts/hrm_openai_server.py` now inserts the repo root into `sys.path`
+  before importing repo modules.
+- `utils/__init__.py` was added so `from utils.functions import ...` resolves
+  to the repo-local utility package instead of colliding with other `utils`
+  namespace/package paths.
+
+A scheduler cleanup bug was also fixed in `scripts/schedule_checkpoint_evals.sh`:
+the DFM and IFEval `RETURN` cleanup traps now read `${server_pid:-}` and
+`${judge_pid:-}` into local temporaries before testing/killing them. Without
+this, `set -u` could terminate a worker later with an unbound local variable
+after a DFM task returned.
+
+When launching a long resume from Codex/tool-managed shells, use `setsid -f`
+rather than plain background `nohup`; plain background launches were observed
+to be torn down after the launcher command returned. The working detached
+resume pattern was:
+
+```bash
+setsid -f bash -c 'exec env \
+  EPOCH=3 EVAL_EPOCH=3 CKPT_TAG=epoch_3 CKPT_PATH=checkpoints/dfm/L \
+  GPUS=0,1,2,3,4,5,6,7 QUEUE_ORDER=heavy_first RESUME_EXISTING_QUEUE=1 \
+  LOG_ROOT="logs/eval/dfm_L_epoch3_heavy_first_20260531T2227" \
+  DFM_LOG_ROOT="logs/dfm_evals/dfm_L_epoch3_heavy_first_20260531T2227" \
+  WANDB_PROJECT="DFM L" WANDB_RUN_ID=kgnbdmwf WANDB_RUN_NAME=dfm-L \
+  MODEL_PREFIX=hrm-dfm-L MAX_RETRIES=3 STARTUP_STAGGER_SECONDS=10 \
+  scripts/schedule_checkpoint_evals.sh \
+  >> "logs/eval/dfm_L_epoch3_heavy_first_20260531T2227.resume6.setsid.log" 2>&1' \
+  </dev/null
+```
+
+After the `setsid` relaunch, GovReport shards resumed successfully: status
+showed shards `0..7` starting, several ending with status `0`, later shards
+starting, `11` GovReport shard eval files written, and the remaining queue
+down to `38` jobs. Confidence: high.
+
+Final CP3 eval status update, 2026-06-01. Confidence: high.
+
+The resumed CP3 scheduler consumed the full queue: `jobs.tsv` reached `0`
+lines, all eval workers/server processes exited, and the last eval job
+(`dfm humaneval shard_3_of_4`) ended with status `0` at
+`2026-06-01T13:35:39+02:00`. The scheduler then entered `FINAL_MERGE_START`
+and reached `FINAL_MERGE_END` at `2026-06-01T13:35:56+02:00`.
+
+However, every final merge-and-W&B-sync command logged `FAILED` because W&B was
+not authenticated in the detached scheduler environment:
+
+```text
+wandb.errors.errors.UsageError: No API key configured. Use `wandb login` to log in.
+```
+
+The eval artifacts are present locally, including HumanEval shard inspect and
+EEE outputs. The next operational step is to rerun merge/sync with a valid W&B
+login or `WANDB_API_KEY` in the environment; the eval computations themselves
+do not need to be rerun for this failure.
+
+Superseded by later 2026-06-01 update: W&B was authenticated and all CP3
+merge/sync commands were rerun successfully. Confidence: high.
+
+After `wandb login`, the standard eval, IFEval-DA, and DFM eval merge/sync
+commands were rerun manually against:
+
+- `logs/eval/dfm_L_epoch3_heavy_first_20260531T2227`
+- `logs/dfm_evals/dfm_L_epoch3_heavy_first_20260531T2227`
+
+The rerun wrote `*.rerun.log` merge logs and printed successful sync completion
+for all standard eval tasks, IFEval-DA, and DFM tasks through HumanEval.
+W&B API summary verification for project `DFM L`, run id `kgnbdmwf`, found
+representative CP3 metrics including:
+
+```text
+eval/MATH/acc/epoch_3 = 0.47639826
+eval/GSM8k/acc/epoch_3 = 0.793018726307809
+dfm_eval/ifeval-da/instruction_following/final_acc/epoch_3 = 0.4760777566757044
+dfm_eval/govreport/rougeL/mean/epoch_3 = 0.019145910006355467
+dfm_eval/nordjyllandnews/rougeL/mean/epoch_3 = 0.18987313066472783
+dfm_eval/humaneval/verify/accuracy/epoch_3 = 0.2195121951219512
+```
+
+Later correction on 2026-06-01. Confidence: high.
+
+The initial verification above was for project `DFM L`. The same CP3 merged
+metrics were then explicitly backfilled to project
+`Original Plus Mixed Danish Instruction Rich L`, run id `kgnbdmwf`, because
+that project initially showed only CP1 and CP2. Backfill log:
+
+```text
+logs/eval/dfm_L_epoch3_heavy_first_20260531T2227/backfill_cp3_to_original_plus_mixed_20260601T134813.log
+```
+
+W&B API summary verification against
+`peter-sk-sdu/Original Plus Mixed Danish Instruction Rich L/kgnbdmwf` found:
+
+```text
+eval/MATH/acc/epoch_3 = 0.47639826
+eval/GSM8k/acc/epoch_3 = 0.793018726307809
+dfm_eval/ifeval-da/instruction_following/final_acc/epoch_3 = 0.4760777566757044
+dfm_eval/govreport/rougeL/mean/epoch_3 = 0.019145910006355467
+dfm_eval/nordjyllandnews/rougeL/mean/epoch_3 = 0.18987313066472783
+dfm_eval/humaneval/verify/accuracy/epoch_3 = 0.2195121951219512
+```
+
+DFM L train-history backfill to Original Plus Mixed project, 2026-06-01.
+Confidence: high.
+
+The target project `Original Plus Mixed Danish Instruction Rich L`, run
+`kgnbdmwf`, initially had only partial DFM L `train/*` history when sampled via
+the W&B API: visible train rows reached about step `302575`, while the source
+project `DFM L`, run `kgnbdmwf`, reached about step `592395`.
+
+Attempted direct full-file sync from the local full run:
+
+```bash
+wandb sync --include-online --no-mark-synced \
+  --project "Original Plus Mixed Danish Instruction Rich L" \
+  wandb/run-20260528_234406-kgnbdmwf
+```
+
+This completed and updated summary state, but the target run still lacked
+high-step `train/*` history above `500k`.
+
+A direct API replay with `wandb.log(..., step=<source_step>)` was also attempted
+and then stopped. It failed conceptually because eval backfills had already
+advanced W&B's internal `_step` to about `900124`; W&B rejected later train
+rows at `_step` values `302k..592k` as non-monotonic.
+
+Superseded by the clean-run solution recorded above on 2026-06-01: replay the full DFM L train history into the target run using
+W&B's monotonic internal step, while storing the original training step in
+`train/source_step` and defining it as the step metric for train curves. The
+successful replay logged `118,775` source train points from source step `5` to
+`592395` into `Original Plus Mixed Danish Instruction Rich L/kgnbdmwf`.
+
+Verification after replay:
+
+```text
+train/source_step = 592395
+train/loss = 1.1001414060592651
+train/accuracy = 0.7316066026687622
+train/exact_accuracy = 0.1923076957464218
+train/lr = 0.00025
+train/dfm_loss = 1.1001414060592651
+train/dfm_accuracy = 0.7316066026687622
+train/dfm_exact_accuracy = 0.1923076957464218
+train/dfm_lr = 0.00025
+```
+
+This same-run replay polluted the original target run and should not be used
+for clean train plots. For the clean comparison, use
+`Original Plus Mixed Danish Instruction Rich L/dfmlfull0601`; it has native
+train `_step` values plus eval and dfm_eval metrics. The
+`train/dfm_*` metrics are duplicated aliases intended to make the DFM L
+backfilled train curves easy to distinguish from any older partial `train/*`
+history in the target project.

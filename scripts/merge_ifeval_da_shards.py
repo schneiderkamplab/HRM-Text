@@ -16,6 +16,10 @@ import numpy as np
 METRIC_PREFIX = "dfm_eval/ifeval-da/instruction_following"
 
 
+def epoch_label(epoch: float) -> str:
+    return str(int(epoch)) if epoch.is_integer() else str(epoch).replace(".", "p")
+
+
 def iter_sample_scores(paths: list[Path]):
     seen_ids: set[str] = set()
     for path in paths:
@@ -130,7 +134,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("eval", nargs="+", type=Path, help="Shard .eval zip files.")
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--epoch", type=int, required=True)
+    parser.add_argument("--epoch", type=float, required=True)
     parser.add_argument("--project")
     parser.add_argument("--run-id")
     parser.add_argument("--run-name")
@@ -164,9 +168,10 @@ def main() -> None:
         row = {epoch_key: args.epoch, **metrics}
         wandb.log(row, commit=True)
         summary = {epoch_key: args.epoch, f"{args.prefix}/last_epoch": args.epoch}
+        label = epoch_label(args.epoch)
         for key, value in metrics.items():
             summary[key] = value
-            summary[f"{key}/epoch_{args.epoch}"] = value
+            summary[f"{key}/epoch_{label}"] = value
         run.summary.update(summary)
         wandb.finish()
 

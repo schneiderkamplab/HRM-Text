@@ -4,17 +4,24 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import threading
 import time
 import uuid
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from evaluation.engines import SimpleEngine
+from simple_inference_engine import normalize_checkpoint_tag
 
 
 class ChatMessage(BaseModel):
@@ -41,7 +48,8 @@ class CompletionRequest(BaseModel):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ckpt-path", required=True)
-    parser.add_argument("--ckpt-epoch", type=int, required=True)
+    parser.add_argument("--ckpt-epoch", type=int, default=None)
+    parser.add_argument("--ckpt-tag", default=None, help="Checkpoint tag such as epoch_1 or step_10000.")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8091)
     parser.add_argument("--model-name", default=None)
@@ -50,7 +58,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-context", type=int, default=4096)
     parser.add_argument("--condition", default="direct")
     parser.add_argument("--no-ema", action="store_true")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.ckpt_epoch is not None and args.ckpt_tag is not None:
+        parser.error("Specify only one of --ckpt-epoch and --ckpt-tag")
+    return args
 
 
 def content_to_text(content: str | list[dict[str, Any]] | None) -> str:
@@ -203,10 +214,14 @@ class BatchGenerator:
 
 
 def make_app(args: argparse.Namespace) -> FastAPI:
-    model_name = args.model_name or f"hrm-epoch-{args.ckpt_epoch}"
+    ckpt_label = normalize_checkpoint_tag(args.ckpt_tag) if args.ckpt_tag is not None else (
+        f"epoch_{args.ckpt_epoch}" if args.ckpt_epoch is not None else "latest"
+    )
+    model_name = args.model_name or f"hrm-{ckpt_label}"
     engine = SimpleEngine(
         ckpt_path=args.ckpt_path,
         ckpt_epoch=args.ckpt_epoch,
+        ckpt_tag=args.ckpt_tag,
         ckpt_use_ema=not args.no_ema,
     )
     generator = BatchGenerator(engine, args)
@@ -224,8 +239,8 @@ def make_app(args: argparse.Namespace) -> FastAPI:
         ]
 
     @app.get("/health")
-    def health() -> dict[str, str | int]:
-        return {"status": "ok", "model": model_name, "epoch": args.ckpt_epoch}
+    def health() -> dict[str, str]:
+        return {"status": "ok", "model": model_name, "checkpoint": ckpt_label}
 
     @app.get("/v1/models")
     def models() -> dict[str, list[dict[str, str]]]:

@@ -19,10 +19,14 @@ DEFAULT_RUN_NAME = "original-sapient-L-clean-history"
 DEFAULT_PREFIX = "dfm_eval"
 
 
+def epoch_label(epoch: float) -> str:
+    return str(int(epoch)) if epoch.is_integer() else str(epoch).replace(".", "p")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--eee-dir", type=Path, required=True)
-    parser.add_argument("--epoch", type=int, required=True)
+    parser.add_argument("--epoch", type=float, required=True)
     parser.add_argument("--project", default=DEFAULT_PROJECT)
     parser.add_argument("--run-id", default=DEFAULT_RUN_ID)
     parser.add_argument("--run-name", default=DEFAULT_RUN_NAME)
@@ -95,8 +99,9 @@ def main() -> None:
     row.update(metrics)
     wandb.log(row)
 
+    label = epoch_label(args.epoch)
     for key, value in metrics.items():
-        run.summary[f"{key}/epoch_{args.epoch}"] = value
+        run.summary[f"{key}/epoch_{label}"] = value
     run.summary[f"{args.prefix}/last_epoch"] = args.epoch
     wandb.finish()
 

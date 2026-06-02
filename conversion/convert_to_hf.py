@@ -118,13 +118,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--ckpt_path", type=Path, required=True)
     parser.add_argument("--ckpt_epoch", type=int, default=None)
+    parser.add_argument("--ckpt_tag", type=str, default=None)
     parser.add_argument("--ckpt_use_ema", type=parse_bool, default=True)
     parser.add_argument("--out_dir", type=Path, required=True)
     parser.add_argument("--tokenizer_path", type=Path, default=None)
     args = parser.parse_args()
+    if args.ckpt_epoch is not None and args.ckpt_tag is not None:
+        parser.error("Specify only one of --ckpt_epoch and --ckpt_tag")
 
     metadata, cfg = load_config(args.ckpt_path)
-    ckpt = inference_load_checkpoint(str(args.ckpt_path), args.ckpt_epoch, args.ckpt_use_ema)
+    ckpt = inference_load_checkpoint(str(args.ckpt_path), args.ckpt_epoch, args.ckpt_use_ema, ckpt_tag=args.ckpt_tag)
 
     hf_state, dropped = convert_state_dict(ckpt.model.state_dict())
     print(f"[convert] mapped {len(hf_state)} tensors; dropped {len(dropped)}")

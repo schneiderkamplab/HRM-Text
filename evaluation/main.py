@@ -12,6 +12,8 @@ class BenchmarkConfig(pydantic.BaseModel):
 
     name: str
     generation_config: dict[str, Any] = {}
+    num_shards: int = 1
+    shard_index: int = 0
 
 
 class EvaluationConfig(pydantic.BaseModel):
@@ -62,6 +64,21 @@ def main():
         # Instantiate benchmark
         bench_cls = load_model_class(f"benchmarks@{b_name}", prefix="evaluation.")
         benchmark = bench_cls(**(b_cfg.__pydantic_extra__ or {}))
+        if b_cfg.num_shards < 1:
+            raise ValueError(f"{b_name}: num_shards must be >= 1")
+        if b_cfg.shard_index < 0 or b_cfg.shard_index >= b_cfg.num_shards:
+            raise ValueError(f"{b_name}: shard_index must satisfy 0 <= shard_index < num_shards")
+        if b_cfg.num_shards > 1:
+            shard_prompts = []
+            shard_ground_truths = []
+            for index, (prompt, ground_truth) in enumerate(
+                zip(benchmark.prompts, benchmark.ground_truths, strict=True)
+            ):
+                if index % b_cfg.num_shards == b_cfg.shard_index:
+                    shard_prompts.append(prompt)
+                    shard_ground_truths.append(ground_truth)
+            benchmark.prompts = shard_prompts
+            benchmark.ground_truths = shard_ground_truths
 
         # Resolve final generation config: Base -> Benchmark Specific -> Benchmark Overrides
         gen_cfg = cfg.generation_config | benchmark.generation_overrides | b_cfg.generation_config

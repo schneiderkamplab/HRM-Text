@@ -62,6 +62,8 @@ def output_path_for(src: Path, input_root: Path, output_root: Path) -> Path:
     rel = src.relative_to(input_root)
     if rel.name.endswith(".jsonl.gz"):
         return output_root / rel.with_name(rel.name[:-len(".jsonl.gz")] + ".parquet")
+    if rel.name.endswith(".json.gz"):
+        return output_root / rel.with_name(rel.name[:-len(".json.gz")] + ".parquet")
     return output_root / rel.with_suffix(".parquet")
 
 
@@ -258,6 +260,29 @@ def convert_dynaword(path: Path, out_path: Path, max_chars: int, batch_size: int
             for text in batch.column(0).to_pylist():
                 for chunk in chunk_text(as_text(text), max_chars):
                     yield {"condition": "direct", "instruction": "", "response": chunk}
+
+    return write_rows(iter_rows(), out_path, batch_size)
+
+
+def convert_raw_text_parquet(path: Path, out_path: Path, max_chars: int, batch_size: int) -> int:
+    def iter_rows():
+        pf = pq.ParquetFile(path)
+        for batch in pf.iter_batches(columns=["text"], batch_size=batch_size):
+            for text in batch.column(0).to_pylist():
+                for chunk in chunk_text(as_text(text), max_chars):
+                    yield {"condition": "direct", "instruction": "", "response": chunk}
+
+    return write_rows(iter_rows(), out_path, batch_size)
+
+
+def convert_raw_text_json(path: Path, out_path: Path, max_chars: int, batch_size: int) -> int:
+    def iter_rows():
+        for row in iter_jsonl_rows(path):
+            text = as_text(row.get("text")).strip()
+            if not text:
+                continue
+            for chunk in chunk_text(text, max_chars):
+                yield {"condition": "direct", "instruction": "", "response": chunk}
 
     return write_rows(iter_rows(), out_path, batch_size)
 
@@ -635,6 +660,10 @@ def convert_file(src: Path, input_root: Path, output_root: Path, args: argparse.
             count = convert_dynaword(src, out_path, args.dynaword_chars, args.batch_size)
             write_convert_meta(src, input_root, out_path, args)
             return "converted_dynaword", count
+        if len(parts) >= 1 and parts[0].startswith("common_pile_") and "text" in cols:
+            count = convert_raw_text_parquet(src, out_path, args.dynaword_chars, args.batch_size)
+            write_convert_meta(src, input_root, out_path, args)
+            return "converted_common_pile_text", count
         if {"condition", "instruction", "response"}.issubset(cols):
             dst = output_root / src.relative_to(input_root)
             link_or_copy(src, dst, args.copy_ready)
@@ -662,7 +691,11 @@ def convert_file(src: Path, input_root: Path, output_root: Path, args: argparse.
             return "converted_instruction_output", count
         return "skipped_unknown_parquet", 0
 
-    if src.suffix == ".jsonl" or src.name.endswith(".jsonl.gz"):
+    if src.suffix == ".jsonl" or src.name.endswith(".jsonl.gz") or src.name.endswith(".json.gz"):
+        if len(parts) >= 1 and parts[0].startswith("common_pile_"):
+            count = convert_raw_text_json(src, out_path, args.dynaword_chars, args.batch_size)
+            write_convert_meta(src, input_root, out_path, args)
+            return "converted_common_pile_text", count
         if len(parts) >= 2 and parts[0] == "lexdk" and parts[-1] == "lexdk_articles.jsonl.gz":
             count = convert_lexdk(src, out_path, args.batch_size)
             write_convert_meta(src, input_root, out_path, args)
@@ -736,7 +769,7 @@ def main() -> None:
 
     files = [
         p for p in input_root.rglob("*")
-        if p.is_file() and (p.suffix in {".parquet", ".jsonl"} or p.name.endswith(".jsonl.gz"))
+        if p.is_file() and (p.suffix in {".parquet", ".jsonl"} or p.name.endswith(".jsonl.gz") or p.name.endswith(".json.gz"))
     ]
     counts: dict[str, int] = {}
     rows: dict[str, int] = {}

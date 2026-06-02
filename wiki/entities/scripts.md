@@ -1,7 +1,7 @@
 # Script Entities
 
-Last updated: 2026-05-24  
-Confidence: high  
+Last updated: 2026-06-01
+Confidence: high
 Scope: Local scripts added or used during data preparation.
 
 ## `scripts/transformers_openai_server.py`
@@ -142,6 +142,219 @@ Mixed tasks linked:          226
 Mixed Sapient tasks skipped: 1,139
 Name collisions skipped:     0
 ```
+
+## `scripts/generate_dfm2_dynaword_tasks.py`
+
+Generates DFM2 self-supervised DynaWord task sources.
+
+Responsibilities:
+
+- read converted DynaWord continuation rows from `data/converted_sources/danish_dynaword`
+- rechunk raw text to smaller task chunks, default `3000` chars
+- write separate `condition/instruction/response` Parquet trees under `data/converted_sources_dfm2_dynaword_tasks`
+- create two prefix-continuation variants, two denoising variants, and six span-fill variants
+- cap rows per source file to the DFM2 sampling budget: `60k` for each prefix-continuation variant, `30k` for each denoising variant, and `30k` for each span-fill variant
+- avoid sampler-level `repeat: 2` for generated task families; unique generated variants are used instead of duplicated sampled rows
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/generate_dfm2_dynaword_tasks.py \
+  --output-root data/converted_sources_dfm2_dynaword_tasks \
+  --force
+```
+
+Verified 2026-05-30 full generation output: `450` Parquet files and `13G`.
+
+## `scripts/build_tokenized_dfm2_tree.py`
+
+Builds the DFM2 tokenized dataset view, `data/tokenized_dfm2`.
+
+Responsibilities:
+
+- symlink all task directories from `data/tokenized_mixed`
+- symlink generated DFM2 task directories from `data/tokenized_dfm2_dynaword_tasks`
+- write `data/tokenized_dfm2/union_manifest.json`
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/build_tokenized_dfm2_tree.py --force
+```
+
+## `scripts/generate_dfm3_common_pile_tasks.py`
+
+Generates DFM3 self-supervised English raw-text task sources from converted
+Common Pile continuation rows.
+
+Responsibilities:
+
+- read converted Common Pile rows from `data/converted_sources/common_pile_*`
+- rechunk raw text to smaller task chunks, default `3000` chars
+- write `condition/instruction/response` Parquet trees under
+  `data/converted_sources_dfm3_common_pile_tasks`
+- create one direct-continuation category, one prefix-continuation category,
+  one denoising category, and three span-fill variants
+- use English instructions for generated tasks
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/generate_dfm3_common_pile_tasks.py \
+  --output-root data/converted_sources_dfm3_common_pile_tasks
+```
+
+Smoke test, 2026-05-31:
+
+```bash
+python scripts/generate_dfm3_common_pile_tasks.py \
+  --limit-files 0 \
+  --output-root /tmp/dfm3_common_pile_smoke \
+  --force
+```
+
+returned `{}` and exited successfully.
+
+## `scripts/build_tokenized_dfm3_tree.py`
+
+Builds the DFM3 tokenized dataset view, `data/tokenized_dfm3`.
+
+Responsibilities:
+
+- symlink task dirs from `data/tokenized_mixed`
+- symlink DFM2 generated DynaWord task dirs from
+  `data/tokenized_dfm2_dynaword_tasks`
+- symlink DFM3 generated Common Pile task dirs from
+  `data/tokenized_dfm3_common_pile_tasks`
+- write `data/tokenized_dfm3/union_manifest.json`
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/build_tokenized_dfm3_tree.py --force
+```
+
+## `scripts/prepare_dfm3_english_recovery.sh`
+
+Stage runner for the DFM3 English-recovery data pipeline.
+
+Responsibilities:
+
+- inventory/download selected Common Pile datasets
+- run filtering and incremental conversion
+- generate Common Pile self-supervised tasks
+- tokenize generated DFM3 tasks with one worker
+- build the DFM3 tokenized union
+- sample `data/sampled_dfm3`
+
+Validated on 2026-05-31 with `bash -n`.
+
+## `scripts/generate_dfm4_tasks.py`
+
+Generates additive DFM4 task sources.
+
+Responsibilities:
+
+- generate paragraph-reordering tasks from converted DynaWord and selected
+  converted Common Pile rows
+- generate arXiv paper-to-abstract summarization tasks from locally downloaded
+  Common Pile arXiv paper JSON shards
+- generate GovReport, WikiCatSum, and LAION Scientific-Summaries summarization
+  tasks when those HF datasets are downloaded under `data/downloads/datasets`
+- write PrefixLM-compatible `condition/instruction/response` Parquet trees
+  under `data/converted_sources_dfm4_paragraph_reorder` and
+  `data/converted_sources_dfm4_summarization`
+- cap generation by rows per source file and by scanned rows per file so sparse
+  paragraph sources cannot stall an entire generation pass
+- support `--only {all,paragraph,summarization,laion}` for targeted
+  regeneration, and `--laion-workers` for parallel LAION Scientific-Summaries
+  conversion
+- preserve response space for long summarization rows by using compact LAION
+  fallbacks when full structured summaries do not fit the 4k-context training
+  format
+- for paragraph reordering, split the full document into paragraphs before
+  trimming and sample deterministic contiguous paragraph windows instead of
+  using only the beginning of long documents
+
+Smoke test, 2026-06-01:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/generate_dfm4_tasks.py --force \
+  --paragraph-output-root data/tmp_dfm4_paragraph_smoke \
+  --summary-output-root data/tmp_dfm4_summary_smoke \
+  --dynaword-rows-per-file 1 \
+  --common-pile-rows-per-file 1 \
+  --arxiv-summary-rows-per-file 1 \
+  --laion-rows-per-file 1 \
+  --max-rows-scanned-per-file 500 \
+  --limit-files 1
+```
+
+This produced one DynaWord paragraph-reorder row and one arXiv summary row
+from already downloaded local sources. GovReport, WikiCatSum, and LAION rows
+were absent in the smoke test because those downloads had not yet been run.
+
+Verified full LAION regeneration command, 2026-06-01:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/generate_dfm4_tasks.py --only laion --force --laion-workers 16
+```
+
+This wrote `4006` LAION task files and `2,288,807` rows under
+`data/converted_sources_dfm4_summarization/dfm4_laion_scientific_summaries`.
+
+## `scripts/build_tokenized_dfm4_tree.py`
+
+Builds the DFM4 tokenized dataset view, `data/tokenized_dfm4`.
+
+Responsibilities:
+
+- symlink all task dirs from `data/tokenized_dfm3`
+- symlink DFM4 paragraph-reordering task dirs from
+  `data/tokenized_dfm4_paragraph_reorder`
+- symlink DFM4 summarization task dirs from
+  `data/tokenized_dfm4_summarization`
+- write `data/tokenized_dfm4/union_manifest.json`
+- traverse source roots with `os.walk(..., followlinks=True)`, because
+  `data/tokenized_dfm3` is itself a symlink union. The initial `Path.rglob`
+  implementation linked `0` DFM3 tasks from the symlinked root and was
+  superseded on 2026-06-01.
+
+Verified 2026-06-01 output:
+
+```json
+{
+  "output": "data/tokenized_dfm4",
+  "roots": [
+    {"linked_tasks": 4689, "root": "data/tokenized_dfm3"},
+    {"linked_tasks": 25, "root": "data/tokenized_dfm4_paragraph_reorder_dynaword_windows"},
+    {"linked_tasks": 425, "root": "data/tokenized_dfm4_paragraph_reorder_common_existing"},
+    {"linked_tasks": 4019, "root": "data/tokenized_dfm4_summarization"}
+  ],
+  "total_tasks": 9158
+}
+```
+
+## `scripts/prepare_dfm4_paragraph_and_summarization.sh`
+
+Stage runner for the DFM4 paragraph-reordering and summarization pipeline.
+
+Responsibilities:
+
+- inventory/download `govreport_summarization`, `wiki_cat_sum`, and
+  `laion_scientific_summaries`
+- generate DFM4 task sources
+- tokenize DFM4 paragraph and summarization roots with one worker by default
+- build the DFM4 tokenized union
+- sample `data/sampled_dfm4` with `data_io/prefix_config_dfm4.yaml`
+
+Validated on 2026-06-01 with `bash -n`.
 
 ## `data_io/sample_tokenized.py`
 
@@ -370,3 +583,33 @@ Full default command:
 cd /work/dfm/HRM-Text
 scripts/run_dfm_evals_on_checkpoints.sh
 ```
+
+## `scripts/report_eval_progress.py`
+
+Added on 2026-05-29. Confidence: high for standard eval tqdm parsing; medium
+for queued-job ETA because it uses historical runtime weights.
+
+Estimates progress for the active queued checkpoint eval scheduler from:
+
+- `logs/eval/dfm_L_epoch1_queued_all/status.tsv`
+- `logs/eval/dfm_L_epoch1_queued_all/jobs.tsv`
+- standard shard log tqdm counters such as `generation ... 93/165`
+
+It reports completed/active/queued job counts, active job progress and per-job
+ETA, plus a full-evaluation ETA using an 8-lane greedy simulation. DFM/Inspect
+active job progress is currently estimated from elapsed time and historical
+weights unless the task writes a machine-readable progress counter.
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/report_eval_progress.py
+```
+
+Verified immediately after DFM CP1 scheduler launch:
+
+- parsed 8 active GSM8k shards,
+- read live tqdm counters such as `93/165`,
+- reported `completed=0`, `active=8`, `queued=104`, `total_visible=112`,
+- estimated full ETA around `2h57m` from 2026-05-29 15:50 Europe/Berlin.

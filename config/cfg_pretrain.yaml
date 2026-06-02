@@ -11,6 +11,18 @@ global_batch_size: 196608  # Effective optimizer batch size (tokens)
 gradient_accumulation_steps: 1  # Physical per-rank microbatch is global_batch_size / world_size / gradient_accumulation_steps
 epochs: 4
 checkpoint_interval: 1
+checkpoint_step_interval: null
+wandb_run_id: null
+wandb_resume: null
+resume_checkpoint_path: null
+resume_checkpoint_tag: null
+resume_epoch: null
+resume_step: null
+resume_batch_in_epoch: null
+project_name: null
+run_name: null
+checkpoint_path: null
+seed: 0
 log_interval: 5
 
 lr: 2.2e-4

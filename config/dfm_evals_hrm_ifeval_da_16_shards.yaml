@@ -1,0 +1,118 @@
+sets:
+  hrm_danish_ifeval_da_shard_0_of_16:
+    description: "IFEval DA shard 0/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=0]
+    args: &ifeval_args
+      - --model
+      - "{{target_model}}"
+      - --sample-shuffle
+      - "4242"
+      - --temperature
+      - "0"
+
+  hrm_danish_ifeval_da_shard_1_of_16:
+    description: "IFEval DA shard 1/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=1]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_2_of_16:
+    description: "IFEval DA shard 2/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=2]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_3_of_16:
+    description: "IFEval DA shard 3/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=3]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_4_of_16:
+    description: "IFEval DA shard 4/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=4]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_5_of_16:
+    description: "IFEval DA shard 5/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=5]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_6_of_16:
+    description: "IFEval DA shard 6/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=6]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_7_of_16:
+    description: "IFEval DA shard 7/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=7]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_8_of_16:
+    description: "IFEval DA shard 8/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=8]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_9_of_16:
+    description: "IFEval DA shard 9/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=9]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_10_of_16:
+    description: "IFEval DA shard 10/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=10]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_11_of_16:
+    description: "IFEval DA shard 11/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=11]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_12_of_16:
+    description: "IFEval DA shard 12/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=12]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_13_of_16:
+    description: "IFEval DA shard 13/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=13]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_14_of_16:
+    description: "IFEval DA shard 14/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=14]
+    args: *ifeval_args
+
+  hrm_danish_ifeval_da_shard_15_of_16:
+    description: "IFEval DA shard 15/16."
+    tasks:
+      - name: dfm_evals/ifeval-da
+        args: [-T, num_shards=16, -T, shard_index=15]
+    args: *ifeval_args

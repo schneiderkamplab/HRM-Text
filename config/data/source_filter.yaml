@@ -46,6 +46,44 @@ allow_overrides:
   - "sapient_cleaned/data_clustered/flan/*hellaswag*.parquet"
   - "sapient_cleaned/data_clustered/flan/*story_cloze*.parquet"
   - "sapient_cleaned/data_clustered/flan/*winogrande*.parquet"
+  # Additional benchmark-adjacent English train-derived sources for DFM4
+  # English recovery. These remain capped in prefix_config_dfm4.yaml.
+  - "sapient_cleaned/data_clustered/flan/*ai2_arc*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*arc_*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*drop*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*boolq*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*bool_q*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*squad_v1*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*squad_v2*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*squad1.1*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*squad2.0*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*anli*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*glue_*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*glue_mnli*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*mnli*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*super_glue_*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*trivia_qa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*triviaqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*trivia_question*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*race_*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*storycloze*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*coqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*quac*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*ropes*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*snli*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*esnli*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*creak*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*ecqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*sensemaking*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*social_iqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*socialiqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*cosmos_qa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*cosmosqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*xquad*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*tydiqa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*xnli*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*xcopa*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*paws*.parquet"
 
   # Narrow Tasksource allowlist: NLI, logic, reasoning, citation/science, and
   # selected medical QA. Social-media, conversation, NER, and unclear text
@@ -79,6 +117,7 @@ allow_overrides:
   - "sapient_cleaned/data_clustered/tasksource/MedQA-USMLE-4-options-hf.parquet"
   - "sapient_cleaned/data_clustered/tasksource/medmcqa.parquet"
   - "sapient_cleaned/data_clustered/tasksource/wikimedqa_medwiki.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/race-c.parquet"
 
 deny:
   # Local DBC drop-in contains many raw/crawl corpora. Include only the
@@ -92,14 +131,79 @@ deny:
   # SciBench: textbook-derived provenance; keep out unless rights are reviewed.
   - "sapient_cleaned/data/Platypus/scibench.jsonl"
 
-  # ScienceQA: CC-BY-NC-SA and benchmark contamination; exclude by default.
-  - "sapient_cleaned/data/Platypus/scienceqa.jsonl"
+  # ReClor stays eval-only by project decision, including recast copies.
+  - "sapient_cleaned/data_clustered/tasksource/reclor.parquet"
 
-  # FLAN/Open-Orca: component-dataset licenses vary; broad aggregator.
-  - "sapient_cleaned/data_clustered/flan/**"
+  # Harsh robots.txt cases, excluded by project decision on 2026-06-01:
+  # - Google and Bing disallow search endpoints, so do not include
+  #   search-derived Natural Questions Open or MS MARCO FLAN transforms.
+  # - data.statmt.org disallows User-agent: * at /, so do not include WMT or
+  #   News Commentary FLAN transforms that depend on that source route.
+  - "sapient_cleaned/data_clustered/flan/*natural_questions_open*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*naturalquestion*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*msmarco*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*wmt*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*newscomm*.parquet"
 
-  # Tasksource: recasts many upstream datasets with mixed provenance/licenses.
-  - "sapient_cleaned/data_clustered/tasksource/**"
+  # High-GDPR/PII-risk FLAN residuals. Copyright/licence uncertainty alone is
+  # no longer a blocker for this academic research run when access is lawful
+  # under the EU DSM Article 3 TDM exception. Real user/chat/social text stays
+  # excluded.
+  - "sapient_cleaned/data_clustered/flan/*tweet*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*twitter*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*dialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*dailydialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*daily_dialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*personachat*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*persona*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*empathetic*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*wizard*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*qrecc*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*air_dialogue*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*deal_or_no*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*casino*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*mutual*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*curiosity_dialogs*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*wiki_dialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*hate*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*toxic*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*civil_comments*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*detox*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*offensive*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*goemotions*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*sms*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*spam*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*review*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*opinion*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*aeslc*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*amazon*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*yelp*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*imdb*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*rotten_tomatoes*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*opinion_abstracts*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*prachathai*.parquet"
+
+  # High-GDPR/PII-risk Tasksource residuals: user/social/chat/review/toxicity
+  # tasks remain excluded even though benchmark adjacency and ShareAlike do not.
+  - "sapient_cleaned/data_clustered/tasksource/*tweet*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*twitter*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*wnut*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*sms*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*spam*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*hate*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*offensive*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*toxic*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*sarcasm*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*emotion*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*goemotions*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*dialog*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*switchboard*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*mrda*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*mutual*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*persona*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*rotten_tomatoes*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*imdb*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/*yelp*.parquet"
 
   # Downloader metadata/cache should never enter conversion/tokenization.
   - "**/.cache/**"

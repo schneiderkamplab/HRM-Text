@@ -1,6 +1,6 @@
 # Dataset Entities
 
-Last updated: 2026-05-27  
+Last updated: 2026-06-01  
 Confidence: medium  
 Scope: Dataset inventory and conversion policy.
 
@@ -45,19 +45,42 @@ Scope: Dataset inventory and conversion policy.
     actually granted.
   - Confidence: high for access failure and supersession.
 - `synquid/wildchat-100k-qwen-messages`
-  - Status: include in the DFM mix, tightly capped.
+  - Status: include, tightly capped.
   - Access recheck on 2026-05-27 with an explicit HF token succeeded. Schema:
     `messages` plus generation/source metadata such as `model`,
     `source_record`, `system_prompt_leak`, and `followup_system_prompt_leak`.
   - Conversion: existing `messages` JSONL converter expands assistant turns into
     PrefixLM instruction/response rows.
-  - Policy note: if access is granted, include only with a tight cap because the
-    source is generated answers to WildChat prompts, and WildChat provenance has
-    higher PII/provenance risk than synthetic or curated instruction datasets.
-  - Sampling: `data_io/prefix_config_dfm.yaml` caps
+  - Policy note: the assistant responses are synthetic, but the prompts derive
+    from WildChat. A local 2026-06-01 regex scan of 99,688 prompt rows found
+    email-like, phone-like, URL, and contact/address/name-word matches,
+    including examples with order names/addresses/emails and named family
+    members. Many hits are false positives, but the source has real user-prompt
+    PII/GDPR risk. Project decision on 2026-06-01: keep it in the mix with the
+    existing tight cap and prioritize it for later PII scrubbing rather than
+    excluding it now.
+  - Sampling: `data_io/prefix_config_dfm4.yaml` currently caps
     `synquid_wildchat_100k_qwen_messages__` at `50,000` rows per file.
-  - Confidence: high for access/schema and local manifest support; medium for
-    cap size.
+  - Confidence: high for access/schema/local scan; medium for final inclusion.
+
+## Web-Sourced Instruction/QA
+
+- `TIGER-Lab/WebInstruct-verified`
+  - Status: include, Article-3/source-route dependent.
+  - Local schema: 228,736 train rows with `question`, `answer`,
+    `answer_type`, `category`, and `difficulty`; no per-row source URL in the
+    local Parquet schema.
+  - Policy note: Apache-2.0 dataset card says the authors traced WebInstruct
+    entries back to original web pages and re-crawled human-written
+    question-answer pairs. This is high-value reasoning data but should be
+    documented as web-recrawl-derived rather than provenance-free.
+- `HuggingFaceH4/no_robots`
+  - Status: include only as a capped small human-instruction source.
+  - Local schema: 9,500 train rows with `prompt`, `messages`, and `category`.
+  - Policy note: the name is unrelated to robots.txt. The issue is missing
+    source/annotator/PII documentation in the card. A simple 2026-06-01 local
+    scan found 9 email-like and 37 phone-like matches; some are tasks about
+    redacting PII rather than necessarily real personal data.
 
 ## Oliver Kinch
 
