@@ -34,7 +34,12 @@ class ChatCompletionRequest(BaseModel):
     messages: list[ChatMessage]
     temperature: float = 0.0
     max_tokens: int | None = None
+    max_completion_tokens: int | None = None
     stop: str | list[str] | None = None
+
+    @property
+    def requested_max_tokens(self) -> int | None:
+        return self.max_tokens if self.max_tokens is not None else self.max_completion_tokens
 
 
 class CompletionRequest(BaseModel):
@@ -42,7 +47,12 @@ class CompletionRequest(BaseModel):
     prompt: str | list[str]
     temperature: float = 0.0
     max_tokens: int | None = None
+    max_completion_tokens: int | None = None
     stop: str | list[str] | None = None
+
+    @property
+    def requested_max_tokens(self) -> int | None:
+        return self.max_tokens if self.max_tokens is not None else self.max_completion_tokens
 
 
 def parse_args() -> argparse.Namespace:
@@ -253,7 +263,7 @@ def make_app(args: argparse.Namespace) -> FastAPI:
         prompt = messages_to_prompt(req.messages)
         output = generate(
             [prompt],
-            max_tokens=req.max_tokens,
+            max_tokens=req.requested_max_tokens,
             temperature=req.temperature,
             stop=req.stop,
         )[0]
@@ -278,7 +288,7 @@ def make_app(args: argparse.Namespace) -> FastAPI:
         prompts = [req.prompt] if isinstance(req.prompt, str) else req.prompt
         outputs = generate(
             prompts,
-            max_tokens=req.max_tokens,
+            max_tokens=req.requested_max_tokens,
             temperature=req.temperature,
             stop=req.stop,
         )

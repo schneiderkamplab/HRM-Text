@@ -13,9 +13,6 @@ from typing import Any
 import numpy as np
 
 
-METRIC_PREFIX = "dfm_eval/ifeval-da/instruction_following"
-
-
 def epoch_label(epoch: float) -> str:
     return str(int(epoch)) if epoch.is_integer() else str(epoch).replace(".", "p")
 
@@ -70,7 +67,7 @@ def final_accuracy_stderr(scores: list[dict[str, Any]], mean_final_accuracy: flo
     return float(np.sqrt(variance * cluster_count / (cluster_count - 1)) / total_num_instructions)
 
 
-def compute_metrics(scores: list[dict[str, Any]]) -> dict[str, float]:
+def compute_metrics(scores: list[dict[str, Any]], *, prefix: str) -> dict[str, float]:
     if not scores:
         raise ValueError("No IFEval scores found.")
 
@@ -127,7 +124,8 @@ def compute_metrics(scores: list[dict[str, Any]]) -> dict[str, float]:
 
     statistics.append(float(np.mean([statistics[i] for i in range(0, len(statistics), 2)]).item()))
     statistics.append(final_accuracy_stderr(scores, statistics[-1]))
-    return {f"{METRIC_PREFIX}/{key}": value for key, value in zip(final_keys, statistics, strict=True)}
+    metric_prefix = f"{prefix}/ifeval-da/instruction_following"
+    return {f"{metric_prefix}/{key}": value for key, value in zip(final_keys, statistics, strict=True)}
 
 
 def main() -> None:
@@ -143,7 +141,7 @@ def main() -> None:
     args = parser.parse_args()
 
     scores = list(iter_sample_scores(args.eval))
-    metrics = compute_metrics(scores)
+    metrics = compute_metrics(scores, prefix=args.prefix)
     payload: dict[str, Any] = {
         "epoch": args.epoch,
         "num_samples": len(scores),

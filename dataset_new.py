@@ -53,6 +53,7 @@ class V1Dataset(IterableDataset):
         self._data_indices: Optional[V1DatasetIndices] = None
         self._sampler: Optional[MultipackDistributedBatchSampler] = None
         self._epoch = 0
+        self._start_batch = 0
 
     def _load_metadata(self) -> V1DatasetMeta:
         with open(os.path.join(self.config.dataset_path, "metadata.json"), "r") as f:
@@ -71,6 +72,13 @@ class V1Dataset(IterableDataset):
         if self._sampler is not None:
             raise RuntimeError("Cannot change dataset epoch after iteration has started")
         self._epoch = epoch
+
+    def set_start_batch(self, start_batch: int):
+        if start_batch < 0:
+            raise ValueError(f"Dataset start batch must be non-negative, got {start_batch}")
+        if self._sampler is not None:
+            raise RuntimeError("Cannot change dataset start batch after iteration has started")
+        self._start_batch = start_batch
 
     def _load_dataset_before_epoch_begin(self):
         # Load tokens (only if not loaded)
@@ -148,5 +156,9 @@ class V1Dataset(IterableDataset):
         self._load_dataset_before_epoch_begin()
 
         assert self._sampler is not None
-        for indices in self._sampler.iter():
+        start_batch = self._start_batch
+        self._start_batch = 0
+        for batch_idx, indices in enumerate(self._sampler.iter(), start=1):
+            if batch_idx <= start_batch:
+                continue
             yield self._load_batch(indices)

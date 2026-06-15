@@ -1,6 +1,6 @@
 # Source Filtering
 
-Last updated: 2026-06-01
+Last updated: 2026-06-12
 Confidence: high  
 Scope: Filtering downloaded sources before conversion/tokenization.
 
@@ -33,9 +33,9 @@ Denied by exact/pattern rules:
 - `sapient_cleaned/data/Platypus/reclor.jsonl`
 - `sapient_cleaned/data/Platypus/scibench.jsonl`
 - high-GDPR/PII-risk Sapient FLAN user/chat/social/review/toxicity patterns,
-  including tweet/twitter, dialog/persona/chat, hate/toxicity/offensive,
-  SMS/email, Amazon/Yelp/IMDb/review-style sources, and similar user-generated
-  text families.
+  including tweet/twitter, unreconsidered dialog/persona/chat,
+  hate/toxicity/offensive, SMS/email, Amazon/Yelp/IMDb/review-style sources,
+  and similar user-generated text families.
 - high-GDPR/PII-risk Sapient Tasksource user/chat/social/review/toxicity
   patterns, including tweet/twitter, WNUT, SMS/spam, hate/offensive/toxicity,
   dialogue/switchboard/MRDA/mutual/persona, and review-style sources.
@@ -51,15 +51,19 @@ FLAN allow back:
 
 - math/science reasoning: `gsm8k`, `mathqa`, `aqua`, `qasc`, `openbookqa`, `sciq`, `strategyqa`, `quartz`
 - commonsense benchmarks: `copa`, `xcopa`, `piqa`, `hellaswag`, `story_cloze`, `winogrande`
+- DFM5 factual QA and lower-risk dialogue/role-play: `natural_questions_open`,
+  `naturalquestion`, `dailydialog`, `daily_dialog`, `personachat`,
+  `deal_or_no`, `casino`, `air_dialogue`, `wiki_dialog`, `dream`, `mutual`
 
 Tasksource allow back:
 
 - NLI/logic/reasoning: `fracas`, `conj_nli`, `temporal-nli`, `robust_nli_*`, `monotonicity-entailment`, `balanced-copa`, `nli_fever`, `ruletaker`, `WANLI`, `probability_words_nli_*`, `ConTRoL-nli`, `e-CARE`, `vitaminc_*`, `commonsense_qa_2.0`, `folio`, `naturallogic`, `add_one_rte`, `fig-qa`, `PARARULE-Plus`, `logiqa*`, `tomi-nli`
 - science/medical/citation: `scicite`, `scifact*`, `scinli`, `citation_intent`, `scientific-exaggeration-detection`, `MedQA-USMLE-4-options-hf`, `medmcqa`, `wikimedqa_medwiki`
+- dialogue reasoning: `mutual`
 
 ## Latest Reported Build
 
-Latest rebuild after the 2026-06-01 harsh-robots exclusion update:
+Superseded: after the 2026-06-01 harsh-robots exclusion update:
 
 ```text
 Allowed files:      9,780
@@ -85,3 +89,17 @@ Harsh-robots FLAN exclusions added on 2026-06-01:
 
 `synquid/wildchat-100k-qwen-messages` remains included with a tight cap by
 project decision, despite user-prompt PII risk, and should be scrubbed later.
+
+Latest dry-run after applying DFM5 reconsiderations on 2026-06-12:
+
+```text
+Allowed files:      10,605
+Denied files:          328
+Allowed bytes:      820,913,796,916
+```
+
+The newly allowed DFM5 Sapient families are Natural Questions/NQ-Open,
+DailyDialog, PersonaChat, Deal-or-No-Deal, CaSiNo, AirDialogue, plus the
+previously allowed WikiDialog, DREAM, and MuTual. MS MARCO, WMT/News
+Commentary, social/Twitter, toxicity/hate/emotion, review/opinion/email, SMS
+spam, ReClor, and SciBench remain denied.

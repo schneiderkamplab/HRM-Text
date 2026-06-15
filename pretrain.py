@@ -80,10 +80,13 @@ class PretrainConfig(pydantic.BaseModel):
     fwd_bwd_dtype: str = "bfloat16"
     accelerator_type: AcceleratorType = "sm100"
     distributed_strategy: Literal["fsdp", "ddp", "none"] = "fsdp"
+    fsdp_params_precision: Literal["fp32", "bf16"] = "fp32"
+    ddp_params_precision: Literal["fp32", "bf16"] = "fp32"
     ddp_find_unused_parameters: bool = True
     compile_train_batch: bool = True
     memory_log_interval: int = 0
     empty_cache_interval: int = 0
+    resume_trace: bool = False
 
     # Names
     project_name: Optional[str] = None
@@ -97,11 +100,14 @@ class PretrainConfig(pydantic.BaseModel):
     resume_epoch: Optional[int] = None
     resume_step: Optional[int] = None
     resume_batch_in_epoch: Optional[int] = None
+    upcast_optimizer_state_on_resume: bool = False
+    reset_ema_on_resume: bool = False
 
     # Extras
     seed: int = 0
     checkpoint_interval: int = 1
     checkpoint_step_interval: Optional[int] = None
+    ephemeral_checkpoint_step_interval: Optional[int] = None
     log_interval: int = 5
 
     @pydantic.model_validator(mode='after')
@@ -110,6 +116,8 @@ class PretrainConfig(pydantic.BaseModel):
             raise ValueError("checkpoint_interval must be >= 1")
         if self.checkpoint_step_interval is not None and self.checkpoint_step_interval < 1:
             raise ValueError("checkpoint_step_interval must be >= 1 when set")
+        if self.ephemeral_checkpoint_step_interval is not None and self.ephemeral_checkpoint_step_interval < 1:
+            raise ValueError("ephemeral_checkpoint_step_interval must be >= 1 when set")
         if self.log_interval < 1:
             raise ValueError("log_interval must be >= 1")
         return self
@@ -125,6 +133,7 @@ class TrainState:
     step: int
     total_steps: int
     fwd_bwd_dtype: torch.dtype
+    use_cuda_autocast: bool
 
 
 @dataclass
@@ -133,6 +142,11 @@ class ResumeState:
     step: int
     start_epoch: int
     skip_batches: int
+
+
+def trace_print(config: PretrainConfig, rank: int, message: str):
+    if config.resume_trace:
+        print(f"[resume_trace rank={rank}] {message}", flush=True)
 
 
 def create_dataloader(config: PretrainConfig, local_batch_size: int, drop_last_batch: bool, rank: int, world_size: int):
@@ -186,6 +200,30 @@ def compute_train_extra_args(model: nn.Module, train_state: TrainState) -> dict:
     return unwrap_model(model).compute_train_extra_args(train_state)  # pyright: ignore[reportCallIssue, reportAttributeAccessIssue]
 
 
+def fsdp_model_dtype(config: PretrainConfig) -> torch.dtype:
+    if config.fsdp_params_precision == "fp32":
+        return torch.float32
+    if config.fsdp_params_precision == "bf16":
+        return torch.bfloat16
+    raise ValueError(f"Unsupported fsdp_params_precision: {config.fsdp_params_precision}")
+
+
+def ddp_model_dtype(config: PretrainConfig, fwd_bwd_dtype: torch.dtype) -> torch.dtype:
+    if config.ddp_params_precision == "fp32":
+        return torch.float32
+    if config.ddp_params_precision == "bf16":
+        return fwd_bwd_dtype
+    raise ValueError(f"Unsupported ddp_params_precision: {config.ddp_params_precision}")
+
+
+def optimizer_ema_dtype(config: PretrainConfig) -> Optional[torch.dtype]:
+    if config.distributed_strategy == "ddp" and config.ddp_params_precision == "bf16":
+        return torch.float32
+    if config.distributed_strategy == "fsdp" and config.fsdp_params_precision == "bf16":
+        return torch.float32
+    return None
+
+
 def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta, local_batch_size: int, device: torch.device):
     model_cfg = config.arch.model_dump() | train_metadata.model_dump() | config.data.model_dump() | {"fwd_bwd_dtype": config.fwd_bwd_dtype}
     fwd_bwd_dtype = getattr(torch, config.fwd_bwd_dtype)
@@ -202,6 +240,10 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
 
     if dist.is_available() and dist.is_initialized():
         if config.distributed_strategy == "fsdp":
+            model_dtype = fsdp_model_dtype(config)
+            if model_dtype != torch.float32:
+                model = model.to(dtype=model_dtype)
+
             # Broadcast buffers
             for buffer in model.buffers():
                 dist.broadcast(buffer, src=0)
@@ -215,7 +257,9 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
         elif config.distributed_strategy == "ddp":
             if device.type != "cuda":
                 raise RuntimeError("distributed_strategy=ddp is currently only supported for CUDA torchrun jobs")
-            model = model.to(dtype=fwd_bwd_dtype)
+            model_dtype = ddp_model_dtype(config, fwd_bwd_dtype)
+            if model_dtype != torch.float32:
+                model = model.to(dtype=model_dtype)
             model = DistributedDataParallel(
                 model,
                 device_ids=[device.index],
@@ -234,7 +278,8 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
                       lr=0.0,
                       betas=(config.beta1, config.beta2),
                       weight_decay=config.weight_decay,
-                      ema=config.ema)
+                      ema=config.ema,
+                      ema_dtype=optimizer_ema_dtype(config))
 
     return model, carry, optim
 
@@ -269,6 +314,11 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
         step=0,
         total_steps=total_steps,
         fwd_bwd_dtype=fwd_bwd_dtype,
+        use_cuda_autocast=(
+            config.distributed_strategy == "ddp"
+            and device.type == "cuda"
+            and fwd_bwd_dtype != torch.float32
+        ),
     )
     return train_state, train_loader, train_metadata
 
@@ -292,12 +342,14 @@ def normalize_checkpoint_tag(tag: str) -> str:
         tag = tag.removeprefix("fsdp2_")
     elif tag.startswith("unsharded_"):
         tag = tag.removeprefix("unsharded_")
+        if tag.endswith(".pt"):
+            tag = tag.removesuffix(".pt")
     elif tag.startswith("carry_"):
         tag = tag.removeprefix("carry_")
     if os.path.basename(tag) != tag:
         raise ValueError(f"Checkpoint tag must be a name, not a path: {tag}")
-    if not (tag.startswith("epoch_") or tag.startswith("step_")):
-        raise ValueError(f"Checkpoint tag must start with 'epoch_' or 'step_': {tag}")
+    if not (tag.startswith("epoch_") or tag.startswith("step_") or tag.startswith("ephemeral_step_")):
+        raise ValueError(f"Checkpoint tag must start with 'epoch_', 'step_', or 'ephemeral_step_': {tag}")
     return tag
 
 
@@ -328,7 +380,7 @@ def resolve_resume_state(config: PretrainConfig) -> Optional[ResumeState]:
         step = -1 if step is None else int(step)
         return ResumeState(tag=tag, step=step, start_epoch=tag_epoch + 1, skip_batches=0)
 
-    step_match = re.fullmatch(r"step_(\d+)", tag)
+    step_match = re.fullmatch(r"(?:ephemeral_)?step_(\d+)", tag)
     if step_match is None:
         raise ValueError(f"Unsupported checkpoint tag: {tag}")
     step = int(step_match.group(1)) if step is None else int(step)
@@ -350,14 +402,27 @@ def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank:
     if not os.path.isfile(carry_path):
         raise ValueError(f"Carry file not found: {carry_path}")
 
+    trace_print(config, rank, f"load_checkpoint_begin tag={resume_state.tag} format={config.checkpoint_format}")
     if config.checkpoint_format == "sharded":
         load_sharded_train_state(config, train_state, resume_state.tag)
     elif config.checkpoint_format == "unsharded":
         load_unsharded_train_state(config, train_state, resume_state.tag, rank)
     else:
         raise ValueError(f"Unsupported checkpoint_format: {config.checkpoint_format}")
+    trace_print(config, rank, f"load_checkpoint_end tag={resume_state.tag}")
 
+    if config.upcast_optimizer_state_on_resume:
+        trace_print(config, rank, "upcast_optimizer_state_begin")
+        upcast_optimizer_state(train_state.optim)
+        trace_print(config, rank, "upcast_optimizer_state_end")
+    if config.reset_ema_on_resume:
+        trace_print(config, rank, "reset_ema_to_params_begin")
+        reset_optimizer_ema_to_params(train_state.optim)
+        trace_print(config, rank, "reset_ema_to_params_end")
+
+    trace_print(config, rank, f"load_carry_begin path={carry_path}")
     train_state.carry = torch.load(carry_path, map_location="cuda")
+    trace_print(config, rank, "load_carry_end")
     if resume_state.step >= 0:
         train_state.step = resume_state.step
     elif resume_state.tag.startswith("epoch_"):
@@ -367,6 +432,25 @@ def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank:
     else:
         raise ValueError(f"Cannot infer resume step for checkpoint tag {resume_state.tag}")
     return resume_state
+
+
+@torch.no_grad()
+def upcast_optimizer_state(optim: AdamATan2):
+    for state in optim.state.values():
+        for key, value in list(state.items()):
+            if torch.is_tensor(value) and value.is_floating_point() and value.dtype != torch.float32:
+                state[key] = value.to(torch.float32)
+
+
+@torch.no_grad()
+def reset_optimizer_ema_to_params(optim: AdamATan2):
+    for group in optim.param_groups:
+        if group.get("ema") is None:
+            continue
+        for param in group["params"]:
+            state = optim.state[param]
+            if "param_ema" in state:
+                state["param_ema"] = param.detach().clone().to(torch.float32)
 
 
 def sharded_checkpoint_id(checkpoint_path: str, tag: str) -> str:
@@ -401,12 +485,15 @@ def load_unsharded_train_state(config: PretrainConfig, train_state: TrainState, 
         raise ValueError(f"Checkpoint file not found: {checkpoint_path}")
 
     if dist.is_available() and dist.is_initialized():
-        checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False) if rank == 0 else {}
+        trace_print(config, rank, f"unsharded_load_begin path={checkpoint_path}")
+        checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False) if (config.distributed_strategy == "ddp" or rank == 0) else {}
+        trace_print(config, rank, f"unsharded_load_end keys={list(checkpoint.keys()) if checkpoint else []}")
         options = StateDictOptions(
             full_state_dict=True,
             cpu_offload=True,
-            broadcast_from_rank0=True,
+            broadcast_from_rank0=config.distributed_strategy != "ddp",
         )
+        trace_print(config, rank, "set_state_dict_begin")
         set_state_dict(
             train_state.model,
             train_state.optim,
@@ -414,10 +501,17 @@ def load_unsharded_train_state(config: PretrainConfig, train_state: TrainState, 
             optim_state_dict=checkpoint.get("optim", {}),
             options=options,
         )
+        trace_print(config, rank, "set_state_dict_end")
     else:
+        trace_print(config, rank, f"unsharded_load_begin path={checkpoint_path}")
         checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+        trace_print(config, rank, f"unsharded_load_end keys={list(checkpoint.keys())}")
+        trace_print(config, rank, "model_load_state_dict_begin")
         train_state.model.load_state_dict(checkpoint["model"])
+        trace_print(config, rank, "model_load_state_dict_end")
+        trace_print(config, rank, "optim_load_state_dict_begin")
         train_state.optim.load_state_dict(checkpoint["optim"])
+        trace_print(config, rank, "optim_load_state_dict_end")
 
 
 def save_sharded_train_state(config: PretrainConfig, train_state: TrainState, tag: str):
@@ -450,7 +544,10 @@ def save_unsharded_train_state(config: PretrainConfig, train_state: TrainState, 
 @torch.compile(dynamic=False)
 def forward_backward_batch(train_state: TrainState, batch: dict[str, Tensor], loss_scale: Tensor, **kwargs):
     device_type = batch["inputs"].device.type
-    use_autocast = device_type in ("mps", "cpu") and train_state.fwd_bwd_dtype != torch.float32
+    use_autocast = (
+        (device_type in ("mps", "cpu") and train_state.fwd_bwd_dtype != torch.float32)
+        or (device_type == "cuda" and train_state.use_cuda_autocast)
+    )
     with torch.autocast(device_type=device_type, dtype=train_state.fwd_bwd_dtype, enabled=use_autocast, cache_enabled=False):
         train_state.carry, loss, metrics = train_state.model(batch=batch, carry=train_state.carry, **kwargs)
     (loss * loss_scale).backward()
@@ -459,7 +556,10 @@ def forward_backward_batch(train_state: TrainState, batch: dict[str, Tensor], lo
 
 def forward_backward_batch_uncompiled(train_state: TrainState, batch: dict[str, Tensor], loss_scale: Tensor, **kwargs):
     device_type = batch["inputs"].device.type
-    use_autocast = device_type in ("mps", "cpu") and train_state.fwd_bwd_dtype != torch.float32
+    use_autocast = (
+        (device_type in ("mps", "cpu") and train_state.fwd_bwd_dtype != torch.float32)
+        or (device_type == "cuda" and train_state.use_cuda_autocast)
+    )
     with torch.autocast(device_type=device_type, dtype=train_state.fwd_bwd_dtype, enabled=use_autocast, cache_enabled=False):
         train_state.carry, loss, metrics = train_state.model(batch=batch, carry=train_state.carry, **kwargs)
     (loss * loss_scale).backward()
@@ -490,34 +590,48 @@ def _add_metrics(total_metrics: Optional[dict[str, tuple[Tensor, Tensor]]], metr
     return total_metrics
 
 
-def _supervised_token_count(batch: dict[str, Tensor]) -> Tensor:
+def _supervised_token_count(config: PretrainConfig, rank: int, batch: dict[str, Tensor]) -> Tensor:
     count = (batch["labels"] != IGNORE_LABEL_ID).sum().to(torch.float32)
     if dist.is_available() and dist.is_initialized():
+        trace_print(config, rank, f"supervised_count_all_reduce_begin local={count.item()}")
         dist.all_reduce(count, op=dist.ReduceOp.AVG)
+        trace_print(config, rank, f"supervised_count_all_reduce_end avg={count.item()}")
     return count
 
 
 def train_accumulated_batches(
+    config: PretrainConfig,
+    rank: int,
     train_state: TrainState,
     batches: list[dict[str, Tensor]],
     use_compiled: bool,
     zero_grad_after_step: bool = True,
     **kwargs,
 ) -> dict[str, tuple[Tensor, Tensor]]:
-    supervised_counts = [_supervised_token_count(batch) for batch in batches]
+    trace_print(config, rank, f"train_accumulated_begin step={train_state.step} microbatches={len(batches)} compiled={use_compiled}")
+    supervised_counts = [_supervised_token_count(config, rank, batch) for batch in batches]
     total_supervised = torch.stack(supervised_counts).sum().clamp_min(1.0)
     backward_step = forward_backward_batch if use_compiled else forward_backward_batch_uncompiled
 
+    trace_print(config, rank, f"zero_grad_begin step={train_state.step}")
     train_state.optim.zero_grad()
+    trace_print(config, rank, f"zero_grad_end step={train_state.step}")
     metrics = None
-    for batch, supervised_count in zip(batches, supervised_counts):
+    for microbatch_idx, (batch, supervised_count) in enumerate(zip(batches, supervised_counts), start=1):
         loss_scale = supervised_count / total_supervised
+        trace_print(config, rank, f"forward_backward_begin step={train_state.step} microbatch={microbatch_idx} loss_scale={loss_scale.item()}")
         metrics = _add_metrics(metrics, backward_step(train_state, batch, loss_scale, **kwargs))
+        trace_print(config, rank, f"forward_backward_end step={train_state.step} microbatch={microbatch_idx}")
 
+    trace_print(config, rank, f"optim_step_begin step={train_state.step}")
     train_state.optim.step()
+    trace_print(config, rank, f"optim_step_end step={train_state.step}")
     if zero_grad_after_step:
+        trace_print(config, rank, f"zero_grad_after_step_begin step={train_state.step}")
         train_state.optim.zero_grad()
+        trace_print(config, rank, f"zero_grad_after_step_end step={train_state.step}")
     assert metrics is not None
+    trace_print(config, rank, f"train_accumulated_end step={train_state.step}")
     return metrics
 
 
@@ -560,12 +674,21 @@ def save_code_and_config(config: PretrainConfig, train_metadata: V1DatasetMeta):
     wandb.run.log_code(config.checkpoint_path)
 
 
-def save_checkpoint_metadata(config: PretrainConfig, train_state: TrainState, tag: str, epoch: int, batch_in_epoch: int, rank: int):
+def save_checkpoint_metadata(
+    config: PretrainConfig,
+    train_state: TrainState,
+    tag: str,
+    epoch: int,
+    batch_in_epoch: int,
+    rank: int,
+    checkpoint_kind: str,
+):
     if config.checkpoint_path is None or rank != 0:
         return
 
     metadata = {
         "tag": tag,
+        "checkpoint_kind": checkpoint_kind,
         "checkpoint_format": config.checkpoint_format,
         "step": train_state.step,
         "epoch": epoch,
@@ -579,7 +702,15 @@ def save_checkpoint_metadata(config: PretrainConfig, train_state: TrainState, ta
         f.write("\n")
 
 
-def save_train_checkpoint(config: PretrainConfig, train_state: TrainState, tag: str, epoch: int, batch_in_epoch: int, rank: int):
+def save_train_checkpoint(
+    config: PretrainConfig,
+    train_state: TrainState,
+    tag: str,
+    epoch: int,
+    batch_in_epoch: int,
+    rank: int,
+    checkpoint_kind: str = "regular",
+):
     if config.checkpoint_path is None:
         return
 
@@ -594,7 +725,53 @@ def save_train_checkpoint(config: PretrainConfig, train_state: TrainState, tag: 
     torch.save(train_state.carry, os.path.join(config.checkpoint_path, f"carry_{tag}.{rank}.pt"))
     if dist.is_available() and dist.is_initialized():
         dist.barrier()
-    save_checkpoint_metadata(config, train_state, tag, epoch, batch_in_epoch, rank)
+    save_checkpoint_metadata(config, train_state, tag, epoch, batch_in_epoch, rank, checkpoint_kind)
+
+
+def _ephemeral_step_from_name(name: str) -> Optional[int]:
+    patterns = (
+        r"^fsdp2_ephemeral_step_(\d+)$",
+        r"^unsharded_ephemeral_step_(\d+)\.pt$",
+        r"^carry_ephemeral_step_(\d+)\.\d+\.pt$",
+        r"^checkpoint_state_ephemeral_step_(\d+)\.json$",
+        r"^ephemeral_step_(\d+)\.pt$",
+    )
+    for pattern in patterns:
+        match = re.fullmatch(pattern, name)
+        if match is not None:
+            return int(match.group(1))
+    return None
+
+
+def remove_stale_ephemeral_checkpoints(config: PretrainConfig, keep_tag: str, rank: int):
+    if config.checkpoint_path is None:
+        return
+    if dist.is_available() and dist.is_initialized():
+        dist.barrier()
+    if rank == 0:
+        keep_step: Optional[int] = None
+        keep_match = re.fullmatch(r"ephemeral_step_(\d+)", keep_tag)
+        if keep_match is not None:
+            keep_step = int(keep_match.group(1))
+
+        removed_steps: set[int] = set()
+        for entry in os.scandir(config.checkpoint_path):
+            step = _ephemeral_step_from_name(entry.name)
+            if step is None or step == keep_step:
+                continue
+            if entry.is_dir(follow_symlinks=False):
+                shutil.rmtree(entry.path)
+            else:
+                os.remove(entry.path)
+            removed_steps.add(step)
+
+        if removed_steps:
+            print(
+                f"Removed stale ephemeral checkpoints: {', '.join(f'ephemeral_step_{step}' for step in sorted(removed_steps))}",
+                flush=True,
+            )
+    if dist.is_available() and dist.is_initialized():
+        dist.barrier()
 
 
 def load_synced_config(hydra_config: DictConfig, rank: int) -> PretrainConfig:
@@ -682,14 +859,21 @@ def launch(hydra_config: DictConfig):
     torch.random.manual_seed(config.seed + RANK)
 
     # --- Training
+    trace_print(config, RANK, "init_train_begin")
     train_state, train_loader, train_metadata = init_train(config, rank=RANK, world_size=WORLD_SIZE, device=device)
+    trace_print(config, RANK, "init_train_end")
     resume_state = load_train_checkpoint(config, train_state, rank=RANK)
     start_epoch = 1
     skip_batches = 0
     if resume_state is not None:
         start_epoch = resume_state.start_epoch
         skip_batches = resume_state.skip_batches
+        trace_print(config, RANK, f"set_epoch_begin epoch_index={start_epoch - 1}")
         train_loader.dataset.set_epoch(start_epoch - 1)
+        trace_print(config, RANK, f"set_epoch_end epoch_index={start_epoch - 1}")
+        trace_print(config, RANK, f"set_start_batch_begin skip_batches={skip_batches}")
+        train_loader.dataset.set_start_batch(skip_batches)
+        trace_print(config, RANK, f"set_start_batch_end skip_batches={skip_batches}")
         if RANK == 0:
             print(
                 f"Resumed from {config.resume_checkpoint_path} ({config.checkpoint_format}:{resume_state.tag}): "
@@ -720,29 +904,36 @@ def launch(hydra_config: DictConfig):
     # Training Loop
     for epoch in range(start_epoch, config.epochs + 1):
         print (f"[Rank {RANK}, World Size {WORLD_SIZE}]: Epoch {epoch}")
+        trace_print(config, RANK, f"epoch_begin epoch={epoch}")
 
         # ############ Train Iter
         train_state.model.train()
         accumulation_batches: list[dict[str, Tensor]] = []
-        for batch_in_epoch, (batch, batch_info) in enumerate(train_loader, start=1):
-            if skip_batches > 0 and batch_in_epoch <= skip_batches:
-                continue
+        batch_start = skip_batches + 1 if skip_batches > 0 else 1
+        trace_print(config, RANK, f"dataloader_iter_begin epoch={epoch} batch_start={batch_start}")
+        for batch_in_epoch, (batch, batch_info) in enumerate(train_loader, start=batch_start):
+            if config.resume_trace and batch_in_epoch == batch_start:
+                trace_print(config, RANK, f"first_batch_yielded batch_in_epoch={batch_in_epoch}")
             batch = move_batch_to_device(batch, device)
+            if config.resume_trace and batch_in_epoch == batch_start:
+                trace_print(config, RANK, f"first_batch_moved batch_in_epoch={batch_in_epoch}")
             accumulation_batches.append(batch | {k: wrap_tensor(torch.tensor(v, device="cpu")) for k, v in batch_info.items()})
             if len(accumulation_batches) < config.gradient_accumulation_steps:
                 continue
 
             train_state.step += 1            
             lr = update_lr(config, train_state)
+            trace_print(config, RANK, f"optimizer_step_start step={train_state.step} batch_in_epoch={batch_in_epoch} lr={lr}")
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = compute_train_extra_args(train_state.model, train_state)
+            trace_print(config, RANK, f"train_extra_args step={train_state.step} {train_extra_args}")
             maybe_log_memory(
                 train_state.step,
                 "before_train",
                 device,
                 config.memory_log_interval > 0 and train_state.step % config.memory_log_interval == 0,
             )
-            metrics = train_accumulated_batches(train_state, accumulation_batches, config.compile_train_batch, **train_extra_args)
+            metrics = train_accumulated_batches(config, RANK, train_state, accumulation_batches, config.compile_train_batch, **train_extra_args)
             accumulation_batches = []
             maybe_log_memory(
                 train_state.step,
@@ -753,15 +944,29 @@ def launch(hydra_config: DictConfig):
             maybe_empty_cache(train_state.step, device, config.empty_cache_interval)
 
             if train_state.step % config.log_interval == 0:
+                trace_print(config, RANK, f"reduce_metrics_begin step={train_state.step}")
                 metrics = reduce_metrics(metrics, prefix="train/")
+                trace_print(config, RANK, f"reduce_metrics_end step={train_state.step}")
                 if RANK == 0:
                     progress_bar.update(train_state.step - progress_bar.n)  # type: ignore
+                    trace_print(config, RANK, f"wandb_log_begin step={train_state.step}")
                     wandb.log(metrics | train_extra_args | {"train/lr": lr}, step=train_state.step)
+                    trace_print(config, RANK, f"wandb_log_end step={train_state.step}")
 
             del metrics
 
+            saved_regular_step_checkpoint = False
             if config.checkpoint_step_interval is not None and train_state.step % config.checkpoint_step_interval == 0:
                 save_train_checkpoint(config, train_state, f"step_{train_state.step}", epoch, batch_in_epoch, RANK)
+                saved_regular_step_checkpoint = True
+
+            if config.ephemeral_checkpoint_step_interval is not None and train_state.step % config.ephemeral_checkpoint_step_interval == 0:
+                if saved_regular_step_checkpoint:
+                    remove_stale_ephemeral_checkpoints(config, f"step_{train_state.step}", RANK)
+                else:
+                    ephemeral_tag = f"ephemeral_step_{train_state.step}"
+                    save_train_checkpoint(config, train_state, ephemeral_tag, epoch, batch_in_epoch, RANK, checkpoint_kind="ephemeral")
+                    remove_stale_ephemeral_checkpoints(config, ephemeral_tag, RANK)
 
         skip_batches = 0
 

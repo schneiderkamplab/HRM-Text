@@ -230,6 +230,8 @@ def main() -> None:
     args = parser.parse_args()
 
     samples = list(iter_sample_records(args.eval))
+    if not samples:
+        raise ValueError(f"No DFM eval samples found for task {args.task}: {', '.join(str(path) for path in args.eval)}")
     metrics = task_metrics(args.task, samples)
     task_name = wandb_task_name(args.task)
     logged_metrics = {f"{args.prefix}/{task_name}/{key}": value for key, value in metrics.items()}

@@ -42,6 +42,9 @@ eval = [
     "math-verify",
     "vllm",
 ]
+euroeval = [
+    "euroeval",
+]
 server = [
     "fastapi",
     "uvicorn",

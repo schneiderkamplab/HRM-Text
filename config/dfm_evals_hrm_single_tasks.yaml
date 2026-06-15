@@ -71,7 +71,10 @@ sets:
   hrm_danish_piqa:
     description: "Single-task HRM Danish suite: PIQA."
     tasks:
-      - dfm_evals/piqa
+      - name: dfm_evals/piqa
+        args:
+          - -T
+          - max_gen_toks=8
     args:
       - --model
       - "{{target_model}}"
@@ -122,6 +125,8 @@ sets:
           - include_bertscore=True
           - -T
           - bertscore_model=xlm-roberta-large
+          - -T
+          - bertscore_device=cpu
     args:
       - --model
       - "{{target_model}}"
@@ -141,6 +146,8 @@ sets:
           - include_bertscore=True
           - -T
           - bertscore_model=xlm-roberta-large
+          - -T
+          - bertscore_device=cpu
     args:
       - --model
       - "{{target_model}}"

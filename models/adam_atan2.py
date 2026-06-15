@@ -5,6 +5,23 @@ from torch import Tensor
 from torch.optim.optimizer import Optimizer, ParamsT
 
 
+def _normalize_dtype_name(dtype: Optional[torch.dtype | str]) -> Optional[str]:
+    if dtype is None:
+        return None
+    if isinstance(dtype, str):
+        return dtype.removeprefix("torch.")
+    return str(dtype).removeprefix("torch.")
+
+
+def _resolve_dtype(dtype_name: Optional[str]) -> Optional[torch.dtype]:
+    if dtype_name is None:
+        return None
+    dtype = getattr(torch, dtype_name, None)
+    if not isinstance(dtype, torch.dtype):
+        raise ValueError(f"Unsupported dtype name: {dtype_name}")
+    return dtype
+
+
 class AdamATan2(Optimizer):
     def __init__(
         self,
@@ -15,6 +32,7 @@ class AdamATan2(Optimizer):
         weight_decay: float = 0.1,
         # Extra features
         ema: Optional[float] = None,
+        ema_dtype: Optional[torch.dtype | str] = None,
     ):
         # Initialize the Adam-atan2 optimizer
         if isinstance(lr, Tensor):
@@ -33,7 +51,8 @@ class AdamATan2(Optimizer):
             "lr": lr,
             "betas": betas,
             "weight_decay": weight_decay,
-            "ema": ema
+            "ema": ema,
+            "ema_dtype": _normalize_dtype_name(ema_dtype),
         }
         super().__init__(params, defaults)
         # Initialize state
@@ -55,7 +74,7 @@ class AdamATan2(Optimizer):
 
                 # Extra features
                 if group["ema"] is not None:
-                    state["param_ema"] = torch.empty_like(p).copy_(p)
+                    state["param_ema"] = torch.empty_like(p, dtype=_resolve_dtype(group["ema_dtype"])).copy_(p)
 
     @torch.no_grad()
     def step(self, closure=None):  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -94,7 +113,10 @@ class AdamATan2(Optimizer):
 
                 # [Extra features] EMA
                 if "param_ema" in state:
-                    state["param_ema"].lerp_(param, 1 - group["ema"])
+                    ema_param = param
+                    if ema_param.dtype != state["param_ema"].dtype:
+                        ema_param = ema_param.to(dtype=state["param_ema"].dtype)
+                    state["param_ema"].lerp_(ema_param, 1 - group["ema"])
 
     @torch.no_grad()
     def swap_ema(self):

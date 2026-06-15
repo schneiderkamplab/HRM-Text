@@ -1,8 +1,682 @@
 # Script Entities
 
-Last updated: 2026-06-01
+Last updated: 2026-06-12
 Confidence: high
 Scope: Local scripts added or used during data preparation.
+
+## `scripts/synthesize_anonymized_sapient_exclusions.py`
+
+Added on 2026-06-12. Confidence: high for local syntax, initialization, and
+active 8-shard launch; medium for final synthetic quality until the generated
+rows are audited after completion.
+
+Builds synthetic anonymized replacements for the 321 original Sapient source
+files excluded from DFM5. It reads
+`logs/data_audits/dfm5_excluded_original_sapient_sources.tsv`, creates one
+folder per excluded source under `synth/`, and writes only judge-accepted rows.
+For sharded runs it writes one gzip per shard, e.g.
+`data/train.shard00000of00008.jsonl.gz`, to avoid concurrent gzip append
+corruption.
+
+For each input row the script asks a local OpenAI-compatible teacher to
+generate a substantially different anonymized version of the
+`condition`/`instruction`/`response` row, then uses the same model as judge. A
+row is kept only if the judge accepts it and local heuristics do not find
+unchanged PII-like strings or high 5-gram overlap. Rejected attempts are kept
+under `rejected/`, also split by shard for sharded runs.
+
+Resume fix, 2026-06-12: the first 8-worker run wrote every shard into the same
+`data/train.jsonl.gz` and `rejected/rejected.jsonl.gz`, which corrupted the
+gzip stream under concurrent appends. Those legacy files for
+`synth/Platypus_reclor.jsonl` were quarantined under
+`synth/Platypus_reclor.jsonl/corrupt_20260612T214749/`. The script now writes
+per-shard accepted/rejected gzip files and per-shard summaries. It also skips
+unreadable gzip files when loading resume IDs instead of crashing.
+
+Quality-gate tightening, 2026-06-12: accepted rows now require all judge
+booleans to be true (`keep`, `substantially_different`, `pii_changed`,
+`low_textual_overlap`, `task_preserved`, and `quality_ok`) in addition to the
+local heuristic requiring at most `0.08` candidate 5-gram overlap and no
+unchanged PII-like strings. Before resuming, the existing 469 accepted ReClor
+rows were audited locally and all 469 passed this stricter condition.
+
+Priority/concurrency update, 2026-06-13: the script now supports
+`--source-priority high40`, an explicit 40-file high-priority campaign that
+excludes the huge WMT/translation and broad review/sentiment sources. It also
+supports `--concurrency N` per worker. The first batched run used concurrency
+`8` and verified `Running: 8 reqs` per GPU server. It was then restarted with
+`CONCURRENCY_PER_SHARD=32`; vLLM sustained `31-32` running requests per GPU
+with no waiting queue, KV cache usage below about `30%`, and a measured
+high40 throughput sample of about `1,206` rows/min.
+
+Concurrency-128 update, 2026-06-13: the first `MAX_NUM_SEQS=128` launch failed
+on one GPU during vLLM/TorchInductor autotuning with `CUDA driver error: file
+not found`, likely from shared compile/cache races during simultaneous
+multi-server startup. The launcher now sets per-GPU `VLLM_CACHE_ROOT`,
+`TORCHINDUCTOR_CACHE_DIR`, and `TRITON_CACHE_DIR` under the run log root. The
+second 128 launch succeeded. vLLM showed about `99-128` running requests per
+GPU, but some GPUs reached `96-99.9%` KV cache usage and small waiting queues.
+The first measured high40 row-throughput sample under the then-active sources
+was about `614` rows/min.
+
+Smoke/init commands:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/synthesize_anonymized_sapient_exclusions.py --init-only
+python scripts/synthesize_anonymized_sapient_exclusions.py \
+  --base-url http://127.0.0.1:8900/v1 \
+  --model posttrain-gemma-teacher \
+  --limit-sources 1 \
+  --limit-rows-per-source 10
+```
+
+## `scripts/run_sapient_anonymization_vllm_8gpu.sh`
+
+Added on 2026-06-12. Confidence: high for local launch and current active run.
+
+Starts eight single-GPU vLLM servers for the fresh Gemma 4 31B IT teacher at
+`data/models/google/gemma-4-31B-it-fresh-20260604`, waits for the OpenAI
+`/v1/models` endpoints, and launches one
+`scripts/synthesize_anonymized_sapient_exclusions.py` shard worker per GPU.
+The default ports are `8900` through `8907`, and the default served model name
+is `posttrain-gemma-teacher`.
+
+The first launch on 2026-06-12 failed because vLLM tried to import DeepGEMM
+and asserted that `CUDA_HOME` was missing. The launcher now disables DeepGEMM
+by default for this run with `VLLM_USE_DEEP_GEMM=0` and
+`VLLM_MOE_USE_DEEP_GEMM=0`.
+
+Active full run:
+
+```bash
+cd /work/dfm/HRM-Text
+tmux attach -t sapient_anonymization_8gpu
+```
+
+Current active log root after the priority/concurrency update:
+
+```text
+logs/sapient_anonymization_20260613T082639
+```
+
+## `scripts/prepare_posttrain_transform_refine.py`
+
+Prepares the transformation-refinement post-training dataset.
+
+Responsibilities:
+
+- convert CoEdIT and filtered Super-NI rows;
+- build synthetic request JSONL files;
+- generate synthetic responses against an OpenAI-compatible teacher endpoint;
+- convert accepted generated JSONL responses to Parquet;
+- support explicit source-target language pairs for synthetic requests:
+  `en:en`, `en:da`, `da:da`, `da:en`;
+- use separate default English and Danish source roots;
+- use special cross-lingual past-tense prompts for `en:da` and `da:en`;
+- reject obvious Danish past-tense language leakage as `language_leak`.
+
+Current source-target convention, 2026-06-05:
+
+```text
+task_en_en: English source, English answer
+task_en_da: English source, Danish answer
+task_da_da: Danish source, Danish answer
+task_da_en: Danish source, English answer
+```
+
+## `scripts/run_posttrain_synthetic_generation_vllm.sh`
+
+Starts one vLLM server per GPU and runs shard workers for synthetic generation.
+
+Responsibilities:
+
+- serve the configured Gemma teacher model over local OpenAI-compatible ports;
+- claim request shards from `SHARD_ROOT/pending`;
+- write generated JSONL responses to `GENERATED_ROOT`;
+- pass `GENERATION_ENDPOINT=chat` to the generator by default;
+- clean up vLLM servers on exit.
+
+Update, 2026-06-05: vLLM servers are launched under `setsid`, and cleanup now
+terminates the process group and escalates to `SIGKILL` if needed.
+
+## `scripts/run_posttrain_transform_refine_v3_missing_generation.sh`
+
+Launch helper for the next post-training synthetic generation run. It should be
+started only when GPUs are free.
+
+Responsibilities:
+
+- use fresh Gemma 4 31B IT at
+  `data/models/google/gemma-4-31B-it-fresh-20260604`;
+- use `SHARD_ROOT=data/synthetic_request_shards_posttrain_transform_refine_v3_missing`;
+- use `GENERATED_ROOT=data/generated_posttrain_transform_refine`;
+- generate only the 550k missing/regenerated rows:
+  `*_da_da`, `*_da_en`, and `past_tense_rewrite_en_da`.
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/run_posttrain_transform_refine_v3_missing_generation.sh
+```
+
+## `scripts/run_posttrain_transform_refine_to_1m_vllm.sh`
+
+Added on 2026-06-08. Confidence: high for shell syntax and launch; medium for
+end-to-end completion until the active run finishes.
+
+All-8-GPU orchestration for reaching the `posttrain_transform_refine`
+`1,000,000` synthetic instruction target with strict judge policy. It:
+
+- starts one local vLLM Gemma 4 31B IT server per GPU;
+- generates the pending `550,000` source-target-expanded rows with
+  `JUDGE_QUALITY=1`;
+- audits English-source generated rows in parallel across the eight servers;
+- creates retry requests for every row marked `regenerate_required=true`;
+
+## `export/transformations-*/recreate_dataset.py`
+
+Updated on 2026-06-11. Confidence: high for local file inspection and
+`py_compile`.
+
+Each transformation export folder has a self-contained recreation script using
+only Python standard-library modules. The script defaults to local
+`seeds/source_texts.jsonl.gz`, reads `generation_config.json` for the
+source/target language defaults, calls an OpenAI-compatible teacher endpoint,
+and judges generated candidates by default. It writes only judge-accepted rows
+unless `--no-judge` is explicitly passed for debugging.
+
+Smoke command shape from inside a transformation export folder:
+
+```bash
+python recreate_dataset.py \
+  --base-url http://127.0.0.1:8100/v1 \
+  --model posttrain-gemma-teacher \
+  --rows 1000 \
+  --output generated/train.jsonl.gz
+```
+
+Exact recreation is not expected because teacher sampling and judge outcomes
+can vary, but seed selection, prompt templates, and task order are deterministic
+for a fixed `--seed`.
+- generates judged replacement rows into a separate regeneration output root;
+- keeps servers alive across phases and tears them down on script exit.
+
+Default important paths:
+
+```text
+MISSING_SHARD_ROOT=data/synthetic_request_shards_posttrain_transform_refine_v3_missing
+GENERATED_ROOT=data/generated_posttrain_transform_refine
+AUDIT_ROOT=logs/posttrain_transform_refine_generation/audits_to_1m_<timestamp>
+REGEN_REQUEST_ROOT=data/synthetic_requests_posttrain_transform_refine_regen_from_audit
+REGEN_SHARD_ROOT=data/synthetic_request_shards_posttrain_transform_refine_regen_from_audit
+REGEN_GENERATED_ROOT=data/generated_posttrain_transform_refine_regen_from_audit
+```
+
+Launched on 2026-06-08 in tmux session `posttrain_to_1m`.
+
+## `scripts/resume_posttrain_transform_refine_to_1m_after_generation.sh`
+
+Added on 2026-06-09. Confidence: high for local launch output.
+
+Recovery helper for the already-completed phase-1 synthetic generation run. It
+assumes the original vLLM teacher servers remain alive on ports `8100`-`8107`
+and runs phases 2-4 directly:
+
+- audit English-source generated rows from
+  `data/generated_posttrain_transform_refine`;
+- build regeneration requests for rows marked by the judge;
+- shard and run judged regeneration without restarting the existing servers.
+
+Verified active launch:
+
+```bash
+cd /work/dfm/HRM-Text
+bash scripts/resume_posttrain_transform_refine_to_1m_after_generation.sh \
+  2>&1 | tee logs/posttrain_transform_refine_to_1m_resume_20260609T083026.log
+```
+
+## `scripts/monitor_posttrain_to_1m_recovery.py`
+
+Added on 2026-06-09. Confidence: high for local tmux output.
+
+Live monitor for the posttrain transform/refine 1M recovery audit. It prints
+one line per GPU with audited rows, current file progress, aggregate rate, audit
+ETA, and GPU memory/utilization.
+
+Active tmux window:
+
+```bash
+tmux attach -t hrm-1
+# switch to window 7: posttrain-monitor
+```
+
+## `scripts/run_dfm4_xl_ddp_lite_eval_700k.sh`
+
+Added on 2026-06-09. Confidence: high for local shell validation and launch.
+
+Runs the DFM4 XL-DDP `step_700000` lite eval pair:
+
+- no-EMA first, with `EVAL_PREFIX=lite_eval_noema` and
+  `DFM_EVAL_PREFIX=lite_dfm_eval_noema`;
+- EMA second, with `EVAL_PREFIX=lite_eval_ema` and
+  `DFM_EVAL_PREFIX=lite_dfm_eval_ema`;
+- syncs both to W&B run `dfm4xlddpclean` in project
+  `Original Plus Mixed Danish Instruction Rich L`;
+- uses all eight GPUs through `scripts/schedule_multiple_checkpoint_evals.sh`;
+- uses the fractional epoch x-axis value `1.9112836727227056`.
+
+Launched in tmux session `dfm4_lite_eval_700k`:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/run_dfm4_xl_ddp_lite_eval_700k.sh \
+  2>&1 | tee logs/dfm4_lite_eval_700k_20260609.log
+```
+
+## `scripts/build_expert_exports.py`
+
+Added on 2026-06-10; export-root note updated on 2026-06-11. Confidence: high.
+
+Builds the self-contained `export/` dataset export package. It creates one
+upload-ready subfolder per non-superseded expert/post-training dataset family,
+writes a `README.md` dataset card and standalone `recreate_dataset.py` into
+each subfolder, and writes chat-template-ready compressed JSONL shards under
+`data/*.jsonl.gz`. It does not create symlinks. The 2026-06-10 rebuild uses
+file-level parallel Parquet conversion controlled by `EXPERT_EXPORT_WORKERS`
+with default `16`.
+
+Synthetic rows are filtered to accepted examples only. Base generated rows
+whose `id` appears as a regenerated `original_id` are excluded, and accepted
+regeneration rows are included as replacements. Synthetic transformation data
+is exported as four source/target language-pair datasets:
+`transformations-danish-danish`, `transformations-danish-english`,
+`transformations-english-danish`, and `transformations-english-english`.
+
+Validated output after the root rename:
+
+```text
+export/ contains 12 dataset folders
+find export -type l | wc -l -> 0
+find export -type f -name '*.jsonl.gz' | wc -l -> 4187
+no export/*.parquet or plain export/*.jsonl files remain
+all export/*/recreate_dataset.py files compile with py_compile
+```
+
+## `scripts/audit_reordering_datasets.py`
+
+Added on 2026-06-10; prompt audited/revised on 2026-06-11. Confidence: high
+for local syntax, row counting, and prompt design; medium until a judge run has
+been executed.
+
+Audits the two expert paragraph-reordering exports with an OpenAI-compatible
+judge model:
+
+```text
+expert/danish-dynaword-paragraph-reordering: 939,361 rows
+expert/common-pile-paragraph-reordering:     277,029 rows
+```
+
+The script is non-mutating. It reads chat `.jsonl.gz` rows, asks a judge whether
+each row is a meaningful supervised paragraph-reordering example, and writes
+`logs/expert_reordering_audit/reordering_judge.audit.jsonl` plus
+`summary.json`. It rejects rows that are semantically arbitrary, index/catalog
+fragments, bibliographies, metadata lists, OCR garbage, too fragmented, or
+where the response does not restore the same source content.
+
+Prompt audit result, 2026-06-11: the judge prompt now explicitly distinguishes
+topic interest from discourse-ordering usefulness, requires inferable order
+from chronology/argument/local coherence, rejects arbitrary alphabetical/list
+ordering, and asks for `primary_failure_type` so later filtering can be
+diagnosed.
+
+Suggested first pass against a local OpenAI-compatible judge:
+
+```bash
+python scripts/audit_reordering_datasets.py \
+  --base-url http://127.0.0.1:8100/v1 \
+  --model posttrain-gemma-teacher \
+  --sample-rate 0.01 \
+  --concurrency 8 \
+  --audit-root logs/expert_reordering_audit/sample_1pct \
+  --force
+```
+
+If the sample looks sane, run with `--sample-rate 1.0` or without
+`--sample-rate`.
+
+Superseded for the upload export folders: use each dataset folder's
+self-contained `recreate_dataset.py audit` / `recreate_dataset.py filter`
+commands instead. The standalone reordering audit script remains useful for
+local experiments.
+
+## `scripts/run_export_audits_8gpu_vllm.sh`
+
+Added on 2026-06-11. Confidence: high for shell syntax, local script wiring,
+and successful 8-GPU audit startup; medium until the full 8-GPU audit
+completes.
+
+Runs the judge audit for the eight non-synthetic export datasets:
+
+```text
+common-pile-denoising
+common-pile-paragraph-reordering
+common-pile-prefix-continuation
+common-pile-span-filling
+danish-dynaword-denoising
+danish-dynaword-paragraph-reordering
+danish-dynaword-prefix-continuation
+danish-dynaword-span-filling
+```
+
+It starts one single-GPU vLLM server per dataset/GPU using Gemma 4 31B IT and
+then runs each folder's self-contained:
+
+```bash
+python recreate_dataset.py audit ...
+```
+
+Default model path is
+`data/models/google/gemma-4-31B-it-fresh-20260604`, falling back to
+`/work/dfm/brainsurgery/models/google/gemma-4-31B-it` if the fresh local copy is
+not present. Default served model name is `posttrain-gemma-teacher`.
+
+Example:
+
+```bash
+SAMPLE_RATE=1.0 CONCURRENCY=8 bash scripts/run_export_audits_8gpu_vllm.sh
+```
+
+Operational update on 2026-06-11: simultaneous startup of eight Gemma 4 31B IT
+vLLM servers initially failed in two ways:
+
+- normal vLLM compilation hit a `torch._inductor` autotune failure
+  (`CUDA driver error: file not found`);
+- eager startup then hit `deep_gemm` import/warmup failure because `CUDA_HOME`
+  was not visible.
+
+The runner now supports `VLLM_EXTRA_ARGS`, isolates
+`TORCHINDUCTOR_CACHE_DIR`/`TRITON_CACHE_DIR` per GPU under the log root, and
+defaults `VLLM_DEEP_GEMM_WARMUP=skip`. The successful launch used:
+
+```bash
+SAMPLE_RATE=1.0 \
+CONCURRENCY=8 \
+GPU_LIST='0 1 2 3 4 5 6 7' \
+AUDIT_ROOT_NAME=audit_full \
+VLLM_EXTRA_ARGS='--enforce-eager' \
+DEEP_GEMM_WARMUP=skip \
+bash scripts/run_export_audits_8gpu_vllm.sh
+```
+
+The first full-audit attempt also exposed that the exported
+`recreate_dataset.py audit` implementation was not safe for large full
+datasets: it built a full in-memory job list and submitted one future per row.
+The eight folder-local recreate scripts were patched to stream audit jobs and
+keep at most `--concurrency * --queue-factor` futures pending. The streamed
+path also passes `path.name` rather than a `Path` object into audit rows, so
+`json.dumps` succeeds.
+
+Update later on 2026-06-11: the eight folder-local audit scripts also support
+stable sharding and skip-existing behavior:
+
+```bash
+python recreate_dataset.py audit \
+  --num-shards 4 \
+  --shard-index 0 \
+  --skip-audit audit_full/audit.jsonl \
+  ...
+```
+
+The shard key is the stable `row_id` (`dataset/train-xxxxx.jsonl.gz:<line>`).
+`--skip-audit` can be repeated and loads existing row ids before scanning, so a
+rebalance worker can avoid rejudging rows already present in earlier audit
+files. This is used by `scripts/rebalance_export_audits.py`.
+
+Each dataset writes `audit_full/audit.jsonl` and `audit_full/summary.json`
+inside its own export folder. To create filtered upload data, run inside each
+dataset folder:
+
+```bash
+python recreate_dataset.py filter \
+  --audit audit_full/audit.jsonl \
+  --output-root audited \
+  --force
+```
+
+Filtering keeps only `keep=true` rows. Negatively judged rows, judge errors,
+and unaudited rows are excluded.
+
+## `scripts/rebalance_export_audits.py`
+
+Added on 2026-06-11. Confidence: high for syntax, status output, and manual
+rebalance launches; medium until all target-token audit runs finish.
+
+Conservative process-level controller for token-targeted export audits. It can:
+
+- report per-dataset accepted-token estimates with `status`;
+- watch for the first dataset to cross a token target;
+- stop the current monolithic `export_audits_8gpu` tmux session;
+- relaunch only unfinished datasets as stable hash shards across the available
+  GPUs, with each shard using `--skip-audit` to avoid already-audited rows.
+
+The active watch session was launched as:
+
+```bash
+python scripts/rebalance_export_audits.py watch \
+  --target-tokens 100000000 \
+  --interval-seconds 300 \
+  --gpus 0,1,2,3,4,5,6,7
+```
+
+This avoids killing a single child audit worker under
+`scripts/run_export_audits_8gpu_vllm.sh`, because that parent script owns all
+vLLM servers and its cleanup trap would otherwise tear down the full run.
+
+Operational update later on 2026-06-11: rebalance-launched vLLM servers and
+audit workers must be started with `start_new_session=True`. Without that,
+children from a short-lived controller process can disappear after the
+controller exits. The script now detaches both vLLM and audit worker children.
+
+Verified 100M-token rebalance command:
+
+```bash
+python scripts/rebalance_export_audits.py rebalance \
+  --target-tokens 100000000 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --port-base 8600 \
+  --stop-current
+```
+
+The 2026-06-11 rebalance log root
+`logs/export_dataset_audits_rebalance_20260611T193116` launched all eight GPUs
+against the six datasets still below the 100M accepted-token target:
+
+```text
+GPU4: common-pile-denoising
+GPU0/GPU6: common-pile-paragraph-reordering shards 0/2 and 1/2
+GPU3: common-pile-prefix-continuation
+GPU5: common-pile-span-filling
+GPU1/GPU7: danish-dynaword-paragraph-reordering shards 0/2 and 1/2
+GPU2: danish-dynaword-prefix-continuation
+```
+
+`danish-dynaword-denoising` and `danish-dynaword-span-filling` were already
+above 100M estimated accepted tokens and were excluded from that rebalance.
+
+Update later on 2026-06-11: paragraph-reordering exports are capped at 50M
+accepted tokens rather than 100M. This is encoded in
+`TARGET_TOKENS_BY_DATASET`:
+
+```text
+common-pile-paragraph-reordering: 50M
+danish-dynaword-paragraph-reordering: 50M
+all other export audit datasets: 100M default
+```
+
+The `status`, `rebalance`, and `watch` commands use these per-dataset targets.
+The watcher also records the initially complete set and only triggers a
+rebalance when a newly complete dataset appears, so already-complete datasets
+do not cause an immediate rebalance loop. Active cap watcher:
+
+```bash
+python scripts/rebalance_export_audits.py watch \
+  --target-tokens 100000000 \
+  --interval-seconds 300 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --port-base 8600
+```
+
+tmux session: `export_audit_cap_watch`
+log: `logs/export_audit_cap_watch_20260611T214524.log`
+
+Update on 2026-06-12: `scripts/rebalance_export_audits.py` also supports a
+manual `--allocation` override in the form
+`dataset:gpu,gpu;dataset:gpu`. This was added after
+`common-pile-paragraph-reordering` exceeded its 50M cap while still occupying
+two GPUs. The ETA-aware rebalance launched at
+`logs/export_dataset_audits_rebalance_20260612T064232` with:
+
+```bash
+python scripts/rebalance_export_audits.py rebalance \
+  --target-tokens 100000000 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --port-base 8700 \
+  --stop-current \
+  --allocation 'common-pile-denoising:0,1;common-pile-prefix-continuation:2,3,4;common-pile-span-filling:5;danish-dynaword-paragraph-reordering:6,7'
+```
+
+Resulting allocation:
+
+```text
+GPU0/GPU1: common-pile-denoising shards 0/2 and 1/2
+GPU2/GPU3/GPU4: common-pile-prefix-continuation shards 0/3, 1/3, 2/3
+GPU5: common-pile-span-filling shard 0/1
+GPU6/GPU7: danish-dynaword-paragraph-reordering shards 0/2 and 1/2
+```
+
+The 2026-06-12 audit generation was stopped manually after the user asked to
+pause it. The run is resumable because each dataset-local `audit.jsonl` contains
+durable judged `row_id`s and future rebalance launches include all previous
+audit files via repeated `--skip-audit`. The stopped log root is:
+
+```text
+logs/export_dataset_audits_rebalance_20260612T064232
+```
+
+To resume the same ETA-aware allocation later, rerun the same `rebalance`
+command above with `--stop-current`; it will skip already-audited rows from
+all earlier audit roots.
+
+Debug update on 2026-06-12. Confidence: high for local single-GPU smoke test.
+`--enforce-eager` is not required for single-GPU vLLM startup on this machine.
+A non-eager Gemma 4 31B IT server on GPU0 successfully loaded, compiled, became
+ready, and answered a chat-completions request when launched without
+`CUDA_MODULE_LOADING=EAGER`.
+
+The failed/stuck debug launches showed:
+
+- setting `CUDA_MODULE_LOADING=EAGER` caused the EngineCore to spend minutes in
+  `torch.cuda._lazy_init()` before model load;
+- removing `CUDA_MODULE_LOADING=EAGER` allowed CUDA init, model load,
+  `torch.compile`, CUDA graph capture, and API warmup to complete;
+- the smoke response to a Danish one-sentence prompt was
+  `København er en smuk by.`
+
+Successful debug log root:
+
+```text
+logs/vllm_debug_single_gpu_20260612T091958_no_cuda_module_eager
+```
+
+Successful launch used GPU0 only, no `--enforce-eager`, and no
+`VLLM_DEEP_GEMM_WARMUP=skip`. If scaling back up, use GPUs 0-3 first; GPUs 4-7
+were occupied by unrelated HRM OpenAI eval servers during this debug session.
+
+Operational restart on 2026-06-12. Confidence: high for local launch and
+process/GPU verification. `scripts/rebalance_export_audits.py` now has a
+Boolean `--enforce-eager/--no-enforce-eager` option; default remains
+`--enforce-eager` for compatibility with previous runs. After the successful
+single-GPU non-eager smoke test, the remaining export audits were restarted on
+GPUs 0-3 only, leaving GPUs 4-7 to unrelated HRM eval servers:
+
+```bash
+python scripts/rebalance_export_audits.py rebalance \
+  --target-tokens 100000000 \
+  --gpus 0,1,2,3 \
+  --port-base 8900 \
+  --allocation 'danish-dynaword-paragraph-reordering:0;common-pile-denoising:1;common-pile-span-filling:2;common-pile-prefix-continuation:3' \
+  --no-enforce-eager
+```
+
+Launch root:
+
+```text
+logs/export_dataset_audits_rebalance_20260612T093058
+```
+
+Verified active allocation:
+
+```text
+GPU0: danish-dynaword-paragraph-reordering shard 0/1
+GPU1: common-pile-denoising shard 0/1
+GPU2: common-pile-span-filling shard 0/1
+GPU3: common-pile-prefix-continuation shard 0/1
+```
+
+## `scripts/filter_all_export_audits.py`
+
+Added on 2026-06-11. Confidence: high for syntax.
+
+Filters the eight export datasets using every `audit*/audit.jsonl` file inside
+each dataset folder. This replaces the earlier `export_audit_filter_watch`
+tmux watcher, which only knew about `audit_full` and would miss rebalance shard
+audit roots.
+
+Run after the desired audit target is reached:
+
+```bash
+python scripts/filter_all_export_audits.py
+```
+
+## `scripts/audit_dbc_article_datasets.py`
+
+Added on 2026-06-11. Confidence: high for local syntax, schema inspection, and
+row counts; medium until a judge run has been executed.
+
+Non-mutating audit for DBC article/author instruction datasets. Defaults:
+
+```text
+data/converted_sources/dbc/dbc-farfatterweb.parquet: 2,831 rows
+data/converted_sources/dbc/dbc-faktalink.parquet:    5,991 rows
+```
+
+The script reads converted Parquet rows with `instruction` and `response`,
+then asks an OpenAI-compatible judge whether the row is useful Danish
+article-section training data. The prompt is dataset-aware:
+
+- Forfatterweb: response should be a plausible Danish section for the requested
+  author/article heading.
+- Faktalink: response should be a plausible Danish explanatory article section
+  for the requested topic/heading.
+
+It rejects wrong-language, empty, metadata-only, boilerplate, OCR-corrupted,
+mostly-reference/URL, unrelated, too-fragmentary, or low-quality article prose.
+It does not reject merely because the judge cannot externally verify every
+factual claim.
+
+Suggested first pass:
+
+```bash
+python scripts/audit_dbc_article_datasets.py \
+  --base-url http://127.0.0.1:8100/v1 \
+  --model posttrain-gemma-teacher \
+  --sample-rate 0.1 \
+  --concurrency 8 \
+  --audit-root logs/dbc_article_audit/sample_10pct \
+  --force
+```
 
 ## `scripts/transformers_openai_server.py`
 
@@ -477,6 +1151,22 @@ Verified syntax:
 python -m py_compile scripts/hrm_openai_server.py
 ```
 
+2026-06-12 EuroEval compatibility update. Confidence: high for local source
+inspection and syntax check. EuroEval/LiteLLM sends OpenAI-style
+`max_completion_tokens` for generation length limits; EuroEval's task configs
+set short limits for classification/multiple-choice tasks and larger limits
+for summarization, translation, instruction following, etc. The HRM
+OpenAI-compatible server previously only read `max_tokens`, so
+`max_completion_tokens` was silently ignored by Pydantic and missing requests
+fell back to the server `--max-context` cap. `scripts/hrm_openai_server.py` now
+accepts both `max_tokens` and `max_completion_tokens`, preferring
+`max_tokens` if both are supplied. Verification:
+
+```bash
+cd /work/dfm/HRM-Text
+PYTHONDONTWRITEBYTECODE=1 python -m py_compile scripts/hrm_openai_server.py
+```
+
 ## `scripts/log_dfm_evals_to_wandb.py`
 
 Logs dfm-evals Every Eval Ever JSON exports to W&B under a non-`eval` prefix.
@@ -613,3 +1303,557 @@ Verified immediately after DFM CP1 scheduler launch:
 - read live tqdm counters such as `93/165`,
 - reported `completed=0`, `active=8`, `queued=104`, `total_visible=112`,
 - estimated full ETA around `2h57m` from 2026-05-29 15:50 Europe/Berlin.
+
+## `scripts/prepare_posttrain_transform_refine.py`
+
+Added on 2026-06-04. Confidence: high for local conversion/request-generation
+execution; medium for later teacher-model generation until run.
+
+Prepares the `posttrain_transform_refine` dataset family. Subcommands:
+
+- `convert-existing`: converts `grammarly/coedit` and a filtered
+  transformation-style subset of `Muennighoff/natural-instructions` into ready
+  `condition/instruction/response` Parquet.
+- `make-synthetic-requests`: builds teacher-model request JSONL files for five
+  transformation tasks in Danish and English.
+- `export-seed-texts`: writes the English and Danish source-text pools used for
+  synthetic request generation to JSONL plus a manifest.
+- `shard-synthetic-requests`: splits request JSONL files into small queue
+  shards for multi-GPU teacher generation.
+- `generate-synthetic`: calls an OpenAI-compatible teacher model endpoint,
+  intended for Gemma 4 31B or 26B-A3.
+- `audit-generated`: rejudges accepted generated JSONL rows through an
+  OpenAI-compatible judge endpoint and writes non-mutating audit JSONL plus a
+  summary.
+- `convert-generated`: writes accepted synthetic generations to ready Parquet.
+
+Verified local outputs:
+
+```text
+posttrain_coedit rows: 70,783
+posttrain_superni_filtered rows: 500,000 across 64 tasks
+synthetic request files: 10 x 50,000 requests
+synthetic request shards: 500 x 1,000 requests
+seed export: 1,119,746 English rows and 99,538 Danish rows
+```
+
+The audit/regeneration policy is audit-first: generate the remaining pending
+rows with `--judge-quality`, then audit the old accepted rows. Any row with an
+unhappy judge must be dropped and regenerated; judge-failed rows should not be
+converted into the post-training data.
+
+## `scripts/build_tokenized_posttrain_transform_refine_tree.py`
+
+Added on 2026-06-04. Confidence: high.
+
+Builds a filtered tokenized union for post-training. It links only allowlisted
+task prefixes from:
+
+```text
+data/tokenized_dfm4
+data/tokenized_posttrain_transform_refine_existing
+data/tokenized_posttrain_transform_refine_synthetic
+```
+
+This is necessary because `data_io/sample_tokenized.py` samples unmatched tasks
+fully by default; the post-training mix must therefore avoid pointing directly
+at the full DFM4 tokenized tree. Verified local manifest linked `4,117` tasks:
+`4,115` selected existing DFM4/relevant tasks plus `2` new post-training tasks.
+
+## `scripts/prepare_posttrain_transform_refine.sh`
+
+Added on 2026-06-04. Confidence: high.
+
+Stage runner for the post-training transformation-refine pipeline. Key stages:
+
+```bash
+scripts/prepare_posttrain_transform_refine.sh inventory
+scripts/prepare_posttrain_transform_refine.sh download-existing
+scripts/prepare_posttrain_transform_refine.sh convert-existing
+scripts/prepare_posttrain_transform_refine.sh make-synthetic-requests
+scripts/prepare_posttrain_transform_refine.sh shard-synthetic-requests
+scripts/prepare_posttrain_transform_refine.sh generate-synthetic
+scripts/prepare_posttrain_transform_refine.sh convert-synthetic
+scripts/prepare_posttrain_transform_refine.sh tokenize-existing
+scripts/prepare_posttrain_transform_refine.sh tokenize-synthetic
+scripts/prepare_posttrain_transform_refine.sh build-tokenized-tree
+scripts/prepare_posttrain_transform_refine.sh sample
+```
+
+## `scripts/run_posttrain_synthetic_generation_vllm.sh`
+
+Added on 2026-06-04. Confidence: high for shell syntax and queue design;
+medium for full execution until Gemma model path is provided.
+
+Starts one vLLM OpenAI-compatible API server per GPU and runs one shard worker
+per GPU. Default queue:
+
+```text
+data/synthetic_request_shards_posttrain_transform_refine/pending
+```
+
+Default behavior:
+
+- `GPU_LIST=0,1,2,3,4,5,6,7`
+- ports `8100..8107`
+- `--tensor-parallel-size 1`
+- `CLIENT_CONCURRENCY=32` per GPU worker
+- atomically claims one shard at a time from `pending`
+- writes generated JSONL rows to `data/generated_posttrain_transform_refine`
+- moves completed shards to `done` and failed shards to `failed`
+
+Command shape:
+
+```bash
+cd /work/dfm/HRM-Text
+GEMMA_MODEL_PATH=<hf-id-or-local-path> \
+SERVED_MODEL_NAME=posttrain-gemma-teacher \
+scripts/run_posttrain_synthetic_generation_vllm.sh
+```
+
+## `scripts/run_posttrain_transform_refine_v3_missing_generation.sh`
+
+Added on 2026-06-05. Confidence: high.
+
+Convenience wrapper for generating the remaining source-target-expanded
+`posttrain_transform_refine` shards. It uses the fresh local Gemma 4 31B IT
+model, the `chat` endpoint, `CLIENT_CONCURRENCY=32`, `JUDGE_QUALITY=1`,
+`JUDGE_RETRIES=2`, and writes into:
+
+```text
+data/generated_posttrain_transform_refine
+```
+
+The queued shard root is:
+
+```text
+data/synthetic_request_shards_posttrain_transform_refine_v3_missing
+```
+
+## `scripts/report_posttrain_synthetic_generation_progress.py`
+
+Added on 2026-06-04. Confidence: high.
+
+Reports sharded synthetic-generation queue state, generated-row count, and
+worker log summaries. Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/report_posttrain_synthetic_generation_progress.py
+```
+
+## `scripts/schedule_checkpoint_evals.sh`
+
+Updated on 2026-06-06. Confidence: high.
+
+Queues standard HRM evals and dfm-evals onto a GPU worker pool. It supports
+lite mode, no-EMA mode, sharded standard/DFM tasks, final merge, and W&B
+logging.
+
+Retry behavior now adapts batch size. On the first attempt, the scheduler uses
+the highest configured batch size unless telemetry has already shown an OOM for
+that task at the current-or-better free-memory level. Successful telemetry at
+the same task and lower-or-equal free memory is treated as evidence that the
+recorded batch size is safe. If no telemetry exists, the configured batch size
+is used rather than falling back to batch size `1`.
+
+On retry attempt `n`, the effective batch size is halved `n` times with a floor
+of `1`:
+
+- standard evals: `STANDARD_BATCH_SIZE`
+- dfm-evals OpenAI shim server and `--max-connections`: `DFM_BATCH_SIZE`
+- IFEval-DA shim server and `--max-connections`: `IFEVAL_BATCH_SIZE`
+
+This means an OOM at batch size `8` will retry at `4`, then `2`, then `1`
+within the existing `MAX_RETRIES` limit.
+
+The scheduler also records per-attempt telemetry for future placement decisions
+in:
+
+```text
+${LOG_ROOT}/eval_attempts.tsv
+```
+
+Each row records checkpoint tag, task/shard, GPU, attempt, effective batch
+size, status, OOM flag, GPU free/used/total MiB before and after the attempt,
+and the primary task log path. This is intended to build a table of highest
+non-OOM-proven batch sizes by task and memory headroom.
+
+Operational note from 2026-06-06. Confidence: high. During DFM4 XL-DDP
+`step_400000` EMA lite eval, `ARC` first failed on GPU4 at about `6.4 GiB`
+free above training even with batch size `1`. Retrying on GPU0 at about
+`16.6 GiB` free succeeded at batch size `1`. The subsequent `MMLU` retry was
+started on GPU0 at batch size `8` because no telemetry yet showed batch-size
+OOM at that free-memory level.
+
+Operational note from 2026-06-07. Confidence: high. Manual one-job retry
+commands can still override the scheduler's adaptive first-attempt choice by
+setting `DFM_BATCH_SIZE` or `IFEVAL_BATCH_SIZE` directly. During DFM4 XL-DDP
+`step_400000` EMA DFM-lite cleanup, WMT24++ en-da was deliberately forced to
+`DFM_BATCH_SIZE=1` after batch 2 had OOMed on low-headroom GPUs. GovReport
+succeeded at batch 2 on GPU0, where about `16.6 GiB` was free above training.
+The adaptive telemetry logic should be treated as the default path for queued
+future runs; forced single-job retries are manual finish-the-run decisions.
+
+Updated on 2026-06-08. Confidence: high. `scripts/schedule_multiple_checkpoint_evals.sh`
+now supports attaching additional workers to an already-running shared queue:
+
+```text
+RESUME_EXISTING_QUEUE=1
+SKIP_FINAL_MERGE=1
+```
+
+`RESUME_EXISTING_QUEUE=1` preserves the existing `jobs.tsv` and `status.tsv`
+instead of rebuilding/truncating them. `SKIP_FINAL_MERGE=1` lets the extra
+workers consume queued jobs while leaving final merge to the original scheduler
+process. This was added to attach GPU1/GPU4 to the active DFM4 XL-DDP
+`step_600000` no-EMA lite eval after the conservative initial launch used only
+GPU0/GPU2/GPU7.
+
+Updated on 2026-06-10. Confidence: high. `scripts/schedule_eval_campaign.sh`
+adds a TSV-defined campaign queue for mixed eval variants. It delegates each
+queued shard to `scripts/schedule_checkpoint_evals.sh` with
+`SKIP_FINAL_MERGE=1`, so existing task definitions, retry/OOM-halving,
+batch-size overrides, server launch code, and telemetry remain the source of
+truth. After all shard jobs finish, it runs `FINAL_MERGE_ONLY=1` once per TSV
+variant so each checkpoint/mode uses the intended `NO_EMA`, `LITE_EVAL`,
+`EVAL_PREFIX`, and `DFM_EVAL_PREFIX` settings.
+
+The campaign TSV columns are:
+
+```text
+variant_id ckpt_tag eval_epoch lite_eval no_ema eval_prefix dfm_eval_prefix log_root dfm_log_root
+```
+
+This helper fills the gap left by `scripts/schedule_multiple_checkpoint_evals.sh`,
+where EMA/no-EMA, lite/full, and metric prefixes are process-wide settings and
+therefore cannot be mixed in one queue.
+
+Updated on 2026-06-10. Confidence: high. `scripts/watch_eval_campaign_progress.py`
+monitors a campaign root from `scripts/schedule_eval_campaign.sh`. It prints
+queue counts, one active-job line per GPU ordered by GPU id, elapsed active-job
+time, live GPU memory/utilization, and the latest scheduler status rows.
+
+## `scripts/summarize_eval_attempt_telemetry.py`
+
+Added on 2026-06-06. Confidence: high.
+
+Summarizes one or more scheduler telemetry TSVs by task, including successes,
+OOMs, highest successful batch size, and memory-free statistics:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/summarize_eval_attempt_telemetry.py logs/eval/*/eval_attempts.tsv
+```
+
+## EuroEval Local Checkpoint Evaluation
+
+Added on 2026-06-12. Confidence: high for local syntax checks and dry-runs;
+medium until a full EuroEval run completes against a checkpoint.
+
+`scripts/run_euroeval_on_checkpoint.sh` runs EuroEval against a local HRM
+checkpoint through `scripts/hrm_openai_server.py`. The requested default scope
+is Danish and English only:
+
+```text
+EUROEVAL_LANGUAGES=da,en
+```
+
+The wrapper intentionally does not override EuroEval's standard evaluation
+policy by default. In particular, it leaves few-shot/zero-shot choice,
+`num_iterations`, and `generative_type` unset unless the corresponding
+environment variables are explicitly provided. EuroEval's upstream CLI default
+is few-shot with 10 iterations, with internal zero-shot fallback for tasks that
+require zero-shot evaluation. The wrapper still passes the local API endpoint,
+API key, cache directory, max context length, `--save-results`, and the
+requested language filters.
+
+Outputs per checkpoint:
+
+```text
+logs/euroeval/.../<CKPT_TAG>/server.log
+logs/euroeval/.../<CKPT_TAG>/euroeval.log
+logs/euroeval/.../<CKPT_TAG>/euroeval_benchmark_results.jsonl
+logs/euroeval/.../<CKPT_TAG>/merged_metrics.json
+logs/euroeval/.../<CKPT_TAG>/merge_and_wandb_sync.log
+```
+
+`scripts/log_euroeval_to_wandb.py` flattens EuroEval JSONL results to W&B
+metrics under `euroeval/<lang>/<task>/<dataset>/...` and records
+`euroeval/epoch` as the step metric. It filters to `da` and `en` in the
+checkpoint wrapper.
+
+Operational update on 2026-06-12. Confidence: high. Installing EuroEval into
+the `hrm` conda environment was done directly because editable install of the
+repo extra failed under setuptools' flat-layout package discovery:
+
+```bash
+uv pip install euroeval
+```
+
+This installed `euroeval==17.3.0` and downgraded `scikit-learn` from `1.8.0`
+to `1.6.1`. EuroEval's import guard refuses any visible top-level
+`flash_attn` package on non-ROCm builds. This conflicts with the local FA4
+install, which provides top-level `flash_attn` from the `flash-attn-4`
+distribution. For API-only EuroEval, use
+`scripts/euroeval_api_no_flash_attn_guard.py`; it hides `flash_attn` only from
+EuroEval's import guard in the EuroEval process. The HRM server process still
+runs normally with FA4 visible.
+
+Concurrency update on 2026-06-12. Confidence: high for local source inspection
+and syntax check. EuroEval 17.3.0's LiteLLM backend hard-codes
+`max_concurrent_calls = 20`. `scripts/euroeval_api_no_flash_attn_guard.py` now
+supports `EUROEVAL_MAX_CONCURRENT_CALLS`; when set, it monkeypatches
+`LiteLLMModel.__init__` after construction to override
+`self.buffer["max_concurrent_calls"]`.
+
+Verification:
+
+```bash
+cd /work/dfm/HRM-Text
+PYTHONDONTWRITEBYTECODE=1 python -m py_compile scripts/euroeval_api_no_flash_attn_guard.py
+```
+
+Example launch using larger server and EuroEval concurrency:
+
+```bash
+cd /work/dfm/HRM-Text
+EUROEVAL_BATCH_SIZE=32 EUROEVAL_MAX_CONCURRENT_CALLS=32 \
+  scripts/run_original_sapient_l_euroeval_epochs.sh
+```
+
+## `scripts/queue_epoch_euroevals_on_free_gpus.sh`
+
+Added on 2026-06-12. Confidence: high for local syntax check and launch.
+
+EuroEval-only queue for epoch checkpoints. It watches GPUs 4-7 by default and
+launches one `scripts/run_euroeval_on_checkpoint.sh` job whenever a watched GPU
+has no active NVIDIA compute process. This lets follow-up EuroEval jobs start
+as soon as individual GPUs are freed by an earlier evaluation campaign, without
+waiting for every GPU in the old campaign to finish.
+
+Default queued jobs:
+
+```text
+checkpoints/dfm/L epoch_1..epoch_4
+checkpoints/dfm4/XL-ddp epoch_1..epoch_2
+```
+
+Default runtime settings:
+
+```text
+GPUS=4,5,6,7
+EUROEVAL_BATCH_SIZE=32
+EUROEVAL_MAX_CONCURRENT_CALLS=32
+EUROEVAL_LANGUAGES=da,en
+```
+
+DFM L results sync to W&B project `DFM L`, run id `kgnbdmwf`, run name
+`dfm-L`. DFM4 XL results sync to project
+`Original Plus Mixed Danish Instruction Rich L`, run id
+`dfm4xlddpcleanfixed2`, run name `dfm4-XL-ddp clean corrected history v2`.
+
+Launch command:
+
+```bash
+cd /work/dfm/HRM-Text
+tmux new-session -d -s queued_dfm_euroevals \
+  'cd /work/dfm/HRM-Text && scripts/queue_epoch_euroevals_on_free_gpus.sh'
+```
+
+## `scripts/queue_valeu_da_rerun_then_dfm4.sh`
+
+Added on 2026-06-12. Confidence: high for local syntax check and launch.
+
+Priority EuroEval queue used after original Sapient L `epoch_2` completed only
+19/20 EuroEval tasks. Local inspection showed the missing result row was
+`valeu-da`; `euroeval.log` ended with `Completed 19 benchmarks, and errored 1
+benchmarks`. The script watches GPUs 4-7 and runs:
+
+```text
+1. original_sapient/L epoch_2, dataset valeu-da only, separate log dir
+2. dfm4/XL-ddp epoch_1
+3. dfm4/XL-ddp epoch_2
+```
+
+The `valeu-da` rerun writes to:
+
+```text
+logs/euroeval/original_sapient_L/epoch_2_valeu_da_rerun
+```
+
+It intentionally sets `WANDB_SYNC=0` for the one-dataset rerun and does not
+modify `logs/euroeval/original_sapient_L/epoch_2/euroeval_benchmark_results.jsonl`.
+The row should be inspected and merged separately after success. DFM4 XL jobs
+use the same W&B target as the normal queue.
+
+Launch command:
+
+```bash
+cd /work/dfm/HRM-Text
+tmux new-session -d -s priority_valeu_da_then_dfm4 \
+  'cd /work/dfm/HRM-Text && scripts/queue_valeu_da_rerun_then_dfm4.sh'
+```
+
+`scripts/run_original_sapient_l_euroeval_epochs.sh` launches the four original
+Sapient L epoch checkpoints on GPUs 4-7:
+
+```bash
+cd /work/dfm/HRM-Text
+tmux new-session -d -s orig_sapient_l_euroeval \
+  'cd /work/dfm/HRM-Text && scripts/run_original_sapient_l_euroeval_epochs.sh'
+```
+
+Defaults:
+
+```text
+CKPT_PATH=checkpoints/original_sapient/L
+epochs: epoch_1, epoch_2, epoch_3, epoch_4
+GPUs:   4, 5, 6, 7
+EUROEVAL_LANGUAGES=da,en
+WANDB_PROJECT=Original Plus Mixed Danish Instruction Rich L
+WANDB_RUN_ID=origLclean
+WANDB_RUN_NAME=original-sapient-L-clean-history
+```
+
+The launch does not set `EUROEVAL_FEW_SHOT`, `EUROEVAL_NUM_ITERATIONS`, or
+`EUROEVAL_GENERATIVE_TYPE`, so EuroEval uses its standard defaults. Initial
+logs showed EuroEval running few-shot and reporting `1/20 benchmarks`, with
+all four HRM servers healthy on ports `9741`-`9744`.
+
+`scripts/schedule_checkpoint_evals.sh` and
+`scripts/schedule_multiple_checkpoint_evals.sh` support opt-in EuroEval jobs:
+
+```bash
+cd /work/dfm/HRM-Text
+RUN_EUROEVAL=1 scripts/schedule_checkpoint_evals.sh
+```
+
+If EuroEval is not installed in the active environment, either install the repo
+extra or use an explicit command:
+
+```bash
+uv pip install -e '.[euroeval]'
+EUROEVAL_BIN='uv run --no-project --with euroeval euroeval' RUN_EUROEVAL=1 scripts/schedule_checkpoint_evals.sh
+```
+
+## `scripts/rebalance_export_audits.py`
+
+Operational update on 2026-06-12. Confidence: high.
+
+The export audit/generation run is currently guarded by an automatic watcher
+that scans every 10 minutes and rebalances only after a currently open dataset
+first reaches its token target. The current generation uses non-eager vLLM on
+GPUs 0-3 only.
+
+Active run root:
+
+```text
+logs/export_dataset_audits_rebalance_20260612T093058
+```
+
+Active allocation:
+
+```text
+GPU0: danish-dynaword-paragraph-reordering
+GPU1: common-pile-denoising
+GPU2: common-pile-span-filling
+GPU3: common-pile-prefix-continuation
+```
+
+Watcher command:
+
+```bash
+cd /work/dfm/HRM-Text
+setsid bash -lc 'exec python scripts/rebalance_export_audits.py watch \
+  --target-tokens 100000000 \
+  --gpus 0,1,2,3 \
+  --port-base 8900 \
+  --interval-seconds 600 \
+  --no-enforce-eager \
+  >> logs/export_dataset_audits_watch_20260612T102445_gpus0123.log 2>&1' \
+  </dev/null >/dev/null 2>&1 &
+echo $! > logs/export_dataset_audits_watch_20260612T102445_gpus0123.pid
+```
+
+Superseded: an attempted 8-GPU rebalance was started when GPUs 4-7 appeared
+free. The user clarified that export audit generation must use only GPUs 0-3.
+The 8-GPU attempt was stopped before any persistent 9000-series audit workers
+remained, GPU 4-7 HRM EuroEval servers were terminated, and the watcher was
+restarted with `--gpus 0,1,2,3` only.
+
+Initial watcher status:
+
+```text
+complete: common-pile-paragraph-reordering, danish-dynaword-denoising,
+          danish-dynaword-prefix-continuation, danish-dynaword-span-filling
+open:     common-pile-denoising, common-pile-prefix-continuation,
+          common-pile-span-filling, danish-dynaword-paragraph-reordering
+```
+
+Most recent full status before watcher launch:
+
+```text
+common-pile-denoising                          72.1M/100.0M open
+common-pile-prefix-continuation                63.4M/100.0M open
+common-pile-span-filling                       71.9M/100.0M open
+danish-dynaword-paragraph-reordering           41.8M/50.0M  open
+```
+
+The full `status` command is filesystem-heavy because it rereads all historical
+audit JSONL files. Use it sparingly while the WEKA filesystem is under load.
+
+Manual denoising speed-up on 2026-06-12. Confidence: high.
+
+The user explicitly authorized using GPUs 6 and 7 to speed up only
+`common-pile-denoising`. The previous single denoising client on GPU1 was
+stopped, the 0-3 watcher was paused to avoid conflicting process control, and
+`common-pile-denoising` was relaunched as three hash shards:
+
+```text
+GPU1: shard 0/3, existing vLLM server on port 8900
+GPU6: shard 1/3, new vLLM server on port 8916
+GPU7: shard 2/3, new vLLM server on port 8917
+```
+
+Run root:
+
+```text
+logs/export_denoising_gpus167_20260612T131403
+```
+
+The GPU6/GPU7 servers were started without `--enforce-eager` and became
+healthy. Initial verification showed GPU1/GPU6/GPU7 at 100% utilization and
+GPU6/GPU7 generation throughput around 275-290 tokens/s.
+
+Operational note on 2026-06-12. Confidence: high.
+
+`danish-dynaword-paragraph-reordering` can appear stuck near `49.8M/50M`
+accepted estimated tokens even while the worker is healthy. At 13:39 local
+time the audit log was still advancing (`judged 38400`), the audit file mtime
+was current, and the GPU0 vLLM server was serving at roughly 430-455 generation
+tokens/s. The accepted-token total was flat because recent rows were rejected,
+with the latest inspected rows marked `wrong_language`.
+
+Manual span-filling speed-up on 2026-06-12. Confidence: high.
+
+After `danish-dynaword-paragraph-reordering` exceeded its 50M target, the user
+asked to stop that audit and reuse GPU0 for `common-pile-span-filling`. The
+Danish paragraph audit client was stopped, its vLLM server on GPU0/port 8903
+was kept alive, the previous single span-filling client on GPU2 was stopped,
+and `common-pile-span-filling` was relaunched as two hash shards:
+
+```text
+GPU2: shard 0/2, existing vLLM server on port 8902
+GPU0: shard 1/2, existing vLLM server on port 8903
+```
+
+Run root:
+
+```text
+logs/export_span_gpus02_20260612T140630
+```
+
+Initial verification showed GPU0 and GPU2 at 100% utilization, both span
+shards reaching `judged 100`, and server throughput around 200-305 generation
+tokens/s.

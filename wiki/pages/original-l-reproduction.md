@@ -1487,6 +1487,169 @@ original+mixed sidecar run reported upload success for `history_lines=3` at
 `status="200 OK"`, but its public summary did not retain the summarization keys,
 matching the known active-run summary overwrite behavior.
 
+Lite eval queue, verified on 2026-06-03. Confidence: high.
+
+The original Sapient L checkpoints `epoch_1`, `epoch_2`, `epoch_3`, and
+`epoch_4` were scheduled with the generic lite multi-checkpoint evaluator. The
+W&B target is the corresponding clean-history run in project
+`Original Plus Mixed Danish Instruction Rich L`, run id `origLclean`, run name
+`original-sapient-L-clean-history`. The queue launched in tmux window
+`hrm-1:origL-lite`, queued `76` jobs, and started one job on each of the eight
+GPUs.
+
+```bash
+CKPT_TAGS=epoch_1,epoch_2,epoch_3,epoch_4 \
+EVAL_EPOCHS=1,2,3,4 \
+CKPT_PATH=checkpoints/original_sapient/L \
+GPUS=0,1,2,3,4,5,6,7 \
+LITE_EVAL=1 \
+QUEUE_ORDER=heavy_first \
+MAX_RETRIES=3 \
+WANDB_PROJECT="Original Plus Mixed Danish Instruction Rich L" \
+WANDB_RUN_ID=origLclean \
+WANDB_RUN_NAME=original-sapient-L-clean-history \
+MODEL_PREFIX=hrm-original-sapient-L \
+LOG_ROOT_BASE=logs/eval/original_sapient_L_lite_all_checkpoints_20260603T213010 \
+DFM_LOG_ROOT_BASE=logs/dfm_evals/original_sapient_L_lite_all_checkpoints_20260603T213010 \
+bash scripts/schedule_multiple_checkpoint_evals.sh
+```
+
+The same merged lite metrics were resynced to the same W&B run under
+`lite_eval_noema/*` and `lite_dfm_eval_noema/*` without rerunning inference.
+The relog read the stored `merged_metrics.json` and
+`merged_ifeval_da_metrics.json` files from the log roots above and wrote four
+history rows for each prefix. W&B reported syncing history steps `65395-65402`.
+Per epoch, the relog wrote `195` `lite_eval_noema` metrics and `74`
+`lite_dfm_eval_noema` metrics. Confidence: high.
+
+Clarification added 2026-06-04: the `lite_eval_noema/*` and
+`lite_dfm_eval_noema/*` relog above is not evidence of a true non-EMA original
+Sapient L evaluation, because it reused the existing generic lite eval outputs
+without rerunning inference. The original launch command did not set `NO_EMA=1`,
+and `scripts/schedule_multiple_checkpoint_evals.sh` defaults `NO_EMA=0`, so
+the underlying generic `lite_eval/*` outputs should be treated as default EMA
+evals. A local search found no separate `original_sapient*noema*` eval root or
+recorded `NO_EMA=1` original Sapient L run. Confidence: high for the local
+search and relog fact; Confidence: medium for the default-EMA interpretation.
+
+True CP4 no-EMA lite eval, launched 2026-06-04. Confidence: high for the
+command and local paths.
+
+The real original Sapient L CP4 no-EMA lite eval was launched immediately in
+tmux window `hrm:7` (`origL-cp4-noema-now`) after first staging, then removing,
+a free-GPU preflight wait loop. It is local only (`WANDB_SYNC=0`) and uses
+distinct prefixes so it cannot be confused with the earlier relogged metrics.
+It queued `19` jobs and started workers `349165` through `349172`; the first
+wave started `dfm_ifeval`, `MATH`, `GSM8k`, `DROP`, `MMLU`, `HellaSwag`, `ARC`,
+and `Winogrande`.
+
+Runtime issue and mitigation, 2026-06-04. Confidence: high.
+
+During the true CP4 no-EMA lite eval, the first `govreport` attempt OOMed while
+loading the BERTScore `xlm-roberta-large` scorer on the same GPU as the HRM
+server. The traceback pointed to `dfm_evals/tasks/summarization.py` constructing
+`BERTScorer(...).to(cuda)`. The mitigation was to add
+`bertscore_device=cpu` to both `hrm_summarization_govreport` and
+`hrm_summarization_nordjyllandnews` in
+`config/dfm_evals_hrm_single_tasks.yaml`. The stuck `govreport` eval process
+and leftover HRM server were killed; the scheduler retried the shard and the
+retry reached `completion 61/61 failed 0`.
+
+CP4 EMA vs true no-EMA lite comparison, 2026-06-04. Confidence: high.
+
+The true CP4 no-EMA lite eval finished with `DONE status_0` after the
+`govreport` retry described above. Comparing it against the earlier CP4 default
+EMA lite eval shows that EMA is clearly better on almost all headline metrics.
+Across 19 inspected metrics, no-EMA was better on 1 (`DALA` macro-F1), EMA was
+better on 15, and 3 were ties at zero (`HumanEval`, `GEC-DALA` exact match,
+`Talemaader`). Representative EMA vs no-EMA values:
+
+- Standard evals: ARC `0.7278` vs `0.6305`, BoolQ `0.8462` vs `0.7485`, DROP
+  F1 `0.7825` vs `0.5908`, GSM8k `0.5333` vs `0.3636`, HellaSwag `0.5031` vs
+  `0.4258`, MATH `0.4051` vs `0.2532`, MMLU `0.5607` vs `0.5069`, Winogrande
+  `0.6669` vs `0.6188`.
+- DFM evals: DALA macro-F1 `0.0039` vs `0.2129` favors no-EMA, Citizen
+  accuracy `0.1303` vs `0.0110`, WMT chrf++ `0.2485` vs `0.1770`, MultiWiki F1
+  `0.1745` vs `0.0153`, PIQA-da `0.0370` vs `0.0000`, IFEval-DA final acc
+  `0.2843` vs `0.1755`, NordjyllandNews BERTScore F1 `0.8640` vs `0.8493`.
+
+CP1 true no-EMA lite eval, launched 2026-06-04. Confidence: high.
+
+A real original Sapient L CP1 no-EMA lite eval was launched local-only in tmux
+window `hrm:8` (`origL-cp1-noema`), with monitor in `hrm:9`
+(`origL-cp1-mon`). It uses `NO_EMA=1`, `WANDB_SYNC=0`, and the distinct
+prefixes `lite_eval_noema_real/*` and `lite_dfm_eval_noema_real/*`. Logs:
+
+- `logs/eval/original_sapient_L_cp1_noema_lite_real_20260604T184821`
+- `logs/dfm_evals/original_sapient_L_cp1_noema_lite_real_20260604T184821`
+
+The CP1 no-EMA lite eval completed with `DONE status_0`. Comparing CP1 default
+EMA vs true no-EMA across 19 inspected metrics: no-EMA was better on 4, EMA was
+better on 12, and 3 were ties. The mean `noEMA - EMA` delta was `-0.0175`, so
+EMA was already beneficial at CP1, but much less decisively than at CP4.
+Representative values:
+
+- Standard evals: ARC `0.4582` vs `0.4394`, BoolQ `0.7260` vs `0.7419` (no-EMA
+  better), DROP F1 `0.5810` vs `0.4886`, GSM8k `0.1697` vs `0.1576`,
+  HellaSwag `0.3318` vs `0.3145`, MATH `0.2658` vs `0.2025`, MMLU `0.4351` vs
+  `0.3905`, Winogrande `0.5422` vs `0.5099`.
+- DFM evals: DALA macro-F1 `0.0382` vs `0.0000`, WMT chrf++ `0.2030` vs
+  `0.1715`, MultiWiki F1 `0.0087` vs `0.0186` (no-EMA better), NordjyllandNews
+  ROUGE-2 `0.0487` vs `0.0581` (no-EMA better), IFEval-DA final acc `0.2279`
+  vs `0.2049`, Talemaader `0.0000` vs `0.0099` (no-EMA better).
+
+```bash
+cd /work/dfm/HRM-Text
+CKPT_TAGS=epoch_4 \
+EVAL_EPOCHS=4 \
+CKPT_PATH=checkpoints/original_sapient/L \
+GPUS=0,1,2,3,4,5,6,7 \
+LITE_EVAL=1 \
+QUEUE_ORDER=heavy_first \
+MAX_RETRIES=3 \
+NO_EMA=1 \
+WANDB_SYNC=0 \
+EVAL_PREFIX=lite_eval_noema_real \
+DFM_EVAL_PREFIX=lite_dfm_eval_noema_real \
+MODEL_PREFIX=hrm-original-sapient-L-noema \
+LOG_ROOT_BASE=logs/eval/original_sapient_L_cp4_noema_lite_real_20260604T181038 \
+DFM_LOG_ROOT_BASE=logs/dfm_evals/original_sapient_L_cp4_noema_lite_real_20260604T181038 \
+bash scripts/schedule_multiple_checkpoint_evals.sh
+```
+
+Original-plus-mixed lite eval queue, verified on 2026-06-04. Confidence: high.
+
+The original-plus-mixed Danish instruction rich L checkpoints `epoch_1`,
+`epoch_2`, `epoch_3`, and `epoch_4` under
+`checkpoints/original_plus_mixed_danish_instruction_rich/L` were queued for the
+generic lite multi-checkpoint evaluator. All four `fsdp2_epoch_*` directories
+had `.metadata`, and all `carry_epoch_*.{0..7}.pt` files were present. The W&B
+target is project `Original Plus Mixed Danish Instruction Rich L`, run id
+`es1od1in`, run name `original-plus-mixed-danish-instruction-rich-L`.
+
+The launch is staged in tmux window `hrm-1:opm-lite`. It first waits for
+`logs/eval/dfm4_XL_ddp_noema_lite_probe_20260604T035517_200k/status.tsv` to
+contain `DONE status_0`, then starts the original-plus-mixed lite queue. This
+avoids stacking a second 8-GPU lite eval wave on top of the active DFM4 200K
+lite queue.
+
+```bash
+CKPT_TAGS=epoch_1,epoch_2,epoch_3,epoch_4 \
+EVAL_EPOCHS=1,2,3,4 \
+CKPT_PATH=checkpoints/original_plus_mixed_danish_instruction_rich/L \
+GPUS=0,1,2,3,4,5,6,7 \
+LITE_EVAL=1 \
+QUEUE_ORDER=heavy_first \
+MAX_RETRIES=3 \
+WANDB_PROJECT="Original Plus Mixed Danish Instruction Rich L" \
+WANDB_RUN_ID=es1od1in \
+WANDB_RUN_NAME=original-plus-mixed-danish-instruction-rich-L \
+MODEL_PREFIX=hrm-original-plus-mixed-L \
+LOG_ROOT_BASE=logs/eval/original_plus_mixed_danish_instruction_rich_L_lite_all_checkpoints_20260604T035922 \
+DFM_LOG_ROOT_BASE=logs/dfm_evals/original_plus_mixed_danish_instruction_rich_L_lite_all_checkpoints_20260604T035922 \
+bash scripts/schedule_multiple_checkpoint_evals.sh
+```
+
 ## Caveat
 
 This is a paper-faithful original-mix run, not the safer mixed-corpus policy. It includes Sapient sources we previously flagged for review when discussing licensing/provenance/GDPR risk.

@@ -85,6 +85,27 @@ allow_overrides:
   - "sapient_cleaned/data_clustered/flan/*xcopa*.parquet"
   - "sapient_cleaned/data_clustered/flan/*paws*.parquet"
 
+  # DFM5 factual QA and dialogue-reasoning inclusions by project decision on
+  # 2026-06-12. Keep the existing deny patterns below as the default for other
+  # search/chat/dialogue sources; these allow overrides are the explicit
+  # reconsidered subset.
+  - "sapient_cleaned/data_clustered/flan/*natural_questions_open*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*naturalquestion*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*dailydialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*daily_dialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*personachat*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*deal_or_no*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*casino*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*air_dialogue*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*curiosity_dialogs*.parquet"
+  # These keep the original Sapient sampling caps via the generic FLAN /
+  # Tasksource rules in prefix_config_dfm4.yaml and future DFM5 configs.
+  - "sapient_cleaned/data_clustered/flan/*wiki_dialog*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*dream*.parquet"
+  - "sapient_cleaned/data_clustered/flan/*mutual*.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/mutual.parquet"
+  - "sapient_cleaned/data_clustered/tasksource/dialogue_nli.parquet"
+
   # Narrow Tasksource allowlist: NLI, logic, reasoning, citation/science, and
   # selected medical QA. Social-media, conversation, NER, and unclear text
   # corpora remain denied.

@@ -482,6 +482,110 @@ final `tokens.npy`, and can spend minutes in kernel I/O wait after the
 `Writing tokens` progress bar reaches `9158/9158`. Let it finish rather than
 restarting unless it errors.
 
+## DFM5 Tokenized Tree And Accepted Exports
+
+Last updated: 2026-06-12
+Confidence: high
+Scope: Local DFM5 preparation commands and tokenizer changes.
+
+DFM5 uses:
+
+- `data/tokenized_original_sapient` filtered by
+  `data/filtered_sources/sapient_cleaned`, preserving original Sapient task
+  names and sampling prefixes;
+- selected Danish and non-Danish mixed-source tokenized tasks from
+  `data/tokenized_mixed`;
+- DFM4 summarization tokenized tasks from `data/tokenized_dfm4_summarization`;
+- accepted-only exported JSONL.GZ task datasets after tokenization into
+  `data/tokenized_dfm5_exports`.
+
+The Rust tokenizer now supports `.jsonl.gz` input rows with either
+`condition`/`instruction`/`response` or chat `messages`. A one-shard smoke run
+from `export/danish-dynaword-paragraph-reordering` succeeded on 2026-06-12.
+
+Tokenize the accepted export datasets:
+
+```bash
+cd /work/dfm/HRM-Text
+WORKERS=1 scripts/tokenize_dfm5_exports.sh
+```
+
+The audited raw-task exports are read from `export/<dataset>/audited/data`.
+The transformation exports are read from `export/<dataset>/data`, because the
+expert export builder wrote only accepted rows for those datasets. If the
+normal `/work/dfm/HRM-Text` path is temporarily not visible but an existing
+process still holds the checkout open, the wrapper can be run through that
+process' cwd handle, for example:
+
+```bash
+cd /
+WORKERS=1 /proc/478730/cwd/scripts/tokenize_dfm5_exports.sh
+```
+
+Then build the DFM5 tokenized union:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/build_tokenized_dfm5_tree.py --force
+```
+
+Dry-run build before export tokenization, verified on 2026-06-12:
+
+```text
+sapient_linked_tasks:       4,891
+danish_mixed_linked_tasks:     54
+extra_mixed_linked_tasks:     139
+summarization_linked_tasks: 4,019
+export_linked_tasks:           0
+total_tasks:                9,103
+sapient_missing_tasks:         []
+```
+
+Final export-tokenized counts, verified on 2026-06-12:
+
+```text
+common-pile-denoising:                    477 task dirs,   321,874,205 tokens
+common-pile-paragraph-reordering:          30 task dirs,    62,098,317 tokens
+common-pile-prefix-continuation:          477 task dirs,   429,844,139 tokens
+common-pile-span-filling:               1,431 task dirs,   302,093,149 tokens
+danish-dynaword-denoising:                 90 task dirs,    98,232,115 tokens
+danish-dynaword-paragraph-reordering:      25 task dirs,    49,706,915 tokens
+danish-dynaword-prefix-continuation:       90 task dirs,    76,473,360 tokens
+danish-dynaword-span-filling:             270 task dirs,    76,165,391 tokens
+transformations-danish-danish:            250 task dirs,   203,867,639 tokens
+transformations-danish-english:           250 task dirs,   187,177,032 tokens
+transformations-english-danish:           409 task dirs,   168,463,570 tokens
+transformations-english-english:          388 task dirs,   136,630,930 tokens
+total export tasks:                     4,187 task dirs, 2,112,626,762 tokens
+```
+
+Final DFM5 tokenized union build, verified on 2026-06-12:
+
+```text
+sapient_linked_tasks:        4,891
+danish_mixed_linked_tasks:      54
+extra_mixed_linked_tasks:      139
+summarization_linked_tasks:  4,019
+export_linked_tasks:        4,187
+total_tasks:               13,290
+sapient_missing_tasks:         []
+```
+
+Sample DFM5 after the exports have been tokenized and the union rebuilt:
+
+```bash
+cd /work/dfm/HRM-Text/data_io
+python sample_tokenized.py \
+  tokenized_path=../data/tokenized_dfm5 \
+  output_path=../data/sampled_dfm5 \
+  epochs=5 \
+  concat_workers=4 \
+  prefix_config_path=prefix_config_dfm5.yaml \
+  > ../data/show_analytics_dfm5.md
+```
+
+Training config: `config/data/dfm5.yaml`.
+
 ## MPS Partial Original-Sapient Smoke
 
 Added upstream on 2026-05-25. Confidence: high for the upstream-reported
@@ -670,6 +774,165 @@ data=original_plus_mixed
 - `cargo run` from `data_io` root fails because `Cargo.toml` is in `data_io/tokenizer`.
 - Tokenizer processing `0 files` usually means `data/converted_sources` is missing or empty.
 - `find -type f` does not count symlinks in `data/filtered_sources`; use `find -L` if inspecting symlink targets.
+- `data_io/sample_tokenized.py` now sizes its epoch buffer from the actual
+  sampled rows per task, including `repeat`, rather than from unique row count.
+  This was fixed on 2026-06-04 after the post-training config triggered
+  `ValueError: could not broadcast input array...` during repeated sampling.
+  Confidence: high.
+
+## Post-Training Transformation Refine Dataset
+
+Added on 2026-06-04. Confidence: high for local commands and outputs; medium
+for final sampling balance until synthetic rows are generated and evaluated.
+
+Purpose: separate post-training data path for final-checkpoint refinement on
+controlled text transformations: exact sentence-count summarization, tense
+rewriting, child-friendly simplification, numbered fact extraction, and
+non-copy paraphrasing.
+
+Core files:
+
+```text
+scripts/prepare_posttrain_transform_refine.py
+scripts/prepare_posttrain_transform_refine.sh
+scripts/build_tokenized_posttrain_transform_refine_tree.py
+data_io/prefix_config_posttrain_transform_refine.yaml
+config/data/posttrain_transform_refine.yaml
+```
+
+Downloaded sources:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/prepare_posttrain_transform_refine.sh download-existing
+```
+
+This downloads `grammarly/coedit`, `Muennighoff/natural-instructions`, and
+`facebook/asset` into `data/downloads/datasets/posttrain_*`. Inventory on
+2026-06-04 estimated about `3.6G`, mostly Super-NI.
+
+Convert existing supervised rows:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/prepare_posttrain_transform_refine.sh convert-existing
+```
+
+Verified local output:
+
+```text
+data/converted_sources_posttrain_transform_refine/posttrain_coedit/data/train.parquet
+  70,783 rows
+data/converted_sources_posttrain_transform_refine/posttrain_superni_filtered/data/train.parquet
+  500,000 rows across 64 filtered transformation-style Super-NI tasks
+```
+
+ASSET is not used as direct supervised training data because it only exposes
+validation/test simplification splits locally. It is used as seed text for
+synthetic simplification/transformation requests.
+
+Create synthetic teacher-model requests:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/prepare_posttrain_transform_refine.sh make-synthetic-requests
+```
+
+Verified local output: `10` request JSONL files under
+`data/synthetic_requests_posttrain_transform_refine`, one for each combination
+of five task families and two languages (`en`, `da`), with `50,000` requests
+each (`500,000` total). These are request/seed files only; they are not sampled
+until a Gemma teacher has generated responses and `convert-synthetic` has
+accepted them.
+
+Generate synthetic responses later using an OpenAI-compatible Gemma teacher
+server:
+
+```bash
+cd /work/dfm/HRM-Text
+GEMMA_OPENAI_BASE_URL=http://127.0.0.1:8000/v1 \
+GEMMA_TEACHER_MODEL=gemma-4-31b \
+scripts/prepare_posttrain_transform_refine.sh generate-synthetic
+scripts/prepare_posttrain_transform_refine.sh convert-synthetic
+```
+
+The generator stores raw generations in
+`data/generated_posttrain_transform_refine` and accepted ready rows in
+`data/converted_sources_posttrain_transform_refine_synthetic`. Validation
+checks include non-empty output, max length, exact two-sentence count for
+summary tasks, exact five numbered items for extraction tasks, and a placeholder
+copy-ratio policy for non-copy rewrites.
+
+Sharded 8-GPU vLLM generation path, added on 2026-06-04. Confidence: high for
+local sharding and syntax checks; medium for vLLM launch until the target Gemma
+model path is provided and servers are started.
+
+The request queue is already split locally:
+
+```text
+data/synthetic_request_shards_posttrain_transform_refine/pending
+  500 shards
+  1,000 requests per shard
+  500,000 requests total
+```
+
+The sharding command is:
+
+```bash
+cd /work/dfm/HRM-Text
+FORCE_SHARDS=1 REQUESTS_PER_SHARD=1000 \
+scripts/prepare_posttrain_transform_refine.sh shard-synthetic-requests
+```
+
+The 8-GPU single-server-per-GPU runner is:
+
+```bash
+cd /work/dfm/HRM-Text
+GEMMA_MODEL_PATH=<hf-id-or-local-path> \
+SERVED_MODEL_NAME=posttrain-gemma-teacher \
+GPU_LIST=0,1,2,3,4,5,6,7 \
+REQUESTS_PER_SHARD=1000 \
+CLIENT_CONCURRENCY=8 \
+scripts/run_posttrain_synthetic_generation_vllm.sh
+```
+
+It starts one vLLM OpenAI API server per GPU on ports `8100..8107`, then starts
+one worker per GPU. Workers atomically move shards from `pending` to `running`,
+write generations to `data/generated_posttrain_transform_refine`, and move
+completed shards to `done`. Failed shards go to `failed`.
+
+Progress command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/report_posttrain_synthetic_generation_progress.py
+```
+
+Use `--watch` for repeated status output.
+
+Tokenize and sample existing rows:
+
+```bash
+cd /work/dfm/HRM-Text
+WORKERS=2 scripts/prepare_posttrain_transform_refine.sh tokenize-existing
+scripts/prepare_posttrain_transform_refine.sh build-tokenized-tree
+CONCAT_WORKERS=2 EPOCHS=1 scripts/prepare_posttrain_transform_refine.sh sample
+```
+
+Verified local outputs on 2026-06-04:
+
+```text
+data/tokenized_posttrain_transform_refine_existing/posttrain_coedit__data__train.parquet
+  22M
+data/tokenized_posttrain_transform_refine_existing/posttrain_superni_filtered__data__train.parquet
+  766M
+data/tokenized_posttrain_transform_refine/union_manifest.json
+  4,117 linked tasks: 4,115 selected existing DFM4/relevant tasks plus 2 new tasks
+data/sampled_posttrain_transform_refine/metadata.json
+  total_length: 29,131,369,710 tokens for one epoch
+data/show_analytics_posttrain_transform_refine.md
+  analytics report
+```
 
 ## Tokenizer Resource Behavior
 

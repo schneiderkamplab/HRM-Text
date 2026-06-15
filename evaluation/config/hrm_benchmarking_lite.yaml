@@ -1,0 +1,48 @@
+engine: SimpleEngine
+ckpt_path: null
+ckpt_tag: null
+
+generation_config:
+  batch_size: 16
+  max_context: 3072
+  temperature: 0.0
+  condition: "direct"
+
+benchmarks:
+  # Lite probes prioritize quick, parseable signal over full reasoning traces.
+  - name: GSM8k
+    generation_config:
+      condition: "direct"
+      max_tokens: 256
+  - name: MATH
+    generation_config:
+      condition: "direct"
+      max_tokens: 512
+
+  - name: DROP
+    generation_config:
+      condition: "direct"
+      max_tokens: 64
+
+  - name: MMLU
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+    special_shots:
+      high_school_european_history: 3
+  - name: ARC
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+  - name: HellaSwag
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+  - name: Winogrande
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+  - name: BoolQ
+    generation_config:
+      condition: "direct"
+      max_context: 4096

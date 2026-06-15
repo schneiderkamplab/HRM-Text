@@ -10,6 +10,7 @@ from torch import Tensor, nn
 import torch.utils._pytree as pytree
 import numpy as np
 import torch.distributed.checkpoint as dcp
+from torch.distributed.checkpoint.default_planner import DefaultLoadPlanner
 from torch.distributed.checkpoint.state_dict import StateDictOptions, get_optimizer_state_dict, set_state_dict
 from transformers import AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast
 
@@ -46,8 +47,8 @@ def normalize_checkpoint_tag(ckpt_tag: str) -> str:
 
     if os.path.basename(ckpt_tag) != ckpt_tag:
         raise ValueError(f"Checkpoint tag must be a name, not a path: {ckpt_tag}")
-    if not (ckpt_tag.startswith("epoch_") or ckpt_tag.startswith("step_")):
-        raise ValueError(f"Checkpoint tag must start with 'epoch_' or 'step_': {ckpt_tag}")
+    if not (ckpt_tag.startswith("epoch_") or ckpt_tag.startswith("step_") or ckpt_tag.startswith("ephemeral_step_")):
+        raise ValueError(f"Checkpoint tag must start with 'epoch_', 'step_', or 'ephemeral_step_': {ckpt_tag}")
     return ckpt_tag
 
 
@@ -88,23 +89,43 @@ def resolve_checkpoint_tag(ckpt_path: str, ckpt_epoch: Optional[int], ckpt_tag: 
     return resolved, checkpoint_format
 
 
-def load_sharded_checkpoint(ckpt_path: str, tag: str, model: nn.Module, optim: AdamATan2):
-    dcp.load({"model": model.state_dict(), "optim": get_optimizer_state_dict(model, optim)},  # pyright: ignore[reportPrivateImportUsage]
+def load_sharded_checkpoint(ckpt_path: str, tag: str, model: nn.Module, optim: Optional[AdamATan2] = None):
+    state = {"model": model.state_dict()}
+    if optim is not None:
+        state["optim"] = get_optimizer_state_dict(model, optim)  # pyright: ignore[reportPrivateImportUsage]
+
+    dcp.load(state,
         checkpoint_id=os.path.join(ckpt_path, f"fsdp2_{tag}"),
+        planner=DefaultLoadPlanner(allow_partial_load=True),
         no_dist=True  # <--- Critical for single rank loading
     )
 
 
-def load_unsharded_checkpoint(ckpt_path: str, tag: str, model: nn.Module, optim: AdamATan2):
+def load_unsharded_checkpoint(
+    ckpt_path: str,
+    tag: str,
+    model: nn.Module,
+    optim: Optional[AdamATan2] = None,
+    use_ema: bool = False,
+):
     checkpoint_file = os.path.join(ckpt_path, f"unsharded_{tag}.pt")
-    checkpoint = torch.load(checkpoint_file, map_location="cpu", weights_only=False)
-    set_state_dict(
-        model,
-        optim,
-        model_state_dict=checkpoint["model"],
-        optim_state_dict=checkpoint["optim"],
-        options=StateDictOptions(full_state_dict=True, cpu_offload=True),
-    )
+    checkpoint = torch.load(checkpoint_file, map_location="cpu", weights_only=False, mmap=True)
+    if optim is None:
+        model_state = checkpoint["model"]
+        if use_ema:
+            for name, optim_state in checkpoint["optim"]["state"].items():
+                param_ema = optim_state.get("param_ema")
+                if param_ema is not None and name in model_state:
+                    model_state[name] = param_ema
+        model.load_state_dict(model_state, strict=False)
+    else:
+        set_state_dict(
+            model,
+            optim,
+            model_state_dict=checkpoint["model"],
+            optim_state_dict=checkpoint["optim"],
+            options=StateDictOptions(full_state_dict=True, cpu_offload=True, strict=False),
+        )
 
 
 def inference_load_checkpoint(
@@ -120,6 +141,8 @@ def inference_load_checkpoint(
     with open(os.path.join(ckpt_path, "train_metadata.yaml"), "r") as f:
         train_metadata = V1DatasetMeta(**yaml.safe_load(f))
 
+    resolved_tag, checkpoint_format = resolve_checkpoint_tag(ckpt_path, ckpt_epoch, ckpt_tag)
+
     # Create model
     model_cls = load_model_class(model_cfg.arch.name)
     head_cls = load_model_class(model_cfg.arch.head)
@@ -129,26 +152,28 @@ def inference_load_checkpoint(
         model: nn.Module = model_cls(combined_cfg)
         # Attach loss head
         model = head_cls(model, combined_cfg)
-        # Optimizer (ONLY for loading states)
-        optim = AdamATan2(model.parameters(),
-                        lr=torch.tensor(0.0, dtype=torch.get_default_dtype(), device="cpu"),
-                        betas=(model_cfg.beta1, model_cfg.beta2),
-                        weight_decay=model_cfg.weight_decay,
-                        ema=model_cfg.ema)
-    
-    resolved_tag, checkpoint_format = resolve_checkpoint_tag(ckpt_path, ckpt_epoch, ckpt_tag)
+        # Optimizer is only needed for EMA loading from sharded checkpoints.
+        # Unsharded checkpoints store CPU optimizer state keyed by parameter
+        # name, so EMA can be applied directly to the model state.
+        optim = None
+        if ckpt_use_ema and checkpoint_format == "sharded":
+            optim = AdamATan2(model.parameters(),
+                            lr=torch.tensor(0.0, dtype=torch.get_default_dtype(), device="cpu"),
+                            betas=(model_cfg.beta1, model_cfg.beta2),
+                            weight_decay=model_cfg.weight_decay,
+                            ema=model_cfg.ema)
 
     # Load checkpoint
     if checkpoint_format == "sharded":
         load_sharded_checkpoint(ckpt_path, resolved_tag, model, optim)
     elif checkpoint_format == "unsharded":
-        load_unsharded_checkpoint(ckpt_path, resolved_tag, model, optim)
+        load_unsharded_checkpoint(ckpt_path, resolved_tag, model, optim, use_ema=ckpt_use_ema)
     else:
         raise ValueError(f"Unsupported checkpoint format: {checkpoint_format}")
     carry = torch.load(os.path.join(ckpt_path, f"carry_{resolved_tag}.0.pt"), map_location="cuda")
 
     # Use EMA weights
-    if ckpt_use_ema:
+    if ckpt_use_ema and optim is not None:
         optim.swap_ema()
     # Cast to fwd dtype & eval mode
     model = model.to(getattr(torch, model_cfg.fwd_bwd_dtype)).eval()

@@ -316,6 +316,30 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         gated=True,
     ),
 
+    # Post-training transformation/refinement sources. These are intended for a
+    # separate post-training mix rather than the main pretraining corpus.
+    HFDataset(
+        name="posttrain_coedit",
+        repo_id="grammarly/coedit",
+        groups=("posttrain_transform", "instruction", "editing"),
+        allow_patterns=("train.jsonl", "validation.jsonl", "README.md"),
+        note="Instruction-style grammar/editing/rewrite data; convert src/tgt rows.",
+    ),
+    HFDataset(
+        name="posttrain_natural_instructions",
+        repo_id="Muennighoff/natural-instructions",
+        groups=("posttrain_transform", "instruction", "editing"),
+        allow_patterns=("train/*.jsonl", "README.md"),
+        note="Super-NaturalInstructions preprocessing; filter to transformation-style train tasks before conversion.",
+    ),
+    HFDataset(
+        name="posttrain_asset",
+        repo_id="facebook/asset",
+        groups=("posttrain_transform", "simplification", "editing"),
+        allow_patterns=("simplification/*.parquet", "README.md"),
+        note="ASSET simplification validation/test rows; use as synthetic seed material rather than direct training rows.",
+    ),
+
     # Nemotron sources.
     HFDataset(
         name="nemotron_terminal_corpus",

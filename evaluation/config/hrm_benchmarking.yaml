@@ -11,12 +11,18 @@ generation_config:
 benchmarks:
   # CoT
   - name: GSM8k
+    generation_config:
+      condition: "direct"
+      max_tokens: 512
   - name: MATH
+    generation_config:
+      max_tokens: 3072
 
   # Few-shot freeform
   - name: DROP
     generation_config:
       condition: "direct"
+      max_tokens: 64
   - name: GovReport
   - name: NordjyllandNews
 

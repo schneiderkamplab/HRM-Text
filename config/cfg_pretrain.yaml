@@ -12,6 +12,7 @@ gradient_accumulation_steps: 1  # Physical per-rank microbatch is global_batch_s
 epochs: 4
 checkpoint_interval: 1
 checkpoint_step_interval: null
+ephemeral_checkpoint_step_interval: null  # Optional resumability checkpoint cadence; keeps only latest ephemeral_step_* unless superseded by a regular step checkpoint.
 checkpoint_format: sharded  # sharded uses FSDP/DCP fsdp2_{tag}; unsharded writes unsharded_{tag}.pt from global rank 0
 wandb_run_id: null
 wandb_resume: null
@@ -20,6 +21,8 @@ resume_checkpoint_tag: null
 resume_epoch: null
 resume_step: null
 resume_batch_in_epoch: null
+upcast_optimizer_state_on_resume: false
+reset_ema_on_resume: false
 project_name: null
 run_name: null
 checkpoint_path: null
@@ -38,7 +41,10 @@ ema: 0.9999
 fwd_bwd_dtype: bfloat16
 accelerator_type: sm100
 distributed_strategy: fsdp
+fsdp_params_precision: fp32  # FSDP only: fp32 persistent sharded weights by default; set bf16 for bf16 optimizer/master params with fp32 EMA
+ddp_params_precision: fp32  # DDP only: fp32 persistent params + bf16 autocast compute, or bf16 params with fp32 EMA
 ddp_find_unused_parameters: true
 compile_train_batch: true
 memory_log_interval: 0
 empty_cache_interval: 0
+resume_trace: false

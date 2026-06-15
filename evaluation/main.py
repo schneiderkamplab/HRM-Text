@@ -16,6 +16,11 @@ class BenchmarkConfig(pydantic.BaseModel):
     shard_index: int = 0
 
 
+class ShardOverrideConfig(pydantic.BaseModel):
+    num_shards: int = 1
+    shard_index: int = 0
+
+
 class EvaluationConfig(pydantic.BaseModel):
     model_config = pydantic.ConfigDict(extra='allow')
 
@@ -23,6 +28,7 @@ class EvaluationConfig(pydantic.BaseModel):
     engine: str
     generation_config: dict[str, Any] = {}
     benchmarks: list[BenchmarkConfig]
+    shard_overrides: dict[str, ShardOverrideConfig] = {}
 
     @pydantic.model_validator(mode='after')
     def check_run_only_against_benchmarks(self):
@@ -64,17 +70,20 @@ def main():
         # Instantiate benchmark
         bench_cls = load_model_class(f"benchmarks@{b_name}", prefix="evaluation.")
         benchmark = bench_cls(**(b_cfg.__pydantic_extra__ or {}))
-        if b_cfg.num_shards < 1:
+        shard_cfg = cfg.shard_overrides.get(b_name)
+        num_shards = shard_cfg.num_shards if shard_cfg is not None else b_cfg.num_shards
+        shard_index = shard_cfg.shard_index if shard_cfg is not None else b_cfg.shard_index
+        if num_shards < 1:
             raise ValueError(f"{b_name}: num_shards must be >= 1")
-        if b_cfg.shard_index < 0 or b_cfg.shard_index >= b_cfg.num_shards:
+        if shard_index < 0 or shard_index >= num_shards:
             raise ValueError(f"{b_name}: shard_index must satisfy 0 <= shard_index < num_shards")
-        if b_cfg.num_shards > 1:
+        if num_shards > 1:
             shard_prompts = []
             shard_ground_truths = []
             for index, (prompt, ground_truth) in enumerate(
                 zip(benchmark.prompts, benchmark.ground_truths, strict=True)
             ):
-                if index % b_cfg.num_shards == b_cfg.shard_index:
+                if index % num_shards == shard_index:
                     shard_prompts.append(prompt)
                     shard_ground_truths.append(ground_truth)
             benchmark.prompts = shard_prompts
