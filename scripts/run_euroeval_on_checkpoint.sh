@@ -117,6 +117,44 @@ PY
   return 1
 }
 
+run_euroeval_with_server_monitor() {
+  (
+    cd "${LOG_ROOT}"
+    # shellcheck disable=SC2086
+    ${EUROEVAL_BIN} "${euroeval_args[@]}"
+  ) > "${EUROEVAL_LOG}" 2>&1 &
+  local client_pid="$!"
+  local status=0
+
+  while kill -0 "${client_pid}" 2>/dev/null; do
+    if ! kill -0 "${server_pid}" 2>/dev/null; then
+      echo "Server process ${server_pid} exited while EuroEval client ${client_pid} was still running." >> "${EUROEVAL_LOG}"
+      kill "${client_pid}" 2>/dev/null || true
+      wait "${client_pid}" 2>/dev/null || true
+      return 71
+    fi
+    if [[ -f "${SERVER_LOG}" ]] && grep -Eiq "OutOfMemoryError|CUDA out of memory|out of memory" "${SERVER_LOG}"; then
+      echo "Server process ${server_pid} logged an OOM; terminating EuroEval client ${client_pid} for scheduler retry." >> "${EUROEVAL_LOG}"
+      kill "${server_pid}" 2>/dev/null || true
+      kill "${client_pid}" 2>/dev/null || true
+      wait "${client_pid}" 2>/dev/null || true
+      return 72
+    fi
+    sleep "${SERVER_MONITOR_INTERVAL_SECONDS:-5}"
+  done
+
+  set +e
+  wait "${client_pid}"
+  status=$?
+  set -e
+
+  if [[ -f "${SERVER_LOG}" ]] && grep -Eiq "OutOfMemoryError|CUDA out of memory|out of memory" "${SERVER_LOG}"; then
+    echo "Server process ${server_pid} logged an OOM after EuroEval client exit; treating job as failed for scheduler retry." >> "${EUROEVAL_LOG}"
+    return 72
+  fi
+  return "${status}"
+}
+
 split_csv_args() {
   local option="$1" csv="$2" item
   [[ -z "${csv}" ]] && return 0
@@ -194,11 +232,7 @@ server_pid="$!"
 wait_for_server "http://${HOST}:${PORT}/health"
 
 rm -f "${RESULTS_FILE}" "${METRICS_FILE}"
-(
-  cd "${LOG_ROOT}"
-  # shellcheck disable=SC2086
-  ${EUROEVAL_BIN} "${euroeval_args[@]}"
-) > "${EUROEVAL_LOG}" 2>&1
+run_euroeval_with_server_monitor
 
 if [[ ! -s "${RESULTS_FILE}" ]]; then
   echo "Missing EuroEval results file: ${RESULTS_FILE}" >&2

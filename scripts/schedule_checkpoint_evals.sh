@@ -64,6 +64,7 @@ QUEUE_ORDER="${QUEUE_ORDER:-default}"
 RESUME_EXISTING_QUEUE="${RESUME_EXISTING_QUEUE:-0}"
 SKIP_FINAL_MERGE="${SKIP_FINAL_MERGE:-0}"
 FINAL_MERGE_ONLY="${FINAL_MERGE_ONLY:-0}"
+INCREMENTAL_MERGE="${INCREMENTAL_MERGE:-1}"
 LITE_EVAL="${LITE_EVAL:-0}"
 LITE_SHARD_INDEX="${LITE_SHARD_INDEX:-0}"
 if [[ -z "${EVAL_PREFIX+x}" ]]; then
@@ -88,8 +89,10 @@ Queue standard HRM evals and dfm-evals onto a single 8-GPU worker pool.
 The scheduler waits for fsdp2_${CKPT_TAG} or unsharded_${CKPT_TAG}.pt, plus
 carry_${CKPT_TAG}.{0..7}.pt.
 It runs at most one eval job per GPU. The generative-talemaader job starts a
-Gemma judge on the same GPU. MATH and IFEval-DA are sharded and merged after all
-workers finish.
+Gemma judge on the same GPU. Sharded standard and DFM task sets are merged and
+synced as soon as every shard for that task has finished when
+INCREMENTAL_MERGE=1. The final merge pass skips already-merged task sets and
+merges any remaining complete sets.
 
 Important env overrides:
   EPOCH=1
@@ -122,6 +125,7 @@ Important env overrides:
   STATUS_FILE_OVERRIDE=/tmp/one_status.tsv # optional alternate status file
   SKIP_FINAL_MERGE=1 # run workers only
   FINAL_MERGE_ONLY=1 # only merge/log existing shard outputs
+  INCREMENTAL_MERGE=1 # merge/log a task as soon as its shard set finishes
   DRY_RUN=1   # write and print the queue, then exit before waiting/running
 USAGE
 }
@@ -137,10 +141,11 @@ mkdir -p "${LOG_ROOT}" "${DFM_LOG_ROOT}" "${EUROEVAL_LOG_ROOT}" "${LOG_ROOT}/wor
 JOB_FILE="${JOB_FILE_OVERRIDE:-${LOG_ROOT}/jobs.tsv}"
 STATUS_FILE="${STATUS_FILE_OVERRIDE:-${LOG_ROOT}/status.tsv}"
 LOCK_FILE="${LOCK_FILE_OVERRIDE:-${LOG_ROOT}/jobs.lock}"
+MERGE_LOCK_FILE="${MERGE_LOCK_FILE_OVERRIDE:-${LOG_ROOT}/merge.lock}"
 WORKER_LOG_DIR="${WORKER_LOG_DIR:-${LOG_ROOT}/workers}"
 TELEMETRY_FILE="${TELEMETRY_FILE_OVERRIDE:-${LOG_ROOT}/eval_attempts.tsv}"
 TELEMETRY_LOCK_FILE="${TELEMETRY_LOCK_FILE_OVERRIDE:-${LOG_ROOT}/eval_attempts.lock}"
-mkdir -p "$(dirname "${JOB_FILE}")" "$(dirname "${STATUS_FILE}")" "$(dirname "${LOCK_FILE}")" "${WORKER_LOG_DIR}"
+mkdir -p "$(dirname "${JOB_FILE}")" "$(dirname "${STATUS_FILE}")" "$(dirname "${LOCK_FILE}")" "$(dirname "${MERGE_LOCK_FILE}")" "${WORKER_LOG_DIR}"
 if [[ "${RESUME_EXISTING_QUEUE}" != "1" ]]; then
   : > "${JOB_FILE}"
   : > "${STATUS_FILE}"
@@ -366,6 +371,43 @@ oom_for_job() {
   echo 0
 }
 
+run_client_with_server_monitor() {
+  local server_pid="$1" server_log="$2" client_log="$3"
+  shift 3
+
+  "$@" > "${client_log}" 2>&1 &
+  local client_pid="$!"
+  local status=0
+
+  while kill -0 "${client_pid}" 2>/dev/null; do
+    if ! kill -0 "${server_pid}" 2>/dev/null; then
+      echo "Server process ${server_pid} exited while client ${client_pid} was still running." >> "${client_log}"
+      kill "${client_pid}" 2>/dev/null || true
+      wait "${client_pid}" 2>/dev/null || true
+      return 71
+    fi
+    if [[ -f "${server_log}" ]] && grep -Eiq "OutOfMemoryError|CUDA out of memory|out of memory" "${server_log}"; then
+      echo "Server process ${server_pid} logged an OOM; terminating client ${client_pid} for scheduler retry." >> "${client_log}"
+      kill "${server_pid}" 2>/dev/null || true
+      kill "${client_pid}" 2>/dev/null || true
+      wait "${client_pid}" 2>/dev/null || true
+      return 72
+    fi
+    sleep "${SERVER_MONITOR_INTERVAL_SECONDS:-5}"
+  done
+
+  set +e
+  wait "${client_pid}"
+  status=$?
+  set -e
+
+  if [[ -f "${server_log}" ]] && grep -Eiq "OutOfMemoryError|CUDA out of memory|out of memory" "${server_log}"; then
+    echo "Server process ${server_pid} logged an OOM after client exit; treating job as failed for scheduler retry." >> "${client_log}"
+    return 72
+  fi
+  return "${status}"
+}
+
 log_eval_attempt() {
   local kind="$1" name="$2" shard="$3" shards="$4" gpu="$5" attempt="$6" batch_size="$7" status="$8" oom="$9" before="${10}" after="${11}" peak_used="${12}" log_path="${13}"
   {
@@ -521,6 +563,179 @@ dfm_shards_for_task() {
     govreport) echo 16 ;;
     *) echo 1 ;;
   esac
+}
+
+wandb_merge_args() {
+  if [[ "${WANDB_SYNC}" == "1" ]]; then
+    printf "%s\n" \
+      --log-wandb \
+      --project "${WANDB_PROJECT}" \
+      --run-id "${WANDB_RUN_ID}" \
+      --run-name "${WANDB_RUN_NAME}"
+  fi
+}
+
+completed_shard_count() {
+  local kind="$1" name="$2" shards="$3"
+  awk -v kind="${kind}" -v name="${name}" '
+    BEGIN { FS = "\t" }
+    {
+      split($2, p, " ")
+      if (p[1] == "END" && p[2] == kind && p[3] == name && $2 ~ /status_0/) {
+        if (match($2, /shard_([0-9]+)_of_([0-9]+)/, m)) {
+          seen[m[1]] = 1
+        }
+      }
+    }
+    END {
+      n = 0
+      for (s in seen) {
+        n += 1
+      }
+      print n
+    }
+  ' "${STATUS_FILE}"
+}
+
+completed_ifeval_count() {
+  awk '
+    BEGIN { FS = "\t" }
+    {
+      split($2, p, " ")
+      if (p[1] == "END" && p[2] == "dfm_ifeval" && $2 ~ /status_0/) {
+        seen[p[3]] = 1
+      }
+    }
+    END {
+      n = 0
+      for (s in seen) {
+        n += 1
+      }
+      print n
+    }
+  ' "${STATUS_FILE}"
+}
+
+standard_merge_marker() {
+  printf "%s" "${LOG_ROOT}/standard_shards/${1}/.merged_${EVAL_PREFIX}_${CKPT_TAG}"
+}
+
+dfm_merge_marker() {
+  printf "%s" "${DFM_LOG_ROOT}/${1}/.merged_${DFM_EVAL_PREFIX}_${CKPT_TAG}"
+}
+
+ifeval_merge_marker() {
+  printf "%s" "${DFM_LOG_ROOT}/.merged_ifeval_${DFM_EVAL_PREFIX}_${CKPT_TAG}"
+}
+
+merge_standard_task() {
+  local task="$1" shards="$2" marker
+  marker="$(standard_merge_marker "${task}")"
+  [[ -f "${marker}" ]] && return 0
+  local standard_paths=()
+  if [[ "${LITE_EVAL}" == "1" ]]; then
+    standard_paths=("${LOG_ROOT}/standard_shards/${task}/${task}_shard_${LITE_SHARD_INDEX}_of_${shards}.log")
+  else
+    standard_paths=("${LOG_ROOT}"/standard_shards/"${task}"/"${task}"_shard_*_of_"${shards}".log)
+  fi
+  local wandb_args=()
+  mapfile -t wandb_args < <(wandb_merge_args)
+  "${PYTHON_BIN}" scripts/merge_standard_eval_shards.py \
+    "${standard_paths[@]}" \
+    --benchmark "${task}" \
+    --epoch "${EVAL_EPOCH}" \
+    --output "${LOG_ROOT}/standard_shards/${task}/merged_metrics.json" \
+    --prefix "${EVAL_PREFIX}" \
+    "${wandb_args[@]}" \
+    > "${LOG_ROOT}/standard_shards/${task}/merge_and_wandb_sync.log" 2>&1
+  touch "${marker}"
+}
+
+merge_dfm_task() {
+  local task="$1" shards="$2" marker
+  marker="$(dfm_merge_marker "${task}")"
+  [[ -f "${marker}" ]] && return 0
+  local paths=()
+  if [[ "${LITE_EVAL}" == "1" ]]; then
+    paths=("${DFM_LOG_ROOT}/${task}/shard_${LITE_SHARD_INDEX}_of_${shards}/${CKPT_TAG}/inspect"/*.eval)
+  else
+    local shard
+    for ((shard = 0; shard < shards; shard++)); do
+      paths+=("${DFM_LOG_ROOT}/${task}/shard_${shard}_of_${shards}/${CKPT_TAG}/inspect"/*.eval)
+    done
+  fi
+  local wandb_args=()
+  mapfile -t wandb_args < <(wandb_merge_args)
+  "${PYTHON_BIN}" scripts/merge_dfm_eval_shards.py \
+    "${paths[@]}" \
+    --task "${task}" \
+    --epoch "${EVAL_EPOCH}" \
+    --output "${DFM_LOG_ROOT}/${task}/merged_metrics.json" \
+    --prefix "${DFM_EVAL_PREFIX}" \
+    "${wandb_args[@]}" \
+    > "${DFM_LOG_ROOT}/${task}/merge_and_wandb_sync.log" 2>&1
+  touch "${marker}"
+}
+
+merge_ifeval_task() {
+  local marker
+  marker="$(ifeval_merge_marker)"
+  [[ -f "${marker}" ]] && return 0
+  local ifeval_paths=()
+  if [[ "${LITE_EVAL}" == "1" ]]; then
+    ifeval_paths=("${DFM_LOG_ROOT}/ifeval_shard_${LITE_SHARD_INDEX}/${CKPT_TAG}/inspect"/*.eval)
+  else
+    local shard
+    for ((shard = 0; shard < DFM_IFEVAL_SHARDS; shard++)); do
+      ifeval_paths+=("${DFM_LOG_ROOT}/ifeval_shard_${shard}/${CKPT_TAG}/inspect"/*.eval)
+    done
+  fi
+  local wandb_args=()
+  mapfile -t wandb_args < <(wandb_merge_args)
+  "${PYTHON_BIN}" scripts/merge_ifeval_da_shards.py \
+    "${ifeval_paths[@]}" \
+    --epoch "${EVAL_EPOCH}" \
+    --output "${DFM_LOG_ROOT}/merged_ifeval_da_metrics.json" \
+    --prefix "${DFM_EVAL_PREFIX}" \
+    "${wandb_args[@]}" \
+    > "${DFM_LOG_ROOT}/merge_ifeval_da_wandb.log" 2>&1
+  touch "${marker}"
+}
+
+maybe_incremental_merge() {
+  [[ "${INCREMENTAL_MERGE}" == "1" ]] || return 0
+  local kind="$1" name="$2" shards="${3:-1}"
+  {
+    flock -x 9
+    case "${kind}" in
+      standard)
+        if [[ "$(completed_shard_count standard "${name}" "${shards}")" -ge "${shards}" ]]; then
+          log_status "INCREMENTAL_MERGE_START standard ${name}"
+          merge_standard_task "${name}" "${shards}" \
+            && log_status "INCREMENTAL_MERGE_END standard ${name}" \
+            || log_status "INCREMENTAL_MERGE_FAILED standard ${name}"
+        fi
+        ;;
+      dfm)
+        if [[ "$(completed_shard_count dfm "${name}" "${shards}")" -ge "${shards}" ]]; then
+          log_status "INCREMENTAL_MERGE_START dfm ${name}"
+          merge_dfm_task "${name}" "${shards}" \
+            && log_status "INCREMENTAL_MERGE_END dfm ${name}" \
+            || log_status "INCREMENTAL_MERGE_FAILED dfm ${name}"
+        fi
+        ;;
+      dfm_ifeval)
+        local expected="${DFM_IFEVAL_SHARDS}"
+        [[ "${LITE_EVAL}" == "1" ]] && expected=1
+        if [[ "$(completed_ifeval_count)" -ge "${expected}" ]]; then
+          log_status "INCREMENTAL_MERGE_START dfm_ifeval"
+          merge_ifeval_task \
+            && log_status "INCREMENTAL_MERGE_END dfm_ifeval" \
+            || log_status "INCREMENTAL_MERGE_FAILED dfm_ifeval"
+        fi
+        ;;
+    esac
+  } 9>"${MERGE_LOCK_FILE}"
 }
 
 wait_for_server() {
@@ -686,6 +901,7 @@ run_dfm_task() {
   OPENAI_API_KEY="${OPENAI_API_KEY:-inspectai}" \
   OPENAI_BASE_URL="${base_url}" \
   DFM_EVALS_MODEL_INFO_OVERRIDES="{\"openai/${model_name}\":{\"context_length\":${MAX_CONTEXT},\"output_tokens\":512,\"display_name\":\"${model_name}\",\"organization\":\"local\"}}" \
+  run_client_with_server_monitor "${server_pid}" "${server_log}" "${run_dir}/dfm-evals.log" \
   uv run --project "${DFM_EVALS_DIR}" evals suite "${suite}" \
     --file "${DFM_SINGLE_TASKS_CONFIG}" \
     --target-model "openai/${model_name}" \
@@ -697,8 +913,7 @@ run_dfm_task() {
     -T "shard_index=${shard}" \
     --log-dir "${inspect_dir}" \
     --log-dir-allow-dirty \
-    --max-connections "${effective_batch_size}" \
-    > "${run_dir}/dfm-evals.log" 2>&1
+    --max-connections "${effective_batch_size}"
 
   if grep -Eq "param '(num_shards|shard_index)' not used by task" "${run_dir}/dfm-evals.log"; then
     echo "Sharding parameters were ignored by ${task}; refusing to treat this as shard output." >&2
@@ -762,6 +977,7 @@ run_dfm_ifeval() {
   OPENAI_API_KEY="${OPENAI_API_KEY:-inspectai}" \
   OPENAI_BASE_URL="${base_url}" \
   DFM_EVALS_MODEL_INFO_OVERRIDES="{\"openai/${model_name}\":{\"context_length\":${MAX_CONTEXT},\"output_tokens\":512,\"display_name\":\"${model_name}\",\"organization\":\"local\"}}" \
+  run_client_with_server_monitor "${server_pid}" "${run_dir}/server.log" "${run_dir}/dfm-evals.log" \
   uv run --project "${DFM_EVALS_DIR}" evals suite "${suite}" \
     --file "${DFM_IFEVAL_SHARDS_CONFIG}" \
     --target-model "openai/${model_name}" \
@@ -770,8 +986,7 @@ run_dfm_ifeval() {
     -- \
     --log-dir "${inspect_dir}" \
     --log-dir-allow-dirty \
-    --max-connections "${effective_batch_size}" \
-    > "${run_dir}/dfm-evals.log" 2>&1
+    --max-connections "${effective_batch_size}"
 
   uv run --project "${DFM_EVALS_DIR}" evals eee inspect \
     --log-path "${inspect_dir}" \
@@ -873,75 +1088,38 @@ worker() {
       attempt=$((attempt + 1))
     done
     log_status "END ${kind} ${name} shard_${shard:-0}_of_${shards:-1} gpu_${gpu} status_${status}"
+    if [[ "${status}" == "0" ]]; then
+      maybe_incremental_merge "${kind}" "${name}" "${shards:-1}"
+    fi
   done
 }
 
 final_merge() {
   log_status "FINAL_MERGE_START"
-  local wandb_args=()
-  if [[ "${WANDB_SYNC}" == "1" ]]; then
-    wandb_args=(
-      --log-wandb
-      --project "${WANDB_PROJECT}"
-      --run-id "${WANDB_RUN_ID}"
-      --run-name "${WANDB_RUN_NAME}"
-    )
-  fi
   local task shards
   for task in GSM8k DROP MMLU ARC HellaSwag Winogrande BoolQ MATH; do
     shards="$(standard_shards_for_task "${task}")"
-    local standard_paths=()
-    if [[ "${LITE_EVAL}" == "1" ]]; then
-      standard_paths=("${LOG_ROOT}/standard_shards/${task}/${task}_shard_${LITE_SHARD_INDEX}_of_${shards}.log")
+    if [[ -f "$(standard_merge_marker "${task}")" ]]; then
+      log_status "FINAL_MERGE_STANDARD_${task}_SKIPPED_ALREADY_MERGED"
     else
-      standard_paths=("${LOG_ROOT}"/standard_shards/"${task}"/"${task}"_shard_*_of_"${shards}".log)
+      merge_standard_task "${task}" "${shards}" || log_status "FINAL_MERGE_STANDARD_${task}_FAILED"
     fi
-    "${PYTHON_BIN}" scripts/merge_standard_eval_shards.py \
-      "${standard_paths[@]}" \
-      --benchmark "${task}" \
-      --epoch "${EVAL_EPOCH}" \
-      --output "${LOG_ROOT}/standard_shards/${task}/merged_metrics.json" \
-      --prefix "${EVAL_PREFIX}" \
-      "${wandb_args[@]}" \
-      > "${LOG_ROOT}/standard_shards/${task}/merge_and_wandb_sync.log" 2>&1 || log_status "FINAL_MERGE_STANDARD_${task}_FAILED"
   done
 
-  local ifeval_paths=()
-  local shard
-  if [[ "${LITE_EVAL}" == "1" ]]; then
-    ifeval_paths=("${DFM_LOG_ROOT}/ifeval_shard_${LITE_SHARD_INDEX}/${CKPT_TAG}/inspect"/*.eval)
+  if [[ -f "$(ifeval_merge_marker)" ]]; then
+    log_status "FINAL_MERGE_IFEVAL_SKIPPED_ALREADY_MERGED"
   else
-    for ((shard = 0; shard < DFM_IFEVAL_SHARDS; shard++)); do
-      ifeval_paths+=("${DFM_LOG_ROOT}/ifeval_shard_${shard}/${CKPT_TAG}/inspect"/*.eval)
-    done
+    merge_ifeval_task || log_status "FINAL_MERGE_IFEVAL_FAILED"
   fi
-  "${PYTHON_BIN}" scripts/merge_ifeval_da_shards.py \
-    "${ifeval_paths[@]}" \
-    --epoch "${EVAL_EPOCH}" \
-    --output "${DFM_LOG_ROOT}/merged_ifeval_da_metrics.json" \
-    --prefix "${DFM_EVAL_PREFIX}" \
-    "${wandb_args[@]}" \
-    > "${DFM_LOG_ROOT}/merge_ifeval_da_wandb.log" 2>&1 || log_status "FINAL_MERGE_IFEVAL_FAILED"
 
   for task in danish_citizen_tests dala gec_dala wmt24pp_en_da multi_wiki_qa piqa generative_talemaader govreport nordjyllandnews humaneval; do
     local shards
     shards="$(dfm_shards_for_task "${task}")"
-    local paths=()
-    if [[ "${LITE_EVAL}" == "1" ]]; then
-      paths=("${DFM_LOG_ROOT}/${task}/shard_${LITE_SHARD_INDEX}_of_${shards}/${CKPT_TAG}/inspect"/*.eval)
+    if [[ -f "$(dfm_merge_marker "${task}")" ]]; then
+      log_status "FINAL_MERGE_DFM_${task}_SKIPPED_ALREADY_MERGED"
     else
-      for ((shard = 0; shard < shards; shard++)); do
-        paths+=("${DFM_LOG_ROOT}/${task}/shard_${shard}_of_${shards}/${CKPT_TAG}/inspect"/*.eval)
-      done
+      merge_dfm_task "${task}" "${shards}" || log_status "FINAL_MERGE_DFM_${task}_FAILED"
     fi
-    "${PYTHON_BIN}" scripts/merge_dfm_eval_shards.py \
-      "${paths[@]}" \
-      --task "${task}" \
-      --epoch "${EVAL_EPOCH}" \
-      --output "${DFM_LOG_ROOT}/${task}/merged_metrics.json" \
-      --prefix "${DFM_EVAL_PREFIX}" \
-      "${wandb_args[@]}" \
-      > "${DFM_LOG_ROOT}/${task}/merge_and_wandb_sync.log" 2>&1 || log_status "FINAL_MERGE_DFM_${task}_FAILED"
   done
   log_status "FINAL_MERGE_END"
 }

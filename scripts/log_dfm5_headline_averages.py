@@ -17,8 +17,8 @@ DANISH_KEYS = [
     "dfm_eval/gec_dala/exact_match/mean",
     "dfm_eval/generative-talemaader/model_graded_fact/accuracy",
     "dfm_eval/ifeval-da/instruction_following/final_acc",
-    "dfm_eval/multi_wiki_qa/f1/mean",
-    "dfm_eval/nordjyllandnews/rouge2/mean",
+    "dfm_eval/multi_wiki_qa/exact_match/mean",
+    "dfm_eval/nordjyllandnews/bertscore_f1/mean",
     "dfm_eval/piqa/piqa_scorer/accuracy",
     "dfm_eval/wmt24pp-en-da/chrf3pp/mean",
     "euroeval/da/sentiment-classification/angry-tweets/macro_f1",
@@ -39,7 +39,7 @@ ENGLISH_KEYS = [
     "eval/HellaSwag/acc",
     "eval/MMLU/acc",
     "eval/Winogrande/acc",
-    "dfm_eval/govreport/rouge2/mean",
+    "dfm_eval/govreport/bertscore_f1/mean",
     "euroeval/en/sentiment-classification/sst5/macro_f1",
     "euroeval/en/linguistic-acceptability/scala-en/macro_f1",
     "euroeval/en/named-entity-recognition/conll-en/micro_f1",
@@ -130,21 +130,21 @@ def section_average(metrics: dict[str, float], keys: list[str]) -> tuple[float |
     return sum(values) / len(values), len(values)
 
 
-def build_row(item: EvalItem) -> dict[str, Any]:
+def build_row(item: EvalItem, metric_prefix: str = "headline_avg") -> dict[str, Any]:
     metrics = gather_metrics(item)
     row: dict[str, Any] = {
-        "headline_avg/epoch": item.epoch,
-        "headline_avg/train_step": item.step,
+        f"{metric_prefix}/epoch": item.epoch,
+        f"{metric_prefix}/train_step": item.step,
     }
     section_values = []
     for section, keys in SECTION_KEYS.items():
         avg, count = section_average(metrics, keys)
-        row[f"headline_avg/{section}/count"] = count
+        row[f"{metric_prefix}/{section}/count"] = count
         if avg is not None:
-            row[f"headline_avg/{section}"] = avg
+            row[f"{metric_prefix}/{section}"] = avg
             section_values.append(avg)
     if section_values:
-        row["headline_avg/overall"] = sum(section_values) / len(section_values)
+        row[f"{metric_prefix}/overall"] = sum(section_values) / len(section_values)
     return row
 
 
@@ -154,6 +154,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-id", default="2tv9u438")
     parser.add_argument("--run-name", default="dfm5-XXS")
     parser.add_argument("--entity", default="peter-sk-sdu")
+    parser.add_argument(
+        "--metric-prefix",
+        default="avg",
+        help="Metric namespace for averages, e.g. avg or headline_avg.",
+    )
     parser.add_argument(
         "--item",
         action="append",
@@ -167,7 +172,8 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    rows = [build_row(item) for item in args.item]
+    metric_prefix = args.metric_prefix.rstrip("/")
+    rows = [build_row(item, metric_prefix=metric_prefix) for item in args.item]
     print(json.dumps(rows, indent=2, sort_keys=True))
     if args.dry_run:
         return
@@ -181,8 +187,8 @@ def main() -> None:
         name=args.run_name,
         resume="allow",
     )
-    wandb.define_metric("headline_avg/epoch")
-    wandb.define_metric("headline_avg/*", step_metric="headline_avg/epoch")
+    wandb.define_metric(f"{metric_prefix}/epoch")
+    wandb.define_metric(f"{metric_prefix}/*", step_metric=f"{metric_prefix}/epoch")
     for row in rows:
         wandb.log(row, commit=True)
     run.finish()

@@ -21,7 +21,8 @@ MAX_RUNS_TO_SHOW = 50
 EVAL_X_AXIS = "eval/epoch"
 DFM_EVAL_X_AXIS = "dfm_eval/epoch"
 EUROEVAL_X_AXIS = "euroeval/epoch"
-HEADLINE_AVG_X_AXIS = "headline_avg/epoch"
+HEADLINE_AVG_X_AXIS = "avg/epoch"
+HEADLINE_AVG_PREFIX = "avg"
 TRAIN_X_AXIS = "_step"
 
 DANISH_METRICS = [
@@ -30,8 +31,8 @@ DANISH_METRICS = [
     ("GEC-DaLA exact match", "dfm_eval/gec_dala/exact_match/mean"),
     ("Talemaader judged accuracy", "dfm_eval/generative-talemaader/model_graded_fact/accuracy"),
     ("IFEval-DA final accuracy", "dfm_eval/ifeval-da/instruction_following/final_acc"),
-    ("MultiWikiQA F1", "dfm_eval/multi_wiki_qa/f1/mean"),
-    ("NordjyllandNews ROUGE-2", "dfm_eval/nordjyllandnews/rouge2/mean"),
+    ("MultiWikiQA exact match", "dfm_eval/multi_wiki_qa/exact_match/mean"),
+    ("NordjyllandNews BERTScore", "dfm_eval/nordjyllandnews/bertscore_f1/mean"),
     ("PIQA-da accuracy", "dfm_eval/piqa/piqa_scorer/accuracy"),
     ("WMT24++ en-da chrF++", "dfm_eval/wmt24pp-en-da/chrf3pp/mean"),
 ]
@@ -56,7 +57,7 @@ ENGLISH_METRICS = [
     ("HellaSwag accuracy", "eval/HellaSwag/acc", EVAL_X_AXIS),
     ("MMLU accuracy", "eval/MMLU/acc", EVAL_X_AXIS),
     ("Winogrande accuracy", "eval/Winogrande/acc", EVAL_X_AXIS),
-    ("GovReport ROUGE-2", "dfm_eval/govreport/rouge2/mean", DFM_EVAL_X_AXIS),
+    ("GovReport BERTScore", "dfm_eval/govreport/bertscore_f1/mean", DFM_EVAL_X_AXIS),
 ]
 
 ENGLISH_EUROEVAL_METRICS = [
@@ -89,45 +90,48 @@ TRAINING_METRICS = [
     ("BP steps", "bp_steps"),
 ]
 
-HEADLINE_AVERAGE_METRICS = {
-    "Headline Averages": [
+def build_headline_average_metrics(prefix: str = HEADLINE_AVG_PREFIX) -> dict[str, list[tuple[str, str, str]] | tuple[str, str, str]]:
+    prefix = prefix.rstrip("/")
+    x_axis = f"{prefix}/epoch"
+    return {
+        "Headline Averages": [
         (
             "Overall headline average",
-            "headline_avg/overall",
-            HEADLINE_AVG_X_AXIS,
+            f"{prefix}/overall",
+            x_axis,
         ),
         (
             "Danish headline average",
-            "headline_avg/danish",
-            HEADLINE_AVG_X_AXIS,
+            f"{prefix}/danish",
+            x_axis,
         ),
         (
             "English headline average",
-            "headline_avg/english",
-            HEADLINE_AVG_X_AXIS,
+            f"{prefix}/english",
+            x_axis,
         ),
         (
             "Math & Code headline average",
-            "headline_avg/math_code",
-            HEADLINE_AVG_X_AXIS,
+            f"{prefix}/math_code",
+            x_axis,
         ),
     ],
     "Danish Headline Metrics": (
         "Danish headline average",
-        "headline_avg/danish",
-        HEADLINE_AVG_X_AXIS,
+        f"{prefix}/danish",
+        x_axis,
     ),
     "English Headline Metrics": (
         "English headline average",
-        "headline_avg/english",
-        HEADLINE_AVG_X_AXIS,
+        f"{prefix}/english",
+        x_axis,
     ),
     "Math & Code Headline Metrics": (
         "Math & Code headline average",
-        "headline_avg/math_code",
-        HEADLINE_AVG_X_AXIS,
+        f"{prefix}/math_code",
+        x_axis,
     ),
-}
+    }
 
 
 def parse_args() -> argparse.Namespace:
@@ -139,6 +143,11 @@ def parse_args() -> argparse.Namespace:
         "--manifest",
         type=Path,
         default=Path("logs/wandb_workspace_specs/dfm5_headline_metrics.json"),
+    )
+    parser.add_argument(
+        "--headline-avg-prefix",
+        default=HEADLINE_AVG_PREFIX,
+        help="Average metric namespace to use in headline panels.",
     )
     return parser.parse_args()
 
@@ -164,10 +173,14 @@ def scalar_panel(title: str, metric: str) -> wr.ScalarChart:
     )
 
 
-def eval_section(name: str, metrics: list[tuple[str, str, str]]) -> ws.Section:
+def eval_section(
+    name: str,
+    metrics: list[tuple[str, str, str]],
+    headline_average_metrics: dict[str, list[tuple[str, str, str]] | tuple[str, str, str]],
+) -> ws.Section:
     panels = []
-    if name in HEADLINE_AVERAGE_METRICS:
-        metric = HEADLINE_AVERAGE_METRICS[name]
+    if name in headline_average_metrics:
+        metric = headline_average_metrics[name]
         if isinstance(metric, tuple):
             panels.append(line_panel(*metric, title_x="epoch"))
     panels.extend(line_panel(title, metric, x_axis, "epoch") for title, metric, x_axis in metrics)
@@ -179,10 +192,12 @@ def eval_section(name: str, metrics: list[tuple[str, str, str]]) -> ws.Section:
     )
 
 
-def headline_average_section() -> ws.Section:
+def headline_average_section(
+    headline_average_metrics: dict[str, list[tuple[str, str, str]] | tuple[str, str, str]],
+) -> ws.Section:
     panels = [
         line_panel(title, metric, x_axis, "epoch")
-        for title, metric, x_axis in HEADLINE_AVERAGE_METRICS["Headline Averages"]
+        for title, metric, x_axis in headline_average_metrics["Headline Averages"]
     ]
     return ws.Section(
         name="Headline Averages",
@@ -214,6 +229,7 @@ def training_section() -> ws.Section:
 
 def main() -> None:
     args = parse_args()
+    headline_average_metrics = build_headline_average_metrics(args.headline_avg_prefix)
     danish = [(title, metric, DFM_EVAL_X_AXIS) for title, metric in DANISH_METRICS]
     danish.extend(DANISH_EUROEVAL_METRICS)
     english = [*ENGLISH_METRICS, *ENGLISH_EUROEVAL_METRICS]
@@ -223,10 +239,10 @@ def main() -> None:
         project=args.project,
         name=args.name,
         sections=[
-            headline_average_section(),
-            eval_section("Danish Headline Metrics", danish),
-            eval_section("English Headline Metrics", english),
-            eval_section("Math & Code Headline Metrics", math_code),
+            headline_average_section(headline_average_metrics),
+            eval_section("Danish Headline Metrics", danish, headline_average_metrics),
+            eval_section("English Headline Metrics", english, headline_average_metrics),
+            eval_section("Math & Code Headline Metrics", math_code, headline_average_metrics),
             training_section(),
         ],
         settings=ws.WorkspaceSettings(
@@ -266,18 +282,18 @@ def main() -> None:
         "name": args.name,
         "url": workspace.url,
         "sections": {
-            "Headline Averages": HEADLINE_AVERAGE_METRICS["Headline Averages"],
+            "Headline Averages": headline_average_metrics["Headline Averages"],
             "Danish Headline Metrics": danish,
             "English Headline Metrics": english,
             "Math & Code Headline Metrics": math_code,
             "Training Metrics & Params": TRAINING_METRICS,
         },
-        "headline_average_metrics": HEADLINE_AVERAGE_METRICS,
+        "headline_average_metrics": headline_average_metrics,
         "x_axes": {
             "standard_eval": EVAL_X_AXIS,
             "dfm_eval": DFM_EVAL_X_AXIS,
             "euroeval": EUROEVAL_X_AXIS,
-            "headline_avg": HEADLINE_AVG_X_AXIS,
+            "headline_avg": f"{args.headline_avg_prefix.rstrip('/')}/epoch",
             "training": TRAIN_X_AXIS,
         },
         "max_runs_to_show": MAX_RUNS_TO_SHOW,

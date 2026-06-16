@@ -1,0 +1,16 @@
+[project]
+name = "hrm-eval-scheduler"
+version = "0.1.0"
+description = "Plan-first HRM evaluation scheduler"
+requires-python = ">=3.13"
+dependencies = [
+    "typer>=0.12",
+]
+
+[project.scripts]
+hrm-eval-scheduler = "eval_scheduler.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+

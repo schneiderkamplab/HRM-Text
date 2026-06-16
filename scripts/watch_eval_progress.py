@@ -20,6 +20,7 @@ PROGRESS_RE = re.compile(
 )
 RESET_GENERATION_RE = re.compile(r"generation:\s+0%\|.*0/1\b")
 STATUS_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
+SAMPLE_PROGRESS_RE = re.compile(r"(\d+)\s*/\s*(\d+)")
 KNOWN_DATASET_TOTALS = {
     "dfm_evals/ifeval-da": 541,
 }
@@ -112,6 +113,22 @@ def progress_for_server_log(path: Path) -> tuple[int, int | None, int] | None:
     return completed, shard_total_from_eval_set(path.parent), failed
 
 
+def progress_for_text_log(path: Path) -> tuple[int, int] | None:
+    text = tail_text(path, limit=2_000_000)
+    best: tuple[int, int] | None = None
+    for raw in re.split(r"[\r\n]+", text):
+        line = clean_line(raw)
+        if "it/s" not in line:
+            continue
+        matches = SAMPLE_PROGRESS_RE.findall(line)
+        if not matches:
+            continue
+        done, total = (int(matches[-1][0]), int(matches[-1][1]))
+        if total > 1:
+            best = (done, total)
+    return best
+
+
 def parse_status_time(value: str) -> datetime | None:
     try:
         return datetime.strptime(value, STATUS_TIME_FORMAT)
@@ -166,6 +183,45 @@ def read_status(status_path: Path) -> tuple[Counter[str], list[str], dict[int, A
     return counts, recent[-12:], active
 
 
+def read_status_full(status_path: Path) -> tuple[Counter[str], list[str], dict[int, ActiveJob], dict[tuple[str, str, int, int], datetime], datetime | None]:
+    counts: Counter[str] = Counter()
+    recent: list[str] = []
+    active_by_gpu: dict[int, ActiveJob] = {}
+    active_by_key: dict[tuple[str, str, int, int], int] = {}
+    completed: dict[tuple[str, str, int, int], datetime] = {}
+    queued_at: datetime | None = None
+    text = tail_text(status_path, limit=20_000_000)
+    for line in text.splitlines():
+        parts = line.split("\t", 1)
+        if len(parts) != 2:
+            continue
+        event = parts[1].split(" ", 1)[0]
+        counts[event] += 1
+        recent.append(line)
+        timestamp = parse_status_time(parts[0])
+        if event == "QUEUED" and queued_at is None and timestamp is not None:
+            queued_at = timestamp
+        parsed = parse_job_event(line)
+        if parsed is None:
+            continue
+        job_event, timestamp, kind, name, shard, shards, gpu = parsed
+        if timestamp is None:
+            continue
+        key = (kind, name, shard, shards)
+        if job_event == "START":
+            active_by_gpu[gpu] = ActiveJob(timestamp, kind, name, shard, shards, gpu)
+            active_by_key[key] = gpu
+        elif job_event == "END":
+            fields = parts[1].split()
+            if "status_0" in fields:
+                completed[key] = timestamp
+            active_by_key.pop(key, None)
+            current = active_by_gpu.get(gpu)
+            if current is not None and (current.kind, current.name, current.shard, current.shards) == key:
+                active_by_gpu.pop(gpu, None)
+    return counts, recent[-12:], active_by_gpu, completed, queued_at
+
+
 def count_jobs(path: Path) -> int:
     try:
         with path.open("rt", errors="replace") as f:
@@ -195,6 +251,27 @@ def gpu_summary() -> list[str]:
     return rows
 
 
+def gpu_summary_map() -> dict[int, str]:
+    try:
+        out = subprocess.check_output(
+            [
+                "nvidia-smi",
+                "--query-gpu=index,memory.used,memory.free,utilization.gpu",
+                "--format=csv,noheader,nounits",
+            ],
+            text=True,
+            timeout=3,
+        )
+    except Exception:
+        return {}
+    rows: dict[int, str] = {}
+    for line in out.splitlines():
+        parts = [p.strip() for p in line.split(",")]
+        if len(parts) == 4:
+            rows[int(parts[0])] = f"{parts[1]}MiB used {parts[2]}MiB free {parts[3]}%"
+    return rows
+
+
 def active_job_label(job: ActiveJob) -> str:
     if job.kind == "dfm_ifeval":
         return f"ifeval-da shard {job.name}"
@@ -206,6 +283,16 @@ def active_job_server_log(job: ActiveJob, dfm_log_root: Path, ckpt_tag: str) -> 
         return dfm_log_root / f"ifeval_shard_{job.name}" / ckpt_tag / "server.log"
     if job.kind == "dfm":
         return dfm_log_root / job.name / f"shard_{job.shard}_of_{job.shards}" / ckpt_tag / "server.log"
+    return None
+
+
+def active_job_progress_log(job: ActiveJob, log_root: Path, dfm_log_root: Path, euroeval_log_root: Path | None, ckpt_tag: str) -> Path | None:
+    if job.kind == "standard":
+        return log_root / "standard_shards" / job.name / f"{job.name}_shard_{job.shard}_of_{job.shards}.log"
+    if job.kind == "euroeval" and euroeval_log_root is not None:
+        return euroeval_log_root / ckpt_tag / job.name / "euroeval.log"
+    if job.kind in {"dfm", "dfm_ifeval"}:
+        return active_job_server_log(job, dfm_log_root, ckpt_tag)
     return None
 
 
@@ -222,26 +309,57 @@ def format_eta(started_at: datetime, completed: int, total: int | None) -> str:
     return f"ETA {seconds / 3600:.1f}h"
 
 
-def gpu_job_lines(active: dict[int, ActiveJob], dfm_log_root: Path, ckpt_tag: str) -> list[str]:
+def format_overall_eta(seconds: float | None) -> str:
+    if seconds is None:
+        return "ETA ?"
+    if seconds < 60:
+        return f"ETA {seconds:.0f}s"
+    if seconds < 3600:
+        return f"ETA {seconds / 60:.1f}m"
+    return f"ETA {seconds / 3600:.1f}h"
+
+
+def overall_eta(completed: dict[tuple[str, str, int, int], datetime], queued_at: datetime | None, remaining: int) -> str:
+    if queued_at is None or not completed or remaining <= 0:
+        return "ETA ?"
+    now = datetime.now(queued_at.tzinfo)
+    elapsed = max(1.0, (now - queued_at).total_seconds())
+    rate = len(completed) / elapsed
+    if rate <= 0:
+        return "ETA ?"
+    return format_overall_eta(remaining / rate)
+
+
+def gpu_job_lines(active: dict[int, ActiveJob], log_root: Path, dfm_log_root: Path, euroeval_log_root: Path | None, ckpt_tag: str) -> list[str]:
     lines = []
+    gpu_mem = gpu_summary_map()
     for gpu in range(8):
         job = active.get(gpu)
+        mem = gpu_mem.get(gpu, "mem ?")
         if job is None:
-            lines.append(f"GPU{gpu}: idle")
+            lines.append(f"GPU{gpu}: idle | {mem}")
             continue
         label = active_job_label(job)
         progress_text = "?/?"
         eta_text = "ETA ?"
-        server_log = active_job_server_log(job, dfm_log_root, ckpt_tag)
-        if server_log is not None and server_log.exists():
-            progress = progress_for_server_log(server_log)
-            if progress is not None:
-                completed, total, failed = progress
-                progress_text = f"{completed}/{total}" if total is not None else f"{completed}/?"
-                if failed:
-                    progress_text += f" failed={failed}"
-                eta_text = format_eta(job.started_at, completed, total)
-        lines.append(f"GPU{gpu}: {label} {progress_text} {eta_text}")
+        log_path = active_job_progress_log(job, log_root, dfm_log_root, euroeval_log_root, ckpt_tag)
+        if log_path is not None and log_path.exists():
+            if log_path.name == "server.log":
+                req_progress = progress_for_server_log(log_path)
+                if req_progress is not None:
+                    completed, total, failed = req_progress
+                    progress_text = f"{completed}/{total}" if total is not None else f"{completed}/?"
+                    if failed:
+                        progress_text += f" failed={failed}"
+                    eta_text = format_eta(job.started_at, completed, total)
+            else:
+                text_progress = progress_for_text_log(log_path)
+                if text_progress is not None:
+                    completed, total = text_progress
+                    progress_text = f"{completed}/{total}"
+                    eta_text = format_eta(job.started_at, completed, total)
+        elapsed = datetime.now(job.started_at.tzinfo) - job.started_at
+        lines.append(f"GPU{gpu}: {label} {progress_text} elapsed {str(elapsed).split('.')[0]} {eta_text} | {mem}")
     return lines
 
 
@@ -272,8 +390,12 @@ def render(args: argparse.Namespace):
     status_path = log_root / "status.tsv"
     jobs_path = log_root / "jobs.tsv"
 
-    counts, recent, active = read_status(status_path)
+    counts, recent, active, completed, queued_at = read_status_full(status_path)
     queued = count_jobs(jobs_path)
+    completed_count = len(completed)
+    active_count = len(active)
+    total = completed_count + active_count + queued
+    remaining = active_count + queued
 
     print("\033[2J\033[H", end="")
     print(time.strftime("%Y-%m-%d %H:%M:%S"), "eval progress monitor")
@@ -282,7 +404,11 @@ def render(args: argparse.Namespace):
     print()
     print(
         "jobs:",
-        f"queued_file_lines={queued}",
+        f"completed={completed_count}",
+        f"active={active_count}",
+        f"queued={queued}",
+        f"total={total}",
+        overall_eta(completed, queued_at, remaining),
         f"START={counts.get('START', 0)}",
         f"END={counts.get('END', 0)}",
         f"FAILED={counts.get('FAILED', 0)}",
@@ -293,7 +419,8 @@ def render(args: argparse.Namespace):
         print("gpus:", " | ".join(gpus))
     print()
     print("active jobs by GPU:")
-    for line in gpu_job_lines(active, dfm_log_root, args.ckpt_tag):
+    euroeval_log_root = Path(args.euroeval_log_root) if args.euroeval_log_root else None
+    for line in gpu_job_lines(active, log_root, dfm_log_root, euroeval_log_root, args.ckpt_tag):
         print(" ", line)
     print()
     print("recent scheduler events:")
@@ -306,6 +433,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--log-root", required=True)
     parser.add_argument("--dfm-log-root", required=True)
+    parser.add_argument("--euroeval-log-root")
     parser.add_argument("--ckpt-tag", default="epoch_4")
     parser.add_argument("--interval", type=float, default=10.0)
     args = parser.parse_args()

@@ -1,8 +1,223 @@
 # Script Entities
 
-Last updated: 2026-06-12
+Last updated: 2026-06-16
 Confidence: high
 Scope: Local scripts added or used during data preparation.
+
+## `eval_scheduler/`
+
+Added on 2026-06-16. Confidence: high for local package compilation, Typer CLI
+startup, smoke plan creation, status display, and pending batch-size editing;
+medium for full end-to-end eval execution until a real checkpoint eval is run
+through this new scheduler.
+
+`eval_scheduler/` is a new self-contained Python package for a plan-first HRM
+evaluation scheduler. It deliberately does not import
+`scripts/schedule_checkpoint_evals.sh`; it owns its own job model, plan writer,
+state/event files, retry policy, and Typer CLI. It still calls the repository's
+existing evaluation entrypoints as external commands (`evaluation.main`,
+`scripts/hrm_openai_server.py`, dfm-evals via `uv run`, merge scripts,
+headline-average logging, and report generation).
+
+Main files:
+
+```text
+eval_scheduler/README.md
+eval_scheduler/pyproject.toml
+eval_scheduler/eval_scheduler/cli.py
+eval_scheduler/eval_scheduler/model.py
+eval_scheduler/eval_scheduler/catalog.py
+eval_scheduler/eval_scheduler/plan.py
+eval_scheduler/eval_scheduler/runtime.py
+```
+
+The editable plan format is `plan.tsv` with header:
+
+```text
+job_id	action	family	name	shard	shards	deps	initial_batch	max_retries	gpu_policy	status	attempt	log_dir	metadata_json
+```
+
+The plan is intentionally more expressive than the old `jobs.tsv`. It includes
+evaluation jobs plus merge, average, and report jobs as dependency-gated rows.
+Pending rows can be edited directly, and `initial_batch` controls future
+attempts. This avoids the previous workaround where synthetic telemetry rows
+had to be injected to force future shards to use a lower batch size.
+
+Current supported actions:
+
+```text
+wait_checkpoint
+eval_standard
+eval_dfm
+eval_dfm_ifeval
+eval_euroeval
+merge_standard
+merge_dfm
+merge_ifeval
+average
+report
+```
+
+Checkpoint-wait update, 2026-06-16. Confidence: high for local plan smoke tests
+and a missing-checkpoint runtime smoke test. Generated plans now include a
+`wait_checkpoint` row by default. All eval rows for that checkpoint depend on
+the wait row. The wait row completes only when either
+`CKPT_PATH/fsdp2_<tag>/.metadata` or `CKPT_PATH/unsharded_<tag>.pt` exists and
+all configured `carry_<tag>.<rank>.pt` files exist. Defaults are 8 carry ranks,
+300 seconds between polls, and no maximum wait time. CLI controls:
+
+```text
+--include-checkpoint-wait / --no-include-checkpoint-wait
+--checkpoint-carry-ranks 8
+--checkpoint-wait-seconds 300
+--checkpoint-wait-max-seconds 0
+```
+
+This makes it possible to queue evals before a checkpoint exists. When the wait
+row becomes `done`, downstream eval shards become ready and can start on free
+GPUs.
+
+Multiple-checkpoint plan update, 2026-06-16. Confidence: high for local append
+smoke test. `plan create --append` appends another checkpoint subgraph to an
+existing `plan.tsv`. Job IDs and internal dependencies are rebased
+automatically. A smoke plan with `step_300000` and appended `step_350000`
+contained two independent `wait_checkpoint` rows:
+
+```text
+wait-00001  step_300000
+wait-00191  step_350000
+```
+
+The first appended eval row for `step_350000` depended on `wait-00191`, not
+the first checkpoint wait row.
+
+The runner now has a small non-GPU worker pool for `wait_checkpoint`, merge,
+average, and report jobs in addition to GPU worker slots. This prevents future
+checkpoint wait rows from consuming GPU slots while still allowing multiple
+upcoming checkpoints to be watched.
+
+Stop/resume update, 2026-06-16. Confidence: high for local smoke tests with a
+missing-checkpoint wait row and a manual stale-`running` repair. The scheduler
+now supports graceful stop and later resume:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler stop \
+  --plan-dir logs/scheduler/dfm5_L_step300000
+
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_step300000 \
+  --gpus 0,1,2,3,4,5,6,7
+```
+
+`stop` writes `PLAN_DIR/stop.request`. The runner observes this file between
+job launches and stops claiming new jobs. Already running eval jobs are allowed
+to finish normally. A running `wait_checkpoint` row exits with scheduler stop
+status and is returned to `pending`, not failed. Starting `run` removes stale
+`stop.request` at the beginning, so a later run continues the remaining
+pending jobs.
+
+For hard-killed schedulers, rows may be left as `running`. Repair them before
+resuming:
+
+```bash
+python -m eval_scheduler plan reset-running \
+  --plan-dir logs/scheduler/dfm5_L_step300000
+```
+
+`plan reset-running --increment-attempt` is also available if an interrupted
+attempt should count against the retry budget.
+
+Smoke commands verified locally:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m compileall -q eval_scheduler
+python -m eval_scheduler --help
+
+rm -rf /tmp/hrm-eval-scheduler-smoke
+python -m eval_scheduler plan create \
+  --plan-dir /tmp/hrm-eval-scheduler-smoke \
+  --ckpt-path checkpoints/dfm5/L \
+  --ckpt-tag step_300000 \
+  --eval-epoch 1.6565307709311847 \
+  --log-root logs/eval/smoke_new_scheduler \
+  --dfm-log-root logs/dfm_evals/smoke_new_scheduler \
+  --euroeval-log-root logs/euroeval/smoke_new_scheduler \
+  --wandb-run-id oti1lisg \
+  --wandb-run-name dfm5-L \
+  --model-prefix hrm-dfm5-L \
+  --run-euroeval \
+  --queue-order euroeval-first \
+  --standard-batch 64 \
+  --dfm-batch 32 \
+  --ifeval-batch 32 \
+  --euroeval-batch 16
+
+python -m eval_scheduler status --plan-dir /tmp/hrm-eval-scheduler-smoke
+python -m eval_scheduler plan set-batch \
+  --plan-dir /tmp/hrm-eval-scheduler-smoke \
+  --family dfm_ifeval \
+  --batch 16
+python -m eval_scheduler plan list \
+  --plan-dir /tmp/hrm-eval-scheduler-smoke \
+  --family dfm_ifeval \
+  --limit 5
+```
+
+The smoke plan produced 209 explicit jobs:
+
+```text
+eval_euroeval: 20
+eval_dfm_ifeval: 32
+eval_standard: 85
+merge_standard: 8
+eval_dfm: 51
+merge_dfm: 10
+merge_ifeval: 1
+average: 1
+report: 1
+```
+
+The batch edit command changed all 32 pending `dfm_ifeval` rows from batch
+`32` to batch `16`.
+
+Locking update, 2026-06-16. Confidence: high for local smoke test. The
+scheduler now uses an advisory `fcntl.flock` lock at `PLAN_DIR/plan.lock` for
+plan reads and writes. Package commands that mutate or read `plan.tsv` acquire
+this lock. The runner claims a job under the same interprocess lock and
+re-checks that dependencies are still complete and the row is still pending.
+
+Manual edit workflow:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler plan edit \
+  --plan-dir logs/scheduler/dfm5_L_step300000 \
+  --editor "vim"
+```
+
+Explicit lock/unlock workflow for manual editing in another terminal:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler plan lock \
+  --plan-dir logs/scheduler/dfm5_L_step300000
+
+vim logs/scheduler/dfm5_L_step300000/plan.tsv
+
+python -m eval_scheduler plan unlock \
+  --plan-dir logs/scheduler/dfm5_L_step300000
+```
+
+`plan lock` starts a background lock-holder process and writes
+`PLAN_DIR/plan.lock.holder.json` with the holder PID. `plan unlock` terminates
+that holder. A smoke test on `/tmp/hrm-eval-scheduler-smoke` verified that
+`python -m eval_scheduler status` blocks while the holder owns the lock and
+works again after `plan unlock`.
+
+The root `pyproject.toml` now includes `typer` as a dependency so the scheduler
+CLI is part of the normal repo environment.
 
 ## `scripts/synthesize_anonymized_sapient_exclusions.py`
 

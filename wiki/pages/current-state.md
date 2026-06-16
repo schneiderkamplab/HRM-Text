@@ -1,8 +1,448 @@
 # Current State
 
-Last updated: 2026-06-15
+Last updated: 2026-06-16
 Confidence: high
 Scope: Local repo state and verified commands from this session.
+
+## 2026-06-16 DFM5 L 300K Full Eval
+
+Confidence: high for local checkpoint state, scheduler launch, and tmux
+process inspection; medium for final metrics until all jobs finish and the
+post-eval watcher logs averages/regenerates docs.
+
+The DFM5 L `step_300000` checkpoint exists under `checkpoints/dfm5/L` with
+`checkpoint_state_step_300000.json`, `fsdp2_step_300000/.metadata`, eight
+FSDP shard files, and eight carry files. The checkpoint state says
+`epoch=2`, `batch_in_epoch=118714`, `global_batch_size=196608`, and
+`checkpoint_format=sharded`.
+
+The eval x-axis value follows the same fractional-epoch convention used for
+the earlier DFM5-L points:
+
+```text
+300000 / (35605979095 / 196608) = 1.6565307709311847
+```
+
+The full eval was launched on 2026-06-16 in tmux window `hrm-0:8` with
+EuroEval-first ordering, W&B sync enabled, and incremental merge enabled by
+the scheduler default:
+
+```bash
+cd /work/dfm/HRM-Text
+CKPT_PATH=checkpoints/dfm5/L \
+CKPT_TAG=step_300000 \
+EVAL_EPOCH=1.6565307709311847 \
+GPUS=0,1,2,3,4,5,6,7 \
+LOG_ROOT=logs/eval/dfm5_L_step300000_full_20260616_eurofirst_guard \
+DFM_LOG_ROOT=logs/dfm_evals/dfm5_L_step300000_full_20260616_eurofirst_guard \
+EUROEVAL_LOG_ROOT=logs/euroeval/dfm5_L_step300000_full_20260616_eurofirst_guard \
+WANDB_SYNC=1 \
+WANDB_PROJECT=DFM5 \
+WANDB_RUN_ID=oti1lisg \
+WANDB_RUN_NAME=dfm5-L \
+MODEL_PREFIX=hrm-dfm5-L \
+RUN_EUROEVAL=1 \
+QUEUE_ORDER=euroeval_first \
+STANDARD_BATCH_SIZE=128 \
+STANDARD_BATCH_SIZE_GSM8K=64 \
+STANDARD_BATCH_SIZE_MATH=64 \
+STANDARD_BATCH_SIZE_DROP=32 \
+DFM_BATCH_SIZE=32 \
+DFM_BATCH_SIZE_GOVREPORT=32 \
+DFM_BATCH_SIZE_NORDJYLLANDNEWS=32 \
+DFM_BATCH_SIZE_WMT24PP_EN_DA=32 \
+DFM_BATCH_SIZE_HUMANEVAL=16 \
+DFM_BATCH_SIZE_GENERATIVE_TALEMAADER=16 \
+IFEVAL_BATCH_SIZE=64 \
+EUROEVAL_BATCH_SIZE=16 \
+EUROEVAL_BATCH_SIZE_IFEVAL=32 \
+EUROEVAL_BATCH_SIZE_IFEVAL_DA=32 \
+MAX_RETRIES=5 \
+EUROEVAL_BIN=/work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py \
+scripts/schedule_checkpoint_evals.sh \
+  2>&1 | tee logs/dfm5_L_step300000_full_eval_20260616.log
+```
+
+The IFEval-specific batch sizes were intentionally set one step higher than
+the previous full-eval command: DFM IFEval-DA uses `IFEVAL_BATCH_SIZE=64`,
+while EuroEval `ifeval` and `ifeval-da` use task-specific overrides of `32`
+instead of the base EuroEval batch size `16`.
+
+Runtime finding, 2026-06-16. Confidence: high for local logs and process/GPU
+inspection. The DFM IFEval-DA bump to `IFEVAL_BATCH_SIZE=64` was too high
+while the DFM5-L training process was still resident on each GPU. Server logs
+for shards 0-4 show CUDA OOMs after attempting an additional `640 MiB`
+allocation with only about `92-602 MiB` free. Each DFM IFEval-DA job starts
+`scripts/hrm_openai_server.py` with both `--batch-size 64` and the dfm-evals
+client uses `--max-connections 64`, so the setting increases both server batch
+capacity and request concurrency. With the training process using roughly
+`104-107 GiB` and the eval server using roughly `71-76 GiB`, this leaves almost
+no GPU memory headroom. The long shard runtime is therefore not normal IFEval
+slowness; it is OOM/retry/stalled-client behavior from over-aggressive
+concurrency. Future concurrent-with-training DFM IFEval-DA evals should use
+`IFEVAL_BATCH_SIZE=32` unless telemetry proves a larger value is safe.
+
+Scheduler fix and active-run intervention, 2026-06-16. Confidence: high for
+code inspection, `bash -n`, process list, and scheduler status. The scheduler
+scripts were patched so future DFM and EuroEval jobs monitor their local
+OpenAI shim server while the eval client is running. If the server exits or
+logs an OOM, the client is killed and the job returns nonzero, allowing the
+existing retry path to halve the batch size. Patched files:
+
+```text
+scripts/schedule_checkpoint_evals.sh
+scripts/run_euroeval_on_checkpoint.sh
+```
+
+The currently running `step_300000` scheduler had already loaded the old shell
+functions, so the stuck DFM IFEval-DA batch-64 clients/servers were manually
+terminated for shards 0-5. The scheduler observed nonzero exits and retried
+those shards at batch `32`:
+
+```text
+2026-06-16T07:33:35+02:00 RETRY dfm_ifeval ... next_attempt_2
+2026-06-16T07:33:45+02:00 START dfm_ifeval ... attempt_2_of_6 batch_32
+```
+
+The training processes were not targeted by the intervention.
+
+Follow-up in the same active run: shards 0-5 completed successfully at batch
+`32`, but the old in-memory scheduler then launched shards 6-11 at batch `64`
+because batch selection is keyed by task/shard id. Synthetic OOM telemetry rows
+were appended for DFM IFEval-DA shard ids 6-31 at batch `64`, and the stuck
+batch-64 processes for shards 6-11 were terminated. The scheduler then retried
+shards 6-11 at batch `32`. This telemetry seeding is an active-run workaround
+only; future scheduler launches should rely on the patched server-monitor
+behavior and a conservative `IFEVAL_BATCH_SIZE=32`.
+
+Initial scheduler status:
+
+```text
+2026-06-16T06:23:48+02:00 QUEUED 188 jobs
+2026-06-16T06:23:48+02:00 CHECKPOINT_READY step_300000 path_checkpoints/dfm5/L
+2026-06-16T06:23:48+02:00 WORKERS 1985476 1985477 1985478 1985479 1985480 1985481 1985482 1985483
+2026-06-16T06:23:49+02:00 START euroeval angry-tweets shard_0_of_20 gpu_0 attempt_1_of_6 batch_16 mem_free_before_72785
+2026-06-16T06:23:58+02:00 START euroeval scala-da shard_1_of_20 gpu_1 attempt_1_of_6 batch_16 mem_free_before_75699
+```
+
+The post-eval watcher is running in tmux window `hrm-0:9`. It waits for
+`FINAL_MERGE_END`, then logs the 300K headline averages under `avg/*` and
+regenerates `docs/dfm5.md`:
+
+```bash
+python scripts/log_dfm5_headline_averages.py \
+  --project DFM5 \
+  --run-id oti1lisg \
+  --run-name dfm5-L \
+  --item 300000:1.6565307709311847:logs/eval/dfm5_L_step300000_full_20260616_eurofirst_guard:logs/dfm_evals/dfm5_L_step300000_full_20260616_eurofirst_guard:logs/euroeval/dfm5_L_step300000_full_20260616_eurofirst_guard/step_300000 \
+  2>&1 | tee logs/dfm5_L_step300000_headline_averages_20260616.log
+
+python scripts/generate_dfm5_l_eval_comparison_report.py \
+  2>&1 | tee logs/dfm5_L_step300000_generate_docs_20260616.log
+```
+
+The progress monitor is running in tmux window `hrm-0:10`:
+
+```bash
+python scripts/watch_eval_progress.py \
+  --log-root logs/eval/dfm5_L_step300000_full_20260616_eurofirst_guard \
+  --dfm-log-root logs/dfm_evals/dfm5_L_step300000_full_20260616_eurofirst_guard \
+  --euroeval-log-root logs/euroeval/dfm5_L_step300000_full_20260616_eurofirst_guard \
+  --ckpt-tag step_300000 \
+  --interval 10
+```
+
+`scripts/generate_dfm5_l_eval_comparison_report.py` now includes a
+`DFM5-L 300K` column sourced from the 2026-06-16 eval roots above. Until the
+300K eval finishes, the generated docs table may show missing 300K values.
+
+## 2026-06-15 Original Sapient L Backfill Into DFM5
+
+Confidence: high for local source artifacts, successful W&B sync, and remote
+run metadata/summary verification.
+
+The original Sapient L reproduction run was backfilled into a new W&B run in
+project `DFM5`:
+
+```text
+project: DFM5
+run id:  original-sapient-L-dfm5-backfill-20260615
+name:    original Sapient L backfilled
+url:     https://wandb.ai/peter-sk-sdu/DFM5/runs/original-sapient-L-dfm5-backfill-20260615
+```
+
+The backfill script is:
+
+```text
+scripts/backfill_original_sapient_l_to_dfm5.py
+```
+
+It replays scalar training rows from:
+
+```text
+wandb/merged-20260524-76sygh18-clean/history.jsonl
+```
+
+and rebuilds evaluation rows from local artifacts:
+
+```text
+logs/eval/original_sapient_L/epoch_{1,2,3,4}.log
+logs/dfm_evals/original_sapient_L_lite_all_checkpoints_20260603T213010/epoch_{1,2,3,4}
+logs/euroeval/original_sapient_L/epoch_{1,2,3,4}/euroeval_benchmark_results.jsonl
+```
+
+The true original Sapient L epoch-step mapping used for eval rows is:
+
+```text
+epoch 1 -> step 81478
+epoch 2 -> step 162961
+epoch 3 -> step 244443
+epoch 4 -> step 325928
+```
+
+Command used:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/backfill_original_sapient_l_to_dfm5.py \
+  2>&1 | tee logs/wandb_backfill_original_sapient_l_to_dfm5_20260615.log
+```
+
+The dry run and final manifest are in:
+
+```text
+logs/wandb_backfill_original_sapient_l_to_dfm5_dryrun_20260615.log
+logs/wandb_backfill_original_sapient_l_to_dfm5_20260615.log
+logs/wandb_backfill_original_sapient_l_to_dfm5_manifest.json
+```
+
+Final manifest:
+
+```text
+training_rows: 65186
+total_rows:    65190
+eval_steps:    [81478, 162961, 244443, 325928]
+metric counts: epoch 1=460, epoch 2=455, epoch 3=460, epoch 4=460
+```
+
+Representative verified summary keys include `train/loss`, `eval/MMLU/acc`,
+`eval/BoolQ/acc`, `eval/GSM8k/acc`,
+`dfm_eval/nordjyllandnews/rouge2/mean`,
+`dfm_eval/humaneval/verify_sanitized/accuracy`,
+`euroeval/da/summarization/nordjylland-news/chr_f3pp`, and
+`headline_avg/{danish,english,math_code,overall}`.
+
+## 2026-06-15 GSM8k Smoke Error Analysis
+
+Confidence: high for local runs and saved artifacts; medium for manual failure
+bucket labels because many wrong completions are bare numeric answers with no
+trace.
+
+The same `100` randomly sampled GSM8k test rows were run with seed
+`20260615` through DFM5-L `step_200000` and the locally trained original
+Sapient L `epoch_4`, both with EMA/default weights, `condition=direct`, and
+`temperature=0.0`.
+
+Raw eval-style prompt scores:
+
+```text
+DFM5-L step_200000:        22/100
+original Sapient L epoch4: 41/100
+```
+
+Show-work prompt scores, used for interpretable buckets:
+
+```text
+DFM5-L step_200000:        31/100
+original Sapient L epoch4: 41/100
+```
+
+Manual bucket counts from the show-work run:
+
+```text
+bucket                                  DFM5-L  original Sapient L
+correct                                    31                  41
+bare_wrong_number_no_trace                 62                  58
+correct_reasoning_unparseable_format        2                   0
+wrong_setup_in_worked_solution              2                   0
+incomplete_or_truncated_reasoning           1                   0
+invalid_non_numeric_final                   1                   0
+dataset_gold_ambiguity                      1                   1
+```
+
+Main interpretation: the observed DFM5-L GSM8k lag is mostly not exposed as
+long faulty reasoning; even when asked to show work, both models often emit only
+bare numbers. Original Sapient L gets more of those bare-number cases right.
+DFM5-L also shows a few format/scoring and worked-solution setup failures that
+did not appear in this original Sapient L sample.
+
+Artifacts:
+
+```text
+scripts/smoke_gsm8k_error_analysis.py
+logs/analysis/gsm8k_smoke_dfm5_L_step200000_seed20260615.json
+logs/analysis/gsm8k_smoke_dfm5_L_step200000_seed20260615_show_work.json
+logs/analysis/gsm8k_smoke_original_sapient_L_epoch4_seed20260615.json
+logs/analysis/gsm8k_smoke_original_sapient_L_epoch4_seed20260615_show_work.json
+logs/analysis/gsm8k_smoke_dfm5_vs_original_sapient_L_seed20260615.md
+logs/analysis/gsm8k_smoke_dfm5_vs_original_sapient_L_seed20260615_counts.json
+```
+
+## 2026-06-15 DFM5 L 250K Full Eval
+
+Confidence: high for local checkpoint state, scheduler completion, merged
+artifacts, W&B average sync, and regenerated Markdown report.
+
+The DFM5 L `step_250000` checkpoint exists under `checkpoints/dfm5/L` with
+`checkpoint_state_step_250000.json`, `fsdp2_step_250000/`, and eight carry
+files. Its eval epoch x-value is:
+
+```text
+1.3831660928989149
+```
+
+The full eval was launched in tmux window `hrm-0:8` with EuroEval-first
+ordering while DFM5 L training continued:
+
+```bash
+cd /work/dfm/HRM-Text
+CKPT_PATH=checkpoints/dfm5/L \
+CKPT_TAG=step_250000 \
+EVAL_EPOCH=1.3831660928989149 \
+GPUS=0,1,2,3,4,5,6,7 \
+LOG_ROOT=logs/eval/dfm5_L_step250000_full_20260615_eurofirst_guard \
+DFM_LOG_ROOT=logs/dfm_evals/dfm5_L_step250000_full_20260615_eurofirst_guard \
+EUROEVAL_LOG_ROOT=logs/euroeval/dfm5_L_step250000_full_20260615_eurofirst_guard \
+WANDB_SYNC=1 \
+WANDB_PROJECT=DFM5 \
+WANDB_RUN_ID=oti1lisg \
+WANDB_RUN_NAME=dfm5-L \
+MODEL_PREFIX=hrm-dfm5-L \
+RUN_EUROEVAL=1 \
+QUEUE_ORDER=euroeval_first \
+STANDARD_BATCH_SIZE=128 \
+STANDARD_BATCH_SIZE_GSM8K=64 \
+STANDARD_BATCH_SIZE_MATH=64 \
+STANDARD_BATCH_SIZE_DROP=32 \
+DFM_BATCH_SIZE=32 \
+DFM_BATCH_SIZE_GOVREPORT=32 \
+DFM_BATCH_SIZE_NORDJYLLANDNEWS=32 \
+DFM_BATCH_SIZE_WMT24PP_EN_DA=32 \
+DFM_BATCH_SIZE_HUMANEVAL=16 \
+DFM_BATCH_SIZE_GENERATIVE_TALEMAADER=16 \
+IFEVAL_BATCH_SIZE=32 \
+EUROEVAL_BATCH_SIZE=16 \
+MAX_RETRIES=5 \
+EUROEVAL_BIN=/work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py \
+scripts/schedule_checkpoint_evals.sh \
+  2>&1 | tee logs/dfm5_L_step250000_full_eval_20260615.log
+```
+
+Initial scheduler status:
+
+```text
+2026-06-15T18:49:55+02:00 QUEUED 188 jobs
+2026-06-15T18:49:55+02:00 CHECKPOINT_READY step_250000 path_checkpoints/dfm5/L
+2026-06-15T18:49:55+02:00 WORKERS 344695 344696 344697 344698 344700 344701 344702 344703
+2026-06-15T18:49:55+02:00 START euroeval angry-tweets shard_0_of_20 gpu_0 attempt_1_of_6 batch_16 mem_free_before_72785
+2026-06-15T18:50:05+02:00 START euroeval scala-da shard_1_of_20 gpu_1 attempt_1_of_6 batch_16 mem_free_before_75699
+```
+
+A post-eval watcher runs in tmux window `hrm-0:9`; it waits for
+`FINAL_MERGE_END`, then logs headline averages to W&B and regenerates the
+comparison table:
+
+```bash
+python scripts/log_dfm5_headline_averages.py \
+  --project DFM5 \
+  --run-id oti1lisg \
+  --run-name dfm5-L \
+  --item 250000:1.3831660928989149:logs/eval/dfm5_L_step250000_full_20260615_eurofirst_guard:logs/dfm_evals/dfm5_L_step250000_full_20260615_eurofirst_guard:logs/euroeval/dfm5_L_step250000_full_20260615_eurofirst_guard/step_250000
+
+python scripts/generate_dfm5_l_eval_comparison_report.py
+```
+
+The eval-progress monitor was updated on 2026-06-15 to show per-GPU active
+task status plus total completed/active/queued/visible shards and an overall
+ETA from the observed completion rate. The running monitor for this eval is in
+tmux window `hrm-0:10`:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/watch_eval_progress.py \
+  --log-root logs/eval/dfm5_L_step250000_full_20260615_eurofirst_guard \
+  --dfm-log-root logs/dfm_evals/dfm5_L_step250000_full_20260615_eurofirst_guard \
+  --euroeval-log-root logs/euroeval/dfm5_L_step250000_full_20260615_eurofirst_guard \
+  --ckpt-tag step_250000 \
+  --interval 10
+```
+
+Example fields now shown:
+
+```text
+jobs: completed=<n> active=<n> queued=<n> total=<n> ETA <...>
+GPU0: euroeval:<task> shard x/y a/b elapsed <...> ETA <...> | <gpu memory/util>
+```
+
+Scheduler incremental merge update, 2026-06-15. Confidence: high for local
+code inspection and `bash -n`; applies to scheduler processes launched after
+this edit. `scripts/schedule_checkpoint_evals.sh` now defaults
+`INCREMENTAL_MERGE=1`. After each successful shard, the worker checks whether
+the full shard set for that standard or DFM task has completed. If yes, it
+merges and syncs that task immediately under a merge lock, then writes a marker
+file. The final merge phase skips marker-present tasks and only merges any
+remaining complete task sets. EuroEval already merged/synced each one-dataset
+group as its job finished.
+
+Important active-run caveat: the already-running `step_250000` eval was
+launched before this edit, so its Bash process has the old final-merge-only
+standard/DFM functions loaded. Starting a sidecar incremental sync for the
+current run would duplicate W&B points when the old final merge runs. For this
+250K run, EuroEval remains incremental, while standard/DFM will sync in the
+final merge. Future eval launches will use incremental standard/DFM merge by
+default.
+
+Completion update, 2026-06-15. Confidence: high for local scheduler status,
+post-eval watcher log, and regenerated report artifact. The 250K eval reached
+`FINAL_MERGE_END` at `2026-06-15T22:02:01+02:00`. The post-eval watcher then
+logged the 250K headline averages to W&B run `DFM5/oti1lisg` under the new
+`avg/*` prefix and regenerated the DFM5-L comparison Markdown table.
+
+250K averages synced by
+`logs/dfm5_L_step250000_headline_averages_20260615.log`:
+
+```text
+avg/danish=0.47466145094826273      count=18
+avg/english=0.5565590118947327      count=15
+avg/math_code=0.2507825859769966    count=4
+avg/overall=0.427334349606664
+avg/epoch=1.383166092898915
+avg/train_step=250000
+```
+
+`scripts/generate_dfm5_l_eval_comparison_report.py` now includes the
+`DFM5-L 250K` column, sourced from:
+
+```text
+logs/eval/dfm5_L_step250000_full_20260615_eurofirst_guard
+logs/dfm_evals/dfm5_L_step250000_full_20260615_eurofirst_guard
+logs/euroeval/dfm5_L_step250000_full_20260615_eurofirst_guard/step_250000
+```
+
+The regenerated Markdown report is:
+
+```text
+docs/dfm5.md
+logs/reports/dfm5_l_eval_comparison_50k_250k_vs_original_ema_and_card.md
+logs/reports/dfm5_l_eval_comparison_50k_100k_150k_vs_original_ema_and_card.md
+```
+
+`docs/dfm5.md` is the canonical human-facing copy. The two files under
+`logs/reports/` are compatibility/report artifacts written with identical
+content by `scripts/generate_dfm5_l_eval_comparison_report.py`.
+
+Its section averages for `DFM5-L 250K` are Danish `47.5`, English `55.7`,
+and Math & Code `25.1` in percent-style display.
 
 ## 2026-06-14 DFM5 L 50K Full Eval
 
@@ -7046,3 +7486,274 @@ Source policy for that report:
   sources. The original Sapient L epoch-2 EuroEval source file does not contain
   the `valeu-da` row, so that cell is reported as `—`; this does not affect the
   Danish average because VaLEU rows are excluded from section averages.
+
+DFM5 L `step_200000` full eval launch, 2026-06-15. Confidence: high for local
+checkpoint state, launch command, and scheduler logs; medium for final sync
+until the post-eval watcher completes.
+
+The `step_200000` checkpoint exists under `checkpoints/dfm5/L` with
+`checkpoint_state_step_200000.json`, `fsdp2_step_200000/`, and eight
+`carry_step_200000.*.pt` files. Its eval epoch x-value is:
+
+```text
+1.1043538472874566
+```
+
+The full eval was launched in tmux window `hrm-0:7` with EuroEval-first
+ordering while DFM5 L training continued:
+
+```bash
+cd /work/dfm/HRM-Text
+CKPT_PATH=checkpoints/dfm5/L \
+CKPT_TAG=step_200000 \
+EVAL_EPOCH=1.1043538472874566 \
+GPUS=0,1,2,3,4,5,6,7 \
+LOG_ROOT=logs/eval/dfm5_L_step200000_full_20260615_eurofirst_guard \
+DFM_LOG_ROOT=logs/dfm_evals/dfm5_L_step200000_full_20260615_eurofirst_guard \
+EUROEVAL_LOG_ROOT=logs/euroeval/dfm5_L_step200000_full_20260615_eurofirst_guard \
+WANDB_SYNC=1 \
+WANDB_PROJECT=DFM5 \
+WANDB_RUN_ID=oti1lisg \
+WANDB_RUN_NAME=dfm5-L \
+MODEL_PREFIX=hrm-dfm5-L \
+RUN_EUROEVAL=1 \
+QUEUE_ORDER=euroeval_first \
+STANDARD_BATCH_SIZE=128 \
+STANDARD_BATCH_SIZE_GSM8K=64 \
+STANDARD_BATCH_SIZE_MATH=64 \
+STANDARD_BATCH_SIZE_DROP=32 \
+DFM_BATCH_SIZE=32 \
+DFM_BATCH_SIZE_GOVREPORT=32 \
+DFM_BATCH_SIZE_NORDJYLLANDNEWS=32 \
+DFM_BATCH_SIZE_WMT24PP_EN_DA=32 \
+DFM_BATCH_SIZE_HUMANEVAL=16 \
+DFM_BATCH_SIZE_GENERATIVE_TALEMAADER=16 \
+IFEVAL_BATCH_SIZE=32 \
+EUROEVAL_BATCH_SIZE=16 \
+MAX_RETRIES=5 \
+EUROEVAL_BIN=/work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py \
+scripts/schedule_checkpoint_evals.sh \
+  2>&1 | tee logs/dfm5_L_step200000_full_eval_20260615.log
+```
+
+Monitor window: `hrm-0:8`. A post-eval watcher runs in `hrm-0:10`; it waits
+for `FINAL_MERGE_END`, then logs the 200K headline averages to W&B and
+regenerates the comparison table:
+
+```bash
+python scripts/log_dfm5_headline_averages.py \
+  --project DFM5 \
+  --run-id oti1lisg \
+  --run-name dfm5-L \
+  --item 200000:1.1043538472874566:logs/eval/dfm5_L_step200000_full_20260615_eurofirst_guard:logs/dfm_evals/dfm5_L_step200000_full_20260615_eurofirst_guard:logs/euroeval/dfm5_L_step200000_full_20260615_eurofirst_guard/step_200000
+
+python scripts/generate_dfm5_l_eval_comparison_report.py
+```
+
+`scripts/generate_dfm5_l_eval_comparison_report.py` was added to regenerate
+the Markdown comparison report from local artifacts. It includes DFM5-L
+50K/100K/150K/200K, original Sapient L e1-e4 EMA/default, and README model-card
+L/XL standard values. The script normalizes local fraction-style metrics to the
+report's percent-style display and excludes VaLEU rows from section averages.
+
+DFM5 workspace panel metrics vs headline averages, 2026-06-15. Confidence:
+high for the live W&B workspace spec fetched with `wandb_workspaces`.
+
+The live workspace `https://wandb.ai/peter-sk-sdu/DFM5?nw=yl894iibtp5`
+(`DFM5 headline metrics`) was fetched to:
+
+```text
+logs/wandb_workspace_specs/dfm5_live_yl894iibtp5_20260615.json
+```
+
+The visible panels currently differ from `scripts/log_dfm5_headline_averages.py`
+in these substantive places:
+
+- Danish MultiWikiQA panel uses `dfm_eval/multi_wiki_qa/exact_match/mean`,
+  while the Danish average still uses `dfm_eval/multi_wiki_qa/f1/mean`.
+- Danish NordjyllandNews panel uses
+  `dfm_eval/nordjyllandnews/bertscore_f1/mean`, while the Danish average still
+  uses `dfm_eval/nordjyllandnews/rouge2/mean`.
+- English DROP panel uses `eval/DROP/em`, while the English average still uses
+  `eval/DROP/f1`.
+- English GovReport panel uses `dfm_eval/govreport/bertscore_f1/mean`, while
+  the English average still uses `dfm_eval/govreport/rouge2/mean`.
+
+The workspace also shows EuroEval VaLEU panels for Danish and English
+(`euroeval/da/european-values/valeu-da/european_values` and
+`euroeval/en/european-values/valeu-en/european_values`), but these remain
+excluded from the headline averages by the earlier VaLEU exclusion policy.
+
+The W&B report shared via `https://api.wandb.ai/links/peter-sk-sdu/iboaiazf`
+resolves to report `DFM5--VmlldzoxNzIzNTc1Nw`; its spec was fetched to:
+
+```text
+logs/wandb_workspace_specs/dfm5_report_VmlldzoxNzIzNTc1Nw_20260615.json
+```
+
+The report's panel metrics initially matched the workspace mismatches above:
+MultiWikiQA exact-match vs average F1, NordjyllandNews BERTScore vs average
+ROUGE-2, DROP exact-match vs average F1, GovReport BERTScore vs average
+ROUGE-2, and visible VaLEU panels that remain excluded from averages.
+
+Follow-up on 2026-06-15: the DFM5 headline-average definitions were updated in
+code to match the live workspace/report panel choices. Confidence: high for
+local script validation and dry-run output.
+
+Changed files:
+
+```text
+scripts/log_dfm5_headline_averages.py
+scripts/create_dfm5_headline_workspace.py
+scripts/generate_dfm5_l_eval_comparison_report.py
+```
+
+Superseded in the same session for DROP: the headline averages now use:
+
+- `dfm_eval/multi_wiki_qa/exact_match/mean` instead of
+  `dfm_eval/multi_wiki_qa/f1/mean`.
+- `dfm_eval/nordjyllandnews/bertscore_f1/mean` instead of
+  `dfm_eval/nordjyllandnews/rouge2/mean`.
+- `eval/DROP/f1`; DROP was intentionally kept on F1 so the Markdown comparison
+  table remains comparable to the model-card DROP F1 values.
+- `dfm_eval/govreport/bertscore_f1/mean` instead of
+  `dfm_eval/govreport/rouge2/mean`.
+
+VaLEU remains visible in the workspace/report but excluded from all headline
+averages. The regenerated local Markdown report is:
+
+```text
+logs/reports/dfm5_l_eval_comparison_50k_100k_150k_vs_original_ema_and_card.md
+```
+
+Dry-run corrected DFM5-L headline averages with DROP kept on F1:
+
+```text
+50K:  Danish=0.3204938053  English=0.3394398505  MathCode=0.0648775454  Overall=0.2416037337
+100K: Danish=0.3856718136  English=0.4337499937  MathCode=0.1409537807  Overall=0.3201251960
+150K: Danish=0.4332904762  English=0.5028531674  MathCode=0.1945934388  Overall=0.3769123608
+200K: Danish=0.4480947019  English=0.5191093860  MathCode=0.2233228181  Overall=0.3968423020
+```
+
+W&B run `DFM5/oti1lisg` currently has four old `headline_avg/*` history rows.
+W&B history rows are append-only, so replacing those points cleanly requires
+either a corrected/new run or new metric keys plus panel updates; appending the
+corrected rows under the same keys would create duplicate points at the same
+`headline_avg/epoch` x-values.
+
+The average logger now defaults to `avg/*` and supports `--metric-prefix` for
+overrides. The workspace builder now defaults to `avg/*` and supports
+`--headline-avg-prefix` for overrides. This means the running 250K post-eval
+watcher, which calls the average logger without an explicit prefix, will log
+250K averages under `avg/*`.
+
+The live workspace `https://wandb.ai/peter-sk-sdu/DFM5?nw=yl894iibtp5` and the
+shared report `DFM5--VmlldzoxNzIzNTc1Nw` were patched in place on 2026-06-15:
+
+- Headline average panels now use `avg/overall`, `avg/danish`, `avg/english`,
+  and `avg/math_code` with x-axis `avg/epoch`.
+- No `headline_avg/` panel references remain in the live workspace.
+- DROP was restored to `DROP F1` using `eval/DROP/f1`.
+
+Patch snapshots:
+
+```text
+logs/wandb_workspace_specs/dfm5_live_yl894iibtp5_after_avg_dropf1_patch_20260615.json
+logs/wandb_workspace_specs/dfm5_report_VmlldzoxNzIzNTc1Nw_after_avg_dropf1_patch_20260615.json
+```
+
+Follow-up: because `avg/*` did not yet have logged history rows, W&B initially
+hid the new average-only section and the average panels when
+`showEmptySections=false`. The live workspace was patched in place to set panel
+bank `showEmptySections=true`. Verification from the live spec showed:
+
+```text
+Headline Averages: 4 panels
+Danish Headline Metrics: 20 panels
+English Headline Metrics: 17 panels
+Math & Code Headline Metrics: 5 panels
+Training Metrics & Params: 9 panels
+```
+
+Snapshot:
+
+```text
+logs/wandb_workspace_specs/dfm5_live_yl894iibtp5_show_empty_sections_20260615.json
+```
+
+On 2026-06-15, `avg/*` headline averages were logged to W&B run
+`DFM5/oti1lisg` for the completed DFM5-L checkpoints 50K, 100K, 150K, and
+200K. Confidence: high; W&B `scan_history` verified exactly four `avg/*` rows.
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/log_dfm5_headline_averages.py \
+  --project DFM5 \
+  --run-id oti1lisg \
+  --run-name dfm5-L \
+  --item 50000:0.27608846182186414:logs/eval/dfm5_L_step50000_full_20260614_dfm5_L_step50000_full:logs/dfm_evals/dfm5_L_step50000_full_20260614_dfm5_L_step50000_full:logs/euroeval/dfm5_L_step50000_full_20260614_dfm5_L_step50000_full/step_50000 \
+  --item 100000:0.5521769236437283:logs/eval/dfm5_L_step100000_full_20260614_eurofirst_guard:logs/dfm_evals/dfm5_L_step100000_full_20260614_eurofirst_guard:logs/euroeval/dfm5_L_step100000_full_20260614_eurofirst_guard/step_100000 \
+  --item 150000:0.8282653854655924:logs/eval/dfm5_L_step150000_full_20260615_eurofirst_guard:logs/dfm_evals/dfm5_L_step150000_full_20260615_eurofirst_guard:logs/euroeval/dfm5_L_step150000_full_20260615_eurofirst_guard/step_150000 \
+  --item 200000:1.1043538472874566:logs/eval/dfm5_L_step200000_full_20260615_eurofirst_guard:logs/dfm_evals/dfm5_L_step200000_full_20260615_eurofirst_guard:logs/euroeval/dfm5_L_step200000_full_20260615_eurofirst_guard/step_200000 \
+  2>&1 | tee logs/dfm5_L_avg_50k_200k_20260615.log
+```
+
+Verified rows:
+
+```text
+50K:  avg/danish=0.3204938053  avg/english=0.3394398505  avg/math_code=0.0648775454  avg/overall=0.2416037337
+100K: avg/danish=0.3856718136  avg/english=0.4337499937  avg/math_code=0.1409537807  avg/overall=0.3201251960
+150K: avg/danish=0.4332904762  avg/english=0.5028531674  avg/math_code=0.1945934388  avg/overall=0.3769123608
+200K: avg/danish=0.4480947019  avg/english=0.5191093860  avg/math_code=0.2233228181  avg/overall=0.3968423020
+```
+
+Superseded in the same session: the DFM5-L 250K eval later reached
+`FINAL_MERGE_END`, and its post-eval watcher logged the 250K row under
+`avg/*`. See the 250K full-eval completion note near the top of this page for
+the exact values.
+
+On 2026-06-15, `avg/*` headline averages were also logged for DFM5-XXS and the
+original Sapient L backfilled run. Confidence: high for W&B client sync output
+and local command logs; medium for remote history verification because a later
+W&B `scan_history` verification call hung and was terminated without touching
+active eval jobs.
+
+DFM5-XXS run:
+
+```text
+project: DFM5
+run id:  2tv9u438
+name:    dfm5-XXS
+log:     logs/dfm5_XXS_avg_50k_300k_20260615.log
+```
+
+Synced rows:
+
+```text
+50K:  avg/danish=0.1973913085  avg/english=0.2084723215  avg/math_code=0.0122617477  avg/overall=0.1393751259
+100K: avg/danish=0.1992734184  avg/english=0.2355164296  avg/math_code=0.0170418092  avg/overall=0.1506105524
+150K: avg/danish=0.2221133424  avg/english=0.2255464438  avg/math_code=0.0122899433  avg/overall=0.1533165765
+200K: avg/danish=0.1915085591  avg/english=0.2427157514  avg/math_code=0.0108271777  avg/overall=0.1483504961
+250K: avg/danish=0.2311608317  avg/english=0.2312142869  avg/math_code=0.0137397351  avg/overall=0.1587049512
+300K: avg/danish=0.2014285955  avg/english=0.2378867045  avg/math_code=0.0145517530  avg/overall=0.1512890176
+```
+
+Original Sapient L backfilled run:
+
+```text
+project: DFM5
+run id:  original-sapient-L-dfm5-backfill-20260615
+name:    original Sapient L backfilled
+log:     logs/original_sapient_L_backfill_avg_20260615.log
+```
+
+Synced rows:
+
+```text
+epoch 1: avg/danish=0.1802960225  avg/english=0.4288698321  avg/math_code=0.2313500000  avg/overall=0.2801719515
+epoch 2: avg/danish=0.2225090016  avg/english=0.4979667276  avg/math_code=0.2937250000  avg/overall=0.3380669097
+epoch 3: avg/danish=0.2250292546  avg/english=0.5219291269  avg/math_code=0.3142750000  avg/overall=0.3537444605
+epoch 4: avg/danish=0.2211987137  avg/english=0.5481151233  avg/math_code=0.3203250000  avg/overall=0.3632129457
+```
