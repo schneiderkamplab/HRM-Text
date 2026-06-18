@@ -13,6 +13,7 @@ epochs: 4
 checkpoint_interval: 1
 checkpoint_step_interval: null
 max_steps: null  # Optional early stop after N optimizer steps (benchmarking/debugging)
+dataloader_prefetch_factor: 8  # Batches the single dataloader worker prefetches ahead
 ephemeral_checkpoint_step_interval: null  # Optional resumability checkpoint cadence; keeps only latest ephemeral_step_* unless superseded by a regular step checkpoint.
 checkpoint_format: sharded  # sharded uses FSDP/DCP fsdp2_{tag}; unsharded writes unsharded_{tag}.pt from global rank 0
 wandb_run_id: null

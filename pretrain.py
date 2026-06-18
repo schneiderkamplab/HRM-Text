@@ -110,6 +110,7 @@ class PretrainConfig(pydantic.BaseModel):
     checkpoint_step_interval: Optional[int] = None
     ephemeral_checkpoint_step_interval: Optional[int] = None
     max_steps: Optional[int] = None  # Optional early stop after this many optimizer steps (benchmarking/debugging).
+    dataloader_prefetch_factor: int = pydantic.Field(default=8, ge=1)  # Batches prefetched by the (single) dataloader worker.
     log_interval: int = 5
 
     @pydantic.model_validator(mode='after')
@@ -173,7 +174,7 @@ def create_dataloader(config: PretrainConfig, local_batch_size: int, drop_last_b
     }
     if num_workers > 0:
         dataloader_kwargs |= {
-            "prefetch_factor": 8,
+            "prefetch_factor": config.dataloader_prefetch_factor,
             "persistent_workers": True,  # NOTE: Required for correct epoch handling
         }
     dataloader = DataLoader(**dataloader_kwargs)
