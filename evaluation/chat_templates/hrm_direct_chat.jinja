@@ -1,0 +1,12 @@
+{%- set ns = namespace(parts=[]) -%}
+{%- for message in messages -%}
+{%- set text = message['content'] | trim -%}
+{%- if text -%}
+{%- if message['role'] == 'user' -%}
+{%- set ns.parts = ns.parts + [text] -%}
+{%- else -%}
+{%- set ns.parts = ns.parts + [message['role'] ~ ': ' ~ text] -%}
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+<|im_start|><|object_ref_start|>{{ ns.parts | join('\n\n') }}<|im_end|>

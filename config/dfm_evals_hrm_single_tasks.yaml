@@ -122,6 +122,8 @@ sets:
           - -T
           - max_gen_toks=512
           - -T
+          - max_report_chars=9000
+          - -T
           - include_bertscore=True
           - -T
           - bertscore_model=xlm-roberta-large

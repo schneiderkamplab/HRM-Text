@@ -55,6 +55,18 @@ EUROEVAL_GENERATIVE_TYPE="${EUROEVAL_GENERATIVE_TYPE:-}"
 EUROEVAL_BIN="${EUROEVAL_BIN:-euroeval}"
 EUROEVAL_PREFIX="${EUROEVAL_PREFIX:-euroeval}"
 NO_EMA="${NO_EMA:-0}"
+HRM_SERVER_BACKEND="${HRM_SERVER_BACKEND:-simple}"
+HRM_HF_EXPORT_DIR="${HRM_HF_EXPORT_DIR:-}"
+HRM_VLLM_NATIVE_PROXY="${HRM_VLLM_NATIVE_PROXY:-0}"
+VLLM_DTYPE="${VLLM_DTYPE:-bfloat16}"
+VLLM_GPU_MEMORY_UTILIZATION="${VLLM_GPU_MEMORY_UTILIZATION:-0.85}"
+VLLM_EXTRA_ARGS="${VLLM_EXTRA_ARGS:-}"
+STANDARD_ENGINE_BACKEND="${STANDARD_ENGINE_BACKEND:-simple}"
+STANDARD_VLLM_CONFIG="${STANDARD_VLLM_CONFIG:-evaluation/config/hrm_vllm_benchmarking.yaml}"
+STANDARD_HF_EXPORT_DIR="${STANDARD_HF_EXPORT_DIR:-${HRM_HF_EXPORT_DIR}}"
+STANDARD_VLLM_DTYPE="${STANDARD_VLLM_DTYPE:-${VLLM_DTYPE}}"
+STANDARD_VLLM_GPU_MEMORY_UTILIZATION="${STANDARD_VLLM_GPU_MEMORY_UTILIZATION:-${VLLM_GPU_MEMORY_UTILIZATION}}"
+STANDARD_VLLM_MAX_MODEL_LEN="${STANDARD_VLLM_MAX_MODEL_LEN:-${MAX_CONTEXT}}"
 CHECKPOINT_WAIT_SECONDS="${CHECKPOINT_WAIT_SECONDS:-300}"
 CHECKPOINT_WAIT_MAX="${CHECKPOINT_WAIT_MAX:-0}"
 STARTUP_STAGGER_SECONDS="${STARTUP_STAGGER_SECONDS:-10}"
@@ -80,6 +92,22 @@ if [[ -z "${DFM_EVAL_PREFIX+x}" ]]; then
   else
     DFM_EVAL_PREFIX="dfm_eval"
   fi
+fi
+if [[ "${HRM_SERVER_BACKEND}" != "simple" && "${HRM_SERVER_BACKEND}" != "vllm" ]]; then
+  echo "Unsupported HRM_SERVER_BACKEND=${HRM_SERVER_BACKEND}; expected simple or vllm." >&2
+  exit 2
+fi
+if [[ "${HRM_SERVER_BACKEND}" == "vllm" && -z "${HRM_HF_EXPORT_DIR}" ]]; then
+  echo "HRM_HF_EXPORT_DIR is required when HRM_SERVER_BACKEND=vllm." >&2
+  exit 2
+fi
+if [[ "${STANDARD_ENGINE_BACKEND}" != "simple" && "${STANDARD_ENGINE_BACKEND}" != "vllm" ]]; then
+  echo "Unsupported STANDARD_ENGINE_BACKEND=${STANDARD_ENGINE_BACKEND}; expected simple or vllm." >&2
+  exit 2
+fi
+if [[ "${STANDARD_ENGINE_BACKEND}" == "vllm" && -z "${STANDARD_HF_EXPORT_DIR}" ]]; then
+  echo "STANDARD_HF_EXPORT_DIR is required when STANDARD_ENGINE_BACKEND=vllm." >&2
+  exit 2
 fi
 
 usage() {
@@ -119,6 +147,12 @@ Important env overrides:
   EUROEVAL_FEW_SHOT=0 # optional override; unset uses EuroEval default
   EUROEVAL_NUM_ITERATIONS=1 # optional override; unset uses EuroEval default
   EUROEVAL_GENERATIVE_TYPE=instruction_tuned # optional override; unset uses EuroEval default
+  HRM_SERVER_BACKEND=vllm # opt into vLLM for server-backed DFM/IFEval/EuroEval tasks
+  HRM_HF_EXPORT_DIR=exports/original_sapient_L_epoch4_ema_hf # required for HRM_SERVER_BACKEND=vllm
+  STANDARD_ENGINE_BACKEND=vllm # opt standard evaluation.main shards into native vLLM
+  STANDARD_HF_EXPORT_DIR=exports/original_sapient_L_epoch4_ema_hf # defaults to HRM_HF_EXPORT_DIR if set
+  STANDARD_VLLM_CONFIG=evaluation/config/hrm_vllm_benchmarking.yaml
+  STANDARD_VLLM_MAX_MODEL_LEN=4096
   NO_EMA=1 # evaluate raw model weights instead of EMA weights
   RESUME_EXISTING_QUEUE=1 # use existing jobs.tsv/status.tsv instead of rebuilding
   JOB_FILE_OVERRIDE=/tmp/one_job.tsv # optional alternate queue file
@@ -127,6 +161,8 @@ Important env overrides:
   FINAL_MERGE_ONLY=1 # only merge/log existing shard outputs
   INCREMENTAL_MERGE=1 # merge/log a task as soon as its shard set finishes
   DRY_RUN=1   # write and print the queue, then exit before waiting/running
+
+Standard evaluation.main shards default to SimpleEngine unless STANDARD_ENGINE_BACKEND=vllm.
 USAGE
 }
 
@@ -420,7 +456,9 @@ log_eval_attempt() {
 
 checkpoint_ready() {
   if [[ -d "${CKPT_PATH}/fsdp2_${CKPT_TAG}" ]]; then
-    [[ -f "${CKPT_PATH}/fsdp2_${CKPT_TAG}/.metadata" ]] || return 1
+    if [[ ! -f "${CKPT_PATH}/fsdp2_${CKPT_TAG}/.metadata" ]]; then
+      return 1
+    fi
   elif [[ -f "${CKPT_PATH}/unsharded_${CKPT_TAG}.pt" ]]; then
     true
   else
@@ -428,8 +466,11 @@ checkpoint_ready() {
   fi
   local rank
   for rank in 0 1 2 3 4 5 6 7; do
-    [[ -f "${CKPT_PATH}/carry_${CKPT_TAG}.${rank}.pt" ]] || return 1
+    if [[ ! -f "${CKPT_PATH}/carry_${CKPT_TAG}.${rank}.pt" ]]; then
+      return 1
+    fi
   done
+  return 0
 }
 
 wait_for_checkpoint() {
@@ -768,6 +809,79 @@ PY
   return 1
 }
 
+wait_for_vllm_server() {
+  local base_url="$1"
+  local expected_model="$2"
+  for _ in $(seq 1 240); do
+    if "${PYTHON_BIN}" - "$base_url" "$expected_model" <<'PY'
+import json
+import sys
+import urllib.request
+
+base_url, expected = sys.argv[1].rstrip("/"), sys.argv[2]
+try:
+    with urllib.request.urlopen(f"{base_url}/health", timeout=2) as response:
+        if response.status != 200:
+            raise SystemExit(1)
+    with urllib.request.urlopen(f"{base_url}/v1/models", timeout=2) as response:
+        if response.status != 200:
+            raise SystemExit(1)
+        data = json.loads(response.read())
+    model_ids = {item.get("id") for item in data.get("data", [])}
+    if expected not in model_ids:
+        raise SystemExit(1)
+except Exception:
+    raise SystemExit(1)
+raise SystemExit(0)
+PY
+    then
+      return 0
+    fi
+    sleep 2
+  done
+  return 1
+}
+
+start_target_server() {
+  local gpu="$1" port="$2" model_name="$3" effective_batch_size="$4" batch_timeout_ms="$5" server_log="$6"
+  local server_ema_args=()
+  if [[ "${NO_EMA}" == "1" ]]; then
+    server_ema_args=(--no-ema)
+  fi
+
+  if [[ "${HRM_SERVER_BACKEND}" == "vllm" ]]; then
+    CUDA_VISIBLE_DEVICES="${gpu}" \
+    PYTHON_BIN="${PYTHON_BIN}" \
+    VLLM_DTYPE="${VLLM_DTYPE}" \
+    VLLM_GPU_MEMORY_UTILIZATION="${VLLM_GPU_MEMORY_UTILIZATION}" \
+    VLLM_EXTRA_ARGS="${VLLM_EXTRA_ARGS}" \
+    scripts/hrm_vllm_openai_server.sh \
+      --model "${HRM_HF_EXPORT_DIR}" \
+      --served-model-name "${model_name}" \
+      --host "${HOST}" \
+      --port "${port}" \
+      --max-model-len "${MAX_CONTEXT}" \
+      > "${server_log}" 2>&1 &
+    server_pid="$!"
+    wait_for_vllm_server "http://${HOST}:${port}" "${model_name}" || return 1
+  else
+    CUDA_VISIBLE_DEVICES="${gpu}" "${PYTHON_BIN}" scripts/hrm_openai_server.py \
+      --ckpt-path "${CKPT_PATH}" \
+      --ckpt-tag "${CKPT_TAG}" \
+      --host "${HOST}" \
+      --port "${port}" \
+      --model-name "${model_name}" \
+      --max-context "${MAX_CONTEXT}" \
+      --batch-size "${effective_batch_size}" \
+      --batch-timeout-ms "${batch_timeout_ms}" \
+      --condition direct \
+      "${server_ema_args[@]}" \
+      > "${server_log}" 2>&1 &
+    server_pid="$!"
+    wait_for_server "http://${HOST}:${port}/health" "${model_name}" || return 1
+  fi
+}
+
 dfm_suite_for_task() {
   case "$1" in
     danish_citizen_tests) echo "hrm_danish_danish_citizen_tests" ;;
@@ -813,16 +927,30 @@ run_standard() {
   export PYTHONUNBUFFERED=1
   local status
   set +e
-  "${PYTHON_BIN}" -u -m evaluation.main \
-    config="${STANDARD_CONFIG}" \
-    ckpt_path="${CKPT_PATH}" \
-    ckpt_tag="${CKPT_TAG}" \
-    "run_only=[${task}]" \
-    "shard_overrides.${task}.num_shards=${shards}" \
-    "shard_overrides.${task}.shard_index=${shard}" \
-    generation_config.batch_size="${effective_batch_size}" \
-    "${ema_args[@]}" \
-    > "${log}" 2>&1
+  if [[ "${STANDARD_ENGINE_BACKEND}" == "vllm" ]]; then
+    "${PYTHON_BIN}" -u -m evaluation.main \
+      config="${STANDARD_VLLM_CONFIG}" \
+      ckpt_path="${STANDARD_HF_EXPORT_DIR}" \
+      max_model_len="${STANDARD_VLLM_MAX_MODEL_LEN}" \
+      dtype="${STANDARD_VLLM_DTYPE}" \
+      gpu_memory_utilization="${STANDARD_VLLM_GPU_MEMORY_UTILIZATION}" \
+      "run_only=[${task}]" \
+      "shard_overrides.${task}.num_shards=${shards}" \
+      "shard_overrides.${task}.shard_index=${shard}" \
+      generation_config.batch_size="${effective_batch_size}" \
+      > "${log}" 2>&1
+  else
+    "${PYTHON_BIN}" -u -m evaluation.main \
+      config="${STANDARD_CONFIG}" \
+      ckpt_path="${CKPT_PATH}" \
+      ckpt_tag="${CKPT_TAG}" \
+      "run_only=[${task}]" \
+      "shard_overrides.${task}.num_shards=${shards}" \
+      "shard_overrides.${task}.shard_index=${shard}" \
+      generation_config.batch_size="${effective_batch_size}" \
+      "${ema_args[@]}" \
+      > "${log}" 2>&1
+  fi
   status=$?
   if [[ "${status}" != "0" ]]; then
     return "${status}"
@@ -865,10 +993,6 @@ run_dfm_task() {
   fi
 
   local server_pid=""
-  local server_ema_args=()
-  if [[ "${NO_EMA}" == "1" ]]; then
-    server_ema_args=(--no-ema)
-  fi
   cleanup_dfm() {
     local current_server_pid="${server_pid:-}"
     local current_judge_pid="${judge_pid:-}"
@@ -883,20 +1007,17 @@ run_dfm_task() {
   }
   trap cleanup_dfm RETURN
 
-  CUDA_VISIBLE_DEVICES="${gpu}" "${PYTHON_BIN}" scripts/hrm_openai_server.py \
-    --ckpt-path "${CKPT_PATH}" \
-    --ckpt-tag "${CKPT_TAG}" \
-    --host "${HOST}" \
-    --port "${port}" \
-    --model-name "${model_name}" \
-    --max-context "${MAX_CONTEXT}" \
-    --batch-size "${effective_batch_size}" \
-    --batch-timeout-ms "${DFM_BATCH_TIMEOUT_MS}" \
-    --condition direct \
-    "${server_ema_args[@]}" \
-    > "${server_log}" 2>&1 &
-  server_pid="$!"
-  wait_for_server "http://${HOST}:${port}/health" "${model_name}" || return 1
+  start_target_server "${gpu}" "${port}" "${model_name}" "${effective_batch_size}" "${DFM_BATCH_TIMEOUT_MS}" "${server_log}" || return 1
+
+  local task_args=()
+  if [[ "${task}" == "govreport" ]]; then
+    if [[ -n "${GOVREPORT_MAX_REPORT_CHARS:-}" ]]; then
+      task_args+=(-T "max_report_chars=${GOVREPORT_MAX_REPORT_CHARS}")
+    fi
+    if [[ -n "${GOVREPORT_MAX_GEN_TOKS:-}" ]]; then
+      task_args+=(-T "max_gen_toks=${GOVREPORT_MAX_GEN_TOKS}")
+    fi
+  fi
 
   OPENAI_API_KEY="${OPENAI_API_KEY:-inspectai}" \
   OPENAI_BASE_URL="${base_url}" \
@@ -911,6 +1032,7 @@ run_dfm_task() {
     -- \
     -T "num_shards=${shards}" \
     -T "shard_index=${shard}" \
+    "${task_args[@]}" \
     --log-dir "${inspect_dir}" \
     --log-dir-allow-dirty \
     --max-connections "${effective_batch_size}"
@@ -942,10 +1064,6 @@ run_dfm_ifeval() {
   local run_dir="${DFM_LOG_ROOT}/ifeval_shard_${shard}/${CKPT_TAG}"
   local inspect_dir="${run_dir}/inspect"
   local eee_dir="${run_dir}/eee"
-  local server_ema_args=()
-  if [[ "${NO_EMA}" == "1" ]]; then
-    server_ema_args=(--no-ema)
-  fi
   rm -rf "${inspect_dir}" "${eee_dir}"
   mkdir -p "${inspect_dir}" "${eee_dir}"
 
@@ -959,20 +1077,7 @@ run_dfm_ifeval() {
   }
   trap cleanup_ifeval RETURN
 
-  CUDA_VISIBLE_DEVICES="${gpu}" "${PYTHON_BIN}" scripts/hrm_openai_server.py \
-    --ckpt-path "${CKPT_PATH}" \
-    --ckpt-tag "${CKPT_TAG}" \
-    --host "${HOST}" \
-    --port "${port}" \
-    --model-name "${model_name}" \
-    --max-context "${MAX_CONTEXT}" \
-    --batch-size "${effective_batch_size}" \
-    --batch-timeout-ms "${IFEVAL_BATCH_TIMEOUT_MS}" \
-    --condition direct \
-    "${server_ema_args[@]}" \
-    > "${run_dir}/server.log" 2>&1 &
-  server_pid="$!"
-  wait_for_server "http://${HOST}:${port}/health" "${model_name}" || return 1
+  start_target_server "${gpu}" "${port}" "${model_name}" "${effective_batch_size}" "${IFEVAL_BATCH_TIMEOUT_MS}" "${run_dir}/server.log" || return 1
 
   OPENAI_API_KEY="${OPENAI_API_KEY:-inspectai}" \
   OPENAI_BASE_URL="${base_url}" \
@@ -1028,6 +1133,12 @@ run_euroeval_task() {
   EUROEVAL_PREFIX="${EUROEVAL_PREFIX}" \
   HOST="${HOST}" \
   NO_EMA="${NO_EMA}" \
+  HRM_SERVER_BACKEND="${HRM_SERVER_BACKEND}" \
+  HRM_HF_EXPORT_DIR="${HRM_HF_EXPORT_DIR}" \
+  HRM_VLLM_NATIVE_PROXY="${HRM_VLLM_NATIVE_PROXY}" \
+  VLLM_DTYPE="${VLLM_DTYPE}" \
+  VLLM_GPU_MEMORY_UTILIZATION="${VLLM_GPU_MEMORY_UTILIZATION}" \
+  VLLM_EXTRA_ARGS="${VLLM_EXTRA_ARGS}" \
   WANDB_SYNC="${WANDB_SYNC}" \
   WANDB_PROJECT="${WANDB_PROJECT}" \
   WANDB_RUN_ID="${WANDB_RUN_ID}" \

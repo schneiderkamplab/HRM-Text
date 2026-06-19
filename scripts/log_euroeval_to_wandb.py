@@ -69,6 +69,10 @@ def flatten_scores(scores: Any, prefix: tuple[str, ...] = ()):
 
 
 def parse_languages(record: dict[str, Any]) -> list[str]:
+    language = record.get("language")
+    if language is not None:
+        return [str(language)]
+
     languages = record.get("languages")
     if languages is not None:
         return [str(lang) for lang in languages]
@@ -170,6 +174,27 @@ def collect_euroeval_v17_metrics(
     return metrics
 
 
+def collect_flat_metric_record(
+    record: dict[str, Any],
+    prefix: str,
+    lang_key: str,
+    dataset: str,
+    task: str,
+) -> dict[str, float]:
+    metric_name = record.get("metric")
+    score = maybe_float(record.get("score"))
+    if metric_name is None or score is None:
+        return {}
+
+    base = f"{prefix}/{sanitize(lang_key)}/{task}/{dataset}/{sanitize(str(metric_name))}"
+    metrics = {base: score}
+    for field in ("confidence_level", "lower", "upper", "num_samples"):
+        value = maybe_float(record.get(field))
+        if value is not None:
+            metrics[f"{base}/{field}"] = value
+    return metrics
+
+
 def collect_metrics(
     results_path: Path,
     prefix: str,
@@ -183,9 +208,12 @@ def collect_metrics(
         lang_key = "_".join(record_languages) if record_languages else "unknown"
         dataset = sanitize(record_dataset(record))
         task = sanitize(record_task(record))
+        if task == "unknown" and dataset in {"ifeval", "ifeval-da"}:
+            task = "instruction-following"
 
         metrics.update(collect_legacy_results_metrics(record, prefix, lang_key, dataset, task))
         metrics.update(collect_euroeval_v17_metrics(record, prefix, lang_key, dataset, task))
+        metrics.update(collect_flat_metric_record(record, prefix, lang_key, dataset, task))
     return metrics
 
 

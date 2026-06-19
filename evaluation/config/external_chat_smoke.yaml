@@ -1,0 +1,43 @@
+engine: OpenAIEngine
+
+generation_config:
+  batch_size: 8
+  max_context: 4096
+  temperature: 0.0
+
+benchmarks:
+  - name: BoolQ
+    max_samples: 20
+    generation_config:
+      max_context: 4096
+      max_tokens: 8
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
+
+  - name: GSM8k
+    max_samples: 20
+    score_extractor: final_integer
+    generation_config:
+      max_context: 3072
+      max_tokens: 512
+      prompt_template: |-
+        Solve the problem step by step.
+        End your response with a separate line exactly like:
+        Final answer: <integer>
+
+        {prompt}
+
+  - name: MATH
+    max_samples: 20
+    num_shards: 64
+    shard_index: 0
+    generation_config:
+      max_context: 3072
+      max_tokens: 1024
+      prompt_template: |-
+        Solve the problem internally. Return exactly one LaTeX final answer of the form \boxed{{...}}.
+        Do not include any explanation or text outside \boxed{{...}}.
+
+        {prompt}

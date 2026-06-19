@@ -18,10 +18,12 @@ class JobStatus(StrEnum):
 
 class Action(StrEnum):
     WAIT_CHECKPOINT = "wait_checkpoint"
+    EXPORT_HF = "export_hf"
     EVAL_STANDARD = "eval_standard"
     EVAL_DFM = "eval_dfm"
     EVAL_DFM_IFEVAL = "eval_dfm_ifeval"
     EVAL_EUROEVAL = "eval_euroeval"
+    EVAL_EUROEVAL_BATCHED_IFEVAL = "eval_euroeval_batched_ifeval"
     MERGE_STANDARD = "merge_standard"
     MERGE_DFM = "merge_dfm"
     MERGE_IFEVAL = "merge_ifeval"
@@ -67,15 +69,19 @@ class Job:
     @property
     def requires_gpu(self) -> bool:
         return self.action in {
+            Action.EXPORT_HF,
             Action.EVAL_STANDARD,
             Action.EVAL_DFM,
             Action.EVAL_DFM_IFEVAL,
             Action.EVAL_EUROEVAL,
+            Action.EVAL_EUROEVAL_BATCHED_IFEVAL,
         }
 
     def retry_batch(self) -> int | None:
         if self.initial_batch is None:
             return None
+        if self.metadata.get("fixed_retry_batch"):
+            return self.initial_batch
         batch = self.initial_batch
         for _ in range(max(0, self.attempt)):
             batch = max(1, (batch + 1) // 2)

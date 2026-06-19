@@ -1,6 +1,6 @@
 # Script Entities
 
-Last updated: 2026-06-16
+Last updated: 2026-06-19
 Confidence: high
 Scope: Local scripts added or used during data preparation.
 
@@ -29,6 +29,7 @@ eval_scheduler/eval_scheduler/model.py
 eval_scheduler/eval_scheduler/catalog.py
 eval_scheduler/eval_scheduler/plan.py
 eval_scheduler/eval_scheduler/runtime.py
+eval_scheduler/eval_scheduler/monitor.py
 ```
 
 The editable plan format is `plan.tsv` with header:
@@ -95,6 +96,50 @@ The runner now has a small non-GPU worker pool for `wait_checkpoint`, merge,
 average, and report jobs in addition to GPU worker slots. This prevents future
 checkpoint wait rows from consuming GPU slots while still allowing multiple
 upcoming checkpoints to be watched.
+
+External-model evaluation update, 2026-06-16. Confidence: high for local source
+inspection, `compileall`, generated plan inspection, and process/status
+inspection. `eval_scheduler` supports external Hugging Face/vLLM models through
+`plan create-external`. External standard evals, DFM evals, DFM IFEval-DA, and
+EuroEval start one single-GPU vLLM OpenAI-compatible server per GPU worker/task,
+run the client against that per-task server, then tear the server down. The
+external standard path uses `evaluation.engines.OpenAIEngine`; dfm-evals and
+EuroEval use OpenAI-compatible target URLs.
+
+Operational notes for external vLLM jobs:
+
+- Prefer a local snapshot path, e.g.
+  `/home/ucloud/.cache/huggingface/hub/models--Qwen--Qwen3.5-2B/snapshots/<rev>`,
+  instead of a remote model id when launching many concurrent per-task servers.
+  The first Qwen3.5-2B attempt hit Hugging Face Hub `429 Too Many Requests`
+  because every vLLM server queried the Hub.
+- Each vLLM job now gets isolated cache directories under the job log directory
+  via `VLLM_CACHE_ROOT`, `TORCHINDUCTOR_CACHE_DIR`, `TRITON_CACHE_DIR`, and
+  `CUDA_CACHE_PATH`.
+- vLLM startup now fails fast if the server process exits or logs an OOM while
+  the scheduler waits for `/health`.
+- For Qwen3.5-2B on this machine, `--vllm-extra-args "--enforce-eager"` avoids
+  torch.compile/CUDAGraph startup fragility, with a speed tradeoff.
+- Follow-up on 2026-06-16: after CUDA was installed in `/usr/local/cuda`, the
+  scheduler-managed vLLM environment was changed to expose `CUDA_HOME`,
+  `CUDA_PATH`, `PATH`, and `LD_LIBRARY_PATH` to each vLLM server when
+  `/usr/local/cuda` exists. This allows vLLM's DeepGEMM warmup to import
+  `deep_gemm` successfully. A single-GPU Qwen3.5-2B smoke on GPU0 reached
+  `/health` with DeepGEMM enabled; the ordered Qwen/DFM5 scheduler was then
+  relaunched and the first Qwen EuroEval jobs completed and synced.
+- Follow-up on 2026-06-16: Qwen external standard evals initially failed on
+  MATH because `evaluation.main` passed checkpoint-oriented Hydra keys such as
+  `ckpt_path` into `OpenAIEngine`. `evaluation.engines.OpenAIEngine` now accepts
+  and ignores extra keyword arguments, matching the external-model use case
+  where checkpoint keys are scheduler metadata rather than engine arguments.
+  The failed/running Qwen MATH rows in
+  `logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616/plan.tsv` were reset to
+  pending and the scheduler was relaunched.
+- Separate `eval_scheduler run` instances do not coordinate GPU leases. The
+  Qwen plan `logs/scheduler/qwen35_2b_full_20260616` was stopped on 2026-06-16
+  after the DFM5 checkpoint scheduler began running `step_400000` EuroEval jobs
+  on GPUs 0 and 1. Its running rows were reset to pending so it can be resumed
+  later on an explicitly non-conflicting GPU set.
 
 Stop/resume update, 2026-06-16. Confidence: high for local smoke tests with a
 missing-checkpoint wait row and a manual stale-`running` repair. The scheduler
@@ -182,6 +227,430 @@ report: 1
 The batch edit command changed all 32 pending `dfm_ifeval` rows from batch
 `32` to batch `16`.
 
+Qwen GovReport retry update, 2026-06-16. Confidence: high for local source
+inspection, shard logs, merge logs, and W&B API checks. The Qwen3.5-2B
+GovReport failures in
+`logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616` were not OOM failures.
+They were vLLM HTTP 400 context-length failures: long GovReport prompts plus
+the requested generation length exceeded the model's 4096-token context. Batch
+size retries could not fix this.
+
+Fixes applied:
+
+- `dfm-evals/dfm_evals/tasks/summarization.py` now lets `govreport()` accept
+  `max_report_chars`; the default is `None`, so normal GovReport behavior is
+  unchanged unless a caller opts in.
+- `eval_scheduler/eval_scheduler/runtime.py` now passes DFM template overrides
+  from job metadata, including `dfm_max_gen_toks` and arbitrary
+  `dfm_task_args`.
+- The Qwen GovReport plan rows were reset with `dfm_max_gen_toks=128` and
+  `dfm_task_args=["max_report_chars=10000"]`.
+- Client fatal logs such as OpenAI bad requests now terminate the paired vLLM
+  server and fail the joint task attempt, instead of leaving an orphan server or
+  treating the worker and server independently.
+
+All 16 Qwen GovReport shards then completed, merged, and synced to W&B run
+`peter-sk-sdu/DFM5/qwen35-2b-full`. Verified summary keys include:
+
+```text
+dfm_eval/govreport/chrf3pp/mean = 9.986128459008524
+dfm_eval/govreport/bertscore_f1/mean = 0.8529781600554213
+dfm_eval/govreport/rouge2/mean = 0.061699390782425347
+```
+
+Gemma 4 E2B external baseline update, 2026-06-17. Confidence: high for local
+process inspection, vLLM logs, EuroEval logs, and scheduler status.
+
+The Gemma baseline is queued in:
+
+```text
+logs/scheduler/gemma4_e2b_then_dfm5_L_500k_20260617
+```
+
+The first block evaluates local model:
+
+```text
+/work/dfm/brainsurgery/models/google/gemma-4-E2B-it
+```
+
+against the full standard, dfm, and EuroEval suite, then the same plan waits
+for `checkpoints/dfm5/L` `step_500000` and evaluates it. The `step_500000`
+wait row depends on the Gemma average row, so the 500K HRM eval block starts
+after the Gemma baseline is averaged.
+
+Gemma-specific vLLM notes:
+
+- Loading the snapshot as its advertised `Gemma4ForConditionalGeneration`
+  failed because the local snapshot has no `preprocessor_config.json`.
+- For text-only evaluation, vLLM must be forced to
+  `Gemma4ForCausalLM` with:
+
+```text
+--hf-overrides '{"architectures":["Gemma4ForCausalLM"]}'
+```
+
+- The local tokenizer has no `chat_template`, and vLLM chat completions fail
+  without one. The scheduler plan therefore passes:
+
+```text
+--chat-template /work/dfm/HRM-Text/evaluation/chat_templates/gemma4_e2b_plain_chat.jinja
+```
+
+This is a conservative plain role-label template using `System:`, `User:`, and
+`Assistant:` rather than Gemma-specific turn tokens, because the local
+tokenizer did not expose `<start_of_turn>`/`<end_of_turn>` as normal tokens.
+
+EuroEval-specific notes:
+
+- Use the explicit HRM Python wrapper:
+
+```text
+/home/ucloud/miniforge3/envs/hrm/bin/python /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py
+```
+
+- Set `euroeval_generative_type=instruction_tuned`.
+- Set `fixed_retry_batch=true` for the Gemma jobs so non-OOM retries do not
+  halve the deliberately chosen baseline batches.
+
+With these settings, the first Gemma EuroEval jobs reached real benchmarking
+logs such as `Loading the model ...` and per-sample progress, and scheduler
+status showed completed rows rather than the earlier `Model ... not found`
+failures.
+
+Gemma baseline repair, 2026-06-17. Confidence: high for local scheduler status,
+plan edits, and successful rerun logs.
+
+The initial Gemma baseline run later blocked before the `step_500000` wait row
+because two DFM merge rows depended on failed shards:
+
+```text
+merge-00162 dfm:govreport
+merge-00180 dfm:generative_talemaader
+```
+
+The failed `euroeval:valeu-en` row was not an average dependency and failed
+because the model produced too many invalid labels; it was marked `skipped`
+rather than retried indefinitely.
+
+GovReport failed with vLLM context overflow: prompts near 3585 input tokens
+plus 512 requested output tokens exceeded the 4096 context limit. The failed
+Gemma GovReport rows were reset with:
+
+```json
+{
+  "dfm_context_length": 3968,
+  "dfm_max_gen_toks": 128,
+  "dfm_task_args": ["max_report_chars=10000"]
+}
+```
+
+All 16 repaired GovReport shards completed successfully and `merge-00162`
+succeeded.
+
+`generative_talemaader` failed because the DFM suite requires a judge model.
+The failed Gemma rows were reset with:
+
+```json
+{
+  "judge_model": "openai/gemma-4-e4b-judge",
+  "judge_base_url": "http://127.0.0.1:8099/v1",
+  "max_connections": 4
+}
+```
+
+The judge server was already running as:
+
+```text
+/home/ucloud/miniforge3/envs/hrm/bin/python scripts/transformers_openai_server.py unsloth/gemma-4-E4B-it --served-model-name gemma-4-e4b-judge --host 127.0.0.1 --port 8099 --dtype bfloat16 --attn-implementation sdpa --max-new-tokens 64
+```
+
+The same GovReport and judge metadata were also applied to the future
+`step_500000` rows in the same plan so that the HRM 500K block does not repeat
+the same failures.
+
+Qwen EuroEval MultiWikiQA sync update, 2026-06-16. Confidence: high for local
+metrics and W&B API checks. The local MultiWikiQA metric existed but initially
+did not appear in the remote W&B summary/history. Re-running
+`scripts/log_euroeval_to_wandb.py` against
+`logs/euroeval/qwen35_2b_full_ordered_20260616/qwen35_2b/multi-wiki-qa-da/euroeval_benchmark_results.jsonl`
+logged the metric to the same run. Verified key:
+
+```text
+euroeval/da/reading-comprehension/multi-wiki-qa-da/f1 = 73.03916213314417
+```
+
+Qwen GSM8K note, 2026-06-16. Confidence: high for local metric/log/source
+inspection, medium for exact generation-format inference because standard evals
+do not persist generated text. The Qwen3.5-2B full run logged
+`eval/GSM8k/acc=0.0`, `eval/GSM8k/invalid=1.0`, and `eval/GSM8k/n=1319`.
+All eight GSM8K shards under
+`logs/eval/qwen35_2b_full_ordered_20260616/standard_shards/GSM8k/` had
+`invalid=1.0`. The local GSM8K scorer in `evaluation/benchmarks.py` parses only
+the whole generated string as a number unless `last_boxed_only_string` finds a
+boxed answer. The standard config gives Qwen the raw GSM8K question with
+`max_tokens=512` and no explicit final-answer-only or boxed-answer instruction.
+Treat this as an extraction/prompt mismatch, not as evidence that Qwen solves
+zero GSM8K. Any fixed rerun should save generations and use a new metric key or
+clear suffix rather than silently replacing the old all-invalid metric.
+
+Follow-up on 2026-06-16. Confidence: high for source inspection and local
+synthetic extraction tests. `evaluation/benchmarks.py` now makes GSM8K answer
+extraction more robust: boxed answers still win, bare numeric strings still
+work, `####`, `final answer`, and `answer is` patterns are accepted, and the
+fallback is the last standalone integer-valued number in the generation.
+Non-integer floats remain invalid. This changes future GSM8K scoring and should
+not be silently mixed with the earlier all-invalid Qwen GSM8K result.
+
+Qwen clean-run backfill and GSM8K rerun, 2026-06-17. Confidence: high for local
+scheduler status, local merged artifact, and W&B API checks. The old Qwen
+metrics were backfilled to a new clean W&B run, excluding old GSM8K and all
+headline averages:
+
+```text
+project: DFM5
+run_id: qwen35-2b-full-clean
+run_name: Qwen3.5 2B full clean
+script: scripts/backfill_qwen35_clean_wandb.py
+```
+
+The backfill logged 444 keys from existing local standard, DFM, and EuroEval
+artifacts. Verified remote summary had no `eval/GSM8k/*` keys and no `avg/*`
+keys before the rerun. The corrected GSM8K rerun was inserted at the front of
+`logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616/plan.tsv` as eight
+external standard-eval shards plus one merge row:
+
+```text
+eval-qwengsm-00000 .. eval-qwengsm-00007
+merge-qwengsm-00008
+log root: logs/eval/qwen35_2b_gsm8k_fixed_20260616
+```
+
+Final merged fixed GSM8K metrics, synced to `qwen35-2b-full-clean`:
+
+```text
+eval/GSM8k/acc = 0.6656600454890069
+eval/GSM8k/invalid = 0.023508567096285068
+eval/GSM8k/n = 1319
+```
+
+The clean run intentionally still has no headline averages; recompute them only
+if the desired average definition should include the corrected Qwen GSM8K.
+
+Follow-up on 2026-06-17. Confidence: high for local dry-run output, W&B sync
+logs, and W&B API verification. Headline averages were added to the clean Qwen
+run after creating a clean standard-eval root that symlinks all standard
+artifacts from the original Qwen run except GSM8K, which points to the fixed
+GSM8K rerun:
+
+```text
+logs/eval/qwen35_2b_clean_standard_20260617/standard_shards/GSM8k
+  -> logs/eval/qwen35_2b_gsm8k_fixed_20260616/standard_shards/GSM8k
+```
+
+Command:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/log_dfm5_headline_averages.py \
+  --project DFM5 \
+  --run-id qwen35-2b-full-clean \
+  --run-name 'Qwen3.5 2B full clean' \
+  --metric-prefix avg \
+  --item '0:0.0:logs/eval/qwen35_2b_clean_standard_20260617:logs/dfm_evals/qwen35_2b_full_ordered_20260616:logs/euroeval/qwen35_2b_full_ordered_20260616/qwen35_2b'
+```
+
+Verified summary values:
+
+```text
+avg/danish = 0.4471885859937283   (count 18)
+avg/english = 0.5782765269227623  (count 15)
+avg/math_code = 0.542416855396642 (count 4)
+avg/overall = 0.5226273227710442
+```
+
+Scheduler average dependency fix, 2026-06-17. Confidence: high for local plan
+inspection, log inspection, active-plan edit, and `compileall`. The
+`step_450000` wait guard in
+`logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616` was present but blocked
+behind the previous checkpoint's `average-00417` row. That average row depended
+on `eval-00219` (`euroeval:valeu-da`), which had failed because EuroEval found
+no candidate label for 1/53 samples and aborts ValEU-da when invalid outputs
+are present. Since `valeu-*` metrics are excluded from headline averages, this
+dependency was wrong.
+
+Fixes applied:
+
+- Removed all existing `valeu-*` EuroEval dependencies from active-plan average
+  rows (`average-00208`, `average-00417`, `average-00626`).
+- Updated `eval_scheduler/eval_scheduler/plan.py` so future generated average
+  jobs include EuroEval dependencies except groups whose names start with
+  `valeu-`.
+- Restarted the scheduler. `average-00417` completed, `wait-00418` immediately
+  saw `step_450000` as ready, and `step_450000` eval jobs started at
+  `2026-06-17T06:24:17+02:00`.
+
+DFM5 report update, 2026-06-17. Confidence: high for local artifact inspection
+and regenerated Markdown. `scripts/generate_dfm5_l_eval_comparison_report.py`
+now includes the DFM5-L `step_400000` full-eval artifacts and populates the
+Qwen3.5 2B comparison column from the local clean Qwen artifacts where
+available:
+
+```text
+DFM5 400K standard: logs/eval/dfm5_L_step400000_full_ordered_20260616
+DFM5 400K DFM:      logs/dfm_evals/dfm5_L_step400000_full_ordered_20260616
+DFM5 400K EuroEval: logs/euroeval/dfm5_L_step400000_full_ordered_20260616/step_400000
+Qwen clean standard: logs/eval/qwen35_2b_clean_standard_20260617
+Qwen DFM:            logs/dfm_evals/qwen35_2b_full_ordered_20260616
+Qwen EuroEval:       logs/euroeval/qwen35_2b_full_ordered_20260616/qwen35_2b
+```
+
+The canonical report is `docs/dfm5.md`. A compatibility symlink
+`docs/df5m.md -> dfm5.md` was added because the filename is easy to mistype.
+At 400K, DFM5-L beats local-clean Qwen3.5 2B on the Danish average
+(`51.0` vs `44.7`) and slightly on the English average (`59.1` vs `57.8`), but
+loses badly on Math & Code (`27.0` vs `54.2`).
+
+DFM5 450K report update, 2026-06-17. Confidence: high for local artifact
+inspection and regenerated Markdown. `scripts/generate_dfm5_l_eval_comparison_report.py`
+now also includes:
+
+```text
+DFM5 450K standard: logs/eval/dfm5_L_step450000_full_ordered_20260616
+DFM5 450K DFM:      logs/dfm_evals/dfm5_L_step450000_full_ordered_20260616
+DFM5 450K EuroEval: logs/euroeval/dfm5_L_step450000_full_ordered_20260616/step_450000
+```
+
+The regenerated `docs/dfm5.md` has DFM5-L 450K headline averages:
+Danish `48.1`, English `60.1`, Math & Code `27.9`. Key Math & Code rows are
+GSM8K `33.4`, MATH `47.1`, HumanEval `31.1`, and BFCL-v2 `0.0`.
+
+Gemma 4 E2B external-baseline eval note, 2026-06-17. Confidence: high for
+local path/config inspection and scheduler CLI inspection; medium for exact
+batch sizes until run. A Qwen3.5-2B-style external eval can be scheduled for
+the local Gemma 4 E2B instruct checkpoint without new scheduler code. The local
+model path is:
+
+```text
+/work/dfm/brainsurgery/models/google/gemma-4-E2B-it
+```
+
+Its local `._param_count.json` reports `5,123,178,979` total parameters and
+`config.json` advertises `Gemma4ForConditionalGeneration` with
+`model_type="gemma4"`. Project decision after review: do not reduce batch sizes
+below the Qwen3.5-2B external-eval defaults just because the total parameter
+count is larger. Much of the total is non-text/image-side capacity, while the
+effective text model is E2B-scale, and prior vLLM jobs had substantial GPU
+headroom. The scheduler's `plan create-external` command already supports the
+needed vLLM fields (`--model`, `--served-model-name`, `--vllm-extra-args`,
+`--vllm-gpu-memory-utilization`, and batch defaults). Start with Qwen-style
+batch sizes (`standard=64`, `dfm=32`, `ifeval=32`, `euroeval=16`) and rely on
+the scheduler's OOM retry/halving path only if a specific task proves too large.
+If vLLM text-only loading has issues, try the known Gemma text-only override:
+
+```text
+--vllm-extra-args '--enforce-eager --hf-overrides {"architectures":["Gemma4ForCausalLM"]}'
+```
+
+DFM6 data-mix note, 2026-06-17. Confidence: medium; this is a forward-looking
+project decision informed by the 400K vs Qwen3.5 2B comparison. DFM6 should:
+
+- include all new DFM post-training datasets;
+- scale up Danish math and code datasets;
+- scale up English math and code datasets.
+- include Danish tool-calling data;
+- include English tool-calling data.
+
+Reason: DFM5-L at 400K is already competitive or better than local-clean
+Qwen3.5 2B on the HRM-Text model-card standard eval average (`58.4` vs `49.3`)
+and on Danish/English language-oriented averages, but remains substantially
+behind on math/code (`27.0` vs `54.2` Math & Code average; GSM8K `31.5` vs
+`66.6`, HumanEval `30.5` vs `47.6`, BFCL-v2 `0.0` vs `52.1`). The next data
+mix should therefore not only add post-training breadth, but explicitly
+increase math/code and tool-calling coverage in both Danish and English.
+
+DFM6 tokenizer/instruction-format note, 2026-06-17. Confidence: medium; this is
+a forward-looking architecture/data-format decision. For DFM6, replace the
+current tokenizer with the Gemma 4 tokenizer and use the Gemma 4 chat template
+for instruction-format data instead of the instruction format used for the
+original Sapient and DFM5 corpora. This should be treated as a dataset
+conversion and training-compatibility change, not a cosmetic tokenizer swap:
+all instruction/post-training sources need to be rendered through the new chat
+template, and evaluation/export paths should be checked for tokenizer/chat
+template assumptions.
+
+Expanded DFM6 checklist, 2026-06-17. Confidence: medium. The DFM6 direction is
+solid, but the plan should explicitly cover these items before sampling or
+training:
+
+- Verify the exact Gemma 4 tokenizer artifact, license, vocabulary size,
+  special tokens, and chat-template rendering; update model config and embedding
+  sizes accordingly.
+- Treat DFM6 as a fresh-tokenizer training run unless a deliberate
+  retokenization/upcycling strategy is implemented; old DFM5 checkpoints are not
+  directly resume-compatible after a tokenizer swap.
+- Define canonical schemas for tool-calling data in both Danish and English,
+  including tool/function JSON, multi-turn tool traces, invalid/tool-error
+  cases, and final natural-language responses.
+- Add dedicated eval coverage for tool calling in both languages, not only
+  BFCL-v2 English; otherwise the data addition cannot be validated.
+- Balance post-training data against pretraining/instruction data so Gemma
+  chat-template formatting does not overfit short assistant-style replies.
+- Rebuild all tokenized/sampled artifacts from source after the tokenizer
+  change; do not mix old tokenizer outputs with Gemma-tokenized outputs.
+- Check conversion/export/inference/eval paths for hard-coded tokenizer path,
+  chat tokens, BOS/EOS handling, and generation stop tokens.
+- Add explicit data-mix targets for math/code/tool calling rather than only
+  "include more"; DFM5 showed that general language gains do not automatically
+  close GSM8K/HumanEval/BFCL gaps.
+- Add contamination and dedup checks for the expanded math/code/tool-calling
+  sources, especially against held-out eval prompts and common benchmark
+  training/test splits.
+- Run at least one small end-to-end migration rehearsal before committing a
+  large DFM6 run: convert a tiny Gemma-template sample, tokenize it, sample it,
+  train for a short smoke run, export, serve, and run standard/DFM/EuroEval
+  smoke evals.
+- Keep an ablation trail for the main DFM6 additions. At minimum, record which
+  source families are new relative to DFM5 and keep enough sampling metadata to
+  compare base DFM6, math/code-scaled DFM6, and tool/post-training-enriched
+  DFM6 rather than treating all changes as one opaque bundle.
+
+Monitor update, 2026-06-16. Confidence: high for local log inspection and a
+live monitor snapshot. External-model DFM jobs write the OpenAI-compatible
+server log as `vllm.log`, while the monitor originally looked only for
+`server.log`. This made active tasks such as Qwen `generative_talemaader`
+display `progress unknown` even though the vLLM log contained successful
+`POST /v1/chat/completions` lines. The monitor now falls back to `vllm.log`
+when `server.log` is absent. It can therefore show request counts such as
+`completion 63/? failed 0`.
+
+Superseded caveat, 2026-06-18: ETA previously remained unknown for some DFM
+tasks whose active shard had not yet written a sample total. The monitor now
+also infers DFM shard totals from completed sibling shard logs for the same
+task/checkpoint. This fixed `generative_talemaader` lines that looked like
+`completion 51/? ... ETA unknown` once at least one sibling shard had emitted a
+stable `(N samples)` task header. Confidence: high for local monitor snapshots
+on the `dfm5_L_step550000_full_native_followup_20260617` campaign.
+
+Follow-up, 2026-06-18. Confidence: high for local log inspection, code
+compilation, and a live monitor snapshot on
+`logs/scheduler/dfm5_L_step600000_full_simple_20260618_600k_simple`. Some
+active DFM shards can keep `dfm-evals.log` empty until late in the run, so no
+current sibling shard has a visible `(N samples)` header yet. The monitor now
+falls back to older completed campaigns for the same DFM task and shard count,
+preferring the exact same shard and using the most common historical total.
+For `generative_talemaader` with `8` shards, local prior logs showed `101`
+samples per shard, and the live monitor changed from
+`completion 56/? ... ETA unknown` to `completion 59/101 ... ETA 5m20s` without
+touching the running eval jobs.
+
+Monitor checkpoint/model-label update, 2026-06-16. Confidence: high for local
+compilation and a one-shot monitor snapshot. `eval_scheduler/eval_scheduler/monitor.py`
+now includes the evaluated model/checkpoint label on active GPU lines and in the
+`next ready` queue, using `external_served_model_name`, `model_prefix`,
+`ckpt_tag`, and `no_ema` metadata. Example labels:
+`qwen35-2b@qwen35_2b:ema`, `hrm-dfm5-L@step_400000:ema`, and
+`hrm-dfm5-L@step_400000:noema`.
+
 Locking update, 2026-06-16. Confidence: high for local smoke test. The
 scheduler now uses an advisory `fcntl.flock` lock at `PLAN_DIR/plan.lock` for
 plan reads and writes. Package commands that mutate or read `plan.tsv` acquire
@@ -218,6 +687,135 @@ works again after `plan unlock`.
 
 The root `pyproject.toml` now includes `typer` as a dependency so the scheduler
 CLI is part of the normal repo environment.
+
+Monitor update, 2026-06-16. Confidence: high for local compilation, CLI smoke
+test, and parsing real EuroEval IFEval logs. The scheduler now has two status
+views:
+
+```bash
+python -m eval_scheduler status --plan-dir logs/scheduler/dfm5_L_step300000
+python -m eval_scheduler monitor --plan-dir logs/scheduler/dfm5_L_step300000 --gpus 0,1,2,3,4,5,6,7
+```
+
+`status` remains a terse plan/event summary. `monitor` is the operational view:
+it reports total `done/running/ready/blocked_pending/failed/skipped`, one line
+per GPU with memory/utilization, the active job on that GPU, shard, batch,
+attempt, elapsed time, parsed progress, and ETA when the progress fraction is
+known. It also lists the next ready jobs.
+
+Progress parsers:
+
+- standard evals: latest generation tqdm `done/total` from the shard log.
+- dfm-evals: local server completion counts and server-batch tqdm when present;
+  Inspect `logs.json` and dfm-evals task headers are used to infer sample
+  totals when available. During model/metric setup before any task header or
+  server request exists, progress may still be reported as unknown.
+- dfm-evals failures: early configuration failures such as missing judge
+  placeholders are surfaced directly in monitor output instead of showing only
+  `progress unknown`.
+- EuroEval: nested tqdm parsing. Single-benchmark setup bars like `1/1` are
+  ignored when a sample loop is still running. Real multi-pass bars are reported
+  as `pass x/y samples a/b`; e.g. a synthetic `3/10` pass bar plus `137/343`
+  samples reports `pass 3/10 samples 137/343`.
+
+Follow-up, 2026-06-18. Confidence: high for live monitor snapshots. Some
+EuroEval tasks such as `cnn-dailymail` and `nordjylland-news` do not keep a
+single monotonic tqdm counter; the per-sample bar resets for repeated scoring
+passes. The monitor now groups those resets into pass loops and defaults to
+10 passes when the plan row has no explicit `euroeval_passes` metadata. This
+turns misleading ETA resets into lines such as
+`pass 6/10 samples 118/157 ETA 25m42s`.
+
+Follow-up, 2026-06-18. Confidence: high for live monitor snapshots. EuroEval
+single-pass tasks such as `ifeval` and `ifeval-da` now also render with an
+explicit pass denominator, e.g. `pass 1/1 samples 101/343`, instead of only
+`samples 101/343`. Repeated-pass tasks still render as `pass X/10 samples Y/Z`.
+
+Superseded in the same session for IFEval-like tasks: after the first IFEval
+generation loop, EuroEval can emit smaller follow-up loops such as
+`343 -> 131 -> 47 -> ...`. Those are variable-sized stages, not repeated
+passes. The monitor now classifies loops with roughly stable denominators as
+`pass X/10` and variable-denominator loops as `stage X/? samples Y/Z`; the
+stage ETA is only for the current stage. Confidence: high for the live
+`euroeval:ifeval` `step_550000` log.
+
+Verified against the current real EuroEval logs:
+
+```text
+ifeval    samples 237/343
+ifeval-da samples 282/343
+```
+
+EuroEval path fix, 2026-06-16. Confidence: high. `eval_scheduler` now resolves
+relative `.py` `euroeval_bin` values to absolute paths in
+`eval_scheduler/eval_scheduler/runtime.py` before calling
+`scripts/run_euroeval_on_checkpoint.sh`. This is required because that wrapper
+changes directory into the EuroEval log root before running `${EUROEVAL_BIN}`.
+Without this, scheduler-created EuroEval jobs failed with status `127` and
+`No such file or directory` for `scripts/euroeval_api_no_flash_attn_guard.py`.
+
+EuroEval package wrapper fix, 2026-06-18. Confidence: high for failed-run log
+inspection and resumed scheduler status. On the DFM5-L `step_600000` eval
+campaign, EuroEval jobs failed after server health checks because the default
+`euroeval_bin` invoked `scripts/euroeval_api_no_flash_attn_guard.py` directly
+from the HRM environment, where `euroeval` was not importable. The scheduler
+default now uses:
+
+```bash
+/home/ucloud/miniforge3/envs/hrm/bin/uv run --no-project --with euroeval \
+  /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py
+```
+
+The active plan's failed EuroEval rows were reset to pending with this
+metadata, and freed GPUs subsequently picked up EuroEval jobs before lower
+priority shards.
+
+DFM progress/failure monitor update, 2026-06-16. Confidence: high for local
+monitor snapshots. `eval_scheduler/eval_scheduler/monitor.py` now reads
+dfm-evals `inspect/logs.json` and task-header text such as `(120 samples)` to
+show totals when possible. It also detects placeholder errors like missing
+`--judge-model` for `{{judge_model}}`; this exposed that the 350K
+`generative_talemaader` shards failed because no judge model/base URL was wired
+into the new scheduler run.
+
+DFM judge-task runtime update, 2026-06-16. Confidence: high for local direct
+judge request, one-sample Inspect smoke test, and completed 350K
+`generative_talemaader` shards. `eval_scheduler/eval_scheduler/runtime.py` now
+passes optional per-row metadata fields `judge_model` and `judge_base_url` to
+dfm-evals jobs, and `max_connections` can cap the Inspect client fanout
+independently of the HRM server batch size. For judged Talemaader shards, the
+working settings were:
+
+```text
+initial_batch: 16
+metadata.max_connections: 4
+metadata.judge_model: openai/gemma-4-e4b-judge
+metadata.judge_base_url: http://127.0.0.1:8099/v1
+```
+
+The initial judge server became wedged: a direct OpenAI-compatible
+`/v1/chat/completions` request asking for `GRADE: C` timed out. Restarting
+`scripts/transformers_openai_server.py` with `--max-new-tokens 64` fixed the
+endpoint; a direct request returned in `0.63s`, and a one-sample
+`hrm_danish_generative_talemaader` Inspect run completed in `4s`. After that,
+the 350K Talemaader shards completed and merged successfully.
+
+## `scripts/generate_dfm5_l_eval_comparison_report.py`
+
+Update, 2026-06-16. Confidence: high for local execution. Regenerates
+`docs/dfm5.md` from local merged evaluation artifacts. It now writes only
+`docs/dfm5.md`; the older duplicate outputs under `logs/reports/` were removed.
+
+Checkpoint inclusion is controlled by the hard-coded `DFM5_CHECKPOINTS` list
+near the top of the script. Each entry names the display label, checkpoint tag,
+standard-eval root, dfm-evals root, and EuroEval root. To include a newly
+completed checkpoint in `docs/dfm5.md`, add its roots to `DFM5_CHECKPOINTS` and
+run:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/generate_dfm5_l_eval_comparison_report.py
+```
 
 ## `scripts/synthesize_anonymized_sapient_exclusions.py`
 
@@ -2072,3 +2670,635 @@ logs/export_span_gpus02_20260612T140630
 Initial verification showed GPU0 and GPU2 at 100% utilization, both span
 shards reaching `judged 100`, and server throughput around 200-305 generation
 tokens/s.
+
+Gemma 4 E2B external-baseline metric caveat, 2026-06-17. Confidence: high for
+local merged metrics and source inspection; medium for exact model-behavior
+interpretation because the standard eval logs do not persist generated text.
+
+The completed Gemma 4 E2B baseline under:
+
+```text
+logs/eval/gemma4_e2b_full_20260617
+logs/dfm_evals/gemma4_e2b_full_20260617
+logs/euroeval/gemma4_e2b_full_20260617
+```
+
+shows a split pattern: several EuroEval tasks produce plausible nonzero scores
+(`bfcl-v2` tool accuracy `37.4`, `cnn-dailymail` chrF++ `36.0`,
+`conll-en` micro-F1 `55.7`, `sst5` macro-F1 `49.4`), while many standard
+HRM-Text evals are dominated by invalid parsing. Examples:
+
+```text
+eval/BoolQ/acc=0.5,     eval/BoolQ/invalid=1.0
+eval/MATH/acc=0.0034,   eval/MATH/invalid=1.0
+eval/GSM8k/acc=0.0076,  eval/GSM8k/invalid=0.7650
+eval/HellaSwag/acc=0.2566, eval/HellaSwag/invalid=0.8813
+eval/Winogrande/acc=0.5036, eval/Winogrande/invalid=0.6504
+```
+
+This should be treated as an evaluation-harness compatibility problem before
+being treated as a model-quality result. The standard external path uses
+`evaluation.engines.OpenAIEngine`, which sends the benchmark prompt as one chat
+`user` message, while `evaluation/benchmarks.py` applies strict HRM-oriented
+extractors. Standard MCQ benchmarks require an exact single-letter response
+after `max_tokens=1`; MATH requires a boxed answer for non-invalid scoring; and
+GSM8K only became reliable for Qwen after the scorer was repaired to accept
+explicit final-answer patterns and final standalone integers. The earlier Qwen
+full run had `eval/GSM8k/invalid=1.0`; the corrected Qwen GSM8K rerun reached
+`eval/GSM8k/acc=0.66566` and `eval/GSM8k/invalid=0.0235`, demonstrating that
+prompt/extraction can dominate the external standard metrics.
+
+Additional Gemma-specific caveat: the local snapshot advertises
+`Gemma4ForConditionalGeneration`, but text-only vLLM serving had to force
+`Gemma4ForCausalLM`; the tokenizer snapshot has no `chat_template`, so the plan
+used the local fallback template
+`evaluation/chat_templates/gemma4_e2b_plain_chat.jinja`. Do not cite the
+current Gemma standard scores as official or fair until at least a small
+diagnostic rerun saves generations and uses task-specific external-model
+prompts/extractors.
+
+Related external-eval code caveat: `OpenAIEngine.generate()` currently ignores
+`max_context`, and `_generate_one()` returns an empty string for HTTP 400. This
+can turn context-length/server request failures into normal-looking invalid
+answers unless the vLLM logs are inspected. A quick search of the Gemma BoolQ
+vLLM log showed ordinary `200 OK` responses, so BoolQ's all-invalid result is
+more likely answer-format/template mismatch than context overflow; nevertheless
+the silent-empty 400 behavior should be fixed before relying on external
+baseline standard metrics.
+
+Gemma clean external diagnostic preparation, 2026-06-17. Confidence: high for
+local code inspection, `compileall`, and generated-plan inspection. The next
+Gemma 4 E2B baseline should run through a separate diagnostic plan after the
+current DFM5-L `step_500000` eval finishes:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/gemma4_e2b_clean_external_after_500k \
+  --gpus 0,1,2,3,4,5,6,7
+```
+
+Monitor:
+
+```bash
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/gemma4_e2b_clean_external_after_500k \
+  --interval 30
+```
+
+The plan was created by:
+
+```bash
+PLAN_DIR=logs/scheduler/gemma4_e2b_clean_external_after_500k \
+  bash scripts/create_gemma4_e2b_clean_external_eval_plan.sh
+```
+
+It has `207` pending jobs and deliberately uses `log_wandb=false`, so local
+artifacts can be inspected before any clean W&B run is created. Important
+prepared changes:
+
+- `evaluation/config/external_chat_benchmarking.yaml` defines explicit
+  chat-model prompts for the standard evals: MCQ tasks return only an option
+  letter, GSM8K ends with `Final answer: <integer>`, and MATH boxes the final
+  answer.
+- `evaluation/main.py` supports `save_generations_dir=...`; external standard
+  scheduler jobs now write per-shard `*.generations.jsonl` files containing
+  prompt, generation, and sanitized ground truth.
+- `evaluation/benchmarks.py` now accepts conservative MCQ final-answer forms
+  (`A`, `A.`, `(A)`, `Answer: A`, `The answer is A`) instead of only exact raw
+  letters. This should not change exact-letter HRM outputs, but makes chat-model
+  external baselines less brittle.
+- `evaluation/engines.py` no longer converts HTTP 400 responses into empty
+  strings; bad OpenAI-compatible requests now fail visibly.
+- `eval_scheduler plan create-external` accepts `--standard-config`, and the
+  scheduler supports `--no-log-wandb` for diagnostic runs.
+- `scripts/backfill_external_eval_to_wandb.py` can later log a clean W&B run
+  from local merged artifacts once the diagnostic values and saved generations
+  look credible.
+
+The generated plan uses the local model
+`/work/dfm/brainsurgery/models/google/gemma-4-E2B-it`, served as
+`gemma4-e2b-it-clean`, with the same text-only Gemma vLLM overrides:
+`--enforce-eager`, `--hf-overrides '{"architectures":["Gemma4ForCausalLM"]}'`,
+and `--chat-template evaluation/chat_templates/gemma4_e2b_plain_chat.jinja`.
+It also keeps the previous GovReport caps (`dfm_context_length=3968`,
+`dfm_max_gen_toks=128`, `max_report_chars=10000`) and
+`euroeval_generative_type=instruction_tuned`.
+
+Scoring smoke follow-up, 2026-06-17. Confidence: high for local smoke tests on
+cached benchmark rows. The clean external scoring changes were smoke-tested
+without using GPUs:
+
+- Conservative MCQ extraction accepts `A`, `A.`, `(B)`, `Answer: C`,
+  `Final answer is D`, and `The answer is A`, while rejecting prose such as
+  `I think A`.
+- Data-backed MCQ smoke on the first 12 rows of `BoolQ`, `Winogrande`, and
+  `ARC` with generations of the form `Answer: <gold>` produced `acc=1.0` and
+  `invalid=0.0`.
+- Data-backed GSM8K smoke on the first 12 cached rows with generations ending
+  `Final answer: <gold>` produced `acc=1.0` and `invalid=0.0`.
+- Data-backed MATH smoke on the first 12 rows of shard `0/64` with boxed gold
+  answers produced `acc=1.0` and `invalid=0.0`.
+
+The smoke exposed and fixed two launch/scoring issues before the Gemma clean
+run:
+
+- `evaluation/config/external_chat_benchmarking.yaml` had to escape literal
+  braces in the MATH prompt as `\boxed{{}}`; otherwise Python `.format()` treats
+  `\boxed{}` as an empty replacement field.
+- MATH scoring normalized `\dfrac` and `\tfrac` to `\frac` before calling
+  `math_verify.parse()`. Without this, an exact boxed answer such as
+  `\boxed{\dfrac{3}{2}}` could be marked wrong because both the ground truth and
+  answer parsed to empty lists.
+
+`python -m compileall -q evaluation eval_scheduler
+scripts/backfill_external_eval_to_wandb.py` passed after these changes.
+
+Tiny live Gemma standard-smoke preparation, 2026-06-17. Confidence: high for
+local config/script syntax and GPU-state inspection; the live smoke itself was
+not launched because all GPUs were at 100% utilization and active 500K eval
+jobs were already retrying after OOMs.
+
+Prepared files:
+
+```text
+evaluation/config/external_chat_smoke.yaml
+scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+The smoke uses the clean external-chat standard prompts on only:
+
+```text
+BoolQ  20 rows
+GSM8K  20 rows
+MATH   20 rows from shard 0/64
+```
+
+It starts a single local Gemma 4 E2B vLLM server with the same text-only
+overrides as the clean full plan, runs `evaluation.main`, and writes
+`evaluation.log`, `vllm.log`, and generation JSONL files under
+`logs/eval/gemma4_e2b_clean_standard_smoke_<timestamp>/`. Launch once a GPU is
+really free:
+
+```bash
+cd /work/dfm/HRM-Text
+GPU=0 bash scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+Use `VLLM_GPU_MEMORY_UTILIZATION=...` only when deliberately testing on a
+partially occupied GPU; default is `0.9`, which is appropriate when the GPU is
+free.
+
+Impact note for HRM checkpoint evals. Confidence: high for source inspection.
+The clean external prompt config affects only runs that explicitly use
+`evaluation/config/external_chat_benchmarking.yaml` or
+`evaluation/config/external_chat_smoke.yaml`. `save_generations_dir` and
+`max_samples` are inert unless set. The conservative MCQ extraction change can
+affect future standard MCQ metrics if an evaluated model emits `Answer: A`,
+`(A)`, etc.; existing HRM checkpoint standard evals usually generated exactly
+one token for MCQ tasks, so they should be unchanged in practice. The MATH
+`\dfrac`/`\tfrac` normalization can affect all future MATH evals slightly by
+fixing exact boxed answers that previously parsed to empty lists. The HTTP-400
+change affects only `OpenAIEngine` external baselines, not `SimpleEngine` HRM
+checkpoint evals. Existing W&B/local metrics are not retroactively changed.
+
+Gemma 4 E2B live standard smoke with batch size 1, 2026-06-17. Confidence:
+high for local command output and saved generation inspection. The first
+attempt used:
+
+```bash
+GPU=3 SMOKE_BATCH_SIZE=1 VLLM_GPU_MEMORY_UTILIZATION=0.25 \
+  LOG_ROOT=logs/eval/gemma4_e2b_clean_standard_smoke_bs1_$(date +%Y%m%d_%H%M%S) \
+  bash scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+It failed during vLLM startup because GPU3 had only `16.16/178.34 GiB` free,
+less than the requested 25% vLLM memory budget. A second attempt succeeded:
+
+```bash
+GPU=5 SMOKE_BATCH_SIZE=1 VLLM_GPU_MEMORY_UTILIZATION=0.08 PORT=18645 \
+  LOG_ROOT=logs/eval/gemma4_e2b_clean_standard_smoke_bs1_$(date +%Y%m%d_%H%M%S) \
+  bash scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+Output directory:
+
+```text
+logs/eval/gemma4_e2b_clean_standard_smoke_bs1_20260617_175531
+```
+
+Scores:
+
+```text
+BoolQ   n=20  acc=0.5000  invalid=1.0000
+GSM8K   n=20  acc=0.0000  invalid=0.8000
+MATH    n=20  acc=0.0000  invalid=1.0000
+```
+
+Saved generations indicate a model serving/prompt-template problem rather than
+a scorer-only problem. BoolQ produced 20/20 empty generations. GSM8K had 6/20
+empty generations, 7/20 literal placeholder generations such as
+`Final answer: <integer>`, and one `Final answer:` loop. MATH had 1/20 empty
+generations and 10/20 `Assistant:` label loops. Do not run or backfill the full
+Gemma 4 E2B clean external evaluation until the Gemma serving/template path is
+fixed and a fresh smoke produces structurally valid outputs.
+
+Gemma 4 native chat-template fix, 2026-06-17. Confidence: high for local
+tokenizer rendering and batch-size-1 live smoke. The local E2B snapshot has no
+`chat_template` in `tokenizer_config.json`; the previous fallback
+`User:`/`Assistant:` template was wrong for Gemma 4. A native Gemma 4 template
+from the installed E4B snapshot was copied into:
+
+```text
+evaluation/chat_templates/gemma4_native_chat.jinja
+```
+
+The template renders prompts as Gemma 4 turns, e.g.:
+
+```text
+<bos><|turn>user
+...
+<turn|>
+<|turn>model
+```
+
+`scripts/run_gemma4_e2b_standard_smoke.sh`,
+`scripts/create_gemma4_e2b_clean_external_eval_plan.sh`, and the two existing
+Gemma scheduler plans were updated to reference this native template instead of
+`gemma4_e2b_plain_chat.jinja`. The already-completed
+`logs/scheduler/gemma4_e2b_then_dfm5_L_500k_20260617` artifacts were produced
+before this fix and should be considered stale unless reset and rerun.
+
+Live smoke command:
+
+```bash
+cd /work/dfm/HRM-Text
+GPU=6 SMOKE_BATCH_SIZE=1 VLLM_GPU_MEMORY_UTILIZATION=0.08 PORT=18646 \
+  LOG_ROOT=logs/eval/gemma4_e2b_native_standard_smoke_bs1_$(date +%Y%m%d_%H%M%S) \
+  bash scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+Output directory:
+
+```text
+logs/eval/gemma4_e2b_native_standard_smoke_bs1_20260617_202216
+```
+
+Scores:
+
+```text
+BoolQ   n=20  acc=0.6500  invalid=0.0000
+GSM8K   n=20  acc=0.7000  invalid=0.0000
+MATH    n=20  acc=0.7000  invalid=0.9500
+```
+
+Saved generations are now structurally sane: BoolQ generations are single
+letters, GSM8K generations are step-by-step answers, and MATH generations are
+real derivations rather than empty strings or role-label loops. The remaining
+high MATH invalid rate is a scorer/answer-extraction issue to inspect
+separately, not the previous Gemma serving-template failure.
+
+Scoring-diff minimization for Gemma external evals, 2026-06-17. Confidence:
+high for local `git diff --exit-code -- evaluation/benchmarks.py`, compile
+check, and smoke output. Temporary edits to shared benchmark scoring were
+removed to avoid changing DFM5-L comparability. `evaluation/benchmarks.py` is
+clean relative to HEAD again. Removed temporary changes were:
+
+- lenient GSM8K extraction from final-answer prose or last number
+- `\dfrac`/`\tfrac` normalization in MATH
+- lenient MCQ parsing of `Answer: A`, `(A)`, etc.
+
+The retained changes are non-scoring support for external diagnostics:
+`OpenAIEngine`, `max_samples`, and optional generation JSONL saving. For Gemma
+external standard evals, strict scorer compatibility is handled by prompt
+templates in `evaluation/config/external_chat_smoke.yaml` and
+`evaluation/config/external_chat_benchmarking.yaml`, not by changing the shared
+scorers.
+
+Strict-scoring Gemma smoke command:
+
+```bash
+cd /work/dfm/HRM-Text
+GPU=1 SMOKE_BATCH_SIZE=1 VLLM_GPU_MEMORY_UTILIZATION=0.08 PORT=18647 \
+  LOG_ROOT=logs/eval/gemma4_e2b_native_strict_prompt_smoke_bs1_$(date +%Y%m%d_%H%M%S) \
+  bash scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+Output directory:
+
+```text
+logs/eval/gemma4_e2b_native_strict_prompt_smoke_bs1_20260617_205021
+```
+
+Scores under the original strict shared scorers:
+
+```text
+BoolQ   n=20  acc=0.6500  invalid=0.0000
+GSM8K   n=20  acc=0.1000  invalid=0.0000
+MATH    n=20  acc=0.7000  invalid=0.2000
+```
+
+The prompt-only fix made GSM8K structurally valid but low on the 20-row smoke
+sample; MATH still often emits derivations despite instructions to return only
+`\boxed{...}`, but strict invalid rate fell from 95% to 20%.
+
+Step-by-step external scoring without shared scorer changes, 2026-06-17.
+Confidence: high for local implementation, compile check, saved generation
+inspection, and smoke output. To let instruction-tuned external baselines solve
+GSM8K step by step without changing DFM5-L comparability, `evaluation.main`
+now supports an opt-in per-benchmark field:
+
+```yaml
+score_extractor: final_integer
+```
+
+This is not a benchmark scorer change. `evaluation/benchmarks.py` remains clean
+relative to HEAD. The extractor is applied only when a config requests it. Raw
+generations are still saved; when `save_generations_dir` is enabled, JSONL rows
+also include `scoring_generation` and `score_extractor` so the exact scored
+text is auditable.
+
+External Gemma GSM8K prompts were changed back to step-by-step reasoning with a
+required final marker:
+
+```text
+Solve the problem step by step.
+End your response with a separate line exactly like:
+Final answer: <integer>
+```
+
+Fresh smoke command:
+
+```bash
+cd /work/dfm/HRM-Text
+GPU=2 SMOKE_BATCH_SIZE=1 VLLM_GPU_MEMORY_UTILIZATION=0.08 PORT=18648 \
+  LOG_ROOT=logs/eval/gemma4_e2b_native_stepwise_extract_smoke_bs1_$(date +%Y%m%d_%H%M%S) \
+  bash scripts/run_gemma4_e2b_standard_smoke.sh
+```
+
+Output directory:
+
+```text
+logs/eval/gemma4_e2b_native_stepwise_extract_smoke_bs1_20260617_215137
+```
+
+Scores:
+
+```text
+BoolQ   n=20  acc=0.6500  invalid=0.0000
+GSM8K   n=20  acc=0.6500  invalid=0.2500
+MATH    n=20  acc=0.7000  invalid=0.2000
+```
+
+The remaining GSM8K invalids are not shared-scorer failures; they are rows
+where Gemma omitted the requested final-answer marker, so the extractor
+deliberately left the raw generation untouched and the strict original GSM8K
+scorer marked it invalid.
+
+Gemma 4 E2B native rerun plus DFM5-L 550K scheduler, 2026-06-17.
+Confidence: high for local plan inspection, pane/process inspection, patched
+runtime behavior, and completed first EuroEval shards.
+
+Combined scheduler plan:
+
+```text
+logs/scheduler/gemma4_e2b_native_then_dfm5_L_550k_20260617_222323
+```
+
+This plan first runs the corrected Gemma 4 E2B instruct external eval with the
+native Gemma 4 chat template, then waits for the fully written DFM5-L
+`step_550000` checkpoint before launching the DFM5-L full eval. W&B targets:
+
+```text
+Gemma 4 E2B: project=DFM5 run_id=gemma4-e2b-it-native-full
+DFM5-L:      project=DFM5 run_id=oti1lisg run_name=dfm5-L
+```
+
+The DFM5-L wait row is deliberately gated on Gemma completion:
+
+```text
+average-00208  tag=gemma4_e2b_it_native
+wait-00209     tag=step_550000  deps=average-00208
+```
+
+Pane 9 in tmux session `hrm-0` was repointed to this plan:
+
+```bash
+cd /work/dfm/HRM-Text
+/home/ucloud/miniforge3/envs/hrm/bin/python -m eval_scheduler run \
+  --plan-dir logs/scheduler/gemma4_e2b_native_then_dfm5_L_550k_20260617_222323 \
+  --gpus 0,1,2,3,4,5,6,7
+
+/home/ucloud/miniforge3/envs/hrm/bin/python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/gemma4_e2b_native_then_dfm5_L_550k_20260617_222323 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --interval 30
+```
+
+Two scheduler/runtime issues were fixed while launching this plan:
+
+- External Gemma vLLM extra args must quote the JSON override for shlex:
+  `--hf-overrides '{"architectures":["Gemma4ForCausalLM"]}'`.
+- `eval_scheduler/eval_scheduler/runtime.py` now normalizes `euroeval_bin`
+  only when it is a single script path. Multi-token commands such as
+  `/home/ucloud/miniforge3/envs/hrm/bin/uv run --no-project --with euroeval
+  /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py` must not be
+  treated as one relative `.py` path.
+
+The first corrected launch reached real EuroEval execution. At the first
+verified status snapshot, 8 Gemma EuroEval jobs were done, 8 were running, and
+0 were failed.
+
+DFM5-L 550K failed-row repair, 2026-06-18. Confidence: high for local plan
+inspection, failed logs, process arguments, and scheduler status. The combined
+plan later stopped blocked with 28 failed `step_550000` rows:
+
+- 20 EuroEval rows failed because the appended DFM5-L block still used
+  `scripts/euroeval_api_no_flash_attn_guard.py` directly, producing
+  `ModuleNotFoundError: No module named 'euroeval'`.
+- 8 `dfm/generative_talemaader` rows failed because the appended DFM5-L block
+  lacked `judge_model` and `judge_base_url`; dfm-evals raised
+  `Placeholder {{judge_model}} ... requires --judge-model`.
+
+The repair reset only those failed rows to `pending` with `attempt=0`. EuroEval
+rows now use:
+
+```text
+/home/ucloud/miniforge3/envs/hrm/bin/uv run --no-project --with euroeval /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py
+```
+
+`generative_talemaader` rows now use:
+
+```text
+judge_model=openai/gemma-4-e4b-judge
+judge_base_url=http://127.0.0.1:8099/v1
+judged_max_connections=4
+```
+
+The judge server was already running on port 8099. After restarting pane 9,
+the scheduler immediately picked up `eval-00210` through `eval-00217`; live
+process arguments confirmed the repaired EuroEval jobs were running through
+`uv run --no-project --with euroeval`.
+
+Monitor progress fixes, 2026-06-18. Confidence: high for local monitor output
+and log inspection. `eval_scheduler/eval_scheduler/monitor.py` now has two
+additional progress fallbacks:
+
+- DFM tasks can infer an active shard's denominator from completed sibling
+  shard logs for the same task/checkpoint. This fixes
+  `completion X/?` on `dfm/generative_talemaader`; the step-550000 shards show
+  `101/101` once sibling shard headers are available.
+- EuroEval progress groups repeated sample tqdm loops and reports them as
+  `pass X/10 samples Y/Z`. This avoids misleading resets such as
+  `cnn-dailymail` dropping from `118/165` to `1/157` when EuroEval starts the
+  next pass.
+
+At the time of the fix, `euroeval:valeu-da` for DFM5-L `step_550000` had
+failed because EuroEval aborted on invalid labels in 3/53 samples. VaLEU is
+excluded from the headline averages, so no synthetic value was created for
+that failed task.
+
+Qwen final-extract GSM8K repair, 2026-06-18. Confidence: high for local vLLM
+logs, package reinstall output, and a one-GPU health smoke test. The appended
+`qwen-finalextract-gsm-*` standard-eval rows initially failed with status 71
+before extraction/scoring could run. The root cause was vLLM server startup
+failure for Qwen3.5-2B on Blackwell:
+
+```text
+FlashInfer Blackwell GDN requires an intact nvidia-cutlass-dsl-libs-cu13 install ...
+terminate called after throwing an instance of 'nanobind::builtin_exception'
+what(): Expected an MLIR object ...
+RuntimeError: Engine core initialization failed.
+```
+
+The package repair command was:
+
+```bash
+cd /work/dfm/HRM-Text
+/home/ucloud/miniforge3/envs/hrm/bin/uv pip install \
+  --force-reinstall --no-deps nvidia-cutlass-dsl-libs-cu13
+```
+
+A one-GPU smoke server then reached `/health`, with vLLM using
+`Using FlashInfer GDN prefill kernel`. The eight Qwen GSM rows were reset to
+`pending`, the scheduler stop request was cleared, and pane 9 was restarted.
+After restart, all eight Qwen GSM shards launched at batch 64 and began
+processing samples.
+
+DFM5-L `step_600000` full eval launch, 2026-06-18. Confidence: high for local
+checkpoint inspection, scheduler status, and process inspection. The
+`checkpoints/dfm5/L` `step_600000` checkpoint exists as
+`fsdp2_step_600000/.metadata` plus `carry_step_600000.{0..7}.pt`. Its W&B
+epoch x-value is `3.3130615418623695`, using the established DFM5-L mapping
+`181101.374791` steps per epoch.
+
+The full standard + DFM + EuroEval campaign was scheduled with the default
+HRM simple-server path, not external/vLLM standard evals. Process inspection
+confirmed launched jobs run `scripts/hrm_openai_server.py --ckpt-path
+checkpoints/dfm5/L --ckpt-tag step_600000`.
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler plan create \
+  --plan-dir logs/scheduler/dfm5_L_step600000_full_simple_20260618_600k_simple \
+  --ckpt-path checkpoints/dfm5/L \
+  --ckpt-tag step_600000 \
+  --eval-epoch 3.3130615418623695 \
+  --log-root logs/eval/dfm5_L_step600000_full_simple_20260618_600k_simple \
+  --dfm-log-root logs/dfm_evals/dfm5_L_step600000_full_simple_20260618_600k_simple \
+  --euroeval-log-root logs/euroeval/dfm5_L_step600000_full_simple_20260618_600k_simple \
+  --wandb-project DFM5 \
+  --wandb-run-id oti1lisg \
+  --wandb-run-name dfm5-L \
+  --model-prefix hrm-dfm5-L \
+  --run-euroeval \
+  --queue-order euroeval-first \
+  --standard-batch 64 \
+  --dfm-batch 32 \
+  --ifeval-batch 32 \
+  --euroeval-batch 16 \
+  --max-retries 5 \
+  --port-base 22000 \
+  --judge-model openai/gemma-4-e4b-judge \
+  --judge-base-url http://127.0.0.1:8099/v1 \
+  --judged-max-connections 4 \
+  --force
+```
+
+The plan contains 210 jobs: 1 checkpoint wait, 20 EuroEval jobs, 85 standard
+eval shards, 51 DFM task shards, 32 DFM IFEval-DA shards, merge rows, an
+average row, and a report row. Pane 9 in tmux session `hrm-0` now runs:
+
+```bash
+/home/ucloud/miniforge3/envs/hrm/bin/python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_step600000_full_simple_20260618_600k_simple \
+  --gpus 0,1,2,3,4,5,6,7
+
+/home/ucloud/miniforge3/envs/hrm/bin/python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_step600000_full_simple_20260618_600k_simple \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --interval 30
+```
+
+Initial status after launch: wait row completed, 8 EuroEval jobs running, 180
+jobs ready, 21 blocked on dependencies, and no failures.
+
+DFM5-L clean W&B backfill, 2026-06-19. Confidence: high for local audit files,
+W&B sync logs, and W&B API summary readback. A new run was backfilled in
+project `peter-sk-sdu/DFM5` with display name `dfm5-L clean`. It uses the
+main DFM5-L run `oti1lisg` as source for training and non-650K history, but
+uses the clean W&B run
+`dfm5-l-vllm-clean-650k-700k-20260618` as the source for 650K eval metrics.
+
+Correct synced run:
+
+```text
+https://wandb.ai/peter-sk-sdu/DFM5/runs/dfm5-l-clean-20260619-v2
+```
+
+Important pitfall: the main DFM5-L source history did not only contain 650K
+eval-like values at W&B `_step=650000`. It also had a later row at internal
+step `673992` with `avg/train_step=650000`, which overwrote the clean 650K
+average after the first attempted backfill. The corrected sanitizer removes
+eval-like keys from any source row whose own `eval/train_step`,
+`dfm_eval/train_step`, `euroeval/train_step`, or `avg/train_step` equals the
+replacement step, regardless of the W&B internal `_step`.
+
+Verified sanitized audit:
+
+```text
+logs/backfill_dfm5_l_clean_rows_wandb_summary650_sanitized.jsonl
+```
+
+The sanitized audit contains no non-650000 row with `*/train_step=650000`; the
+650K row has the replacement values from the clean vLLM W&B run, including:
+
+```text
+eval/MMLU/acc = 0.536375
+eval/GSM8k/acc = 0.3760511751326763
+avg/overall = 0.4565571277762064
+dfm_eval/generative-talemaader/model_graded_fact/accuracy = 0
+euroeval/da/sentiment-classification/angry-tweets/macro_f1 = 65.04088348514136
+```
+
+Online `wandb.init` timed out repeatedly for this large backfill, so the
+working path was to create an offline run and then `wandb sync` it:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/backfill_dfm5_l_clean_wandb.py \
+  --use-existing-audit \
+  --wandb-mode offline \
+  --dest-run-name 'dfm5-L clean' \
+  --dest-run-id dfm5-l-clean-20260619-v2 \
+  --audit-jsonl logs/backfill_dfm5_l_clean_rows_wandb_summary650_sanitized.jsonl
+
+wandb sync --entity peter-sk-sdu --project DFM5 \
+  wandb/offline-run-20260619_090701-dfm5-l-clean-20260619-v2
+```
+
+The sync log is:
+
+```text
+logs/backfill_dfm5_l_clean_v2_offline_sync_20260619.log
+```

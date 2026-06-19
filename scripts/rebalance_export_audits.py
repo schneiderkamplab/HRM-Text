@@ -104,16 +104,18 @@ def count_audits(dataset: str) -> Counts:
     return counts
 
 
-def target_tokens_for(dataset: str, default_target_tokens: float) -> float:
+def target_tokens_for(dataset: str, default_target_tokens: float, overrides: dict[str, float] | None = None) -> float:
+    if overrides and dataset in overrides:
+        return overrides[dataset]
     return TARGET_TOKENS_BY_DATASET.get(dataset, default_target_tokens)
 
 
-def status(default_target_tokens: float) -> dict[str, dict[str, float]]:
+def status(default_target_tokens: float, overrides: dict[str, float] | None = None) -> dict[str, dict[str, float]]:
     out = {}
     for dataset in DATASETS:
         counts = count_audits(dataset)
         tokens = counts.keep * AVG_TOKENS[dataset]
-        target_tokens = target_tokens_for(dataset, default_target_tokens)
+        target_tokens = target_tokens_for(dataset, default_target_tokens, overrides)
         out[dataset] = {
             "accepted_rows": counts.keep,
             "dropped_rows": counts.drop,
@@ -126,8 +128,8 @@ def status(default_target_tokens: float) -> dict[str, dict[str, float]]:
     return out
 
 
-def print_status(default_target_tokens: float) -> None:
-    stats = status(default_target_tokens)
+def print_status(default_target_tokens: float, overrides: dict[str, float] | None = None) -> None:
+    stats = status(default_target_tokens, overrides)
     total = 0.0
     for dataset, row in stats.items():
         total += row["estimated_tokens"]
@@ -312,7 +314,8 @@ def start_audit_worker(
 
 
 def rebalance(args: argparse.Namespace) -> None:
-    stats = status(args.target_tokens)
+    target_overrides = load_target_overrides(args)
+    stats = status(args.target_tokens, target_overrides)
     open_datasets = [d for d in DATASETS if not stats[d]["complete"]]
     if not open_datasets:
         print("All datasets have reached target.")
@@ -352,7 +355,7 @@ def rebalance(args: argparse.Namespace) -> None:
 
     manifest = {
         "default_target_tokens": args.target_tokens,
-        "target_tokens_by_dataset": TARGET_TOKENS_BY_DATASET,
+        "target_tokens_by_dataset": target_overrides or TARGET_TOKENS_BY_DATASET,
         "open_datasets": open_datasets,
         "allocation": allocation,
         "allocation_override": args.allocation,
@@ -364,9 +367,10 @@ def rebalance(args: argparse.Namespace) -> None:
 
 
 def watch(args: argparse.Namespace) -> None:
-    initial_complete = {d for d, row in status(args.target_tokens).items() if row["complete"]}
+    target_overrides = load_target_overrides(args)
+    initial_complete = {d for d, row in status(args.target_tokens, target_overrides).items() if row["complete"]}
     while True:
-        stats = status(args.target_tokens)
+        stats = status(args.target_tokens, target_overrides)
         complete = [d for d, row in stats.items() if row["complete"]]
         open_datasets = [d for d, row in stats.items() if not row["complete"]]
         newly_complete = sorted(set(complete) - initial_complete)
@@ -378,7 +382,7 @@ def watch(args: argparse.Namespace) -> None:
                     "newly_complete": newly_complete,
                     "open": open_datasets,
                     "default_target_tokens": args.target_tokens,
-                    "target_tokens_by_dataset": TARGET_TOKENS_BY_DATASET,
+                    "target_tokens_by_dataset": target_overrides or TARGET_TOKENS_BY_DATASET,
                 },
                 sort_keys=True,
             ),
@@ -394,10 +398,27 @@ def watch(args: argparse.Namespace) -> None:
         time.sleep(args.interval_seconds)
 
 
+def load_target_overrides(args: argparse.Namespace) -> dict[str, float] | None:
+    if not args.target_tokens_by_dataset:
+        return None
+    path = Path(args.target_tokens_by_dataset)
+    data = json.loads(path.read_text(encoding="utf-8"))
+    overrides = {str(k): float(v) for k, v in data.items()}
+    unknown = sorted(set(overrides) - set(DATASETS))
+    if unknown:
+        raise SystemExit(f"Unknown dataset(s) in {path}: {', '.join(unknown)}")
+    return overrides
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("command", choices=["status", "rebalance", "watch"])
     ap.add_argument("--target-tokens", type=float, default=DEFAULT_TARGET_TOKENS)
+    ap.add_argument(
+        "--target-tokens-by-dataset",
+        default=None,
+        help="JSON file mapping dataset name to target tokens; overrides built-in per-dataset targets.",
+    )
     ap.add_argument("--session", default="export_audits_8gpu")
     ap.add_argument("--gpus", default="0,1,2,3,4,5,6,7")
     ap.add_argument("--allocation", default=None, help="Manual allocation as 'dataset:gpu,gpu;dataset:gpu'.")
@@ -415,7 +436,7 @@ def main() -> None:
     args = ap.parse_args()
 
     if args.command == "status":
-        print_status(args.target_tokens)
+        print_status(args.target_tokens, load_target_overrides(args))
     elif args.command == "rebalance":
         rebalance(args)
     elif args.command == "watch":

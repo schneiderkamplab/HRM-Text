@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shlex
 import shutil
 import signal
 import subprocess
@@ -20,6 +21,10 @@ from .model import Action, Job, JobStatus, append_tsv, read_plan, write_plan
 from .plan import plan_path
 
 OOM_RE = re.compile(r"OutOfMemoryError|CUDA out of memory|out of memory", re.IGNORECASE)
+CLIENT_FATAL_RE = re.compile(
+    r"BadRequestError|Task interrupted|ServerDisconnectedError|APIConnectionError|APITimeoutError",
+    re.IGNORECASE,
+)
 STOP_STATUS = 130
 
 
@@ -66,6 +71,62 @@ def contains_oom(paths: Iterable[Path]) -> bool:
         if path.exists() and OOM_RE.search(tail(path)):
             return True
     return False
+
+
+def contains_client_fatal(paths: Iterable[Path]) -> bool:
+    for path in paths:
+        if path.exists() and CLIENT_FATAL_RE.search(tail(path)):
+            return True
+    return False
+
+
+def dfm_max_output_tokens(job: Job) -> int:
+    override = job.metadata.get("dfm_max_gen_toks")
+    if isinstance(override, int):
+        return override
+    if isinstance(override, str) and override.isdigit():
+        return int(override)
+    if job.name == "nordjyllandnews":
+        return 128
+    if job.name == "multi_wiki_qa":
+        return 32
+    if job.name == "piqa":
+        return 8
+    if job.name == "generative_talemaader":
+        return 128
+    return 512
+
+
+def dfm_context_length(job: Job) -> int:
+    override = job.metadata.get("dfm_context_length")
+    if isinstance(override, int):
+        return override
+    if isinstance(override, str) and override.isdigit():
+        return int(override)
+    if is_external_model(job):
+        return int(job.metadata.get("vllm_max_model_len", 4096))
+    return 4096
+
+
+def dfm_template_overrides(job: Job) -> list[str]:
+    overrides: list[str] = []
+    max_gen_toks = job.metadata.get("dfm_max_gen_toks")
+    if max_gen_toks is not None:
+        overrides.extend(["-T", f"max_gen_toks={max_gen_toks}"])
+    for item in job.metadata.get("dfm_task_args", []) or []:
+        overrides.extend(["-T", str(item)])
+    return overrides
+
+
+def standard_generation_overrides(job: Job) -> list[str]:
+    overrides: list[str] = []
+    max_tokens = job.metadata.get("standard_max_tokens")
+    if max_tokens is not None:
+        overrides.append(f"generation_config.max_tokens={max_tokens}")
+    max_context = job.metadata.get("standard_max_context")
+    if max_context is not None:
+        overrides.append(f"generation_config.max_context={max_context}")
+    return overrides
 
 
 def run_command(argv: list[str], *, log_path: Path, env: dict[str, str] | None = None) -> int:
@@ -137,6 +198,47 @@ def run_wait_checkpoint(job: Job) -> int:
                 time.sleep(1)
 
 
+def run_export_hf(job: Job, gpu: int) -> int:
+    out_dir = Path(str(job.metadata.get("hf_export_dir") or job.metadata.get("standard_hf_export_dir") or job.metadata.get("hrm_hf_export_dir")))
+    log_path = Path(job.log_dir) / f"export_hf_{job.metadata['ckpt_tag']}.log"
+    if (out_dir / "model.safetensors").is_file():
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text(f"{now()}\texisting export found\t{out_dir / 'model.safetensors'}\n", encoding="utf-8")
+        return 0
+
+    tmp_dir = out_dir.with_name(f"{out_dir.name}.tmp.{os.getpid()}")
+    shutil.rmtree(tmp_dir, ignore_errors=True)
+    argv = [
+        python_bin(job),
+        "conversion/convert_to_hf.py",
+        "--ckpt_path",
+        str(job.metadata["ckpt_path"]),
+        "--ckpt_tag",
+        str(job.metadata["ckpt_tag"]),
+        "--ckpt_use_ema",
+        "false" if job.metadata.get("no_ema") else "true",
+        "--out_dir",
+        str(tmp_dir),
+    ]
+    status = run_command(argv, log_path=log_path, env=env_with_gpu(gpu))
+    if status != 0:
+        return status
+    if not (tmp_dir / "model.safetensors").is_file():
+        with log_path.open("a") as log:
+            log.write(f"\n{now()}\tmissing converted model.safetensors in {tmp_dir}\n")
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+        return 4
+    if out_dir.exists():
+        backup = out_dir.with_name(f"{out_dir.name}.incomplete.{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+        shutil.move(str(out_dir), str(backup))
+        with log_path.open("a") as log:
+            log.write(f"\n{now()}\tmoved previous incomplete export to {backup}\n")
+    tmp_dir.replace(out_dir)
+    with log_path.open("a") as log:
+        log.write(f"\n{now()}\texport ready\t{out_dir}\n")
+    return 0
+
+
 def wait_for_server(url: str, expected_model: str | None = None, *, timeout: int = 480) -> None:
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -179,32 +281,241 @@ def env_with_gpu(gpu: int | None) -> dict[str, str]:
     return env
 
 
+def is_external_model(job: Job) -> bool:
+    return bool(job.metadata.get("external_model"))
+
+
+def use_vllm_hrm_server(job: Job) -> bool:
+    return is_external_model(job) or str(job.metadata.get("hrm_server_backend", "simple")) == "vllm"
+
+
+def vllm_model_path(job: Job) -> str:
+    if is_external_model(job):
+        return str(job.metadata["external_model"])
+    if job.metadata.get("hrm_hf_export_dir"):
+        return str(job.metadata["hrm_hf_export_dir"])
+    if job.metadata.get("standard_hf_export_dir"):
+        return str(job.metadata["standard_hf_export_dir"])
+    raise SchedulerError("internal vLLM HRM server requires hrm_hf_export_dir or standard_hf_export_dir")
+
+
+def vllm_served_model_prefix(job: Job) -> str:
+    if is_external_model(job):
+        return external_model_name(job)
+    return str(job.metadata["model_prefix"])
+
+
+def external_model_name(job: Job) -> str:
+    return str(job.metadata.get("external_served_model_name") or job.metadata["external_model"])
+
+
+def openai_model_ref(model_name: str) -> str:
+    return model_name if model_name.startswith("openai/") else f"openai/{model_name}"
+
+
+def start_vllm_server(job: Job, gpu: int, *, port: int, model_name: str, log: Path) -> subprocess.Popen[bytes]:
+    argv = [
+        str(job.metadata.get("vllm_python") or python_bin(job)),
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        vllm_model_path(job),
+        "--served-model-name",
+        model_name,
+        "--host",
+        str(job.metadata["host"]),
+        "--port",
+        str(port),
+        "--dtype",
+        str(job.metadata.get("vllm_dtype", "bfloat16")),
+        "--max-model-len",
+        str(job.metadata.get("vllm_max_model_len", 4096)),
+        "--gpu-memory-utilization",
+        str(job.metadata.get("vllm_gpu_memory_utilization", 0.9)),
+    ]
+    if job.metadata.get("vllm_trust_remote_code"):
+        argv.append("--trust-remote-code")
+    extra = str(job.metadata.get("vllm_extra_args") or "").strip()
+    if extra:
+        argv.extend(shlex.split(extra))
+    log.parent.mkdir(parents=True, exist_ok=True)
+    cache_root = log.parent / f"{log.stem}.cache"
+    env = env_with_gpu(gpu)
+    cuda_home = str(job.metadata.get("cuda_home") or "")
+    if not cuda_home and Path("/usr/local/cuda").is_dir():
+        cuda_home = "/usr/local/cuda"
+    env.update(
+        {
+            "VLLM_CACHE_ROOT": str(cache_root / "vllm"),
+            "TORCHINDUCTOR_CACHE_DIR": str(cache_root / "torchinductor"),
+            "TRITON_CACHE_DIR": str(cache_root / "triton"),
+            "CUDA_CACHE_PATH": str(cache_root / "cuda"),
+        }
+    )
+    if cuda_home:
+        env["CUDA_HOME"] = cuda_home
+        env["CUDA_PATH"] = cuda_home
+        env["PATH"] = f"{cuda_home}/bin:{env.get('PATH', '')}"
+        lib_paths = [f"{cuda_home}/lib64", f"{cuda_home}/lib"]
+        env["LD_LIBRARY_PATH"] = ":".join([*lib_paths, env.get("LD_LIBRARY_PATH", "")]).rstrip(":")
+    for path in env["VLLM_CACHE_ROOT"], env["TORCHINDUCTOR_CACHE_DIR"], env["TRITON_CACHE_DIR"], env["CUDA_CACHE_PATH"]:
+        Path(path).mkdir(parents=True, exist_ok=True)
+    with log.open("w") as f:
+        f.write(f"{now()}\tSTART_VLLM\t{shlex.join(argv)}\n")
+        f.write(f"{now()}\tCUDA_VISIBLE_DEVICES={gpu}\tcache_root={cache_root}\n")
+        if cuda_home:
+            f.write(f"{now()}\tCUDA_HOME={cuda_home}\n")
+    return subprocess.Popen(argv, stdout=log.open("a"), stderr=subprocess.STDOUT, env=env)
+
+
+def wait_for_vllm_server(job: Job, server: subprocess.Popen[bytes], *, server_log: Path, health_url: str) -> int:
+    deadline = time.monotonic() + int(job.metadata.get("vllm_start_timeout", 1800))
+    while time.monotonic() < deadline:
+        if server.poll() is not None:
+            with server_log.open("a") as log:
+                log.write(f"\n{now()}\tserver exited during startup\tstatus={server.returncode}\n")
+            return 71
+        if contains_oom([server_log]):
+            with server_log.open("a") as log:
+                log.write(f"\n{now()}\tserver logged OOM during startup\n")
+            terminate(server)
+            return 72
+        try:
+            with urlopen(health_url, timeout=2) as response:
+                if response.status == 200:
+                    return 0
+        except Exception:
+            pass
+        time.sleep(2)
+    with server_log.open("a") as log:
+        log.write(f"\n{now()}\tserver did not become healthy\turl={health_url}\n")
+    return 124
+
+
+def run_with_vllm_server(
+    job: Job,
+    gpu: int,
+    *,
+    model_name: str,
+    port_offset: int,
+    log: Path,
+    callback,
+) -> int:
+    port = int(job.metadata["port_base"]) + port_offset + gpu * 100 + (os.getpid() % 80) + 1
+    base_url = f"http://{job.metadata['host']}:{port}/v1"
+    server_log = log
+    server = start_vllm_server(job, gpu, port=port, model_name=model_name, log=server_log)
+    try:
+        startup_status = wait_for_vllm_server(
+            job,
+            server,
+            server_log=server_log,
+            health_url=f"http://{job.metadata['host']}:{port}/health",
+        )
+        if startup_status != 0:
+            return startup_status
+        return callback(base_url, server_log, server)
+    finally:
+        terminate(server)
+
+
 def run_standard(job: Job, gpu: int, batch: int) -> int:
+    if is_external_model(job):
+        return run_standard_external(job, gpu, batch)
     task = job.name
     shard = job.shard or 0
     shards = job.shards or 1
     log = Path(job.log_dir) / f"{task}_shard_{shard}_of_{shards}.log"
+    standard_backend = str(job.metadata.get("standard_engine_backend", "simple"))
+    ckpt_path = str(job.metadata["ckpt_path"])
+    ckpt_tag = str(job.metadata["ckpt_tag"])
+    if standard_backend == "vllm":
+        ckpt_path = str(job.metadata["standard_hf_export_dir"])
+        ckpt_tag = ""
     argv = [
         python_bin(job),
         "-u",
         "-m",
         "evaluation.main",
         f"config={job.metadata['standard_config']}",
-        f"ckpt_path={job.metadata['ckpt_path']}",
-        f"ckpt_tag={job.metadata['ckpt_tag']}",
+        f"ckpt_path={ckpt_path}",
         f"run_only=[{task}]",
         f"shard_overrides.{task}.num_shards={shards}",
         f"shard_overrides.{task}.shard_index={shard}",
         f"generation_config.batch_size={batch}",
     ]
+    if ckpt_tag:
+        argv.append(f"ckpt_tag={ckpt_tag}")
+    if standard_backend == "vllm":
+        argv.extend(
+            [
+                f"dtype={job.metadata.get('vllm_dtype', 'bfloat16')}",
+                f"max_model_len={job.metadata.get('vllm_max_model_len', 4096)}",
+                f"gpu_memory_utilization={job.metadata.get('vllm_gpu_memory_utilization', 0.9)}",
+                f"attention_backend={job.metadata.get('vllm_attention_backend', 'FLASH_ATTN')}",
+                "enforce_eager=true",
+            ]
+        )
     if job.metadata.get("no_ema"):
         argv.append("ckpt_use_ema=false")
-    status = run_command(argv, log_path=log, env=env_with_gpu(gpu))
+    env = env_with_gpu(gpu)
+    status = run_command(argv, log_path=log, env=env)
     if status == 0 and f"--- {task} ---" not in tail(log):
         with log.open("a") as f:
             f.write(f"\nMissing {task} summary in log.\n")
         return 4
     return status
+
+
+def run_standard_external(job: Job, gpu: int, batch: int) -> int:
+    task = job.name
+    shard = job.shard or 0
+    shards = job.shards or 1
+    model_name = f"{external_model_name(job)}-{task}-shard-{shard}-{job.metadata['ckpt_tag']}"
+    root = Path(job.log_dir)
+    log = root / f"{task}_shard_{shard}_of_{shards}.log"
+    server_log = root / f"{task}_shard_{shard}_of_{shards}.vllm.log"
+
+    def callback(base_url: str, server_log_path: Path, server: subprocess.Popen[bytes]) -> int:
+        generations_dir = root / "generations" / f"shard_{shard}_of_{shards}"
+        argv = [
+            python_bin(job),
+            "-u",
+            "-m",
+            "evaluation.main",
+            f"config={job.metadata['standard_config']}",
+            "engine=OpenAIEngine",
+            f"model={model_name}",
+            f"base_url={base_url}",
+            f"api_key={os.environ.get('OPENAI_API_KEY', 'inspectai')}",
+            f"run_only=[{task}]",
+            f"shard_overrides.{task}.num_shards={shards}",
+            f"shard_overrides.{task}.shard_index={shard}",
+            f"generation_config.batch_size={batch}",
+            f"save_generations_dir={generations_dir}",
+            *standard_generation_overrides(job),
+        ]
+        status = run_client_with_server_monitor(
+            argv,
+            client_log=log,
+            server_log=server_log_path,
+            server_proc=server,
+            env=env_with_gpu(None),
+        )
+        if status == 0 and f"--- {task} ---" not in tail(log):
+            with log.open("a") as f:
+                f.write(f"\nMissing {task} summary in log.\n")
+            return 4
+        return status
+
+    return run_with_vllm_server(
+        job,
+        gpu,
+        model_name=model_name,
+        port_offset=0,
+        log=server_log,
+        callback=callback,
+    )
 
 
 def run_client_with_server_monitor(
@@ -228,6 +539,13 @@ def run_client_with_server_monitor(
                 terminate(client)
                 terminate(server_proc)
                 return 72
+            if contains_client_fatal([client_log]):
+                log.write(
+                    f"\nClient log contains a fatal task/API error; terminating paired server {server_proc.pid}.\n"
+                )
+                terminate(client)
+                terminate(server_proc)
+                return 73
             time.sleep(5)
         status = client.wait()
     if contains_oom([server_log]):
@@ -264,7 +582,62 @@ def start_hrm_server(job: Job, gpu: int, *, port: int, model_name: str, batch: i
     return subprocess.Popen(argv, stdout=log.open("w"), stderr=subprocess.STDOUT, env=env_with_gpu(gpu))
 
 
+def managed_judge_enabled(job: Job) -> bool:
+    return job.name == "generative_talemaader" and bool(job.metadata.get("judge_server_model"))
+
+
+def judge_served_model_name(job: Job) -> str:
+    model = str(job.metadata.get("judge_model") or "openai/gemma-4-e4b-judge")
+    return model.removeprefix("openai/")
+
+
+def start_judge_server(job: Job, gpu: int, *, port: int, log: Path) -> subprocess.Popen[bytes]:
+    argv = [
+        python_bin(job),
+        "scripts/transformers_openai_server.py",
+        str(job.metadata["judge_server_model"]),
+        "--served-model-name",
+        judge_served_model_name(job),
+        "--host",
+        str(job.metadata["host"]),
+        "--port",
+        str(port),
+        "--dtype",
+        str(job.metadata.get("judge_server_dtype", "bfloat16")),
+        "--attn-implementation",
+        str(job.metadata.get("judge_server_attn_implementation", "sdpa")),
+        "--max-new-tokens",
+        str(job.metadata.get("judge_server_max_new_tokens", 64)),
+    ]
+    log.parent.mkdir(parents=True, exist_ok=True)
+    with log.open("w") as f:
+        f.write(f"{now()}\tSTART_JUDGE\t{shlex.join(argv)}\n")
+        f.write(f"{now()}\tCUDA_VISIBLE_DEVICES={gpu}\n")
+    return subprocess.Popen(argv, stdout=log.open("a"), stderr=subprocess.STDOUT, env=env_with_gpu(gpu))
+
+
+def start_managed_judge(job: Job, gpu: int, run_dir: Path) -> tuple[subprocess.Popen[bytes] | None, str | None, Path | None]:
+    if not managed_judge_enabled(job):
+        return None, None, None
+    shard = job.shard or 0
+    port = int(job.metadata["port_base"]) + 7000 + gpu * 100 + shard
+    log = run_dir / "judge-server.log"
+    proc = start_judge_server(job, gpu, port=port, log=log)
+    status = wait_for_vllm_server(
+        job,
+        proc,
+        server_log=log,
+        health_url=f"http://{job.metadata['host']}:{port}/health",
+    )
+    if status != 0:
+        terminate(proc)
+        raise SchedulerError(f"managed judge server failed to start with status {status}; see {log}")
+    return proc, f"http://{job.metadata['host']}:{port}/v1", log
+
+
 def run_dfm(job: Job, gpu: int, batch: int) -> int:
+    if use_vllm_hrm_server(job):
+        return run_dfm_external(job, gpu, batch)
     shard = job.shard or 0
     shards = job.shards or 1
     port = int(job.metadata["port_base"]) + gpu * 100 + (os.getpid() % 80) + 1
@@ -279,16 +652,18 @@ def run_dfm(job: Job, gpu: int, batch: int) -> int:
     eee_dir.mkdir(parents=True, exist_ok=True)
     server_log = run_dir / "server.log"
     server = start_hrm_server(job, gpu, port=port, model_name=model_name, batch=batch, log=server_log)
+    judge_server: subprocess.Popen[bytes] | None = None
     try:
         wait_for_server(f"http://{job.metadata['host']}:{port}/health", model_name)
+        judge_server, managed_judge_base_url, _judge_log = start_managed_judge(job, gpu, run_dir)
         env = env_with_gpu(None)
         env["OPENAI_API_KEY"] = env.get("OPENAI_API_KEY", "inspectai")
         env["OPENAI_BASE_URL"] = base_url
         env["DFM_EVALS_MODEL_INFO_OVERRIDES"] = json.dumps(
             {
                 f"openai/{model_name}": {
-                    "context_length": 4096,
-                    "output_tokens": 512,
+                    "context_length": dfm_context_length(job),
+                    "output_tokens": dfm_max_output_tokens(job),
                     "display_name": model_name,
                     "organization": "local",
                 }
@@ -308,19 +683,29 @@ def run_dfm(job: Job, gpu: int, batch: int) -> int:
             f"openai/{model_name}",
             "--target-base-url",
             base_url,
-            "--mode",
-            "set",
-            "--",
-            "-T",
-            f"num_shards={shards}",
-            "-T",
-            f"shard_index={shard}",
-            "--log-dir",
-            str(inspect_dir),
-            "--log-dir-allow-dirty",
-            "--max-connections",
-            str(batch),
         ]
+        if job.metadata.get("judge_model"):
+            argv.extend(["--judge-model", str(job.metadata["judge_model"])])
+        judge_base_url = managed_judge_base_url or job.metadata.get("judge_base_url")
+        if judge_base_url:
+            argv.extend(["--judge-base-url", str(judge_base_url)])
+        argv.extend(
+            [
+                "--mode",
+                "set",
+                "--",
+                "-T",
+                f"num_shards={shards}",
+                "-T",
+                f"shard_index={shard}",
+                *dfm_template_overrides(job),
+                "--log-dir",
+                str(inspect_dir),
+                "--log-dir-allow-dirty",
+                "--max-connections",
+                str(job.metadata.get("max_connections", batch)),
+            ]
+        )
         status = run_client_with_server_monitor(
             argv,
             client_log=run_dir / "dfm-evals.log",
@@ -353,10 +738,124 @@ def run_dfm(job: Job, gpu: int, batch: int) -> int:
         ]
         return run_command(eee_argv, log_path=run_dir / "eee-export.log")
     finally:
+        terminate(judge_server)
         terminate(server)
 
 
+def run_dfm_external(job: Job, gpu: int, batch: int) -> int:
+    shard = job.shard or 0
+    shards = job.shards or 1
+    model_name = f"{vllm_served_model_prefix(job)}-{job.name}-shard-{shard}-{job.metadata['ckpt_tag']}"
+    run_dir = Path(job.log_dir)
+    inspect_dir = run_dir / "inspect"
+    eee_dir = run_dir / "eee"
+    shutil.rmtree(inspect_dir, ignore_errors=True)
+    shutil.rmtree(eee_dir, ignore_errors=True)
+    inspect_dir.mkdir(parents=True, exist_ok=True)
+    eee_dir.mkdir(parents=True, exist_ok=True)
+    server_log = run_dir / "vllm.log"
+
+    def callback(base_url: str, server_log_path: Path, server: subprocess.Popen[bytes]) -> int:
+        judge_server: subprocess.Popen[bytes] | None = None
+        env = env_with_gpu(None)
+        env["OPENAI_API_KEY"] = env.get("OPENAI_API_KEY", "inspectai")
+        env["OPENAI_BASE_URL"] = base_url
+        env["DFM_EVALS_MODEL_INFO_OVERRIDES"] = json.dumps(
+            {
+                openai_model_ref(model_name): {
+                    "context_length": dfm_context_length(job),
+                    "output_tokens": dfm_max_output_tokens(job),
+                    "display_name": model_name,
+                    "organization": "local",
+                }
+            }
+        )
+        argv = [
+            "uv",
+            "run",
+            "--project",
+            str(job.metadata["dfm_evals_dir"]),
+            "evals",
+            "suite",
+            dfm_suite(job.name),
+            "--file",
+            str(job.metadata["dfm_single_tasks_config"]),
+            "--target-model",
+            openai_model_ref(model_name),
+            "--target-base-url",
+            base_url,
+        ]
+        if job.metadata.get("judge_model"):
+            argv.extend(["--judge-model", str(job.metadata["judge_model"])])
+        judge_server, managed_judge_base_url, _judge_log = start_managed_judge(job, gpu, run_dir)
+        judge_base_url = managed_judge_base_url or job.metadata.get("judge_base_url")
+        if judge_base_url:
+            argv.extend(["--judge-base-url", str(judge_base_url)])
+        argv.extend(
+            [
+                "--mode",
+                "set",
+                "--",
+                "-T",
+                f"num_shards={shards}",
+                "-T",
+                f"shard_index={shard}",
+                *dfm_template_overrides(job),
+                "--log-dir",
+                str(inspect_dir),
+                "--log-dir-allow-dirty",
+                "--max-connections",
+                str(job.metadata.get("max_connections", batch)),
+            ]
+        )
+        try:
+            status = run_client_with_server_monitor(
+                argv,
+                client_log=run_dir / "dfm-evals.log",
+                server_log=server_log_path,
+                server_proc=server,
+                env=env,
+            )
+        finally:
+            terminate(judge_server)
+        if status != 0:
+            return status
+        eee_argv = [
+            "uv",
+            "run",
+            "--project",
+            str(job.metadata["dfm_evals_dir"]),
+            "evals",
+            "eee",
+            "inspect",
+            "--log-path",
+            str(inspect_dir),
+            "--output-dir",
+            str(eee_dir),
+            "--source-organization-name",
+            "schneiderkamplab",
+            "--evaluator-relationship",
+            "first_party",
+            "--inference-base-url",
+            base_url,
+            "--inference-provider-name",
+            "vllm-openai",
+        ]
+        return run_command(eee_argv, log_path=run_dir / "eee-export.log")
+
+    return run_with_vllm_server(
+        job,
+        gpu,
+        model_name=model_name,
+        port_offset=0,
+        log=server_log,
+        callback=callback,
+    )
+
+
 def run_dfm_ifeval(job: Job, gpu: int, batch: int) -> int:
+    if use_vllm_hrm_server(job):
+        return run_dfm_ifeval_external(job, gpu, batch)
     shard = job.shard or 0
     shards = job.shards or 1
     port = int(job.metadata["port_base"]) + 1000 + gpu * 100 + shard
@@ -379,8 +878,8 @@ def run_dfm_ifeval(job: Job, gpu: int, batch: int) -> int:
         env["DFM_EVALS_MODEL_INFO_OVERRIDES"] = json.dumps(
             {
                 f"openai/{model_name}": {
-                    "context_length": 4096,
-                    "output_tokens": 512,
+                    "context_length": dfm_context_length(job),
+                    "output_tokens": dfm_max_output_tokens(job),
                     "display_name": model_name,
                     "organization": "local",
                 }
@@ -407,7 +906,7 @@ def run_dfm_ifeval(job: Job, gpu: int, batch: int) -> int:
             str(inspect_dir),
             "--log-dir-allow-dirty",
             "--max-connections",
-            str(batch),
+            str(job.metadata.get("max_connections", batch)),
         ]
         status = run_client_with_server_monitor(
             argv,
@@ -444,9 +943,107 @@ def run_dfm_ifeval(job: Job, gpu: int, batch: int) -> int:
         terminate(server)
 
 
+def run_dfm_ifeval_external(job: Job, gpu: int, batch: int) -> int:
+    shard = job.shard or 0
+    shards = job.shards or 1
+    model_name = f"{vllm_served_model_prefix(job)}-ifeval-da-shard-{shard}-{job.metadata['ckpt_tag']}"
+    run_dir = Path(job.log_dir)
+    inspect_dir = run_dir / "inspect"
+    eee_dir = run_dir / "eee"
+    shutil.rmtree(inspect_dir, ignore_errors=True)
+    shutil.rmtree(eee_dir, ignore_errors=True)
+    inspect_dir.mkdir(parents=True, exist_ok=True)
+    eee_dir.mkdir(parents=True, exist_ok=True)
+    server_log = run_dir / "vllm.log"
+
+    def callback(base_url: str, server_log_path: Path, server: subprocess.Popen[bytes]) -> int:
+        env = env_with_gpu(None)
+        env["OPENAI_API_KEY"] = env.get("OPENAI_API_KEY", "inspectai")
+        env["OPENAI_BASE_URL"] = base_url
+        env["DFM_EVALS_MODEL_INFO_OVERRIDES"] = json.dumps(
+            {
+                openai_model_ref(model_name): {
+                    "context_length": dfm_context_length(job),
+                    "output_tokens": dfm_max_output_tokens(job),
+                    "display_name": model_name,
+                    "organization": "local",
+                }
+            }
+        )
+        argv = [
+            "uv",
+            "run",
+            "--project",
+            str(job.metadata["dfm_evals_dir"]),
+            "evals",
+            "suite",
+            ifeval_suite(shard, shards),
+            "--file",
+            str(job.metadata["dfm_ifeval_config"]),
+            "--target-model",
+            openai_model_ref(model_name),
+            "--target-base-url",
+            base_url,
+            "--mode",
+            "set",
+            "--",
+            "--log-dir",
+            str(inspect_dir),
+            "--log-dir-allow-dirty",
+            "--max-connections",
+            str(job.metadata.get("max_connections", batch)),
+        ]
+        status = run_client_with_server_monitor(
+            argv,
+            client_log=run_dir / "dfm-evals.log",
+            server_log=server_log_path,
+            server_proc=server,
+            env=env,
+        )
+        if status != 0:
+            return status
+        eee_argv = [
+            "uv",
+            "run",
+            "--project",
+            str(job.metadata["dfm_evals_dir"]),
+            "evals",
+            "eee",
+            "inspect",
+            "--log-path",
+            str(inspect_dir),
+            "--output-dir",
+            str(eee_dir),
+            "--source-organization-name",
+            "schneiderkamplab",
+            "--evaluator-relationship",
+            "first_party",
+            "--inference-base-url",
+            base_url,
+            "--inference-provider-name",
+            "vllm-openai",
+        ]
+        return run_command(eee_argv, log_path=run_dir / "eee-export.log")
+
+    return run_with_vllm_server(
+        job,
+        gpu,
+        model_name=model_name,
+        port_offset=1000,
+        log=server_log,
+        callback=callback,
+    )
+
+
 def run_euroeval(job: Job, gpu: int, batch: int) -> int:
+    if is_external_model(job):
+        return run_euroeval_external(job, gpu, batch)
     run_root = Path(job.log_dir)
     run_root.mkdir(parents=True, exist_ok=True)
+    euroeval_bin = str(job.metadata["euroeval_bin"])
+    euroeval_argv = shlex.split(euroeval_bin)
+    if len(euroeval_argv) == 1 and euroeval_argv[0].endswith(".py") and not Path(euroeval_argv[0]).is_absolute():
+        euroeval_bin = str((Path.cwd() / euroeval_argv[0]).resolve())
     env = env_with_gpu(gpu)
     env.update(
         {
@@ -457,25 +1054,155 @@ def run_euroeval(job: Job, gpu: int, batch: int) -> int:
             "EVAL_EPOCH": str(job.metadata["eval_epoch"]),
             "EUROEVAL_LOG_ROOT": str(run_root),
             "MODEL_PREFIX": str(job.metadata["model_prefix"]),
-            "MAX_CONTEXT": "4096",
+            "MAX_CONTEXT": str(job.metadata.get("vllm_max_model_len", 4096)),
             "EUROEVAL_BATCH_SIZE": str(batch),
             "EUROEVAL_BATCH_TIMEOUT_MS": "25",
             "EUROEVAL_DATASETS": job.name,
-            "EUROEVAL_BIN": str(job.metadata["euroeval_bin"]),
+            "EUROEVAL_BIN": euroeval_bin,
             "EUROEVAL_PREFIX": "euroeval",
             "HOST": str(job.metadata["host"]),
             "NO_EMA": "1" if job.metadata.get("no_ema") else "0",
-            "WANDB_SYNC": "1",
+            "WANDB_SYNC": "1" if job.metadata.get("log_wandb", True) else "0",
             "WANDB_PROJECT": str(job.metadata["wandb_project"]),
             "WANDB_RUN_ID": str(job.metadata["wandb_run_id"]),
             "WANDB_RUN_NAME": str(job.metadata["wandb_run_name"]),
             "PYTHON_BIN": python_bin(job),
+            "HRM_SERVER_BACKEND": str(job.metadata.get("hrm_server_backend", "simple")),
+            "HRM_VLLM_NATIVE_PROXY": "1" if job.metadata.get("hrm_vllm_native_proxy") else "0",
+            "VLLM_DTYPE": str(job.metadata.get("vllm_dtype", "bfloat16")),
+            "VLLM_GPU_MEMORY_UTILIZATION": str(job.metadata.get("vllm_gpu_memory_utilization", 0.9)),
+            "VLLM_EXTRA_ARGS": str(job.metadata.get("vllm_extra_args", "")),
         }
     )
+    if job.metadata.get("hrm_hf_export_dir"):
+        env["HRM_HF_EXPORT_DIR"] = str(job.metadata["hrm_hf_export_dir"])
+    if job.metadata.get("vllm_python"):
+        env["VLLM_PYTHON"] = str(job.metadata["vllm_python"])
+    if job.metadata.get("euroeval_max_concurrent_calls") is not None:
+        env["EUROEVAL_MAX_CONCURRENT_CALLS"] = str(job.metadata["euroeval_max_concurrent_calls"])
     return run_command(["scripts/run_euroeval_on_checkpoint.sh"], log_path=run_root / "euroeval-wrapper.log", env=env)
 
 
+def run_euroeval_batched_ifeval(job: Job, gpu: int, batch: int) -> int:
+    run_root = Path(job.log_dir)
+    run_root.mkdir(parents=True, exist_ok=True)
+    env = env_with_gpu(gpu)
+    port = int(job.metadata["port_base"]) + 5000 + gpu * 100 + (os.getpid() % 80) + 1
+    env.update(
+        {
+            "GPU": str(gpu),
+            "PORT": str(port),
+            "VLLM_PORT": str(port + 1000),
+            "CKPT_TAG": str(job.metadata["ckpt_tag"]),
+            "EVAL_EPOCH": str(job.metadata["eval_epoch"]),
+            "EUROEVAL_LOG_ROOT": str(run_root),
+            "MODEL_PREFIX": str(job.metadata["model_prefix"]),
+            "EUROEVAL_DATASETS": job.name,
+            "EUROEVAL_BATCH_SIZE": str(batch),
+            "EUROEVAL_MAX_TOKENS": str(job.metadata.get("euroeval_max_tokens", 2048)),
+            "EUROEVAL_PREFIX": "euroeval",
+            "HOST": str(job.metadata["host"]),
+            "OPENAI_API_KEY": "inspectai",
+            "PYTHON_BIN": str(job.metadata.get("vllm_python") or python_bin(job)),
+            "WANDB_SYNC": "1" if job.metadata.get("log_wandb", True) else "0",
+            "WANDB_PROJECT": str(job.metadata["wandb_project"]),
+            "WANDB_RUN_ID": str(job.metadata["wandb_run_id"]),
+            "WANDB_RUN_NAME": str(job.metadata["wandb_run_name"]),
+            "VLLM_DTYPE": str(job.metadata.get("vllm_dtype", "bfloat16")),
+            "VLLM_GPU_MEMORY_UTILIZATION": str(job.metadata.get("vllm_gpu_memory_utilization", 0.9)),
+            "VLLM_EXTRA_ARGS": str(job.metadata.get("vllm_extra_args", "")),
+        }
+    )
+    if job.metadata.get("hrm_hf_export_dir"):
+        env["HRM_HF_EXPORT_DIR"] = str(job.metadata["hrm_hf_export_dir"])
+    return run_command(["scripts/run_batched_ifeval_on_checkpoint.sh"], log_path=run_root / "batched-wrapper.log", env=env)
+
+
+def run_euroeval_external(job: Job, gpu: int, batch: int) -> int:
+    run_root = Path(job.log_dir)
+    run_root.mkdir(parents=True, exist_ok=True)
+    model_name = f"{external_model_name(job)}-euroeval-{job.name}-{job.metadata['ckpt_tag']}"
+    server_log = run_root / "vllm.log"
+    results_file = run_root / "euroeval_benchmark_results.jsonl"
+    metrics_file = run_root / "merged_metrics.json"
+    euroeval_log = run_root / "euroeval.log"
+    euroeval_bin = str(job.metadata["euroeval_bin"])
+    euroeval_bin_argv = shlex.split(euroeval_bin)
+    if len(euroeval_bin_argv) == 1 and euroeval_bin_argv[0].endswith(".py") and not Path(euroeval_bin_argv[0]).is_absolute():
+        euroeval_bin = str((Path.cwd() / euroeval_bin_argv[0]).resolve())
+
+    def callback(base_url: str, server_log_path: Path, server: subprocess.Popen[bytes]) -> int:
+        results_file.unlink(missing_ok=True)
+        metrics_file.unlink(missing_ok=True)
+        euroeval_argv = shlex.split(euroeval_bin) + [
+            "--model",
+            model_name,
+            "--api-base",
+            base_url,
+            "--api-key",
+            os.environ.get("OPENAI_API_KEY", "inspectai"),
+            "--cache-dir",
+            str(run_root / "cache"),
+            "--max-context-length",
+            str(job.metadata.get("vllm_max_model_len", 4096)),
+            "--force",
+            "--no-progress-bar",
+            "--save-results",
+            "--language",
+            "da",
+            "--language",
+            "en",
+            "--dataset",
+            job.name,
+        ]
+        if job.metadata.get("euroeval_generative_type"):
+            euroeval_argv.extend(["--generative-type", str(job.metadata["euroeval_generative_type"])])
+        argv = ["bash", "-lc", f"cd {shlex.quote(str(run_root))} && {shlex.join(euroeval_argv)}"]
+        status = run_client_with_server_monitor(
+            argv,
+            client_log=euroeval_log,
+            server_log=server_log_path,
+            server_proc=server,
+            env=env_with_gpu(None),
+        )
+        if status != 0:
+            return status
+        if not results_file.is_file() or results_file.stat().st_size == 0:
+            with euroeval_log.open("a") as log:
+                log.write(f"\nMissing EuroEval results file: {results_file}\n")
+            return 3
+        merge_argv = [
+            python_bin(job),
+            "scripts/log_euroeval_to_wandb.py",
+            "--results",
+            str(results_file),
+            "--epoch",
+            str(job.metadata["eval_epoch"]),
+            "--output",
+            str(metrics_file),
+            "--prefix",
+            "euroeval",
+            "--language",
+            "da",
+            "--language",
+            "en",
+            *wandb_args(job),
+        ]
+        return run_command(merge_argv, log_path=run_root / "merge_and_wandb_sync.log")
+
+    return run_with_vllm_server(
+        job,
+        gpu,
+        model_name=model_name,
+        port_offset=2000,
+        log=server_log,
+        callback=callback,
+    )
+
+
 def wandb_args(job: Job) -> list[str]:
+    if not job.metadata.get("log_wandb", True):
+        return []
     return [
         "--log-wandb",
         "--project",
@@ -553,9 +1280,23 @@ def run_merge_ifeval(job: Job) -> int:
 
 
 def run_average(job: Job) -> int:
+    if not job.metadata.get("log_wandb", True):
+        log_path = Path(job.log_dir) / "headline_averages.log"
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text("Skipped W&B headline averages because log_wandb=false.\n", encoding="utf-8")
+        return 0
+    ckpt_tag = str(job.metadata["ckpt_tag"])
+    if "eval_step" in job.metadata:
+        step = str(job.metadata["eval_step"])
+    elif ckpt_tag.startswith("step_") and ckpt_tag.removeprefix("step_").isdigit():
+        step = ckpt_tag.removeprefix("step_")
+    elif ckpt_tag.isdigit():
+        step = ckpt_tag
+    else:
+        step = "0"
     item = ":".join(
         [
-            str(job.metadata["ckpt_tag"]).replace("step_", ""),
+            step,
             str(job.metadata["eval_epoch"]),
             str(job.metadata["log_root"]),
             str(job.metadata["dfm_log_root"]),
@@ -585,6 +1326,9 @@ def run_job(job: Job, gpu: int | None) -> int:
     batch = job.retry_batch() or 1
     if job.action == Action.WAIT_CHECKPOINT:
         return run_wait_checkpoint(job)
+    if job.action == Action.EXPORT_HF:
+        assert gpu is not None
+        return run_export_hf(job, gpu)
     if job.action == Action.EVAL_STANDARD:
         assert gpu is not None
         return run_standard(job, gpu, batch)
@@ -597,6 +1341,9 @@ def run_job(job: Job, gpu: int | None) -> int:
     if job.action == Action.EVAL_EUROEVAL:
         assert gpu is not None
         return run_euroeval(job, gpu, batch)
+    if job.action == Action.EVAL_EUROEVAL_BATCHED_IFEVAL:
+        assert gpu is not None
+        return run_euroeval_batched_ifeval(job, gpu, batch)
     if job.action == Action.MERGE_STANDARD:
         return run_merge_standard(job)
     if job.action == Action.MERGE_DFM:
@@ -684,7 +1431,15 @@ class Runner:
             f"gpu_{gpu if gpu is not None else '-'} attempt_{job.attempt + 1}_of_{job.max_retries + 1} "
             f"batch_{batch if batch is not None else '-'} mem_free_before_{free_before}"
         )
-        status = run_job(job, gpu)
+        try:
+            status = run_job(job, gpu)
+        except SchedulerError as exc:
+            status = 72
+            self.event(
+                f"ERROR {job.job_id} {job.action.value} {job.family} {job.name} "
+                f"shard_{job.shard if job.shard is not None else '-'}_of_{job.shards if job.shards is not None else '-'} "
+                f"{exc}"
+            )
         free_after, used_after, total_after = gpu_snapshot(gpu) if gpu is not None else ("NA", "NA", "NA")
         oom = "1" if self.job_had_oom(job) else "0"
         with self.lock:

@@ -1,0 +1,5 @@
+path: data/sampled_dfm6
+target_only: true
+
+# DFM6 is planned as a fresh Gemma-tokenizer build. Do not point this config at
+# DFM5 tokenized/sampled artifacts; build a separate data/tokenized_dfm6 tree.

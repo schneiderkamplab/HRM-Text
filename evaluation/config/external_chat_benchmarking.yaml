@@ -1,0 +1,86 @@
+engine: OpenAIEngine
+
+generation_config:
+  batch_size: 64
+  max_context: 4096
+  temperature: 0.0
+
+benchmarks:
+  - name: GSM8k
+    score_extractor: final_integer
+    generation_config:
+      max_context: 3072
+      max_tokens: 512
+      prompt_template: |-
+        Solve the problem step by step.
+        End your response with a separate line exactly like:
+        Final answer: <integer>
+
+        {prompt}
+
+  - name: MATH
+    generation_config:
+      max_context: 3072
+      max_tokens: 3072
+      prompt_template: |-
+        Solve the problem internally. Return exactly one LaTeX final answer of the form \boxed{{...}}.
+        Do not include any explanation or text outside \boxed{{...}}.
+
+        {prompt}
+
+  - name: DROP
+    generation_config:
+      max_context: 3072
+      max_tokens: 64
+      stop: "\n\n"
+      prompt_template: |-
+        Answer the question as briefly as possible. Return only the answer.
+
+        {prompt}
+
+  - name: MMLU
+    generation_config:
+      max_context: 4096
+      max_tokens: 8
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
+    special_shots:
+      high_school_european_history: 3
+
+  - name: ARC
+    generation_config:
+      max_context: 4096
+      max_tokens: 8
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
+
+  - name: HellaSwag
+    generation_config:
+      max_context: 4096
+      max_tokens: 8
+      prompt_template: |-
+        Choose the most logical continuation. Return only the option letter.
+
+        {prompt}
+
+  - name: Winogrande
+    generation_config:
+      max_context: 4096
+      max_tokens: 8
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
+
+  - name: BoolQ
+    generation_config:
+      max_context: 4096
+      max_tokens: 8
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}

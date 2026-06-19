@@ -64,6 +64,68 @@ python -m eval_scheduler plan create \
   --queue-order euroeval-first
 ```
 
+Create a DFM5-L plan whose EuroEval jobs use an exported HF/vLLM checkpoint
+through the native-compatible proxy:
+
+```bash
+python -m eval_scheduler plan create \
+  --plan-dir logs/scheduler/dfm5_L_step550000_vllm \
+  --ckpt-path checkpoints/dfm5/L \
+  --ckpt-tag step_550000 \
+  --eval-epoch 1.4976296606915782 \
+  --log-root logs/eval/dfm5_L_step550000_vllm \
+  --dfm-log-root logs/dfm_evals/dfm5_L_step550000_vllm \
+  --euroeval-log-root logs/euroeval/dfm5_L_step550000_vllm \
+  --wandb-run-id oti1lisg \
+  --wandb-run-name dfm5-L \
+  --model-prefix hrm-dfm5-L-vllm-native-proxy \
+  --run-euroeval \
+  --queue-order euroeval-first \
+  --standard-config evaluation/config/hrm_vllm_benchmarking.yaml \
+  --standard-engine-backend vllm \
+  --standard-hf-export-dir /work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf \
+  --euroeval-batch 32 \
+  --hrm-server-backend vllm \
+  --hrm-hf-export-dir /work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf \
+  --hrm-vllm-native-proxy \
+  --vllm-gpu-memory-utilization 0.22 \
+  --vllm-attention-backend FLASH_ATTN \
+  --vllm-extra-args "--enforce-eager --attention-backend FLASH_ATTN --chat-template /work/dfm/HRM-Text/evaluation/chat_templates/hrm_direct_chat.jinja"
+```
+
+For current DFM5-L vLLM checkpoint evals, prefer the checked-in wrapper instead
+of recreating the long command manually:
+
+```bash
+scripts/create_dfm5_l_vllm_eval_plan.sh step_750000 4.141326927327961 20260619
+```
+
+That wrapper creates the full standard + DFM + DFM-IFEval + EuroEval graph with
+the working settings used for the 700K run:
+
+- standard evals: `evaluation/config/hrm_vllm_benchmarking.yaml`, vLLM/FA4,
+  batch `64`.
+- DFM evals: vLLM/FA4, batch `32`.
+- DFM IFEval-DA: `32` shards, batch `32`.
+- EuroEval: batch `32`, `EUROEVAL_MAX_CONCURRENT_CALLS=32`, native-compatible
+  vLLM proxy.
+- global vLLM server memory: `--vllm-gpu-memory-utilization 0.35`.
+- `generative_talemaader`: batch `16`, max-connections `16`,
+  per-shard managed `unsloth/gemma-4-E4B-it` judge, and per-task vLLM memory
+  utilization `0.25` so the judge fits beside training and the HRM server.
+- `govreport`: inserts `max_report_chars=9000` into each GovReport row.
+
+`--hrm-vllm-native-proxy` strips EuroEval/OpenAI fields that the native HRM
+server ignores, such as strict `response_format`, logprobs, and seed. Use it
+when comparing vLLM results to historical native-server EuroEval lines.
+
+For internal vLLM plans, `plan create` adds an `export_hf` job by default. The
+job runs after `wait_checkpoint`, writes the EMA HF export with
+`conversion/convert_to_hf.py`, and all vLLM eval rows depend on it. If
+`model.safetensors` already exists in the export directory, the job exits
+successfully without rewriting the export. Disable this with
+`--no-include-hf-export` only when the export is managed externally.
+
 Append another upcoming checkpoint to the same plan:
 
 ```bash
@@ -162,6 +224,23 @@ Monitor:
 python -m eval_scheduler status --plan-dir logs/scheduler/dfm5_L_step300000
 ```
 
+Rich monitor with per-GPU workload, queue counts, and task-specific progress:
+
+```bash
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_step300000 \
+  --gpus 0,1,2,3,4,5,6,7
+```
+
+For a one-shot snapshot:
+
+```bash
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_step300000 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --once
+```
+
 ## Notes
 
 - `plan.tsv` is human-editable.  Edits only affect pending jobs.
@@ -180,3 +259,15 @@ python -m eval_scheduler status --plan-dir logs/scheduler/dfm5_L_step300000
 - Starting `run` clears any stale `stop.request`, so rerunning the same plan
   resumes remaining `pending` jobs. Use `plan reset-running` after hard kills
   that leave rows stuck as `running`.
+- `status` is intentionally terse. `monitor` is the operator view: it reads
+  `plan.tsv`, `status.tsv`, GPU memory/utilization, and active task logs. It
+  reports standard tqdm progress, dfm-evals server completion counts, and
+  EuroEval nested pass/sample progress such as `pass 3/10 samples 137/343`.
+- Active GPU lines and the `next ready` queue include a model/checkpoint label
+  such as `hrm-dfm5-L@step_400000:ema`, `hrm-dfm5-L@step_400000:noema`, or
+  `qwen35-2b@qwen35_2b:ema`.
+- For dfm-evals jobs, `monitor` also reads Inspect `logs.json` and the
+  dfm-evals text log when available to infer sample totals, and surfaces early
+  configuration failures such as missing judge placeholders. Some dfm-evals
+  jobs still show `progress unknown` during model/metric setup before the task
+  header or server requests exist.

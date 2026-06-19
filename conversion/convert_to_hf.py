@@ -1,12 +1,17 @@
 import argparse
 import json
 import math
+import sys
 from pathlib import Path
 
 import torch
 import yaml
 from safetensors.torch import save_file
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, PreTrainedTokenizerFast
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from dataset_new import V1DatasetMeta
 from pretrain import PretrainConfig
@@ -44,7 +49,7 @@ def _compute_intermediate_size(hidden_size: int, expansion: float) -> int:
     return ((round(expansion * hidden_size * 2 / 3) + 255) // 256) * 256
 
 
-def _compute_l_bp_steps(cfg: dict) -> list[int]:
+def _compute_l_bp_cycles(cfg: dict) -> list[int]:
     H, L = int(cfg["H_cycles"]), int(cfg["L_cycles"])
     bp_steps = int(cfg.get("bp_max_steps", cfg.get("max_bp_steps", H + 1)))
     h_bp_steps = min(H, max(0, bp_steps - 1))
@@ -53,14 +58,24 @@ def _compute_l_bp_steps(cfg: dict) -> list[int]:
     return [max(0, min(L, (i + 1) * L - threshold)) for i in range(H)]
 
 
-def load_config(ckpt_path: Path) -> tuple[V1DatasetMeta, dict]:
+def per_stack_layers(cfg: dict) -> int:
+    n_layers = int(cfg["n_layers"])
+    if cfg.get("half_layers"):
+        if n_layers % 2 != 0:
+            raise ValueError(f"half_layers=True requires an even n_layers, got {n_layers}")
+        return n_layers // 2
+    return n_layers
+
+
+def load_config(ckpt_path: Path) -> tuple[V1DatasetMeta, PretrainConfig, dict]:
     model_cfg = PretrainConfig(**yaml.safe_load((ckpt_path / "all_config.yaml").read_text()))
     metadata = V1DatasetMeta(**yaml.safe_load((ckpt_path / "train_metadata.yaml").read_text()))
-    return metadata, model_cfg.arch.model_dump() | metadata.model_dump() | model_cfg.data.model_dump()
+    return metadata, model_cfg, model_cfg.arch.model_dump() | metadata.model_dump() | model_cfg.data.model_dump()
 
 
 def build_hf_config(cfg: dict, tokenizer) -> dict:
     hidden_size = cfg["hidden_size"]
+    rope_theta = cfg.get("rope_theta", 10000.0)
     init_type, init_std = cfg.get("init_type", "fixed_normal"), cfg.get("init_std")
     if init_type == "lecun_normal":
         in_std = 1.0 / math.sqrt(hidden_size)
@@ -75,16 +90,22 @@ def build_hf_config(cfg: dict, tokenizer) -> dict:
         "vocab_size": cfg["vocab_size"],
         "hidden_size": hidden_size,
         "intermediate_size": _compute_intermediate_size(hidden_size, cfg.get("expansion", 4.0)),
-        "num_hidden_layers": cfg["n_layers"],
+        "num_hidden_layers": per_stack_layers(cfg),
         "num_attention_heads": cfg["num_heads"],
         "num_key_value_heads": cfg["num_heads"],
         "head_dim": hidden_size // cfg["num_heads"],
+        "hidden_act": "silu",
         "H_cycles": cfg["H_cycles"],
         "L_cycles": cfg["L_cycles"],
-        "L_bp_steps": _compute_l_bp_steps(cfg),
+        "L_bp_cycles": _compute_l_bp_cycles(cfg),
         "max_position_embeddings": cfg["max_seq_len"],
         "rms_norm_eps": cfg.get("norm_eps", 1e-6),
-        "rope_theta": cfg.get("rope_theta", 10000.0),
+        "rope_theta": rope_theta,
+        "rope_parameters": {"rope_type": "default", "rope_theta": rope_theta},
+        "attention_bias": False,
+        "attention_dropout": 0.0,
+        "mlp_bias": False,
+        "use_cache": True,
         "tie_word_embeddings": False,
         "initializer_range": in_std,
         "embedding_scale": 1.0 / in_std,
@@ -103,11 +124,22 @@ def tokenizer_path(metadata: V1DatasetMeta, override: Path | None) -> Path:
 
 
 def set_tokenizer_special_tokens(tokenizer, cfg: dict):
+    if tokenizer.pad_token is None:
+        endoftext_id = tokenizer.convert_tokens_to_ids("<|endoftext|>")
+        if endoftext_id != tokenizer.unk_token_id:
+            tokenizer.pad_token = "<|endoftext|>"
     if "boq" in cfg:
         tokenizer.bos_token = cfg["boq"]
     if "eoa" in cfg:
         tokenizer.eos_token = cfg["eoa"]
     return tokenizer
+
+
+def load_tokenizer(path: Path):
+    tokenizer_file = path / "tokenizer.json" if path.is_dir() else path
+    if tokenizer_file.is_file():
+        return PreTrainedTokenizerFast(tokenizer_file=str(tokenizer_file))
+    return AutoTokenizer.from_pretrained(str(path), use_fast=True)
 
 
 def parse_bool(value: str) -> bool:
@@ -122,25 +154,34 @@ def main():
     parser.add_argument("--ckpt_use_ema", type=parse_bool, default=True)
     parser.add_argument("--out_dir", type=Path, required=True)
     parser.add_argument("--tokenizer_path", type=Path, default=None)
+    parser.add_argument("--config-only", action="store_true", help="Write config/tokenizer only; do not load or save model weights.")
     args = parser.parse_args()
     if args.ckpt_epoch is not None and args.ckpt_tag is not None:
         parser.error("Specify only one of --ckpt_epoch and --ckpt_tag")
 
-    metadata, cfg = load_config(args.ckpt_path)
-    ckpt = inference_load_checkpoint(str(args.ckpt_path), args.ckpt_epoch, args.ckpt_use_ema, ckpt_tag=args.ckpt_tag)
-
-    hf_state, dropped = convert_state_dict(ckpt.model.state_dict())
-    print(f"[convert] mapped {len(hf_state)} tensors; dropped {len(dropped)}")
+    metadata, _model_cfg, cfg = load_config(args.ckpt_path)
 
     tok_path = tokenizer_path(metadata, args.tokenizer_path)
     print(f"[convert] using tokenizer at {tok_path}")
-    tokenizer = ckpt.tokenizer if args.tokenizer_path is None else AutoTokenizer.from_pretrained(str(tok_path), use_fast=True)
+    tokenizer = load_tokenizer(tok_path)
     tokenizer = set_tokenizer_special_tokens(tokenizer, metadata.tokenizer_info)
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     (args.out_dir / "config.json").write_text(json.dumps(build_hf_config(cfg | metadata.tokenizer_info, tokenizer), indent=2))
-    save_file(hf_state, args.out_dir / "model.safetensors")
     tokenizer.save_pretrained(args.out_dir)
+    if args.config_only:
+        print(f"[convert] wrote config/tokenizer only to {args.out_dir}")
+        return
+
+    ckpt = inference_load_checkpoint(str(args.ckpt_path), args.ckpt_epoch, args.ckpt_use_ema, ckpt_tag=args.ckpt_tag)
+    hf_state, dropped = convert_state_dict(ckpt.model.state_dict())
+    print(f"[convert] mapped {len(hf_state)} tensors; dropped {len(dropped)}")
+    if dropped:
+        print("[convert] dropped tensors:")
+        for key in dropped:
+            print(f"  - {key}")
+
+    save_file(hf_state, args.out_dir / "model.safetensors")
     print(f"[convert] wrote checkpoint to {args.out_dir}")
 
 

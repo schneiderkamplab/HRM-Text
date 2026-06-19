@@ -11,8 +11,6 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/dfm5.md"
-REPORT_OUT = ROOT / "logs/reports/dfm5_l_eval_comparison_50k_250k_vs_original_ema_and_card.md"
-LEGACY_OUT = ROOT / "logs/reports/dfm5_l_eval_comparison_50k_100k_150k_vs_original_ema_and_card.md"
 
 
 DFM5_CHECKPOINTS = [
@@ -58,9 +56,33 @@ DFM5_CHECKPOINTS = [
         ROOT / "logs/dfm_evals/dfm5_L_step300000_full_20260616_eurofirst_guard",
         ROOT / "logs/euroeval/dfm5_L_step300000_full_20260616_eurofirst_guard/step_300000",
     ),
+    (
+        "DFM5-L 350K",
+        "step_350000",
+        ROOT / "logs/eval/dfm5_L_step350000_full_20260616_new_scheduler",
+        ROOT / "logs/dfm_evals/dfm5_L_step350000_full_20260616_new_scheduler",
+        ROOT / "logs/euroeval/dfm5_L_step350000_full_20260616_new_scheduler/step_350000",
+    ),
+    (
+        "DFM5-L 400K",
+        "step_400000",
+        ROOT / "logs/eval/dfm5_L_step400000_full_ordered_20260616",
+        ROOT / "logs/dfm_evals/dfm5_L_step400000_full_ordered_20260616",
+        ROOT / "logs/euroeval/dfm5_L_step400000_full_ordered_20260616/step_400000",
+    ),
+    (
+        "DFM5-L 450K",
+        "step_450000",
+        ROOT / "logs/eval/dfm5_L_step450000_full_ordered_20260616",
+        ROOT / "logs/dfm_evals/dfm5_L_step450000_full_ordered_20260616",
+        ROOT / "logs/euroeval/dfm5_L_step450000_full_ordered_20260616/step_450000",
+    ),
 ]
 
 ORIG_DFM_ROOT = ROOT / "logs/dfm_evals/original_sapient_L_lite_all_checkpoints_20260603T213010"
+QWEN35_2B_STANDARD_ROOT = ROOT / "logs/eval/qwen35_2b_clean_standard_20260617"
+QWEN35_2B_DFM_ROOT = ROOT / "logs/dfm_evals/qwen35_2b_full_ordered_20260616"
+QWEN35_2B_EURO_ROOT = ROOT / "logs/euroeval/qwen35_2b_full_ordered_20260616/qwen35_2b"
 
 
 STANDARD_MAP = {
@@ -166,6 +188,31 @@ CARD = {
     "HellaSwag acc": (52.7, 63.4),
     "Winogrande acc": (67.6, 72.4),
     "BoolQ acc": (85.0, 86.2),
+}
+
+QWEN35_2B = {
+    "GSM8k acc": 53.0,
+    "MATH acc": 34.2,
+    "DROP F1": 30.8,
+    "MMLU acc": 64.5,
+    "ARC-C acc": 81.0,
+    "HellaSwag acc": 64.6,
+    "Winogrande acc": 56.7,
+    "BoolQ acc": 80.5,
+}
+
+QWEN35_9B: dict[str, float] = {}
+
+QWEN35_9B_OFFICIAL_ADJACENT = {
+    "MMLU-Pro": 82.5,
+    "MMLU-Redux": 91.1,
+    "C-Eval": 88.2,
+    "SuperGPQA": 58.2,
+    "GPQA Diamond": 81.7,
+    "IFEval": 91.5,
+    "IFBench": 64.5,
+    "Global PIQA": 83.2,
+    "WMT24++": 72.6,
 }
 
 
@@ -276,6 +323,14 @@ def load_original() -> tuple[list[str], dict[str, dict[str, float]]]:
     return labels, columns
 
 
+def load_qwen35_2b() -> dict[str, float]:
+    values = dict(QWEN35_2B)
+    values.update(parse_standard_merged(QWEN35_2B_STANDARD_ROOT))
+    values.update(parse_dfm(QWEN35_2B_DFM_ROOT))
+    values.update(parse_euro(QWEN35_2B_EURO_ROOT))
+    return values
+
+
 def fmt(value: float | None, bold: bool = False) -> str:
     if value is None:
         return "—"
@@ -301,43 +356,49 @@ def write_section(
 ) -> None:
     lines.append(f"## {title}")
     lines.append("")
-    lines.append("| Metric | " + " | ".join(labels) + " | Card L | Card XL |")
-    lines.append("|---|" + "---:|" * (len(labels) + 2))
+    lines.append("| Metric | " + " | ".join(labels) + " | Card L | Card XL | Qwen3.5 2B | Qwen3.5 9B |")
+    lines.append("|---|" + "---:|" * (len(labels) + 4))
     for metric in metrics:
         card_l, card_xl = CARD.get(metric, (None, None))
+        qwen35_2b = QWEN35_2B.get(metric)
+        qwen35_9b = QWEN35_9B.get(metric)
         vals = [fmt(columns[label].get(metric)) for label in labels]
-        lines.append(f"| {metric} | " + " | ".join(vals) + f" | {fmt(card_l)} | {fmt(card_xl)} |")
+        lines.append(
+            f"| {metric} | "
+            + " | ".join(vals)
+            + f" | {fmt(card_l)} | {fmt(card_xl)} | {fmt(qwen35_2b)} | {fmt(qwen35_9b)} |"
+        )
     vals = [fmt(section_average(columns[label], metrics), bold=True) for label in labels]
-    lines.append(f"| **{avg_label}** | " + " | ".join(vals) + " | — | — |")
+    lines.append(f"| **{avg_label}** | " + " | ".join(vals) + " | — | — | — | — |")
     lines.append("")
 
 
 def main() -> None:
     dfm5_labels, dfm5_columns = load_dfm5()
     orig_labels, orig_columns = load_original()
+    QWEN35_2B.update(load_qwen35_2b())
     labels = dfm5_labels + orig_labels
     columns = {**dfm5_columns, **orig_columns}
 
     lines = [
         "# DFM5 L eval comparison",
         "",
-        "Values are percent-style scores where applicable. `—` means no comparable value. Model-card L/XL values are only available for the standard README benchmarks.",
+        "Values are percent-style scores where applicable. `—` means no comparable value. Model-card L/XL values are only available for the standard README benchmarks. Qwen3.5 2B values use the local clean Qwen run artifacts where available, including the fixed GSM8K rerun, and fall back to HRM-Text arXiv v1 Table 4 for missing standard metrics. Qwen3.5 9B has official Qwen model-card results for adjacent newer benchmarks, but no same-suite HRM-Text standard row was found, so the table column is left unavailable.",
         "",
         "Original Sapient L uses EMA/default evaluation sources: full epoch-wise standard eval logs, epoch-wise EuroEval JSONL files, and the default/EMA local DFM-evals artifacts. The original DFM-evals artifacts are lite/sharded-local rows, so use them directionally for non-standard metrics. No `*_noema_*` artifacts are used.",
+        "",
+        "Qwen3.5 9B official adjacent language benchmarks from the model card: "
+        + ", ".join(f"{name} {value:.1f}" for name, value in QWEN35_9B_OFFICIAL_ADJACENT.items())
+        + ". These are not inserted into the main rows because they are not the same benchmark/configuration as the HRM-Text standard table.",
         "",
     ]
     write_section(lines, "Danish", DANISH, "Danish average", labels, columns)
     write_section(lines, "English", ENGLISH, "English average", labels, columns)
     write_section(lines, "Math & Code", MATH_CODE, "Math & Code average", labels, columns)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT_OUT.parent.mkdir(parents=True, exist_ok=True)
     text = "\n".join(lines)
     OUT.write_text(text, encoding="utf-8")
-    REPORT_OUT.write_text(text, encoding="utf-8")
-    LEGACY_OUT.write_text(text, encoding="utf-8")
     print(OUT)
-    print(REPORT_OUT)
-    print(LEGACY_OUT)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,61 @@
+engine: VLLMEngine
+ckpt_path: null
+prompt_mode: hrm_tokens
+max_model_len: 4096
+dtype: bfloat16
+gpu_memory_utilization: 0.85
+enforce_eager: true
+attention_backend: FLASH_ATTN
+
+generation_config:
+  batch_size: 33
+  max_context: 3072
+  temperature: 0.0
+  condition: "synth,cot"
+
+benchmarks:
+  # CoT
+  - name: GSM8k
+    generation_config:
+      condition: "direct"
+      max_tokens: 512
+  - name: MATH
+    generation_config:
+      max_tokens: 3072
+
+  # Few-shot freeform
+  - name: DROP
+    generation_config:
+      condition: "direct"
+      max_tokens: 64
+  - name: GovReport
+  - name: NordjyllandNews
+
+  # Few-shot MCQ
+  - name: MMLU
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+      batch_size: 1
+    special_shots:
+      high_school_european_history: 3
+  - name: ARC
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+      batch_size: 1
+  - name: HellaSwag
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+      batch_size: 1
+  - name: Winogrande
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+      batch_size: 1
+  - name: BoolQ
+    generation_config:
+      condition: "direct"
+      max_context: 4096
+      batch_size: 1

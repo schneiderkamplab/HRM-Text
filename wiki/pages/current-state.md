@@ -1,8 +1,626 @@
 # Current State
 
-Last updated: 2026-06-16
+Last updated: 2026-06-19
 Confidence: high
 Scope: Local repo state and verified commands from this session.
+
+## 2026-06-18 Clean DFM5-L 650K/700K vLLM Eval Scheduler
+
+Confidence: high for local code inspection, `py_compile`, throwaway plan
+probe, plan creation, and live scheduler monitor output.
+
+The first DFM5-L `step_650000` vLLM scheduler run was invalid for standard
+English evals. Standard `evaluation.main` vLLM rows attempted to force FA4 with
+`VLLM_ATTENTION_BACKEND=FLASH_ATTN`, but this vLLM build logs that env var as
+unknown and selected FlashInfer. The broken local artifacts were removed:
+
+```text
+logs/scheduler/dfm5_L_step650000_vllm_20260618
+logs/eval/dfm5_L_step650000_vllm_20260618
+logs/dfm_evals/dfm5_L_step650000_vllm_20260618
+logs/euroeval/dfm5_L_step650000_vllm_20260618
+```
+
+The scheduler now passes `attention_backend=FLASH_ATTN` as an actual
+`evaluation.main` override for standard vLLM rows. Plan metadata records this
+as `vllm_attention_backend: FLASH_ATTN`. This matches the known-good DFM5-L
+`step_550000` vLLM FA4 standard eval path, whose logs showed
+`Using AttentionBackendEnum.FLASH_ATTN backend` and `Using FlashAttention
+version 4`.
+
+The scheduler also now has a first-class GPU-backed action:
+
+```text
+export_hf
+```
+
+For internal vLLM plans, `plan create` inserts `export_hf` after
+`wait_checkpoint` by default. It runs `conversion/convert_to_hf.py` with
+`--ckpt_use_ema true` unless `--no-ema` is set, writes into a temporary sibling
+directory, and swaps it into the requested export path only after
+`model.safetensors` is present. If the target export already has
+`model.safetensors`, the job succeeds immediately without rewriting it. Disable
+this only with `--no-include-hf-export` when the export is managed externally.
+
+The clean combined plan is:
+
+```text
+plan_dir:      logs/scheduler/dfm5_L_clean_vllm_650k_700k_20260618
+standard logs: logs/eval/dfm5_L_clean_vllm_650k_700k_20260618/step_{650000,700000}
+dfm logs:      logs/dfm_evals/dfm5_L_clean_vllm_650k_700k_20260618/step_{650000,700000}
+euro logs:     logs/euroeval/dfm5_L_clean_vllm_650k_700k_20260618
+W&B run:       DFM5 / dfm5-l-vllm-clean-650k-700k-20260618
+```
+
+It contains full 650K and 700K eval graphs. The 700K wait row is explicitly
+chained behind the 650K report row:
+
+```text
+wait-00212 step_700000 depends on report-00211 step_650000
+export-00213 step_700000 depends on wait-00212
+```
+
+The run was launched in tmux session `hrm-0`:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_clean_vllm_650k_700k_20260618 \
+  --gpus 0,1,2,3,4,5,6,7
+
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_clean_vllm_650k_700k_20260618 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --interval 10
+```
+
+Initial monitor output showed `wait-00001` and `export-00002` done for 650K.
+The export job skipped because
+`exports/dfm5_L_step650000_ema_hf/model.safetensors` already existed. The first
+EuroEval wave was running on all eight GPUs.
+
+Follow-up, 2026-06-19. Confidence: high for local scheduler code inspection,
+`py_compile`, plan edits under `PlanLock`, and live monitor output. The DFM
+`generative_talemaader` task must not rely on a single shared judge URL. The
+scheduler now supports managed per-task judge servers for this task via plan
+metadata:
+
+```text
+judge_model: openai/gemma-4-e4b-judge
+judge_server_model: unsloth/gemma-4-E4B-it
+judge_server_dtype: bfloat16
+judge_server_attn_implementation: sdpa
+judge_server_max_new_tokens: 64
+```
+
+For `generative_talemaader`, each shard starts its own target HRM/vLLM server
+and its own judge server on the same assigned GPU, passes the resulting
+per-shard `--judge-base-url` to `dfm-evals`, and tears down the judge in the job
+cleanup path. This replaced the broken single external judge assumption that
+caused 650K Talemaader shards to stall.
+
+There are two distinct batching controls for this path:
+
+```text
+initial_batch:   target HRM/vLLM server batch size shown as `batch` in monitor
+max_connections: dfm-evals client concurrency to the target and judge APIs
+```
+
+The 650K Talemaader recovery rows were intentionally kept conservative at
+`initial_batch=4` and `max_connections=4`; live monitor output showed all eight
+shards moving with no failed judge calls.
+
+Superseded: the still-pending 700K Talemaader rows were briefly updated under
+scheduler lock to `initial_batch=16` and `max_connections=16`.
+
+Superseded: Replacement, 2026-06-19. The 700K Talemaader rows were removed
+from the active clean plan:
+
+```text
+removed eval-00385..eval-00392
+removed merge-00393
+updated average-00421 deps 37 -> 36
+```
+
+Replacement, 2026-06-19. Confidence: high for local process inspection,
+locked plan edit, and scheduler monitor output. The intended change was to
+stop and remove all 700K eval work, not just Talemaader. The scheduler stop
+file was written, the active scheduler/eval process group `1106626` was
+terminated, and every `step_700000` row was removed from the clean plan:
+
+```text
+removed_step_700000_rows=202
+total_rows=211
+remaining_step_700000_rows=0
+```
+
+Post-edit monitor output showed the plan completed/stopped with
+`done=211`, `running=0`, `ready=0`, `blocked_pending=0`, `failed=0`,
+`total=211`. Process inspection found no remaining `step_700000` vLLM,
+proxy, EuroEval, or scheduler-run processes; the remaining GPU processes were
+the existing training workers.
+
+Follow-up, 2026-06-19. Confidence: high for local plan creation, metadata
+inspection, and live scheduler monitor output. A fresh 700K-only scheduler was
+created so the 700K metrics log to the main DFM5-L W&B run rather than the
+temporary clean 650K run:
+
+```text
+plan_dir:      logs/scheduler/dfm5_L_step700000_vllm_main_20260619
+standard logs: logs/eval/dfm5_L_step700000_vllm_main_20260619
+dfm logs:      logs/dfm_evals/dfm5_L_step700000_vllm_main_20260619
+euro logs:     logs/euroeval/dfm5_L_step700000_vllm_main_20260619
+W&B target:    DFM5 / oti1lisg / dfm5-L
+eval_epoch:    3.865238465506098
+```
+
+The plan has 211 rows for `step_700000` only. It uses the agreed vLLM path:
+standard evals through `evaluation/config/hrm_vllm_benchmarking.yaml`, HRM
+EuroEval through the native-compatible proxy, explicit FA4 via
+`--attention-backend FLASH_ATTN`, vLLM GPU memory utilization `0.35`, and
+EuroEval max concurrent calls `32`. The managed Talemaader judge setup is
+enabled with one per-shard `unsloth/gemma-4-E4B-it` judge server, and
+Talemaader rows are explicitly set to `initial_batch=16` and
+`max_connections=16`.
+
+The run was launched in tmux session `hrm-0`:
+
+```text
+runner:  window eval700main
+monitor: window mon700main
+```
+
+Initial monitor output showed `done=2`, `running=8`, `failed=0`, with the
+EuroEval-first block running on GPUs 0-7.
+
+Superseded/correction, 2026-06-19. Confidence: high for live process
+inspection and local scheduler code inspection. The 700K plan above did use
+vLLM for EuroEval, but it did **not** use vLLM for the DFM and DFM-IFEval
+shards. Live DFM-IFEVal processes were:
+
+```text
+scripts/hrm_openai_server.py --ckpt-path checkpoints/dfm5/L --ckpt-tag step_700000 ...
+```
+
+not `vllm.entrypoints.openai.api_server`. Code inspection showed why:
+`run_dfm()` and `run_dfm_ifeval()` only dispatch to their vLLM-backed
+`*_external()` variants when `is_external_model(job)` is true. The
+`hrm_server_backend=vllm` setting is currently honored by the EuroEval wrapper
+path, not by scheduler DFM/DFM-IFEval rows for internal HRM checkpoints.
+
+The run was stopped to avoid logging further non-vLLM 700K DFM results to the
+main W&B run. Process group `1438800` was terminated. After stopping, process
+inspection found no active `step_700000` scheduler, HRM server, vLLM server,
+proxy, or EuroEval worker processes. At stop time the plan had completed:
+
+```text
+17 eval_euroeval rows
+2 eval_euroeval_batched_ifeval rows
+6 eval_dfm_ifeval rows using native HRM server
+1 eval_euroeval row failed: valeu-da
+```
+
+Before a vLLM-only 700K DFM run, patch the scheduler so internal HRM
+`eval_dfm` and `eval_dfm_ifeval` rows honor `hrm_server_backend=vllm` (or route
+them through the existing vLLM server helper with the HF export path), then
+create a fresh plan or reset only the intended rows.
+
+Follow-up fix, 2026-06-19. Confidence: high for local code inspection,
+`py_compile`, locked plan edit, live process inspection, and vLLM logs. The
+scheduler was patched so internal HRM DFM and DFM-IFEval rows now honor
+`hrm_server_backend=vllm`:
+
+```text
+eval_scheduler/eval_scheduler/runtime.py
+```
+
+The patch added helpers for internal vLLM routing:
+
+```text
+use_vllm_hrm_server(job)
+vllm_model_path(job)
+vllm_served_model_prefix(job)
+```
+
+`start_vllm_server()` now launches from `external_model` for external plans or
+from `hrm_hf_export_dir` / `standard_hf_export_dir` for internal HRM plans.
+`run_dfm()` and `run_dfm_ifeval()` dispatch to their vLLM-backed paths whenever
+`hrm_server_backend=vllm`.
+
+All 32 DFM-IFEval rows were reset to `pending` so the final DFM-IFEval metric
+does not mix native HRM-server shards with vLLM shards. The failed EuroEval
+`valeu-da` row was also reset. The scheduler was restarted in tmux window:
+
+```text
+runner: hrm-0:eval700vllmfix
+monitor: hrm-0:mon700main
+```
+
+Live process inspection after restart showed DFM-IFEval rows running as:
+
+```text
+python -m vllm.entrypoints.openai.api_server \
+  --model /work/dfm/HRM-Text/exports/dfm5_L_step700000_ema_hf \
+  --served-model-name hrm-dfm5-L-vllm-native-proxy-ifeval-da-shard-... \
+  --attention-backend FLASH_ATTN
+```
+
+and no `scripts/hrm_openai_server.py --ckpt-tag step_700000` processes. The
+new DFM-IFEval vLLM logs confirmed:
+
+```text
+Using AttentionBackendEnum.FLASH_ATTN backend.
+Using FlashAttention version 4
+```
+
+## 2026-06-18 Batched vLLM IFEval Scheduler Path
+
+Confidence: high for local code inspection, py_compile checks, scheduler plan
+inspection, and live monitor/vLLM log output.
+
+The slow EuroEval `ifeval`/`ifeval-da` vLLM path was not fixed by merely
+raising EuroEval's concurrent-call setting because EuroEval feeds these tasks
+sample-by-sample. A local batched IFEval runner now bypasses that bottleneck
+while preserving the EuroEval cached prompts and IFEval scoring:
+
+```text
+scripts/run_ifeval_batched_openai.py
+scripts/run_batched_ifeval_on_checkpoint.sh
+```
+
+`scripts/native_compatible_openai_proxy.py` was also changed to use async
+`httpx` forwarding instead of blocking `urllib.request.urlopen()` inside the
+FastAPI route. This is required for actual concurrent upstream requests. Live
+vLLM logs verified `Running: 32 reqs, Waiting: 0 reqs`.
+
+The durable scheduler integration uses a new action:
+
+```text
+eval_euroeval_batched_ifeval
+```
+
+When a plan uses `hrm_server_backend=vllm` with the native-compatible proxy,
+`eval_scheduler/eval_scheduler/plan.py` routes only EuroEval `ifeval` and
+`ifeval-da` to this action; all other EuroEval tasks continue to use the normal
+`eval_euroeval` action. `eval_scheduler/eval_scheduler/monitor.py` parses the
+batched runner's `batched_ifeval.log`, so the normal scheduler monitor is the
+intended monitor for this path.
+
+The initial batched IFEval proof run was launched by an ad hoc tmux script, so
+its monitor looked different from the scheduler monitor. Superseded: use the
+scheduler path below for resumed and future runs.
+
+Current resumed 550K DFM5-L vLLM IFEval comparison plan:
+
+```text
+plan_dir: logs/scheduler/dfm5_L_step550000_batched_ifeval_resume_20260618_205047
+output_root: logs/euroeval/dfm5_L_step550000_vllm_native_proxy_batched_ifeval_20260618_204610/step_550000
+tmux run window: hrm-0:eval550batched
+tmux monitor window: hrm-0:mon550batched
+GPUs: 0,1
+batch/concurrency: 32
+```
+
+The wrapper script must be executable:
+
+```bash
+cd /work/dfm/HRM-Text
+chmod +x scripts/run_batched_ifeval_on_checkpoint.sh
+```
+
+If the scheduler crashes before starting the wrapper, reset stale running rows
+without incrementing attempts and relaunch:
+
+```bash
+cd /work/dfm/HRM-Text
+PLAN_DIR=logs/scheduler/dfm5_L_step550000_batched_ifeval_resume_20260618_205047
+python -m eval_scheduler plan reset-running --plan-dir "$PLAN_DIR" --no-increment-attempt
+python -m eval_scheduler clear-stop --plan-dir "$PLAN_DIR"
+python -m eval_scheduler run --plan-dir "$PLAN_DIR" --gpus 0,1
+```
+
+Follow-up, 2026-06-18. Confidence: high for local traceback and completed
+scheduler rerun. `ifeval-da` initially retried until failure even though
+`predictions.jsonl` had all 541 generations. The failure was in local scoring:
+one or more Danish IFEval cached targets had fewer `kwargs` entries than
+`instruction_id_list` entries, and `scripts/run_ifeval_batched_openai.py` used
+`zip(..., strict=True)`. The runner now pads missing kwargs with `{}` before
+calling EuroEval's constraint functions. After resetting only `eval-00009` to
+`pending`, the rerun skipped generation, wrote metrics, and the scheduler ended
+with `done=2 failed=0`.
+
+Completed local vLLM-native-proxy 550K IFEval metrics:
+
+```text
+ifeval instruction_accuracy:    69.65486279197968
+ifeval-da instruction_accuracy: 53.2762661506822
+```
+
+Follow-up sync patch, 2026-06-18. Confidence: high for local code inspection,
+`py_compile`/`bash -n`, and successful W&B backfill. The custom batched
+EuroEval IFEval wrapper now logs its flat JSONL result records to W&B through
+`scripts/log_euroeval_to_wandb.py` when `WANDB_SYNC=1` and `EVAL_EPOCH` is set.
+The scheduler passes the W&B project/run metadata to
+`scripts/run_batched_ifeval_on_checkpoint.sh` for
+`eval_euroeval_batched_ifeval` rows. The logger now accepts flat records with
+singular `language`, `dataset`, `task`, `metric`, `score`, and confidence
+fields, which produces the same canonical key shape as the normal EuroEval
+sync.
+
+The already-finished 650K batched rows were backfilled to the real DFM5-L W&B
+run at epoch `3.5891500036842335`:
+
+```text
+euroeval/da/instruction-following/ifeval-da/instruction_accuracy: 53.81851573616802
+euroeval/en/instruction-following/ifeval/instruction_accuracy:    69.36556541198156
+```
+
+Note: a first manual backfill attempt before the `language` parser fix uploaded
+extra `euroeval/unknown/instruction-following/...` metric series. The canonical
+`da` and `en` series above are now present; hide or delete the stray W&B series
+in the UI if they become confusing.
+
+## 2026-06-18 DFM5-L 650K vLLM Full Eval Launch
+
+Confidence: high for local checkpoint/export inspection, scheduler plan
+creation, and live scheduler status.
+
+DFM5-L `step_650000` is fully written under `checkpoints/dfm5/L` and exported
+for vLLM at:
+
+```text
+exports/dfm5_L_step650000_ema_hf
+```
+
+The correct W&B x-axis is on the real DFM5 sampled-token scale, not the
+temporary local 550K vLLM comparison scale:
+
+```text
+650000 / (35605979095 / 196608) = 3.5891500036842335
+```
+
+Scheduler patch, 2026-06-18. Confidence: high for code inspection and
+`py_compile`. `eval_scheduler plan create` now exposes:
+
+```text
+--standard-config
+--standard-engine-backend
+--standard-hf-export-dir
+```
+
+When `standard_engine_backend=vllm`, standard eval rows still wait on the real
+FSDP checkpoint path, but `evaluation.main` receives the HF export path as
+`ckpt_path`, uses the vLLM standard config, and gets scheduler-controlled vLLM
+settings such as `gpu_memory_utilization`.
+
+Launched plan:
+
+```text
+plan_dir: logs/scheduler/dfm5_L_step650000_vllm_20260618
+standard logs: logs/eval/dfm5_L_step650000_vllm_20260618
+dfm logs: logs/dfm_evals/dfm5_L_step650000_vllm_20260618
+euroeval logs: logs/euroeval/dfm5_L_step650000_vllm_20260618
+W&B project/run: DFM5 / oti1lisg / dfm5-L
+monitor: tmux hrm-0 window 8 (mon650)
+runner: tmux hrm-0 window 9 (eval650)
+```
+
+Plan shape:
+
+```text
+eval_standard: 85, batch 64, vLLM standard config
+eval_dfm: 51, batch 32 except generative_talemaader batch 16
+eval_dfm_ifeval: 32, batch 32
+eval_euroeval: 18, batch 32
+eval_euroeval_batched_ifeval: 2, batch 32
+```
+
+Launch command:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_step650000_vllm_20260618 \
+  --gpus 0,1,2,3,4,5,6,7
+```
+
+Monitor command:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_step650000_vllm_20260618 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --interval 10
+```
+
+## 2026-06-16 Eval Scheduler EuroEval Monitor Progress Fix
+
+Confidence: high for local code inspection and one-shot monitor verification.
+
+`eval_scheduler/eval_scheduler/monitor.py` now reports EuroEval progress more
+robustly. The monitor still prefers EuroEval's own tqdm sample bars
+(`samples done/total`) and ETA calculation, but no longer falls back to the
+unhelpful `progress unknown` during normal startup states. It now reports
+`loading model`, `benchmark setup`, `starting`, or `requests N failed M` when
+sample bars are not yet available. Server request counts are only an activity
+signal because one EuroEval sample can issue multiple API calls; they are not
+used as sample-count fractions.
+
+Verified command:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_350k_400k_full_20260616 \
+  --gpus 0,1 \
+  --once
+```
+
+The check showed active EuroEval jobs with `samples done/total` and ETA, e.g.
+`samples 57/157 ETA 4m36s` and `samples 141/157 ETA 17s`.
+
+## 2026-06-16 DFM5 L 350K/400K Wait-Based Full Eval Scheduler
+
+Confidence: high for local commands, plan state, and tmux launch.
+
+Created a new `eval_scheduler` plan for DFM5 L full evaluations at
+`step_350000` and `step_400000`:
+
+```text
+plan_dir: logs/scheduler/dfm5_L_350k_400k_full_20260616
+checkpoint path: checkpoints/dfm5/L
+W&B project/run: DFM5 / oti1lisg / dfm5-L
+model prefix: hrm-dfm5-L
+```
+
+The 350K subgraph uses:
+
+```text
+ckpt_tag: step_350000
+eval_epoch: 1.932619232753049
+standard log root: logs/eval/dfm5_L_step350000_full_20260616_new_scheduler
+dfm log root: logs/dfm_evals/dfm5_L_step350000_full_20260616_new_scheduler
+euroeval log root: logs/euroeval/dfm5_L_step350000_full_20260616_new_scheduler
+```
+
+The 400K subgraph was appended to the same plan and waits independently for:
+
+```text
+ckpt_tag: step_400000
+eval_epoch: 2.208707694574913
+standard log root: logs/eval/dfm5_L_step400000_full_20260616_new_scheduler
+dfm log root: logs/dfm_evals/dfm5_L_step400000_full_20260616_new_scheduler
+euroeval log root: logs/euroeval/dfm5_L_step400000_full_20260616_new_scheduler
+```
+
+Follow-up append, 2026-06-16. Confidence: high for locked local plan edit and
+plan inspection. The same scheduler plan now also contains chained subgraphs
+for `step_450000` and `step_500000`. These were appended in one locked write,
+then dependency-gated so they run strictly after the prior checkpoint's report:
+
+```text
+step_400000 report-00420 -> step_450000 wait-00421
+step_450000 report-00630 -> step_500000 wait-00631
+```
+
+The new x-axis values are:
+
+```text
+step_450000 eval_epoch: 2.4847961563967775
+step_500000 eval_epoch: 2.7608846182186415
+```
+
+The new log roots are:
+
+```text
+logs/eval/dfm5_L_step450000_full_20260616_new_scheduler
+logs/dfm_evals/dfm5_L_step450000_full_20260616_new_scheduler
+logs/euroeval/dfm5_L_step450000_full_20260616_new_scheduler
+logs/eval/dfm5_L_step500000_full_20260616_new_scheduler
+logs/dfm_evals/dfm5_L_step500000_full_20260616_new_scheduler
+logs/euroeval/dfm5_L_step500000_full_20260616_new_scheduler
+```
+
+All subgraphs include `wait_checkpoint` rows with 60-second polling. Batch
+starts are standard `64`, dfm `32`, dfm IFEval-DA `32`, and EuroEval `16`; the
+scheduler halves the batch size on retry after failures/OOMs.
+
+Judged `generative_talemaader` rows are configured with the verified
+Gemma judge endpoint:
+
+```text
+initial_batch: 16
+metadata.max_connections: 4
+metadata.judge_model: openai/gemma-4-e4b-judge
+metadata.judge_base_url: http://127.0.0.1:8099/v1
+```
+
+The 350K subgraph is complete: standard, dfm-evals, EuroEval, Talemaader merge,
+headline averages, and report generation finished. `docs/dfm5.md` has been
+regenerated with a `DFM5-L 350K` column. The 400K `wait_checkpoint` row is the
+only active scheduler row until the 400K checkpoint is fully written.
+
+The scheduler was launched in tmux session `hrm-0`, window `8:eval350400`, with
+monitor window `9:mon350400`:
+
+```bash
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_350k_400k_full_20260616 \
+  --gpus 0,1,2,3,4,5,6,7
+
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_350k_400k_full_20260616 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --interval 5
+```
+
+Startup status: `step_350000` checkpoint wait completed immediately because the
+checkpoint was already fully present; the first eight 350K EuroEval jobs
+started. The `step_400000` wait row is running as a non-GPU job and will unblock
+the 400K eval DAG once that checkpoint is fully written.
+
+Follow-up fix, 2026-06-16. Confidence: high. The first EuroEval launches failed
+with status `127` because the new scheduler passed
+`scripts/euroeval_api_no_flash_attn_guard.py` as a relative `EUROEVAL_BIN`, and
+`scripts/run_euroeval_on_checkpoint.sh` changes directory into the EuroEval log
+root before invoking that binary. `eval_scheduler/eval_scheduler/runtime.py`
+now resolves relative `.py` EuroEval binaries to absolute paths. The eight
+failed EuroEval rows were reset to `pending` with attempt `0`, `stop.request`
+was cleared, and the scheduler was relaunched in tmux window `eval350400b`.
+Process inspection confirmed active EuroEval clients using absolute
+`/work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py` paths.
+
+Superseding scheduler update, 2026-06-16. Confidence: high for process
+inspection, locked plan generation, dependency inspection, and launch status.
+After `step_400000` became ready, the original plan above had started EuroEval
+jobs on GPUs 0 and 1 while a separate Qwen external scheduler also existed.
+Because separate `eval_scheduler run` instances do not share a global GPU
+lease, the original DFM5 scheduler was stopped completely: the scheduler
+process group, two active EuroEval client/server pairs, and monitor were
+terminated, and the two running rows were reset to pending.
+
+A fresh single ordered plan now owns the combined work:
+
+```text
+logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616
+```
+
+It contains three subgraphs in this order:
+
+1. `qwen35_2b`: external Qwen3.5-2B full standard + DFM + EuroEval evals,
+   using the local snapshot
+   `/home/ucloud/.cache/huggingface/hub/models--Qwen--Qwen3.5-2B/snapshots/15852e8c16360a2fea060d615a32b45270f8a8fc`,
+   one vLLM server per GPU worker/task, and `--enforce-eager`.
+2. `step_400000`: full DFM5 L evals synced to W&B run `oti1lisg`.
+3. `step_450000`: full DFM5 L evals synced to W&B run `oti1lisg`, with a
+   checkpoint wait row.
+
+The dependency chain was manually enforced in `plan.tsv`:
+
+```text
+wait-00209 step_400000 deps: average-00208
+wait-00418 step_450000 deps: average-00417
+```
+
+The ordered scheduler was launched on all 8 GPUs in tmux session `hrm-0`,
+windows `qwen400450` and `monq400450`:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616 \
+  --gpus 0,1,2,3,4,5,6,7
+
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/qwen_then_dfm5_L_400k_450k_20260616 \
+  --gpus 0,1,2,3,4,5,6,7 \
+  --interval 30
+```
+
+Initial dependency inspection showed Qwen with 8 running jobs and 200 pending;
+all `step_400000` and `step_450000` jobs were pending behind the explicit
+dependencies.
 
 ## 2026-06-16 DFM5 L 300K Full Eval
 
@@ -7757,3 +8375,744 @@ epoch 2: avg/danish=0.2225090016  avg/english=0.4979667276  avg/math_code=0.2937
 epoch 3: avg/danish=0.2250292546  avg/english=0.5219291269  avg/math_code=0.3142750000  avg/overall=0.3537444605
 epoch 4: avg/danish=0.2211987137  avg/english=0.5481151233  avg/math_code=0.3203250000  avg/overall=0.3632129457
 ```
+
+DFM5 comparison table Qwen baselines, 2026-06-16. Confidence: high for the
+local `docs/dfm5.md` and
+`scripts/generate_dfm5_l_eval_comparison_report.py` edits, HRM-Text arXiv v1
+Table 4 inspection, and Qwen3.5-9B model-card inspection. The generator now
+preserves `Qwen3.5 2B` and `Qwen3.5 9B` columns whenever `docs/dfm5.md` is
+regenerated. HRM-Text arXiv v1 Table 4 reports same-suite standard English
+values for `Qwen3.5 2B` only:
+
+```text
+MMLU=64.5, ARC-C=81.0, HellaSwag=64.6, Winogrande=56.7,
+BoolQ=80.5, DROP=30.8, GSM8K=53.0, MATH=34.2
+```
+
+The same arXiv table does not report `Qwen3.5 9B`, so that column is present
+but left unavailable (`—`) until a same-suite authoritative source is found.
+The official Qwen3.5-9B model card does report adjacent newer language
+benchmarks: `MMLU-Pro=82.5`, `MMLU-Redux=91.1`, `C-Eval=88.2`,
+`SuperGPQA=58.2`, `GPQA Diamond=81.7`, `IFEval=91.5`, `IFBench=64.5`,
+`Global PIQA=83.2`, and `WMT24++=72.6`. These are noted in `docs/dfm5.md`
+but not inserted into the main benchmark rows because they are not the same
+benchmark/configuration as the HRM-Text standard table. The Slack table exports
+under `docs/dfm5_slack_tables/` were regenerated from the updated Markdown and
+now have 15 columns.
+
+DFM5-L step-550K vLLM EuroEval local run, 2026-06-18. Confidence: high for
+local logs and merged metric files. A non-W&B-synced vLLM FA4 EuroEval run was
+launched for `checkpoints/dfm5/L` `step_550000` using the EMA HF export at
+`exports/dfm5_L_step550000_ema_hf`, `MAX_CONTEXT=4096`,
+`EUROEVAL_BATCH_SIZE=16`, and `EUROEVAL_MAX_CONCURRENT_CALLS=32`.
+
+```text
+scheduler/log root: logs/eval/dfm5_L_step550000_20260618_vllm_fa4_local_euroeval
+EuroEval root:      logs/euroeval/dfm5_L_step550000_20260618_vllm_fa4_local_euroeval/step_550000
+native comparison:  logs/euroeval/dfm5_L_step550000_full_native_followup_20260617/step_550000
+```
+
+The queue finished with `19/20` EuroEval tasks successful. `valeu-en` failed
+all three attempts because EuroEval found no candidate label for `1/53`
+predictions and aborts VaLEU tasks on invalid outputs. The vLLM run should
+therefore not be W&B-synced as a replacement for the native 550K EuroEval row.
+
+Headline comparison against the native 550K EuroEval artifacts shows that vLLM
+is not currently EuroEval-parity for many classification/tagging tasks:
+
+```text
+angry-tweets macro_f1:        native 72.54  vLLM 28.17
+scala-da macro_f1:            native 52.60  vLLM 33.74
+dansk micro_f1:               native 36.65  vLLM 14.95
+multi-wiki-qa-da f1:          native 79.90  vLLM 78.29
+nordjylland-news chr_f3pp:    native 32.60  vLLM 24.07
+danske-talemaader accuracy:   native 39.38  vLLM 28.44
+danish-citizen-tests accuracy:native 55.67  vLLM 41.44
+hellaswag-da accuracy:        native 42.77  vLLM 24.14
+ifeval-da instr accuracy:     native 52.27  vLLM 52.72
+sst5 macro_f1:                native 71.53  vLLM 40.70
+scala-en macro_f1:            native 76.09  vLLM 32.87
+conll-en micro_f1:            native 57.05  vLLM 21.11
+squad f1:                     native 88.83  vLLM 85.90
+cnn-dailymail chr_f3pp:       native 36.39  vLLM 31.97
+life-in-the-uk accuracy:      native 51.64  vLLM 29.69
+hellaswag accuracy:           native 48.24  vLLM 25.78
+ifeval instr accuracy:        native 69.56  vLLM 69.46
+bfcl-v2 tool_calling_accuracy:native 0.00   vLLM 23.12
+```
+
+Interpretation: the vLLM export path is usable enough for some generative,
+extractive QA, and instruction-following tasks, but the current OpenAI/vLLM
+EuroEval prompt/decoding path is not equivalent to the native HRM evaluation
+path for short-label classification and sequence-tagging tasks. Investigate
+prompt formatting, chat template behavior, stopping/max-token policy, and
+label-constrained decoding before trusting vLLM EuroEval classification scores.
+
+Follow-up root cause, 2026-06-18. Confidence: high for local log and code
+inspection. The bad vLLM EuroEval run did use FlashAttention: vLLM server logs
+record `attention_backend: FLASH_ATTN`, `Using AttentionBackendEnum.FLASH_ATTN
+backend`, and `Using FlashAttention version 4`.
+
+Follow-up GovReport context failure, 2026-06-19. Confidence: high for local
+`dfm-evals.log`, `vllm.log`, scheduler `attempts.tsv`, and runtime inspection.
+The 700K vLLM GovReport failures are context-window rejections, not GPU OOMs.
+GovReport examples can have prompts near the 4096-token model limit while the
+DFM eval task requests 512 output tokens. vLLM rejects such requests with HTTP
+400, for example:
+
+```text
+This model's maximum context length is 4096 tokens.
+However, you requested 512 output tokens and your prompt contains at least
+3585 input tokens, for a total of at least 4097 tokens.
+Please reduce the length of the input prompt or the number of requested output tokens.
+```
+
+The scheduler records these as status `73` because
+`run_client_with_server_monitor()` treats the client BadRequest as a fatal
+task/API error and terminates the paired vLLM server. Retrying with smaller
+batch sizes does not help; GovReport needs either lower `max_tokens`, shorter
+prompt/input truncation, or a larger model context length/export path.
+
+Follow-up GovReport truncation, 2026-06-19. Confidence: high for local config
+edit, plan reset, process inspection, and live logs. GovReport was patched in
+`config/dfm_evals_hrm_single_tasks.yaml` to pass:
+
+```text
+max_report_chars=9000
+```
+
+All 16 GovReport rows in
+`logs/scheduler/dfm5_L_step700000_vllm_main_20260619/plan.tsv` were reset to
+`pending` with `attempt=0`, stale GovReport vLLM/client processes were
+terminated, the stop flag was cleared, and the scheduler was relaunched in
+tmux window `hrm-0:eval700govfix`. Live GovReport vLLM logs then showed
+`POST /v1/chat/completions` returning `200 OK` instead of the previous
+context-length `400 Bad Request`.
+
+The likely root cause of the classification/tagging score collapse is prompt
+formatting, not FA4. Native `scripts/hrm_openai_server.py` collapses
+OpenAI-style chat messages into a single plain prompt with
+`messages_to_prompt()`, prefixing non-user turns as `role: text`, and then
+`SimpleEngine` tokenizes once as:
+
+```text
+<|im_start|><|object_ref_start|>{flattened prompt}<|im_end|>
+```
+
+The old vLLM chat template instead rendered each EuroEval few-shot user turn as
+a separate HRM query and each assistant turn as a separate HRM answer:
+
+```text
+<|im_start|><|object_ref_start|>example<|im_end|>label<|box_end|><|im_start|><|object_ref_start|>query<|im_end|>
+```
+
+EuroEval sends few-shot classification examples as multi-turn chat messages, so
+this produced a different token stream only for the tasks that degraded most.
+`evaluation/chat_templates/hrm_direct_chat.jinja` was updated to flatten chat
+messages like the native shim and wrap once. A local tokenizer check verified
+that the patched template renders exactly:
+
+```text
+<|im_start|><|object_ref_start|>Example question?
+
+assistant: positive
+
+Classify this.<|im_end|>
+```
+
+for the corresponding three-message few-shot chat. A remaining reproducibility
+detail is that the native run used `euroeval 17.4.0` / `litellm 1.89.2`, while
+the vLLM wrapper run used the installed env versions `euroeval 17.3.0` /
+`litellm 1.88.1`; future parity reruns should use the patched template and
+match the EuroEval/LiteLLM versions.
+
+Patch verification, 2026-06-18. Confidence: high for local rerun logs and
+merged metrics. A local, non-W&B vLLM FA4 probe reran the quick diverging
+EuroEval task `angry-tweets` on DFM5-L `step_550000` after the chat-template
+patch. The probe used the native run's EuroEval/LiteLLM versions via:
+
+```text
+EUROEVAL_BIN='uv run --no-project --with euroeval==17.4.0 --with litellm==1.89.2 python /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py'
+```
+
+and vLLM server settings:
+
+```text
+HRM_HF_EXPORT_DIR=/work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf
+VLLM_EXTRA_ARGS='--enforce-eager --attention-backend FLASH_ATTN --chat-template /work/dfm/HRM-Text/evaluation/chat_templates/hrm_direct_chat.jinja'
+VLLM_GPU_MEMORY_UTILIZATION=0.22
+EUROEVAL_BATCH_SIZE=16
+EUROEVAL_MAX_CONCURRENT_CALLS=32
+WANDB_SYNC=0
+```
+
+Probe root:
+
+```text
+logs/euroeval/dfm5_L_step550000_vllm_fa4_angry_tweets_template_probe_20260618_173313/step_550000/angry-tweets
+```
+
+Result:
+
+```text
+native AngryTweets:       macro_f1=72.5364  mcc=59.8001
+old vLLM AngryTweets:     macro_f1=28.1726  mcc=17.9991
+patched vLLM AngryTweets: macro_f1=69.7931  mcc=57.6837
+```
+
+The patched vLLM path is therefore much closer to native on this previously
+diverging classification task. The residual gap is small compared with the
+pre-patch failure and may be due to remaining backend/version/output-format
+differences; rerun a broader EuroEval subset before replacing native results.
+
+Broader patched vLLM EuroEval rerun, 2026-06-18. Confidence: high for local
+logs and merged metrics. The remaining 19 EuroEval datasets were rerun locally
+without W&B sync using the patched template, vLLM FA4, and pinned
+`euroeval==17.4.0` / `litellm==1.89.2`.
+
+```text
+scheduler root: logs/eval/dfm5_L_step550000_vllm_fa4_euroeval_template_fixed_19_20260618_173817
+EuroEval root:  logs/euroeval/dfm5_L_step550000_vllm_fa4_euroeval_template_fixed_19_20260618_173817/step_550000
+```
+
+The queue completed with 18 successes and one failure. `valeu-en` failed after
+four attempts because EuroEval found no candidate label for `1/53` outputs and
+aborts that task on invalid labels. Including the separate patched
+`angry-tweets` probe, patched vLLM has 19/20 merged EuroEval metrics.
+
+Headline comparison:
+
+```text
+task                    native   old vLLM   patched vLLM
+angry-tweets macro_f1    72.54      28.17          69.79
+scala-da macro_f1        52.60      33.74          33.74
+dansk micro_f1           36.65      14.95          36.79
+multi-wiki-qa-da f1      79.90      78.29          79.89
+nordjylland chr_f3pp     32.60      24.07          32.62
+talemaader accuracy      39.38      28.44          19.38
+citizen-tests accuracy   55.67      41.44          43.11
+hellaswag-da accuracy    42.77      24.14          40.31
+ifeval-da instr acc      52.27      52.72          51.82
+valeu-da european_values missing     0.00           0.00
+sst5 macro_f1            71.53      40.70          69.66
+scala-en macro_f1        76.09      32.87          46.14
+conll-en micro_f1        57.05      21.11          57.02
+squad f1                 88.83      85.90          88.94
+cnn-dailymail chr_f3pp   36.39      31.97          36.28
+life-in-uk accuracy      51.64      29.69          36.33
+hellaswag accuracy       48.24      25.78          32.89
+ifeval instr acc         69.56      69.46          70.13
+bfcl-v2 tool accuracy     0.00      23.12          22.84
+valeu-en european_values 90.71    missing        missing
+```
+
+Interpretation: the prompt-template fix clearly resolves many prompt-shape
+regressions (`angry-tweets`, NER, QA, summarization, IFEval), but not all
+EuroEval parity issues. Remaining divergences (`scala-da`, `scala-en`,
+`talemaader`, `citizen-tests`, `life-in-the-uk`, `hellaswag`, `bfcl-v2`, and
+`valeu-en`) likely involve EuroEval/LiteLLM/vLLM output constraints,
+label extraction, or task-specific prompt/decoding behavior rather than the
+multi-turn chat-template issue alone.
+
+EuroEval vLLM parity diagnosis, 2026-06-18. Confidence: high for version/split
+checks and local result files; medium for the structured-output explanation
+until request payloads are captured. The remaining vLLM/native divergences do
+not appear to come from mismatched EuroEval versions, task splits, few-shot
+settings, or failed-instance counts. Native and patched-vLLM reruns use the same
+`euroeval 17.4.0` / `litellm 1.89.2` versions, and the divergent tasks inspected
+(`scala-da`, `scala-en`, `danske-talemaader`, `danish-citizen-tests`,
+`hellaswag`, `life-in-the-uk`) have zero failed instances in both native and
+patched-vLLM outputs.
+
+The strongest current hypothesis is endpoint semantics. The native
+`scripts/hrm_openai_server.py` shim flattens messages and ignores most
+OpenAI-compatible extras, while vLLM is a fuller OpenAI-compatible endpoint and
+can honor structured-output, tool-calling, and constrained-decoding request
+fields sent through LiteLLM/EuroEval. vLLM logs also show structured-output
+bitmask kernel activity. This explains why `bfcl-v2` improves under vLLM
+(proper tool-call interface) while label/classification tasks can still diverge
+after prompt flattening is fixed, and why `valeu-en` can abort from one invalid
+label output under vLLM despite native succeeding.
+
+Next diagnostic step: capture the exact OpenAI request payload for one remaining
+divergent task, especially `scala-da` or `scala-en`, and compare which fields
+native ignores versus vLLM honors (`response_format`, `tools`, `tool_choice`,
+`logit_bias`, structured-output constraints, stop strings, and max-token
+settings). For parity, consider a native-compatible vLLM shim that strips these
+extras and forwards only the flattened prompt/generation settings to vLLM.
+
+Follow-up payload capture, 2026-06-18. Confidence: high for local captured
+request JSON and code inspection. Added `scripts/capture_openai_payloads.py`, a
+small OpenAI-compatible capture server that logs raw `/v1/chat/completions` and
+`/v1/completions` payloads to JSONL and returns dummy responses. It was used to
+capture `scala-da` EuroEval requests with:
+
+```text
+uv run --no-project --with euroeval==17.4.0 --with litellm==1.89.2 \
+  python scripts/euroeval_api_no_flash_attn_guard.py \
+  --model payload-capture-scala-da \
+  --api-base http://127.0.0.1:18181/v1 \
+  --api-key inspectai \
+  --cache-dir logs/debug/euroeval_payload_capture_20260618_180154/cache \
+  --max-context-length 4096 \
+  --force --no-progress-bar --save-results \
+  --language da --dataset scala-da
+```
+
+Capture root:
+
+```text
+logs/debug/euroeval_payload_capture_20260618_180154
+```
+
+The first real `scala-da` requests include:
+
+```text
+endpoint: /v1/chat/completions
+keys: logprobs, max_completion_tokens, messages, model, response_format, seed,
+      stop, temperature, top_logprobs
+max_completion_tokens: 10
+temperature: 0.0
+stop: []
+logprobs: true
+top_logprobs: 8
+seed: 4242
+response_format:
+  type: json_schema
+  json_schema.strict: true
+  schema:
+    required: ["label"]
+    properties.label.enum: ["ja", "nej"]
+```
+
+The native `scripts/hrm_openai_server.py` request model only consumes
+`model`, `messages`, `temperature`, `max_tokens` / `max_completion_tokens`, and
+`stop`. It ignores `response_format`, `logprobs`, `top_logprobs`, and `seed`.
+The vLLM OpenAI server can honor strict JSON-schema response formats and uses
+structured-output constrained decoding. Therefore, for `scala-da`, the
+remaining vLLM/native divergence is not just a prompt-template issue; vLLM and
+native are evaluating different decoding semantics. The earlier "medium"
+structured-output hypothesis is confirmed for `scala-da`.
+
+Native-compatible vLLM proxy probe, 2026-06-18. Confidence: high for local code,
+logs, and completed EuroEval result. Added `scripts/native_compatible_openai_proxy.py`,
+an OpenAI-compatible proxy that:
+
+- accepts EuroEval `/v1/chat/completions` and `/v1/completions` requests,
+- flattens chat messages using the same rule as `scripts/hrm_openai_server.py`,
+- forwards only native-shim-compatible fields (`model`, flattened
+  `messages`/`prompt`, `temperature`, max tokens, non-empty `stop`), and
+- strips `response_format`, `logprobs`, `top_logprobs`, `seed`, and other
+  richer OpenAI-compatible fields before forwarding to the vLLM server.
+
+The probe ran DFM5-L `step_550000` / EMA HF export through vLLM FA4 plus this
+proxy on `scala-da`:
+
+```text
+run root: logs/euroeval/dfm5_L_step550000_vllm_native_proxy_scala_da_20260618_180830
+export:   exports/dfm5_L_step550000_ema_hf
+GPU:      7
+vLLM:     --enforce-eager --attention-backend FLASH_ATTN
+proxy:    scripts/native_compatible_openai_proxy.py
+EuroEval: euroeval==17.4.0, litellm==1.89.2
+W&B:      disabled
+```
+
+Result:
+
+```text
+native scala-da macro_f1:             52.60
+direct patched-vLLM scala-da macro_f1:33.74
+native-compatible vLLM proxy macro_f1:52.36
+native-compatible vLLM proxy mcc:     31.72
+failed instances:                     0
+```
+
+This confirms that the large `scala-da` direct-vLLM regression was caused by
+EuroEval/vLLM structured-output semantics rather than HRM export quality,
+FlashAttention, or prompt flattening. For parity with historical native
+EuroEval numbers, route vLLM through the native-compatible proxy or implement
+the same stripping behavior directly in the EuroEval runner. For measuring a
+"real OpenAI/vLLM structured output" serving surface, direct vLLM remains a
+different but valid evaluation mode and should be labeled separately.
+
+Follow-up operational finding, 2026-06-18. Confidence: high for live process
+inspection, vLLM logs, and proxy payload logs. The full DFM5-L `step_550000`
+EuroEval rerun through the native-compatible vLLM proxy is genuinely using
+vLLM, but the remaining slow tasks are not batching well. Live vLLM logs for
+`cnn-dailymail`, `ifeval`, and `ifeval-da` showed `Running: 1 reqs,
+Waiting: 0 reqs` and roughly 45-55 generated tokens/s. Proxy payload logs
+showed EuroEval forwards `max_tokens=2048` for IFEval / IFEval-da and
+`max_tokens=256` for CNN/DailyMail, with many requests using `max_tokens=1`
+for scoring/probing calls. When the model does not stop early on IFEval, a
+single sample can consume close to the 2048-token budget, so wall-clock time is
+dominated by serial long decoding rather than by model load, startup, or Python
+native inference.
+
+Current run root:
+
+```text
+logs/euroeval/dfm5_L_step550000_vllm_native_proxy_euroeval_full_20260618_184836
+```
+
+The rerun should be considered standard-EuroEval comparable only while these
+generation limits are left unchanged. Lowering IFEval max generation length or
+forcing stronger stop conditions would likely speed it up, but would create a
+different evaluation setting and should be labeled separately.
+
+Scheduler integration follow-up, 2026-06-18. Confidence: high for local code
+inspection, syntax checks, and a throwaway plan probe. The manual vLLM/proxy
+EuroEval launch path has been promoted into `eval_scheduler plan create` for
+internal HRM checkpoints. New plan options:
+
+```text
+--hrm-server-backend simple|vllm
+--hrm-hf-export-dir /path/to/exported_hf_checkpoint
+--hrm-vllm-native-proxy
+--vllm-gpu-memory-utilization FLOAT
+--vllm-extra-args "..."
+--vllm-max-model-len INT
+```
+
+For DFM5-L vLLM/native-proxy EuroEval jobs, create plans with:
+
+```bash
+python -m eval_scheduler plan create \
+  --run-euroeval \
+  --hrm-server-backend vllm \
+  --hrm-hf-export-dir /work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf \
+  --hrm-vllm-native-proxy \
+  --euroeval-batch 32 \
+  --vllm-gpu-memory-utilization 0.22 \
+  --vllm-extra-args "--enforce-eager --attention-backend FLASH_ATTN --chat-template /work/dfm/HRM-Text/evaluation/chat_templates/hrm_direct_chat.jinja"
+```
+
+Verified commands:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m py_compile \
+  eval_scheduler/eval_scheduler/cli.py \
+  eval_scheduler/eval_scheduler/plan.py \
+  eval_scheduler/eval_scheduler/runtime.py
+
+rm -rf /tmp/hrm_eval_plan_probe
+python -m eval_scheduler plan create \
+  --plan-dir /tmp/hrm_eval_plan_probe \
+  --ckpt-path checkpoints/dfm5/L \
+  --ckpt-tag step_probe \
+  --eval-epoch 0 \
+  --log-root /tmp/hrm_eval_plan_probe/log \
+  --dfm-log-root /tmp/hrm_eval_plan_probe/dfm \
+  --euroeval-log-root /tmp/hrm_eval_plan_probe/euro \
+  --wandb-run-id probe \
+  --wandb-run-name probe \
+  --model-prefix hrm-dfm5-L-vllm-native-proxy \
+  --run-euroeval \
+  --hrm-server-backend vllm \
+  --hrm-hf-export-dir /work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf \
+  --hrm-vllm-native-proxy \
+  --vllm-gpu-memory-utilization 0.22 \
+  --vllm-extra-args "--enforce-eager --attention-backend FLASH_ATTN --chat-template /work/dfm/HRM-Text/evaluation/chat_templates/hrm_direct_chat.jinja" \
+  --euroeval-batch 32 \
+  --force
+```
+
+The probe wrote `/tmp/hrm_eval_plan_probe/plan.tsv`; an `eval_euroeval` row
+contained `hrm_server_backend: vllm`, `hrm_hf_export_dir`,
+`hrm_vllm_native_proxy: true`, `vllm_gpu_memory_utilization: 0.22`, and the
+FA/chat-template `vllm_extra_args`.
+
+Follow-up wrapper fix, 2026-06-18. Confidence: high for local shell dry-run and
+code inspection. `scripts/run_euroeval_on_checkpoint.sh` now honors
+`VLLM_PYTHON` for the vLLM server process while keeping `PYTHON_BIN` for the
+EuroEval client, health checks, merge/logging, and native-compatible proxy. The
+scheduler's `--vllm-python` option therefore controls the server interpreter
+for internal HRM vLLM EuroEval jobs.
+
+Verified dry-run:
+
+```bash
+cd /work/dfm/HRM-Text
+DRY_RUN=1 \
+HRM_SERVER_BACKEND=vllm \
+HRM_HF_EXPORT_DIR=/work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf \
+HRM_VLLM_NATIVE_PROXY=1 \
+GPU=0 \
+PORT=19001 \
+CKPT_PATH=checkpoints/dfm5/L \
+CKPT_TAG=step_550000 \
+MODEL_PREFIX=probe \
+VLLM_PYTHON=/home/ucloud/miniforge3/envs/hrm/bin/python \
+EUROEVAL_DATASETS=angry-tweets \
+EUROEVAL_LOG_ROOT=/tmp/hrm_euroeval_dry_run \
+scripts/run_euroeval_on_checkpoint.sh
+```
+
+The dry-run printed the vLLM server launch branch, native-compatible proxy
+launch, and EuroEval client command without starting long-running processes.
+
+DFM5-L 550K remaining vLLM/native-proxy EuroEval launch, 2026-06-18.
+Confidence: high for local scheduler plan/status output. To finish the
+standard-comparable 550K vLLM/native-proxy EuroEval comparison, a small pruned
+`eval_scheduler` plan was launched for the three tasks that were missing from
+the earlier vLLM/native-proxy merged metrics but present in the native 550K
+run:
+
+```text
+conll-en
+ifeval
+ifeval-da
+```
+
+`valeu-da` was not included because the native 550K comparison run also lacks a
+merged `valeu-da` metric.
+
+Plan and log roots:
+
+```text
+plan_dir:  logs/scheduler/dfm5_L_step550000_vllm_native_proxy_remaining_euroeval_bs32_20260618_200914
+euro_root: logs/euroeval/dfm5_L_step550000_vllm_native_proxy_remaining_euroeval_bs32_20260618_200914
+```
+
+The plan was created with full scheduler metadata, then pruned to only the
+three `eval_euroeval` rows. Each row has `initial_batch=32`,
+`fixed_retry_batch=true`, `hrm_server_backend=vllm`,
+`hrm_vllm_native_proxy=true`, W&B sync disabled, and:
+
+```text
+HRM_HF_EXPORT_DIR=/work/dfm/HRM-Text/exports/dfm5_L_step550000_ema_hf
+VLLM_EXTRA_ARGS=--enforce-eager --attention-backend FLASH_ATTN --chat-template /work/dfm/HRM-Text/evaluation/chat_templates/hrm_direct_chat.jinja
+```
+
+Launched in tmux session `hrm-0`:
+
+```bash
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_step550000_vllm_native_proxy_remaining_euroeval_bs32_20260618_200914 \
+  --gpus 0,1,2
+
+python -m eval_scheduler monitor \
+  --plan-dir logs/scheduler/dfm5_L_step550000_vllm_native_proxy_remaining_euroeval_bs32_20260618_200914 \
+  --gpus 0,1,2 \
+  --interval 10
+```
+
+Initial monitor after startup showed all three rows running:
+
+```text
+GPU0: ifeval-da, batch 32
+GPU1: conll-en, batch 32
+GPU2: ifeval, batch 32
+```
+
+Concurrency follow-up, 2026-06-18. Confidence: high for local code inspection,
+process environment inspection, and live vLLM logs. `eval_scheduler plan
+create` now accepts:
+
+```text
+--euroeval-max-concurrent-calls INT
+```
+
+The value is written to plan metadata and passed by
+`eval_scheduler/eval_scheduler/runtime.py` as
+`EUROEVAL_MAX_CONCURRENT_CALLS` to `scripts/run_euroeval_on_checkpoint.sh`.
+`scripts/euroeval_api_no_flash_attn_guard.py` already uses this environment
+variable to override EuroEval's `LiteLLMModel.buffer["max_concurrent_calls"]`.
+
+The running 550K `ifeval` and `ifeval-da` jobs were stopped after `conll-en`
+finished, the interrupted serial log directories were moved aside with a
+`serial_interrupted_YYYYmmdd_HHMMSS` suffix, and the two IFEval rows were
+relaunched with `euroeval_max_concurrent_calls=32`.
+
+Process environment inspection confirmed both the `uv run` parent and child
+Python EuroEval processes had:
+
+```text
+EUROEVAL_BATCH_SIZE=32
+EUROEVAL_MAX_CONCURRENT_CALLS=32
+```
+
+However, live vLLM logs still showed only:
+
+```text
+Running: 1 reqs, Waiting: 0 reqs
+```
+
+for both `ifeval` and `ifeval-da`. Interpretation: the scheduler and LiteLLM
+concurrency setting are no longer the limiting factor; EuroEval's IFEval task
+path is feeding very small `generate()` batches, often a single long-generation
+sample, so LiteLLM has little or nothing to fan out. Increasing actual
+throughput for IFEval likely requires task-level sharding/subsetting or a
+custom IFEval runner/evaluator that batches multiple prompts before calling the
+OpenAI endpoint.
+
+## DFM5-L 700K vLLM Scheduler Recovery, 2026-06-19
+
+Confidence: high for local process inspection, scheduler monitor output, and
+log inspection.
+
+The 700K main-run vLLM scheduler plan is:
+
+```text
+logs/scheduler/dfm5_L_step700000_vllm_main_20260619
+```
+
+It logs to the main W&B run:
+
+```text
+entity/project/run: dfm/DFM5/oti1lisg
+display name: dfm5-L
+```
+
+Two separate issues caused ready shards not to be picked up:
+
+1. GPU5 had an orphaned `VLLM::EngineCore` process from an earlier failed
+   scheduler attempt, consuming about 65 GiB in addition to the training
+   process. Killing the orphan restored GPU5 to only the training process.
+2. The active scheduler runner had exited after a managed Talemaader judge
+   startup failure. The monitor still showed stale `running` rows in
+   `plan.tsv`, but `ps` showed no live `eval_scheduler run` process, so ready
+   rows could not be claimed.
+
+GovReport context overflow was handled by setting a more aggressive DFM eval
+task override:
+
+```yaml
+max_report_chars=9000
+```
+
+in `config/dfm_evals_hrm_single_tasks.yaml`. After this, 15/16 GovReport shards
+completed; the remaining shard failed only because of the GPU5 orphan process,
+not because of context length. After clearing the orphan, GovReport shard 5
+finished and the GovReport merge became ready.
+
+Talemaader requires three GPU residents at once during each shard: the training
+process, the HRM vLLM server, and a local `unsloth/gemma-4-E4B-it` judge server.
+With `vllm_gpu_memory_utilization=0.35`, judge startup OOMed. Talemaader eval
+and merge rows in the 700K plan were adjusted to:
+
+```text
+vllm_gpu_memory_utilization=0.25
+batch=16
+managed judge: unsloth/gemma-4-E4B-it, bfloat16, sdpa
+```
+
+The seven stale Talemaader `running` rows were reset to `pending` with
+`attempt=0`, and the scheduler was restarted in tmux window:
+
+```text
+hrm-0:eval700resume2
+```
+
+Code hardening: `eval_scheduler/eval_scheduler/runtime.py` now catches
+`SchedulerError` from `run_job()` inside `Runner.run_one()` and converts it to a
+retryable status `72`, logging an `ERROR` event instead of crashing the whole
+scheduler. This is important for managed judge/vLLM startup failures: a single
+bad shard should no longer leave the plan with stale `running` rows and no live
+runner.
+
+## Canonical DFM5-L vLLM Eval Settings, 2026-06-19
+
+Confidence: high for local code changes, `py_compile`, and throwaway plan
+probes.
+
+The working DFM5-L vLLM evaluation settings have been promoted into plan
+creation so future checkpoint plans do not require manual `plan.tsv` edits
+after failures.
+
+Preferred command for upcoming DFM5-L checkpoint evals:
+
+```bash
+cd /work/dfm/HRM-Text
+scripts/create_dfm5_l_vllm_eval_plan.sh step_750000 4.141326927327961 20260619
+python -m eval_scheduler run \
+  --plan-dir logs/scheduler/dfm5_L_step750000_vllm_main_20260619 \
+  --gpus 0,1,2,3,4,5,6,7
+```
+
+The script accepts `CKPT_TAG EVAL_EPOCH [RUN_SUFFIX]` and writes a full
+standard + DFM + DFM-IFEval + EuroEval plan. Environment variables can override
+paths and W&B settings: `PLAN_DIR`, `CKPT_PATH`, `EXPORT_DIR`, `LOG_ROOT`,
+`DFM_LOG_ROOT`, `EUROEVAL_LOG_ROOT`, `WANDB_PROJECT`, `WANDB_RUN_ID`,
+`WANDB_RUN_NAME`, `MODEL_PREFIX`, `PORT_BASE`, and `FORCE`.
+
+Canonical settings inserted into the plan:
+
+```text
+standard_config: evaluation/config/hrm_vllm_benchmarking.yaml
+standard_engine_backend: vllm
+hrm_server_backend: vllm
+hrm_vllm_native_proxy: true
+vllm_dtype: bfloat16
+vllm_max_model_len: 4096
+vllm_attention_backend: FLASH_ATTN
+vllm_extra_args: --enforce-eager --attention-backend FLASH_ATTN --chat-template /work/dfm/HRM-Text/evaluation/chat_templates/hrm_direct_chat.jinja
+global vllm_gpu_memory_utilization: 0.35
+max_retries: 5
+standard_batch: 64
+dfm_batch: 32
+ifeval_batch: 32
+dfm_ifeval_shards: 32
+euroeval_batch: 32
+euroeval_max_concurrent_calls: 32
+judge_model: openai/gemma-4-e4b-judge
+judge_server_model: unsloth/gemma-4-E4B-it
+judge_server_dtype: bfloat16
+judge_server_attn_implementation: sdpa
+judge_server_max_new_tokens: 64
+```
+
+Task-specific plan metadata now inserted automatically:
+
+```text
+generative_talemaader:
+  initial_batch: 16
+  max_connections: 16
+  vllm_gpu_memory_utilization: 0.25
+  managed judge server: unsloth/gemma-4-E4B-it
+
+govreport:
+  initial_batch: 32
+  dfm_task_args:
+    - max_report_chars=9000
+```
+
+Implementation details:
+
+```text
+scripts/create_dfm5_l_vllm_eval_plan.sh
+eval_scheduler/eval_scheduler/plan.py
+eval_scheduler/eval_scheduler/cli.py
+```
+
+`eval_scheduler plan create` now exposes these explicit options:
+
+```text
+--judged-batch
+--judged-vllm-gpu-memory-utilization
+--govreport-max-report-chars
+```
+
+The settings were verified with:
+
+```bash
+cd /work/dfm/HRM-Text
+python -m py_compile \
+  eval_scheduler/eval_scheduler/cli.py \
+  eval_scheduler/eval_scheduler/plan.py \
+  eval_scheduler/eval_scheduler/runtime.py
+
+PLAN_DIR=/tmp/hrm_dfm5_script_probe \
+LOG_ROOT=/tmp/hrm_dfm5_script_probe/eval \
+DFM_LOG_ROOT=/tmp/hrm_dfm5_script_probe/dfm \
+EUROEVAL_LOG_ROOT=/tmp/hrm_dfm5_script_probe/euro \
+EXPORT_DIR=/work/dfm/HRM-Text/exports/dfm5_L_step_probe_ema_hf \
+FORCE=1 \
+scripts/create_dfm5_l_vllm_eval_plan.sh step_probe 0 probe
+```
+
+The probe showed `MMLU` batch `64` with vLLM utilization `0.35`, `GovReport`
+batch `32` with `dfm_task_args=['max_report_chars=9000']`, and
+`generative_talemaader` batch `16`, `max_connections=16`, judge server
+`unsloth/gemma-4-E4B-it`, and vLLM utilization `0.25`.

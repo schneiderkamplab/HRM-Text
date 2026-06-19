@@ -17,6 +17,10 @@ PYTHON_BIN="${PYTHON_BIN:-/home/ucloud/miniforge3/envs/hrm/bin/python}"
 if [[ ! -x "${PYTHON_BIN}" ]]; then
   PYTHON_BIN="python"
 fi
+VLLM_PYTHON="${VLLM_PYTHON:-${PYTHON_BIN}}"
+if [[ "${VLLM_PYTHON}" != "python" && ! -x "${VLLM_PYTHON}" ]]; then
+  VLLM_PYTHON="${PYTHON_BIN}"
+fi
 
 HOST="${HOST:-127.0.0.1}"
 PORT="${PORT:-9700}"
@@ -36,6 +40,13 @@ EUROEVAL_BIN="${EUROEVAL_BIN:-euroeval}"
 EUROEVAL_EXTRA_ARGS="${EUROEVAL_EXTRA_ARGS:-}"
 OPENAI_API_KEY="${OPENAI_API_KEY:-inspectai}"
 NO_EMA="${NO_EMA:-0}"
+HRM_SERVER_BACKEND="${HRM_SERVER_BACKEND:-simple}"
+HRM_HF_EXPORT_DIR="${HRM_HF_EXPORT_DIR:-}"
+HRM_VLLM_NATIVE_PROXY="${HRM_VLLM_NATIVE_PROXY:-0}"
+HRM_VLLM_TARGET_PORT="${HRM_VLLM_TARGET_PORT:-$((PORT + 1000))}"
+VLLM_DTYPE="${VLLM_DTYPE:-bfloat16}"
+VLLM_GPU_MEMORY_UTILIZATION="${VLLM_GPU_MEMORY_UTILIZATION:-0.85}"
+VLLM_EXTRA_ARGS="${VLLM_EXTRA_ARGS:-}"
 WANDB_SYNC="${WANDB_SYNC:-0}"
 WANDB_PROJECT="${WANDB_PROJECT:-}"
 WANDB_RUN_ID="${WANDB_RUN_ID:-}"
@@ -45,7 +56,8 @@ DRY_RUN="${DRY_RUN:-0}"
 
 usage() {
   cat <<'USAGE'
-Run EuroEval against an HRM checkpoint through scripts/hrm_openai_server.py.
+Run EuroEval against an HRM checkpoint through scripts/hrm_openai_server.py
+or, when HRM_SERVER_BACKEND=vllm, through an exported HRM-Text vLLM model.
 
 Default scope is Danish and English EuroEval only:
   EUROEVAL_LANGUAGES=da,en
@@ -62,6 +74,8 @@ Common overrides:
   EUROEVAL_NUM_ITERATIONS=1             # optional override; unset uses EuroEval default
   EUROEVAL_GENERATIVE_TYPE=instruction_tuned # optional override; unset uses EuroEval default
   EUROEVAL_BIN='uv run --no-project --with euroeval euroeval'
+  HRM_SERVER_BACKEND=vllm HRM_HF_EXPORT_DIR=exports/original_sapient_L_epoch4_ema_hf
+  HRM_VLLM_NATIVE_PROXY=1 # optional: strip structured-output extras for native parity
   WANDB_SYNC=1 WANDB_PROJECT=... WANDB_RUN_ID=...
 USAGE
 }
@@ -73,6 +87,14 @@ fi
 
 if [[ -n "${EUROEVAL_DATASETS}" && -n "${EUROEVAL_TASKS}" ]]; then
   echo "EUROEVAL_DATASETS and EUROEVAL_TASKS are mutually exclusive." >&2
+  exit 2
+fi
+if [[ "${HRM_SERVER_BACKEND}" != "simple" && "${HRM_SERVER_BACKEND}" != "vllm" ]]; then
+  echo "Unsupported HRM_SERVER_BACKEND=${HRM_SERVER_BACKEND}; expected simple or vllm." >&2
+  exit 2
+fi
+if [[ "${HRM_SERVER_BACKEND}" == "vllm" && -z "${HRM_HF_EXPORT_DIR}" ]]; then
+  echo "HRM_HF_EXPORT_DIR is required when HRM_SERVER_BACKEND=vllm." >&2
   exit 2
 fi
 
@@ -105,6 +127,38 @@ try:
         data = json.loads(response.read())
         if data.get("model") != sys.argv[2]:
             raise SystemExit(1)
+except Exception:
+    raise SystemExit(1)
+raise SystemExit(0)
+PY
+    then
+      return 0
+    fi
+    sleep 2
+  done
+  return 1
+}
+
+wait_for_vllm_server() {
+  local url="$1"
+  for _ in $(seq 1 240); do
+    if "${PYTHON_BIN}" - "$url" "${MODEL_NAME}" <<'PY'
+import json
+import sys
+import urllib.request
+
+base_url, expected = sys.argv[1].rstrip("/"), sys.argv[2]
+try:
+    with urllib.request.urlopen(f"{base_url}/health", timeout=2) as response:
+        if response.status != 200:
+            raise SystemExit(1)
+    with urllib.request.urlopen(f"{base_url}/v1/models", timeout=2) as response:
+        if response.status != 200:
+            raise SystemExit(1)
+        data = json.loads(response.read())
+    model_ids = {item.get("id") for item in data.get("data", [])}
+    if expected not in model_ids:
+        raise SystemExit(1)
 except Exception:
     raise SystemExit(1)
 raise SystemExit(0)
@@ -200,7 +254,14 @@ if [[ -n "${EUROEVAL_EXTRA_ARGS}" ]]; then
 fi
 
 if [[ "${DRY_RUN}" == "1" ]]; then
-  printf 'CUDA_VISIBLE_DEVICES=%q %q scripts/hrm_openai_server.py ...\n' "${GPU}" "${PYTHON_BIN}"
+  if [[ "${HRM_SERVER_BACKEND}" == "vllm" ]]; then
+    printf 'CUDA_VISIBLE_DEVICES=%q HRM_HF_EXPORT_DIR=%q scripts/hrm_vllm_openai_server.sh ...\n' "${GPU}" "${HRM_HF_EXPORT_DIR}"
+    if [[ "${HRM_VLLM_NATIVE_PROXY}" == "1" ]]; then
+      printf '%q scripts/native_compatible_openai_proxy.py --target-base-url %q ...\n' "${PYTHON_BIN}" "http://${HOST}:${HRM_VLLM_TARGET_PORT}/v1"
+    fi
+  else
+    printf 'CUDA_VISIBLE_DEVICES=%q %q scripts/hrm_openai_server.py ...\n' "${GPU}" "${PYTHON_BIN}"
+  fi
   printf '(cd %q && %s ' "${LOG_ROOT}" "${EUROEVAL_BIN}"
   printf '%q ' "${euroeval_args[@]}"
   printf ')\n'
@@ -208,28 +269,71 @@ if [[ "${DRY_RUN}" == "1" ]]; then
 fi
 
 server_pid=""
+vllm_pid=""
 cleanup() {
   if [[ -n "${server_pid}" ]] && kill -0 "${server_pid}" 2>/dev/null; then
     kill "${server_pid}" 2>/dev/null || true
     wait "${server_pid}" 2>/dev/null || true
   fi
+  if [[ -n "${vllm_pid}" ]] && kill -0 "${vllm_pid}" 2>/dev/null; then
+    kill "${vllm_pid}" 2>/dev/null || true
+    wait "${vllm_pid}" 2>/dev/null || true
+  fi
 }
 trap cleanup EXIT
 
-CUDA_VISIBLE_DEVICES="${GPU}" "${PYTHON_BIN}" scripts/hrm_openai_server.py \
-  --ckpt-path "${CKPT_PATH}" \
-  --ckpt-tag "${CKPT_TAG}" \
-  --host "${HOST}" \
-  --port "${PORT}" \
-  --model-name "${MODEL_NAME}" \
-  --max-context "${MAX_CONTEXT}" \
-  --batch-size "${EUROEVAL_BATCH_SIZE}" \
-  --batch-timeout-ms "${EUROEVAL_BATCH_TIMEOUT_MS}" \
-  --condition direct \
-  "${server_ema_args[@]}" \
-  > "${SERVER_LOG}" 2>&1 &
+if [[ "${HRM_SERVER_BACKEND}" == "vllm" ]]; then
+  vllm_port="${PORT}"
+  vllm_log="${SERVER_LOG}"
+  if [[ "${HRM_VLLM_NATIVE_PROXY}" == "1" ]]; then
+    vllm_port="${HRM_VLLM_TARGET_PORT}"
+    vllm_log="${LOG_ROOT}/vllm.log"
+  fi
+  CUDA_VISIBLE_DEVICES="${GPU}" \
+  PYTHON_BIN="${VLLM_PYTHON}" \
+  VLLM_DTYPE="${VLLM_DTYPE}" \
+  VLLM_GPU_MEMORY_UTILIZATION="${VLLM_GPU_MEMORY_UTILIZATION}" \
+  VLLM_EXTRA_ARGS="${VLLM_EXTRA_ARGS}" \
+  scripts/hrm_vllm_openai_server.sh \
+    --model "${HRM_HF_EXPORT_DIR}" \
+    --served-model-name "${MODEL_NAME}" \
+    --host "${HOST}" \
+    --port "${vllm_port}" \
+    --max-model-len "${MAX_CONTEXT}" \
+    > "${vllm_log}" 2>&1 &
+  vllm_pid="$!"
+  if [[ "${HRM_VLLM_NATIVE_PROXY}" == "1" ]]; then
+    wait_for_vllm_server "http://${HOST}:${vllm_port}"
+    "${PYTHON_BIN}" scripts/native_compatible_openai_proxy.py \
+      --host "${HOST}" \
+      --port "${PORT}" \
+      --target-base-url "http://${HOST}:${vllm_port}/v1" \
+      --model-name "${MODEL_NAME}" \
+      --target-model-name "${MODEL_NAME}" \
+      --api-key "${OPENAI_API_KEY}" \
+      --log-jsonl "${LOG_ROOT}/proxy_payloads.jsonl" \
+      > "${SERVER_LOG}" 2>&1 &
+  fi
+else
+  CUDA_VISIBLE_DEVICES="${GPU}" "${PYTHON_BIN}" scripts/hrm_openai_server.py \
+    --ckpt-path "${CKPT_PATH}" \
+    --ckpt-tag "${CKPT_TAG}" \
+    --host "${HOST}" \
+    --port "${PORT}" \
+    --model-name "${MODEL_NAME}" \
+    --max-context "${MAX_CONTEXT}" \
+    --batch-size "${EUROEVAL_BATCH_SIZE}" \
+    --batch-timeout-ms "${EUROEVAL_BATCH_TIMEOUT_MS}" \
+    --condition direct \
+    "${server_ema_args[@]}" \
+    > "${SERVER_LOG}" 2>&1 &
+fi
 server_pid="$!"
-wait_for_server "http://${HOST}:${PORT}/health"
+if [[ "${HRM_SERVER_BACKEND}" == "vllm" && "${HRM_VLLM_NATIVE_PROXY}" != "1" ]]; then
+  wait_for_vllm_server "http://${HOST}:${PORT}"
+else
+  wait_for_server "http://${HOST}:${PORT}/health"
+fi
 
 rm -f "${RESULTS_FILE}" "${METRICS_FILE}"
 run_euroeval_with_server_monitor

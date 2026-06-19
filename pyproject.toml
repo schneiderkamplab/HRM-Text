@@ -41,7 +41,7 @@ sm100 = [
 eval = [
     "lm-eval[hf,vllm]",
     "math-verify",
-    "vllm",
+    "vllm==0.23.1rc1.dev102+ga46abb7ae",
 ]
 euroeval = [
     "euroeval",
@@ -57,3 +57,9 @@ package = false
 [tool.uv.sources]
 flash_attn_3 = { git = "https://github.com/Dao-AILab/flash-attention.git", subdirectory = "hopper" }
 flash-attn-4 = { git = "https://github.com/Dao-AILab/flash-attention.git", subdirectory = "flash_attn/cute" }
+vllm = { index = "vllm-a46abb7-cu130" }
+
+[[tool.uv.index]]
+name = "vllm-a46abb7-cu130"
+url = "https://wheels.vllm.ai/a46abb7ae68acc13a4fc5870db98619b3f97c6e0/cu130"
+explicit = true
