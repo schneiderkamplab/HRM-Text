@@ -77,10 +77,10 @@ def collect_euroeval(root: Path) -> dict[str, float | int]:
     return metrics
 
 
-def row_targets_step(row: dict[str, Any], step: int) -> bool:
+def row_targets_replacement(row: dict[str, Any], *, step: int, epoch: float) -> bool:
     if row.get("_step") == step:
         return True
-    return any(
+    if any(
         row.get(key) == step
         for key in (
             "eval/train_step",
@@ -88,6 +88,19 @@ def row_targets_step(row: dict[str, Any], step: int) -> bool:
             "euroeval/train_step",
             "avg/train_step",
             "headline_avg/train_step",
+        )
+    ):
+        return True
+    return any(
+        isinstance(row.get(key), (int, float))
+        and not isinstance(row.get(key), bool)
+        and abs(float(row[key]) - epoch) < 1e-12
+        for key in (
+            "eval/epoch",
+            "dfm_eval/epoch",
+            "euroeval/epoch",
+            "avg/epoch",
+            "headline_avg/epoch",
         )
     )
 
@@ -112,11 +125,51 @@ def replacement_eval_row_from_wandb_summary(run: Any, *, step: int, epoch: float
     return row
 
 
-def clean_history_row(row: dict[str, Any], *, replacement_step: int) -> tuple[int | None, dict[str, Any]]:
+def clean_replacement_history_row(row: dict[str, Any], *, step: int, epoch: float) -> dict[str, float | int]:
+    cleaned: dict[str, float | int] = {}
+    prefixes_present: set[str] = set()
+    for key, value in row.items():
+        key = str(key)
+        if not keep_replacement_key(key):
+            continue
+        parsed = finite_number(value)
+        if parsed is None:
+            continue
+        cleaned[key] = parsed
+        prefixes_present.add(key.split("/", 1)[0])
+
+    for prefix in prefixes_present:
+        cleaned[f"{prefix}/train_step"] = step
+        cleaned[f"{prefix}/epoch"] = epoch
+    return cleaned
+
+
+def replacement_eval_rows_from_wandb_history(run: Any, *, step: int, epoch: float, page_size: int) -> list[tuple[int, dict[str, float | int]]]:
+    rows: list[tuple[int, dict[str, float | int]]] = []
+    for raw in run.scan_history(page_size=page_size):
+        internal_step = raw.get("_step")
+        if not isinstance(internal_step, int):
+            continue
+        cleaned = clean_replacement_history_row(raw, step=step, epoch=epoch)
+        if cleaned:
+            # Preserve the replacement run's row separation while mapping all
+            # replacement eval x-axes to the real training step.
+            rows.append((step + internal_step, cleaned))
+    if not rows:
+        raise RuntimeError(f"No eval-like replacement history metrics found in {run.id}")
+    return rows
+
+
+def clean_history_row(
+    row: dict[str, Any],
+    *,
+    replacement_step: int,
+    replacement_epoch: float,
+) -> tuple[int | None, dict[str, Any]]:
     step_value = row.get("_step")
     if not isinstance(step_value, int):
         return None, {}
-    targets_replacement = row_targets_step(row, replacement_step)
+    targets_replacement = row_targets_replacement(row, step=replacement_step, epoch=replacement_epoch)
     cleaned: dict[str, Any] = {}
     for key, value in row.items():
         if key in SYSTEM_KEYS or key.startswith("_"):
@@ -170,6 +223,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--audit-jsonl", type=Path, default=Path("logs/backfill_dfm5_l_clean_rows.jsonl"))
     parser.add_argument("--use-existing-audit", action="store_true")
     parser.add_argument("--sanitize-existing-audit", action="store_true")
+    parser.add_argument("--replacement-source", choices=("history", "summary"), default="history")
     parser.add_argument("--wandb-mode", choices=("online", "offline"), default="online")
     parser.add_argument("--page-size", type=int, default=5000)
     parser.add_argument("--dry-run", action="store_true")
@@ -185,21 +239,39 @@ def main() -> None:
     source = api.run(f"{args.entity}/{args.project}/{args.source_run_id}")
     replacement_source = api.run(f"{args.entity}/{args.project}/{args.replacement_run_id}")
 
-    if args.use_existing_audit or args.sanitize_existing_audit:
-        audit_rows_by_step: dict[int, dict[str, Any]] = {}
+    if args.replacement_source == "history":
+        replacement_rows = replacement_eval_rows_from_wandb_history(
+            replacement_source,
+            step=args.replacement_step,
+            epoch=args.replacement_epoch,
+            page_size=args.page_size,
+        )
+        replacement: dict[str, float | int] = {}
+        for _step, row in replacement_rows:
+            replacement.update(row)
+    else:
         replacement = replacement_eval_row_from_wandb_summary(
             replacement_source,
             step=args.replacement_step,
             epoch=args.replacement_epoch,
         )
+        replacement_rows = [(args.replacement_step, replacement)]
+
+    if args.use_existing_audit or args.sanitize_existing_audit:
+        audit_rows_by_step: dict[int, dict[str, Any]] = {}
         for line in args.audit_jsonl.read_text(encoding="utf-8").splitlines():
             record = json.loads(line)
             step = int(record["step"])
             raw_row = {"_step": step, **dict(record["row"])}
-            _clean_step, cleaned = clean_history_row(raw_row, replacement_step=args.replacement_step)
+            _clean_step, cleaned = clean_history_row(
+                raw_row,
+                replacement_step=args.replacement_step,
+                replacement_epoch=args.replacement_epoch,
+            )
             if cleaned:
                 audit_rows_by_step.setdefault(step, {}).update(cleaned)
-        audit_rows_by_step.setdefault(args.replacement_step, {}).update(replacement)
+        for replacement_step, replacement_row in replacement_rows:
+            audit_rows_by_step.setdefault(replacement_step, {}).update(replacement_row)
         audit_rows = sorted(audit_rows_by_step.items(), key=lambda item: item[0])
         if args.sanitize_existing_audit:
             args.audit_jsonl.parent.mkdir(parents=True, exist_ok=True)
@@ -210,37 +282,47 @@ def main() -> None:
             "source_rows_seen": "from_existing_audit",
             "source_rows_logged": "from_existing_audit",
             "source_rows_at_replacement_step": "from_existing_audit",
+            "source_rows_at_replacement_epoch": "from_existing_audit",
             "replacement_keys": len(replacement),
+            "replacement_rows": len(replacement_rows),
             "unique_steps_logged": len(audit_rows),
         }
     else:
-        replacement = replacement_eval_row_from_wandb_summary(
-            replacement_source,
-            step=args.replacement_step,
-            epoch=args.replacement_epoch,
-        )
-
         counts = {
             "source_rows_seen": 0,
             "source_rows_logged": 0,
             "source_rows_at_replacement_step": 0,
+            "source_rows_at_replacement_epoch": 0,
             "replacement_keys": len(replacement),
+            "replacement_rows": len(replacement_rows),
         }
         audit_rows_by_step: dict[int, dict[str, Any]] = {}
 
         for raw in iter_source_rows(source, page_size=args.page_size):
             counts["source_rows_seen"] += 1
-            step, cleaned = clean_history_row(raw, replacement_step=args.replacement_step)
+            targets_replacement = row_targets_replacement(
+                raw,
+                step=args.replacement_step,
+                epoch=args.replacement_epoch,
+            )
+            step, cleaned = clean_history_row(
+                raw,
+                replacement_step=args.replacement_step,
+                replacement_epoch=args.replacement_epoch,
+            )
             if step is None:
                 continue
             if step == args.replacement_step:
                 counts["source_rows_at_replacement_step"] += 1
+            if targets_replacement:
+                counts["source_rows_at_replacement_epoch"] += 1
             if not cleaned:
                 continue
             audit_rows_by_step.setdefault(step, {}).update(cleaned)
             counts["source_rows_logged"] += 1
 
-        audit_rows_by_step.setdefault(args.replacement_step, {}).update(replacement)
+        for replacement_step, replacement_row in replacement_rows:
+            audit_rows_by_step.setdefault(replacement_step, {}).update(replacement_row)
         audit_rows = sorted(audit_rows_by_step.items(), key=lambda item: item[0])
         counts["unique_steps_logged"] = len(audit_rows)
 
@@ -282,9 +364,8 @@ def main() -> None:
     run.summary["clean_backfill/replacement_run_id"] = args.replacement_run_id
     run.summary["clean_backfill/replacement_step"] = args.replacement_step
     run.summary["clean_backfill/replacement_epoch"] = args.replacement_epoch
+    run.summary["clean_backfill/replacement_source"] = args.replacement_source
     run.summary["clean_backfill/audit_jsonl"] = str(args.audit_jsonl)
-    for key, value in replacement.items():
-        run.summary[key] = value
     wandb.finish()
 
 

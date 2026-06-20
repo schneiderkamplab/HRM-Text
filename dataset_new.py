@@ -54,6 +54,7 @@ class V1Dataset(IterableDataset):
         self._sampler: Optional[MultipackDistributedBatchSampler] = None
         self._epoch = 0
         self._start_batch = 0
+        self._start_row_cursor: Optional[int] = None
 
     def _load_metadata(self) -> V1DatasetMeta:
         with open(os.path.join(self.config.dataset_path, "metadata.json"), "r") as f:
@@ -79,6 +80,13 @@ class V1Dataset(IterableDataset):
         if self._sampler is not None:
             raise RuntimeError("Cannot change dataset start batch after iteration has started")
         self._start_batch = start_batch
+
+    def set_start_row_cursor(self, start_row_cursor: int):
+        if start_row_cursor < 0:
+            raise ValueError(f"Dataset start row cursor must be non-negative, got {start_row_cursor}")
+        if self._sampler is not None:
+            raise RuntimeError("Cannot change dataset start row cursor after iteration has started")
+        self._start_row_cursor = start_row_cursor
 
     def _load_dataset_before_epoch_begin(self):
         # Load tokens (only if not loaded)
@@ -158,7 +166,15 @@ class V1Dataset(IterableDataset):
         assert self._sampler is not None
         start_batch = self._start_batch
         self._start_batch = 0
-        for batch_idx, indices in enumerate(self._sampler.iter(), start=1):
-            if batch_idx <= start_batch:
+        start_row_cursor = self._start_row_cursor
+        self._start_row_cursor = None
+        if start_row_cursor is not None:
+            iterator = self._sampler.iter_with_info(start_index=start_row_cursor)
+        else:
+            iterator = self._sampler.iter_with_info()
+
+        for batch_idx, (indices, resume_info) in enumerate(iterator, start=1):
+            if start_row_cursor is None and batch_idx <= start_batch:
                 continue
-            yield self._load_batch(indices)
+            batch, scalars = self._load_batch(indices)
+            yield batch, scalars | {"resume_info": resume_info}

@@ -504,11 +504,23 @@ Qwen DFM:            logs/dfm_evals/qwen35_2b_full_ordered_20260616
 Qwen EuroEval:       logs/euroeval/qwen35_2b_full_ordered_20260616/qwen35_2b
 ```
 
-The canonical report is `docs/dfm5.md`. A compatibility symlink
-`docs/df5m.md -> dfm5.md` was added because the filename is easy to mistype.
+The canonical report is `docs/dfm5.md`. Superseded, 2026-06-20: the former
+compatibility symlink `docs/df5m.md -> dfm5.md` was deleted so the repo has only
+one canonical DFM5 report path.
 At 400K, DFM5-L beats local-clean Qwen3.5 2B on the Danish average
 (`51.0` vs `44.7`) and slightly on the English average (`59.1` vs `57.8`), but
 loses badly on Math & Code (`27.0` vs `54.2`).
+
+DFM5 docs cleanup, 2026-06-20. Confidence: high for local filesystem
+inspection and regenerated Markdown. The Slack paste-table files
+`docs/dfm5_slack_tables.md` and `docs/dfm5_slack_tables/` were deleted, as was
+the misnamed compatibility symlink `docs/df5m.md`. `docs/dfm5.md` is now the
+only file under `docs/`, and it was regenerated with:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/generate_dfm5_l_eval_comparison_report.py
+```
 
 DFM5 450K report update, 2026-06-17. Confidence: high for local artifact
 inspection and regenerated Markdown. `scripts/generate_dfm5_l_eval_comparison_report.py`
@@ -3301,4 +3313,323 @@ The sync log is:
 
 ```text
 logs/backfill_dfm5_l_clean_v2_offline_sync_20260619.log
+```
+
+DFM5-L clean append, 2026-06-19. Confidence: high for local audit files,
+offline W&B sync output, and W&B API summary readback. After the clean run was
+created, the live source run `oti1lisg` advanced beyond the clean run. The
+append-only backfill script:
+
+```text
+scripts/append_dfm5_l_clean_from_source_wandb.py
+```
+
+was used to append source rows with W&B `_step > 735320` into the existing
+clean run `dfm5-l-clean-20260619-v2`. This added missing training rows and the
+750K eval/average rows from the main DFM5-L source run.
+
+Audit and logs:
+
+```text
+logs/append_dfm5_l_clean_from_oti1lisg_after735320_20260619.jsonl
+logs/append_dfm5_l_clean_from_oti1lisg_after735320_offline_create_20260619.log
+logs/append_dfm5_l_clean_from_oti1lisg_after735320_sync_20260619.log
+```
+
+The dry-run found `4083` rows to append, including `38` eval-like rows, covering
+internal W&B steps `735325..755545`. The append was done offline and synced:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/append_dfm5_l_clean_from_source_wandb.py \
+  --use-existing-audit \
+  --audit-jsonl logs/append_dfm5_l_clean_from_oti1lisg_after735320_20260619.jsonl \
+  --wandb-mode offline
+
+wandb sync --entity peter-sk-sdu --project DFM5 \
+  wandb/offline-run-20260619_115118-dfm5-l-clean-20260619-v2
+```
+
+W&B API readback after sync showed the clean run at `_step=755545` with:
+
+```text
+avg/train_step = 750000
+avg/overall = 0.5236963639147983
+avg/danish = 0.5194176019991262
+avg/english = 0.6620535778037574
+avg/math_code = 0.3896179119415115
+eval/MMLU/acc = 0.5478999999999999
+eval/GSM8k/acc = 0.36922160727824105
+dfm_eval/generative-talemaader/model_graded_fact/accuracy = 0.0012376237623762376
+euroeval/da/sentiment-classification/angry-tweets/macro_f1 = 66.17822158112952
+```
+
+DFM5-L clean append to 800K, 2026-06-19. Confidence: high for local audit
+files, offline W&B sync output, and W&B API summary readback. The same
+append-only script was used again after the clean run had reached
+`_step=755545`:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/append_dfm5_l_clean_from_source_wandb.py \
+  --dry-run \
+  --audit-jsonl logs/append_dfm5_l_clean_from_oti1lisg_after755545_20260619.jsonl
+
+python scripts/append_dfm5_l_clean_from_source_wandb.py \
+  --use-existing-audit \
+  --audit-jsonl logs/append_dfm5_l_clean_from_oti1lisg_after755545_20260619.jsonl \
+  --wandb-mode offline
+
+wandb sync --entity peter-sk-sdu --project DFM5 \
+  wandb/offline-run-20260619_192323-dfm5-l-clean-20260619-v2
+```
+
+Audit and logs:
+
+```text
+logs/append_dfm5_l_clean_from_oti1lisg_after755545_20260619.jsonl
+logs/append_dfm5_l_clean_from_oti1lisg_after755545_dryrun_20260619.log
+logs/append_dfm5_l_clean_from_oti1lisg_after755545_offline_create_20260619.log
+logs/append_dfm5_l_clean_from_oti1lisg_after755545_sync_20260619.log
+```
+
+The dry-run found `11232` rows to append, including `36` eval-like rows,
+covering internal W&B steps `755550..811530`. W&B API readback after sync
+showed the clean run at `_step=811530` with:
+
+```text
+avg/train_step = 800000
+avg/overall = 0.4941255723568704
+avg/danish = 0.5140386857991142
+avg/english = 0.6653983714808205
+avg/math_code = 0.3029396597906766
+avg/epoch = 4.417415389149824
+eval/MMLU/acc = 0.54305
+eval/GSM8k/acc = 0.3767944655041698
+eval/BoolQ/acc = 0.8471
+dfm_eval/generative-talemaader/model_graded_fact/accuracy = 0
+dfm_eval/nordjyllandnews/chrf3pp/mean = 36.063069175646135
+euroeval/da/sentiment-classification/angry-tweets/macro_f1 = 72.50525327604699
+```
+
+Superseded, 2026-06-19: the `dfm5-l-clean-20260619-v2` clean run was deleted.
+It still allowed stale source eval rows at the 650K epoch to survive for some
+standard eval metrics such as ARC, because the sanitizer only stripped rows by
+`*/train_step=650000` or W&B `_step=650000`. Some source eval rows only carried
+`*/epoch=3.5891500036842338`, so they could overwrite the clean rerun values.
+
+DFM5-L clean v3 backfill, 2026-06-19. Confidence: high for local audit diff,
+offline W&B sync output, W&B summary readback, and remote ARC row readback. The
+corrected script:
+
+```text
+scripts/backfill_dfm5_l_clean_wandb.py
+```
+
+now defaults to `--replacement-source history`, which streams all non-null
+eval-like rows from the rerun W&B history rather than copying only the rerun
+summary. It also strips source eval-like rows when they target either
+`650000` via `*/train_step` or the replacement epoch
+`3.5891500036842338` via `*/epoch`. The script no longer writes replacement
+metric values directly to `run.summary` after logging the full history; this
+keeps the final summary at the latest logged checkpoint.
+
+The corrected clean run is:
+
+```text
+https://wandb.ai/peter-sk-sdu/DFM5/runs/dfm5-l-clean-20260619-v3
+```
+
+Commands used:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/backfill_dfm5_l_clean_wandb.py \
+  --dry-run \
+  --wandb-mode offline \
+  --dest-run-id dfm5-l-clean-20260619-v3 \
+  --dest-run-name 'dfm5-L clean' \
+  --audit-jsonl logs/backfill_dfm5_l_clean_rows_v3_history650_20260619.jsonl
+
+python scripts/backfill_dfm5_l_clean_wandb.py \
+  --sanitize-existing-audit \
+  --dry-run \
+  --wandb-mode offline \
+  --dest-run-id dfm5-l-clean-20260619-v3 \
+  --dest-run-name 'dfm5-L clean' \
+  --audit-jsonl logs/backfill_dfm5_l_clean_rows_v3_history650_20260619.jsonl
+
+python scripts/backfill_dfm5_l_clean_wandb.py \
+  --use-existing-audit \
+  --wandb-mode offline \
+  --dest-run-id dfm5-l-clean-20260619-v3 \
+  --dest-run-name 'dfm5-L clean' \
+  --audit-jsonl logs/backfill_dfm5_l_clean_rows_v3_history650_20260619.jsonl
+
+wandb sync --entity peter-sk-sdu --project DFM5 \
+  wandb/offline-run-20260619_203345-dfm5-l-clean-20260619-v3
+```
+
+Audit and logs:
+
+```text
+logs/backfill_dfm5_l_clean_rows_v3_history650_20260619.jsonl
+logs/backfill_dfm5_l_clean_v3_history650_dryrun_20260619.log
+logs/backfill_dfm5_l_clean_v3_history650_sanitize_20260619.log
+logs/backfill_dfm5_l_clean_v3_history650_offline_create_20260619.log
+logs/backfill_dfm5_l_clean_v3_history650_sync_20260619.log
+```
+
+The strict local audit diff against the rerun W&B run
+`dfm5-l-vllm-clean-650k-700k-20260618` showed `447` expected replacement keys,
+`447` actual 650K audit keys, and zero missing, extra, or differing values.
+Spot-checked replacement values:
+
+```text
+eval/ARC/acc = 0.6954
+eval/ARC/n = 1172
+eval/ARC/invalid = 0
+eval/MMLU/acc = 0.536375
+eval/GSM8k/acc = 0.3760511751326763
+eval/BoolQ/acc = 0.8416
+avg/overall = 0.45655712777620644
+avg/train_step = 650000
+avg/epoch = 3.589150003684234
+```
+
+W&B summary readback after sync showed the v3 clean run at `_step=820565`, with
+latest summary values from 800K:
+
+```text
+avg/train_step = 800000
+avg/epoch = 4.417415389149824
+avg/overall = 0.4941255723568704
+avg/danish = 0.5140386857991142
+avg/english = 0.6653983714808205
+avg/math_code = 0.3029396597906766
+eval/MMLU/acc = 0.54305
+eval/GSM8k/acc = 0.3767944655041698
+eval/ARC/acc = 0.7099
+eval/BoolQ/acc = 0.8471
+```
+
+A remote sparse-history spot check found the 650K ARC row at W&B `_step=650023`
+with `eval/ARC/acc=0.6954`, `eval/train_step=650000`, and
+`eval/epoch=3.589150003684234`.
+
+DFM5-L clean v3 append to 900K, 2026-06-20. Confidence: high for local append
+audit, offline W&B sync output, W&B API summary readback, and regenerated
+`docs/dfm5.md`. After the v3 clean run had reached `_step=820565`, the
+append-only script was used to add missing training rows plus the 850K and 900K
+eval/average rows from the source DFM5-L run `oti1lisg`:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/append_dfm5_l_clean_from_source_wandb.py \
+  --dry-run \
+  --dest-run-id dfm5-l-clean-20260619-v3 \
+  --audit-jsonl logs/append_dfm5_l_clean_from_oti1lisg_after820565_20260620.jsonl
+
+python scripts/append_dfm5_l_clean_from_source_wandb.py \
+  --use-existing-audit \
+  --dest-run-id dfm5-l-clean-20260619-v3 \
+  --audit-jsonl logs/append_dfm5_l_clean_from_oti1lisg_after820565_20260620.jsonl \
+  --wandb-mode offline
+
+wandb sync --entity peter-sk-sdu --project DFM5 \
+  wandb/offline-run-20260620_092234-dfm5-l-clean-20260619-v3
+```
+
+Audit and logs:
+
+```text
+logs/append_dfm5_l_clean_from_oti1lisg_after820565_20260620.jsonl
+logs/append_dfm5_l_clean_from_oti1lisg_after820565_dryrun_20260620.log
+logs/append_dfm5_l_clean_from_oti1lisg_after820565_offline_create_20260620.log
+logs/append_dfm5_l_clean_from_oti1lisg_after820565_sync_20260620.log
+```
+
+The dry-run found `17243` rows to append, including `73` eval-like rows,
+covering W&B steps `820570..906456`. It included 850K at
+`avg/epoch=4.693503850971687` and 900K at `avg/epoch=4.96959231279355`.
+W&B API readback after sync showed the v3 clean run at `_step=906456` with:
+
+```text
+avg/train_step = 900000
+avg/epoch = 4.96959231279355
+avg/overall = 0.49627485017703776
+avg/danish = 0.5110413263920152
+avg/english = 0.6661624442926698
+avg/math_code = 0.3116207798464284
+eval/ARC/acc = 0.7159
+eval/MMLU/acc = 0.55125
+eval/GSM8k/acc = 0.3874275208491281
+eval/BoolQ/acc = 0.8599
+dfm_eval/nordjyllandnews/chrf3pp/mean = 35.676897848564714
+euroeval/da/sentiment-classification/angry-tweets/macro_f1 = 70.41063419555583
+```
+
+The DFM5 comparison report generator:
+
+```text
+scripts/generate_dfm5_l_eval_comparison_report.py
+```
+
+was updated to include local artifacts for `DFM5-L 800K`, `DFM5-L 850K`, and
+`DFM5-L 900K`. Running it regenerated:
+
+```text
+docs/dfm5.md
+```
+
+DFM5-L clean v3 850K/900K visible-history repair, 2026-06-20. Confidence:
+high for W&B API summary readback and sparse-history row readback. The first
+append to 900K updated the run summary but the newly appended rows were not
+visible through W&B's normal history scan/workspace panels. In addition, the
+source eval rows had `*/epoch` but many rows lacked the matching
+`*/train_step` field required by the metric definitions.
+
+The repair script:
+
+```text
+scripts/relog_dfm5_l_clean_eval_rows.py
+```
+
+reads the append audit, selects the 850K/900K eval rows, injects explicit
+`eval/train_step`, `dfm_eval/train_step`, `euroeval/train_step`, or
+`avg/train_step` for each row's prefix, and logs the repaired rows at fresh
+W&B internal steps. The offline repair sync again updated summary but did not
+make rows visible through `scan_history`, so the successful repair was the
+online run:
+
+```bash
+cd /work/dfm/HRM-Text
+python scripts/relog_dfm5_l_clean_eval_rows.py \
+  --audit-jsonl logs/append_dfm5_l_clean_from_oti1lisg_after820565_20260620.jsonl \
+  --output-jsonl logs/relog_dfm5_l_clean_850k_900k_explicit_train_step_online_20260620.jsonl \
+  --target 850000:4.693503850971687 \
+  --target 900000:4.96959231279355 \
+  --base-step 920000 \
+  --wandb-mode online
+```
+
+Logs and repaired audit:
+
+```text
+logs/relog_dfm5_l_clean_850k_900k_explicit_train_step_online_20260620.jsonl
+logs/relog_dfm5_l_clean_850k_900k_explicit_train_step_online_20260620.log
+```
+
+Remote W&B sparse-history readback showed the repaired average rows:
+
+```text
+_step=920036 avg/train_step=850000 avg/epoch=4.693503850971687 avg/overall=0.49205879573912314
+_step=920072 avg/train_step=900000 avg/epoch=4.96959231279355 avg/overall=0.49627485017703776
+```
+
+It also showed repaired standard eval rows, for example:
+
+```text
+_step=920023 eval/train_step=850000 eval/epoch=4.693503850971687 eval/ARC/acc=0.721
+_step=920024 eval/train_step=850000 eval/epoch=4.693503850971687 eval/MMLU/acc=0.5447500000000001
 ```

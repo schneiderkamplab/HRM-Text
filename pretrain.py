@@ -142,6 +142,8 @@ class ResumeState:
     step: int
     start_epoch: int
     skip_batches: int
+    start_row_cursor: Optional[int] = None
+    resume_mode: str = "batch"
 
 
 def trace_print(config: PretrainConfig, rank: int, message: str):
@@ -361,7 +363,7 @@ def load_checkpoint_metadata(checkpoint_path: str, tag: str) -> dict:
         return json.load(f)
 
 
-def resolve_resume_state(config: PretrainConfig) -> Optional[ResumeState]:
+def resolve_resume_state(config: PretrainConfig, current_local_batch_size: int) -> Optional[ResumeState]:
     if config.resume_checkpoint_path is None and config.resume_checkpoint_tag is None:
         return None
     if config.resume_checkpoint_path is None or config.resume_checkpoint_tag is None:
@@ -373,6 +375,9 @@ def resolve_resume_state(config: PretrainConfig) -> Optional[ResumeState]:
     step = metadata.get("step", config.resume_step)
     epoch = metadata.get("epoch", config.resume_epoch)
     batch_in_epoch = metadata.get("batch_in_epoch", config.resume_batch_in_epoch)
+    row_cursor = metadata.get("global_row_cursor_in_epoch")
+    checkpoint_local_batch_size = metadata.get("local_batch_size")
+    batch_in_epoch_exact = bool(metadata.get("batch_in_epoch_exact", True))
 
     if tag.startswith("epoch_"):
         tag_epoch = int(tag.removeprefix("epoch_"))
@@ -389,11 +394,27 @@ def resolve_resume_state(config: PretrainConfig) -> Optional[ResumeState]:
             f"Step checkpoint {tag} needs checkpoint_state_{tag}.json or explicit "
             "resume_epoch and resume_batch_in_epoch overrides"
         )
-    return ResumeState(tag=tag, step=step, start_epoch=int(epoch), skip_batches=int(batch_in_epoch))
+    start_row_cursor = None
+    resume_mode = "batch"
+    if (
+        row_cursor is not None
+        and checkpoint_local_batch_size is not None
+        and (int(checkpoint_local_batch_size) != current_local_batch_size or not batch_in_epoch_exact)
+    ):
+        start_row_cursor = int(row_cursor)
+        resume_mode = "row_cursor"
+    return ResumeState(
+        tag=tag,
+        step=step,
+        start_epoch=int(epoch),
+        skip_batches=int(batch_in_epoch),
+        start_row_cursor=start_row_cursor,
+        resume_mode=resume_mode,
+    )
 
 
-def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank: int) -> Optional[ResumeState]:
-    resume_state = resolve_resume_state(config)
+def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank: int, local_batch_size: int) -> Optional[ResumeState]:
+    resume_state = resolve_resume_state(config, local_batch_size)
     if resume_state is None:
         return None
 
@@ -682,6 +703,9 @@ def save_checkpoint_metadata(
     batch_in_epoch: int,
     rank: int,
     checkpoint_kind: str,
+    local_batch_size: int,
+    resume_info: Optional[dict[str, int]] = None,
+    batch_in_epoch_exact: bool = True,
 ):
     if config.checkpoint_path is None or rank != 0:
         return
@@ -693,10 +717,20 @@ def save_checkpoint_metadata(
         "step": train_state.step,
         "epoch": epoch,
         "batch_in_epoch": batch_in_epoch,
+        "batch_in_epoch_exact": batch_in_epoch_exact,
+        "gradient_accumulation_steps": config.gradient_accumulation_steps,
         "global_batch_size": config.global_batch_size,
+        "local_batch_size": local_batch_size,
         "data_path": config.data.path,
         "seed": config.seed,
     }
+    if resume_info is not None:
+        metadata.update({
+            "global_row_start_in_epoch": int(resume_info["global_row_start"]),
+            "global_row_cursor_in_epoch": int(resume_info["global_row_end"]),
+            "global_numseq": int(resume_info["global_numseq"]),
+            "global_batch_totlen": int(resume_info["global_batch_totlen"]),
+        })
     with open(os.path.join(config.checkpoint_path, f"checkpoint_state_{tag}.json"), "wt") as f:
         json.dump(metadata, f, indent=2, sort_keys=True)
         f.write("\n")
@@ -710,6 +744,9 @@ def save_train_checkpoint(
     batch_in_epoch: int,
     rank: int,
     checkpoint_kind: str = "regular",
+    local_batch_size: int = 0,
+    resume_info: Optional[dict[str, int]] = None,
+    batch_in_epoch_exact: bool = True,
 ):
     if config.checkpoint_path is None:
         return
@@ -725,7 +762,7 @@ def save_train_checkpoint(
     torch.save(train_state.carry, os.path.join(config.checkpoint_path, f"carry_{tag}.{rank}.pt"))
     if dist.is_available() and dist.is_initialized():
         dist.barrier()
-    save_checkpoint_metadata(config, train_state, tag, epoch, batch_in_epoch, rank, checkpoint_kind)
+    save_checkpoint_metadata(config, train_state, tag, epoch, batch_in_epoch, rank, checkpoint_kind, local_batch_size, resume_info, batch_in_epoch_exact)
 
 
 def _ephemeral_step_from_name(name: str) -> Optional[int]:
@@ -859,25 +896,34 @@ def launch(hydra_config: DictConfig):
     torch.random.manual_seed(config.seed + RANK)
 
     # --- Training
+    local_batch_size = config.global_batch_size // (WORLD_SIZE * config.gradient_accumulation_steps)
     trace_print(config, RANK, "init_train_begin")
     train_state, train_loader, train_metadata = init_train(config, rank=RANK, world_size=WORLD_SIZE, device=device)
     trace_print(config, RANK, "init_train_end")
-    resume_state = load_train_checkpoint(config, train_state, rank=RANK)
+    resume_state = load_train_checkpoint(config, train_state, rank=RANK, local_batch_size=local_batch_size)
     start_epoch = 1
     skip_batches = 0
+    batch_in_epoch_exact = True
     if resume_state is not None:
         start_epoch = resume_state.start_epoch
         skip_batches = resume_state.skip_batches
+        batch_in_epoch_exact = resume_state.resume_mode == "batch"
         trace_print(config, RANK, f"set_epoch_begin epoch_index={start_epoch - 1}")
         train_loader.dataset.set_epoch(start_epoch - 1)
         trace_print(config, RANK, f"set_epoch_end epoch_index={start_epoch - 1}")
-        trace_print(config, RANK, f"set_start_batch_begin skip_batches={skip_batches}")
-        train_loader.dataset.set_start_batch(skip_batches)
-        trace_print(config, RANK, f"set_start_batch_end skip_batches={skip_batches}")
+        if resume_state.start_row_cursor is not None:
+            trace_print(config, RANK, f"set_start_row_cursor_begin row_cursor={resume_state.start_row_cursor}")
+            train_loader.dataset.set_start_row_cursor(resume_state.start_row_cursor)
+            trace_print(config, RANK, f"set_start_row_cursor_end row_cursor={resume_state.start_row_cursor}")
+        else:
+            trace_print(config, RANK, f"set_start_batch_begin skip_batches={skip_batches}")
+            train_loader.dataset.set_start_batch(skip_batches)
+            trace_print(config, RANK, f"set_start_batch_end skip_batches={skip_batches}")
         if RANK == 0:
             print(
                 f"Resumed from {config.resume_checkpoint_path} ({config.checkpoint_format}:{resume_state.tag}): "
-                f"step={train_state.step}, start_epoch={start_epoch}, skip_batches={skip_batches}",
+                f"step={train_state.step}, start_epoch={start_epoch}, skip_batches={skip_batches}, "
+                f"resume_mode={resume_state.resume_mode}, row_cursor={resume_state.start_row_cursor}",
                 flush=True,
             )
 
@@ -909,6 +955,7 @@ def launch(hydra_config: DictConfig):
         # ############ Train Iter
         train_state.model.train()
         accumulation_batches: list[dict[str, Tensor]] = []
+        accumulation_resume_info: Optional[dict[str, int]] = None
         batch_start = skip_batches + 1 if skip_batches > 0 else 1
         trace_print(config, RANK, f"dataloader_iter_begin epoch={epoch} batch_start={batch_start}")
         for batch_in_epoch, (batch, batch_info) in enumerate(train_loader, start=batch_start):
@@ -917,7 +964,10 @@ def launch(hydra_config: DictConfig):
             batch = move_batch_to_device(batch, device)
             if config.resume_trace and batch_in_epoch == batch_start:
                 trace_print(config, RANK, f"first_batch_moved batch_in_epoch={batch_in_epoch}")
+            resume_info = batch_info.pop("resume_info", None)
             accumulation_batches.append(batch | {k: wrap_tensor(torch.tensor(v, device="cpu")) for k, v in batch_info.items()})
+            if resume_info is not None:
+                accumulation_resume_info = resume_info
             if len(accumulation_batches) < config.gradient_accumulation_steps:
                 continue
 
@@ -957,7 +1007,7 @@ def launch(hydra_config: DictConfig):
 
             saved_regular_step_checkpoint = False
             if config.checkpoint_step_interval is not None and train_state.step % config.checkpoint_step_interval == 0:
-                save_train_checkpoint(config, train_state, f"step_{train_state.step}", epoch, batch_in_epoch, RANK)
+                save_train_checkpoint(config, train_state, f"step_{train_state.step}", epoch, batch_in_epoch, RANK, local_batch_size=local_batch_size, resume_info=accumulation_resume_info, batch_in_epoch_exact=batch_in_epoch_exact)
                 saved_regular_step_checkpoint = True
 
             if config.ephemeral_checkpoint_step_interval is not None and train_state.step % config.ephemeral_checkpoint_step_interval == 0:
@@ -965,7 +1015,7 @@ def launch(hydra_config: DictConfig):
                     remove_stale_ephemeral_checkpoints(config, f"step_{train_state.step}", RANK)
                 else:
                     ephemeral_tag = f"ephemeral_step_{train_state.step}"
-                    save_train_checkpoint(config, train_state, ephemeral_tag, epoch, batch_in_epoch, RANK, checkpoint_kind="ephemeral")
+                    save_train_checkpoint(config, train_state, ephemeral_tag, epoch, batch_in_epoch, RANK, checkpoint_kind="ephemeral", local_batch_size=local_batch_size, resume_info=accumulation_resume_info, batch_in_epoch_exact=batch_in_epoch_exact)
                     remove_stale_ephemeral_checkpoints(config, ephemeral_tag, RANK)
 
         skip_batches = 0
@@ -974,7 +1024,7 @@ def launch(hydra_config: DictConfig):
 
         ############ Checkpointing
         if (epoch % config.checkpoint_interval == 0) or (epoch == config.epochs):
-            save_train_checkpoint(config, train_state, f"epoch_{epoch}", epoch, 0, RANK)
+            save_train_checkpoint(config, train_state, f"epoch_{epoch}", epoch, 0, RANK, local_batch_size=local_batch_size, batch_in_epoch_exact=True)
 
     # finalize
     if dist.is_initialized():

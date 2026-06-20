@@ -11,7 +11,8 @@ Example:
 
 Environment overrides:
   PLAN_DIR, CKPT_PATH, EXPORT_DIR, LOG_ROOT, DFM_LOG_ROOT, EUROEVAL_LOG_ROOT,
-  WANDB_PROJECT, WANDB_RUN_ID, WANDB_RUN_NAME, MODEL_PREFIX, PORT_BASE, FORCE
+  WANDB_PROJECT, WANDB_RUN_ID, WANDB_RUN_NAME, MODEL_PREFIX, PORT_BASE, FORCE,
+  SKIP_VALEU_DA
 USAGE
   exit 2
 fi
@@ -37,6 +38,8 @@ WANDB_RUN_NAME="${WANDB_RUN_NAME:-dfm5-L}"
 MODEL_PREFIX="${MODEL_PREFIX:-hrm-dfm5-L-vllm-native-proxy}"
 PORT_BASE="${PORT_BASE:-28000}"
 FORCE="${FORCE:-0}"
+SKIP_VALEU_DA="${SKIP_VALEU_DA:-1}"
+CHECKPOINT_WAIT_SECONDS="${CHECKPOINT_WAIT_SECONDS:-60}"
 
 force_arg=()
 if [[ "${FORCE}" == "1" ]]; then
@@ -60,6 +63,7 @@ python -m eval_scheduler plan create \
   --run-euroeval \
   --queue-order euroeval-first \
   --max-retries 5 \
+  --checkpoint-wait-seconds "${CHECKPOINT_WAIT_SECONDS}" \
   --standard-config evaluation/config/hrm_vllm_benchmarking.yaml \
   --standard-engine-backend vllm \
   --standard-hf-export-dir "${EXPORT_DIR}" \
@@ -87,6 +91,39 @@ python -m eval_scheduler plan create \
   --judged-vllm-gpu-memory-utilization 0.25 \
   --govreport-max-report-chars 9000 \
   "${force_arg[@]}"
+
+if [[ "${SKIP_VALEU_DA}" == "1" ]]; then
+  python - <<'PY' "${PLAN_DIR}"
+from pathlib import Path
+import sys
+
+from eval_scheduler.eval_scheduler.locking import PlanLock
+from eval_scheduler.eval_scheduler.model import JobStatus, read_plan, write_plan
+
+plan_dir = Path(sys.argv[1])
+plan_file = plan_dir / "plan.tsv"
+with PlanLock(plan_dir, exclusive=True):
+    jobs = read_plan(plan_file)
+    updated = []
+    skipped = 0
+    for job in jobs:
+        if job.action.value == "eval_euroeval" and job.name == "valeu-da":
+            updated.append(
+                job.with_updates(
+                    status=JobStatus.SKIPPED,
+                    metadata={
+                        **job.metadata,
+                        "skip_reason": "EuroEval ValEU-da aborts the whole task on invalid labels; skipped for failure-free DFM5-L checkpoint sweeps.",
+                    },
+                )
+            )
+            skipped += 1
+        else:
+            updated.append(job)
+    write_plan(plan_file, updated)
+print(f"skipped_valeu_da_rows={skipped}")
+PY
+fi
 
 cat <<EOF
 

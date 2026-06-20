@@ -150,12 +150,15 @@ class MultipackDistributedBatchSampler(Sampler):
         self.eff_total_used = 0
         self.eff_total_slots = 0
 
-    def iter(self):
+    def iter_with_info(self, start_index: int = 0):
+        if start_index < 0:
+            raise ValueError(f"start_index must be non-negative, got {start_index}")
+
         # Allocate workspace
         heap = np.empty(self.num_replicas + 1, dtype=self.lengths.dtype)
 
-        start_index = 0
         while start_index < self.lengths.size:
+            batch_start_index = start_index
             is_full, global_numseq, batch, batch_totlen = allocate(heap,
                                                                    start_index, self.lengths,
                                                                    rank=self.rank, c=self.batch_max_length, n=self.num_replicas)
@@ -168,7 +171,16 @@ class MultipackDistributedBatchSampler(Sampler):
 
             self.eff_total_used += batch_totlen
             self.eff_total_slots += self.num_replicas * self.batch_max_length
-            
+
+            yield batch, {
+                "global_row_start": int(batch_start_index),
+                "global_row_end": int(start_index),
+                "global_numseq": int(global_numseq),
+                "global_batch_totlen": int(batch_totlen),
+            }
+
+    def iter(self):
+        for batch, _ in self.iter_with_info():
             yield batch
             
     def estimate_num_batches(self):

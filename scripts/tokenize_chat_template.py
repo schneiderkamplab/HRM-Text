@@ -11,6 +11,7 @@ import argparse
 import gzip
 import json
 import os
+import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import dataclass
@@ -29,6 +30,7 @@ WORKER_TEMPLATE: jinja2.Template | None = None
 WORKER_OUTPUT_DIR: Path | None = None
 WORKER_FORCE = False
 WORKER_ENABLE_THINKING = False
+WORKER_SKIP_BAD_JSON = False
 
 
 @dataclass
@@ -55,6 +57,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--chat-template", required=True, type=Path)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--enable-thinking", action="store_true")
+    parser.add_argument("--skip-bad-json", action="store_true")
     parser.add_argument("--workers", type=int, default=1)
     return parser.parse_args()
 
@@ -199,11 +202,26 @@ def examples_from_messages(messages: list[dict[str, Any]], tools: list[dict[str,
 
 def read_jsonl(path: Path) -> Iterable[Example]:
     opener = gzip.open if path.name.endswith(".gz") else open
+    decoder = json.JSONDecoder(strict=False)
     with opener(path, "rt", encoding="utf-8") as handle:
+        buffer = ""
+        start_line = 1
         for line_no, line in enumerate(handle, start=1):
-            if not line.strip():
+            if not line.strip() and not buffer:
                 continue
-            row = json.loads(line)
+            if not buffer:
+                start_line = line_no
+            buffer += line
+            try:
+                row, end = decoder.raw_decode(buffer)
+            except json.JSONDecodeError:
+                if WORKER_SKIP_BAD_JSON and "\x00" in buffer:
+                    print(f"Skipping corrupt JSON object at {path}:{start_line}", file=sys.stderr)
+                    buffer = ""
+                continue
+            if buffer[end:].strip():
+                raise ValueError(f"{path}:{start_line}: trailing data after JSON object")
+            buffer = ""
             if "response" in row:
                 yield hrm_row_to_messages(
                     str(row.get("condition", "direct")),
@@ -214,7 +232,12 @@ def read_jsonl(path: Path) -> Iterable[Example]:
                 tools = row.get("tools") if isinstance(row.get("tools"), list) else None
                 yield from examples_from_messages(row["messages"], tools)
             else:
-                raise ValueError(f"{path}:{line_no}: expected response or messages")
+                raise ValueError(f"{path}:{start_line}: expected response or messages")
+        if buffer.strip():
+            if WORKER_SKIP_BAD_JSON:
+                print(f"Skipping incomplete JSON object at {path}:{start_line}", file=sys.stderr)
+                return
+            raise ValueError(f"{path}:{start_line}: incomplete JSON object")
 
 
 def read_parquet(path: Path) -> Iterable[Example]:
@@ -351,14 +374,16 @@ def init_worker(
     output_dir: str,
     force: bool,
     enable_thinking: bool,
+    skip_bad_json: bool,
 ) -> None:
-    global WORKER_TOKENIZER, WORKER_TEMPLATE, WORKER_OUTPUT_DIR, WORKER_FORCE, WORKER_ENABLE_THINKING
+    global WORKER_TOKENIZER, WORKER_TEMPLATE, WORKER_OUTPUT_DIR, WORKER_FORCE, WORKER_ENABLE_THINKING, WORKER_SKIP_BAD_JSON
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     WORKER_TOKENIZER = Tokenizer.from_file(tokenizer_path)
     WORKER_TEMPLATE = jinja2.Environment().from_string(Path(chat_template_path).read_text())
     WORKER_OUTPUT_DIR = Path(output_dir)
     WORKER_FORCE = force
     WORKER_ENABLE_THINKING = enable_thinking
+    WORKER_SKIP_BAD_JSON = skip_bad_json
 
 
 def process_file_worker(found: FoundFile) -> tuple[str, int, int]:
@@ -377,6 +402,8 @@ def process_file_worker(found: FoundFile) -> tuple[str, int, int]:
 
 def main() -> None:
     args = parse_args()
+    global WORKER_SKIP_BAD_JSON
+    WORKER_SKIP_BAD_JSON = args.skip_bad_json
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     tokenizer = Tokenizer.from_file(str(args.tokenizer_path))
     template = jinja2.Environment().from_string(args.chat_template.read_text())
@@ -416,6 +443,7 @@ def main() -> None:
                 str(args.output_dir),
                 args.force,
                 args.enable_thinking,
+                args.skip_bad_json,
             ),
         ) as executor:
             futures = [executor.submit(process_file_worker, found) for found in files]

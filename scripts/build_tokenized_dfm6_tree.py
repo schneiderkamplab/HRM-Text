@@ -33,6 +33,8 @@ SELECTED_PREFIXES = (
     "nemotron_agentic__",
     "nemotron_swe__",
     "nemotron_instruction_reasoning_off__",
+    "nemotron_multilingual__",
+    "dolci_instruct_sft__",
     "dolci_instruct_sft_no_tools__",
     "dolci_instruct_sft_tool_use__",
     "dolci_instruct_sft_tool_use_sa__",
@@ -42,13 +44,29 @@ SELECTED_PREFIXES = (
     "allenai_tulu_3_personas_code__",
     "allenai_tulu_3_personas_math__",
     "allenai_tulu_3_personas_if__",
+    "allenai_tulu_3_personas_algebra__",
     "openmathinstruct2__",
     "acereason__",
     "openthoughts2__",
     "allenai_big_reasoning_traces__",
     "allenai_code_meta_reasoning__",
+    "allenai_if_sft_verified__",
+    "allenai_sciriff_train_mix__",
     "allenai_tulu_3_sft_mixture__",
+    "allenai_tulu_v2_sft_mixture__",
+    "allenai_tulu_v2_sft_long_mixture__",
+    "allenai_verifiable_reasoning_gpt41__",
+    "allenai_verifiable_reasoning_o4mini__",
     "no_robots__",
+)
+
+DFM4_SUMMARIZATION_WRAPPER_PREFIX = "converted_sources_dfm4_summarization__"
+
+EXPORT_UPLOAD_STRIP_PREFIXES = (
+    "sapient-synth-",
+    "danish-dynaword-",
+    "common-pile-",
+    "transformations-",
 )
 
 
@@ -107,6 +125,22 @@ def link_task(src: Path, dst_root: Path, name: str) -> None:
     dst.symlink_to(src.resolve(), target_is_directory=True)
 
 
+def selected_export_upload_name(raw_name: str) -> str | None:
+    prefix = "export-upload__"
+    if not raw_name.startswith(prefix):
+        return None
+    name = raw_name.removeprefix(prefix)
+    if name.startswith(EXPORT_UPLOAD_STRIP_PREFIXES):
+        return name
+    return None
+
+
+def dfm4_summarization_name(raw_name: str) -> str | None:
+    if raw_name.startswith(DFM4_SUMMARIZATION_WRAPPER_PREFIX):
+        return raw_name.removeprefix(DFM4_SUMMARIZATION_WRAPPER_PREFIX)
+    return None
+
+
 def main() -> None:
     args = parse_args()
     if args.output.exists():
@@ -125,6 +159,7 @@ def main() -> None:
     skipped = 0
     sapient_selected = 0
     sapient_missing = set(allowed_sapient)
+    export_upload_selected = 0
 
     for src in task_dirs(args.raw_tokenized):
         raw_name = src.relative_to(args.raw_tokenized).as_posix()
@@ -137,6 +172,19 @@ def main() -> None:
                 sapient_missing.discard(sapient_name)
             else:
                 skipped += 1
+            continue
+
+        export_upload_name = selected_export_upload_name(raw_name)
+        if export_upload_name is not None:
+            link_task(src, args.output, export_upload_name)
+            selected += 1
+            export_upload_selected += 1
+            continue
+
+        summarization_name = dfm4_summarization_name(raw_name)
+        if summarization_name is not None:
+            link_task(src, args.output, summarization_name)
+            selected += 1
             continue
 
         if raw_name.startswith(SELECTED_PREFIXES):
@@ -153,6 +201,8 @@ def main() -> None:
         "sapient_allowed_tasks": len(allowed_sapient),
         "sapient_selected_tasks": sapient_selected,
         "sapient_missing_tasks": sorted(sapient_missing),
+        "export_upload_selected_tasks": export_upload_selected,
+        "export_upload_strip_prefixes": list(EXPORT_UPLOAD_STRIP_PREFIXES),
         "selected_prefixes": list(SELECTED_PREFIXES),
     }
     (args.output / "union_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))

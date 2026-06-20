@@ -77,6 +77,69 @@ DFM5_CHECKPOINTS = [
         ROOT / "logs/dfm_evals/dfm5_L_step450000_full_ordered_20260616",
         ROOT / "logs/euroeval/dfm5_L_step450000_full_ordered_20260616/step_450000",
     ),
+    (
+        "DFM5-L 500K",
+        "step_500000",
+        ROOT / "logs/eval/dfm5_L_step500000_full_ordered_20260617",
+        ROOT / "logs/dfm_evals/dfm5_L_step500000_full_ordered_20260617",
+        ROOT / "logs/euroeval/dfm5_L_step500000_full_ordered_20260617/step_500000",
+    ),
+    (
+        "DFM5-L 550K",
+        "step_550000",
+        ROOT / "logs/eval/dfm5_L_step550000_full_native_followup_20260617",
+        ROOT / "logs/dfm_evals/dfm5_L_step550000_full_native_followup_20260617",
+        ROOT / "logs/euroeval/dfm5_L_step550000_full_native_followup_20260617/step_550000",
+    ),
+    (
+        "DFM5-L 600K",
+        "step_600000",
+        ROOT / "logs/eval/dfm5_L_step600000_full_simple_20260618_600k_simple",
+        ROOT / "logs/dfm_evals/dfm5_L_step600000_full_simple_20260618_600k_simple",
+        ROOT / "logs/euroeval/dfm5_L_step600000_full_simple_20260618_600k_simple/step_600000",
+    ),
+    (
+        "DFM5-L 650K",
+        "step_650000",
+        ROOT / "logs/eval/dfm5_L_clean_vllm_650k_700k_20260618/step_650000",
+        ROOT / "logs/dfm_evals/dfm5_L_clean_vllm_650k_700k_20260618/step_650000",
+        ROOT / "logs/euroeval/dfm5_L_clean_vllm_650k_700k_20260618/step_650000",
+    ),
+    (
+        "DFM5-L 700K",
+        "step_700000",
+        ROOT / "logs/eval/dfm5_L_step700000_vllm_main_20260619",
+        ROOT / "logs/dfm_evals/dfm5_L_step700000_vllm_main_20260619",
+        ROOT / "logs/euroeval/dfm5_L_step700000_vllm_main_20260619/step_700000",
+    ),
+    (
+        "DFM5-L 750K",
+        "step_750000",
+        ROOT / "logs/eval/dfm5_L_step750000_vllm_main_20260619",
+        ROOT / "logs/dfm_evals/dfm5_L_step750000_vllm_main_20260619",
+        ROOT / "logs/euroeval/dfm5_L_step750000_vllm_main_20260619/step_750000",
+    ),
+    (
+        "DFM5-L 800K",
+        "step_800000",
+        ROOT / "logs/eval/dfm5_L_step800000_vllm_main_20260619",
+        ROOT / "logs/dfm_evals/dfm5_L_step800000_vllm_main_20260619",
+        ROOT / "logs/euroeval/dfm5_L_step800000_vllm_main_20260619/step_800000",
+    ),
+    (
+        "DFM5-L 850K",
+        "step_850000",
+        ROOT / "logs/eval/dfm5_L_step850000_vllm_main_20260619",
+        ROOT / "logs/dfm_evals/dfm5_L_step850000_vllm_main_20260619",
+        ROOT / "logs/euroeval/dfm5_L_step850000_vllm_main_20260619/step_850000",
+    ),
+    (
+        "DFM5-L 900K",
+        "step_900000",
+        ROOT / "logs/eval/dfm5_L_step900000_vllm_main_20260620",
+        ROOT / "logs/dfm_evals/dfm5_L_step900000_vllm_main_20260620",
+        ROOT / "logs/euroeval/dfm5_L_step900000_vllm_main_20260620/step_900000",
+    ),
 ]
 
 ORIG_DFM_ROOT = ROOT / "logs/dfm_evals/original_sapient_L_lite_all_checkpoints_20260603T213010"
@@ -284,11 +347,18 @@ def parse_euro(root: Path) -> dict[str, float]:
             if not line.strip():
                 continue
             obj = json.loads(line)
-            dataset = obj["eval_library"]["additional_details"]["dataset"]
-            for result in obj.get("evaluation_results", []):
-                metric = EURO_MAP.get((dataset, result["evaluation_name"]))
+            if "eval_library" in obj:
+                dataset = obj["eval_library"]["additional_details"]["dataset"]
+                for result in obj.get("evaluation_results", []):
+                    metric = EURO_MAP.get((dataset, result["evaluation_name"]))
+                    if metric:
+                        out[metric] = percent(float(result["score_details"]["score"]))  # type: ignore[assignment]
+            elif "dataset" in obj and "metric" in obj and "score" in obj:
+                evaluation_name = f"test_{obj['metric']}"
+                metric = EURO_MAP.get((obj["dataset"], evaluation_name))
                 if metric:
-                    out[metric] = percent(float(result["score_details"]["score"]))  # type: ignore[assignment]
+                    score = float(obj["score"])
+                    out[metric] = score if score > 1.0 else percent(score)
     return out
 
 
