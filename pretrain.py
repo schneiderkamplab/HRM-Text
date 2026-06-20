@@ -5,6 +5,7 @@ import json
 import math
 import os
 import re
+import time
 import yaml
 import shutil
 
@@ -108,6 +109,8 @@ class PretrainConfig(pydantic.BaseModel):
     checkpoint_interval: int = 1
     checkpoint_step_interval: Optional[int] = None
     ephemeral_checkpoint_step_interval: Optional[int] = None
+    max_steps: Optional[int] = None  # Optional early stop after this many optimizer steps (benchmarking/debugging).
+    dataloader_prefetch_factor: int = pydantic.Field(default=8, ge=1)  # Batches prefetched by the (single) dataloader worker.
     log_interval: int = 5
 
     @pydantic.model_validator(mode='after')
@@ -169,11 +172,11 @@ def create_dataloader(config: PretrainConfig, local_batch_size: int, drop_last_b
         "dataset": dataset,
         "batch_size": None,
         "num_workers": num_workers,
-        "pin_memory": config.accelerator_type in ("sm90", "sm100"),
+        "pin_memory": config.accelerator_type in ("sm90", "sm100", "rocm"),
     }
     if num_workers > 0:
         dataloader_kwargs |= {
-            "prefetch_factor": 8,
+            "prefetch_factor": config.dataloader_prefetch_factor,
             "persistent_workers": True,  # NOTE: Required for correct epoch handling
         }
     dataloader = DataLoader(**dataloader_kwargs)
@@ -188,8 +191,13 @@ def apply_fsdp(module: nn.Module, param_dtype: torch.dtype):
     
     assert isinstance(module, FSDPModule)
     # Disable gradient division. Adams is scale invariant.
-    module.set_gradient_divide_factor(1.0)
-    module.set_force_sum_reduction_for_comms(True)
+    # The FSDP2 API for this was renamed across torch versions; support both.
+    if hasattr(module, "set_gradient_divide_factor"):
+        module.set_gradient_divide_factor(1.0)
+    else:
+        module.set_reduce_scatter_divide_factor(1.0)
+    if hasattr(module, "set_force_sum_reduction_for_comms"):
+        module.set_force_sum_reduction_for_comms(True)
 
 
 def unwrap_model(model: nn.Module) -> nn.Module:
@@ -927,6 +935,10 @@ def launch(hydra_config: DictConfig):
                 flush=True,
             )
 
+    # Optional per-step timing for benchmarking (only active with max_steps).
+    bench_step_times: list[float] = []
+    bench_last_time: Optional[float] = None
+
     # Progress bar and logger
     progress_bar = None
     if RANK == 0:
@@ -985,6 +997,13 @@ def launch(hydra_config: DictConfig):
             )
             metrics = train_accumulated_batches(config, RANK, train_state, accumulation_batches, config.compile_train_batch, **train_extra_args)
             accumulation_batches = []
+
+            if config.max_steps is not None and RANK == 0:
+                synchronize_device(device)
+                now = time.perf_counter()
+                if bench_last_time is not None:
+                    bench_step_times.append(now - bench_last_time)
+                bench_last_time = now
             maybe_log_memory(
                 train_state.step,
                 "after_train",
@@ -1018,13 +1037,45 @@ def launch(hydra_config: DictConfig):
                     save_train_checkpoint(config, train_state, ephemeral_tag, epoch, batch_in_epoch, RANK, checkpoint_kind="ephemeral", local_batch_size=local_batch_size, resume_info=accumulation_resume_info, batch_in_epoch_exact=batch_in_epoch_exact)
                     remove_stale_ephemeral_checkpoints(config, ephemeral_tag, RANK)
 
+            if config.max_steps is not None and train_state.step >= config.max_steps:
+                break
+
         skip_batches = 0
+
+        if config.max_steps is not None and train_state.step >= config.max_steps:
+            break
 
         ############ EVAL STACK: TBD TODO
 
         ############ Checkpointing
         if (epoch % config.checkpoint_interval == 0) or (epoch == config.epochs):
             save_train_checkpoint(config, train_state, f"epoch_{epoch}", epoch, 0, RANK, local_batch_size=local_batch_size, batch_in_epoch_exact=True)
+
+    # Benchmark summary (rank 0 only, when max_steps was set).
+    if config.max_steps is not None and RANK == 0 and bench_step_times:
+        # Drop the first couple of measured intervals as warmup (compile/MIOPEN tuning).
+        warmup = min(2, len(bench_step_times) - 1) if len(bench_step_times) > 1 else 0
+        steady = bench_step_times[warmup:]
+        sorted_steady = sorted(steady)
+        median = sorted_steady[len(sorted_steady) // 2]
+        summary = {
+            "world_size": WORLD_SIZE,
+            "nnodes": int(os.environ.get("NNODES", os.environ.get("SLURM_JOB_NUM_NODES", 0))),
+            "global_batch_size": config.global_batch_size,
+            "gradient_accumulation_steps": config.gradient_accumulation_steps,
+            "measured_steps": len(bench_step_times),
+            "warmup_dropped": warmup,
+            "median_step_seconds": median,
+            "mean_step_seconds": sum(steady) / len(steady),
+            "min_step_seconds": min(steady),
+            "max_step_seconds": max(steady),
+            "all_step_seconds": bench_step_times,
+        }
+        bench_path = os.environ.get("BENCH_OUTPUT")
+        if bench_path:
+            with open(bench_path, "w") as f:
+                json.dump(summary, f, indent=2)
+        print(f"[bench] {json.dumps({k: v for k, v in summary.items() if k != 'all_step_seconds'})}", flush=True)
 
     # finalize
     if dist.is_initialized():
