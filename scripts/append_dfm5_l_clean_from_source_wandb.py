@@ -11,6 +11,14 @@ from typing import Any
 
 
 SYSTEM_KEYS = {"_runtime", "_timestamp", "_step"}
+def remap_average_key(key: str) -> str:
+    if key.startswith("avg/"):
+        return "headline_avg_v2/" + key.removeprefix("avg/")
+    if key.startswith("headline_avg/"):
+        return "headline_avg_v2/" + key.removeprefix("headline_avg/")
+    if key.startswith("suite_avg/"):
+        return "suite_avg_v2/" + key.removeprefix("suite_avg/")
+    return key
 
 
 def finite_number(value: Any) -> float | int | None:
@@ -31,19 +39,21 @@ def clean_row(row: dict[str, Any]) -> tuple[int | None, dict[str, float | int]]:
     for key, value in row.items():
         if key in SYSTEM_KEYS or key.startswith("_"):
             continue
+        key = remap_average_key(str(key))
         parsed = finite_number(value)
         if parsed is not None:
-            cleaned[str(key)] = parsed
+            cleaned[key] = parsed
     return step, cleaned
 
 
 def define_metrics(wandb: Any) -> None:
-    for prefix in ("eval", "dfm_eval", "euroeval", "avg", "headline_avg"):
+    for prefix in ("eval", "dfm_eval", "euroeval", "headline_avg_v2", "suite_avg_v2"):
         epoch_key = f"{prefix}/epoch"
         train_step_key = f"{prefix}/train_step"
         wandb.define_metric(epoch_key)
         wandb.define_metric(train_step_key)
-        wandb.define_metric(f"{prefix}/*", step_metric=train_step_key)
+        step_metric = epoch_key if prefix in {"headline_avg_v2", "suite_avg_v2"} else train_step_key
+        wandb.define_metric(f"{prefix}/*", step_metric=step_metric)
 
 
 def parse_args() -> argparse.Namespace:
@@ -100,7 +110,7 @@ def main() -> None:
     eval_like_rows = sum(
         1
         for _step, row in audit_rows
-        if any(key.startswith(("eval/", "dfm_eval/", "euroeval/", "avg/")) for key in row)
+        if any(key.startswith(("eval/", "dfm_eval/", "euroeval/", "headline_avg_v2/", "suite_avg_v2/")) for key in row)
     )
     summary = {
         "source": f"{args.entity}/{args.project}/{args.source_run_id}",

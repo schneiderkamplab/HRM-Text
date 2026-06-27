@@ -482,6 +482,24 @@ def runnable_pending(jobs: list[Job]) -> list[Job]:
     return [job for job in jobs if job.status == JobStatus.PENDING and all(dep in done for dep in job.deps)]
 
 
+def blocked_pending_jobs(jobs: list[Job]) -> list[tuple[Job, list[str]]]:
+    by_id = {job.job_id: job for job in jobs}
+    blocked: list[tuple[Job, list[str]]] = []
+    for job in jobs:
+        if job.status != JobStatus.PENDING:
+            continue
+        unmet: list[str] = []
+        for dep in job.deps:
+            dep_job = by_id.get(dep)
+            if dep_job is None:
+                unmet.append(f"{dep}:missing")
+            elif dep_job.status != JobStatus.DONE:
+                unmet.append(f"{dep}:{dep_job.status.value}")
+        if unmet:
+            blocked.append((job, unmet))
+    return blocked
+
+
 def job_model_label(job: Job) -> str:
     metadata = job.metadata
     model = (
@@ -524,6 +542,18 @@ def gpu_line(gpu: int, info: GpuInfo, job: Job | None, event: RunningEvent | Non
     )
 
 
+def pending_job_line(job: Job, *, extra: str | None = None) -> str:
+    shard = "-" if job.shard is None else str(job.shard)
+    shards = "-" if job.shards is None else str(job.shards)
+    text = (
+        f"{job.job_id} {job_model_label(job)} {job.action.value} "
+        f"{job.family}:{job.name} shard {shard}/{shards} batch {job.retry_batch()}"
+    )
+    if extra:
+        text = f"{text} {extra}"
+    return text
+
+
 def status_text(plan_dir: Path, *, gpus: list[int] | None = None) -> str:
     with PlanLock(plan_dir, exclusive=False):
         jobs = read_plan(plan_path(plan_dir))
@@ -546,7 +576,7 @@ def status_text(plan_dir: Path, *, gpus: list[int] | None = None) -> str:
     active_by_gpu = {event.gpu: (job, event) for job, event in active_pairs if event.gpu is not None}
     infos = gpu_infos(gpus)
     ready = runnable_pending(jobs)
-    blocked_pending = counts[JobStatus.PENDING] - len(ready)
+    blocked = blocked_pending_jobs(jobs)
     now = datetime.now().astimezone()
 
     lines = [
@@ -554,7 +584,7 @@ def status_text(plan_dir: Path, *, gpus: list[int] | None = None) -> str:
         (
             "jobs "
             f"done={counts[JobStatus.DONE]} running={counts[JobStatus.RUNNING]} "
-            f"ready={len(ready)} blocked_pending={blocked_pending} "
+            f"ready={len(ready)} blocked_pending={len(blocked)} "
             f"failed={counts[JobStatus.FAILED]} skipped={counts[JobStatus.SKIPPED]} "
             f"total={len(jobs)}"
         ),
@@ -567,14 +597,18 @@ def status_text(plan_dir: Path, *, gpus: list[int] | None = None) -> str:
         lines.append("  " + gpu_line(gpu, infos[gpu], job, event, now))
     lines.append("next ready:")
     for job in ready[:12]:
-        shard = "-" if job.shard is None else str(job.shard)
-        shards = "-" if job.shards is None else str(job.shards)
-        lines.append(
-            f"  {job.job_id} {job_model_label(job)} {job.action.value} "
-            f"{job.family}:{job.name} shard {shard}/{shards} batch {job.retry_batch()}"
-        )
+        lines.append("  " + pending_job_line(job))
     if len(ready) > 12:
         lines.append(f"  ... {len(ready) - 12} more ready")
+    if blocked:
+        lines.append("blocked pending:")
+        for job, unmet in blocked[:12]:
+            deps = ", ".join(unmet[:6])
+            if len(unmet) > 6:
+                deps += f", ... {len(unmet) - 6} more"
+            lines.append("  " + pending_job_line(job, extra=f"blocked_by [{deps}]"))
+        if len(blocked) > 12:
+            lines.append(f"  ... {len(blocked) - 12} more blocked")
     return "\n".join(lines)
 
 

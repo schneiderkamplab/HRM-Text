@@ -115,6 +115,15 @@ def build_hf_config(cfg: dict, tokenizer) -> dict:
     for key, token_name in (("bos_token_id", "boq"), ("eos_token_id", "eoa")):
         if token_name in cfg:
             hf_cfg[key] = tokenizer.convert_tokens_to_ids(cfg[token_name])
+    if cfg.get("template_mode") == "jinja_chat_template":
+        for key, token_name in (
+            ("bos_token_id", "<bos>"),
+            ("eos_token_id", "<turn|>"),
+            ("pad_token_id", "<pad>"),
+        ):
+            token_id = tokenizer.convert_tokens_to_ids(token_name)
+            if token_id is not None and token_id != getattr(tokenizer, "unk_token_id", None):
+                hf_cfg[key] = token_id
     return {k: v for k, v in hf_cfg.items() if v is not None}
 
 
@@ -124,6 +133,21 @@ def tokenizer_path(metadata: V1DatasetMeta, override: Path | None) -> Path:
 
 
 def set_tokenizer_special_tokens(tokenizer, cfg: dict):
+    if cfg.get("template_mode") == "jinja_chat_template":
+        # Gemma 4 uses a tokenizer JSON that Transformers warns about unless
+        # this compatibility flag is persisted for downstream AutoTokenizer
+        # loads. Without it, HF/vLLM can tokenize punctuation/spacing
+        # differently from the intended Gemma tokenizer.
+        tokenizer.init_kwargs["fix_mistral_regex"] = True
+        if tokenizer.convert_tokens_to_ids("<pad>") != getattr(tokenizer, "unk_token_id", None):
+            tokenizer.pad_token = "<pad>"
+        if tokenizer.convert_tokens_to_ids("<bos>") != getattr(tokenizer, "unk_token_id", None):
+            tokenizer.bos_token = "<bos>"
+        if tokenizer.convert_tokens_to_ids("<turn|>") != getattr(tokenizer, "unk_token_id", None):
+            tokenizer.eos_token = "<turn|>"
+        chat_template_path = cfg.get("chat_template_path")
+        if chat_template_path and Path(chat_template_path).is_file():
+            tokenizer.chat_template = Path(chat_template_path).read_text()
     if tokenizer.pad_token is None:
         endoftext_id = tokenizer.convert_tokens_to_ids("<|endoftext|>")
         if endoftext_id != tokenizer.unk_token_id:
@@ -169,6 +193,11 @@ def main():
     args.out_dir.mkdir(parents=True, exist_ok=True)
     (args.out_dir / "config.json").write_text(json.dumps(build_hf_config(cfg | metadata.tokenizer_info, tokenizer), indent=2))
     tokenizer.save_pretrained(args.out_dir)
+    tokenizer_config_path = args.out_dir / "tokenizer_config.json"
+    if tokenizer_config_path.is_file() and metadata.tokenizer_info.get("template_mode") == "jinja_chat_template":
+        tokenizer_config = json.loads(tokenizer_config_path.read_text())
+        tokenizer_config["fix_mistral_regex"] = True
+        tokenizer_config_path.write_text(json.dumps(tokenizer_config, indent=2) + "\n")
     if args.config_only:
         print(f"[convert] wrote config/tokenizer only to {args.out_dir}")
         return

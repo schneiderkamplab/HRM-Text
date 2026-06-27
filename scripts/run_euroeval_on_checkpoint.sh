@@ -11,6 +11,7 @@ CKPT_TAG="${CKPT_TAG#fsdp2_}"
 CKPT_TAG="${CKPT_TAG#unsharded_}"
 CKPT_TAG="${CKPT_TAG%.pt}"
 EVAL_EPOCH="${EVAL_EPOCH:-${EPOCH}}"
+EVAL_STEP="${EVAL_STEP:-}"
 GPU="${GPU:-0}"
 LOG_ROOT="${EUROEVAL_LOG_ROOT:-${LOG_ROOT:-logs/euroeval/${CKPT_TAG}}}"
 PYTHON_BIN="${PYTHON_BIN:-/home/ucloud/miniforge3/envs/hrm/bin/python}"
@@ -304,6 +305,14 @@ if [[ "${HRM_SERVER_BACKEND}" == "vllm" ]]; then
   vllm_pid="$!"
   if [[ "${HRM_VLLM_NATIVE_PROXY}" == "1" ]]; then
     wait_for_vllm_server "http://${HOST}:${vllm_port}"
+    proxy_args=()
+    if [[ "${HRM_VLLM_GEMMA_BFCL_TOOLS:-0}" == "1" ]]; then
+      if [[ "${HRM_VLLM_GEMMA_BFCL_TOOL_MODE:-parser}" == "text" ]]; then
+        proxy_args+=(--gemma-native-bfcl-tools-as-text)
+      else
+        proxy_args+=(--gemma-native-bfcl-tools)
+      fi
+    fi
     "${PYTHON_BIN}" scripts/native_compatible_openai_proxy.py \
       --host "${HOST}" \
       --port "${PORT}" \
@@ -312,6 +321,7 @@ if [[ "${HRM_SERVER_BACKEND}" == "vllm" ]]; then
       --target-model-name "${MODEL_NAME}" \
       --api-key "${OPENAI_API_KEY}" \
       --log-jsonl "${LOG_ROOT}/proxy_payloads.jsonl" \
+      "${proxy_args[@]}" \
       > "${SERVER_LOG}" 2>&1 &
   fi
 else
@@ -347,10 +357,15 @@ wandb_args=()
 if [[ "${WANDB_SYNC}" == "1" ]]; then
   wandb_args=(--log-wandb --project "${WANDB_PROJECT}" --run-id "${WANDB_RUN_ID}" --run-name "${WANDB_RUN_NAME}")
 fi
+step_args=()
+if [[ -n "${EVAL_STEP}" ]]; then
+  step_args=(--step "${EVAL_STEP}")
+fi
 
 "${PYTHON_BIN}" scripts/log_euroeval_to_wandb.py \
   --results "${RESULTS_FILE}" \
   --epoch "${EVAL_EPOCH}" \
+  "${step_args[@]}" \
   --output "${METRICS_FILE}" \
   --prefix "${EUROEVAL_PREFIX}" \
   --language da \

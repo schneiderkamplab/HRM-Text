@@ -21,8 +21,9 @@ MAX_RUNS_TO_SHOW = 50
 EVAL_X_AXIS = "eval/epoch"
 DFM_EVAL_X_AXIS = "dfm_eval/epoch"
 EUROEVAL_X_AXIS = "euroeval/epoch"
-HEADLINE_AVG_X_AXIS = "avg/epoch"
-HEADLINE_AVG_PREFIX = "avg"
+HEADLINE_AVG_X_AXIS = "headline_avg_v2/epoch"
+HEADLINE_AVG_PREFIX = "headline_avg_v2"
+SUITE_AVG_PREFIX = "suite_avg_v2"
 TRAIN_X_AXIS = "_step"
 
 DANISH_METRICS = [
@@ -134,6 +135,16 @@ def build_headline_average_metrics(prefix: str = HEADLINE_AVG_PREFIX) -> dict[st
     }
 
 
+def build_suite_average_metrics(prefix: str = SUITE_AVG_PREFIX) -> list[tuple[str, str, str]]:
+    prefix = prefix.rstrip("/")
+    x_axis = f"{prefix}/epoch"
+    return [
+        ("Standard suite average", f"{prefix}/standard", x_axis),
+        ("DFM suite average", f"{prefix}/dfm", x_axis),
+        ("EuroEval suite average", f"{prefix}/euroeval", x_axis),
+    ]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--entity", default=ENTITY)
@@ -148,6 +159,11 @@ def parse_args() -> argparse.Namespace:
         "--headline-avg-prefix",
         default=HEADLINE_AVG_PREFIX,
         help="Average metric namespace to use in headline panels.",
+    )
+    parser.add_argument(
+        "--suite-avg-prefix",
+        default=SUITE_AVG_PREFIX,
+        help="Average metric namespace to use in suite-average panels.",
     )
     return parser.parse_args()
 
@@ -207,6 +223,19 @@ def headline_average_section(
     )
 
 
+def suite_average_section(suite_average_metrics: list[tuple[str, str, str]]) -> ws.Section:
+    panels = [
+        line_panel(title, metric, x_axis, "epoch")
+        for title, metric, x_axis in suite_average_metrics
+    ]
+    return ws.Section(
+        name="Suite Averages",
+        panels=panels,
+        is_open=True,
+        layout_settings=ws.SectionLayoutSettings(columns=3, rows=1),
+    )
+
+
 def training_section() -> ws.Section:
     panels: list[wr.LinePlot | wr.ScalarChart] = [
         line_panel(title, metric, TRAIN_X_AXIS, "step") for title, metric in TRAINING_METRICS
@@ -230,6 +259,7 @@ def training_section() -> ws.Section:
 def main() -> None:
     args = parse_args()
     headline_average_metrics = build_headline_average_metrics(args.headline_avg_prefix)
+    suite_average_metrics = build_suite_average_metrics(args.suite_avg_prefix)
     danish = [(title, metric, DFM_EVAL_X_AXIS) for title, metric in DANISH_METRICS]
     danish.extend(DANISH_EUROEVAL_METRICS)
     english = [*ENGLISH_METRICS, *ENGLISH_EUROEVAL_METRICS]
@@ -240,6 +270,7 @@ def main() -> None:
         name=args.name,
         sections=[
             headline_average_section(headline_average_metrics),
+            suite_average_section(suite_average_metrics),
             eval_section("Danish Headline Metrics", danish, headline_average_metrics),
             eval_section("English Headline Metrics", english, headline_average_metrics),
             eval_section("Math & Code Headline Metrics", math_code, headline_average_metrics),
@@ -283,17 +314,20 @@ def main() -> None:
         "url": workspace.url,
         "sections": {
             "Headline Averages": headline_average_metrics["Headline Averages"],
+            "Suite Averages": suite_average_metrics,
             "Danish Headline Metrics": danish,
             "English Headline Metrics": english,
             "Math & Code Headline Metrics": math_code,
             "Training Metrics & Params": TRAINING_METRICS,
         },
         "headline_average_metrics": headline_average_metrics,
+        "suite_average_metrics": suite_average_metrics,
         "x_axes": {
             "standard_eval": EVAL_X_AXIS,
             "dfm_eval": DFM_EVAL_X_AXIS,
             "euroeval": EUROEVAL_X_AXIS,
             "headline_avg": f"{args.headline_avg_prefix.rstrip('/')}/epoch",
+            "suite_avg": f"{args.suite_avg_prefix.rstrip('/')}/epoch",
             "training": TRAIN_X_AXIS,
         },
         "max_runs_to_show": MAX_RUNS_TO_SHOW,

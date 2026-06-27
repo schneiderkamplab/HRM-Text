@@ -20,6 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results", type=Path, required=True)
     parser.add_argument("--epoch", type=float, required=True)
+    parser.add_argument("--step", type=int, default=None)
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--prefix", default=DEFAULT_PREFIX)
     parser.add_argument("--language", action="append", default=None)
@@ -226,6 +227,9 @@ def main() -> None:
 
     epoch_key = f"{args.prefix}/epoch"
     row: dict[str, float] = {epoch_key: args.epoch}
+    train_step_key = f"{args.prefix}/train_step"
+    if args.step is not None:
+        row[train_step_key] = args.step
     row.update(metrics)
 
     if args.output is not None:
@@ -244,11 +248,16 @@ def main() -> None:
         assert run is not None
         wandb.define_metric(epoch_key)
         wandb.define_metric(f"{args.prefix}/*", step_metric=epoch_key)
+        if args.step is not None:
+            wandb.define_metric(train_step_key)
         wandb.log(row)
         label = str(int(args.epoch)) if args.epoch.is_integer() else str(args.epoch).replace(".", "p")
         for key, value in metrics.items():
             run.summary[f"{key}/epoch_{label}"] = value
         run.summary[f"{args.prefix}/last_epoch"] = args.epoch
+        if args.step is not None:
+            run.summary[train_step_key] = args.step
+            run.summary[f"{args.prefix}/last_train_step"] = args.step
         wandb.finish()
 
     print(f"Collected {len(metrics)} EuroEval metrics from {args.results}.")

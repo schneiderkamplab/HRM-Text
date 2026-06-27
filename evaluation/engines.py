@@ -4,7 +4,9 @@ import json
 import os
 import urllib.error
 import urllib.request
+from pathlib import Path
 
+import jinja2
 from tqdm import tqdm
 from vllm import LLM, SamplingParams
 from vllm.inputs import TokensPrompt
@@ -27,13 +29,27 @@ class VLLMEngine(BaseEngine):
         "synth": "<|quad_end|>",
     }
 
-    def __init__(self, ckpt_path: str, prompt_mode: str = "raw", **kwargs):
-        if prompt_mode not in {"raw", "hrm", "hrm_tokens"}:
-            raise ValueError(f"Unsupported VLLMEngine prompt_mode={prompt_mode!r}; expected raw, hrm, or hrm_tokens")
+    def __init__(
+        self,
+        ckpt_path: str,
+        prompt_mode: str = "raw",
+        chat_template_path: str | None = None,
+        **kwargs,
+    ):
+        if prompt_mode not in {"raw", "hrm", "hrm_tokens", "gemma_chat"}:
+            raise ValueError(
+                f"Unsupported VLLMEngine prompt_mode={prompt_mode!r}; "
+                "expected raw, hrm, hrm_tokens, or gemma_chat"
+            )
         self.prompt_mode = prompt_mode
         self.tokenizer = None
-        if prompt_mode == "hrm_tokens":
+        self.chat_template = None
+        if prompt_mode in {"hrm_tokens", "gemma_chat"}:
             self.tokenizer = AutoTokenizer.from_pretrained(ckpt_path, use_fast=True)
+        if prompt_mode == "gemma_chat":
+            if chat_template_path is None:
+                raise ValueError("VLLMEngine prompt_mode='gemma_chat' requires chat_template_path")
+            self.chat_template = jinja2.Environment().from_string(Path(chat_template_path).read_text())
         self.llm = LLM(model=ckpt_path, **kwargs)
 
     def _format_hrm_prompt(self, prompt: str, condition: str) -> str:
@@ -41,6 +57,18 @@ class VLLMEngine(BaseEngine):
             self.HRM_CONDITION_MAPPING[c] for c in condition.split(",")
         )
         return f"{self.HRM_BOQ}{condition_tokens}{prompt.strip()}{self.HRM_EOQ}"
+
+    def _format_gemma_chat_prompt(self, prompt: str) -> str:
+        assert self.tokenizer is not None
+        assert self.chat_template is not None
+        return self.chat_template.render(
+            messages=[{"role": "user", "content": prompt.strip()}],
+            tools=None,
+            add_generation_prompt=True,
+            enable_thinking=False,
+            bos_token=self.tokenizer.bos_token or "",
+            eos_token=self.tokenizer.eos_token or "",
+        )
 
     def generate(
         self,
@@ -60,6 +88,8 @@ class VLLMEngine(BaseEngine):
             prompts = [self._format_hrm_prompt(prompt, condition) for prompt in prompts]
             if stop_token_ids is None:
                 stop_token_ids = [self.HRM_EOA_ID]
+        elif self.prompt_mode == "gemma_chat":
+            prompts = [self._format_gemma_chat_prompt(prompt) for prompt in prompts]
 
         sampling_params = SamplingParams(
             temperature=temperature,

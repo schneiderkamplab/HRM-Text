@@ -15,7 +15,18 @@ from pathlib import Path
 from typing import Any
 
 
-PREFIXES = ("eval", "dfm_eval", "euroeval", "avg", "headline_avg")
+PREFIXES = ("eval", "dfm_eval", "euroeval", "headline_avg_v2", "suite_avg_v2")
+SOURCE_PREFIXES = ("eval", "dfm_eval", "euroeval", "avg", "headline_avg", "headline_avg_v2", "suite_avg", "suite_avg_v2")
+
+
+def remap_average_key(key: str) -> str:
+    if key.startswith("avg/"):
+        return "headline_avg_v2/" + key.removeprefix("avg/")
+    if key.startswith("headline_avg/"):
+        return "headline_avg_v2/" + key.removeprefix("headline_avg/")
+    if key.startswith("suite_avg/"):
+        return "suite_avg_v2/" + key.removeprefix("suite_avg/")
+    return key
 
 
 def finite_number(value: Any) -> float | int | None:
@@ -34,7 +45,8 @@ def define_metrics(wandb: Any) -> None:
         train_step_key = f"{prefix}/train_step"
         wandb.define_metric(epoch_key)
         wandb.define_metric(train_step_key)
-        wandb.define_metric(f"{prefix}/*", step_metric=train_step_key)
+        step_metric = epoch_key if prefix in {"headline_avg_v2", "suite_avg_v2"} else train_step_key
+        wandb.define_metric(f"{prefix}/*", step_metric=step_metric)
 
 
 def parse_target(value: str) -> tuple[int, float]:
@@ -56,7 +68,7 @@ def build_rows(
             record = json.loads(line)
             original_row = dict(record["row"])
             matched_epoch: float | None = None
-            for prefix in PREFIXES:
+            for prefix in SOURCE_PREFIXES:
                 value = original_row.get(f"{prefix}/epoch")
                 if isinstance(value, (int, float)):
                     for epoch in target_by_epoch:
@@ -72,8 +84,9 @@ def build_rows(
             cleaned: dict[str, float | int] = {}
             prefixes_present: set[str] = set()
             for key, value in original_row.items():
-                if not any(key.startswith(f"{prefix}/") for prefix in PREFIXES):
+                if not any(key.startswith(f"{prefix}/") for prefix in SOURCE_PREFIXES):
                     continue
+                key = remap_average_key(str(key))
                 parsed = finite_number(value)
                 if parsed is None:
                     continue

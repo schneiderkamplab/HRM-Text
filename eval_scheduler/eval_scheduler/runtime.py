@@ -129,6 +129,25 @@ def standard_generation_overrides(job: Job) -> list[str]:
     return overrides
 
 
+def gemma_bfcl_tool_mode(job: Job) -> str:
+    mode = str(job.metadata.get("hrm_vllm_gemma_bfcl_tool_mode") or "parser").strip().lower()
+    if mode not in {"parser", "text"}:
+        return "parser"
+    return mode
+
+
+def gemma_bfcl_vllm_extra_args(job: Job, enabled: bool) -> str:
+    extra = str(job.metadata.get("vllm_extra_args", "") or "").strip()
+    if not enabled or gemma_bfcl_tool_mode(job) != "parser":
+        return extra
+    parts = shlex.split(extra) if extra else []
+    if "--enable-auto-tool-choice" not in parts:
+        parts.append("--enable-auto-tool-choice")
+    if "--tool-call-parser" not in parts:
+        parts.extend(["--tool-call-parser", "gemma4"])
+    return shlex.join(parts)
+
+
 def run_command(argv: list[str], *, log_path: Path, env: dict[str, str] | None = None) -> int:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("w") as log:
@@ -1045,6 +1064,10 @@ def run_euroeval(job: Job, gpu: int, batch: int) -> int:
     if len(euroeval_argv) == 1 and euroeval_argv[0].endswith(".py") and not Path(euroeval_argv[0]).is_absolute():
         euroeval_bin = str((Path.cwd() / euroeval_argv[0]).resolve())
     env = env_with_gpu(gpu)
+    gemma_bfcl_tools = bool(job.metadata.get("hrm_vllm_gemma_bfcl_tools")) or (
+        "gemma4_native_chat.jinja" in str(job.metadata.get("vllm_extra_args", ""))
+    )
+    vllm_extra_args = gemma_bfcl_vllm_extra_args(job, gemma_bfcl_tools)
     env.update(
         {
             "GPU": str(gpu),
@@ -1052,6 +1075,7 @@ def run_euroeval(job: Job, gpu: int, batch: int) -> int:
             "CKPT_PATH": str(job.metadata["ckpt_path"]),
             "CKPT_TAG": str(job.metadata["ckpt_tag"]),
             "EVAL_EPOCH": str(job.metadata["eval_epoch"]),
+            "EVAL_STEP": eval_step(job),
             "EUROEVAL_LOG_ROOT": str(run_root),
             "MODEL_PREFIX": str(job.metadata["model_prefix"]),
             "MAX_CONTEXT": str(job.metadata.get("vllm_max_model_len", 4096)),
@@ -1069,9 +1093,11 @@ def run_euroeval(job: Job, gpu: int, batch: int) -> int:
             "PYTHON_BIN": python_bin(job),
             "HRM_SERVER_BACKEND": str(job.metadata.get("hrm_server_backend", "simple")),
             "HRM_VLLM_NATIVE_PROXY": "1" if job.metadata.get("hrm_vllm_native_proxy") else "0",
+            "HRM_VLLM_GEMMA_BFCL_TOOLS": "1" if gemma_bfcl_tools else "0",
+            "HRM_VLLM_GEMMA_BFCL_TOOL_MODE": gemma_bfcl_tool_mode(job),
             "VLLM_DTYPE": str(job.metadata.get("vllm_dtype", "bfloat16")),
             "VLLM_GPU_MEMORY_UTILIZATION": str(job.metadata.get("vllm_gpu_memory_utilization", 0.9)),
-            "VLLM_EXTRA_ARGS": str(job.metadata.get("vllm_extra_args", "")),
+            "VLLM_EXTRA_ARGS": vllm_extra_args,
         }
     )
     if job.metadata.get("hrm_hf_export_dir"):
@@ -1095,6 +1121,7 @@ def run_euroeval_batched_ifeval(job: Job, gpu: int, batch: int) -> int:
             "VLLM_PORT": str(port + 1000),
             "CKPT_TAG": str(job.metadata["ckpt_tag"]),
             "EVAL_EPOCH": str(job.metadata["eval_epoch"]),
+            "EVAL_STEP": eval_step(job),
             "EUROEVAL_LOG_ROOT": str(run_root),
             "MODEL_PREFIX": str(job.metadata["model_prefix"]),
             "EUROEVAL_DATASETS": job.name,
@@ -1178,6 +1205,8 @@ def run_euroeval_external(job: Job, gpu: int, batch: int) -> int:
             str(results_file),
             "--epoch",
             str(job.metadata["eval_epoch"]),
+            "--step",
+            eval_step(job),
             "--output",
             str(metrics_file),
             "--prefix",
@@ -1214,6 +1243,17 @@ def wandb_args(job: Job) -> list[str]:
     ]
 
 
+def eval_step(job: Job) -> str:
+    ckpt_tag = str(job.metadata["ckpt_tag"])
+    if "eval_step" in job.metadata:
+        return str(job.metadata["eval_step"])
+    if ckpt_tag.startswith("step_") and ckpt_tag.removeprefix("step_").isdigit():
+        return ckpt_tag.removeprefix("step_")
+    if ckpt_tag.isdigit():
+        return ckpt_tag
+    return "0"
+
+
 def run_merge_standard(job: Job) -> int:
     shards = int(job.metadata["shards"])
     root = Path(job.metadata["log_root"]) / "standard_shards" / job.name
@@ -1226,6 +1266,8 @@ def run_merge_standard(job: Job) -> int:
         job.name,
         "--epoch",
         str(job.metadata["eval_epoch"]),
+        "--step",
+        eval_step(job),
         "--output",
         str(root / "merged_metrics.json"),
         "--prefix",
@@ -1249,6 +1291,8 @@ def run_merge_dfm(job: Job) -> int:
         job.name,
         "--epoch",
         str(job.metadata["eval_epoch"]),
+        "--step",
+        eval_step(job),
         "--output",
         str(root / job.name / "merged_metrics.json"),
         "--prefix",
@@ -1270,6 +1314,8 @@ def run_merge_ifeval(job: Job) -> int:
         *paths,
         "--epoch",
         str(job.metadata["eval_epoch"]),
+        "--step",
+        eval_step(job),
         "--output",
         str(root / "merged_ifeval_da_metrics.json"),
         "--prefix",
@@ -1280,42 +1326,47 @@ def run_merge_ifeval(job: Job) -> int:
 
 
 def run_average(job: Job) -> int:
+    average_scope = str(job.metadata.get("average_scope") or "all")
+    average_prefix = str(job.metadata.get("average_prefix") or "headline_avg_v2")
+    extra_average_prefixes = job.metadata.get("extra_average_prefixes", [])
+    if not isinstance(extra_average_prefixes, list):
+        extra_average_prefixes = []
     if not job.metadata.get("log_wandb", True):
-        log_path = Path(job.log_dir) / "headline_averages.log"
+        log_path = Path(job.log_dir) / f"{job.name}.log"
         log_path.parent.mkdir(parents=True, exist_ok=True)
-        log_path.write_text("Skipped W&B headline averages because log_wandb=false.\n", encoding="utf-8")
+        log_path.write_text(f"Skipped W&B {job.name} because log_wandb=false.\n", encoding="utf-8")
         return 0
     ckpt_tag = str(job.metadata["ckpt_tag"])
-    if "eval_step" in job.metadata:
-        step = str(job.metadata["eval_step"])
-    elif ckpt_tag.startswith("step_") and ckpt_tag.removeprefix("step_").isdigit():
-        step = ckpt_tag.removeprefix("step_")
-    elif ckpt_tag.isdigit():
-        step = ckpt_tag
-    else:
-        step = "0"
-    item = ":".join(
-        [
-            step,
-            str(job.metadata["eval_epoch"]),
-            str(job.metadata["log_root"]),
-            str(job.metadata["dfm_log_root"]),
-            f"{job.metadata['euroeval_log_root']}/{job.metadata['ckpt_tag']}",
-        ]
-    )
+    step = eval_step(job)
     argv = [
         python_bin(job),
-        "scripts/log_dfm5_headline_averages.py",
+        "scripts/backfill_external_eval_to_wandb.py",
         "--project",
         str(job.metadata["wandb_project"]),
         "--run-id",
         str(job.metadata["wandb_run_id"]),
         "--run-name",
         str(job.metadata["wandb_run_name"]),
-        "--item",
-        item,
+        "--standard-root",
+        str(job.metadata["log_root"]),
+        "--dfm-root",
+        str(job.metadata["dfm_log_root"]),
+        "--euroeval-root",
+        f"{job.metadata['euroeval_log_root']}/{job.metadata['ckpt_tag']}",
+        "--epoch",
+        str(job.metadata["eval_epoch"]),
+        "--step",
+        step,
+        "--average-prefix",
+        average_prefix,
+        "--log-averages",
+        "--average-scope",
+        average_scope,
+        "--averages-only",
     ]
-    return run_command(argv, log_path=Path(job.log_dir) / "headline_averages.log")
+    for prefix in extra_average_prefixes:
+        argv.extend(["--extra-average-prefix", str(prefix)])
+    return run_command(argv, log_path=Path(job.log_dir) / f"{job.name}.log")
 
 
 def run_report(job: Job) -> int:
@@ -1497,10 +1548,12 @@ class Runner:
         stop_request_path(self.plan_dir).unlink(missing_ok=True)
         self.event(f"RUN_START gpus_{','.join(map(str, self.gpus))}")
         non_gpu_slots = 4
-        with ThreadPoolExecutor(max_workers=max(1, len(self.gpus) + 4)) as pool:
-            futures: dict[object, int | None] = {}
+        checkpoint_wait_slots = int(os.environ.get("EVAL_SCHEDULER_CHECKPOINT_WAIT_SLOTS", "8"))
+        with ThreadPoolExecutor(max_workers=max(1, len(self.gpus) + non_gpu_slots + checkpoint_wait_slots)) as pool:
+            futures: dict[object, tuple[str, int | None, str]] = {}
             free_gpus = list(self.gpus)
             free_non_gpu_slots = non_gpu_slots
+            free_checkpoint_wait_slots = checkpoint_wait_slots
             while True:
                 launched = False
                 if stop_requested(self.plan_dir):
@@ -1512,20 +1565,31 @@ class Runner:
                             if not free_gpus:
                                 continue
                             gpu = free_gpus.pop(0)
+                            slot = ("gpu", gpu)
+                        elif job.action == Action.WAIT_CHECKPOINT:
+                            if free_checkpoint_wait_slots <= 0:
+                                continue
+                            gpu = None
+                            free_checkpoint_wait_slots -= 1
+                            slot = ("checkpoint_wait", None)
                         else:
                             if free_non_gpu_slots <= 0:
                                 continue
                             gpu = None
                             free_non_gpu_slots -= 1
+                            slot = ("non_gpu", None)
                         claimed = self.claim_job(job.job_id)
                         if claimed is None:
-                            if gpu is not None:
+                            if slot[0] == "gpu":
+                                assert gpu is not None
                                 free_gpus.append(gpu)
+                            elif slot[0] == "checkpoint_wait":
+                                free_checkpoint_wait_slots += 1
                             else:
                                 free_non_gpu_slots += 1
                             continue
                         job = claimed
-                        futures[pool.submit(self.run_one, job, gpu)] = gpu
+                        futures[pool.submit(self.run_one, job, gpu)] = (slot[0], slot[1], job.job_id)
                         launched = True
                 if not futures:
                     remaining = [job for job in self.load() if job.status in {JobStatus.PENDING, JobStatus.RUNNING}]
@@ -1535,12 +1599,21 @@ class Runner:
                     break
                 done, _ = wait(futures.keys(), return_when=FIRST_COMPLETED, timeout=5)
                 for fut in done:
-                    gpu = futures.pop(fut)
+                    slot_kind, gpu, job_id_for_future = futures.pop(fut)
                     try:
                         fut.result()
+                    except BaseException as exc:
+                        self.update_job(job_id_for_future, status=JobStatus.FAILED)
+                        self.event(
+                            f"RUN_EXCEPTION {job_id_for_future} "
+                            f"{type(exc).__name__} {str(exc).replace(chr(10), ' ')[:500]}"
+                        )
                     finally:
-                        if gpu is not None:
+                        if slot_kind == "gpu":
+                            assert gpu is not None
                             free_gpus.append(gpu)
+                        elif slot_kind == "checkpoint_wait":
+                            free_checkpoint_wait_slots += 1
                         else:
                             free_non_gpu_slots += 1
                 if not launched and not done:

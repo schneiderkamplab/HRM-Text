@@ -16,8 +16,27 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-EVAL_PREFIXES = ("eval/", "dfm_eval/", "euroeval/", "avg/", "headline_avg/")
+SOURCE_EVAL_PREFIXES = (
+    "eval/",
+    "dfm_eval/",
+    "euroeval/",
+    "avg/",
+    "headline_avg/",
+    "headline_avg_v2/",
+    "suite_avg/",
+    "suite_avg_v2/",
+)
 SYSTEM_KEYS = {"_runtime", "_timestamp", "_step"}
+
+
+def remap_average_key(key: str) -> str:
+    if key.startswith("avg/"):
+        return "headline_avg_v2/" + key.removeprefix("avg/")
+    if key.startswith("headline_avg/"):
+        return "headline_avg_v2/" + key.removeprefix("headline_avg/")
+    if key.startswith("suite_avg/"):
+        return "suite_avg_v2/" + key.removeprefix("suite_avg/")
+    return key
 
 
 def finite_number(value: Any) -> float | int | None:
@@ -31,7 +50,7 @@ def finite_number(value: Any) -> float | int | None:
 
 
 def keep_replacement_key(key: str) -> bool:
-    if not key.startswith(EVAL_PREFIXES):
+    if not key.startswith(SOURCE_EVAL_PREFIXES):
         return False
     if "/epoch_" in key:
         return False
@@ -88,6 +107,9 @@ def row_targets_replacement(row: dict[str, Any], *, step: int, epoch: float) -> 
             "euroeval/train_step",
             "avg/train_step",
             "headline_avg/train_step",
+            "headline_avg_v2/train_step",
+            "suite_avg/train_step",
+            "suite_avg_v2/train_step",
         )
     ):
         return True
@@ -101,6 +123,9 @@ def row_targets_replacement(row: dict[str, Any], *, step: int, epoch: float) -> 
             "euroeval/epoch",
             "avg/epoch",
             "headline_avg/epoch",
+            "headline_avg_v2/epoch",
+            "suite_avg/epoch",
+            "suite_avg_v2/epoch",
         )
     )
 
@@ -111,12 +136,13 @@ def replacement_eval_row_from_wandb_summary(run: Any, *, step: int, epoch: float
     for key, value in summary.items():
         if not keep_replacement_key(str(key)):
             continue
+        key = remap_average_key(str(key))
         parsed = finite_number(value)
         if parsed is not None:
             row[key] = parsed
     if not row:
         raise RuntimeError(f"No eval-like replacement summary metrics found in {run.id}")
-    for prefix in ("eval", "dfm_eval", "euroeval", "avg"):
+    for prefix in ("eval", "dfm_eval", "euroeval", "headline_avg_v2", "suite_avg_v2"):
         train_step_key = f"{prefix}/train_step"
         epoch_key = f"{prefix}/epoch"
         if any(key.startswith(f"{prefix}/") for key in row):
@@ -132,6 +158,7 @@ def clean_replacement_history_row(row: dict[str, Any], *, step: int, epoch: floa
         key = str(key)
         if not keep_replacement_key(key):
             continue
+        key = remap_average_key(key)
         parsed = finite_number(value)
         if parsed is None:
             continue
@@ -174,8 +201,9 @@ def clean_history_row(
     for key, value in row.items():
         if key in SYSTEM_KEYS or key.startswith("_"):
             continue
-        if targets_replacement and key.startswith(EVAL_PREFIXES):
+        if targets_replacement and key.startswith(SOURCE_EVAL_PREFIXES):
             continue
+        key = remap_average_key(str(key))
         parsed = finite_number(value)
         if parsed is not None:
             cleaned[key] = parsed
@@ -187,12 +215,13 @@ def iter_source_rows(run: Any, *, page_size: int) -> Iterable[dict[str, Any]]:
 
 
 def define_metrics(wandb: Any) -> None:
-    for prefix in ("eval", "dfm_eval", "euroeval", "avg", "headline_avg"):
+    for prefix in ("eval", "dfm_eval", "euroeval", "headline_avg_v2", "suite_avg_v2"):
         epoch_key = f"{prefix}/epoch"
         train_step_key = f"{prefix}/train_step"
         wandb.define_metric(epoch_key)
         wandb.define_metric(train_step_key)
-        wandb.define_metric(f"{prefix}/*", step_metric=train_step_key)
+        step_metric = epoch_key if prefix in {"headline_avg_v2", "suite_avg_v2"} else train_step_key
+        wandb.define_metric(f"{prefix}/*", step_metric=step_metric)
 
 
 def parse_args() -> argparse.Namespace:

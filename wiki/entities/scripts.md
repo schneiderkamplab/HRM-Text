@@ -3633,3 +3633,44 @@ It also showed repaired standard eval rows, for example:
 _step=920023 eval/train_step=850000 eval/epoch=4.693503850971687 eval/ARC/acc=0.721
 _step=920024 eval/train_step=850000 eval/epoch=4.693503850971687 eval/MMLU/acc=0.5447500000000001
 ```
+
+## `scripts/smoke_dfm6_eval_contracts.py`
+
+Last updated: 2026-06-24
+Confidence: high
+Scope: DFM6 eval preflight/smoke test.
+
+This script is a contract smoke test for DFM6 checkpoint evaluations. It does
+not run model generations. Instead it checks the eval/export plumbing that can
+silently invalidate metrics:
+
+- DFM6 HF export tokenizer/config metadata: BOS `2`, EOS `<turn|>` id `106`,
+  PAD `0`, `fix_mistral_regex=True`, and a present Gemma chat template.
+- Evaluation and data-prep Gemma template files have identical SHA-256 hashes.
+- A rendered Gemma prompt contains the user turn and ends at
+  `<|turn>model`.
+- `evaluation/config/dfm6_vllm_benchmarking.yaml` contains the expected
+  standard benchmark set, per-task generation limits, and
+  `stop_token_ids: [106]`.
+- DFM single-task and 32-way IFEval configs contain the expected tasks,
+  shard arguments, GovReport truncation, and max-generation settings.
+- A generated in-memory scheduler plan routes standard, DFM, and EuroEval jobs
+  through vLLM/native-proxy with Gemma BFCL parser mode, the intended
+  utilization/batch settings, `suite_avg_v2`/`headline_avg_v2` average prefixes,
+  and the correct average dependencies.
+
+Run before launching a DFM6 full eval:
+
+```bash
+cd /work/dfm/HRM-Text
+/home/ucloud/miniforge3/envs/hrm/bin/python scripts/smoke_dfm6_eval_contracts.py
+```
+
+Latest verified output on 2026-06-24:
+
+```text
+DFM6 eval smoke passed. Wrote /work/dfm/HRM-Text/logs/smoke/dfm6_eval_contracts_20260624_080712.json
+Standard tasks: 10
+DFM tasks: 10 + 32 IFEval shards
+EuroEval groups: 20 (valeu-da skipped by plan)
+```

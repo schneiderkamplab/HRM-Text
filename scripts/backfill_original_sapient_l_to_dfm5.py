@@ -28,6 +28,7 @@ DEFAULT_HISTORY = Path("wandb/merged-20260524-76sygh18-clean/history.jsonl")
 DEFAULT_STANDARD_ROOT = Path("logs/eval/original_sapient_L")
 DEFAULT_DFM_ROOT = Path("logs/dfm_evals/original_sapient_L_lite_all_checkpoints_20260603T213010")
 DEFAULT_EURO_ROOT = Path("logs/euroeval/original_sapient_L")
+HEADLINE_AVG_PREFIX = "headline_avg_v2"
 
 
 def parse_args() -> argparse.Namespace:
@@ -56,7 +57,19 @@ def numeric(value: Any) -> int | float | None:
 
 
 def is_eval_key(key: str) -> bool:
-    return key.startswith(("eval/", "dfm_eval/", "lite_dfm_eval/", "euroeval/", "headline_avg/"))
+    return key.startswith(
+        (
+            "eval/",
+            "dfm_eval/",
+            "lite_dfm_eval/",
+            "euroeval/",
+            "avg/",
+            "headline_avg/",
+            "headline_avg_v2/",
+            "suite_avg/",
+            "suite_avg_v2/",
+        )
+    )
 
 
 def load_training_rows(path: Path) -> list[tuple[int, dict[str, Any]]]:
@@ -152,8 +165,8 @@ def load_euroeval_metrics(root: Path, epoch: int) -> dict[str, int | float]:
 
 def build_headline_row(metrics: dict[str, int | float], *, step: int, epoch: float) -> dict[str, int | float]:
     row: dict[str, int | float] = {
-        "headline_avg/epoch": epoch,
-        "headline_avg/train_step": step,
+        f"{HEADLINE_AVG_PREFIX}/epoch": epoch,
+        f"{HEADLINE_AVG_PREFIX}/train_step": step,
     }
     section_values: list[float] = []
     for section, keys in SECTION_KEYS.items():
@@ -164,12 +177,12 @@ def build_headline_row(metrics: dict[str, int | float], *, step: int, epoch: flo
                 if normalized is not None:
                     values[key] = value
         avg, count = section_average(values, keys)
-        row[f"headline_avg/{section}/count"] = count
+        row[f"{HEADLINE_AVG_PREFIX}/{section}/count"] = count
         if avg is not None:
-            row[f"headline_avg/{section}"] = avg
+            row[f"{HEADLINE_AVG_PREFIX}/{section}"] = avg
             section_values.append(avg)
     if section_values:
-        row["headline_avg/overall"] = sum(section_values) / len(section_values)
+        row[f"{HEADLINE_AVG_PREFIX}/overall"] = sum(section_values) / len(section_values)
     return row
 
 
@@ -251,7 +264,7 @@ def main() -> None:
             "standard_root": str(args.standard_root),
             "dfm_root": str(args.dfm_root),
             "euro_root": str(args.euro_root),
-            "backfill_note": "Original Sapient L training replay plus rebuilt standard/DFM/EuroEval/headline rows at true epoch steps.",
+            "backfill_note": "Original Sapient L training replay plus rebuilt standard/DFM/EuroEval/headline_avg_v2 rows at true epoch steps.",
             "data": "data/sampled_original_sapient",
             "checkpoint_path": "checkpoints/original_sapient/L",
             "global_batch_size": 172032,
@@ -259,7 +272,7 @@ def main() -> None:
         },
     )
     assert run is not None
-    for prefix in ("eval", "dfm_eval", "euroeval", "headline_avg"):
+    for prefix in ("eval", "dfm_eval", "euroeval", HEADLINE_AVG_PREFIX):
         wandb.define_metric(f"{prefix}/epoch")
         wandb.define_metric(f"{prefix}/*", step_metric=f"{prefix}/epoch")
     for step, row in rows:

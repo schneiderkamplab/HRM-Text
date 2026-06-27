@@ -20,6 +20,7 @@ HRM_HF_EXPORT_DIR="${HRM_HF_EXPORT_DIR:?HRM_HF_EXPORT_DIR is required}"
 CONCURRENCY="${EUROEVAL_BATCH_SIZE:-32}"
 MAX_TOKENS="${EUROEVAL_MAX_TOKENS:-2048}"
 EVAL_EPOCH="${EVAL_EPOCH:-}"
+EVAL_STEP="${EVAL_STEP:-}"
 VLLM_DTYPE="${VLLM_DTYPE:-bfloat16}"
 VLLM_GPU_MEMORY_UTILIZATION="${VLLM_GPU_MEMORY_UTILIZATION:-0.22}"
 VLLM_EXTRA_ARGS="${VLLM_EXTRA_ARGS:-}"
@@ -145,9 +146,14 @@ if [[ "${WANDB_SYNC}" == "1" ]]; then
 fi
 
 if [[ -n "${EVAL_EPOCH}" ]]; then
+  step_args=()
+  if [[ -n "${EVAL_STEP}" ]]; then
+    step_args=(--step "${EVAL_STEP}")
+  fi
   "${PYTHON_BIN}" scripts/log_euroeval_to_wandb.py \
     --results "${LOG_ROOT}/euroeval_benchmark_results.jsonl" \
     --epoch "${EVAL_EPOCH}" \
+    "${step_args[@]}" \
     --output "${LOG_ROOT}/wandb_metrics.json" \
     --prefix "${EUROEVAL_PREFIX}" \
     "${wandb_args[@]}" \

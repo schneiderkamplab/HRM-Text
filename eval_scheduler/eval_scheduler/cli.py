@@ -97,6 +97,8 @@ def create_plan(
     hrm_server_backend: str = typer.Option("simple", help="Server backend for internal HRM EuroEval jobs: simple or vllm."),
     hrm_hf_export_dir: str | None = typer.Option(None, help="HF export directory required for internal HRM EuroEval with --hrm-server-backend vllm."),
     hrm_vllm_native_proxy: bool = typer.Option(False, help="Route internal HRM vLLM EuroEval through the native-compatible proxy."),
+    hrm_vllm_gemma_bfcl_tools: bool = typer.Option(False, help="For Gemma-template HRM vLLM EuroEval, convert BFCL text prompts to native tool declarations."),
+    hrm_vllm_gemma_bfcl_tool_mode: str = typer.Option("parser", help="Gemma BFCL tool mode for HRM vLLM EuroEval: parser or text."),
     vllm_python: str | None = typer.Option(None, help="Python executable for vLLM servers; defaults to python-bin."),
     vllm_dtype: str = typer.Option("bfloat16", help="vLLM dtype."),
     vllm_max_model_len: int = typer.Option(4096, help="vLLM --max-model-len."),
@@ -116,7 +118,7 @@ def create_plan(
     judge_server_max_new_tokens: int = typer.Option(64, help="Transformers judge server max new tokens."),
     judged_max_connections: int | None = typer.Option(None, help="Inspect max-connections for judged dfm-evals tasks."),
     judged_batch: int | None = typer.Option(16, help="Initial batch for judged DFM tasks; use none to derive from DFM batch/max-connections."),
-    judged_vllm_gpu_memory_utilization: float | None = typer.Option(0.25, help="Per-judged-task vLLM GPU memory utilization; use none to inherit global vLLM setting."),
+    judged_vllm_gpu_memory_utilization: float | None = typer.Option(0.18, help="Per-judged-task vLLM GPU memory utilization; use none to inherit global vLLM setting."),
     govreport_max_report_chars: int | None = typer.Option(9000, help="GovReport max_report_chars task override; use none to rely on the dfm-evals config."),
     append: bool = typer.Option(False, help="Append this checkpoint subgraph to an existing plan."),
     force: bool = typer.Option(False, help="Overwrite an existing plan.tsv."),
@@ -129,6 +131,8 @@ def create_plan(
         raise typer.BadParameter("standard-engine-backend must be 'simple' or 'vllm'")
     if standard_engine_backend == "vllm" and not standard_hf_export_dir:
         raise typer.BadParameter("standard-hf-export-dir is required when standard-engine-backend is vllm")
+    if hrm_vllm_gemma_bfcl_tool_mode not in {"parser", "text"}:
+        raise typer.BadParameter("hrm-vllm-gemma-bfcl-tool-mode must be 'parser' or 'text'")
     config = PlanConfig(
         plan_dir=plan_dir,
         ckpt_path=ckpt_path,
@@ -165,6 +169,8 @@ def create_plan(
         hrm_server_backend=hrm_server_backend,
         hrm_hf_export_dir=hrm_hf_export_dir,
         hrm_vllm_native_proxy=hrm_vllm_native_proxy,
+        hrm_vllm_gemma_bfcl_tools=hrm_vllm_gemma_bfcl_tools,
+        hrm_vllm_gemma_bfcl_tool_mode=hrm_vllm_gemma_bfcl_tool_mode,
         vllm_python=vllm_python,
         vllm_dtype=vllm_dtype,
         vllm_max_model_len=vllm_max_model_len,
@@ -236,7 +242,7 @@ def create_external_plan(
     judge_server_max_new_tokens: int = typer.Option(64, help="Transformers judge server max new tokens."),
     judged_max_connections: int | None = typer.Option(4, help="Inspect max-connections for judged dfm-evals tasks."),
     judged_batch: int | None = typer.Option(16, help="Initial batch for judged DFM tasks; use none to derive from DFM batch/max-connections."),
-    judged_vllm_gpu_memory_utilization: float | None = typer.Option(0.25, help="Per-judged-task vLLM GPU memory utilization; use none to inherit global vLLM setting."),
+    judged_vllm_gpu_memory_utilization: float | None = typer.Option(0.18, help="Per-judged-task vLLM GPU memory utilization; use none to inherit global vLLM setting."),
     govreport_max_report_chars: int | None = typer.Option(9000, help="GovReport max_report_chars task override; use none to rely on the dfm-evals config."),
     append: bool = typer.Option(False, help="Append this model subgraph to an existing plan."),
     force: bool = typer.Option(False, help="Overwrite an existing plan.tsv."),

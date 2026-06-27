@@ -221,6 +221,7 @@ def main() -> None:
     parser.add_argument("eval", nargs="+", type=Path)
     parser.add_argument("--task", required=True)
     parser.add_argument("--epoch", type=float, required=True)
+    parser.add_argument("--step", type=int, default=None)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--project")
     parser.add_argument("--run-id")
@@ -257,8 +258,15 @@ def main() -> None:
         wandb.define_metric(epoch_key)
         wandb.define_metric(f"{args.prefix}/*", step_metric=epoch_key)
         row = {epoch_key: args.epoch, **logged_metrics}
+        train_step_key = f"{args.prefix}/train_step"
+        if args.step is not None:
+            wandb.define_metric(train_step_key)
+            row[train_step_key] = args.step
         wandb.log(row, commit=True)
         summary = {epoch_key: args.epoch, f"{args.prefix}/last_epoch": args.epoch}
+        if args.step is not None:
+            summary[train_step_key] = args.step
+            summary[f"{args.prefix}/last_train_step"] = args.step
         label = epoch_label(args.epoch)
         for key, value in logged_metrics.items():
             summary[key] = value

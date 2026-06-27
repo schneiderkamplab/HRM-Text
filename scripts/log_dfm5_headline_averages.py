@@ -63,6 +63,33 @@ SECTION_KEYS = {
     "math_code": MATH_CODE_KEYS,
 }
 
+SUITE_KEYS = {
+    "standard": sorted(
+        {
+            key
+            for keys in SECTION_KEYS.values()
+            for key in keys
+            if key.startswith("eval/")
+        }
+    ),
+    "dfm": sorted(
+        {
+            key
+            for keys in SECTION_KEYS.values()
+            for key in keys
+            if key.startswith("dfm_eval/")
+        }
+    ),
+    "euroeval": sorted(
+        {
+            key
+            for keys in SECTION_KEYS.values()
+            for key in keys
+            if key.startswith("euroeval/")
+        }
+    ),
+}
+
 
 @dataclass(frozen=True)
 class EvalItem:
@@ -130,21 +157,51 @@ def section_average(metrics: dict[str, float], keys: list[str]) -> tuple[float |
     return sum(values) / len(values), len(values)
 
 
-def build_row(item: EvalItem, metric_prefix: str = "headline_avg") -> dict[str, Any]:
+def build_row(
+    item: EvalItem,
+    metric_prefix: str = "headline_avg",
+    *,
+    include_sections: bool = True,
+    include_suites: bool = True,
+    sections: set[str] | None = None,
+    include_overall: bool = True,
+    overall_only: bool = False,
+    suites: set[str] | None = None,
+) -> dict[str, Any]:
     metrics = gather_metrics(item)
     row: dict[str, Any] = {
         f"{metric_prefix}/epoch": item.epoch,
         f"{metric_prefix}/train_step": item.step,
     }
     section_values = []
-    for section, keys in SECTION_KEYS.items():
+    selected_sections = sections or set(SECTION_KEYS)
+    if include_sections:
+        for section, keys in SECTION_KEYS.items():
+            if section not in selected_sections:
+                continue
+            avg, count = section_average(metrics, keys)
+            row[f"{metric_prefix}/{section}/count"] = count
+            if avg is not None:
+                row[f"{metric_prefix}/{section}"] = avg
+                section_values.append(avg)
+        if include_overall and not sections and section_values:
+            row[f"{metric_prefix}/overall"] = sum(section_values) / len(section_values)
+    if overall_only:
+        all_section_values = []
+        for keys in SECTION_KEYS.values():
+            avg, _ = section_average(metrics, keys)
+            if avg is not None:
+                all_section_values.append(avg)
+        if all_section_values:
+            row[f"{metric_prefix}/overall"] = sum(all_section_values) / len(all_section_values)
+    selected_suites = suites or set(SUITE_KEYS)
+    for suite, keys in SUITE_KEYS.items():
+        if not include_suites or suite not in selected_suites:
+            continue
         avg, count = section_average(metrics, keys)
-        row[f"{metric_prefix}/{section}/count"] = count
+        row[f"{metric_prefix}/{suite}/count"] = count
         if avg is not None:
-            row[f"{metric_prefix}/{section}"] = avg
-            section_values.append(avg)
-    if section_values:
-        row[f"{metric_prefix}/overall"] = sum(section_values) / len(section_values)
+            row[f"{metric_prefix}/{suite}"] = avg
     return row
 
 
@@ -160,6 +217,12 @@ def parse_args() -> argparse.Namespace:
         help="Metric namespace for averages, e.g. avg or headline_avg.",
     )
     parser.add_argument(
+        "--average-scope",
+        choices=["all", "sections", "suites", "danish", "english", "math_code", "overall", "standard", "dfm", "euroeval"],
+        default="all",
+        help="Which averages to compute.",
+    )
+    parser.add_argument(
         "--item",
         action="append",
         type=parse_item,
@@ -173,7 +236,24 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     metric_prefix = args.metric_prefix.rstrip("/")
-    rows = [build_row(item, metric_prefix=metric_prefix) for item in args.item]
+    if args.average_scope == "all":
+        build_kwargs = {}
+    elif args.average_scope == "sections":
+        build_kwargs = {"include_sections": True, "include_suites": False}
+    elif args.average_scope == "suites":
+        build_kwargs = {"include_sections": False, "include_suites": True}
+    elif args.average_scope in SECTION_KEYS:
+        build_kwargs = {
+            "include_sections": True,
+            "include_suites": False,
+            "sections": {args.average_scope},
+            "include_overall": False,
+        }
+    elif args.average_scope == "overall":
+        build_kwargs = {"include_sections": False, "include_suites": False, "overall_only": True}
+    else:
+        build_kwargs = {"include_sections": False, "include_suites": True, "suites": {args.average_scope}}
+    rows = [build_row(item, metric_prefix=metric_prefix, **build_kwargs) for item in args.item]
     print(json.dumps(rows, indent=2, sort_keys=True))
     if args.dry_run:
         return

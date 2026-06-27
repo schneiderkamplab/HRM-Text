@@ -109,10 +109,16 @@ the working settings used for the 700K run:
 - DFM IFEval-DA: `32` shards, batch `32`.
 - EuroEval: batch `32`, `EUROEVAL_MAX_CONCURRENT_CALLS=32`, native-compatible
   vLLM proxy.
-- global vLLM server memory: `--vllm-gpu-memory-utilization 0.35`.
+- global vLLM server memory while co-running with the active DFM6 training run:
+  `--vllm-gpu-memory-utilization 0.28`. This replaced the earlier `0.33`
+  setting after `step_250000` hit vLLM startup failures under higher training
+  memory pressure around `bp_steps == 5`.
 - `generative_talemaader`: batch `16`, max-connections `16`,
   per-shard managed `unsloth/gemma-4-E4B-it` judge, and per-task vLLM memory
-  utilization `0.25` so the judge fits beside training and the HRM server.
+  utilization `0.18` so the judge fits beside training and the HRM server. Do
+  not lower batch/max-connections for this failure mode; the OOM was caused by
+  insufficient judge startup headroom after the HRM vLLM server reserved KV
+  cache.
 - `govreport`: inserts `max_report_chars=9000` into each GovReport row.
 
 `--hrm-vllm-native-proxy` strips EuroEval/OpenAI fields that the native HRM
@@ -266,6 +272,9 @@ python -m eval_scheduler monitor \
 - Active GPU lines and the `next ready` queue include a model/checkpoint label
   such as `hrm-dfm5-L@step_400000:ema`, `hrm-dfm5-L@step_400000:noema`, or
   `qwen35-2b@qwen35_2b:ema`.
+- `monitor` also shows a `blocked pending` section when pending jobs are not
+  runnable yet. Each line names the job and the unmet dependency IDs with their
+  current status, e.g. `blocked_by [eval-00123:running]`.
 - For dfm-evals jobs, `monitor` also reads Inspect `logs.json` and the
   dfm-evals text log when available to infer sample totals, and surfaces early
   configuration failures such as missing judge placeholders. Some dfm-evals
