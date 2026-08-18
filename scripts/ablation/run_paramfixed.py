@@ -267,6 +267,9 @@ def main() -> None:
             env = os.environ | {"CUDA_VISIBLE_DEVICES": gpu,
                                 "MASTER_ADDR": "127.0.0.1",
                                 "MASTER_PORT": str(29500 + slot),
+                                # Hydra swallows the child traceback without this, leaving
+                                # only torchrun's useless ChildFailedError wrapper.
+                                "HYDRA_FULL_ERROR": "1",
                                 # pretrain.py dumps its [bench] summary here when max_steps is set
                                 "BENCH_OUTPUT": str((args.logdir / f"{c['name']}.bench.json").resolve())}
             cmd = ["torchrun", "--nproc_per_node=1", f"--master_port={29500+slot}",

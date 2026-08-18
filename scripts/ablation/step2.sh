@@ -139,6 +139,26 @@ echo
 echo "############ 2d. PREFLIGHT (now with GPU) ############"
 python3 scripts/ablation/preflight.py --data data/sampled_dfm9_mini --skip-overlap 2>&1
 
+echo
+echo "############ 2d2. VALIDATION LOADER PATCH ############"
+# V1Dataset advances _epoch on every __iter__, so the SECOND evaluation against a
+# one-directory validation set asks for epoch_1 and dies. This is a bug in the training
+# source, not in the harness, so it is never applied silently -- you run the patch.
+python3 scripts/ablation/patch_val_epoch.py --check
+PATCH_RC=$?
+if [ "$PATCH_RC" -eq 0 ] && python3 scripts/ablation/patch_val_epoch.py --check 2>/dev/null | grep -q "^  \[to do"; then
+  echo
+  echo "FAIL: the validation-loader fix is NOT applied. Repeated validation will crash at"
+  echo "      the second evaluation with FileNotFoundError .../epoch_1/inst_start.npy."
+  echo "      Apply and verify it with:"
+  echo "        python3 scripts/ablation/patch_val_epoch.py"
+  echo "        python3 scripts/ablation/verify_val_epoch.py"
+  exit 1
+elif [ "$PATCH_RC" -ne 0 ]; then
+  echo "FAIL: patch_val_epoch.py could not match the source (see above)."
+  exit 1
+fi
+
 if [ "$CHECK_ONLY" -eq 1 ]; then
   echo; echo "--check-only: stopping before the timing run."; echo "############ END ############"
   exit 0
@@ -177,6 +197,22 @@ grep -iE "val/loss|validation" "$LOG" 2>/dev/null | tail -5 || echo "(none in lo
 echo
 echo "--- peak memory ---"
 grep -iE "memory|GiB|GB allocated" "$LOG" 2>/dev/null | tail -5 || echo "(none)"
+echo
+echo "--- step timing ---"
+grep -oE "[0-9]+/[0-9]+ \[[0-9:]+<[0-9:]+, +[0-9.]+it/s\]" "$LOG" 2>/dev/null | tail -3 \
+  || echo "(no progress bar found)"
+echo
+echo "--- THE ACTUAL ERROR (child traceback, not torchrun's wrapper) ---"
+# Hydra prints 'Error executing job with overrides:' then the real traceback. torchrun's
+# ChildFailedError block after it is noise, so cut the log at that boundary.
+if grep -q "Error executing job with overrides" "$LOG" 2>/dev/null; then
+  sed -n '/Error executing job with overrides/,/torch.distributed.elastic/p' "$LOG" \
+    | grep -v "^torch.distributed.elastic" | tail -60
+elif grep -qE "^(Traceback|.*Error:)" "$LOG" 2>/dev/null; then
+  grep -nE "Traceback|Error|Exception|OutOfMemory|StopIteration|assert" "$LOG" | tail -30
+else
+  echo "(no error region found -- run probably succeeded)"
+fi
 echo
 echo "--- last 25 log lines ---"
 tail -25 "$LOG" 2>/dev/null || echo "(no log)"

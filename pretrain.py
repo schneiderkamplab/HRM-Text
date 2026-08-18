@@ -173,6 +173,8 @@ def create_dataloader(
     rank: int,
     world_size: int,
     dataset_path: Optional[str] = None,
+    fixed_epoch: bool = False,
+    persistent_workers: bool = True,
 ):
     dataset = V1Dataset(V1DatasetConfig(
         seed=config.seed,
@@ -185,6 +187,8 @@ def create_dataloader(
         batch_max_length=local_batch_size,
         rank=rank,
         num_replicas=world_size,
+
+        fixed_epoch=fixed_epoch,
     ))
     num_workers = 0 if config.accelerator_type in ("mps", "cpu", "none") else 1
     dataloader_kwargs = {
@@ -196,7 +200,11 @@ def create_dataloader(
     if num_workers > 0:
         dataloader_kwargs |= {
             "prefetch_factor": config.dataloader_prefetch_factor,
-            "persistent_workers": True,  # NOTE: Required for correct epoch handling
+            # Training MUST keep workers alive: the worker process owns the epoch
+            # counter that walks epoch_0, epoch_1, ... Validation must NOT, so each new
+            # iterator gets a fresh worker seeded from the parent's untouched _epoch=0
+            # and the pass ends with StopIteration after exactly one traversal.
+            "persistent_workers": persistent_workers,
         }
     dataloader = DataLoader(**dataloader_kwargs)
     return dataloader, dataset.metadata
@@ -996,8 +1004,9 @@ def launch(hydra_config: DictConfig):
             rank=RANK,
             world_size=WORLD_SIZE,
             dataset_path=config.data.validation_path,
+            fixed_epoch=True,
+            persistent_workers=False,
         )
-        val_iter = iter(val_loader)
     resume_state = load_train_checkpoint(config, train_state, rank=RANK, local_batch_size=local_batch_size)
     if train_state.step > train_state.total_steps:
         raise ValueError(
@@ -1131,9 +1140,11 @@ def launch(hydra_config: DictConfig):
 
             if (
                 val_loader is not None
-                and val_iter is not None
                 and train_state.step % config.validation_interval == 0
             ):
+                # Fresh iterator per evaluation: one full pass over the same fixed
+                # validation rows every time, so val/loss is comparable across steps.
+                val_iter = iter(val_loader)
                 val_metrics = validate_batches(
                     config,
                     RANK,

@@ -26,6 +26,11 @@ class V1DatasetConfig(pydantic.BaseModel):
     rank: int
     num_replicas: int
 
+    # A validation dataset is ONE fixed directory, re-read identically at every
+    # evaluation. With fixed_epoch the dataset never advances past epoch_0, so repeated
+    # iteration is well defined. Training leaves this False and walks epoch_0, epoch_1, ...
+    fixed_epoch: bool = False
+
 
 class V1DatasetMeta(pydantic.BaseModel):
     tokenizer_info: dict[str, Any] = {}
@@ -96,7 +101,8 @@ class V1Dataset(IterableDataset):
         # Load indices
         self._data_indices = V1DatasetIndices(**{f.name: np.load(os.path.join(self.config.dataset_path, f"epoch_{self._epoch}", f"{f.name}.npy"), mmap_mode="r")
                                                  for f in fields(V1DatasetIndices)})
-        self._epoch += 1
+        if not self.config.fixed_epoch:
+            self._epoch += 1
 
         # Re-create sampler
         self._sampler = MultipackDistributedBatchSampler(

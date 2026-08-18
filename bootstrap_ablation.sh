@@ -1008,6 +1008,9 @@ def main() -> None:
             env = os.environ | {"CUDA_VISIBLE_DEVICES": gpu,
                                 "MASTER_ADDR": "127.0.0.1",
                                 "MASTER_PORT": str(29500 + slot),
+                                # Hydra swallows the child traceback without this, leaving
+                                # only torchrun's useless ChildFailedError wrapper.
+                                "HYDRA_FULL_ERROR": "1",
                                 # pretrain.py dumps its [bench] summary here when max_steps is set
                                 "BENCH_OUTPUT": str((args.logdir / f"{c['name']}.bench.json").resolve())}
             cmd = ["torchrun", "--nproc_per_node=1", f"--master_port={29500+slot}",
@@ -1139,6 +1142,403 @@ def main() -> None:
     else:
         print("\nNo repeated seeds found -- you cannot tell signal from noise yet. "
               "Run `--stage main` (3 seeds of the baseline) before reading this table.")
+
+
+if __name__ == "__main__":
+    main()
+EOF_HRM_ABL
+
+cat > scripts/ablation/patch_val_epoch.py <<'EOF_HRM_ABL'
+#!/usr/bin/env python3
+"""Fix repeated validation against a fixed held-out set.
+
+THE BUG
+    V1Dataset._load_dataset_before_epoch_begin() reads epoch_<n> and then does
+    `self._epoch += 1`. That is correct for training, which walks epoch_0, epoch_1, ...
+    It is wrong for a validation dataset, which is ONE fixed directory: the second
+    evaluation asks for epoch_1 and dies with
+
+        FileNotFoundError: data/val_dfm9_mini/epoch_1/inst_start.npy
+
+    pretrain.py creates `val_iter = iter(val_loader)` once. validate_batches() breaks on
+    StopIteration but returns the metrics it accumulated, so the `if val_metrics is None`
+    recreate-path never fires. The first evaluation succeeds and the second one crashes.
+
+THE FIX -- two independent parts, because neither alone covers both worker modes.
+
+  1. `fixed_epoch` on V1DatasetConfig. When set, the dataset never advances its epoch
+     counter, so it re-reads epoch_0 forever. This is what makes num_workers=0 correct
+     (accelerator_type cpu/mps/none), where the dataset iterates in the parent process
+     and the counter mutates in-place.
+
+  2. `persistent_workers=False` on the validation DataLoader only. Training MUST keep its
+     workers alive -- the worker process owns the epoch counter that walks epoch_0,
+     epoch_1, ... (hence the repo's "Required for correct epoch handling" note). For
+     validation the opposite is wanted: each new iterator gets a fresh worker, so the pass
+     ends cleanly with StopIteration after exactly one traversal instead of wrapping.
+
+  3. A fresh `iter(val_loader)` per evaluation, so every val/loss is one full pass over
+     the same rows and the numbers are comparable across steps.
+
+Part 1 covers num_workers=0; part 2 covers num_workers=1. We run num_workers=1 on sm100,
+but a cpu smoke test hits the other path, so both are here.
+
+    python patch_val_epoch.py --check     # report status, change nothing
+    python patch_val_epoch.py             # apply (writes .bak files)
+    python patch_val_epoch.py --revert    # restore from .bak
+"""
+
+from __future__ import annotations
+
+import argparse
+import shutil
+import sys
+from pathlib import Path
+
+# (file, description, marker, old, new)
+#   marker: a string unique to the PATCHED text. Presence of the marker -- not
+#   absence of `old` -- is what "already applied" means, because for some edits the
+#   replacement text CONTAINS the original (extra indentation, appended field), so
+#   counting `old` would report a finished edit as still pending and double-apply it.
+EDITS = [
+    (
+        "dataset_new.py",
+        "V1DatasetConfig: add fixed_epoch",
+        "fixed_epoch: bool = False",
+        """    target_only: bool
+
+    rank: int
+    num_replicas: int
+""",
+        """    target_only: bool
+
+    rank: int
+    num_replicas: int
+
+    # A validation dataset is ONE fixed directory, re-read identically at every
+    # evaluation. With fixed_epoch the dataset never advances past epoch_0, so repeated
+    # iteration is well defined. Training leaves this False and walks epoch_0, epoch_1, ...
+    fixed_epoch: bool = False
+""",
+    ),
+    (
+        "dataset_new.py",
+        "_load_dataset_before_epoch_begin: honour fixed_epoch",
+        "if not self.config.fixed_epoch:",
+        """        self._epoch += 1
+""",
+        """        if not self.config.fixed_epoch:
+            self._epoch += 1
+""",
+    ),
+    (
+        "pretrain.py",
+        "create_dataloader: accept fixed_epoch / persistent_workers",
+        "persistent_workers: bool = True,",
+        """    dataset_path: Optional[str] = None,
+):
+    dataset = V1Dataset(V1DatasetConfig(
+""",
+        """    dataset_path: Optional[str] = None,
+    fixed_epoch: bool = False,
+    persistent_workers: bool = True,
+):
+    dataset = V1Dataset(V1DatasetConfig(
+""",
+    ),
+    (
+        "pretrain.py",
+        "create_dataloader: pass fixed_epoch to the dataset",
+        "fixed_epoch=fixed_epoch,",
+        """        batch_max_length=local_batch_size,
+        rank=rank,
+        num_replicas=world_size,
+    ))
+""",
+        """        batch_max_length=local_batch_size,
+        rank=rank,
+        num_replicas=world_size,
+
+        fixed_epoch=fixed_epoch,
+    ))
+""",
+    ),
+    (
+        "pretrain.py",
+        "create_dataloader: make persistent_workers a parameter",
+        '"persistent_workers": persistent_workers,',
+        """            "persistent_workers": True,  # NOTE: Required for correct epoch handling
+""",
+        """            # Training MUST keep workers alive: the worker process owns the epoch
+            # counter that walks epoch_0, epoch_1, ... Validation must NOT, so each new
+            # iterator gets a fresh worker seeded from the parent's untouched _epoch=0
+            # and the pass ends with StopIteration after exactly one traversal.
+            "persistent_workers": persistent_workers,
+""",
+    ),
+    (
+        "pretrain.py",
+        "validation loader: fixed epoch, non-persistent workers",
+        "persistent_workers=False,",
+        """            dataset_path=config.data.validation_path,
+        )
+        val_iter = iter(val_loader)
+""",
+        """            dataset_path=config.data.validation_path,
+            fixed_epoch=True,
+            persistent_workers=False,
+        )
+""",
+    ),
+    (
+        "pretrain.py",
+        "validation call site: fresh iterator per evaluation",
+        "# Fresh iterator per evaluation",
+        """            if (
+                val_loader is not None
+                and val_iter is not None
+                and train_state.step % config.validation_interval == 0
+            ):
+                val_metrics = validate_batches(
+""",
+        """            if (
+                val_loader is not None
+                and train_state.step % config.validation_interval == 0
+            ):
+                # Fresh iterator per evaluation: one full pass over the same fixed
+                # validation rows every time, so val/loss is comparable across steps.
+                val_iter = iter(val_loader)
+                val_metrics = validate_batches(
+""",
+    ),
+]
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--check", action="store_true", help="report status, change nothing")
+    ap.add_argument("--revert", action="store_true", help="restore the .bak files")
+    ap.add_argument("--root", type=Path, default=Path("."))
+    args = ap.parse_args()
+
+    files = sorted({f for f, *_ in EDITS})
+    for f in files:
+        if not (args.root / f).is_file():
+            raise SystemExit(f"ERROR: {args.root/f} not found -- run from the repo root.")
+
+    if args.revert:
+        for f in files:
+            bak = args.root / (f + ".bak")
+            if bak.is_file():
+                shutil.copy2(bak, args.root / f)
+                print(f"reverted {f} from {f}.bak")
+            else:
+                print(f"no {f}.bak, left {f} alone")
+        return
+
+    texts = {f: (args.root / f).read_text() for f in files}
+    applied, pending, broken = [], [], []
+
+    for f, desc, marker, old, new in EDITS:
+        t = texts[f]
+        if marker in t:
+            applied.append(desc)
+            continue
+        n_old = t.count(old)
+        if n_old == 1:
+            pending.append((f, desc, old, new))
+        elif n_old == 0:
+            broken.append(f"{f}: pattern NOT FOUND and marker absent -- {desc}")
+        else:
+            broken.append(f"{f}: pattern found {n_old}x, expected exactly 1 -- {desc}")
+
+    for d in applied:
+        print(f"  [already] {d}")
+    for _, d, _, _ in pending:
+        print(f"  [to do  ] {d}")
+    for b in broken:
+        print(f"  [BROKEN ] {b}")
+
+    if broken:
+        print("\nRefusing to touch anything. The upstream source differs from what this "
+              "patch expects; re-check it by hand.")
+        sys.exit(2)
+    if not pending:
+        print("\nAll edits already present. Nothing to do.")
+        return
+    if args.check:
+        print(f"\n--check: {len(pending)} edit(s) would be applied. Nothing written.")
+        return
+
+    for f in files:
+        bak = args.root / (f + ".bak")
+        if not bak.exists():
+            shutil.copy2(args.root / f, bak)
+            print(f"backed up {f} -> {f}.bak")
+
+    for f, desc, old, new in pending:
+        texts[f] = texts[f].replace(old, new, 1)
+    for f in files:
+        (args.root / f).write_text(texts[f])
+        print(f"wrote {f}")
+
+    print(f"\n{len(pending)} edit(s) applied. Verify with:")
+    print("  python3 scripts/ablation/verify_val_epoch.py")
+
+
+if __name__ == "__main__":
+    main()
+EOF_HRM_ABL
+
+cat > scripts/ablation/verify_val_epoch.py <<'EOF_HRM_ABL'
+#!/usr/bin/env python3
+"""Prove the validation loader re-reads the SAME fixed rows on every evaluation.
+
+Costs no training steps. Run from the repo root after patch_val_epoch.py.
+
+Three checks:
+
+  CONTROL   unpatched behaviour (fixed_epoch=False, persistent_workers=True) must still
+            fail on the second pass with FileNotFoundError .../epoch_1/... If this does
+            NOT fail, the test is not sensitive and the other two results mean nothing.
+
+  WORKER    the configuration training actually uses on sm100: num_workers=1,
+            fixed_epoch=True, persistent_workers=False. Three passes must yield the same
+            batch count and the same checksum.
+
+  INPROC    num_workers=0, the accelerator_type=cpu/mps path, where the dataset iterates
+            in the parent process and the epoch counter mutates in place. fixed_epoch is
+            the only thing that saves this one.
+
+    python verify_val_epoch.py                      # uses data/val_dfm9_mini
+    python verify_val_epoch.py --val-path data/... --microbatch 16384
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+import traceback
+from pathlib import Path
+
+# This script lives in scripts/ablation/, and Python puts the SCRIPT's directory on
+# sys.path -- not the working directory. Without this, `import dataset_new` fails even
+# when you are standing in the repo root.
+_HERE = Path(__file__).resolve()
+for _cand in (Path.cwd(), _HERE.parents[2] if len(_HERE.parents) > 2 else _HERE.parent):
+    if (_cand / "dataset_new.py").is_file():
+        sys.path.insert(0, str(_cand))
+        break
+else:
+    raise SystemExit("ERROR: cannot find dataset_new.py -- run from the HRM-Text repo root.")
+
+import torch
+from torch.utils.data import DataLoader
+
+from dataset_new import V1Dataset, V1DatasetConfig
+
+
+def make_loader(path: str, microbatch: int, num_workers: int,
+                fixed_epoch: bool, persistent_workers: bool) -> DataLoader:
+    kwargs = dict(seed=0, dataset_path=path, batch_max_length=microbatch,
+                  drop_last_batch=False, target_only=True, rank=0, num_replicas=1)
+    try:
+        cfg = V1DatasetConfig(**kwargs, fixed_epoch=fixed_epoch)
+    except TypeError:
+        if fixed_epoch:
+            raise SystemExit("V1DatasetConfig has no fixed_epoch field -- patch not applied.\n"
+                             "Run: python3 scripts/ablation/patch_val_epoch.py")
+        cfg = V1DatasetConfig(**kwargs)
+    dl = {"dataset": V1Dataset(cfg), "batch_size": None,
+          "num_workers": num_workers, "pin_memory": False}
+    if num_workers > 0:
+        dl |= {"prefetch_factor": 2, "persistent_workers": persistent_workers}
+    return DataLoader(**dl)
+
+
+def one_pass(loader: DataLoader) -> tuple[int, int, list[int]]:
+    """(batch count, checksum over every token, first 16 tokens) for one full pass."""
+    n, checksum, head = 0, 0, []
+    for batch, _info in loader:
+        if n == 0:
+            head = batch["inputs"][:16].to(torch.int64).tolist()
+        checksum = (checksum + int(batch["inputs"].to(torch.int64).sum())) % (2**61 - 1)
+        n += 1
+    return n, checksum, head
+
+
+def run(label: str, loader: DataLoader, passes: int) -> bool:
+    results = []
+    for i in range(passes):
+        n, chk, head = one_pass(loader)
+        results.append((n, chk, head))
+        print(f"    pass {i+1}: {n:>4} batches   checksum={chk}   head={head[:6]}...")
+    same = all(r == results[0] for r in results)
+    print(f"    -> {'IDENTICAL' if same else 'DIFFERENT -- BROKEN'} across {passes} passes")
+    if results[0][0] == 0:
+        print("    -> but the pass was EMPTY; the validation set has no batches.")
+        return False
+    return same
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--val-path", default="data/val_dfm9_mini")
+    ap.add_argument("--microbatch", type=int, default=16384,
+                    help="Must match global_batch_size/(world*grad_accum) = 16384 by default")
+    ap.add_argument("--passes", type=int, default=3)
+    ap.add_argument("--skip-control", action="store_true")
+    args = ap.parse_args()
+
+    print(f"validation path : {args.val_path}")
+    print(f"microbatch      : {args.microbatch:,} tokens\n")
+    ok = True
+
+    if not args.skip_control:
+        print("CONTROL -- unpatched behaviour, MUST fail on pass 2")
+        try:
+            loader = make_loader(args.val_path, args.microbatch, 1,
+                                 fixed_epoch=False, persistent_workers=True)
+            for i in range(2):
+                n, _, _ = one_pass(loader)
+                print(f"    pass {i+1}: {n} batches")
+            print("    -> NO FAILURE. The control did not reproduce the bug, so the")
+            print("       checks below prove nothing. Investigate before trusting them.")
+            ok = False
+        except FileNotFoundError as e:
+            print(f"    -> failed as expected: {type(e).__name__}: {e}")
+        except Exception as e:
+            msg = str(e)
+            if "epoch_1" in msg or "FileNotFoundError" in msg:
+                print(f"    -> failed as expected (wrapped): {type(e).__name__}")
+            else:
+                print(f"    -> failed for an UNEXPECTED reason: {type(e).__name__}: {e}")
+                traceback.print_exc()
+                ok = False
+        print()
+
+    print(f"WORKER  -- num_workers=1, fixed_epoch=True, persistent_workers=False  "
+          f"(the sm100 path)")
+    ok &= run("worker", make_loader(args.val_path, args.microbatch, 1,
+                                    fixed_epoch=True, persistent_workers=False), args.passes)
+    print()
+
+    print("INPROC  -- num_workers=0, fixed_epoch=True  (the cpu/mps path)")
+    ok &= run("inproc", make_loader(args.val_path, args.microbatch, 0,
+                                    fixed_epoch=True, persistent_workers=False), args.passes)
+    print()
+
+    print("=" * 70)
+    if ok:
+        print("PASS -- every evaluation reads the identical fixed validation set.")
+        print("Set validation_batches >= the batch count above so each evaluation")
+        print("completes one full pass and stops on StopIteration.")
+    else:
+        print("FAIL -- see above. Do not start the timing run.")
+    print("=" * 70)
+    sys.exit(0 if ok else 1)
 
 
 if __name__ == "__main__":
@@ -1379,6 +1779,26 @@ echo
 echo "############ 2d. PREFLIGHT (now with GPU) ############"
 python3 scripts/ablation/preflight.py --data data/sampled_dfm9_mini --skip-overlap 2>&1
 
+echo
+echo "############ 2d2. VALIDATION LOADER PATCH ############"
+# V1Dataset advances _epoch on every __iter__, so the SECOND evaluation against a
+# one-directory validation set asks for epoch_1 and dies. This is a bug in the training
+# source, not in the harness, so it is never applied silently -- you run the patch.
+python3 scripts/ablation/patch_val_epoch.py --check
+PATCH_RC=$?
+if [ "$PATCH_RC" -eq 0 ] && python3 scripts/ablation/patch_val_epoch.py --check 2>/dev/null | grep -q "^  \[to do"; then
+  echo
+  echo "FAIL: the validation-loader fix is NOT applied. Repeated validation will crash at"
+  echo "      the second evaluation with FileNotFoundError .../epoch_1/inst_start.npy."
+  echo "      Apply and verify it with:"
+  echo "        python3 scripts/ablation/patch_val_epoch.py"
+  echo "        python3 scripts/ablation/verify_val_epoch.py"
+  exit 1
+elif [ "$PATCH_RC" -ne 0 ]; then
+  echo "FAIL: patch_val_epoch.py could not match the source (see above)."
+  exit 1
+fi
+
 if [ "$CHECK_ONLY" -eq 1 ]; then
   echo; echo "--check-only: stopping before the timing run."; echo "############ END ############"
   exit 0
@@ -1417,6 +1837,22 @@ grep -iE "val/loss|validation" "$LOG" 2>/dev/null | tail -5 || echo "(none in lo
 echo
 echo "--- peak memory ---"
 grep -iE "memory|GiB|GB allocated" "$LOG" 2>/dev/null | tail -5 || echo "(none)"
+echo
+echo "--- step timing ---"
+grep -oE "[0-9]+/[0-9]+ \[[0-9:]+<[0-9:]+, +[0-9.]+it/s\]" "$LOG" 2>/dev/null | tail -3 \
+  || echo "(no progress bar found)"
+echo
+echo "--- THE ACTUAL ERROR (child traceback, not torchrun's wrapper) ---"
+# Hydra prints 'Error executing job with overrides:' then the real traceback. torchrun's
+# ChildFailedError block after it is noise, so cut the log at that boundary.
+if grep -q "Error executing job with overrides" "$LOG" 2>/dev/null; then
+  sed -n '/Error executing job with overrides/,/torch.distributed.elastic/p' "$LOG" \
+    | grep -v "^torch.distributed.elastic" | tail -60
+elif grep -qE "^(Traceback|.*Error:)" "$LOG" 2>/dev/null; then
+  grep -nE "Traceback|Error|Exception|OutOfMemory|StopIteration|assert" "$LOG" | tail -30
+else
+  echo "(no error region found -- run probably succeeded)"
+fi
 echo
 echo "--- last 25 log lines ---"
 tail -25 "$LOG" 2>/dev/null || echo "(no log)"
