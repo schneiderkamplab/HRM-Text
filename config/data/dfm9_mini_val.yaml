@@ -1,0 +1,7 @@
+# Peter's dfm9_mini, plus epoch_9 held out for validation.
+# Training reads data/sampled_dfm9_mini/epoch_0..8; canonical recipe is epochs=3.
+# epoch_9 is the validation holdout -- never train on it.
+# The validation dir is symlinks only -- no token data is duplicated.
+path: data/sampled_dfm9_mini
+validation_path: data/val_dfm9_mini
+target_only: true

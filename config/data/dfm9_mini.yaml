@@ -1,0 +1,6 @@
+path: data/sampled_dfm9_mini
+target_only: true
+
+# DFM9-mini: permissively licensed subset of DFM9.
+# ~5B tokens/epoch, 3 epochs = 15B total.
+# See data_io/prefix_config_dfm9_mini.yaml for source inclusion/exclusion.
