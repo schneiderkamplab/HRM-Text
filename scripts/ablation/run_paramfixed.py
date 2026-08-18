@@ -66,9 +66,12 @@ def main() -> None:
                         "runs under inference_mode and does not affect training.")
     p.add_argument("--val-batches", type=int, default=8,
                    help="validation_batches per evaluation")
-    p.add_argument("--epochs", type=int, default=None,
-                   help="Override epochs. Keep <= 9 so training never reaches the "
-                        "held-out epoch_9. Omit to use the config default.")
+    p.add_argument("--epochs", type=int, default=3,
+                   help="Training epochs. 3 is the canonical DFM9-mini recipe (~5B/epoch). "
+                        "Peter sampled 10 epochs so runs can be extended; epoch_9 is the "
+                        "validation holdout, so this must stay <= 9.")
+    p.add_argument("--holdout-epoch", type=int, default=9,
+                   help="Epoch reserved for validation; --epochs must not exceed it")
     p.add_argument("--project", default="hrm-paramfixed")
     p.add_argument("--gpus", default="0")
     p.add_argument("--microbatch", type=int, default=16384,
@@ -80,6 +83,9 @@ def main() -> None:
     p.add_argument("--max-steps", type=int, default=None,
                    help="Cap steps. Also sets training_total_steps so the LR/bp schedules "
                         "span the actual run instead of the full-epoch estimate.")
+    p.add_argument("--extra", action="append", default=[], metavar="KEY=VALUE",
+                   help="Extra Hydra override, repeatable. Diagnostics only "
+                        "(e.g. memory_log_interval=50); always echoed in the command.")
     p.add_argument("--logdir", type=Path, default=Path("logs/paramfixed"))
     p.add_argument("--dry-run", action="store_true")
     args = p.parse_args()
@@ -106,8 +112,10 @@ def main() -> None:
         print(f"validation every {args.val_every} steps x {args.val_batches} batches "
               f"(evaluation only)")
     if args.epochs is not None:
-        print(f"epochs={args.epochs}"
-              + ("  WARNING: >9 would train on the held-out epoch_9" if args.epochs > 9 else ""))
+        if args.epochs > args.holdout_epoch:
+            raise SystemExit(f"--epochs {args.epochs} would train on the held-out "
+                             f"epoch_{args.holdout_epoch}. Use --epochs <= {args.holdout_epoch}.")
+        print(f"epochs={args.epochs} (holdout epoch_{args.holdout_epoch} never reached)")
     print()
 
     cmds = []
@@ -134,6 +142,7 @@ def main() -> None:
                    f"validation_batches={args.val_batches}"]
         if max_steps:
             ov += [f"max_steps={max_steps}", f"training_total_steps={max_steps}"]
+        ov += list(args.extra)
         cmds.append({"name": name, "d": d, "schedule": schedule(h, l), "overrides": ov})
 
     for c in cmds:
@@ -159,7 +168,9 @@ def main() -> None:
             log = args.logdir / f"{c['name']}.log"
             env = os.environ | {"CUDA_VISIBLE_DEVICES": gpu,
                                 "MASTER_ADDR": "127.0.0.1",
-                                "MASTER_PORT": str(29500 + slot)}
+                                "MASTER_PORT": str(29500 + slot),
+                                # pretrain.py dumps its [bench] summary here when max_steps is set
+                                "BENCH_OUTPUT": str((args.logdir / f"{c['name']}.bench.json").resolve())}
             cmd = ["torchrun", "--nproc_per_node=1", f"--master_port={29500+slot}",
                    "pretrain.py", *c["overrides"]]
             t0 = time.time()

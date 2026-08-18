@@ -37,8 +37,20 @@ def npy_header(path):
         n *= x
     return n, _DT[d["descr"].lstrip("<>|=")], header_len
 
-GLOBAL_BATCH = 65_536
-GRAD_ACCUM = 4
+def _cfg_global_batch(default: int = 196_608) -> int:
+    """Read global_batch_size from config/cfg_pretrain.yaml rather than hard-coding it."""
+    try:
+        for line in Path("config/cfg_pretrain.yaml").read_text().splitlines():
+            if line.strip().startswith("global_batch_size:"):
+                return int(line.split(":", 1)[1].split("#")[0].strip())
+    except Exception:  # noqa: BLE001
+        pass
+    return default
+
+
+GLOBAL_BATCH = _cfg_global_batch()
+MICROBATCH = 16_384
+GRAD_ACCUM = max(1, GLOBAL_BATCH // MICROBATCH)
 
 OK, WARN, BAD = "  OK  ", " WARN ", " FAIL "
 
@@ -224,15 +236,16 @@ def main() -> None:
         vm = json.loads((args.val / "metadata.json").read_text())
         line(OK, f"{args.val} exists, {vm['total_length']:,} held-out tokens")
     else:
-        line(WARN, f"{args.val} not built yet -- run make_val_split.py (step 2 of the runbook)")
+        line(WARN, f"{args.val} not built yet -- run make_val_from_epoch.py")
 
     print()
     print("=" * 78)
     print("4. BATCH SHAPE / MEMORY")
     print("=" * 78)
-    micro = GLOBAL_BATCH // GRAD_ACCUM
+    micro = MICROBATCH
     steps = args.tokens // GLOBAL_BATCH
-    line(OK, f"global_batch={GLOBAL_BATCH:,} tok, grad_accum={GRAD_ACCUM} -> microbatch={micro:,} tok")
+    line(OK, f"global_batch={GLOBAL_BATCH:,} tok (from config/cfg_pretrain.yaml), "
+             f"grad_accum={GRAD_ACCUM} -> microbatch={micro:,} tok")
     line(OK, f"{args.tokens:,} tokens -> {steps:,} optimizer steps per run")
     if meta:
         v = meta.get("tokenizer_info", {}).get("vocab_size", 262144)
