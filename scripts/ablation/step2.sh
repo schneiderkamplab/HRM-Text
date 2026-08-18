@@ -34,6 +34,37 @@ else
   echo "FAIL: no nvidia-smi -- this job has no GPU. Start a B200 job."
   exit 1
 fi
+GPU_NAME="$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | head -1)"
+case "$GPU_NAME" in
+  *MIG*) echo
+         echo "NOTE: this is a MIG slice ($GPU_NAME), not a whole card."
+         echo "      Fine for a smoke test, but sec/step measured here does NOT extrapolate"
+         echo "      to a full GPU. For the real timing baseline, move the UCloud slider from"
+         echo "      the MIG section (1/7..4/7) to GPU(s) = 1." ;;
+esac
+
+echo
+echo "############ 2a2. DATA LINKS ############"
+DATA_SRC="${DATA_SRC:-/work/Training_Ablations/data/sampled_dfm9_mini}"
+if [ ! -e data/sampled_dfm9_mini ]; then
+  if [ -d "$DATA_SRC" ]; then
+    mkdir -p data && ln -sfn "$DATA_SRC" data/sampled_dfm9_mini
+    echo "linked data/sampled_dfm9_mini -> $DATA_SRC"
+  else
+    echo "FAIL: data/sampled_dfm9_mini is missing and DATA_SRC=$DATA_SRC does not exist."
+    echo "      Re-run with DATA_SRC=/path/to/sampled_dfm9_mini bash scripts/ablation/step2.sh"
+    exit 1
+  fi
+else
+  echo "data/sampled_dfm9_mini  OK  -> $(readlink -f data/sampled_dfm9_mini)"
+fi
+if [ -d data/val_dfm9_mini/epoch_0 ]; then
+  echo "data/val_dfm9_mini      OK  (validation holdout built by step1)"
+else
+  echo "FAIL: data/val_dfm9_mini is missing. Run step1 first:"
+  echo "      bash scripts/ablation/step1.sh data/sampled_dfm9_mini"
+  exit 1
+fi
 
 echo
 echo "############ 2b. MINIMAL TRAINING DEPENDENCIES ############"
@@ -48,9 +79,38 @@ case "$CAP" in
   9)  ACCEL=sm90;  REQ=requirements-sm90.txt;  FA_MOD=flash_attn_interface ;;
   *)  echo "FAIL: no CUDA GPU visible to torch."; exit 1 ;;
 esac
-echo "-> accelerator_type=$ACCEL, installing $REQ"
+echo "-> detected accelerator_type=$ACCEL, installing $REQ"
 python3 -m pip install --user --quiet -r "$REQ" \
   && echo "FlashAttention install OK" || echo "WARN: FlashAttention install reported errors"
+
+echo
+echo "############ 2b2. accelerator_type IN THE CONFIG ############"
+# The launcher only sets H_cycles/L_cycles and the batch plumbing. accelerator_type is
+# infrastructure, not recipe -- but if the config disagrees with the hardware, pretrain.py
+# dispatches the wrong FlashAttention kernel and dies. Decide it here from the DETECTED
+# device rather than hardcoding a value that goes stale on a different job type.
+CFG_YAML=config/cfg_pretrain.yaml
+CUR_ACCEL="$(sed -n 's/^accelerator_type:[[:space:]]*\([^#[:space:]]*\).*/\1/p' "$CFG_YAML" 2>/dev/null | head -1)"
+CUR_ACCEL="${CUR_ACCEL%\"}"; CUR_ACCEL="${CUR_ACCEL#\"}"
+CUR_ACCEL="${CUR_ACCEL%\'}"; CUR_ACCEL="${CUR_ACCEL#\'}"
+ACCEL_OV=""
+KNOWN=" sm90 sm100 cpu mps none auto null "
+if [ -z "$CUR_ACCEL" ]; then
+  echo "$CFG_YAML has no accelerator_type line."
+  echo "-> passing ++accelerator_type=$ACCEL"
+  ACCEL_OV="++accelerator_type=$ACCEL"
+elif [ "$CUR_ACCEL" = "$ACCEL" ]; then
+  echo "$CFG_YAML says accelerator_type: $CUR_ACCEL -- matches the detected device."
+  echo "-> no override needed"
+elif echo "$KNOWN" | grep -q " $CUR_ACCEL "; then
+  echo "$CFG_YAML says accelerator_type: $CUR_ACCEL, but this device is $ACCEL."
+  echo "-> passing ++accelerator_type=$ACCEL"
+  ACCEL_OV="++accelerator_type=$ACCEL"
+else
+  echo "$CFG_YAML says accelerator_type: $CUR_ACCEL -- not a token this script recognises."
+  echo "-> LEAVING IT ALONE. If training dies on a kernel or FlashAttention import error,"
+  echo "   that line is the first suspect."
+fi
 
 echo
 echo "############ 2c. IMPORT VERIFICATION ############"
@@ -92,11 +152,14 @@ echo
 echo "############ 2e. TIMING RUN — 200 steps, H=2 L=3, recipe otherwise untouched ############"
 export WANDB_MODE="${WANDB_MODE:-offline}"
 echo "WANDB_MODE=$WANDB_MODE   (offline needs no login; \`wandb sync wandb/offline-run-*\` to upload)"
-python3 scripts/ablation/run_paramfixed.py \
-    --timing --data dfm9_mini_val --epochs 3 \
-    --val-every 50 --val-batches 256 \
-    --extra memory_log_interval=50 \
-    --gpus 0 2>&1
+LAUNCH=(python3 scripts/ablation/run_paramfixed.py
+        --timing --data dfm9_mini_val --epochs 3
+        --val-every 50 --val-batches 256
+        --extra memory_log_interval=50)
+[ -n "$ACCEL_OV" ] && LAUNCH+=(--extra "$ACCEL_OV")
+LAUNCH+=(--gpus 0)
+printf '%s ' "${LAUNCH[@]}"; echo
+"${LAUNCH[@]}" 2>&1
 
 echo
 echo "############ 2f. RESULTS ############"

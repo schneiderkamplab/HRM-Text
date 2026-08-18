@@ -755,7 +755,17 @@ microbatch fits. The optimizer still sees exactly the same effective batch, so t
 schedule and training math are untouched.
 
     global_batch_size / (world_size * gradient_accumulation_steps) = microbatch tokens
-    196608 / (1 * 12) = 16384   <- ~26 GB of logits, fits an 80-180 GB card
+    196608 / (1 * 12) = 16384   -> ~26 GB of logits; needs a big card
+    196608 / (1 * 48) =  4096   -> ~6.4 GB of logits; fits a 22 GB MIG slice
+
+--microbatch auto (the default) reads the visible GPU's memory and picks the largest
+power-of-two microbatch that divides global_batch and keeps the logits tensor under 30%
+of VRAM, capped at 16384 so every run in the sweep is measured the same way.
+
+Hydra note: validation_interval / validation_batches / max_steps / training_total_steps /
+memory_log_interval are pydantic-only fields on PretrainConfig. Whichever of them are
+absent from cfg_pretrain.yaml need a '+' prefix or Hydra's struct mode rejects them. This
+script checks the yaml and adds the '+' itself.
 
 Usage
     python run_paramfixed.py --dry-run                    # print commands, run nothing
@@ -769,6 +779,7 @@ from __future__ import annotations
 import argparse
 import os
 import queue
+import re
 import shlex
 import subprocess
 import threading
@@ -776,6 +787,71 @@ import time
 from pathlib import Path
 
 NATIVE_GLOBAL_BATCH = 196_608   # cfg_pretrain.yaml default; do not change lightly
+VOCAB = 262_144                 # Gemma-4 tokenizer; sets the logits tensor size
+LOGIT_BYTES = 2 + 4             # bf16 logits + the fp32 copy the CE loss makes
+CFG = Path("config/cfg_pretrain.yaml")
+
+# Fields defined on PretrainConfig but not necessarily present in the yaml. Hydra's struct
+# mode rejects an override for a key it cannot find, so these need a '+' when absent.
+RISKY_KEYS = {
+    "validation_interval",
+    "validation_batches",
+    "max_steps",
+    "training_total_steps",
+    "memory_log_interval",
+    "epochs",
+}
+
+
+def yaml_top_level_keys(path: Path = CFG) -> set[str] | None:
+    """Top-level mapping keys of the config, or None if it cannot be read."""
+    try:
+        text = path.read_text()
+    except Exception:
+        return None
+    return set(re.findall(r"^([A-Za-z_][A-Za-z0-9_]*)\s*:", text, flags=re.MULTILINE))
+
+
+def override(key: str, value, present: set[str] | None) -> str:
+    """'key=value', with a '+' prefix if key is a risky field missing from the yaml."""
+    if key in RISKY_KEYS:
+        missing = True if present is None else key not in present
+        if missing:
+            return f"+{key}={value}"
+    return f"{key}={value}"
+
+
+def logits_gb(microbatch: int) -> float:
+    return microbatch * VOCAB * LOGIT_BYTES / 1e9
+
+
+def gpu_total_gb() -> float | None:
+    try:
+        import torch
+        if not torch.cuda.is_available():
+            return None
+        return torch.cuda.get_device_properties(0).total_memory / 1e9
+    except Exception:
+        return None
+
+
+def auto_microbatch(global_batch: int, world: int, cap: int = 16_384) -> tuple[int, str]:
+    """Largest power-of-two microbatch dividing global_batch that keeps logits < 30% VRAM."""
+    total = gpu_total_gb()
+    cands = [m for m in (16_384, 8_192, 4_096, 2_048, 1_024)
+             if m <= cap and global_batch % (world * m) == 0]
+    if not cands:
+        raise SystemExit(f"no power-of-two microbatch divides global_batch={global_batch}")
+    if total is None:
+        return cap if cap in cands else cands[0], "no GPU visible; using the default"
+    budget = 0.30 * total
+    for m in cands:
+        if logits_gb(m) <= budget:
+            return m, (f"{total:.0f} GB GPU -> budget {budget:.1f} GB for logits; "
+                       f"{m:,} needs {logits_gb(m):.1f} GB")
+    m = cands[-1]
+    return m, (f"WARNING: {total:.0f} GB GPU is small; even {m:,} needs "
+               f"{logits_gb(m):.1f} GB of logits. Expect OOM.")
 
 
 def configs_for_depth(d: int) -> list[tuple[int, int]]:
@@ -815,8 +891,9 @@ def main() -> None:
                    help="Epoch reserved for validation; --epochs must not exceed it")
     p.add_argument("--project", default="hrm-paramfixed")
     p.add_argument("--gpus", default="0")
-    p.add_argument("--microbatch", type=int, default=16384,
-                   help="Physical tokens per device per micro-step; sets grad_accum")
+    p.add_argument("--microbatch", default="auto",
+                   help="Physical tokens per device per micro-step; sets grad_accum. "
+                        "'auto' sizes it from the visible GPU's memory (default).")
     p.add_argument("--global-batch", type=int, default=NATIVE_GLOBAL_BATCH,
                    help="Leave at the cfg default unless you mean to change the recipe")
     p.add_argument("--timing", action="store_true",
@@ -834,17 +911,32 @@ def main() -> None:
     gpus = [g.strip() for g in args.gpus.split(",") if g.strip()]
     world = 1  # one single-GPU process per run; runs go in parallel across GPUs
 
-    if args.global_batch % (world * args.microbatch):
+    if str(args.microbatch).lower() == "auto":
+        microbatch, why = auto_microbatch(args.global_batch, world)
+        print(f"microbatch=auto -> {microbatch:,}   ({why})")
+    else:
+        microbatch = int(args.microbatch)
+        print(f"microbatch={microbatch:,} (explicit)   logits {logits_gb(microbatch):.1f} GB")
+
+    if args.global_batch % (world * microbatch):
         raise SystemExit(f"global_batch {args.global_batch} is not divisible by "
-                         f"world*microbatch = {world*args.microbatch}")
-    grad_accum = args.global_batch // (world * args.microbatch)
+                         f"world*microbatch = {world*microbatch}")
+    grad_accum = args.global_batch // (world * microbatch)
+
+    present = yaml_top_level_keys()
+    if present is None:
+        print(f"NOTE: could not read {CFG}; assuming the pydantic-only fields need '+'")
+    else:
+        plussed = sorted(k for k in RISKY_KEYS if k not in present)
+        if plussed:
+            print(f"keys absent from {CFG}, will be appended with '+': {', '.join(plussed)}")
 
     cells = ([(2, 3)] if args.timing
              else [(h, l) for d in range(args.min_d, args.max_d + 1)
                    for (h, l) in configs_for_depth(d)])
     max_steps = 200 if args.timing else args.max_steps
 
-    print(f"global_batch={args.global_batch} (native)  microbatch={args.microbatch}  "
+    print(f"global_batch={args.global_batch} (native)  microbatch={microbatch}  "
           f"-> gradient_accumulation_steps={grad_accum}")
     print(f"{len(cells)} run(s); everything except H_cycles/L_cycles left at config defaults")
     if max_steps:
@@ -876,14 +968,20 @@ def main() -> None:
         if args.global_batch != NATIVE_GLOBAL_BATCH:
             ov.insert(4, f"global_batch_size={args.global_batch}")
         if args.epochs is not None:
-            ov.append(f"epochs={args.epochs}")
+            ov.append(override("epochs", args.epochs, present))
         if args.val_every > 0:
             # Evaluation only -- validate_batches runs under inference_mode.
-            ov += [f"validation_interval={args.val_every}",
-                   f"validation_batches={args.val_batches}"]
+            ov += [override("validation_interval", args.val_every, present),
+                   override("validation_batches", args.val_batches, present)]
         if max_steps:
-            ov += [f"max_steps={max_steps}", f"training_total_steps={max_steps}"]
-        ov += list(args.extra)
+            ov += [override("max_steps", max_steps, present),
+                   override("training_total_steps", max_steps, present)]
+        for e in args.extra:
+            if "=" in e and not e.startswith("+"):
+                k, v = e.split("=", 1)
+                ov.append(override(k, v, present))
+            else:
+                ov.append(e)
         cmds.append({"name": name, "d": d, "schedule": schedule(h, l), "overrides": ov})
 
     for c in cmds:
@@ -1176,6 +1274,37 @@ else
   echo "FAIL: no nvidia-smi -- this job has no GPU. Start a B200 job."
   exit 1
 fi
+GPU_NAME="$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | head -1)"
+case "$GPU_NAME" in
+  *MIG*) echo
+         echo "NOTE: this is a MIG slice ($GPU_NAME), not a whole card."
+         echo "      Fine for a smoke test, but sec/step measured here does NOT extrapolate"
+         echo "      to a full GPU. For the real timing baseline, move the UCloud slider from"
+         echo "      the MIG section (1/7..4/7) to GPU(s) = 1." ;;
+esac
+
+echo
+echo "############ 2a2. DATA LINKS ############"
+DATA_SRC="${DATA_SRC:-/work/Training_Ablations/data/sampled_dfm9_mini}"
+if [ ! -e data/sampled_dfm9_mini ]; then
+  if [ -d "$DATA_SRC" ]; then
+    mkdir -p data && ln -sfn "$DATA_SRC" data/sampled_dfm9_mini
+    echo "linked data/sampled_dfm9_mini -> $DATA_SRC"
+  else
+    echo "FAIL: data/sampled_dfm9_mini is missing and DATA_SRC=$DATA_SRC does not exist."
+    echo "      Re-run with DATA_SRC=/path/to/sampled_dfm9_mini bash scripts/ablation/step2.sh"
+    exit 1
+  fi
+else
+  echo "data/sampled_dfm9_mini  OK  -> $(readlink -f data/sampled_dfm9_mini)"
+fi
+if [ -d data/val_dfm9_mini/epoch_0 ]; then
+  echo "data/val_dfm9_mini      OK  (validation holdout built by step1)"
+else
+  echo "FAIL: data/val_dfm9_mini is missing. Run step1 first:"
+  echo "      bash scripts/ablation/step1.sh data/sampled_dfm9_mini"
+  exit 1
+fi
 
 echo
 echo "############ 2b. MINIMAL TRAINING DEPENDENCIES ############"
@@ -1190,9 +1319,38 @@ case "$CAP" in
   9)  ACCEL=sm90;  REQ=requirements-sm90.txt;  FA_MOD=flash_attn_interface ;;
   *)  echo "FAIL: no CUDA GPU visible to torch."; exit 1 ;;
 esac
-echo "-> accelerator_type=$ACCEL, installing $REQ"
+echo "-> detected accelerator_type=$ACCEL, installing $REQ"
 python3 -m pip install --user --quiet -r "$REQ" \
   && echo "FlashAttention install OK" || echo "WARN: FlashAttention install reported errors"
+
+echo
+echo "############ 2b2. accelerator_type IN THE CONFIG ############"
+# The launcher only sets H_cycles/L_cycles and the batch plumbing. accelerator_type is
+# infrastructure, not recipe -- but if the config disagrees with the hardware, pretrain.py
+# dispatches the wrong FlashAttention kernel and dies. Decide it here from the DETECTED
+# device rather than hardcoding a value that goes stale on a different job type.
+CFG_YAML=config/cfg_pretrain.yaml
+CUR_ACCEL="$(sed -n 's/^accelerator_type:[[:space:]]*\([^#[:space:]]*\).*/\1/p' "$CFG_YAML" 2>/dev/null | head -1)"
+CUR_ACCEL="${CUR_ACCEL%\"}"; CUR_ACCEL="${CUR_ACCEL#\"}"
+CUR_ACCEL="${CUR_ACCEL%\'}"; CUR_ACCEL="${CUR_ACCEL#\'}"
+ACCEL_OV=""
+KNOWN=" sm90 sm100 cpu mps none auto null "
+if [ -z "$CUR_ACCEL" ]; then
+  echo "$CFG_YAML has no accelerator_type line."
+  echo "-> passing ++accelerator_type=$ACCEL"
+  ACCEL_OV="++accelerator_type=$ACCEL"
+elif [ "$CUR_ACCEL" = "$ACCEL" ]; then
+  echo "$CFG_YAML says accelerator_type: $CUR_ACCEL -- matches the detected device."
+  echo "-> no override needed"
+elif echo "$KNOWN" | grep -q " $CUR_ACCEL "; then
+  echo "$CFG_YAML says accelerator_type: $CUR_ACCEL, but this device is $ACCEL."
+  echo "-> passing ++accelerator_type=$ACCEL"
+  ACCEL_OV="++accelerator_type=$ACCEL"
+else
+  echo "$CFG_YAML says accelerator_type: $CUR_ACCEL -- not a token this script recognises."
+  echo "-> LEAVING IT ALONE. If training dies on a kernel or FlashAttention import error,"
+  echo "   that line is the first suspect."
+fi
 
 echo
 echo "############ 2c. IMPORT VERIFICATION ############"
@@ -1234,11 +1392,14 @@ echo
 echo "############ 2e. TIMING RUN — 200 steps, H=2 L=3, recipe otherwise untouched ############"
 export WANDB_MODE="${WANDB_MODE:-offline}"
 echo "WANDB_MODE=$WANDB_MODE   (offline needs no login; \`wandb sync wandb/offline-run-*\` to upload)"
-python3 scripts/ablation/run_paramfixed.py \
-    --timing --data dfm9_mini_val --epochs 3 \
-    --val-every 50 --val-batches 256 \
-    --extra memory_log_interval=50 \
-    --gpus 0 2>&1
+LAUNCH=(python3 scripts/ablation/run_paramfixed.py
+        --timing --data dfm9_mini_val --epochs 3
+        --val-every 50 --val-batches 256
+        --extra memory_log_interval=50)
+[ -n "$ACCEL_OV" ] && LAUNCH+=(--extra "$ACCEL_OV")
+LAUNCH+=(--gpus 0)
+printf '%s ' "${LAUNCH[@]}"; echo
+"${LAUNCH[@]}" 2>&1
 
 echo
 echo "############ 2f. RESULTS ############"
