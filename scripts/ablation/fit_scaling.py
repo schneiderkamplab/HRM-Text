@@ -184,6 +184,8 @@ def main() -> None:
     print("-" * 40)
     total_h = 0.0
     n_cfg = 0
+    per_d: list[tuple[int, float]] = []
+    n_cfgs: dict[int, int] = {}
     for d in range(args.min_d, args.max_d + 1):
         cfgs = configs_for_depth(d)
         if not cfgs:
@@ -192,11 +194,30 @@ def main() -> None:
         h_run = (steps * t + evals * args.val_seconds) / 3600
         total_h += h_run * len(cfgs)
         n_cfg += len(cfgs)
+        per_d.append((d, h_run))
+        n_cfgs[d] = len(cfgs)
         print(f"{d:>4} {len(cfgs):>5} {t:>8.4f} {h_run:>8.2f} {h_run*len(cfgs):>9.1f}")
     print("-" * 40)
     print(f"{'':>4} {n_cfg:>5} {'':>8} {'':>8} {total_h:>9.1f}  GPU-hours for the full sweep")
-    print(f"\nwall-clock on N GPUs in parallel: "
-          + ", ".join(f"{n} GPU -> {total_h/n:.0f} h" for n in (1, 2, 4, 8)))
+    # Wall-clock is NOT total/N: a run cannot be split across GPUs, so the finish time is
+    # the makespan of the schedule. With one config per GPU it is simply the longest run.
+    # Longest-processing-time-first is the standard greedy assignment and is within 4/3 of
+    # optimal, which is far tighter than the uncertainty in these estimates.
+    durations = sorted((h_run for d, h_run in per_d for _ in range(n_cfgs[d])), reverse=True)
+    print("\nwall-clock (makespan, longest-first schedule; a run cannot be split):")
+    for n in (1, 2, 4, 8):
+        loads = [0.0] * n
+        for dur in durations:
+            i = loads.index(min(loads))
+            loads[i] += dur
+        mk = max(loads)
+        note = ""
+        if n >= len(durations):
+            note = f"  <- one run per GPU; set by the longest ({max(durations):.1f} h)"
+        elif mk > total_h / n * 1.05:
+            note = f"  <- {mk - total_h/n:.1f} h above the {total_h/n:.1f} h average; runs pack unevenly"
+        print(f"  {n} GPU: {mk:5.1f} h{note}")
+    print("  Request MORE job hours than this -- an expired UCloud job kills an unfinished run.")
     print("\nThese are extrapolations from short probes. Treat the first full run as the "
           "real check on them.")
 
