@@ -40,6 +40,7 @@ import os
 import queue
 import re
 import shlex
+import sys
 import subprocess
 import threading
 import time
@@ -134,6 +135,13 @@ def main() -> None:
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--min-d", type=int, default=2)
     p.add_argument("--max-d", type=int, default=10)
+    p.add_argument("--cells", default=None, metavar="HxL,HxL,...",
+                   help="Explicit (H,L) list, e.g. '1x1,1x9,4x1'. Overrides --min-d/--max-d. "
+                        "Use for the D-scaling probe, where you want specific depths and "
+                        "two different splits at the SAME D.")
+    p.add_argument("--tag", default=None,
+                   help="Name fragment for these runs, e.g. 'probe'. Default is "
+                        "'pf-d<NN>' (or 'timing' with --timing).")
     p.add_argument("--size", default="XXS")
     p.add_argument("--data", default="dfm9_mini_val",
                    help="Data config. dfm9_mini_val = Peter's dfm9_mini + epoch_9 as validation")
@@ -170,6 +178,19 @@ def main() -> None:
     gpus = [g.strip() for g in args.gpus.split(",") if g.strip()]
     world = 1  # one single-GPU process per run; runs go in parallel across GPUs
 
+    if not args.dry_run:
+        try:
+            import torch
+        except Exception as e:
+            raise SystemExit(
+                f"ERROR: torch is not importable in this job ({e}).\n"
+                "UCloud job homes are per-job -- ~/.local does not survive a new job.\n"
+                "Install the environment first:  bash scripts/ablation/step2.sh --check-only")
+        if not torch.cuda.is_available():
+            raise SystemExit(
+                "ERROR: torch sees no CUDA device. Training would fall back to a CPU path\n"
+                "that has no FlashAttention kernel. Check the job has a GPU attached.")
+
     if str(args.microbatch).lower() == "auto":
         microbatch, why = auto_microbatch(args.global_batch, world)
         print(f"microbatch=auto -> {microbatch:,}   ({why})")
@@ -190,10 +211,26 @@ def main() -> None:
         if plussed:
             print(f"keys absent from {CFG}, will be appended with '+': {', '.join(plussed)}")
 
-    cells = ([(2, 3)] if args.timing
-             else [(h, l) for d in range(args.min_d, args.max_d + 1)
-                   for (h, l) in configs_for_depth(d)])
-    max_steps = 200 if args.timing else args.max_steps
+    if args.cells:
+        cells = []
+        for tok in args.cells.split(","):
+            tok = tok.strip().lower()
+            if "x" not in tok:
+                raise SystemExit(f"--cells entry {tok!r} is not of the form HxL, e.g. 2x3")
+            h_s, _, l_s = tok.partition("x")
+            try:
+                h, l = int(h_s), int(l_s)
+            except ValueError:
+                raise SystemExit(f"--cells entry {tok!r} is not of the form HxL, e.g. 2x3")
+            if h < 1 or l < 1:
+                raise SystemExit(f"--cells entry {tok!r}: H and L must both be >= 1")
+            cells.append((h, l))
+    elif args.timing:
+        cells = [(2, 3)]
+    else:
+        cells = [(h, l) for d in range(args.min_d, args.max_d + 1)
+                 for (h, l) in configs_for_depth(d)]
+    max_steps = 200 if (args.timing and args.max_steps is None) else args.max_steps
 
     print(f"global_batch={args.global_batch} (native)  microbatch={microbatch}  "
           f"-> gradient_accumulation_steps={grad_accum}")
@@ -213,7 +250,9 @@ def main() -> None:
     cmds = []
     for h, l in cells:
         d = h * (l + 1)
-        name = f"{args.size}-{'timing' if args.timing else f'pf-d{d:02d}'}-h{h}l{l}"
+        tag = args.tag or ("timing" if args.timing else f"pf-d{d:02d}")
+        name = f"{args.size}-{tag}-d{d:02d}-h{h}l{l}" if args.tag \
+            else f"{args.size}-{tag}-h{h}l{l}"
         ov = [
             f"arch/size@arch={args.size}",
             f"data={args.data}",
@@ -246,7 +285,7 @@ def main() -> None:
     for c in cmds:
         print(f"# D={c['d']:<2} {c['schedule']:<12} {c['name']}")
         if args.dry_run:
-            print("torchrun --nproc_per_node=1 pretrain.py \\\n  " +
+            print("python -m torch.distributed.run --nproc_per_node=1 pretrain.py \\\n  " +
                   " \\\n  ".join(shlex.quote(o) for o in c["overrides"]) + "\n")
     if args.dry_run:
         print("--dry-run: nothing launched")
@@ -272,7 +311,12 @@ def main() -> None:
                                 "HYDRA_FULL_ERROR": "1",
                                 # pretrain.py dumps its [bench] summary here when max_steps is set
                                 "BENCH_OUTPUT": str((args.logdir / f"{c['name']}.bench.json").resolve())}
-            cmd = ["torchrun", "--nproc_per_node=1", f"--master_port={29500+slot}",
+            # `python -m torch.distributed.run` rather than the `torchrun` console
+            # script: UCloud job homes are per-job, so ~/.local/bin is often not on PATH
+            # even when torch itself is installed. This also guarantees the launcher and
+            # the training process use the SAME interpreter.
+            cmd = [sys.executable, "-m", "torch.distributed.run",
+                   "--nproc_per_node=1", f"--master_port={29500+slot}",
                    "pretrain.py", *c["overrides"]]
             t0 = time.time()
             print(f"[gpu {gpu}] start {c['name']}", flush=True)

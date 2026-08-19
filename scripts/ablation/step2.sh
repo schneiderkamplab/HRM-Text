@@ -68,7 +68,15 @@ fi
 
 echo
 echo "############ 2b. MINIMAL TRAINING DEPENDENCIES ############"
-python3 -m pip install --user --quiet \
+# Persistent venv on /work if setup_env.sh is present, so a new job costs seconds
+# instead of ~2 minutes. Falls back to a --user install if it is missing.
+if [ -f scripts/ablation/setup_env.sh ]; then
+  # shellcheck disable=SC1091
+  . scripts/ablation/setup_env.sh
+  [ "${HRM_ENV_OK:-0}" = "1" ] || echo "WARN: setup_env.sh reported a problem; continuing"
+fi
+PIPU="${HRM_PIP_USER---user}"   # empty inside a venv: pip refuses --user there
+python3 -m pip install $PIPU --quiet \
     torch numpy numba einops pydantic hydra-core omegaconf tqdm wandb coolname PyYAML \
   && echo "base deps OK" || echo "WARN: some base deps failed; see errors above"
 
@@ -80,7 +88,7 @@ case "$CAP" in
   *)  echo "FAIL: no CUDA GPU visible to torch."; exit 1 ;;
 esac
 echo "-> detected accelerator_type=$ACCEL, installing $REQ"
-python3 -m pip install --user --quiet -r "$REQ" \
+python3 -m pip install $PIPU --quiet -r "$REQ" \
   && echo "FlashAttention install OK" || echo "WARN: FlashAttention install reported errors"
 
 echo
@@ -170,8 +178,27 @@ fi
 
 echo
 echo "############ 2e. TIMING RUN — 200 steps, H=2 L=3, recipe otherwise untouched ############"
-export WANDB_MODE="${WANDB_MODE:-offline}"
-echo "WANDB_MODE=$WANDB_MODE   (offline needs no login; \`wandb sync wandb/offline-run-*\` to upload)"
+# W&B: a key must actually exist. Claiming online without one makes wandb.init()
+# abort the run minutes in; offline is always recoverable with `wandb sync`.
+if [ -z "${HRM_WANDB_OK:-}" ]; then
+  if [ -n "${WANDB_API_KEY:-}" ] || grep -qs "api\.wandb\.ai" "$HOME/.netrc"; then
+    HRM_WANDB_OK=1
+  else
+    HRM_WANDB_OK=0
+  fi
+fi
+if [ "$HRM_WANDB_OK" = "0" ]; then
+  case "${WANDB_MODE:-}" in
+    offline|disabled|dryrun) ;;
+    *) [ -n "${WANDB_MODE:-}" ] && echo "W&B: WARNING -- WANDB_MODE=$WANDB_MODE but no API key; forcing offline."
+       export WANDB_MODE=offline ;;
+  esac
+  echo "W&B: no key -> WANDB_MODE=offline  (persist a key: see scripts/ablation/setup_env.sh)"
+else
+  [ -z "${WANDB_MODE:-}" ] && export WANDB_MODE=online
+  echo "W&B: key present -> WANDB_MODE=$WANDB_MODE"
+fi
+
 LAUNCH=(python3 scripts/ablation/run_paramfixed.py
         --timing --data dfm9_mini_val --epochs 3
         --val-every 50 --val-batches 256
