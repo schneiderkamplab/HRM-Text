@@ -1,0 +1,27 @@
+{
+  "version": "dfm10-open-grounded-chats-v1",
+  "wikipedia_da": {
+    "request_shards": 128,
+    "candidate_chats": 50000,
+    "minimum_chats": 25000,
+    "minimum_assistant_turns": 150000,
+    "target_exchanges": "5-7",
+    "conversation_focus": "broad orientation followed by progressively deeper factual understanding"
+  },
+  "openstax_en": {
+    "request_shards": 256,
+    "minimum_chats": 80000,
+    "minimum_assistant_turns": 500000,
+    "target_exchanges": "5-7",
+    "conversation_focuses": [
+      "conceptual overview followed by progressively deeper understanding",
+      "causes, mechanisms, and relationships",
+      "common misconceptions and careful correction",
+      "realistic application and transfer to a new situation",
+      "comparison, scope, boundaries, and limitations",
+      "worked problem solving and interpretation where naturally supported",
+      "evidence, assumptions, and what can or cannot be concluded",
+      "student teach-back, synthesis, and targeted clarification"
+    ]
+  }
+}

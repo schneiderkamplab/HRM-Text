@@ -340,7 +340,6 @@ class StandardMCQBenchmark(BaseBenchmark):
             pred_clean = pred.strip().upper()
             if pred_clean not in gt["valid_set"]:
                 invalid += 1
-                correct += 1 / len(gt["valid_set"])
             elif pred_clean == gt["gold"]:
                 correct += 1
 
@@ -385,7 +384,6 @@ class MMLU(StandardMCQBenchmark):
             pred_clean = pred.strip().upper()
             if pred_clean not in gt["valid_set"]:
                 stats[subject]["invalid"] += 1
-                stats[subject]["correct"] += 1 / len(gt["valid_set"])
             elif pred_clean == gt["gold"]:
                 stats[subject]["correct"] += 1
 

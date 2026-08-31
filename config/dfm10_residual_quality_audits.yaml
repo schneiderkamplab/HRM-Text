@@ -1,0 +1,97 @@
+# Ordered, resumable post-reconciliation DFM10 quality-audit campaign.
+# Raw roots audit the exact published chat packages. Prefix sources audit the
+# exact prompt/target spans in data/tokenized_dfm10 after sampling policy.
+stages:
+  - id: 01_sapient_packages
+    description: Stratify the active policy-filtered Sapient family by provenance package.
+    sources:
+      - {source_id: sapient/acereason, patterns: [acereason__], samples: 500}
+      - {source_id: sapient/amps-mathematica, patterns: [ampsmathematica__], samples: 500}
+      - {source_id: sapient/dmmath, patterns: [dmmath__], samples: 500}
+      - {source_id: sapient/flan-cot, patterns: ['flan__cot_*'], samples: 500}
+      - {source_id: sapient/flan-dialog, patterns: ['flan_factual__dialog_*'], samples: 500}
+      - {source_id: sapient/flan-flan, patterns: ['flan__flan_*'], samples: 500}
+      - {source_id: sapient/flan-niv2, patterns: ['flan__niv2_*'], samples: 500}
+      - {source_id: sapient/flan-t0, patterns: ['flan__t0_*'], samples: 500}
+      - {source_id: sapient/openmathinstruct2-repaired, patterns: [openmathinstruct2_repaired__], samples: 500}
+      - {source_id: sapient/openthoughts2, patterns: [openthoughts2__], samples: 500}
+      - {source_id: sapient/platypus, patterns: [Platypus__], samples: 500}
+      - {source_id: sapient/qrecc-ii-repaired, patterns: [sapient_qrecc_ii_repaired__], samples: 500}
+      - {source_id: sapient/scibench-repaired, patterns: [sapient_scibench_repaired__], samples: 500}
+      - {source_id: sapient/sudoku-extreme, patterns: [sudoku_extreme__], samples: 500}
+      - {source_id: sapient/synth, patterns: [SYNTH__], samples: 500}
+      - {source_id: sapient/tasksource, patterns: [tasksource__], samples: 500}
+      - {source_id: sapient/textbook-reasoning, patterns: [textbookreasoning__], samples: 500}
+
+  - id: 02_native_tool_agent
+    description: Audit final Gemma-native 4K tool and terminal targets.
+    sources:
+      - source_id: native-tool/nemotron-terminal
+        patterns: [nemotron_terminal_corpus_native__]
+        samples: 100
+        per_task: true
+        minimum_matches: 29
+      - {source_id: native-tool/dolci-repaired, patterns: [dolci_tool_use_repaired__], samples: 1000, minimum_matches: 13}
+      - {source_id: native-tool/glaive, patterns: [glaive_native_tool_use__], samples: 500}
+      - {source_id: native-tool/toolace, patterns: [toolace_native_tool_use__], samples: 500}
+      - {source_id: native-tool/xlam, patterns: [xlam_native_tool_use__], samples: 500}
+      - {source_id: native-tool/deepdive, patterns: [zai_deepdive_trajectories_sft__], samples: 500}
+
+  - id: 03_folketing_error_correction
+    description: Deep accepted-row audit of the weakest Folketing task family.
+    sources:
+      - source_id: folketing/error-correction
+        patterns: [folketingets-dokumenter-error-correction__]
+        samples: 5000
+
+  - id: 04_borderline_danish
+    description: Re-audit one-pass Danish sources before deciding keep, replace, or exclude.
+    sources:
+      - {source_id: danish/tidsskrift-bt, patterns: [oliverkinch_tidsskrift_dk_bt__], samples: 500}
+      - {source_id: danish/eur-lex-bt, patterns: [oliverkinch_eur_lex_bt__], samples: 500}
+      - {source_id: danish/eur-lex-summary, patterns: [oliverkinch_eur_lex_sum_instruct__], samples: 500}
+      - {source_id: danish/dynaword-bt, patterns: [oliverkinch_dynaword_bt__], samples: 500}
+      - {source_id: danish/doab-bt, patterns: [oliverkinch_doab_da_bt__], samples: 500}
+      - {source_id: danish/kaenguruen, patterns: [kaenguruen__], samples: 500}
+      - {source_id: danish/multi-zebra, patterns: [alexandra_multi_zebra__], samples: 500}
+
+  - id: 05_borderline_english
+    description: Task-aware re-audit of retained one-pass English sources.
+    sources:
+      - {source_id: english/asset, patterns: [posttrain_asset__], samples: 500}
+      - {source_id: english/coedit, patterns: [posttrain_coedit__], samples: 500}
+      - {source_id: english/if-sft, patterns: [allenai_if_sft_verified__], samples: 500}
+      - {source_id: english/tulu-personas-math, patterns: [allenai_tulu_3_personas_math__], samples: 1000}
+      - {source_id: english/textbook-reasoning, patterns: [textbookreasoning__], samples: 1000}
+      - {source_id: english/qrecc, patterns: [sapient-synth-flan-dialog-zsopt-data-qrecc__], samples: 500}
+      - {source_id: english/aeslc, patterns: [sapient-synth-flan-flan-fsnoopt-data-aeslc-1.0.0__], samples: 500}
+      - source_id: english/paper-review
+        patterns:
+          - sapient-synth-flan-niv2-fsopt-data-task264-paper-reviews-accept-reject__
+          - sapient-synth-flan-niv2-zsopt-data-task264-paper-reviews-accept-reject__
+        samples: 500
+      - source_id: english/newscomm
+        patterns:
+          - sapient-synth-flan-niv2-fsopt-data-task1374-newscomm-translation__
+          - sapient-synth-flan-niv2-zsopt-data-task1374-newscomm-translation__
+          - sapient-synth-flan-niv2-fsopt-data-task1375-newscomm-translation__
+          - sapient-synth-flan-niv2-zsopt-data-task1375-newscomm-translation__
+          - sapient-synth-flan-niv2-fsopt-data-task1376-newscomm-translation__
+          - sapient-synth-flan-niv2-zsopt-data-task1376-newscomm-translation__
+        samples: 1000
+      - source_id: english/natural-instructions
+        patterns: [posttrain_natural_instructions__]
+        samples: 20
+        per_task: true
+        minimum_matches: 600
+
+  - id: 06_completed_wip_packages
+    description: Final admission audit for packages that are currently work in progress.
+    wait_for_manifest_status: uploaded
+    sources:
+      - {source_id: wip/danish-persona-chats, raw_root: exports_dfm10/dfm10-danish-persona-chats, samples: 1000}
+      - {source_id: wip/mimir-answer-contract, raw_root: exports_dfm10/dfm10-mimir-answer-contract-calibration, samples: 1000}
+      - {source_id: wip/mimir-boolq, raw_root: exports_dfm10/dfm10-mimir-boolq-entailment-sft, samples: 1000}
+      - {source_id: wip/mimir-drop, raw_root: exports_dfm10/dfm10-mimir-drop-reasoning-sft, samples: 1000}
+      - {source_id: wip/mimir-event-coreference, raw_root: exports_dfm10/dfm10-mimir-event-coreference-sft, samples: 1000}
+      - {source_id: wip/mimir-ifeval, raw_root: exports_dfm10/dfm10-mimir-ifeval-verifier-sft, samples: 1000}

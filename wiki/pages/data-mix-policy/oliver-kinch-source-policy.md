@@ -8,7 +8,7 @@ tags:
 - provenance
 - privacy
 status: stable
-last_updated: 2026-08-17
+last_updated: 2026-08-29
 confidence: high
 part_of: /pages/data-mix-policy.md
 ---
@@ -48,3 +48,32 @@ Exclude by default:
 - Small/no-license synthetic/demo datasets (`life-in-the-uk-multiple-choice`, `synthetic-qa`, `synthetic-qa-context-qa`, `mt_da_uk`) unless separately justified.
 
 Confidence: medium for source-card safety; high for local manifest/converter support after `py_compile` and downloader dry-run.
+
+## Tidsskrift.dk local holding, 2026-08-29
+
+**Superseded 2026-08-29:** the initial inspection found the derived
+`oliverkinch/tidsskrift-dk-bt` tree but missed the raw corpus nested under the
+local DynaWord snapshot. The statement that the raw articles were absent must
+not be used for planning.
+
+The repository has both the derived `oliverkinch/tidsskrift-dk-bt` training
+split and the raw corpus at
+`data/downloads/datasets/danish_dynaword/data/tidsskrift-dk/tidsskrift-dk.parquet`.
+The raw parquet contains 4,121 rows and approximately 50.01 million Llama-3
+tokens under CC BY 4.0. The local BT Parquet has
+62,934 prompt/target passages derived from 3,359 distinct source-article rows
+across 13 journals. Its tokenized form contributes 38,334,152 tokens at DFM10
+repeat 1. Source URLs, article titles, journal slugs, and source-row identities
+are retained in each BT row.
+
+The upstream raw dataset card identifies 4,132 currently exposed rows and a
+single `CC BY` license value; its documentation describes 5,699 collected
+articles across 16 journals. The BT card describes 62,934 train plus 6,993 eval
+passages, but the downloader intentionally fetched only `data/train-*.parquet`
+for the BT dataset. The raw DynaWord copy and the BT data substantially overlap
+and must not be counted as independent source content. Preserve article-level
+author/journal attribution in any grounded generation or expanded harvest.
+
+The current DynaWord `tidsskrift-dk` component is sourced from the same Oliver
+Kinch corpus and is not a larger independent Tidsskrift.dk harvest. A future
+expansion must deduplicate by canonical article URL, DOI, and normalized text.

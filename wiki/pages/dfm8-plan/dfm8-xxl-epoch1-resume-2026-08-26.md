@@ -171,6 +171,39 @@ to about 305K--610K optimizer steps at the current GBS. This range is an
 engineering forecast, not a scaling-law guarantee; the custom recurrent depth,
 data changes, and aggressive constant LR can move the crossover.
 
+## Intentional pause at step 175000
+
+Update 2026-08-27: the step-161000 resume point above is superseded for future
+continuations. Scheduler dispatch was soft-stopped, and the exact production
+TorchRun process group was terminated only after
+`fsdp2_ephemeral_step_175000/.metadata` and
+`checkpoint_state_ephemeral_step_175000.json` were fully published. The
+sidecar records step 175000, epoch 1, exact global row cursor 141196506,
+world size 8, local batch size 8192, GAS 4, and `carry_policy=none`. All eight
+GPUs were free after termination.
+
+The existing scheduler plan remains stop-requested. Its
+`campaign-train-200000` row has been reset to pending with attempt zero,
+`resume_from_tag=ephemeral_step_175000`, and log directory
+`logs/training/dfm8_XXL_1epoch/step_175000_to_200000`. No scheduler process is
+running. To continue the established one-node path, clear the stop request and
+restart the existing plan; do not create a replacement campaign.
+
+The training row requests all eight GPUs and requires 178000 MiB effective free
+memory on every GPU, so it will not collide with active DFM10 audit vLLM
+servers. This is a headroom gate, not an audit-completion dependency: an audit
+worker deliberately releases its GPU between retry attempts. Do not rely on
+the gate to order audit finalization before training. For strict ordering,
+start the scheduler only after the audit launcher exits successfully and
+`logs/dfm10_folketing_audit_8gpu_vllm/final_summary.json` exists, or add an
+explicit external-completion guard.
+
+Update 2026-08-28: after the DFM10 audit released the GPUs, the scheduler
+started the prepared continuation. It was intentionally stopped again during
+startup/compilation before producing a newer checkpoint. The scheduler is
+stop-requested with no running process, and `campaign-train-200000` is pending
+at attempt zero, still resuming from authoritative
+`ephemeral_step_175000`.
 ## Mimir resume from step 175000
 
 Update 2026-08-28: the authoritative checkpoint is the fully written

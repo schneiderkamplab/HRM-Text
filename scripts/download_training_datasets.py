@@ -28,6 +28,7 @@ class HFDataset:
     allow_patterns: tuple[str, ...]
     note: str = ""
     gated: bool = False
+    revision: str | None = None
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,54 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         groups=("danish", "danish_continuation", "raw"),
         allow_patterns=("data/**/*.parquet", "README.md", "CHANGELOG.md"),
         note="Raw Danish documents; convert to continuation rows.",
+    ),
+    HFDataset(
+        name="dfm10_elrc_medical",
+        repo_id="qanastek/ELRC-Medical-V2",
+        groups=("dfm10", "danish", "english", "medical", "translation"),
+        allow_patterns=("README.md", "LICENSE", "Sources.md", "csv/en-da.csv"),
+        note=(
+            "CC-BY-4.0 English-Danish medical/public-health parallel text. "
+            "DFM10 filters document artefacts and converts both directions."
+        ),
+        revision="7f5633e7f9903947a9e51ab0e12ff483574aeebf",
+    ),
+    HFDataset(
+        name="dfm10_emea_medical",
+        repo_id="qanastek/EMEA-V3",
+        groups=("dfm10", "danish", "english", "medical", "translation"),
+        allow_patterns=("README.md", "LICENSE", "csv/da-en.csv.gz"),
+        note=(
+            "CC-BY-4.0 OPUS/EMA Danish-English medical parallel text. "
+            "DFM10 converts both directions and deduplicates against ELRC."
+        ),
+        revision="783edb3e7341c61ec455b253654550c6bdbdfa89",
+    ),
+    HFDataset(
+        name="dfm10_ecdc_medical",
+        repo_id="qanastek/ECDC",
+        groups=("dfm10", "danish", "english", "medical", "translation"),
+        allow_patterns=("README.md", "LICENSE", "csv/ECDC.csv.gz"),
+        note=(
+            "EU/ECDC professional public-health translation memory. Its terms "
+            "grant commercial and non-commercial reuse with notice retention."
+        ),
+        revision="30a7e525efbb3094204e7e9a49bc46fd0ec7afb6",
+    ),
+    HFDataset(
+        name="dfm10_nhs_synthetic_clinical_notes",
+        repo_id="NHSEDataScience/synthetic_clinical_notes",
+        groups=("dfm10", "english", "medical", "synthetic"),
+        allow_patterns=(
+            "README.md",
+            "silver/README.md",
+            "silver/synthetic_clinical_notes.csv",
+        ),
+        note=(
+            "MIT-licensed fully synthetic notes. DFM10 uses grounded note "
+            "classification and exact span-reconstruction supervision only."
+        ),
+        revision="368a5bd2a55090a0bae3436f2823d606c5077158",
     ),
     HFDataset(
         name="alexandra_nordjylland_news",
@@ -116,6 +165,95 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         note=(
             "DFM10 uses only the 858 successful SFT search trajectories. "
             "QA/RL splits are excluded; trajectories require native-tool conversion."
+        ),
+    ),
+    HFDataset(
+        name="dfm10_synthetic_values_model_charter",
+        repo_id="danish-foundation-models/synthetic-values-model-charter",
+        groups=("dfm10", "english", "instruction", "alignment", "preference"),
+        allow_patterns=(
+            "README.md",
+            "sft_train.jsonl",
+            "sft_test.jsonl",
+            "dpo_train.jsonl",
+            "dpo_test.jsonl",
+            "scenarios_train.jsonl",
+            "scenarios_test.jsonl",
+            "value_units.jsonl",
+        ),
+        note=(
+            "DFM10 includes both nominal SFT splits; both DPO splits remain in "
+            "a separate preference export. Based on model-charter commit "
+            "e60e41aad338c6261cc21f926847b3ab77ff4226."
+        ),
+    ),
+    HFDataset(
+        name="dfm10_synthetic_values_model_charter_da",
+        repo_id="schneiderkamplab/dfm10-synthetic-values-model-charter-da",
+        groups=("dfm10", "danish", "instruction", "alignment", "preference"),
+        allow_patterns=("README.md", "LICENSE.md", "data/**/*", "metadata/**/*", "recreate_dataset.py"),
+        note="Audited Danish SFT/DPO adaptation; DFM10 SFT uses accepted chosen responses at repeat 10.",
+    ),
+    HFDataset(
+        name="dfm10_bornholmsk_parallel",
+        repo_id="strombergnlp/bornholmsk_parallel",
+        groups=("dfm10", "danish", "translation", "dialect"),
+        allow_patterns=("README.md", "bornholmsk_parallel.py", "dataset_infos.json"),
+        note=(
+            "DFM10 includes train, validation, and test in both translation directions. "
+            "The converter fetches the six raw files from the immutable upstream revision "
+            "pinned by the dataset loader."
+        ),
+        revision="3bc5cfb4ec514264fe2db5615fac9016f7251552",
+    ),
+    HFDataset(
+        name="ra_diem_htr",
+        repo_id="RA-Data-Science/DiEm_HTR",
+        groups=("dfm10", "danish", "historical", "modernization"),
+        allow_patterns=("README.md", "dataset_info.json", "data/DiEm_GT_HTR.parquet"),
+        note=(
+            "Historical Danish ALTO transcriptions. DFM10 admits only independently "
+            "audited Gemma 4 31B modernization targets, never the page images as text SFT."
+        ),
+        revision="6984292ba5992f039ea8a90b3f0fce709ad63093",
+    ),
+    HFDataset(
+        name="dfm10_danish_book_ads",
+        repo_id="chcaa/danish-book-ads",
+        groups=("dfm10", "danish", "historical", "bibliographic"),
+        allow_patterns=("README.md", "data/train-*.parquet"),
+        note=(
+            "Historical book advertisements. DFM10 admits only grounded, checked "
+            "extraction/classification targets after overlap and quality auditing."
+        ),
+        revision="0dd49411c8922bbcd4da60b147b0d7b4fa422f58",
+    ),
+    HFDataset(
+        name="dfm10_croco_munin_da_50k_candidate",
+        repo_id="danish-foundation-models/croco-munin-apertus-8b-da-50k",
+        groups=("audit_candidate", "danish", "instruction", "alignment", "preference_candidate"),
+        allow_patterns=("README.md", "preference_pairs.jsonl"),
+        note=(
+            "Excluded from DFM10 after overlap audit: only seven prompts were "
+            "absent from the active croco-munin-apertus-8b-da-simpo-full-50k."
+        ),
+    ),
+    HFDataset(
+        name="dfm10_danish_personas_seed",
+        repo_id="oliverkinch/danish-personas",
+        groups=("dfm10", "danish", "synthetic_seed"),
+        allow_patterns=("README.md", "data/train-*.parquet"),
+        note="Generation seed only; persona rows are never tokenized directly.",
+    ),
+    HFDataset(
+        name="dfm10_domsdatabasen",
+        repo_id="alexandrainst/domsdatabasen",
+        groups=("dfm10", "danish", "legal", "grounding_source"),
+        allow_patterns=("README.md", "data/train-*.parquet"),
+        note=(
+            "Grounding source only. DFM10 uses non-empty pseudonymized text for "
+            "generated and audited legal conversations; judgments are never "
+            "admitted as raw continuation data."
         ),
     ),
 
@@ -319,6 +457,13 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         note="Backtranslation from Danmarks Statistik CC-BY-4.0 publications.",
     ),
     HFDataset(
+        name="oliverkinch_danmarks_statistik",
+        repo_id="oliverkinch/danmarks-statistik",
+        groups=("danish", "grounding_source", "dfm10"),
+        allow_patterns=("data/train-*.parquet", "README.md"),
+        note="Source metadata and passages used with live DST URLs to recover rejected BT rows.",
+    ),
+    HFDataset(
         name="oliverkinch_tidsskrift_dk_bt",
         repo_id="oliverkinch/tidsskrift-dk-bt",
         groups=("danish", "instruction", "backtranslation"),
@@ -338,6 +483,13 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         groups=("danish", "instruction", "backtranslation"),
         allow_patterns=("data/train-*.parquet", "README.md"),
         note="Backtranslation from Danish university portal publications; source card says CC-BY-only material.",
+    ),
+    HFDataset(
+        name="oliverkinch_danish_university_portals",
+        repo_id="oliverkinch/danish-university-portals",
+        groups=("dfm10_repair_support", "danish", "source_documents"),
+        allow_patterns=("data/train-*.parquet", "README.md"),
+        note="Authoritative CC-BY full documents used to recover and audit truncated university-portals BT targets.",
     ),
     HFDataset(
         name="oliverkinch_eur_lex_bt",
@@ -692,9 +844,10 @@ HF_DATASETS: tuple[HFDataset, ...] = (
     ),
     HFDataset(
         name="allenai_code_meta_reasoning",
-        repo_id="allenai/code-meta-reasoning-cleaned-final-string-id",
-        groups=("allenai", "code_agentic", "reasoning"),
+        repo_id="allenai/code-meta-reasoning-filtered",
+        groups=("allenai", "code_agentic", "reasoning", "dfm10"),
         allow_patterns=("data/train-*.parquet", "README.md"),
+        note="Structured source used by the DFM10 repair; retains prompt family, question, generation prompt, and response boundaries.",
     ),
     HFDataset(
         name="allenai_open_math_2_50k_r1",
@@ -886,7 +1039,13 @@ def format_bytes(value: int | None) -> str:
 
 
 def matching_size(api: HfApi, dataset: HFDataset, token: str | None, revision: str | None) -> tuple[int, int]:
-    info = api.dataset_info(dataset.repo_id, revision=revision, files_metadata=True, token=token)
+    effective_revision = revision or dataset.revision
+    info = api.dataset_info(
+        dataset.repo_id,
+        revision=effective_revision,
+        files_metadata=True,
+        token=token,
+    )
     siblings = info.siblings or []
 
     # Reuse the hub's own pattern matching by doing a cheap metadata-side
@@ -974,7 +1133,7 @@ def download_hf_dataset(args: argparse.Namespace, dataset: HFDataset) -> None:
     snapshot_download(
         dataset.repo_id,
         repo_type="dataset",
-        revision=args.revision,
+        revision=args.revision or dataset.revision,
         local_dir=target,
         allow_patterns=list(dataset.allow_patterns),
         token=token,

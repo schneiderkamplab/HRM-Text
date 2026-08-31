@@ -1,0 +1,51 @@
+{
+  "version": "mimir_grounded_500k_sft_v1_20260829",
+  "language": "en",
+  "teacher_model": "google/gemma-4-31B-it-fresh-20260604",
+  "judge_model": "google/gemma-4-31B-it-fresh-20260604",
+  "target_per_category": 100000,
+  "candidate_per_category": 130000,
+  "shards": 640,
+  "max_training_tokens": 4096,
+  "categories": {
+    "technical_stem": {
+      "source": "data/mimir_grounded_500k/source_passages/technical_stem.jsonl",
+      "task_variants": ["conceptual_explanation", "worked_derivation", "misconception_correction", "quantitative_application", "cross_context_transfer"]
+    },
+    "professional_domains": {
+      "source": "data/mimir_grounded_500k/source_passages/professional_domains.jsonl",
+      "task_variants": ["applied_case", "rule_application", "evidence_interpretation", "scope_and_exception", "decision_explanation"]
+    },
+    "compositional_reasoning": {
+      "source": "data/mimir_grounded_500k/source_passages/compositional_reasoning.jsonl",
+      "task_variants": ["multi_constraint", "ordering", "counterfactual", "classification", "logical_deduction"]
+    },
+    "grounded_factual_qa": {
+      "source": "data/mimir_grounded_500k/source_passages/grounded_factual_qa.jsonl",
+      "task_variants": ["short_answer", "alias_aware", "temporal_scope", "multi_fact", "answerability"]
+    },
+    "mcq_answer_contract": {
+      "sources": [
+        "data/mimir_grounded_500k/source_passages/technical_stem.jsonl",
+        "data/mimir_grounded_500k/source_passages/professional_domains.jsonl",
+        "data/mimir_grounded_500k/source_passages/compositional_reasoning.jsonl",
+        "data/mimir_grounded_500k/source_passages/grounded_factual_qa.jsonl"
+      ],
+      "task_variants": ["concept", "application", "misconception", "rule_selection", "transfer"]
+    }
+  },
+  "acceptance": {
+    "minimum_judge_score": 4,
+    "require_source_support": true,
+    "require_standalone_prompt": true,
+    "require_exact_category_quotas": true,
+    "keep_all_accepted_rows": true,
+    "additional_accepted_targets": {
+      "technical_stem": 100000
+    },
+    "require_benchmark_decontamination": true,
+    "decontamination_mode": "normalized_exact_only",
+    "mcq_option_count": 4,
+    "mcq_answer_positions_balanced": true
+  }
+}

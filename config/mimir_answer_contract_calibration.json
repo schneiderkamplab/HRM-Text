@@ -1,0 +1,16 @@
+{
+  "version": "mimir_answer_contract_calibration_v1_20260830",
+  "seed": 20260830,
+  "source": "data/mimir_grounded_500k_sft/accepted/mimir_grounded_expanded_sft.jsonl",
+  "output_root": "data/mimir_answer_contract_calibration",
+  "target_rows": 150000,
+  "quotas": {
+    "selection_label": 67368,
+    "binary_or_semantic_label": 30000,
+    "short_exact_answer": 22632,
+    "reason_then_final": 15000,
+    "structured_payload": 15000
+  },
+  "audit_samples": 1600,
+  "audit_shards": 8
+}

@@ -15,6 +15,37 @@ from transformers import AutoTokenizer
 
 from simple_inference_engine import inference_load_checkpoint, inference_generate
 
+
+DEFAULT_GEMMA_CHAT_TEMPLATE = Path(__file__).parent / "chat_templates" / "gemma4_native_chat.jinja"
+
+
+def _atomic_token_id(tokenizer, token: str) -> int | None:
+    """Return the token ID only when ``token`` is represented atomically."""
+    token_ids = tokenizer(
+        token,
+        return_attention_mask=False,
+        add_special_tokens=False,
+    )["input_ids"]
+    if len(token_ids) != 1:
+        return None
+    return int(token_ids[0])
+
+
+def _hrm_marker_ids(tokenizer) -> dict[str, int] | None:
+    markers = (
+        "<|im_start|>",
+        "<|im_end|>",
+        "<|box_end|>",
+        "<|object_ref_start|>",
+        "<|object_ref_end|>",
+        "<|quad_start|>",
+        "<|quad_end|>",
+    )
+    resolved = {marker: _atomic_token_id(tokenizer, marker) for marker in markers}
+    if any(token_id is None for token_id in resolved.values()):
+        return None
+    return {marker: int(token_id) for marker, token_id in resolved.items()}
+
 class BaseEngine:
     def generate(self, prompts: list[str]) -> list[str]:
         raise NotImplementedError
@@ -22,7 +53,6 @@ class BaseEngine:
 class VLLMEngine(BaseEngine):
     HRM_BOQ = "<|im_start|>"
     HRM_EOQ = "<|im_end|>"
-    HRM_EOA_ID = 11
     HRM_CONDITION_MAPPING = {
         "direct": "<|object_ref_start|>",
         "cot": "<|object_ref_end|>",
@@ -37,17 +67,44 @@ class VLLMEngine(BaseEngine):
         chat_template_path: str | None = None,
         **kwargs,
     ):
-        if prompt_mode not in {"raw", "hrm", "hrm_tokens", "gemma_chat"}:
+        if prompt_mode not in {"raw", "auto", "hrm", "hrm_tokens", "gemma_chat"}:
             raise ValueError(
                 f"Unsupported VLLMEngine prompt_mode={prompt_mode!r}; "
-                "expected raw, hrm, hrm_tokens, or gemma_chat"
+                "expected raw, auto, hrm, hrm_tokens, or gemma_chat"
             )
         self.prompt_mode = prompt_mode
         self.tokenizer = None
         self.chat_template = None
-        if prompt_mode in {"hrm_tokens", "gemma_chat"}:
+        self.hrm_eoa_id = None
+        if prompt_mode in {"auto", "hrm", "hrm_tokens", "gemma_chat"}:
             self.tokenizer = AutoTokenizer.from_pretrained(ckpt_path, use_fast=True)
-        if prompt_mode == "gemma_chat":
+
+        if prompt_mode == "auto":
+            assert self.tokenizer is not None
+            if _hrm_marker_ids(self.tokenizer) is not None:
+                self.prompt_mode = "hrm_tokens"
+            elif self.tokenizer.eos_token == "<turn|>":
+                self.prompt_mode = "gemma_chat"
+                chat_template_path = chat_template_path or str(DEFAULT_GEMMA_CHAT_TEMPLATE)
+            else:
+                raise ValueError(
+                    "Could not infer a safe prompt mode from the checkpoint tokenizer. "
+                    "Specify prompt_mode and its matching chat template explicitly."
+                )
+
+        if self.prompt_mode in {"hrm", "hrm_tokens"}:
+            assert self.tokenizer is not None
+            marker_ids = _hrm_marker_ids(self.tokenizer)
+            if marker_ids is None:
+                raise ValueError(
+                    f"prompt_mode={self.prompt_mode!r} requires an HRM tokenizer with "
+                    "atomic <|im_start|>, condition, <|im_end|>, and <|box_end|> markers. "
+                    "This checkpoint does not have that tokenizer; use prompt_mode='gemma_chat' "
+                    "with the checkpoint's training chat template."
+                )
+            self.hrm_eoa_id = marker_ids["<|box_end|>"]
+
+        if self.prompt_mode == "gemma_chat":
             if chat_template_path is None:
                 raise ValueError("VLLMEngine prompt_mode='gemma_chat' requires chat_template_path")
             self.chat_template = jinja2.Environment().from_string(Path(chat_template_path).read_text())
@@ -88,7 +145,8 @@ class VLLMEngine(BaseEngine):
         if self.prompt_mode in {"hrm", "hrm_tokens"}:
             prompts = [self._format_hrm_prompt(prompt, condition) for prompt in prompts]
             if stop_token_ids is None:
-                stop_token_ids = [self.HRM_EOA_ID]
+                assert self.hrm_eoa_id is not None
+                stop_token_ids = [self.hrm_eoa_id]
         elif self.prompt_mode == "gemma_chat":
             prompts = [self._format_gemma_chat_prompt(prompt) for prompt in prompts]
 

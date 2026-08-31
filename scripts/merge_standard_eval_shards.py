@@ -44,6 +44,9 @@ def parse_metrics(path: Path, benchmark: str) -> dict[str, float]:
 
 def compute_merged(paths: list[Path], benchmark: str) -> dict[str, float]:
     parsed = [parse_metrics(path, benchmark) for path in paths]
+    if benchmark == "MMLU":
+        return compute_merged_mmlu(parsed)
+
     total_n = int(sum(int(metrics["n"]) for metrics in parsed))
     if total_n <= 0:
         raise ValueError(f"No {benchmark} samples found.")
@@ -61,6 +64,39 @@ def compute_merged(paths: list[Path], benchmark: str) -> dict[str, float]:
             denom += n
         if denom:
             merged[key] = numer / denom
+    return merged
+
+
+def compute_merged_mmlu(parsed: list[dict[str, float]]) -> dict[str, float]:
+    """Merge MMLU by subject rather than treating its macro ``n`` as samples."""
+    subjects = sorted(
+        key.removeprefix("n_")
+        for metrics in parsed
+        for key in metrics
+        if key.startswith("n_")
+    )
+    subjects = sorted(set(subjects))
+    if not subjects:
+        raise ValueError("No MMLU subject metrics found.")
+
+    merged: dict[str, float] = {"n": float(len(subjects))}
+    for subject in subjects:
+        n_key = f"n_{subject}"
+        total_n = int(sum(int(metrics.get(n_key, 0)) for metrics in parsed))
+        if total_n <= 0:
+            raise ValueError(f"No MMLU samples found for subject {subject!r}.")
+        merged[n_key] = float(total_n)
+        for prefix in ("acc", "invalid"):
+            key = f"{prefix}_{subject}"
+            numerator = sum(
+                metrics[key] * int(metrics.get(n_key, 0))
+                for metrics in parsed
+                if key in metrics
+            )
+            merged[key] = numerator / total_n
+
+    for prefix in ("acc", "invalid"):
+        merged[prefix] = sum(merged[f"{prefix}_{subject}"] for subject in subjects) / len(subjects)
     return merged
 
 

@@ -34,6 +34,17 @@ def parse_args() -> argparse.Namespace:
         default="HF_TOKEN",
         help="Environment variable containing a Hugging Face write token.",
     )
+    parser.add_argument(
+        "--large-folder",
+        action="store_true",
+        help="Use the resumable large-folder uploader for each dataset.",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help="Parallel upload workers used with --large-folder.",
+    )
     return parser.parse_args()
 
 
@@ -75,19 +86,28 @@ def main() -> None:
 
             print(f"UPLOAD {repo_id}", flush=True)
             log.write(f"[{datetime.now().isoformat()}] UPLOAD {repo_id}\n")
-            info = api.upload_folder(
-                repo_id=repo_id,
-                repo_type="dataset",
-                folder_path=str(folder),
-                commit_message="Upload dataset export package",
-                token=token,
-                ignore_patterns=["__pycache__/*", "*.pyc"],
-            )
-            print(f"DONE {repo_id} {info.commit_url}", flush=True)
-            log.write(
-                f"[{datetime.now().isoformat()}] DONE {repo_id} "
-                f"{info.commit_url}\n"
-            )
+            if args.large_folder:
+                api.upload_large_folder(
+                    repo_id=repo_id,
+                    repo_type="dataset",
+                    folder_path=str(folder),
+                    num_workers=max(1, args.workers),
+                    ignore_patterns=["__pycache__/*", "*.pyc"],
+                    print_report_every=60,
+                )
+                commit_url = f"https://huggingface.co/datasets/{repo_id}/commits/main"
+            else:
+                info = api.upload_folder(
+                    repo_id=repo_id,
+                    repo_type="dataset",
+                    folder_path=str(folder),
+                    commit_message="Upload dataset export package",
+                    token=token,
+                    ignore_patterns=["__pycache__/*", "*.pyc"],
+                )
+                commit_url = info.commit_url
+            print(f"DONE {repo_id} {commit_url}", flush=True)
+            log.write(f"[{datetime.now().isoformat()}] DONE {repo_id} {commit_url}\n")
 
 
 if __name__ == "__main__":

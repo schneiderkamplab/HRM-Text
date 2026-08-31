@@ -1,5 +1,7 @@
 path: data/sampled_dfm10
 target_only: true
 
-# DFM9 plus Andersen Danish modernization training data (repeat 20).
+# DFM9 plus DFM10 Danish, English, reasoning, tool-use, and repaired sources.
+# Bornholmsk uses all three official splits bidirectionally; DiEm is admitted
+# only after teacher generation and independent row-level audit.
 # See wiki/pages/dfm10-plan.md.

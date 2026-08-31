@@ -1,0 +1,18 @@
+{
+  "version": "mimir_exact_decontamination_v1_20260829",
+  "benchmarks": [
+    {"name": "MMLU", "path": "cais/mmlu", "config": "all", "split": "test", "fields": ["question"]},
+    {"name": "MMLU-Pro", "path": "TIGER-Lab/MMLU-Pro", "config": "default", "split": "test", "fields": ["question"]},
+    {"name": "GSM8K", "path": "gsm8k", "config": "main", "split": "test", "fields": ["question"]},
+    {"name": "HellaSwag", "path": "Rowan/hellaswag", "split": "validation", "fields": ["ctx"]},
+    {"name": "Winogrande", "path": "allenai/winogrande", "config": "winogrande_debiased", "split": "validation", "fields": ["sentence"]},
+    {"name": "BoolQ", "path": "google/boolq", "split": "validation", "fields": ["question"]},
+    {"name": "ARC-Challenge", "path": "allenai/ai2_arc", "config": "ARC-Challenge", "split": "test", "fields": ["question"]},
+    {
+      "name": "PIQA",
+      "archive_url": "https://storage.googleapis.com/ai2-mosaic/public/physicaliqa/physicaliqa-train-dev.zip",
+      "archive_member": "physicaliqa-train-dev/dev.jsonl",
+      "fields": ["goal"]
+    }
+  ]
+}

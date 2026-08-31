@@ -32,6 +32,8 @@ WORKER_OUTPUT_DIR: Path | None = None
 WORKER_FORCE = False
 WORKER_ENABLE_THINKING = False
 WORKER_SKIP_BAD_JSON = False
+WORKER_MAX_SEQ_LEN: int | None = None
+WORKER_PRESERVE_FIRST_USER = False
 
 
 @dataclass
@@ -60,6 +62,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--enable-thinking", action="store_true")
     parser.add_argument("--skip-bad-json", action="store_true")
     parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument(
+        "--max-seq-len",
+        type=int,
+        default=None,
+        help="Drop complete older chat messages until prompt plus target fits; drop targets that still do not fit.",
+    )
+    parser.add_argument(
+        "--preserve-first-user",
+        action="store_true",
+        help="Pin the first user request when older turns are windowed (for terminal-style trajectories).",
+    )
     return parser.parse_args()
 
 
@@ -230,15 +243,22 @@ def tools_from_messages(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return []
 
 
-def examples_from_messages(messages: list[dict[str, Any]], tools: list[dict[str, Any]] | None = None) -> Iterable[Example]:
+def examples_from_messages(
+    messages: list[dict[str, Any]],
+    tools: list[dict[str, Any]] | None = None,
+    target_message_index: int | None = None,
+) -> Iterable[Example]:
     history: list[dict[str, Any]] = []
     example_tools = tools if tools is not None else tools_from_messages(messages)
-    for raw in messages:
+    if target_message_index is not None and not 0 <= target_message_index < len(messages):
+        raise ValueError(f"target_message_index={target_message_index} is outside {len(messages)} messages")
+    for message_index, raw in enumerate(messages):
         message = normalize_message(raw)
         role = str(message.get("role", "")).lower()
         content = message.get("content", "")
         has_tool_calls = bool(message.get("tool_calls"))
-        if role == "assistant" and ((isinstance(content, str) and content.strip()) or has_tool_calls):
+        selected = target_message_index is None or message_index == target_message_index
+        if selected and role == "assistant" and ((isinstance(content, str) and content.strip()) or has_tool_calls):
             yield Example(
                 prompt_messages=[dict(m) for m in history],
                 assistant_message=message,
@@ -280,7 +300,12 @@ def read_jsonl(path: Path) -> Iterable[Example]:
                 )
             elif isinstance(row.get("messages"), list):
                 tools = row.get("tools") if isinstance(row.get("tools"), list) else None
-                yield from examples_from_messages(row["messages"], tools)
+                target_index = row.get("target_message_index")
+                yield from examples_from_messages(
+                    row["messages"],
+                    tools,
+                    int(target_index) if target_index is not None else None,
+                )
             else:
                 example = generic_row_to_messages(row)
                 if example is None:
@@ -302,6 +327,8 @@ def read_parquet(path: Path) -> Iterable[Example]:
         columns = ["messages"]
         if "tools" in names:
             columns.append("tools")
+        if "target_message_index" in names:
+            columns.append("target_message_index")
     else:
         generic_columns = [
             "instruction",
@@ -325,7 +352,10 @@ def read_parquet(path: Path) -> Iterable[Example]:
         ]
         columns = [column for column in generic_columns if column in names] or None
 
-    for batch in parquet_file.iter_batches(columns=columns):
+    # PyArrow can fail when its 65,536-row default combines nested list/struct
+    # columns across Parquet row groups. A bounded batch keeps native message
+    # columns as supported arrays and also limits peak conversion memory.
+    for batch in parquet_file.iter_batches(batch_size=4096, columns=columns):
         names = set(batch.schema.names)
         rows = batch.to_pylist()
         if {"condition", "instruction", "response"}.issubset(names):
@@ -340,7 +370,12 @@ def read_parquet(path: Path) -> Iterable[Example]:
                 messages = row.get("messages")
                 if isinstance(messages, list):
                     tools = row.get("tools")
-                    yield from examples_from_messages(messages, tools if isinstance(tools, list) else None)
+                    target_index = row.get("target_message_index")
+                    yield from examples_from_messages(
+                        messages,
+                        tools if isinstance(tools, list) else None,
+                        int(target_index) if target_index is not None else None,
+                    )
         else:
             for row in rows:
                 example = generic_row_to_messages(row)
@@ -379,27 +414,127 @@ def tokenize_example(
     template: jinja2.Template,
     example: Example,
     enable_thinking: bool,
+    max_seq_len: int | None = None,
+    preserve_first_user: bool = False,
 ) -> tuple[list[int], list[int]] | None:
-    if not example.prompt_messages:
+    def encode(prompt_messages: list[dict[str, Any]]) -> tuple[list[int], list[int]] | None:
+        if not prompt_messages:
+            return None
+        prompt_text = render(template, prompt_messages, example.tools, True, enable_thinking)
+        full_text = render(
+            template,
+            prompt_messages + [example.assistant_message],
+            example.tools,
+            False,
+            enable_thinking,
+        )
+        prompt_ids = tokenizer.encode(prompt_text, add_special_tokens=False).ids
+        full_ids = tokenizer.encode(full_text, add_special_tokens=False).ids
+        if full_ids[: len(prompt_ids)] != prompt_ids:
+            return None
+        response_ids = full_ids[len(prompt_ids) :]
+        if not prompt_ids or len(response_ids) < 2:
+            return None
+        return prompt_ids, response_ids
+
+    encoded = encode(example.prompt_messages)
+    if encoded is None or max_seq_len is None or sum(map(len, encoded)) <= max_seq_len:
+        return encoded
+
+    # Preserve native roles and the newest causal context. A leading system
+    # message is pinned; older turns are removed only at complete user-message
+    # boundaries. Never truncate the target assistant response.
+    history = example.prompt_messages
+    pinned_system = history[:1] if history[0].get("role") in {"system", "developer"} else []
+    first_user = next(
+        (index for index, message in enumerate(history) if message.get("role") == "user"),
+        None,
+    )
+    starts = [
+        index
+        for index in range(1 if pinned_system else 0, len(history))
+        if history[index].get("role") == "user"
+    ]
+    best: tuple[list[int], list[int]] | None = None
+    low, high = 0, len(starts) - 1
+    while low <= high:
+        middle = (low + high) // 2
+        start = starts[middle]
+        anchor = (
+            [history[first_user]]
+            if preserve_first_user and first_user is not None and start != first_user
+            else []
+        )
+        candidate = pinned_system + anchor + history[start:]
+        candidate_encoded = encode(candidate)
+        if (
+            candidate_encoded is not None
+            and sum(map(len, candidate_encoded)) <= max_seq_len
+        ):
+            best = candidate_encoded
+            high = middle - 1
+        else:
+            low = middle + 1
+    if best is not None:
+        return best
+
+    # Agent trajectories often contain one user request followed by many
+    # assistant-call/tool-result pairs. Preserve that request and trim only
+    # complete older call/result groups, beginning the retained suffix at an
+    # assistant call whose predecessor was a tool result.
+    user_indices = [
+        index for index, message in enumerate(history) if message.get("role") == "user"
+    ]
+    if not user_indices or not any(message.get("role") == "tool" for message in history):
         return None
-    prompt_text = render(template, example.prompt_messages, example.tools, True, enable_thinking)
-    full_text = render(template, example.prompt_messages + [example.assistant_message], example.tools, False, enable_thinking)
-    prompt_ids = tokenizer.encode(prompt_text, add_special_tokens=False).ids
-    full_ids = tokenizer.encode(full_text, add_special_tokens=False).ids
-    if full_ids[: len(prompt_ids)] != prompt_ids:
-        return None
-    response_ids = full_ids[len(prompt_ids) :]
-    if not prompt_ids or len(response_ids) < 2:
-        return None
-    return prompt_ids, response_ids
+    latest_user = user_indices[-1]
+    tool_cycle_starts = [
+        index
+        for index in range(latest_user + 1, len(history))
+        if history[index].get("role") == "assistant"
+        and history[index - 1].get("role") == "tool"
+    ]
+    low, high = 0, len(tool_cycle_starts) - 1
+    while low <= high:
+        middle = (low + high) // 2
+        candidate = (
+            pinned_system
+            + [history[latest_user]]
+            + history[tool_cycle_starts[middle] :]
+        )
+        candidate_encoded = encode(candidate)
+        if (
+            candidate_encoded is not None
+            and sum(map(len, candidate_encoded)) <= max_seq_len
+        ):
+            best = candidate_encoded
+            high = middle - 1
+        else:
+            low = middle + 1
+    return best
 
 
-def current_metadata(path: Path) -> dict[str, int]:
+def current_metadata(
+    path: Path,
+    max_seq_len: int | None = None,
+    preserve_first_user: bool = False,
+) -> dict[str, int | bool | None]:
     stat = path.stat()
-    return {"source_mtime": int(stat.st_mtime), "source_size": stat.st_size}
+    return {
+        "source_mtime": int(stat.st_mtime),
+        "source_size": stat.st_size,
+        "max_seq_len": max_seq_len,
+        "preserve_first_user": preserve_first_user,
+    }
 
 
-def should_process(input_path: Path, output_subdir: Path, force: bool) -> bool:
+def should_process(
+    input_path: Path,
+    output_subdir: Path,
+    force: bool,
+    max_seq_len: int | None,
+    preserve_first_user: bool,
+) -> bool:
     if force:
         return True
     meta_path = output_subdir / "metadata.json"
@@ -409,7 +544,7 @@ def should_process(input_path: Path, output_subdir: Path, force: bool) -> bool:
         cached = json.loads(meta_path.read_text())
     except json.JSONDecodeError:
         return True
-    return cached != current_metadata(input_path)
+    return cached != current_metadata(input_path, max_seq_len, preserve_first_user)
 
 
 def process_file(
@@ -419,9 +554,17 @@ def process_file(
     template: jinja2.Template,
     force: bool,
     enable_thinking: bool,
+    max_seq_len: int | None,
+    preserve_first_user: bool,
 ) -> tuple[str, int, int]:
     out = output_dir / found.safe_name
-    if not should_process(found.path, out, force):
+    if not should_process(
+        found.path,
+        out,
+        force,
+        max_seq_len,
+        preserve_first_user,
+    ):
         return found.safe_name, 0, 0
     if out.exists():
         shutil.rmtree(out)
@@ -434,7 +577,14 @@ def process_file(
     skipped = 0
 
     for example in read_examples(found.path):
-        encoded = tokenize_example(tokenizer, template, example, enable_thinking)
+        encoded = tokenize_example(
+            tokenizer,
+            template,
+            example,
+            enable_thinking,
+            max_seq_len=max_seq_len,
+            preserve_first_user=preserve_first_user,
+        )
         if encoded is None:
             skipped += 1
             continue
@@ -452,7 +602,12 @@ def process_file(
     np.save(out / "inst_len.npy", np.asarray(inst_len, dtype=np.uint64))
     np.save(out / "resp_start.npy", np.asarray(resp_start, dtype=np.uint64))
     np.save(out / "resp_len.npy", np.asarray(resp_len, dtype=np.uint64))
-    (out / "metadata.json").write_text(json.dumps(current_metadata(found.path), sort_keys=True))
+    (out / "metadata.json").write_text(
+        json.dumps(
+            current_metadata(found.path, max_seq_len, preserve_first_user),
+            sort_keys=True,
+        )
+    )
     return found.safe_name, len(inst_start), skipped
 
 
@@ -463,8 +618,10 @@ def init_worker(
     force: bool,
     enable_thinking: bool,
     skip_bad_json: bool,
+    max_seq_len: int | None,
+    preserve_first_user: bool,
 ) -> None:
-    global WORKER_TOKENIZER, WORKER_TEMPLATE, WORKER_OUTPUT_DIR, WORKER_FORCE, WORKER_ENABLE_THINKING, WORKER_SKIP_BAD_JSON
+    global WORKER_TOKENIZER, WORKER_TEMPLATE, WORKER_OUTPUT_DIR, WORKER_FORCE, WORKER_ENABLE_THINKING, WORKER_SKIP_BAD_JSON, WORKER_MAX_SEQ_LEN, WORKER_PRESERVE_FIRST_USER
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     WORKER_TOKENIZER = Tokenizer.from_file(tokenizer_path)
     WORKER_TEMPLATE = jinja2.Environment().from_string(Path(chat_template_path).read_text())
@@ -472,6 +629,8 @@ def init_worker(
     WORKER_FORCE = force
     WORKER_ENABLE_THINKING = enable_thinking
     WORKER_SKIP_BAD_JSON = skip_bad_json
+    WORKER_MAX_SEQ_LEN = max_seq_len
+    WORKER_PRESERVE_FIRST_USER = preserve_first_user
 
 
 def process_file_worker(found: FoundFile) -> tuple[str, int, int]:
@@ -485,6 +644,8 @@ def process_file_worker(found: FoundFile) -> tuple[str, int, int]:
         WORKER_TEMPLATE,
         WORKER_FORCE,
         WORKER_ENABLE_THINKING,
+        WORKER_MAX_SEQ_LEN,
+        WORKER_PRESERVE_FIRST_USER,
     )
 
 
@@ -496,6 +657,8 @@ def main() -> None:
     tokenizer = Tokenizer.from_file(str(args.tokenizer_path))
     template = jinja2.Environment().from_string(args.chat_template.read_text())
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    completion_path = args.output_dir / "completion.json"
+    completion_path.unlink(missing_ok=True)
     repo_root = Path(__file__).resolve().parents[1]
     tokenizer_info = {
         # Metadata is consumed from the repository working directory. Keep it
@@ -509,6 +672,16 @@ def main() -> None:
         "vocab_size": tokenizer.get_vocab_size(with_added_tokens=True),
     }
     (args.output_dir / "tokenizer_info.json").write_text(json.dumps(tokenizer_info, indent=2, sort_keys=True))
+    (args.output_dir / "processing_info.json").write_text(
+        json.dumps(
+            {
+                "max_seq_len": args.max_seq_len,
+                "preserve_first_user": args.preserve_first_user,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
 
     files = scan_inputs(args.dirs)
     start = time.time()
@@ -523,6 +696,8 @@ def main() -> None:
                 template,
                 args.force,
                 args.enable_thinking,
+                args.max_seq_len,
+                args.preserve_first_user,
             )
             rows += file_rows
             skipped += file_skipped
@@ -537,6 +712,8 @@ def main() -> None:
                 args.force,
                 args.enable_thinking,
                 args.skip_bad_json,
+                args.max_seq_len,
+                args.preserve_first_user,
             ),
         ) as executor:
             futures = [executor.submit(process_file_worker, found) for found in files]
@@ -544,7 +721,42 @@ def main() -> None:
                 _, file_rows, file_skipped = future.result()
                 rows += file_rows
                 skipped += file_skipped
-    print(json.dumps({"files": len(files), "rows": rows, "skipped_rows": skipped, "seconds": round(time.time() - start, 1)}, indent=2))
+    incomplete_files = [
+        found.safe_name
+        for found in files
+        if not (args.output_dir / found.safe_name / "metadata.json").is_file()
+        or not (args.output_dir / found.safe_name / "resp_len.npy").is_file()
+    ]
+    if incomplete_files:
+        raise RuntimeError(
+            "tokenization finished without complete outputs for: "
+            + ", ".join(incomplete_files[:10])
+        )
+    materialized_rows = sum(
+        int(
+            np.load(
+                args.output_dir / found.safe_name / "resp_len.npy",
+                mmap_mode="r",
+            ).shape[0]
+        )
+        for found in files
+    )
+    summary = {
+        "files": len(files),
+        "rows": materialized_rows,
+        "rows_written_this_run": rows,
+        "skipped_rows_this_run": skipped,
+        "seconds": round(time.time() - start, 1),
+        "max_seq_len": args.max_seq_len,
+        "preserve_first_user": args.preserve_first_user,
+    }
+    temporary_completion = completion_path.with_suffix(".json.tmp")
+    temporary_completion.write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    temporary_completion.replace(completion_path)
+    print(json.dumps(summary, indent=2))
 
 
 if __name__ == "__main__":

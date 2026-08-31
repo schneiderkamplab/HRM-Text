@@ -8,13 +8,29 @@ tags:
 - evaluation
 - runtime
 status: stable
-last_updated: 2026-08-27
+last_updated: 2026-08-30
 confidence: high
 part_of: /pages/current-state.md
 ---
 # Data State
 
 Part of [Current State](/pages/current-state.md).
+
+## 2026-08-30 Current DFM10 sample
+
+**Superseded:** the 2026-08-29 snapshot had 15,689 tasks, 229,097,054 rows and
+101,731,426,509 tokens per epoch.
+
+The current repaired DFM10 union and ten-epoch production sample are complete.
+The sampler consumed 15,737 tokenized task directories. `data/sampled_dfm10`
+contains ten complete epoch index sets with 232,138,339 rows apiece; metadata
+reports 103,143,215,009 tokens per epoch at a 4,097-token maximum sequence
+length. The backing array contains 212,996,621,848 tokens. Every sampled
+instruction and response span passed a bounded exact backing-array bounds
+check. The superseded snapshot is retained at
+`data/sampled_dfm10_pre_20260830`. See the
+[final source reconciliation](/pages/dfm10-final-source-reconciliation.md) for
+repair counts, filtering decisions, and production-gate details.
 
 Update on 2026-05-31:
 
@@ -213,3 +229,54 @@ materializes a monolithic `tokens.npy` in every output, so overlapping corpus
 versions cannot generally share storage without symlinking/reflinking verified
 immutable token pools or redesigning the format around content-addressed token
 stores.
+
+## 2026-08-28 DFM10 Nemotron SWE replacement
+
+The inherited `nemotron_swe_windowed__*` source is disabled for DFM10. Its
+authoritative replacement is `data/tokenized_dfm10_nemotron_swe_repaired`, with
+33 current tasks, 2,472,316 rows, and 6,597,089,585 exact Gemma-rendered tokens.
+`data/tokenized_dfm10` links all 33 tasks under the
+`nemotron_swe_repaired__*` prefix. Exhaustive structural validation passed and
+the fresh 1,000-row E4B audit marked every row usable with zero judge errors;
+see the [DFM10 source-quality audit](/pages/dfm10-source-quality-audit.md) for
+the conversion contract, superseded drafts, and residual caveats.
+
+## 2026-08-28 DFM10 DynaWord-instruction replacement
+
+The four inherited `oliverkinch_da_instruct_dynaword*` tasks are disabled in
+`data_io/prefix_config_dfm10.yaml`. Their audited replacement is
+`data/tokenized_dfm10_dynaword_instruct_repaired`, containing four tasks,
+65,548 rows, and 39,422,832 exact Gemma-rendered tokens. The final corpus keeps
+61,604 unchanged rows and 3,944 prompt-only repairs that passed a second E4B
+audit; incomplete/corrupt targets are dropped rather than rewritten. The
+replacement is linked into `data/tokenized_dfm10` at repeat four. Validation
+details and reproducible commands are in the
+[DFM10 source-quality audit](/pages/dfm10-source-quality-audit.md).
+
+## 2026-08-29 Danmarks Statistik BT repair queued
+
+The CPU inventory prepared all 7,154 `oliverkinch/danmarks-statistik-bt` rows
+for answer-matched prompt regeneration. An eight-GPU Gemma 4 E4B runner is
+queued behind unrelated GPU work and will generate prompts, independently
+audit every surviving pair, filter strictly, and tokenize the replacement. The
+old prefix is disabled and DFM10 construction requires the repaired tokenized
+root, so an incomplete audit cannot silently fall back to the 61%-usable
+legacy corpus. See the
+[repair runbook](/pages/dfm10-danmarks-statistik-repair.md).
+
+**Superseded later 2026-08-29:** the queue completed via a GPU2 continuation
+while the other seven GPUs ran an unrelated audit. Full prompt repair and
+exhaustive auditing retained 3,086/7,154 source rows. The tokenized replacement
+contains 762,189 tokens, or 7,621,890 per epoch at repeat ten. Two repeatedly
+unjudgeable rows are explicit terminal rejections. The old prefix remains
+disabled; the repaired prefix is ready for the DFM10 union rebuild.
+
+**Superseded again 2026-08-29:** a separate Gemma 4 31B article-grounded
+recovery followed by independent E4B auditing admitted 2,541 additional,
+source-ID-disjoint rows. The canonical Danmarks Statistik replacement now has
+5,627 rows and 1,282,988 rendered tokens. The analogous authoritative-document
+recovery for Danish university portals admitted 902 rows, raising that source
+to 3,049 rows and 1,607,730 tokens. GovReport complete-report recovery remains
+deferred to an 8K+ DFM10 version. The active next repair is a 60,000-request,
+domain-balanced WikiCatSum recovery with 31B generation and independent E4B
+grounding audit.

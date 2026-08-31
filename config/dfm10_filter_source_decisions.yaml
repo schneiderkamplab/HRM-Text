@@ -1,0 +1,33 @@
+# Explicit resolution of all 32 Filter dispositions in the 2026-08-26 audit.
+GEM/wiki_cat_sum: repaired replacement
+oliverkinch/danmarks-statistik-bt: repaired replacement
+schneiderkamplab/sapient-synth-flan-dialog-fsopt-data-qrecc-ii: repaired replacement
+schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task871-msmarco-question-generation: exclude negligible low-quality source
+allenai/code_meta_reasoning: repaired replacement
+oliverkinch/da-instruct-dynaword: repaired replacement
+alexandrainst/dacoref: exclude incorrect-answer-heavy tiny source
+oliverkinch/tidsskrift-dk-bt: retain one pass
+oliverkinch/eur-lex-bt: retain one pass
+oliverkinch/doab-da-bt: retain one pass
+oliverkinch/dynaword-bt: retain one pass
+nvidia/OpenMathInstruct-2: repaired replacement
+schneiderkamplab/opus-da-en-permissive: repaired replacement
+facebook/asset: retain one pass
+schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task871-msmarco-question-generation: exclude negligible low-quality source
+oliverkinch/da-instruct-dynaword-contemporary: repaired replacement
+alexandrainst/nordjylland-news-summarization: repaired replacement
+danish-foundation-models/kaenguruen: retain one pass
+allenai/IF_sft_data_verified: retain one pass
+schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task264-paper-reviews-accept-reject: retain one pass
+schneiderkamplab/sapient-synth-flan-dialog-zsopt-data-qrecc: retain one pass
+alexandrainst/multi-zebra-logic: retain one pass
+grammarly/coedit: retain one pass
+oliverkinch/eur-lex-sum-instruct: retain one pass
+oliverkinch/machine-translation-da-en: exclude in favor of filtered OPUS DA-EN
+schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-aeslc-1.0.0: retain one pass
+oliverkinch/da-instruct-dynaword-contemporary-hq: repaired replacement
+allenai/Dolci-Instruct-SFT-Tool-Use: repaired replacement
+allenai/tulu-3-sft-personas-algebra: retain one pass
+MegaScience/TextbookReasoning: retain one pass
+Muennighoff/natural-instructions: retain one pass
+schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1374-newscomm-translation: retain one pass

@@ -1,0 +1,18 @@
+{
+  "version": "dfm10-tidsskrift-grounded-v1",
+  "request_shards": 256,
+  "examples_per_chunk": 8,
+  "minimum_accepted_rows": 125000,
+  "minimum_score": 4,
+  "chunking": {
+    "min_chars": 900,
+    "target_chars": 1500,
+    "max_chars": 2500,
+    "overlap_paragraphs": 1
+  },
+  "task_contract": {
+    "grounded_qa": 5,
+    "grounded_explanation": 2,
+    "natural_summary_or_qa": 1
+  }
+}

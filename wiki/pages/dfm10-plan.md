@@ -4,10 +4,81 @@ title: DFM10 Plan
 description: DFM10 integration of Danish H.C. Andersen and Alexandra Institute data plus native English search-agent trajectories.
 tags: [dfm10, danish, english, andersen, alexandra-institute, agentic, tool-use, evaluation]
 status: stable
-last_updated: 2026-08-26
+last_updated: 2026-08-30
 confidence: high
 ---
 # DFM10 Plan
+
+## Danish corpus expansion, 2026-08-29
+
+DFM10 now also includes one-pass, gold-label supervision from the explicitly
+licensed DSL Danish Sentiment Lexicon and Danish FrameNet. The strict-open
+Tidsskrift.dk article-to-author-abstract source completed its extraction and
+independent grounding audit. Its nine accepted gold rows are retained inside
+the unified `dfm10-tidsskrift-open-sft` package rather than exposed as a tiny
+standalone source. **Superseded 2026-08-30:** the 200,000-row minimum exceeded
+the 189,392 candidates; production now audits all and requires 125,000 accepted
+rows. A separate
+`dfm10-tidsskrift-open-chats` package uses the same chunks for audited 2–10
+exchange student inquiry conversations under the 4,096-token contract.
+The Kalliope modernization pilot supports later full production behind the
+existing audit gate. VoxPopuli normalization is excluded because 67 of its 79
+accepted pilot outputs were near-copies and provide too little SFT signal.
+Exact commands, rights policy, counts, and paths are maintained in the
+[DFM10 Danish Corpus Expansion](/pages/dfm10-danish-corpus-expansion.md)
+runbook.
+
+## Repaired inherited sources
+
+DFM10 replaces the inherited raw `nvidia/OpenMathInstruct-2` CoT/direct
+prefixes with the verified, PRM-filtered, decontaminated
+`openmathinstruct2_repaired__*` source. The repaired source contains 7,490,945
+rows and passed both exhaustive structural validation and a 4,000-row
+stratified E4B audit. The old prefix has `max_per_file: 0`; the repaired prefix
+is capped at 20,000,000 rows per file, so its actual rows remain available
+without repetition. Full methodology and results are in the
+[DFM10 source-quality audit](/pages/dfm10-source-quality-audit.md).
+
+DFM10 also replaces the inherited `nemotron_swe_windowed__*` conversion with
+`nemotron_swe_repaired__*`. The legacy converter emitted every assistant turn
+as a target and the generic chat tokenizer emitted every preceding assistant
+turn again, creating duplicated targets and contextless partial actions. The
+repaired conversion retains complete native `execute_bash` and
+`str_replace_editor` call/result cycles, removes obsolete `think` calls,
+converts terminal `finish` calls to normal assistant responses, admits only
+complete examples fitting 4,096 tokens, and designates exactly one assistant
+target per row. Agentless examples use a separate generic software-task system
+prompt that defers to each explicit user request, and no tool schema. The old
+prefix has `max_per_file: 0`; the
+repaired prefix is the only Nemotron SWE source eligible for DFM10 sampling.
+Conversion, structural validation, tokenization, and audit details are in the
+[DFM10 source-quality audit](/pages/dfm10-source-quality-audit.md).
+The authoritative converter-v4 corpus contains 2,472,316 examples and
+6,597,089,585 exact Gemma-rendered tokens before sampling. The DFM10 union
+contains all 33 repaired tokenized tasks; the new prefix retains up to 500,000
+rows per task without repeating these files.
+
+DFM10 also replaces all four inherited `oliverkinch/da-instruct-dynaword*`
+tasks with `dynaword_instruct_repaired__*`. A complete E4B audit separates
+clean rows, prompt/target mismatches, and damaged or incomplete authentic
+targets. Only prompts are regenerated; authentic target text is never rewritten
+or heuristically extended. A strict second audit and global target-aware dedupe
+yield 65,548 final rows and 39,422,832 Gemma-rendered tokens. The repaired
+prefix retains the prior repeat factor of four, while every legacy prefix has
+`max_per_file: 0`. See the
+[DFM10 source-quality audit](/pages/dfm10-source-quality-audit.md) for exact
+admission counts and serving-path requirements.
+
+DFM10 also disables the inherited `oliverkinch_danmarks_statistik_bt__`
+prefix. Its authentic Danmarks Statistik targets are retained, but
+persona-generated prompts are regenerated to request only information that the
+target actually supplies. A separate exhaustive E4B audit filters indirect,
+context-dependent, malformed, or still-mismatched pairs before the replacement
+`danmarks_statistik_bt_repaired__` prefix becomes available at repeat ten. See
+the [Danmarks Statistik repair runbook](/pages/dfm10-danmarks-statistik-repair.md).
+
+The exact original-versus-repaired row and token inventory is maintained in
+[DFM10 Production Replacement Inventory](/pages/dfm10-repaired-datasets.md).
 
 ## Z.ai Dataset Candidate Review
 
@@ -45,8 +116,8 @@ tokenization of the pinned upstream parquet SHA-256
 - Converted source: `data/dfm10_deepdive_sources/`.
 - Tokenized source: `data/tokenized_dfm10_deepdive/`.
 - Sampling prefix: `zai_deepdive_trajectories_sft__`, `repeat: 1`,
-  `long_context: drop`. Complete targets are dropped if they do not fit; they
-  are never clipped.
+  `long_context: drop`. Its 4K tokenizer drops complete older turns, never
+  clips targets, and preserves the longer source trajectories.
 
 The upstream `id` field is incorrectly constant (`858`) across all 858 rows.
 The converter therefore derives a stable ID from row index and a BLAKE2 hash
@@ -77,7 +148,7 @@ following train-only additions are integrated into DFM10:
 
 | Dataset | Training material to use | Current size | Intended conversion |
 | --- | --- | ---: | --- |
-| `alexandrainst/nordjylland-news-summarization` | original `train` file only | 75,219 Danish rows | Article to original concise summary. The separate 63,855-row synthetic-summary file is already inherited through `oliverkinch/danish-summarization` and is not duplicated. |
+| `alexandrainst/nordjylland-news-summarization` | grounded subset of original `train` | 75,219 source rows; 73,097 pre-audit candidates | Article to an authentic headline or brief summary. **Superseded 2026-08-28:** the generic-summary conversion is disabled; only the full-corpus grounding-filtered [repair](/pages/dfm10-nordjylland-news-repair.md) is eligible. The separate 63,855-row synthetic-summary file inherited through `oliverkinch/danish-summarization` is not duplicated. |
 | `alexandrainst/scandi-qa` | Danish `train` only | 6,810 Danish rows | Context and question to short extractive answer or an explicit unanswerable response. Validation/test remain held out. |
 | `alexandrainst/multi-zebra-logic` | Danish and English `train` configs only | 512 Danish + 256 English puzzles | Introduction, clues, question, and format instruction to compact JSON solution. Reserve validation/test as a new bilingual structured-reasoning evaluation. |
 | `alexandrainst/dane` | `train` only | 4,383 Danish sentences | Sentence to JSON grouped `PER`/`ORG`/`LOC`/`MISC` surface spans, decoded from BIO annotations. This does not materially overlap the production DANSK NER benchmark; see the overlap audit below. |
@@ -182,6 +253,82 @@ GPU utilization during this bounded scan is expected and is not a stall.
 Confidence: high from process inspection, source file offsets, server health
 checks, and preserved JSONL line counts.
 
+**Superseded readiness snapshot (2026-08-27):** the Folketing audit was not complete
+or safe to filter. The four candidate files contain `14,586,873` rows. The
+eight authoritative partition files contain `13,327,490` decisions, leaving
+`1,259,383` unaudited rows concentrated in partitions 6 and 7. In addition,
+partitions 1 and 2 contain approximately `798,000` `judge_error` records caused
+by connection-refused failures; these are currently serialized as drops and
+must be cleared and retried rather than treated as quality rejections. No audit
+workers are active. After all eight partitions cover the complete candidate
+set with no retryable judge errors, merge and de-duplicate them by `row_id`,
+build `data/dfm10_folketing_transform_sources_audited`, tokenize it into
+`data/tokenized_dfm10_folketing`, rebuild the `data/tokenized_dfm10` union, and
+only then sample `data/sampled_dfm10`. The Andersen, Alexandra, DeepDive, and
+inherited DFM9 tokenized components are already present and have byte-identical
+tokenizer/template metadata. Confidence: high from local manifests, complete
+partition line counts, audit summaries, and direct inspection of failed rows.
+
+**Current balanced resume (2026-08-27):**
+`scripts/prepare_dfm10_folketing_audit_resume.py prepare` atomically removed
+and compressed-archived all `810,286` retryable judge-error rows while
+retaining `12,517,204` valid decisions. The resulting missing set contains
+`2,069,669` rows. A shared completed-ID index under
+`logs/dfm10_folketing_audit_8gpu_vllm/balanced_remaining/` lets the audit
+client scan the complete candidate corpus with primary partitioning disabled
+and independently hash the missing rows into eight approximately equal
+secondary partitions. This avoids reproducing the highly uneven ownership of
+the interrupted original campaign. The detached launcher
+`scripts/run_dfm10_folketing_remaining_balanced_8gpu.sh` (initial PID
+`2607312`) has one watcher per GPU. Each watcher waits for no compute PID and
+at least 170,000 MiB free before starting its E4B vLLM server and 64-concurrent
+client. It never terminates unrelated processes. Retryable errors from a
+nominally successful client are removed and retried. After all eight shards
+finish, the launcher validates exactly `14,586,873` unique, non-error row IDs
+before atomically publishing the merged audit. Confidence: high from the
+completed cleanup manifest and live watcher/process inspection.
+
+**Balanced-resume update (2026-08-28):** inference covered
+`2,069,526 / 2,069,669` missing rows (`99.993%`). The remaining 143 rows
+repeatedly produced malformed judge JSON even after 15--16 campaign attempts;
+the old unbounded watcher loop consequently had no finite ETA. The audit client
+now optionally requests an OpenAI-compatible constrained JSON object, and the
+Folketing launcher enables it. Campaign retries are capped at three; any row
+still lacking a parseable judgment is conservatively recorded as a terminal
+drop with `audit_resolution=terminal_drop_after_exhausted_judge_retries`, not
+accepted as training data. The audit was paused when the XXL training scheduler
+claimed all GPUs; relaunch the balanced runner after they are free. One final
+source scan plus atomic merge remains. Confidence: high from per-shard counts,
+archived error inspection, process ownership, and repeated identical failures.
+
+**Completed audit (2026-08-28):** this supersedes the paused state above. A
+constrained-JSON retry resolved 55 of the final 143 malformed judgments. The
+remaining 88 had already failed repeatedly and were conservatively sealed as
+terminal drops from their archived judge records; none can enter training.
+Finalization validated exactly `14,586,873` unique, non-error decisions and
+atomically published
+`logs/dfm10_folketing_audit_8gpu_vllm/export_judge.audit.jsonl`: `13,225,678`
+keep, `1,361,195` drop, keep rate `90.668356%`. All audit vLLM servers were
+released after the campaign. Confidence: high from exact-count validation,
+duplicate detection, terminal-error checks, and the final summary manifest.
+
+**Accepted-source materialization (2026-08-29):** the exact final audit was
+joined back to the four candidate files and atomically materialized at
+`data/dfm10_folketing_transform_sources_audited`. It retained 13,225,678 rows:
+3,636,825 denoising, 3,105,440 error-correction, 3,573,233 prefix-continuation,
+and 2,910,180 span-filling examples. `scripts/finalize_dfm10_folketing.sh`
+verifies the exact source/accepted counts and the four-family inventory before
+Gemma-native tokenization; it refuses partial or differently shaped input.
+Production tokenization completed with zero skipped rows and 17,498,229,889
+tokens: 5,391,304,669 denoising, 4,866,431,131 error-correction,
+2,851,683,248 prefix-continuation, and 4,388,810,841 span-filling tokens. All
+four prefixes use repeat one.
+
+The DFM10 tokenized union was rebuilt after Folketing and the grounded
+Nordjylland replacement completed. Its manifest records 11,719 task
+directories, including all four Folketing families and one grounded
+Nordjylland task.
+
 The raw generated candidates are not an approved training corpus by
 themselves; a filtered `keep=true` tree must be built before sampling.
 
@@ -240,9 +387,9 @@ decision:
 - `scandi-reddit`, `scandi-reddit-filtered`, `scandi-wiki`, and `wiki40b-da`
   are raw continuation data, conflicting with the current continuation policy;
   Reddit also raises privacy/provenance concerns.
-- `domsdatabasen` is OCR-derived legal text and requires a separate privacy and
-  provenance review. Speech/audio and image-caption datasets do not fit the
-  current text-only pipeline.
+- **Superseded 2026-08-30:** `domsdatabasen` is admitted only through the
+  [audited chat path](/pages/dfm10-persona-doms-chats.md). Speech/audio and
+  image-caption data remain out of scope.
 
 ## Scope
 
@@ -287,6 +434,14 @@ pairs_chunked_val.jsonl   7d635eb87ecab1fd88be0e290fe029d4af183fbafc0097f516fce0
 
 ## Training Integration
 
+### Audited OpenStax grounded SFT
+
+The independently audited derivative SFT from 61 immutable historical OpenStax
+CC BY artifacts is active in DFM10 at repeat one. All 64 shards succeeded and
+the final corpus contains 50,000 rows and 8,592,140 rendered tokens. See the
+[DFM10 OpenStax Grounded SFT](/pages/dfm10-openstax-sft.md) record for the
+licensing boundary, quality gate, exact artifacts, and integration procedure.
+
 The planned XXL continuation after its first DFM8 epoch is documented in the
 [DFM8 XXL to DFM10 multi-node transition plan](model-architecture/dfm8-xxl-to-dfm10-multinode-transition.md).
 
@@ -305,22 +460,26 @@ Tokenization retained all 1,068 training rows and produced 1,205,157 tokens:
 | Assistant target | 552,242 |
 | Unique total | 1,205,157 |
 | Raw repeated total before context truncation | 24,103,140 |
-| Effective DFM10 contribution after context truncation | 24,097,380 |
+| Effective DFM10 contribution under the superseded truncation policy | 24,097,380 |
 
 One row is 4,385 rendered tokens, above the sampler's 4,097-token context
-budget. The inherited `long_context: truncate` policy retains that row and
-truncates its assistant target to fit. All other rows fit.
+budget. **Superseded 2026-08-30:** truncation retained it with a clipped target;
+DFM10 drops it intact for later long-context use. All other rows fit.
 
-Verified Alexandra token counts before sampling/context packing:
+Verified Alexandra token counts before sampling/context packing. **Superseded
+2026-08-28 for Nordjylland only:** its old count below remains the historical
+baseline; the repaired count will replace it after full-corpus filtering and
+tokenization.
 
 | Source | Rows | Unique tokens | Repeat | Raw repeated tokens/epoch |
 | --- | ---: | ---: | ---: | ---: |
 | Original Nordjylland summaries | 75,219 | 37,188,521 | 1 | 37,188,521 |
+| Grounded Nordjylland repair (authoritative replacement) | 47,120 | 26,590,391 | 1 | 26,590,391 |
 | Danish ScandiQA | 6,810 | 3,988,956 | 4 | 15,955,824 |
-| Danish/English MultiZebra | 768 | 521,134 | 8 | 4,169,072 |
+| Danish/English MultiZebra | 768 | 521,134 | 1 | 521,134 |
 | DaNE | 4,383 | 614,709 | 4 | 2,458,836 |
-| DaCoref | 2,686 | 323,960 | 4 | 1,295,840 |
-| **Alexandra total** | **89,866** | **42,637,280** | | **61,068,093** |
+| DaCoref | 2,686 | 323,960 | disabled | 0 |
+| **Alexandra total** | **89,866** | **42,637,280** | | **56,124,315** |
 
 The DaNE upstream archive contains all official splits because that is how the
 dataset is distributed, but the converter extracts and exposes only
@@ -334,25 +493,33 @@ families is downloaded, and no held-out filename exists in
 - prefix: andersen_modernization__
   repeat: 20
 - prefix: alexandra_nordjylland_original__
+  max_per_file: 0
+- prefix: nordjylland_news_repaired__
   repeat: 1
 - prefix: alexandra_scandi_qa_da__
   repeat: 4
 - prefix: alexandra_multi_zebra__
-  repeat: 8
+  repeat: 1
 - prefix: alexandra_dane__
   repeat: 4
 - prefix: alexandra_dacoref__
-  repeat: 4
+  max_per_file: 0
 ```
 
 `config/data/dfm10.yaml` points training to `data/sampled_dfm10`. Full DFM10
-sampling has intentionally not been run yet because it rewrites the very large
-combined token store. To sample after reviewing the integration:
+sampling completed on 2026-08-29. The following command is retained as the
+reproducible rebuild command, not as pending work:
 
 ```bash
 cd /work/dfm/HRM-Text
 DFM10_SAMPLE=1 DFM10_EPOCHS=10 bash scripts/prepare_dfm10_data.sh
 ```
+
+**Superseded 2026-08-29:** the pre-audit plan used MultiZebra at 8x and DaCoref
+at 4x and described sampling as pending. Final source reconciliation reduced
+MultiZebra to one pass, disabled DaCoref, and produced ten epochs of
+101,731,426,509 tokens each. See the
+[final source reconciliation](/pages/dfm10-final-source-reconciliation.md).
 
 ## Zero-Shot Evaluation
 

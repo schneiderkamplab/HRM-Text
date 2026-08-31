@@ -1,0 +1,45 @@
+{
+  "version": "mimir_benchmark_campaigns_v1_20260830",
+  "max_training_tokens": 4096,
+  "shards": 1024,
+  "campaigns": {
+    "ifeval_verifier": {
+      "target_rows": 200000,
+      "candidate_requests": 260000,
+      "sources": [
+        "data/mimir_grounded_500k/source_passages/compositional_reasoning.jsonl",
+        "data/mimir_grounded_500k/source_passages/grounded_factual_qa.jsonl"
+      ],
+      "variants": ["required_forbidden_words", "sections_and_counts", "prefix_suffix", "json_schema", "ordered_transform"]
+    },
+    "boolq_entailment": {
+      "target_rows": 100000,
+      "candidate_requests": 150000,
+      "sources": [
+        "data/mimir_grounded_500k/source_passages/grounded_factual_qa.jsonl",
+        "data/mimir_grounded_500k/source_passages/professional_domains.jsonl"
+      ],
+      "variants": ["explicit_support", "controlled_contradiction", "negation", "temporal_scope", "multi_sentence_inference"]
+    },
+    "drop_reasoning": {
+      "target_rows": 200000,
+      "candidate_requests": 320000,
+      "sources": [
+        "data/mimir_grounded_500k/source_passages/professional_domains.jsonl",
+        "data/mimir_grounded_500k/source_passages/grounded_factual_qa.jsonl",
+        "data/mimir_grounded_500k/source_passages/technical_stem.jsonl"
+      ],
+      "variants": ["addition", "subtraction", "count", "minimum", "maximum"]
+    },
+    "event_coreference": {
+      "target_rows": 300000,
+      "candidate_requests": 260000,
+      "sources": [
+        "data/mimir_grounded_500k/source_passages/compositional_reasoning.jsonl",
+        "data/mimir_grounded_500k/source_passages/grounded_factual_qa.jsonl",
+        "data/mimir_grounded_500k/source_passages/professional_domains.jsonl"
+      ],
+      "variants": ["event_continuation", "procedure_continuation", "coreference_swap_pair", "role_reversal_pair"]
+    }
+  }
+}

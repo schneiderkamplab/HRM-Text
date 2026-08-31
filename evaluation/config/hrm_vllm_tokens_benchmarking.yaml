@@ -1,5 +1,6 @@
 engine: VLLMEngine
 ckpt_path: null
+# Legacy Sapient tokenizer only. VLLMEngine rejects Gemma-tokenizer exports.
 prompt_mode: hrm_tokens
 max_model_len: 4096
 dtype: bfloat16

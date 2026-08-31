@@ -166,6 +166,8 @@ def call_chat_json(args: argparse.Namespace, system: str, user: str) -> dict[str
         "top_p": 1,
         "max_tokens": args.max_tokens,
     }
+    if args.json_response_format:
+        body["response_format"] = {"type": "json_object"}
     req = urllib.request.Request(
         args.base_url.rstrip("/") + "/chat/completions",
         data=json.dumps(body).encode("utf-8"),
@@ -588,6 +590,11 @@ def main() -> None:
     audit_parser.add_argument("--retry-sleep", type=float, default=2.0)
     audit_parser.add_argument("--timeout", type=int, default=300)
     audit_parser.add_argument("--max-tokens", type=int, default=256)
+    audit_parser.add_argument(
+        "--json-response-format",
+        action="store_true",
+        help="Request constrained JSON-object output from compatible OpenAI servers.",
+    )
     audit_parser.add_argument("--max-segments", type=int, default=10)
     audit_parser.add_argument("--max-instruction-chars", type=int, default=7000)
     audit_parser.add_argument("--max-response-chars", type=int, default=7000)

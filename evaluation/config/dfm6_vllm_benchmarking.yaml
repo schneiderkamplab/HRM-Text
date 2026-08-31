@@ -34,29 +34,59 @@ benchmarks:
 
   # Few-shot MCQ
   - name: MMLU
+    score_extractor: choice_letter
     generation_config:
       condition: "direct"
       max_context: 4096
+      max_tokens: 8
       batch_size: 1
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
     special_shots:
       high_school_european_history: 3  # MMLU: some tasks have too long context to fit inside model.
   - name: ARC
+    score_extractor: choice_letter
     generation_config:
       condition: "direct"
       max_context: 4096
+      max_tokens: 8
       batch_size: 1
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
   - name: HellaSwag
+    score_extractor: choice_letter
     generation_config:
       condition: "direct"
       max_context: 4096
+      max_tokens: 8
       batch_size: 1
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
   - name: Winogrande
+    score_extractor: choice_letter
     generation_config:
       condition: "direct"
       max_context: 4096
+      max_tokens: 8
       batch_size: 1
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
   - name: BoolQ
+    score_extractor: choice_letter
     generation_config:
       condition: "direct"
       max_context: 4096
+      max_tokens: 8
       batch_size: 1
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}

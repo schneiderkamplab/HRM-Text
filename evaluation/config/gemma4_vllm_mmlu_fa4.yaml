@@ -1,0 +1,28 @@
+engine: VLLMEngine
+ckpt_path: null
+prompt_mode: gemma_chat
+chat_template_path: evaluation/chat_templates/gemma4_native_chat.jinja
+max_model_len: 4096
+dtype: bfloat16
+gpu_memory_utilization: 0.85
+enforce_eager: true
+attention_backend: FLASH_ATTN
+
+generation_config:
+  batch_size: 8
+  max_context: 4096
+  max_tokens: 8
+  temperature: 0.0
+  condition: "direct"
+  stop_token_ids: [106]
+
+benchmarks:
+  - name: MMLU
+    score_extractor: choice_letter
+    generation_config:
+      prompt_template: |-
+        Choose the correct option. Return only the option letter.
+
+        {prompt}
+    special_shots:
+      high_school_european_history: 3

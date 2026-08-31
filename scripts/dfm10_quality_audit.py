@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import fcntl
+import fnmatch
 import gzip
 import hashlib
 import json
@@ -46,12 +47,12 @@ class SourceSpec:
     patterns: tuple[str, ...]
     form: str
     raw_root: str | None = None
+    sample_count: int | None = None
 
 
 DFM9_ADDITIONS = (
     SourceSpec("AI-MO/NuminaMath-1.5", "dfm9", ("numinamath_1_5",), "converted"),
     SourceSpec("nvidia/Nemotron-Terminal-Corpus", "dfm9", ("nemotron_terminal_corpus",), "converted"),
-    SourceSpec("allenai/code_meta_reasoning", "dfm9", ("allenai_code_meta_reasoning",), "converted"),
     SourceSpec("Muennighoff/natural-instructions", "dfm9", ("posttrain_natural_instructions",), "filtered/converted"),
     SourceSpec("grammarly/coedit", "dfm9", ("posttrain_coedit",), "converted"),
     SourceSpec("facebook/asset", "dfm9", ("posttrain_asset",), "converted"),
@@ -61,8 +62,55 @@ DFM9_ADDITIONS = (
 )
 
 DFM10_ADDITIONS = (
+    SourceSpec(
+        "dsldk/danish-sentiment-lexicon",
+        "dfm10",
+        ("dsldk_danish_sentiment_lexicon.jsonl",),
+        "gold lexical polarity batches",
+    ),
+    SourceSpec(
+        "dsldk/dansk-frame-net",
+        "dfm10",
+        ("dsldk_danish_framenet.jsonl",),
+        "gold lexical semantic-frame batches",
+    ),
+    SourceSpec(
+        "tidsskrift.dk/strict-open-sft",
+        "dfm10",
+        ("tidsskrift_open_sft.jsonl",),
+        "audited grounded questions, explanations, natural summaries, and gold author abstracts",
+    ),
+    SourceSpec(
+        "tidsskrift.dk/strict-open-chats",
+        "dfm10",
+        ("tidsskrift_open_chats.jsonl",),
+        "audited 2-10 exchange source-grounded student inquiry chats",
+    ),
+    SourceSpec(
+        "danish-foundation-models/danish-dynaword/wikipedia",
+        "dfm10",
+        ("danish_wikipedia_open_chats.jsonl",),
+        "audited source-grounded Danish student inquiry chats",
+    ),
+    SourceSpec(
+        "OpenStax/official-cc-by-4.0",
+        "dfm10",
+        ("openstax_open_chats.jsonl",),
+        "audited multi-lens English textbook student inquiry chats",
+    ),
+    SourceSpec(
+        "allenai/code_meta_reasoning",
+        "dfm10",
+        ("code_meta_reasoning_repaired",),
+        "structured repaired conversion",
+    ),
     SourceSpec("dfm-agreement/hc-andersen-modernization", "dfm10", ("andersen_modernization",), "converted"),
-    SourceSpec("alexandrainst/nordjylland-news-summarization", "dfm10", ("alexandra_nordjylland_original",), "converted train split"),
+    SourceSpec(
+        "alexandrainst/nordjylland-news-summarization",
+        "dfm10",
+        ("nordjylland_news_repaired",),
+        "headline-aware, full-corpus grounded repair",
+    ),
     SourceSpec("alexandrainst/scandi-qa", "dfm10", ("alexandra_scandi_qa_da",), "converted Danish train split"),
     SourceSpec("alexandrainst/multi-zebra-logic", "dfm10", ("alexandra_multi_zebra",), "converted Danish/English train splits"),
     SourceSpec("alexandrainst/dane", "dfm10", ("alexandra_dane",), "converted train split"),
@@ -100,16 +148,26 @@ def parse_dfm8_inventory(path: Path) -> list[SourceSpec]:
         elif source_id == "giannor/gec_dala_tv2r_it":
             patterns = ("giannor_tv2r_instruction__giannor_gec_dala_tv2r_it",)
         elif source_id == "allenai/Dolci-Instruct-SFT-Tool-Use":
-            patterns = ("dolci_native_tool_use__dolci_instruct_sft_tool_use__",)
+            patterns = ("dolci_tool_use_repaired__dolci_instruct_sft_tool_use__",)
         elif source_id == "allenai/Dolci-Instruct-SFT-Tool-Use-SA":
-            patterns = ("dolci_native_tool_use__dolci_instruct_sft_tool_use_sa__",)
+            patterns = ("dolci_tool_use_repaired__dolci_instruct_sft_tool_use_sa__",)
+        elif source_id == "ccdv/govreport-summarization":
+            patterns = ("govreport_summarization_repaired__",)
+        elif source_id == "schneiderkamplab/opus-da-en-permissive":
+            patterns = ("opus_da_en_repaired",)
+        elif source_id == "GEM/wiki_cat_sum":
+            patterns = ("wiki_cat_sum_repaired__",)
+            form = "evidence-selected, full-corpus grounding-filtered repair"
+        elif source_id == "oliverkinch/danmarks-statistik-bt":
+            patterns = ("danmarks_statistik_bt_repaired__",)
+            form = "answer-matched prompt regeneration and full-corpus coherence filter"
         elif source_id == "sapientinc/HRM-Text-data-io-cleaned-20260515":
             patterns = (*patterns, "flan_factual")
         specs.append(SourceSpec(source_id, "dfm8", patterns, form))
 
     specs.extend(
         (
-            SourceSpec("dfm-agreement/dbc", "dfm8", ("dbc",), "converted"),
+            SourceSpec("dfm-agreement/dbc", "dfm8", ("dbc_repaired", "dbc"), "repaired/converted"),
             SourceSpec("dfm-agreement/lexdk", "dfm8", ("lexdk",), "converted"),
         )
     )
@@ -136,7 +194,92 @@ def source_specs(inventory_doc: Path) -> list[SourceSpec]:
     return specs
 
 
+def configured_source_specs(path: Path, stage_id: str, task_dirs: list[Path]) -> list[SourceSpec]:
+    """Load one targeted audit stage without changing the legacy inventory."""
+    document = yaml.safe_load(path.read_text(encoding="utf-8"))
+    stages = document.get("stages", []) if isinstance(document, dict) else []
+    matches = [stage for stage in stages if str(stage.get("id")) == stage_id]
+    if len(matches) != 1:
+        raise ValueError(f"expected exactly one stage {stage_id!r} in {path}, found {len(matches)}")
+
+    stage = matches[0]
+    required_status = stage.get("wait_for_manifest_status")
+    manifest_status: dict[str, str] = {}
+    if required_status is not None:
+        manifest = json.loads((ROOT / "exports_dfm10/manifest.json").read_text(encoding="utf-8"))
+        manifest_status = {str(item["name"]): str(item.get("status", "")) for item in manifest["packages"]}
+
+    specs: list[SourceSpec] = []
+    for item in stage.get("sources", []):
+        source_id = str(item["source_id"])
+        patterns = tuple(str(value) for value in item.get("patterns", ()))
+        sample_count = int(item.get("samples", 100))
+        generation = str(item.get("generation", "dfm10_residual_audit"))
+        form = str(item.get("form", "final_training_representation"))
+        raw_root = item.get("raw_root")
+        if raw_root is not None:
+            raw_root = str(raw_root)
+            if required_status is not None:
+                package_name = Path(raw_root).name
+                actual_status = manifest_status.get(package_name, "missing")
+                if actual_status != str(required_status):
+                    raise ValueError(
+                        f"stage {stage_id} package {package_name} requires status {required_status}, "
+                        f"found {actual_status}"
+                    )
+
+        if bool(item.get("per_task", False)):
+            matching_tasks = sorted(
+                task for task in task_dirs if any(matches_pattern(task.name, pattern) for pattern in patterns)
+            )
+            minimum_matches = int(item.get("minimum_matches", 1))
+            if len(matching_tasks) < minimum_matches:
+                raise ValueError(
+                    f"stage {stage_id} source {source_id} expected at least {minimum_matches} tasks, "
+                    f"found {len(matching_tasks)}"
+                )
+            for task in matching_tasks:
+                specs.append(
+                    SourceSpec(
+                        source_id=f"{source_id}/{task.name}",
+                        generation=generation,
+                        patterns=(task.name,),
+                        form=form,
+                        sample_count=sample_count,
+                    )
+                )
+            continue
+
+        if raw_root is None:
+            minimum_matches = int(item.get("minimum_matches", 1))
+            matching_count = sum(
+                any(matches_pattern(task.name, pattern) for pattern in patterns) for task in task_dirs
+            )
+            if matching_count < minimum_matches:
+                raise ValueError(
+                    f"stage {stage_id} source {source_id} expected at least {minimum_matches} tasks, "
+                    f"found {matching_count}"
+                )
+        specs.append(
+            SourceSpec(
+                source_id=source_id,
+                generation=generation,
+                patterns=patterns,
+                form=form,
+                raw_root=raw_root,
+                sample_count=sample_count,
+            )
+        )
+
+    ids = [spec.source_id for spec in specs]
+    if not specs or len(ids) != len(set(ids)):
+        raise ValueError(f"empty or duplicate configured source IDs in stage {stage_id}")
+    return specs
+
+
 def matches_pattern(task_name: str, pattern: str) -> bool:
+    if any(character in pattern for character in "*?["):
+        return fnmatch.fnmatchcase(task_name, pattern)
     if pattern.endswith("__"):
         return task_name.startswith(pattern)
     return task_name == pattern or task_name.startswith(pattern + "__")
@@ -238,7 +381,8 @@ def decode_tokenized_samples(
 
 
 def iter_chat_rows(root: Path) -> Iterable[tuple[str, int, dict[str, Any]]]:
-    for path in sorted(root.glob("*/data/*.jsonl*")):
+    paths = list(root.glob("data/*.jsonl*")) + list(root.glob("*/data/*.jsonl*"))
+    for path in sorted(set(paths)):
         opener = gzip.open if path.name.endswith(".gz") else open
         with opener(path, "rt", encoding="utf-8") as handle:
             for line_number, line in enumerate(handle):
@@ -268,7 +412,9 @@ def reservoir_raw_samples(source: SourceSpec, count: int, seed: int) -> tuple[li
             "source_id": source.source_id,
             "generation": source.generation,
             "form": source.form,
-            "task_name": relative_path.split("/", 1)[0],
+            # Shard-local line numbers repeat. The complete relative filename is
+            # therefore part of the stable sample identity for packaged rows.
+            "task_name": relative_path,
             "row_index": line_number,
             "prompt": json.dumps(messages[:target], ensure_ascii=False),
             "response": json.dumps(messages[target], ensure_ascii=False),
@@ -299,8 +445,13 @@ def prepare(args: argparse.Namespace) -> None:
     tokenizer_info = json.loads((root / "tokenizer_info.json").read_text())
     tokenizer = Tokenizer.from_file(tokenizer_info["tokenizer_path"])
     policy = load_sampling_policy(args.prefix_config)
-    specs = source_specs(args.inventory_doc)
     task_dirs = [path for path in root.iterdir() if path.is_dir()]
+    if args.source_specs is None:
+        specs = source_specs(args.inventory_doc)
+    else:
+        if not args.stage:
+            raise ValueError("--stage is required with --source-specs")
+        specs = configured_source_specs(args.source_specs, args.stage, task_dirs)
     assignments: dict[str, list[Path]] = {spec.source_id: [] for spec in specs}
 
     for task in task_dirs:
@@ -317,7 +468,9 @@ def prepare(args: argparse.Namespace) -> None:
     for source in specs:
         if source.raw_root is not None:
             try:
-                samples, available = reservoir_raw_samples(source, args.samples_per_source, args.seed)
+                samples, available = reservoir_raw_samples(
+                    source, source.sample_count or args.samples_per_source, args.seed
+                )
             except FileNotFoundError:
                 if not args.allow_pending_raw:
                     raise
@@ -337,7 +490,7 @@ def prepare(args: argparse.Namespace) -> None:
                 assignments[source.source_id],
                 policy,
                 tokenizer,
-                args.samples_per_source,
+                source.sample_count or args.samples_per_source,
                 args.seed,
             )
         if available == 0:
@@ -440,7 +593,19 @@ JUDGE_RESPONSE_FORMAT = {
                     "additionalProperties": False,
                 },
                 "usable_for_training": {"type": "boolean"},
-                "primary_problem": {"type": "string"},
+                "primary_problem": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "wrong_language",
+                        "incoherent",
+                        "incorrect",
+                        "low_quality",
+                        "low_value",
+                        "format_error",
+                        "other",
+                    ],
+                },
                 "assessment": {"type": "string"},
             },
             "required": [
@@ -451,6 +616,33 @@ JUDGE_RESPONSE_FORMAT = {
                 "usable_for_training",
                 "primary_problem",
                 "assessment",
+            ],
+            "additionalProperties": False,
+        },
+    },
+}
+
+COMPACT_JUDGE_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "compact_training_data_quality_audit",
+        "schema": {
+            "type": "object",
+            "properties": {
+                "primary_language": {"type": "string"},
+                "language_quality": {"type": "integer", "minimum": 1, "maximum": 5},
+                "instruction_answer_coherence": {"type": "integer", "minimum": 1, "maximum": 5},
+                "training_value": {"type": "integer", "minimum": 1, "maximum": 5},
+                "usable_for_training": {"type": "boolean"},
+                "primary_problem": {"type": "string"},
+            },
+            "required": [
+                "primary_language",
+                "language_quality",
+                "instruction_answer_coherence",
+                "training_value",
+                "usable_for_training",
+                "primary_problem",
             ],
             "additionalProperties": False,
         },
@@ -509,6 +701,74 @@ def call_judge(args: argparse.Namespace, sample: dict[str, Any]) -> dict[str, An
             if attempt < args.retries:
                 time.sleep(args.retry_sleep * (attempt + 1))
     return {**sample, "judge_model": args.model, "judge_error": last_error}
+
+
+def call_compact_judge(args: argparse.Namespace, sample: dict[str, Any]) -> dict[str, Any]:
+    payload = {
+        "form": sample["form"],
+        "task_name": sample["task_name"],
+        "prompt": sample["prompt"],
+        "assistant_target": sample["response"],
+    }
+    body = {
+        "model": args.model,
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "Audit this language-model training example. Score language quality, prompt/target "
+                    "coherence, and training value from 1 to 5. A concise direct answer is valid when the "
+                    "declared form requests direct-answer supervision. Return only the required JSON."
+                ),
+            },
+            {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
+        ],
+        "temperature": 0,
+        "top_p": 1,
+        "max_tokens": args.max_tokens,
+        "response_format": COMPACT_JUDGE_RESPONSE_FORMAT,
+    }
+    last_error = ""
+    for attempt in range(args.retries + 1):
+        try:
+            request = urllib.request.Request(
+                args.base_url.rstrip("/") + "/chat/completions",
+                data=json.dumps(body).encode(),
+                headers={"Content-Type": "application/json", "Authorization": "Bearer local"},
+                method="POST",
+            )
+            with urllib.request.urlopen(request, timeout=args.timeout) as response:
+                content = json.loads(response.read().decode())["choices"][0]["message"]["content"]
+            compact = json.loads(content)
+            issue = compact["primary_problem"]
+            issues = [] if issue.casefold() == "none" else [issue]
+            judgment = {
+                "primary_language": compact["primary_language"],
+                "language_quality": {"score": compact["language_quality"], "issues": issues},
+                "instruction_answer_coherence": {
+                    "score": compact["instruction_answer_coherence"],
+                    "issues": issues,
+                },
+                "training_value": {
+                    "score": compact["training_value"],
+                    "contributions": [],
+                    "issues": issues,
+                },
+                "usable_for_training": compact["usable_for_training"],
+                "primary_problem": issue,
+                "assessment": "compact fallback judgment after malformed detailed JSON",
+            }
+            return {**sample, "judge_model": args.model, "judgment": judgment, "compact_fallback": True}
+        except (OSError, TimeoutError, urllib.error.URLError, KeyError, ValueError, json.JSONDecodeError) as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+            if attempt < args.retries:
+                time.sleep(args.retry_sleep * (attempt + 1))
+    return {**sample, "judge_model": args.model, "judge_error": last_error, "compact_fallback": True}
+
+
+def judge_with_fallback(args: argparse.Namespace, sample: dict[str, Any]) -> dict[str, Any]:
+    result = call_judge(args, sample)
+    return call_compact_judge(args, sample) if "judge_error" in result else result
 
 
 def read_jsonl(path: Path) -> Iterable[dict[str, Any]]:
@@ -572,7 +832,7 @@ def audit(args: argparse.Namespace) -> None:
                     sample = next(iterator)
                 except StopIteration:
                     return
-                pending[pool.submit(call_judge, args, sample)] = None
+                pending[pool.submit(judge_with_fallback, args, sample)] = None
 
         fill()
         while pending:
@@ -613,7 +873,13 @@ def merge(args: argparse.Namespace) -> None:
         unexpected = merged.keys() - expected
         if missing or unexpected:
             raise ValueError(f"merge coverage mismatch: missing={len(missing)} unexpected={len(unexpected)}")
-        ordered = sorted(merged.values(), key=lambda row: (row["source_id"], row["sample_ordinal"]))
+        ordered = sorted(
+            merged.values(),
+            key=lambda row: (
+                row["source_id"],
+                row.get("sample_ordinal", row["sample_id"]),
+            ),
+        )
         atomic_jsonl(args.output, ordered)
         errors = sum("judge_error" in row for row in ordered)
         summary = {
@@ -637,6 +903,8 @@ def parser() -> argparse.ArgumentParser:
     prepare_parser.add_argument("--tokenized-root", type=Path, default=DEFAULT_TOKENIZED_ROOT)
     prepare_parser.add_argument("--prefix-config", type=Path, default=DEFAULT_PREFIX_CONFIG)
     prepare_parser.add_argument("--inventory-doc", type=Path, default=DEFAULT_INVENTORY_DOC)
+    prepare_parser.add_argument("--source-specs", type=Path)
+    prepare_parser.add_argument("--stage")
     prepare_parser.add_argument("--samples-per-source", type=int, default=100)
     prepare_parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     prepare_parser.add_argument("--samples-output", type=Path, required=True)

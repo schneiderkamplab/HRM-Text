@@ -35,6 +35,7 @@ def build_engine(args: argparse.Namespace):
     return VLLMEngine(
         ckpt_path=args.ckpt_path,
         prompt_mode=args.prompt_mode,
+        chat_template_path=args.chat_template_path,
         dtype=args.dtype,
         max_model_len=args.max_model_len,
         gpu_memory_utilization=args.gpu_memory_utilization,
@@ -56,7 +57,7 @@ def score(generations: list[str], ground_truths: list[dict[str, Any]]) -> dict[s
         if pred not in gt["valid_set"]:
             invalid += 1
             pred_counts["<invalid>"] += 1
-            item_correct = 1.0 / len(gt["valid_set"])
+            item_correct = 0.0
         else:
             pred_counts[pred] += 1
             item_correct = 1.0 if pred == gold else 0.0
@@ -98,7 +99,12 @@ def main() -> None:
     parser.add_argument("--max-tokens", type=int, default=1)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--condition", default="direct")
-    parser.add_argument("--prompt-mode", default="hrm_tokens")
+    parser.add_argument(
+        "--prompt-mode",
+        choices=("auto", "hrm", "hrm_tokens", "gemma_chat"),
+        default="auto",
+    )
+    parser.add_argument("--chat-template-path")
     parser.add_argument("--dtype", default="bfloat16")
     parser.add_argument("--max-model-len", type=int, default=4096)
     parser.add_argument("--gpu-memory-utilization", type=float, default=0.05)

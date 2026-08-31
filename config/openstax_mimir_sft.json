@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "license": "CC-BY-4.0",
+  "language": "en",
+  "pilot_target_rows": 50000,
+  "generation_oversample": 1.3,
+  "passage_min_chars": 800,
+  "passage_max_chars": 6000,
+  "passage_overlap_chars": 500,
+  "primary": {
+    "math_statistics": [
+      "algebra-1",
+      "algebra-and-trigonometry-2e",
+      "college-algebra-2e",
+      "contemporary-mathematics",
+      "elementary-algebra-2e",
+      "intermediate-algebra-2e",
+      "introductory-business-statistics-2e",
+      "introductory-statistics-2e",
+      "prealgebra-2e",
+      "precalculus-2e"
+    ],
+    "natural_health_sciences": [
+      "anatomy-and-physiology-2e",
+      "astronomy-2e",
+      "biology-2e",
+      "chemistry-2e",
+      "college-physics-2e",
+      "microbiology",
+      "nutrition",
+      "pharmacology",
+      "physics",
+      "population-health",
+      "university-physics-volume-1",
+      "university-physics-volume-2",
+      "university-physics-volume-3"
+    ],
+    "business_economics_professional": [
+      "business-ethics",
+      "entrepreneurship",
+      "introduction-business",
+      "introduction-intellectual-property",
+      "organizational-behavior",
+      "principles-economics-3e",
+      "principles-finance",
+      "principles-macroeconomics-3e",
+      "principles-management",
+      "principles-marketing",
+      "principles-microeconomics-3e"
+    ],
+    "social_sciences_humanities": [
+      "american-government-4e",
+      "introduction-anthropology",
+      "introduction-philosophy",
+      "introduction-political-science",
+      "introduction-sociology-3e",
+      "life-liberty-and-pursuit-happiness",
+      "lifespan-development",
+      "psychology-2e",
+      "us-history",
+      "world-history-volume-1",
+      "world-history-volume-2",
+      "writing-guide"
+    ],
+    "computing_technical": [
+      "additive-manufacturing-essentials",
+      "foundations-information-systems",
+      "introduction-python-programming",
+      "principles-data-science",
+      "workplace-software-skills"
+    ]
+  },
+  "supplemental": [
+    "biology-ap-courses",
+    "chemistry-atoms-first-2e",
+    "college-algebra-corequisite-support-2e",
+    "college-physics-ap-courses-2e",
+    "college-success-concise",
+    "concepts-biology",
+    "preparing-for-college-success",
+    "principles-macroeconomics-ap-courses-2e",
+    "principles-microeconomics-ap-courses-2e",
+    "statistics"
+  ],
+  "task_families": {
+    "concept_explanation": 0.25,
+    "grounded_application": 0.20,
+    "misconception_correction": 0.20,
+    "worked_problem": 0.20,
+    "comparison_and_transfer": 0.15
+  },
+  "supplemental_sampling_weight": 0.25
+}

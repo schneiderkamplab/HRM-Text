@@ -1,5 +1,425 @@
 # Knowledge Bundle Update Log
 
+- 2026-08-31: Added a DFM11 Magpie-style chat program using only the
+  self-synthesis method, never historical Magpie rows. The pinned Gemma 4 31B
+  teacher generates separate Danish and English lanes; accepted quotas are
+  balanced 50/50 after language, quality, diversity, deduplication, and
+  task-aware audits, with a 20,000-row pilot before a proposed one-million-row
+  production corpus.
+
+- 2026-08-31: Deferred residual quality cleanup to DFM11 so DFM10 training can
+  start without another curation cycle. The DFM10 freeze boundary occurs only
+  after the separate workstream integrates the audited Danish Model Charter
+  package and completes authoritative resampling. The DFM11 plan covers
+  Folketing gates, Natural Instructions selection, legacy Danish BT retirement,
+  task-aware tool/math audits, English filters, and Mimir verification tails.
+
+- 2026-08-31: Recovered the MedQuAD English/Danish campaign after its original
+  corpus-level completeness gate rejected 16,027 fully translated and audited
+  pairs because 269 of 16,296 candidates remained incomplete. Candidate
+  coverage is now informational; 12,472 independently accepted pairs are being
+  tokenized in both languages, while row-level structural and quality gates
+  remain fail-closed.
+
+- 2026-08-31: Compared the DFM8 XL 1.65M EMA checkpoint with the completed
+  DFM9 2,127,489-step endpoint using finalized W&B averages. Standard remained
+  flat, but DFM, EuroEval, and every headline section regressed; recorded 1.65M
+  as the recommended DFM10 continuation baseline, with DFM9 retained only as
+  an optional short A/B branch.
+
+- 2026-08-30: Added a detached, lock-safe finalization and publication chain
+  for the four Mimir benchmark campaigns. It waits for all 1,024
+  generation/audit shards, applies normalized-exact decontamination and
+  validation, reports rather than blocks on quota shortfalls, validates and
+  remotely verifies four independent Hugging Face packages, then tokenizes and
+  integrates them into DFM10.
+
+- 2026-08-30: Applied equal `max_per_file: 1000000` sampling caps to all four
+  Folketing-derived task families. Deferred regenerating the ten DFM10 epochs
+  until the active Mimir IFEval/BoolQ/DROP/event campaigns and queued
+  English/Danish MedQuAD adaptation finish; the current sampled corpus remains
+  the explicitly documented uncapped snapshot.
+
+- 2026-08-30: Implemented and queued the pinned MedQuAD English/Danish medical
+  QA campaign. The 16,296 candidate pairs preserve official source URLs and
+  medical metadata; a guarded eight-GPU Gemma 4 31B translation and independent
+  audit pass will produce separately selectable repeat-1 English and Danish
+  subsets before tokenization and lock-protected DFM10 integration.
+
+- 2026-08-30: Queued six ordered post-reconciliation DFM10 quality-audit
+  stages behind the active Mimir campaign. Added exact token-array sampling,
+  per-task stratification, persistent eight-GPU judging, atomic status,
+  resumable partitions, source-completeness gates, and final admission gates
+  for the six unfinished persona/Mimir packages. Subsequently made the
+  combined English/Danish MedQuAD campaign an explicit predecessor so the two
+  waiters cannot race for GPUs after Mimir exits.
+
+- 2026-08-30: Finalized, tokenized, published, and integrated the 150,000-row
+  Mimir answer-contract corpus after a 1,596/1,600 usable E4B audit with zero
+  judge errors. Added a production runbook and launched the verifier-backed
+  IFEval, BoolQ, DROP, and event/coreference programs through a resumable shared
+  1,024-shard queue containing 990,000 grounded candidate requests.
+
+- 2026-08-30: Staged DFM10's first narrow medical tranche for the next union
+  rebuild: 13,203 pinned
+  CC-BY-4.0 ELRC English-Danish pairs became 26,406 bidirectional rows, and
+  1,602 MIT synthetic NHS notes became 4,756 grounded classification/span
+  rows after identifier redaction and encoding repair. The two sources add
+  about 6.68M sampled Gemma-native tokens per epoch. Real-row inspection also
+  established that ELRC contains substantial generic EU-policy prose, so its
+  prompts no longer claim every row is medical and its weight remains modest.
+
+- 2026-08-30: Added a license-gated DFM10 medical-data plan. It records the
+  explicit Laegehaandbogen/Patienthaandbogen TDM exclusion, identifies the
+  already-local 27.07M-token CC0 Health Hovedstaden corpus, and ranks Danish
+  and English Hugging Face candidates with provenance, privacy,
+  decontamination, and medical-safety gates.
+
+- 2026-08-30: Finalized and published the 4,438-row Domsdatabasen grounded-chat
+  package and the expanded 37,119-row FrameNet and 13,055-row Danish lexical
+  sentiment packages. All three passed local validation and complete remote
+  file-set verification. The DFM10 export inventory now records 61 uploaded,
+  zero ready-for-upload, and six work-in-progress packages; lock-protected
+  union watchers serialize Doms and eventual persona activation behind older
+  tokenization work.
+
+- 2026-08-30: Reconciled all 61 materialized DFM10 exports against their live
+  Hub package manifests. Republished the final 37,135-row FrameNet, 13,698-row
+  lexical-sentiment, and unchanged-count 49,787-row Danish Wikipedia chat
+  builds after detecting stale remote shard hashes. All 61 now match local row,
+  source, shard-size, and shard-SHA metadata exactly.
+
+- 2026-08-30: Kept Danish persona chats fail-closed after the first complete
+  campaign pass retained 1,834 seven-turn chats against its 2,000-row minimum.
+  The resumable retry fills only incomplete generation/audit records; if that
+  does not close the 166-row deficit, production requires a separately audited
+  deterministic seven-turn top-up rather than weakening the distribution gate.
+
+- 2026-08-30: Superseded the persona seven-turn top-up requirement by explicit
+  owner approval. The final floor is 1,850 independently accepted rows, met by
+  the existing 1,852; all other per-length gates and the original 25,000
+  deterministic candidates remain unchanged.
+
+- 2026-08-30: Finalized, tokenized, published, and integrated the approved
+  22,284-row Danish persona package. It contributes 110,290 supervised turns
+  with zero tokenization skips; remote revision
+  `ed6f54ad347a6e2d0ced84abafaa5d46bae83198` matches the local package
+  manifest and shard checksum. The canonical union now has 15,734 tasks.
+
+- 2026-08-30: Promoted the completed Tidsskrift campaign from stale WIP state.
+  Published and remotely verified 132,444 grounded SFT rows and 23,213 grounded
+  chats; all 64 materialized DFM10 packages now match their Hub manifests.
+  The Mimir answer-contract stratified audit also completed with 1,596/1,600
+  usable samples and no judge errors, leaving final admission/build pending.
+
+- 2026-08-30: Superseded partial terminal closure for grounded Tidsskrift
+  SFT/chats. All shards now require 100% structural generation/audit coverage;
+  retained responses are repaired and incomplete done markers are requeued
+  without weakening row-level quality gates.
+
+- 2026-08-30 (**superseded later the same day**): Completed all 256 Tidsskrift chat shards after introducing
+  non-destructive terminal closure floors of 97.5% for chat and 97% for SFT.
+  The floors exclude persistent malformed or audit-incomplete requests rather
+  than admitting them: 161/165 chat rows and 270/277 SFT request batches were
+  retained from five threshold-edge shards. The active SFT campaign reached
+  108/256 shards with eight workers active and no failed queue entries.
+
+- 2026-08-30: Completed the Danish research-source campaign and released all
+  eight GPUs. Zero-error E4B samples accepted Bornholmsk 94%, COR.SEM 100%,
+  checked book ads 98%, and SKS commentary 94%. DiEm generated 1,258/1,259
+  targets and retained 1,167 independently accepted rows (1,658,595 tokens per
+  pass). All five slices are integrated in the 15,728-task DFM10 union and
+  remain export-manifest WIP only because resampling/publication are pending.
+
+- 2026-08-30: Superseded destructive exact-eight validation for Tidsskrift SFT
+  generation. The pipeline now salvages individually valid examples from short,
+  mixed-validity, and truncated batches, records partial-recovery counts, and
+  reparses stored raw responses before new inference. Offline recovery restored
+  6,272 paid-for request batches and 35,379 valid examples; the resumed queue
+  prioritizes the two missing chat shards before continuing SFT generation and
+  audit.
+
+- 2026-08-30: The project owner approved public upload of all 22 technically
+  validated `ready_for_upload` DFM10 packages, including the 13 policy-filtered
+  Sapient provenance partitions, after the recorded redistribution cautions
+  were presented. Added a resumable manifest-driven uploader with exact remote
+  file-presence verification; upload receipts are retained under
+  `logs/dfm10_ready_upload/`.
+
+- 2026-08-30: Completed the 384-shard Danish Wikipedia and OpenStax grounded
+  chat campaign with zero failed shards. Materialized and fully validated
+  49,787 Danish Wikipedia and 158,605 OpenStax upload rows; OpenStax contributes
+  847,838 supervised turns and tokenized with zero skips. Activated both in the
+  15,721-task DFM10 union and moved the OpenStax package from work in progress
+  to ready for upload.
+
+- 2026-08-30: Marked all five admitted Danish research-source packages as
+  work in progress in `exports_dfm10/manifest.json`. Materialized and tokenized
+  13,570 Bornholmsk, 130,111 COR.SEM, 73,301 checked book-ad, and 39,007 SKS
+  commentary rows. COR.SEM.EXT and raw SKS author text remain excluded. Queued
+  a shared-lock-safe campaign behind Tidsskrift for DiEm 31B generation,
+  independent E4B audits of all admitted sources, DiEm packaging/tokenization,
+  and final tokenized-union integration. Unfinished research roots are now
+  optional in generic union rebuilds; their dedicated finalizer remains
+  fail-closed.
+
+- 2026-08-30: Implemented the queued DFM10 Danish persona and Domsdatabasen
+  grounded-chat campaigns. Prepared 25,000 persona and 4,500 legal candidates
+  across 96 atomic shards; production retains every accepted row after strict
+  generation/audit gates. Added repeat-two persona and repeat-one legal union
+  policy, optional tokenized-tree wiring, local HF export specs, tests, and an
+  eight-GPU runner that waits behind the active lexical campaign without
+  rebuilding or resampling DFM10.
+
+- 2026-08-30: Implemented the queued DFM10 Danish persona and Domsdatabasen
+  grounded-chat campaigns. Prepared 25,000 persona and 4,500 legal candidates
+  across 96 atomic shards; production retains every accepted row after strict
+  generation/audit gates. Added repeat-two persona and repeat-one legal union
+  policy, optional tokenized-tree wiring, local HF export specs, tests, and an
+  eight-GPU runner that waits behind the active lexical campaign without
+  rebuilding or resampling DFM10.
+
+- 2026-08-30: Versioned the native DFM10 DeepDive, repaired DOLCI, Terminal,
+  and provenance-partitioned Sapient export set in the root export manifest.
+  The DFM10 union now excludes legacy Terminal and both direct/native legacy
+  DOLCI tool-use task families, records their replacement sources, and fails
+  if a superseded prefix leaks into a rebuilt union; sampler zero-caps remain
+  as a second guard.
+
+- 2026-08-30: Admitted `alexandrainst/domsdatabasen` to DFM10 only through the
+  `dfm10-domsdatabasen-grounded-chats` derivative: nonempty pseudonymized text,
+  no raw continuation, 3,000--4,500 accepted chats, 15,000--20,000 assistant
+  turns, repeat one, and mandatory privacy/grounding audit before tokenization.
+
+- 2026-08-30: Refined the Danish research-source decisions. Added all 6,785
+  official Bornholmsk parallel pairs from train, validation, and test in both
+  translation directions, preserving original split provenance while treating
+  none as held-out evaluation. Added a fail-closed DiEm historical-modernization
+  path using ALTO-only extraction, Gemma 4 31B target generation, and independent
+  E4B auditing. Marked CoRal out of scope and documented concrete COR.SEM,
+  Danish book-ad, and SKS TEI task contracts; COR.SEM.EXT remains excluded from
+  derived training under CC BY-NC-ND.
+
+- 2026-08-30: Registered the two research additions in DFM10 export staging.
+  `dfm10-bornholmsk-parallel` is a validated 13,570-row CC BY 4.0 package ready
+  for upload; `dfm10-diem-historical-modernization` is an explicit WIP record
+  for 1,259 prepared requests and cannot materialize before generation/audit.
+
+- 2026-08-30: Made DFM10's 4K boundary explicit. Native Nemotron Terminal,
+  DeepDive, and repaired DOLCI tokenization now removes only complete older
+  turns and never clips assistant targets; the DFM10 sampler drops all other
+  overlength examples by default so their source rows can be revisited in
+  dedicated long-context epochs.
+
+- 2026-08-30: Consolidated the DFM9/DFM10 long-context source record into a
+  dedicated 8K/16K/32K inventory. It separates public training candidates,
+  project-derived document objectives, measured DFM9 long-example families,
+  and evaluation-only datasets, including explicit LongAlign contamination
+  handling.
+
+- 2026-08-30: Registered `dfm10-danish-persona-chats` as an unmaterialized
+  DFM10 export work item targeting 20,000 accepted chats and about 100,000
+  assistant turns at repeat two. Measured Domsdatabasen's pseudonymized corpus
+  at 33.37M Gemma tokens and specified a rights-gated 3,000--4,500-conversation
+  grounded legal target rather than raw continuation.
+
+- 2026-08-30: Broadened the Danish data-source scan from model-building Hub
+  namespaces to linguistics, lexicography, archives, historians, literary
+  scholarship, and digital humanities. Added a ranked training/evaluation
+  survey, identified COR.SEM and structured historical sources as the strongest
+  gaps, and recorded which large humanities corpora already overlap DynaWord.
+
+- 2026-08-30: Implemented the DFM10 Danish Hub gap decisions without rebuilding
+  or resampling DFM10. Converted and tokenized all 1,360 Synthetic Values
+  Model Charter SFT rows (432,223 tokens; repeat 10 planned), exported all 1,360
+  preference pairs separately, and admitted no nominal holdout. The Croco-Munin
+  audit found only seven candidate-only prompts and excluded the second 50K
+  repository. Set Danish persona chat generation to five assistant turns on
+  average and deferred Domsdatabasen after a rights/privacy/impact review.
+
+- 2026-08-30: Added a concrete DFM10 Danish Hub gap-integration plan. It removes
+  four composite duplicate routes, separates model-charter SFT and DPO use,
+  gates the second Croco-Munin set on overlap and quality, defines a
+  persona-seeded 20k-chat campaign, and defers legal text pending rights and
+  privacy review.
+
+- 2026-08-30: Scanned nine Danish-researcher Hugging Face namespaces for DFM10
+  gaps. Prioritized the new model-charter SFT/DPO dataset, made the additional
+  Croco-Munin preference set conditional on overlap analysis, and recorded why
+  raw continuation, benchmark, hallucination, prompt-only, and redundant
+  sources should not be added directly.
+
+- 2026-08-30: Quantified duplicate DFM10 exposure for Wiki Instruct, Danish
+  verifiable reasoning, IFBench train, and Translation 100k through their
+  direct routes and `dfm-dyna-instruct`. The composite adds 273,022,333 tokens
+  per epoch above 1,117,174,612 configured-direct tokens; recorded a future
+  single-lineage rebuild requirement.
+
+- 2026-08-30: Uploaded the validated 213,354-row
+  `dfm10-arxiv-paper-summarization-sft` package publicly to
+  `schneiderkamplab/dfm10-arxiv-paper-summarization-sft`. Verified Hub commit
+  `f8b5b81d54e2ace242916b8f1dbd7dcc5248cb09`, all expected package files, and
+  the exact 217,828,007-byte compressed data shard; added it to the explicit
+  verified-upload inventory.
+
+- 2026-08-30: Materialized the exact 213,354-row inherited arXiv
+  excerpt-to-abstract task as the provenance-preserving, upload-ready
+  `dfm10-arxiv-paper-summarization-sft` package. Every training row matched a
+  unique Common Pile source record, retained row-level attribution and licence,
+  and passed complete row and canonical-content-hash validation. Recorded the
+  remaining exact-artifact materialization backlog.
+
+- 2026-08-30: Audited the complete DFM10 tokenizer lineage through inherited
+  DFM2--DFM9 sources. DFM2--DFM5 remain intentionally legacy-tokenized but are
+  not inherited as token arrays; DFM6 retokenized the active lineage with the
+  Gemma tokenizer. All 15,712 active DFM10 tasks resolve to Gemma-native roots,
+  sampled array checks found no vocabulary or index corruption, and key
+  multi-turn target counts agree with tokenized example counts. Recorded the
+  negligible fail-closed OpenHermes targets and the non-impacting grounded
+  Mimir length-check default as explicit limitations.
+
+- 2026-08-30: Materialized and structurally validated the first 150,000-row
+  Mimir answer-contract calibration candidate with 150,000 unique source rows,
+  no holdouts, and exact family quotas. Prepared a 1,600-row stratified E4B
+  audit and queued its eight-GPU runner behind the active Open Chats and
+  Tidsskrift campaigns; DFM10 integration remains gated on the audit.
+
+- 2026-08-30: Registered five planned Mimir benchmark augmentation datasets as
+  non-materialized work-in-progress records in the generated DFM10 export
+  inventory: IFEval verifier SFT, answer-contract calibration, event
+  coreference, DROP reasoning, and BoolQ entailment. Stable export identities
+  now survive inventory refreshes without presenting zero-row plans as
+  uploadable packages.
+
+- 2026-08-30: Verified DFM10 multi-turn supervision end to end for the Danish
+  Wikipedia chats. Chat tokenization expands every assistant turn into its own
+  prompt/response index pair with all preceding turns as context; canonical
+  Gemma tokenization produced 261,588 examples and 213,380,681 tokens with no
+  skips. Recorded and superseded the rejected legacy-tokenizer attempt.
+
+- 2026-08-30: Refined the post-integration Mimir benchmark-data plan. MMLU and
+  ARC-C capability augmentation is deferred until corrected post-DFM10
+  per-subject diagnostics exist; decontamination remains normalized-exact only.
+  Promoted answer-contract calibration to a primary 100k--200k slice after
+  auditing the distinct bare-letter, prefixed-letter, localized-label,
+  short-span, numeric/boxed, and structured-payload contracts used by the
+  standard, DFM, EuroEval, and current training paths.
+
+- 2026-08-30: Marked the Danish lexical sentiment and FrameNet export packages
+  as `work_in_progress` in the generated `exports_dfm10/manifest.json` until
+  additive natural-question generation, audit, tokenization, and package
+  refresh finish. The marker is generated, not a one-off manifest edit.
+
+- 2026-08-30: Cleared a stale Mimir campaign lock after verifying complete
+  640/640 main and 128/128 top-up state and no child workers or servers. The
+  queued natural Danish lexical campaign now waits on its all-GPUs-free gate;
+  the unrelated DFM10 Open Chats vLLM campaign was not disturbed.
+
+- 2026-08-29: Superseded the nine-row standalone Tidsskrift packaging plan.
+  The nine gold summaries now form an explicit subset of the unified
+  `dfm10-tidsskrift-open-sft`, alongside at least 200,000 independently audited
+  Gemma 4 31B grounded rows. Added the separate
+  `dfm10-tidsskrift-open-chats` contract for audited 2–10 exchange student
+  inquiry conversations below 4,096 rendered tokens, plus the all-article,
+  resumable eight-GPU production runbook.
+
+- 2026-08-29: Added a resumable Gemma 4 31B generation and independent-audit
+  pipeline for 47,854 natural Danish lexical interactions: 14,008 sentiment
+  and 33,846 FrameNet rows. These are additive to, rather than replacements
+  for, the 5,982 existing batched gold rows. Exact signed polarities and frame
+  labels are deterministically enforced; the queued eight-GPU campaign waits
+  for the active Mimir campaign and owns only its own vLLM server PIDs.
+
+- 2026-08-29: Placed `dfm10-tidsskrift-open-article-summaries` under an
+  explicit publication hold. Its nine validated, openly licensed rows remain
+  local until the hold is explicitly lifted; the hold does not cover the
+  Danish FrameNet or lexical-sentiment SFT packages.
+
+- 2026-08-29: Completed the strict-open Tidsskrift.dk OAI inventory with
+  127,510 unique records across 232 journal sets. After explicit-license and
+  overlap gates, 2,173 new candidates remain and 758 have usable author
+  abstracts. Added abstract-removal and residual target-leakage checks.
+
+- 2026-08-29: Integrated 5,982 deterministic Danish lexical SFT rows
+  (2,389,573 Gemma tokens) from the explicitly licensed DSL sentiment and
+  FrameNet resources, and started strict 100-row DynaWord modernization and
+  spoken-normalization pilots.
+
+- 2026-08-29: Finalized the DynaWord pilots. Kalliope retained 60/99
+  successfully generated rows with substantive edits and remains a viable
+  production candidate behind full audit. VoxPopuli retained 79/100, but 67
+  accepted rows were near-copies, so it is not admitted to DFM10.
+
+- 2026-08-29: Materialized the strict-open Tidsskrift instruction package.
+  Structural conversion yielded 24 candidates; a Gemma 4 31B grounding and
+  usefulness audit plus duplicate-target filtering retained 9 rows (5 English,
+  4 Danish). The final tokenized source has 21,376 Gemma tokens and is linked
+  into the 15,708-task DFM10 union at repeat one.
+
+- 2026-08-29: Clarified the Tidsskrift.dk holding: DFM10 contains the 62,934-row
+  train split of the CC-BY-derived backtranslation corpus (38.33M tokens from
+  3,359 source articles), while the raw article corpus and BT eval split are not
+  locally downloaded.
+
+- 2026-08-29: Completed the expanded OpenStax grounded-SFT run and DFM10
+  integration. All 64 shards succeeded; the final corpus has 50,000 audited
+  rows, 8,592,140 Gemma-rendered tokens, a maximum 859-token row, and 16
+  tokenized tasks linked into the canonical DFM10 union at repeat one.
+
+- 2026-08-29: Materialized and fully validated 25 upload-ready DFM10 dataset
+  packages under `exports_dfm10/` without uploading them. The 26 GB staging
+  tree contains 69,364,759 chat-normalized rows with cards, checksummed
+  manifests, provenance, and standalone validators. Hub API checks resolved
+  all 159 inherited DFM8 repositories and all nine DFM9 additions; agreement-
+  backed Lex.dk and DBC remain deliberately excluded from public staging.
+
+- 2026-08-29: Added a fail-closed DFM10 integration path for the expanded
+  OpenStax grounded-SFT run. Only rows from the 61 immutable historical CC BY
+  artifacts can enter; all 64 shards must complete with zero failures, every
+  row must pass the independent 4/5 audit and 4,096-token gate, and the source
+  is sampled once under `openstax_mimir_sft__`. The 10,000-row pilot remains a
+  separate baseline and is not linked into DFM10.
+
+- 2026-08-29: Activated the English OpenStax relevance allowlist for the Mimir
+  augmentation pipeline using only immutable official artifacts. The corrected
+  text-only pool contains 61 books, 20,047 unique passages, and 95,979,948
+  characters; media, third-party permission-only modules, and the
+  provenance-poor Hugging Face repack are excluded. The initial Additive
+  Manufacturing pin was superseded by the internally consistent CC BY commit
+  `26653ddb1048708bd974e8c11471e426b1ff5520`. The initial pilot completed with
+  10,000 accepted rows; all were below 4,096 rendered training tokens. It was
+  preserved and followed by an expanded 65,000-request run targeting 50,000
+  accepted rows. Expanded-run rows are checked with the DFM8 Gemma
+  tokenizer/template and rejected above 4,096 rendered training tokens.
+
+- 2026-08-29: Audited OpenStax's official source history and retained editions,
+  producing `docs/openstax_cc_by_inventory.csv` with 107 independently
+  retrievable CC BY 4.0 editions/volumes. The inventory pins 75 source trees to
+  immutable commits, records version identifiers or hashes for other artifacts,
+  and quarantines overwritten nursing PDFs and conflicting Business Law
+  metadata pending recovery and verification.
+
+- 2026-08-29: Corrected the DFM10 completion assessment after reconciling the
+  178-source audit with active prefixes. Scientific Summaries is repaired but
+  not integrated; DA-AR and DA-UK remain enabled contrary to their documented
+  exclusion decision; and several lower-priority `Filter`/`Repair` families
+  still require explicit disposition before final sampling.
+
+- 2026-08-29: Added a detailed Mimir v1 (DFM8 XL step 1,650,000)
+  evaluation-gap analysis. It identifies technical science, professional
+  knowledge, compositional reasoning, and grounded factual QA as credible data
+  priorities, while recording that MMLU high-school mathematics is invalid as
+  a capability signal because 98.9% of outputs violated the one-letter answer
+  contract. Follow-up reproduction identified immediate Gemma `<turn|>` output
+  under a legacy HRM prompt. The evaluator now validates tokenizer/template
+  compatibility, derives legacy termination IDs, supports safe automatic prompt
+  selection, and gives malformed MCQ output zero rather than chance credit.
+
+- 2026-08-29: Completed source-grounded recovery for Danmarks Statistik BT
+  (5,627 final rows) and Danish university portals (3,049 final rows), deferred
+  complete-report GovReport recovery to a future 8K+ DFM10 variant, and started
+  additive 31B-generation/E4B-audit recovery for WikiCatSum without weakening
+  its existing strict corpus.
 ## 2026-08-31
 
 - Verified the transferred 92.66B-token DFM10 sample, repaired its relocatable
@@ -51,10 +471,38 @@
   GAS, static recurrent execution, recurrent-aware distribution, and
   time-to-quality improvements. No new experiment was approved by this entry.
 
+- 2026-08-29: Added an exact production inventory for all 13 DFM10 repaired
+  replacement families, measured from the disabled legacy and active repaired
+  token arrays. The inventory distinguishes stored pre-sampling rows/tokens
+  from caps, repeats, packing, and epoch sampling. The DOLCI baseline counts
+  only the DFM9-active native conversion, not two older already-disabled
+  representations; GovReport's complete-input repair explains its higher
+  token count despite fewer rows.
+
 - 2026-08-29: Fused seqused FA4 prefix/causal output selection and padding
   zeroing in a NaN-safe custom-autograd Triton boundary. Direct FA4 outputs
   and gradients are bit-identical; a 100-step XXL A/B reduced median step time
   by 4.01% and mean step time by 3.39%.
+
+- 2026-08-29: Completed the NordjyllandNews production repair. The exhaustive
+  Gemma 4 31B audit retained 47,120/73,097 candidates (64.46%); an independent
+  800-row post-filter gate passed 797/800 (99.625%). The strict replacement is
+  tokenized as 26,590,391 Gemma-native tokens and is eligible at repeat one.
+
+- 2026-08-29: Materialized the completed Folketing audit into four accepted
+  source families with 13,225,678 rows total: 3,636,825 denoising, 3,105,440
+  error-correction, 3,573,233 prefix-continuation, and 2,910,180 span-filling.
+  Added a fail-closed finalizer that verifies exact full-audit counts before
+  tokenization. Production tokenization completed with zero skipped rows and
+  17,498,229,889 tokens. Rebuilt the DFM10 union with 11,719 task directories,
+  including all four Folketing families and the grounded Nordjylland repair.
+
+- 2026-08-29: Replaced the raw `oliverkinch/danish-university-portals-bt`
+  sampling path with a deterministic structural filter and exhaustive Gemma 4
+  E4B audit. Exact no-error coverage retained 2,147/4,505 rows and 1,034,131
+  unique Gemma-native tokens. DFM10 now disables the legacy prefix and samples
+  the strict replacement at repeat 10, reducing its per-epoch contribution
+  from 21,765,750 to 10,341,310 tokens.
 
 - 2026-08-29: Completed a checkpoint-based 1,000-step eight-B200 comparison of
   `main` against FA4 `seqused+triton`. The optimized path reduced median step
@@ -62,8 +510,83 @@
   accuracy showed no adverse trajectory. Documented exact row-cursor resume,
   benchmark artifacts, memory use, and an excluded vLLM-contaminated launch.
 
+- 2026-08-29: Added the DFM10 DST table-prompts repair. The inherited prefix is
+  disabled. Exhaustive Gemma 4 31B review accepted only 133/3,016 cleaned
+  authentic targets and identified unsupported claims in 2,739 rows. The
+  replacement now preserves those 133 rows, regenerates only the 2,883 rejects
+  from their exact tables, and requires a second exhaustive grounding audit
+  before final filtering and Gemma-native tokenization. The independent audit
+  accepted 2,909/3,016 rows (96.45%); the 4,111,556-token result contributes
+  41,115,560 tokens per epoch at repeat ten. Its production marker now
+  satisfies the DFM10 union gate.
+
+- 2026-08-29: Added the Danmarks Statistik BT answer-matched prompt repair,
+  exhaustive E4B coherence gate, fail-closed DFM10 replacement prefix, and
+  GPU-idle orchestration. The source targets remain authoritative; only prompts
+  are regenerated, and indirect or context-dependent pairs are filtered.
+  Completion retained 3,086/7,154 original rows and tokenized 762,189 unique
+  tokens, contributing 7,621,890 tokens per DFM10 epoch at repeat ten.
+
+- 2026-08-29: Paused the additive Danmarks Statistik full-article recovery
+  after its generation pass and before merge/audit. Of 3,932 prepared requests,
+  2,156 generated valid records and 1,776 remain explicit retryable
+  structured-output truncation errors. All owned E4B servers were released.
+
+- 2026-08-28: Added the fail-closed WikiCatSum production finalizer, exact
+  full-audit coverage gate, and DFM10 replacement-prefix policy. **Superseded
+  detail:** a first merge trusted contradictory usable/complete booleans and
+  counted 263/300 pilot and 12,854/14,479 production rows. The authoritative
+  criterion also requires `primary_problem: none`: 244/300 pilot and
+  11,791/14,479 production rows pass. The 48 tokenized shards contain
+  2,317,983 tokens, or 4,635,966 per epoch at repeat two.
+
 ## 2026-08-28
 
+* **OPUS DA-EN deterministic repair started**: Sharded 29,261,517 canonical
+  bilingual pairs into 64 balanced Parquet files, calibrated Lingua direction
+  checks and LaBSE alignment filtering against the prior E4B audit, removed
+  OPUS provenance from the user-visible translation contract, and added
+  resumable scoring, conversion, re-audit, validation, tokenization, and DFM10
+  union hooks. Sampling activation remains gated on full scoring and the new
+  1,000-row accepted-pair audit.
+
+  **Completed 2026-08-28:** Accepted 20,577,773 pairs (70.32%), emitted and
+  tokenized 41,155,546 directional rows (3,629,237,788 tokens), and passed the
+  independent 1,000-row E4B gate at 97.3% usable and 87.2% strict with zero
+  judge errors. DFM10 now samples exactly 30M rows from the repaired 64-shard
+  prefix and samples zero rows from the legacy OPUS conversion.
+
+* **WikiCatSum grounding repair staged**: Replaced the inherited noisy-prefix
+  conversion with a 16-process, 48-shard evidence selector. A permissive
+  68,624-row draft failed its 300-row pilot at 33.67% strict usability and is
+  superseded. The calibrated version retains 14,479 title-anchored candidates
+  at 90% content and 50% bigram support; its row-level E4B grounding gate is
+  queued behind unrelated GPU work. **Superseded 2026-08-28:** the old-prefix
+  activation statement no longer applies; DFM10 now disables the old prefix
+  immediately and fails closed until the replacement passes completely.
+
+* **NordjyllandNews grounding repair prepared**: Replaced the one-shape summary
+  instruction with a headline-aware, exact-template conversion, deterministically
+  reduced 75,219 source rows to 73,097 complete candidates, and disabled the
+  inherited prefix. An E4B pilot was superseded after inconsistent judgments;
+  the authoritative Gemma 4 31B pilot accepted 493/800 under the strict gate.
+  Full-corpus audit, strict filtering, and post-filter validation are required
+  before the new repeat-one prefix can enter DFM10.
+
+* **Code Meta-Reasoning structured repair completed**: Replaced the flattened
+  empty-prompt interpretation with the authoritative structured AllenAI source,
+  restored six explicit task-family contracts, removed deliberately bad-code,
+  wrong-function, missing-image, recursive meta-task, malformed, and over-4K
+  rows, and retained 429,301 Gemma-native examples. The 600-row family-stratified
+  E4B quality gate passed 575/600 examples under the strict criterion. All rows
+  were tokenized into 667.31M tokens, the broken inherited prefix was disabled,
+  and the repaired prefix was capped to exactly 249,999 sampled rows.
+* **GovReport grounding repair completed**: Replaced the design that paired
+  truncated report prefixes with full summaries by an isolated exact-template
+  4K converter, audited all 1,845 complete candidates, and published 891 rows
+  passing strict completeness and grounding thresholds. The 2.99M-token
+  corpus passed its independent 200-row E4B audit at 99.5% usable; DFM10 now
+  disables the old prefix and samples the repaired corpus twice.
 * **DFM8 XXL one-node return at step 178000**: Restarted the existing
   coordinator/worker campaign on a fresh eight-B200 node and resumed W&B run
   `DFM5/40j5y877` from the protected regular checkpoint. The first attempt
@@ -107,7 +630,8 @@
   conversion with an atomic 16-process, Gemma-token-aware rebuild from complete
   structured fields. Added a deterministic eight-GPU E4B audit with exact
   merge and constrained-decoding recovery; its 320-row pilot passed at 91.88%
-  usable, and the full rebuild/audit campaign was launched.
+  usable. The 3.31M-row rebuild and 40,044-row production audit then completed
+  at 99.63% deterministic retention and 91.04% judged usability.
 * **Nemotron SWE structural repair**: Replaced the duplicated/contextless
   inherited windowing design with complete Gemma-native next-action examples
   and one explicitly selected assistant target per row. Preserved matched
@@ -117,6 +641,13 @@
   tokenization, added exhaustive validation and a deterministic 1,000-row
   behavior-stratified E4B audit, and wired the repaired prefix into DFM10 while
   disabling the superseded prefix.
+  **Superseded detail:** converter v3 had 2,466,262 rows and 6.615B rendered
+  tokens, but its agentless fit check unnecessarily included interactive tool
+  schemas. Converter v4 uses each task's actual tools and is authoritative:
+  2,472,316 structurally valid rows and 6,597,089,585 exact rendered tokens.
+  Its fresh 1,000-row audit completed with zero judge errors and 100% usable
+  decisions; manual review retained four mild agentless output-format
+  deviations and a few weak exploratory actions as useful supervision.
 
 * **DOLCI native tool-use repair**: Identified that the inherited converter
   dropped all `environment` tool results and reused call IDs, then added an
@@ -828,6 +1359,230 @@
   neutral versus default (`2.982--2.986 s` versus `2.987 s` median), so default
   remains recommended. Graph-enabled max-autotune exposed an output-lifetime
   error and remains a separate CUDA-graph integration task.
+- Added an opt-in SM100 FA4 PrefixLM path using `seqused_q`/`seqused_k` over
+  original packed Q/K/V storage. Direct B200 tests are bit-identical for
+  forward and all gradients, including prefix-only and padded batches.
+- Documented FA4's undefined gradients for `seqused`-excluded storage rows and
+  the required prefix/causal/padding masks. A corrected 40-step XXL run stayed
+  finite at 2.865 s median and 154148 MiB observed peak memory, about 4.1%
+  faster than the earlier controlled gather result. `gather` remains default
+  pending a clean bracketed A/B and longer resumed-checkpoint run.
+- Completed a clean same-tree gather control at 2.978 s median and 3.035 s
+  mean. The corrected `seqused` path is 3.79% faster by median, 4.08% faster by
+  mean, and used 7,376 MiB less observed peak GPU memory. Both runs remained
+  finite with nearly identical final loss and accuracy.
+- Reprofiled the corrected `seqused` path. Kernel launch rate fell about 31%,
+  index/radix work fell from 11.01% to 0.70%, and no radix-sort kernels remained.
+  Six full-QKV undefined-gradient masks per FA4 backward are now the clearest
+  target at 8.22% of summed kernel time; exposed NCCL is mostly 5--6%, so FSDP
+  restructuring moves behind mask fusion/pre-zeroed backward buffers.
+
+## 2026-08-28 - DynaWord instruction repair
+
+- Audited all 70,081 rows in the four `oliverkinch/da-instruct-dynaword*`
+  sources, conservatively dropping one repeated judge failure and damaged or
+  incomplete authentic targets.
+- Regenerated only 4,303 mismatched Danish prompts with Gemma 4 31B IT and
+  re-audited every repaired pair with E4B; no authentic target was rewritten.
+- Built and exhaustively validated a 65,548-row replacement with 39,422,832
+  Gemma-rendered tokens, disabled the four legacy prefixes, retained repeat
+  four for the repaired prefix, and rebuilt the DFM10 tokenized union.
+
+## 2026-08-29 - Mimir v1 evaluation contract audit
+
+- Audited the DFM8 XL 1,650,000-step EMA MMLU artifacts and corrected the
+  causal record: production used the Gemma chat template, while the
+  reasoning-prone subjects conflict with the historical one-token direct-answer
+  contract. A separate legacy-token probe exposed a real fail-closed requirement
+  but did not reproduce the production prompt path.
+- Made invalid standard MCQ outputs score zero, added strict unambiguous choice
+  extraction, explicit Gemma MCQ answer instructions, and tokenizer-contract
+  validation that rejects legacy HRM markers for Gemma exports.
+- Added MMLU-aware shard aggregation. A remerge of the historical artifacts now
+  reports 57 subjects and reconstructs all 14,042 subject-level examples instead
+  of the misleading aggregate `n=228`.
+- Confirmed two independent result artifacts: expanded PIQA EN rejected correct
+  bare letters because its wrapper contract differed from the scorer, and the
+  Generative Talemaader judge was truncated before every required grade line.
+- Queued a four-shard corrected MMLU rerun under
+  `logs/scheduler/mimir_v1_mmlu_corrected_20260829`, gated on fully free GPUs and
+  configured to retain generations and merge locally before any W&B overwrite.
+* **2026-08-29 - English OpenStax relevance allowlist:** Classified the 91
+  recoverable English CC BY editions into 51 primary Mimir grounding sources,
+  10 overlap-capped supplements, and 30 superseded/duplicate editions. Recorded
+  exact inventory slugs and retained the existing pinned-artifact and legal
+  activation gates.
+* **2026-08-29 - DFM10 final source reconciliation:** Disabled DA-AR and the
+  inherited DA-UK source, queued an eight-shard language/alignment-filtered
+  DA-UK rebuild, integrated the validated Scientific Summaries repair, and
+  rebuilt QReCC-II/SciBench with explicit complete response contracts. Added a
+  measured reconciliation for all 32 audited Filter sources, removed aggressive
+  repeats from borderline Danish sources, and recorded the final production
+  gates before union rebuild and ten-epoch sampling.
+# 2026-08-30
+
+- Completed Danish Wikipedia grounded-chat generation/audit: all 128 shards,
+  49,787 accepted chats, and 261,588 supervised assistant turns. Downstream
+  materialization, export staging, tokenization, union activation, and DFM10
+  resampling remain pending behind the shared OpenStax runner.
+- Registered the active Danish Wikipedia, OpenStax, and Tidsskrift generation
+  efforts in `exports_dfm10/manifest.json` as four package-level WIP records.
+  Added an inventory-only refresh command so pending packages do not require
+  empty or misleading upload-ready directories.
+- Reconciled Tidsskrift production with the completed strict-open harvest:
+  audit all 189,392 available SFT candidates, require at least 125,000 accepted
+  rows, and require 18,000 chats/100,000 supervised assistant turns. Added a
+  lock-based handoff that starts generation after the active Wikipedia/OpenStax
+  campaign releases all eight GPUs.
+- Corrected the open grounded-chat shard gate after production showed that
+  requiring every one of 400--650 requests to survive malformed-output retries
+  incorrectly failed otherwise complete shards. Shards now require 98% valid
+  generated-and-audited coverage; failed rows remain excluded and the global
+  accepted-chat and assistant-turn gates remain fail-closed.
+
+# 2026-08-29
+
+- Prepared and queued two fail-closed DFM10 grounded-chat campaigns: 50,000
+  Danish Wikipedia candidates with a 150,000-assistant-turn gate, and 160,376
+  requests over 20,047 verified OpenStax passages with a 500,000-turn gate.
+  Both retain source attribution, use independent Gemma 4 31B generation and
+  audit, tokenize one target per assistant reply, and wait behind the active
+  Tidsskrift campaign rather than competing for GPUs.
+- Added a resumable, rate-limited, article-rights-gated Tidsskrift.dk OAI
+  harvester; prepared audited-generation candidates from new DynaWord
+  VoxPopuli and Kalliope sources while excluding DaKultur contamination; and
+  integrated 5,982 gold DSL sentiment/FrameNet rows totaling 2,389,573 Gemma
+  tokens at one pass.
+- Surveyed Andersen/DSL-related Danish corpus candidates, recording explicit
+  license gates for diaries, letters, literary editions, and annotation data.
+  Reconciled local DynaWord 1.2.16 with Hub release 1.2.22 and identified six
+  added configs totaling about 2.985B text tokens. Corrected the local
+  Tidsskrift holding record and specified a fail-closed OAI-PMH harvest for a
+  larger article-level openly licensed corpus.
+- Added the completed 50,000-row OpenStax Mimir SFT corpus to DFM10 Hugging
+  Face export staging under CC BY 4.0. Corrected Andersen provenance to the
+  public AGPLv3 `ogierMontanus/hcandersenDk_data_2024` TEI corpus and recorded
+  the Folketing/Rigsarkivet handover 14004 CC BY 4.0 terms. Published the
+  validated 1,068-row Andersen training package to
+  `schneiderkamplab/dfm10-andersen-modernization`; the held-out 119-row
+  evaluation split was not uploaded. **Superseded publication scope:** all 26
+  prepared DFM10 packages were subsequently uploaded publicly under
+  `schneiderkamplab/dfm10-*`. A complete remote file, size, and LFS-hash audit
+  verified 69,414,759 rows and 27,163,247,201 compressed data bytes without a
+  mismatch.
+- Ranked additional open-book sources for grounded SFT. Prioritized the already
+  downloaded CC BY Open Logic source, then exact-edition Open Textbook Library
+  and BCcampus pilots, with OAPEN/DOAB behind stricter per-book license and
+  retrieval gates; recorded existing Gutenberg and Danish DOAB overlap.
+- Completed the repaired 15,689-task DFM10 union and ten production epochs at
+  101,731,426,509 tokens per epoch, with exact row and index-bound validation.
+- Validated the repaired DA/UK translation output with a source-weighted E4B
+  audit: 95/100 rows usable at one-pass sampling weight.
+- Made final DFM10 production recovery-safe: WikiCat can resume at its E4B
+  audit after completed generation, model phases wait for stable idle GPUs, and
+  final sampling gates on fully-written artifacts instead of historical PIDs.
+- Materialized the Mimir English OpenStax allowlist from 61 immutable official
+  CC BY artifacts, with no `izumi-lab/open-text-books` rows, and prepared a
+  provenance-preserving 13,000-request pilot targeting 10,000 accepted SFT
+  rows. The pilot is queued behind the active WikiCat recovery workload.
+- Invalidated the first MMLU failure-ontology aggregate after finding 4,896
+  malformed JSON classifications among 5,630 requests. Updated the classifier
+  to preserve and recover constrained output and to retry failed rows correctly;
+  the invalid aggregate is quarantined until a complete rerun succeeds.
+- Implemented and queued the separate Mimir five-by-100k campaign: 130k
+  candidates per category across 640 atomic shards, eight restart-safe Gemma 4
+  31B generation/audit workers, strict category and MCQ contracts, and a
+  fail-closed final build requiring exact quotas and benchmark decontamination.
+- Corrected the Mimir 500k structural checker after a 40-shard sample showed
+  that valid substantive verification strings were being rejected. Requeued
+  all affected shards without interrupting workers and retained superseded done
+  markers for auditability.
+- Narrowed Mimir 500k benchmark decontamination to reproducible normalized exact
+  matching only. Added the canonical benchmark manifest and report generator;
+  finalization now verifies the exact-mode marker and performs no lexical or
+  semantic similarity screening.
+- Superseded the Mimir 500k output cap: finalization now retains all accepted
+  unique rows and combines a separately versioned 130k-candidate Technical/STEM
+  top-up that must contribute at least 100k additional accepted rows. The
+  exact-only decontamination report and final builder cover both roots.
+- Completed the expanded Mimir campaign on 2026-08-30: 640/640 base and 128/128
+  top-up shards passed with no failed shards, yielding 732,763 unique accepted
+  rows and about 164.7M training tokens. Exact decontamination found zero
+  matches among 736,127 accepted candidates against 44,982 benchmark units.
+  Replaced the incompatible PIQA legacy dataset-script loader with the
+  canonical static AI2 validation artifact and recorded its archive SHA-256.
+- Staged the completed 732,763-row augmentation as the upload-ready local DFM10
+  package `dfm10-mimir-grounded-expanded-sft`: three deterministic checksummed
+  gzip shards, complete row-level provenance, dataset card and license notice,
+  standalone validator, successful validation receipt, and matching root
+  export inventory. No Hugging Face upload was performed.
+- Integrated the expanded Mimir package into the DFM10 preparation path at
+  repeat one. All 732,763 rows tokenized without skips into three tasks and
+  138,161,296 Gemma-native tokens; the 15,711-task tokenized union includes
+  them. Marked the older sampled DFM10 epochs as predating this addition rather
+  than silently treating their unchanged indices as current.
+- Published and remotely verified all 24 DFM10 packages marked
+  `ready_for_upload` on 2026-08-30 (122,249,521,523 local bytes). Added a
+  receipt-backed resumable upload runner, corrected the AI Arena card language
+  marker from invalid `mixed` to `multilingual`, and promoted the exact
+  verified set into the canonical uploaded-package inventory.
+- The first DFM10 persona/Domsdatabasen production launch prepared all 29,500
+  requests but stopped before generation when the GPU 0 vLLM server failed to
+  become ready. No campaign server remains active and both export packages
+  remain non-materialized WIP entries; the prepared requests are reusable.
+- Lifted the publication hold on the five completed Bornholmsk, COR.SEM,
+  Danish Book Ads, DiEM modernization, and SKS TEI packages. All five were
+  uploaded to `schneiderkamplab`, remotely file-set verified, and added to the
+  canonical uploaded inventory. Corrected the Bornholmsk dataset-card language
+  field from the invalid dialect tag `da-bornholm` to ISO `da` before upload.
+- Replaced the standalone Mimir answer-contract waiter with a retrying DFM10
+  shortest-work-first queue. It waits for Tidsskrift, then runs Doms/persona
+  (Doms shards first), Danish lexical generation/audit, and the answer-contract
+  audit; one exhausted stage no longer strands all later work.
+- Recovered the DFM10 shortest-work-first queue after its persona/Doms clients
+  failed before inference because `pyarrow` was absent from the `audit` conda
+  environment. Installed `pyarrow==25.0.1` using `uv pip`, added dependency
+  preflight and per-stage log isolation, reset the queue, and verified all eight
+  GPUs serving and processing Doms generation at 100% utilization.
+- Added a separate post-integration benchmark-data plan for Mimir. It
+  prioritizes deterministically verified instruction following,
+  event/coreference commonsense, and executable passage arithmetic before
+  measured MMLU/ARC and BoolQ top-ups, with explicit shadow-eval and
+  contamination firewalls.
+- Started the validation-gated ten-epoch DFM10 resample from the current
+  Gemma-native tokenized union. Added `scripts/resample_dfm10_current.sh` to
+  stage, validate, preserve the prior snapshot, and promote safely; also made
+  the Filter reconciliation report tolerate audit-only unmatched records that
+  have no sampled-row estimate.
+- Completed and promoted the current ten-epoch DFM10 sample: 15,737 tokenized
+  tasks, 232,138,339 rows and 103,143,215,009 tokens per epoch over a
+  212,996,621,848-token backing array. All spans passed bounded validation and
+  the 2026-08-29 sample remains available as
+  `data/sampled_dfm10_pre_20260830`. Recorded the exact DFM8 comparison and the
+  exclusion of four still-running Mimir campaigns from this snapshot.
+- Assessed the sampled Folketing weight. Its four correlated reconstruction
+  families provide valuable formal/historical Danish coverage but occupy
+  17.497B tokens (16.96%) per epoch from 3.66M underlying windows; recorded the
+  independent 87/100 usability result, the weaker 18/25 error-correction slice,
+  and a non-binding approximately 4.97B-token capped diagnostic mix.
+- Refined the proposed Folketing remediation to a strict quality decision per
+  3.66M underlying source windows followed by equal 1M-row caps on all four
+  task families. The cap alone is approximately 5.36B tokens/epoch; the
+  independent no-issue criterion retained 59/100, but its row labels cannot be
+  applied to the full corpus without a new window-level filter.
+- Clarified DFM9/DFM10 scale: current DFM10 is 9.81% larger by tokens but 4.42%
+  smaller by rows; the proposed equal Folketing caps would make it roughly
+  91.00B tokens/epoch, 3.12% below DFM9, solely because they remove about
+  12.14B tokens of correlated Folketing exposure.
+- Recorded the DFM9 quality comparison: DFM10's repaired representations and
+  grounded/native additions are materially better engineered, but downstream
+  superiority remains unproven for the uncapped 17%-Folketing mix. The
+  filtered/capped mix is expected to be broadly stronger and should be tested
+  by an equal-token continuation A/B from one checkpoint.
+- Corrected “less math” to the precise claim: DFM10 has 4.463B fewer
+  OpenMathInstruct2 tokens because it retains 7.49M verified, PRM-filtered,
+  deduplicated, and decontaminated rows instead of DFM9's 25.02M duplicated
+  CoT/direct rows. This does not establish that total math supervision is lower.
 
 ## 2026-08-30 - DFM8 XXL skip-only production boundary
 

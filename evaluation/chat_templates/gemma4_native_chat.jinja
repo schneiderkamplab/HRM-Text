@@ -285,7 +285,9 @@
                         {%- endfor -%}
                         {#- Handle content as string or content-parts array -#}
                         {%- set tool_body = follow.get('content') -%}
-                        {%- if tool_body is string -%}
+                        {%- if tool_body is mapping -%}
+                            {{- format_tool_response_block(ns_tname.name, tool_body) -}}
+                        {%- elif tool_body is string -%}
                             {{- format_tool_response_block(ns_tname.name, tool_body) -}}
                         {%- elif tool_body is sequence and tool_body is not string -%}
                             {%- set ns_txt = namespace(s='') -%}

@@ -10,11 +10,17 @@ dependencies = [
     "datasets",
     "einops",
     "hydra-core",
+    "langdetect",
+    "lxml",
+    "lingua-language-detector",
     "numba",
     "numpy",
     "omegaconf",
     "pydantic",
+    "pyarrow",
+    "pypdf",
     "pyyaml",
+    "requests",
     "safetensors",
     "sympy",
     "tqdm",
@@ -24,6 +30,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+data-quality = [
+    "sentence-transformers",
+]
 cpu = [
     "torch",
 ]

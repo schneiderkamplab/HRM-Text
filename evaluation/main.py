@@ -70,6 +70,12 @@ FINAL_INTEGER_RE = re.compile(
     re.IGNORECASE,
 )
 
+CHOICE_LETTER_RE = re.compile(
+    r"^(?:\(?\s*(?P<bare>[A-Z])\s*\)?[.)]?|"
+    r"(?:final\s+)?answer\s*(?:is|:)?\s*\(?\s*(?P<label>[A-Z])\s*\)?[.)]?)$",
+    re.IGNORECASE,
+)
+
 
 def _extract_final_integer(text: str) -> str:
     matches = list(FINAL_INTEGER_RE.finditer(text))
@@ -78,11 +84,20 @@ def _extract_final_integer(text: str) -> str:
     return matches[-1].group("answer").replace(",", "")
 
 
+def _extract_choice_letter(text: str) -> str:
+    match = CHOICE_LETTER_RE.fullmatch(text.strip())
+    if match is None:
+        return text
+    return str(match.group("bare") or match.group("label")).upper()
+
+
 def _extract_for_scoring(text: str, extractor: Optional[str]) -> str:
     if extractor is None:
         return text
     if extractor == "final_integer":
         return _extract_final_integer(text)
+    if extractor == "choice_letter":
+        return _extract_choice_letter(text)
     raise ValueError(f"Unknown score_extractor: {extractor}")
 
 

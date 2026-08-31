@@ -63,6 +63,15 @@ Conversion details:
 - CoEdIT: src→instruction, tgt→response
 - ASSET: original→instruction, simplification→response
 
+**Superseded for DFM10 on 2026-08-30:** the historical Terminal Corpus
+conversion flattened prior native roles into labelled text inside one user
+message and collided on the repeated `data_filtered.parquet` basename. DFM10
+does not inherit those four legacy tokenized tasks. It uses
+`scripts/prepare_nemotron_terminal_native.py`, which preserves 366,154 original
+conversations across 29 source-relative files and delegates expansion of all
+3,101,906 assistant turns to `scripts/tokenize_chat_template.py`. This
+supersession does not rewrite the historical DFM9 sampling record below.
+
 ## Tokenization
 Tokenized via `scripts/tokenize_chat_template.py` (same pipeline as DFM8/DFM9
 existing data). Tokenizer: `/work/dfm/brainsurgery/models/gemma4_31b/tokenizer.json`,

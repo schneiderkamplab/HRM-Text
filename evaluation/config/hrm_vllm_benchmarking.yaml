@@ -1,5 +1,6 @@
 engine: VLLMEngine
 ckpt_path: null
+# Legacy Sapient tokenizer only. Use dfm6_vllm_benchmarking.yaml for Gemma exports.
 prompt_mode: hrm
 max_model_len: 4096
 dtype: bfloat16
