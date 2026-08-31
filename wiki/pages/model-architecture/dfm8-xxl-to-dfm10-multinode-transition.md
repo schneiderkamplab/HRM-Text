@@ -3,8 +3,8 @@ type: Plan
 title: DFM8 XXL to DFM10 Multi-Node Transition
 description: Planned epoch-boundary transition from the one-node DFM8 XXL run to a four- or eight-node DFM10 continuation.
 tags: [dfm8, dfm10, xxl, multi-node, hsdp, training]
-status: draft
-last_updated: 2026-08-28
+status: stable
+last_updated: 2026-08-31
 confidence: high
 ---
 # DFM8 XXL to DFM10 Multi-Node Transition
@@ -40,11 +40,16 @@ state. Do not restart warmup, optimizer moments, or EMA.
 
 ## Readiness Gates
 
-DFM10 is not currently launchable: `data/sampled_dfm10` has not been built,
-the accepted Folketing source has not been fully consolidated/tokenized, and
-known high-impact `Filter`/`Repair` findings such as DBC prompt-language and
-GovReport grounding defects remain unresolved. Finalize, rebuild, sample, and
-audit DFM10 before constructing the production command.
+**Superseded on 2026-08-31:** DFM10 has been transferred to this node and is
+now launchable. `data/sampled_dfm10` contains ten sampled epoch index sets and
+`92,658,813,451` tokens per epoch. The transferred metadata's stale
+`/work/dfm/...` tokenizer path was replaced with the repository-relative
+`../brainsurgery/models/gemma4_31b/tokenizer.json` contract; token and index
+arrays were not modified.
+
+The earlier source-quality gates were addressed before this sampled artifact
+was transferred. The remaining operational gates are the fully written DFM8
+epoch-one checkpoint and its full standard, DFM, and EuroEval campaign.
 
 **Superseded on 2026-08-28:** the launcher and HSDP implementation are now
 validated for a two-node, 16-rank checkpoint resume and short training run.
@@ -122,3 +127,45 @@ Run and preserve a full DFM8 epoch-one evaluation before the switch. Evaluate
 DFM10 every 50K global steps afterward. W&B and reports must label the dataset
 transition explicitly so later gains are not attributed solely to XXL scale or
 multi-node execution.
+
+## Scheduled Single-Node Transition
+
+On 2026-08-31, the transition was appended under the lock of the existing
+scheduler plan:
+
+```text
+logs/scheduler/dfm8_XXL_1epoch_steps50k_100k_persistent_vllm_20260725/plan.tsv
+```
+
+The current DFM8 row targets step `268857`. Because a `stop_after_step`
+boundary exits before epoch-checkpoint saving, a guarded finalization row
+resumes `step_268857`, exhausts any residual DFM8 batches, and accepts the
+natural `epoch_1` checkpoint. If the active row naturally exhausts first, the
+same `epoch_1` completion tag makes the finalizer a no-op.
+
+The scheduler then exports and fully evaluates DFM8 `epoch_1`, including
+standard, DFM, and EuroEval suites, atomic v3 averages, and W&B synchronization
+to `DFM5/40j5y877`. Only its terminal eval barrier and persistent-server
+teardown release the first DFM10 training row.
+
+DFM10 resumes model, optimizer, EMA, and global optimizer step from DFM8
+`epoch_1`, while writing new checkpoints under:
+
+```text
+checkpoints/dfm10/XXL-from-dfm8-epoch1
+```
+
+The continuation preserves the established single-node performance geometry:
+eight B200 GPUs, global batch `262144`, GAS `4`, FP32 FSDP parameters, BF16
+forward/backward compute, `fsdp_reshard_after_forward=false`, FSDP accumulation
+`no_sync`, compiled batches, LR `2.5e-4`, and norm-1 gradient clipping. It uses
+`epochs=2` so resuming `epoch_1` selects zero-based DFM10 index set `epoch_1`.
+The progress denominator is conservatively set to global step `622400`; natural
+dataset exhaustion and `completion_checkpoint_tag=epoch_2` are authoritative.
+
+Full evaluations are interleaved at global steps 300K, 350K, 400K, 450K,
+500K, 550K, and 600K. The natural DFM10 `epoch_2` checkpoint receives a final
+full evaluation. Eval terminal barriers release subsequent training without
+waiting for CPU-side merges and averages, while those jobs continue and sync
+independently. All nine newly queued exports explicitly use the Gemma 4
+tokenizer directory on `/work/mimir`.

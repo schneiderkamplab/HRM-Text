@@ -2,6 +2,11 @@
 
 ## 2026-08-31
 
+- Verified the transferred 92.66B-token DFM10 sample, repaired its relocatable
+  tokenizer metadata, and extended the active DFM8 XXL campaign through a full
+  epoch-one evaluation and one DFM10 continuation epoch. The DFM10 phase keeps
+  the optimizer/EMA/global step and evaluates every 50K steps plus `epoch_2`.
+
 - Replaced machine-specific DFM7/8/10 tokenizer metadata defaults with
   repository-relative paths, fixed HF conversion to propagate the tokenizer
   override through checkpoint loading, and recovered the DFM8 XXL 250K export
