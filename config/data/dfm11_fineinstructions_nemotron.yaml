@@ -1,0 +1,33 @@
+# DFM11 admission policy for fineinstructions/fineinstructions_nemotron.
+# This source is intentionally not part of the generic bulk downloader.
+repo_id: fineinstructions/fineinstructions_nemotron
+revision: b1f556ec27529d09602e4dbe49de4263f5ebd068
+seed: 110031
+
+# The published score is row-aligned with each Parquet shard. The paper used
+# >=4; DFM11 starts more conservatively with only the highest score.
+minimum_judge_score: 5
+
+# Exact DFM/Gemma-rendered tokens are enforced after tokenization. This source
+# token budget deliberately over-materializes by 15% to leave room for schema,
+# PII, deduplication, context-length, and rendered-token filtering.
+rendered_token_cap: 3000000000
+materialized_source_token_target: 3450000000
+repeat: 1
+
+pilot_rows: 100000
+output_rows_per_shard: 250000
+max_answer_characters: 12000
+
+admission:
+  license_status: review_required
+  pii_audit_required: true
+  source_copy_audit_required: true
+  benchmark_decontamination_required: true
+  task_quality_audit_required: true
+  approval_receipt: data/receipts/dfm11_fineinstructions_nemotron_admission.yaml
+
+paths:
+  staging: data/staging/dfm11_fineinstructions_nemotron
+  review_output: data/review/dfm11_fineinstructions_nemotron
+  admitted_output: data/converted_dfm11/fineinstructions_nemotron

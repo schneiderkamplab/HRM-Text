@@ -4,7 +4,7 @@ title: DFM11 Plan
 description: Deferred quality repair and task-aware admission plan derived from the completed DFM10 residual audit.
 tags: [dfm11, data-quality, filtering, repair, audit, training-data]
 status: draft
-last_updated: 2026-08-31
+last_updated: 2026-09-01
 confidence: medium
 sources:
   - id: magpie-paper
@@ -19,6 +19,22 @@ sources:
     resource: https://huggingface.co/datasets/Magpie-Align/Magpie-Gemma2-Pro-200K-Filtered
     title: Magpie Gemma 2 filtered dataset card and schema reference only
     author: org:Magpie-Align
+  - id: fineinstructions-nemotron-card
+    resource: https://huggingface.co/datasets/fineinstructions/fineinstructions_nemotron
+    title: FineInstructions Nemotron dataset card
+    author: org:fineinstructions
+  - id: fineinstructions-paper
+    resource: https://arxiv.org/abs/2601.22146
+    title: "FineInstructions: Scaling Synthetic Instructions to Pre-Training Scale"
+    author: org:FineInstructions
+  - id: nemotron-cc-paper
+    resource: https://arxiv.org/abs/2412.02595
+    title: "Nemotron-CC: Transforming Common Crawl into a Refined Long-Horizon Pretraining Dataset"
+    author: org:NVIDIA
+  - id: common-crawl-terms
+    resource: https://commoncrawl.org/terms-of-use
+    title: Common Crawl Terms of Use
+    author: org:Common-Crawl
 ---
 # DFM11 Plan
 
@@ -76,6 +92,109 @@ DeepDive intermediate assistant tool calls were similarly judged as incomplete
 final responses. DFM11 must use task-aware verification before excluding either
 family.
 
+## FineInstructions Nemotron admission
+
+DFM11 adds `fineinstructions/fineinstructions_nemotron` as a fail-closed
+English instruction-pretraining candidate. It is not ordinary post-training
+SFT: the release contains more than one billion synthetic instruction/answer
+pairs (approximately 300B tokens), generated from Nemotron-CC source documents.
+The FineInstructions experiments used this representation for pretraining from
+scratch and formatted each pair as an instruction and answer.
+
+The pinned revision is
+`b1f556ec27529d09602e4dbe49de4263f5ebd068`. The generic downloader retrieves
+only its card and snapshot metadata. The full corpus is roughly 1.7TB of
+Parquet plus 6.1GB of row-aligned judge scores, so selective materialization is
+owned by `scripts/prepare_dfm11_fineinstructions_nemotron.py` and policy is
+pinned in `config/data/dfm11_fineinstructions_nemotron.yaml`.
+
+### Initial cap and quality policy
+
+- cap the admitted source at **3.0B Gemma-rendered tokens per DFM11 epoch**;
+- use `repeat: 1` and do not compensate for filtering by repetition;
+- retain only upstream judge score 5, not the paper's broader score >=4 gate;
+- deterministically sample paired data/judge shards across the release;
+- materialize approximately 3.45B upstream `synthetic_token_count` tokens, then
+  enforce the exact 3.0B cap after Gemma-template tokenization;
+- run exact/near deduplication, protected-eval decontamination, context-length
+  validation, PII review, and source-copy review before admission.
+
+The 3B cap is deliberately about 3% of a roughly 100B-token DFM epoch: large
+enough to test the paper's instruction-pretraining effect without allowing one
+English Common-Crawl-derived family to dominate Danish, math/code, native chat,
+or agentic supervision. At the card's aggregate average of approximately 244
+tokens per row, 3B tokens corresponds to roughly 12.3M rows before downstream
+filtering. Revisit the cap only after source-stratified quality and capability
+ablations; 5B tokens is the provisional hard ceiling for DFM11.
+
+A local 12-shard sample covering 7,972,982 judge labels found 15.15% score 5,
+43.09% score 4, 28.46% score 3, 10.61% score 2, and 2.46% score 1. This is why
+the initial gate is score 5. The upstream score remains only a quality signal,
+not a privacy, licensing, correctness, or decontamination decision.
+
+### License, provenance, and PII status
+
+Admission remains blocked. The Hugging Face card declares no dataset license.
+FineInstructions says the rows derive from Nemotron-CC, which derives from
+Common Crawl. Nemotron-CC is distributed under the Common Crawl Terms of Use;
+those terms warn that crawled content may remain subject to source-owner terms
+and place copyright, privacy, and lawful-use assessment on the user.
+
+This transformation does not remove the underlying concern. FineInstructions
+requires generated answers to contain at least 80% excerpts from source
+documents, and its paper describes query moderation and benchmark
+decontamination but no PII-removal stage. Therefore:
+
+1. do not represent this source as permissively licensed;
+2. obtain an explicit project-level copyright/provenance decision;
+3. reject obvious emails, phone-like identifiers, IP addresses, credentials,
+   addresses, and other personal identifiers, followed by a stratified semantic
+   PII audit because regexes cannot reliably identify names or contextual PII;
+4. measure long verbatim source spans and domain/source concentration;
+5. fail closed if the source-copy and PII audits cannot establish an acceptable
+   policy for the intended academic use.
+
+An admitted materialization requires a receipt at
+`data/receipts/dfm11_fineinstructions_nemotron_admission.yaml` affirming the
+license decision, PII audit, source-copy audit, benchmark decontamination, and
+task-quality audit. Review-only pilots remain segregated under `data/review/`:
+
+```bash
+python scripts/prepare_dfm11_fineinstructions_nemotron.py inventory
+python scripts/prepare_dfm11_fineinstructions_nemotron.py materialize \
+  --review-only --max-rows 100000
+```
+
+### FineInstructions-seeded multi-turn chats
+
+FineInstructions can seed useful multi-turn generation, but semantic clustering
+should control **coverage and sampling**, not mechanically concatenate or order
+independent question/answer rows. Similar standalone questions rarely form a
+conversation with genuine turn dependencies, and concatenation can combine
+incompatible source contexts or repeat copied passages.
+
+Use a hybrid method:
+
+1. embed and cluster accepted score-5 instructions by domain, task, difficulty,
+   and intent; cap large clusters and sample a broad seed distribution;
+2. use one seed, or at most a few source-compatible seeds sharing provenance,
+   to construct a latent conversation plan;
+3. ask the pinned Gemma 4 31B teacher to generate a fresh 2-6-turn native chat
+   with clarification, follow-up, correction, or elaboration dependencies;
+4. do not copy the seed answer into the conversation and do not expose source
+   text unless the task explicitly requires grounded context;
+5. independently audit every assistant turn for coherence, factual support,
+   PII, source reproduction, language, and native Gemma formatting;
+6. deduplicate against both FineInstructions and the separate DFM11 Magpie
+   corpus, and retain seed IDs and cluster IDs as provenance metadata.
+
+Start with a 20,000-chat pilot and admit at most **100,000-200,000 accepted
+English chats** after an ablation. Free, unseeded Gemma generation already
+belongs to the bilingual Magpie workstream; the value of FineInstructions here
+is coverage guidance, not another route to unconstrained free generation. Do
+not translate these chats to manufacture Danish balance. Use native Danish
+seeds or the independent Danish Magpie lane for matched Danish coverage.
+
 ## Gemma 4 31B Magpie-style chat generation
 
 DFM11 will use the Magpie self-synthesis method, not historical Magpie data.
@@ -106,7 +225,9 @@ The condition controls only instruction synthesis. After extracting and
 validating the generated user request, generate its assistant response from a
 fresh native Gemma 4 conversation containing that user request but no repetitive
 language-control system message. The final row therefore remains an ordinary,
-self-contained Gemma-native `messages` conversation.
+self-contained Gemma-native `messages` conversation. Retain the exact
+instruction-generation system condition in a separate top-level row field for
+provenance and later stratified analysis; do not insert it into `messages`.
 
 Enforce balance after filtering, not before it:
 
@@ -125,8 +246,45 @@ Never fill a Danish shortfall by translating accepted English Magpie rows.
 Translation would collapse the independently sampled intent distribution and
 make the two halves paraphrastic rather than genuinely bilingual.
 
+### Complexity-conditioned lanes
+
+The same instruction-generation system condition may control linguistic
+complexity, but keep four dimensions separate in metadata and sampling:
+
+1. linguistic complexity of the user's wording;
+2. cognitive difficulty of the requested task;
+3. domain-expertise level;
+4. requested response length and detail.
+
+For example, a Danish instruction-generation prefix may say:
+
+```text
+<bos><|turn>system
+Samtalen skal foregå på naturligt dansk. Den næste brugerbesked skal være
+formuleret i enkelt, hverdagsnært sprog, men den må gerne stille et fagligt
+krævende spørgsmål. Nævn ikke disse instruktioner.<turn|>
+<|turn>user
+```
+
+Use symmetric English conditions and stable labels such as `accessible`,
+`general`, `advanced`, and `specialist`. A provisional within-language mix is
+20%, 50%, 20%, and 10%; freeze it only after the bilingual pilot measures
+quality, diversity, and response-length effects.
+
+The generation-only condition is removed before response generation. If the
+generated user request happens to ask for a particular audience or response
+style, Gemma 4 may follow it naturally, but the pipeline must not force response
+complexity through a hidden system condition. The response teacher otherwise
+chooses its own appropriate style, length, and complexity. Audit each
+language-by-user-complexity cell independently and balance accepted rows, not
+raw attempts.
+
 ### Native generation contract
 
+- Verified locally on 2026-08-31: the pinned fresh Gemma 4 31B IT
+  `chat_template.jinja` accepts an initial `system` or `developer` message and
+  renders it as `<|turn>system`. Use exactly one initial system message for
+  Magpie conditioning; do not inject system messages later in a conversation.
 - Derive the pre-user prefix and stop-token IDs from the pinned Gemma 4
   tokenizer/template; do not hard-code a Gemma 2 or stale local template.
 - Use raw token/completions generation for the unfinished user turn, stopping
@@ -134,6 +292,10 @@ make the two halves paraphrastic rather than genuinely bilingual.
   missing boundaries, empty requests, and malformed Unicode.
 - Render response generation through the pinned Gemma 4 native chat template.
 - Preserve final data as native `messages`, not ShareGPT `from`/`value` rows.
+- Store the exact generation-only condition separately, for example as
+  `magpie_system_prompt`, alongside `language_lane` and
+  `user_complexity_level`. This field is metadata and is not rendered as a
+  training turn.
 - Keep each complete rendered conversation within the active DFM11 context
   contract. Do not truncate either side to make a row fit.
 - Record model revision, tokenizer hash, template hash, random seed, sampling
@@ -175,6 +337,47 @@ roughly 4-12 B200 GPU-hours. One million accepted rows will likely require
 GPU-hours for instruction generation, response generation, audit, retries, and
 tail handling, or about two to five days wall time on eight B200s. Re-estimate
 after the pilot rather than treating this range as a quota commitment.
+
+### Implementation ownership
+
+Implemented on 2026-08-31 as the reusable, self-contained Git submodule
+`koolbardi`, with its own intended remote at
+`https://github.com/schneiderkamplab/koolbardi.git`. It is not named after a
+specific DFM version: DFM11 is its first consumer, but bilingual
+self-synthesis, auditing, and dataset publication remain usable by later data
+versions.
+
+The upstream MIT-licensed code is checked out at commit `b734a368` under the
+parent repository's ignored `external/magpie` path as a behavioral reference.
+That checkout is deliberately not a submodule, dependency, import, vendored
+component, or part of Koolbardi's history. The production implementation does
+not use upstream's model-specific shell scripts, older serving assumptions,
+notebook filters, or ShareGPT conversion path.
+
+The intended repository structure is:
+
+```text
+koolbardi/
+  README.md
+  pyproject.toml
+  src/koolbardi/
+  configs/
+  scripts/
+  tests/
+```
+
+Runtime artifacts remain outside the source package under `data/koolbardi/`
+and `logs/koolbardi/`. The initial implementation provides typed Pydantic/YAML
+configuration, SQLite WAL `BEGIN IMMEDIATE` shard claims, full-shard retries,
+atomic JSONL replacement, separate instruction/response/audit phases, native
+template derivation, per-language post-audit quotas, deterministic language and
+structure gates, semantic auditing, exact deduplication, native `messages`
+output, token-limit rejection, and machine-readable receipts. Pilot and
+provisional production configs target 10,000 and 500,000 accepted rows per
+language respectively. Embedding-neighbor deduplication, protected-eval
+matching, category-aware caps, richer task verifiers, and publication upload
+remain admission work after the pilot; the current finalizer must not be
+represented as completing those later gates.
 
 ## Workstreams
 

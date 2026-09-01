@@ -48,6 +48,18 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         allow_patterns=("data/**/*.jsonl", "data_clustered/**/*.parquet", "README.md"),
         note="Cleaned Sapient HRM-Text data_io corpus.",
     ),
+    HFDataset(
+        name="dfm11_fineinstructions_nemotron_metadata",
+        repo_id="fineinstructions/fineinstructions_nemotron",
+        groups=("dfm11_candidate", "english", "synthetic", "instruction_pretraining"),
+        allow_patterns=("README.md", "pretrain_snapshot.json"),
+        note=(
+            "Metadata only: the full Common-Crawl-derived corpus is about 2 TB. "
+            "Use prepare_dfm11_fineinstructions_nemotron.py for deterministic, "
+            "quality-filtered materialization after its admission gates pass."
+        ),
+        revision="b1f556ec27529d09602e4dbe49de4263f5ebd068",
+    ),
 
     # Danish and Synquid sources discussed for the replacement mix.
     HFDataset(

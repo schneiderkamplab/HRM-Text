@@ -1,5 +1,36 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-01 - DFM11 FineInstructions Nemotron admission policy
+
+- Registered the pinned FineInstructions Nemotron metadata without exposing
+  the generic downloader to its roughly 2TB payload, and added a deterministic
+  score-5 selective materializer with separate review/admitted outputs.
+- Set an initial 3B rendered-token cap, repeat one, and fail-closed license,
+  PII, source-copy, and benchmark-decontamination admission gates. Recorded
+  that the source has no declared dataset license and preserves substantial
+  excerpts from Common-Crawl-derived documents.
+- Defined FineInstructions clustering as a diversity/sampling mechanism for a
+  20K seeded-chat pilot, not a method for concatenating independent questions;
+  any admitted chats must be freshly generated and turn-wise audited.
+
+- 2026-08-31: Implemented the standalone `koolbardi` package for the DFM11
+  bilingual Magpie-style campaign. Koolbardi is an independently versioned
+  submodule targeting `schneiderkamplab/koolbardi`; the ignored upstream
+  Magpie checkout remains reference-only. Added native Gemma-template
+  derivation, atomic SQLite shard claims, all-or-nothing retries, separate
+  generation/response/audit phases, bilingual post-audit quotas, configs,
+  launchers, finalization receipts, and tests.
+
+- 2026-08-31: Started the DFM10 XL continuation from the verified DFM9
+  2,127,489-step epoch-8 boundary using DFM10's ninth sampled index set. The
+  exact 354,595-step epoch ends at 2,482,084; full evaluations are scheduled
+  every 50K steps and at the endpoint.
+
+- 2026-08-31: Finalized DFM10 at 72 published packages and 15,746 tokenized
+  tasks. The ten-epoch production sample contains 92,658,813,451 tokens per
+  epoch; a resumable transfer of its 878 GB training directory was launched to
+  the Mimir workspace.
+
 - 2026-08-31: Added a DFM11 Magpie-style chat program using only the
   self-synthesis method, never historical Magpie rows. The pinned Gemma 4 31B
   teacher generates separate Danish and English lanes; accepted quotas are

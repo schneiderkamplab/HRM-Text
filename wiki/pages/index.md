@@ -25,7 +25,8 @@
 * [DFM9 Plan Concepts](dfm9-plan/) - Focused DFM9 measurements, implementation records, and continuation operations.
 * [DFM10 Plan](dfm10-plan.md) - DFM9 plus train-only Andersen and Alexandra Institute additions.
 * [DFM11 Plan](dfm11-plan.md) - Deferred task-aware quality repairs from the frozen DFM10 residual audit.
-* [DFM10 Publication and Sampling State](dfm10-publication-state.md) - Current 71-package Hub completeness and remaining final-sampling delta.
+* [DFM10 Publication and Sampling State](dfm10-publication-state.md) - Final 72-package Hub inventory, sampled corpus, and transfer state.
+* [DFM10 XL Epoch-9 Continuation](dfm10-xl-epoch9-continuation.md) - Exact DFM9 endpoint resume into DFM10 and 50K evaluation campaign.
 * [DFM10 Medical Data Plan](dfm10-medical-data-plan.md) - License-gated Danish and English medical training and evaluation candidates.
 * [DFM10 Persona and Domsdatabasen Chats](dfm10-persona-doms-chats.md) - Audited Danish multi-turn generation runbook.
 * [Long-Context Dataset Inventory](long-context-dataset-inventory.md) - Training candidates, project-derived sources, and evaluation-only corpora for 8K, 16K, and 32K stages.
