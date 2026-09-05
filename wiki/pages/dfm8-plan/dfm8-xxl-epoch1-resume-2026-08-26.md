@@ -4,7 +4,7 @@ title: DFM8 XXL Epoch 1 Resume
 description: Verified scheduler continuation from the latest complete ephemeral through the first DFM8 epoch.
 tags: [dfm8, xxl, training, evaluation, scheduler]
 status: stable
-last_updated: 2026-08-29
+last_updated: 2026-08-31
 confidence: high
 part_of: /pages/dfm8-plan.md
 ---
@@ -44,10 +44,13 @@ batch `262144`, GAS 4, FP32 FSDP parameters, BF16 forward/backward, EMA
 command also mirrors the latest successful 8K training envelope by explicitly
 setting GCC, G++, assembler, compiler path, and `hrm/bin` on `PATH`.
 
-The final numeric target `268857` remains a conservative metadata-derived
-upper bound. The scheduler now accepts the fully verified `epoch_1` checkpoint
-when the data loader exhausts before that estimate, preventing the historical
-false failure caused by demanding a nonexistent estimated step checkpoint.
+**Superseded 2026-08-31:** the statement below that `268857` was a conservative
+upper bound is false for the current sampled DFM8 tree. The scheduler accepts a
+verified `epoch_1` checkpoint when the loader exhausts before a numeric target,
+but the target must actually lie beyond the natural boundary.
+
+The final numeric target `268857` was originally treated as a conservative
+metadata-derived upper bound. This assumption must not be reused.
 
 The runner uses the verified `hrm` environment, `CUDA_HOME=/usr/local/cuda`,
 persistent vLLM, FA4 attention, and `VLLM_USE_FLASHINFER_SAMPLER=0`. A detached
@@ -55,6 +58,42 @@ watcher records to `start-watch.log`; it waits until every GPU has at least
 178000 MiB free, waits another two minutes, then checks scheduler state, the
 training process, and forward/backward progress. While the independent DFM10
 audit owns the GPUs, only the plan's CPU-side checkpoint waits run.
+
+## Epoch-one boundary correction, 2026-08-31
+
+The first production segment reached `step_268857` and a short finalizer then
+reached `step_268900`, but neither point was the natural end of sampled
+`epoch_0`. The latter checkpoint is complete and its sidecar records exact
+resume state at global row cursor `216953568`. Direct inspection of the active
+epoch index found `218313891` rows, leaving `1360323` rows and approximately
+`437490536` unpadded source tokens after step 268900. The sampled tree's
+`metadata.json` value of `70479433697` therefore underestimates the active
+epoch index and must not be used to choose a tight stopping boundary.
+
+The existing scheduler plan was corrected in place. Its epoch finalizer now
+resumes `step_268900`, uses `step_271000` only as a safe upper stop bound, and
+sets `completion_checkpoint_tag=epoch_1`. Because `pretrain.py` otherwise
+derives `training_total_steps=268857` from the same stale metadata and rejects
+the later resume checkpoint, this finalizer must also set
+`training_total_steps=271000` explicitly. Training should end naturally before
+that upper bound and publish `fsdp2_epoch_1`; the existing epoch-one evaluation
+and DFM10 continuation rows deliberately continue to depend on that canonical
+epoch tag. Do not manufacture an epoch alias from a numeric checkpoint or
+change the W&B epoch coordinate merely to satisfy the wait row.
+
+The natural boundary was subsequently observed at global step **270584**. The
+last progress line was `270580` because training logs every five steps; the
+authoritative `checkpoint_state_epoch_1.json` records `step=270584`,
+`epoch=1`, and exact `batch_in_epoch=0`.
+
+The first EuroEval dispatch on the new `/work/mimir` node exhausted its retries
+because plan metadata still named
+`/work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py`. On 2026-08-31
+all stale `/work/dfm/HRM-Text` values in this live plan were replaced with
+`/work/mimir/HRM-Text`, and only the 17 failed EuroEval rows were reset. When a
+campaign plan is transferred between nodes, audit every absolute path in
+`metadata_json`; a healthy vLLM server does not imply that its separate eval
+client executable exists at a stale path.
 
 ## Intentional pause at step 152500
 
