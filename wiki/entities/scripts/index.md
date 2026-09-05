@@ -58,3 +58,4 @@
 * [`scripts/queue_valeu_da_rerun_then_dfm4.sh`](scripts-queuevaleudarerunthendfm4-sh.md) - Part of Script Entities: `scripts/queue_valeu_da_rerun_then_dfm4.sh`.
 * [`scripts/rebalance_export_audits.py`](scripts-rebalanceexportaudits-py-2.md) - Part of Script Entities: `scripts/rebalance_export_audits.py`.
 * [`scripts/smoke_dfm6_eval_contracts.py`](scripts-smokedfm6evalcontracts-py.md) - Part of Script Entities: `scripts/smoke_dfm6_eval_contracts.py`.
+* [`scripts/prepare_dfm11_koolbardi_exports.py`](scripts-preparedfm11koolbardiexports-py.md) - Validated bilingual controlled-chat publication-package builder.

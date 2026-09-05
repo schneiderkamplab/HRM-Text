@@ -448,6 +448,22 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         note="Processed Danish-English OPUS permissive/public-domain subset used by DFM mixes.",
     ),
     HFDataset(
+        name="dfm11_koolbardi_da",
+        repo_id="schneiderkamplab/dfm11-koolbardi-da",
+        groups=("dfm11", "danish", "instruction", "multi_turn", "synthetic"),
+        allow_patterns=("data/*.jsonl.gz", "metadata/manifest.json", "README.md"),
+        note="Controlled Danish Koolbardi conversations; assistant-turn audited and admitted at repeat 1.",
+        revision="de2b92ba6684001fe2504d2b96520b394bc08897",
+    ),
+    HFDataset(
+        name="dfm11_koolbardi_en",
+        repo_id="schneiderkamplab/dfm11-koolbardi-en",
+        groups=("dfm11", "english", "instruction", "multi_turn", "synthetic"),
+        allow_patterns=("data/*.jsonl.gz", "metadata/manifest.json", "README.md"),
+        note="Controlled English Koolbardi conversations; assistant-turn audited and admitted at repeat 1.",
+        revision="81ad1affa1539006b04fb833664ea393fbab59c1",
+    ),
+    HFDataset(
         name="oliverkinch_machine_translation_da_uk",
         repo_id="oliverkinch/machine-translation-da-uk",
         groups=("danish", "translation"),

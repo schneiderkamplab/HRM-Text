@@ -2,7 +2,22 @@ from __future__ import annotations
 
 import pytest
 
-from scripts.tokenize_chat_template import examples_from_messages
+from scripts.tokenize_chat_template import examples_from_messages, scan_inputs
+
+
+def test_scan_inputs_keeps_package_name_and_skips_metadata(tmp_path):
+    package = tmp_path / "example-package"
+    (package / "data").mkdir(parents=True)
+    (package / "metadata").mkdir()
+    (package / "metadata" / "manifest.json").write_text("{}")
+    (package / "data" / "train.jsonl").write_text("{}\n")
+    (package / "metadata" / "selection.jsonl").write_text("{}\n")
+
+    found = scan_inputs([package])
+
+    assert [(item.path.name, item.safe_name) for item in found] == [
+        ("train.jsonl", "example-package__data__train.jsonl")
+    ]
 
 
 MESSAGES = [

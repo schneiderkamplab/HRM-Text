@@ -83,15 +83,20 @@ def is_supported(path: Path) -> bool:
 def scan_inputs(roots: list[Path]) -> list[FoundFile]:
     files: list[FoundFile] = []
     for root in roots:
+        package_root = (root / "metadata" / "manifest.json").is_file()
         for dirpath, _, filenames in os.walk(root, followlinks=True):
             dirpath = Path(dirpath)
-            if "seeds" in dirpath.parts:
+            relative_dir = dirpath.relative_to(root)
+            if "seeds" in relative_dir.parts or "metadata" in relative_dir.parts:
                 continue
             for filename in sorted(filenames):
                 path = dirpath / filename
                 if not path.is_file() or not is_supported(path):
                     continue
-                safe_name = "__".join(path.relative_to(root).parts)
+                relative_parts = path.relative_to(root).parts
+                if package_root:
+                    relative_parts = (root.name, *relative_parts)
+                safe_name = "__".join(relative_parts)
                 files.append(FoundFile(path=path, safe_name=safe_name))
     return files
 
@@ -683,7 +688,18 @@ def main() -> None:
         )
     )
 
-    files = scan_inputs(args.dirs)
+    all_files = scan_inputs(args.dirs)
+    files = [
+        found
+        for found in all_files
+        if should_process(
+            found.path,
+            args.output_dir / found.safe_name,
+            args.force,
+            args.max_seq_len,
+            args.preserve_first_user,
+        )
+    ]
     start = time.time()
     rows = 0
     skipped = 0
@@ -723,7 +739,7 @@ def main() -> None:
                 skipped += file_skipped
     incomplete_files = [
         found.safe_name
-        for found in files
+        for found in all_files
         if not (args.output_dir / found.safe_name / "metadata.json").is_file()
         or not (args.output_dir / found.safe_name / "resp_len.npy").is_file()
     ]
@@ -739,10 +755,11 @@ def main() -> None:
                 mmap_mode="r",
             ).shape[0]
         )
-        for found in files
+        for found in all_files
     )
     summary = {
-        "files": len(files),
+        "files": len(all_files),
+        "files_written_this_run": len(files),
         "rows": materialized_rows,
         "rows_written_this_run": rows,
         "skipped_rows_this_run": skipped,

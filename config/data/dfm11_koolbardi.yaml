@@ -1,0 +1,46 @@
+# DFM11 admission and sampling policy for controlled Koolbardi conversations.
+seed: 110032
+
+sources:
+  koolbardi_da:
+    repo_id: schneiderkamplab/dfm11-koolbardi-da
+    revision: de2b92ba6684001fe2504d2b96520b394bc08897
+    available_rows: 535930
+    available_rendered_tokens: 1165181804
+    rows_per_epoch: all
+    repeat: 1
+    language: da
+    admission_status: assistant_turn_audited
+
+  koolbardi_en:
+    repo_id: schneiderkamplab/dfm11-koolbardi-en
+    revision: 81ad1affa1539006b04fb833664ea393fbab59c1
+    available_rows: 528926
+    available_rendered_tokens: 1147687693
+    rows_per_epoch: all
+    repeat: 1
+    language: en
+    admission_status: assistant_turn_audited
+
+training:
+  chat_template: gemma4_native_chat
+  target_only: true
+  max_seq_len: 4096
+
+tokenization:
+  status: complete
+  source: data/koolbardi/dfm11-million-controlled-a4b/final.jsonl
+  packages:
+    - exports_dfm11/dfm11-koolbardi-da
+    - exports_dfm11/dfm11-koolbardi-en
+  output: data/tokenized_dfm11_additions
+  files: 64
+  assistant_targets: 3366675
+  stored_tokens:
+    da: 2704118142
+    en: 2611428918
+    total: 5315547060
+  skipped_rows: 0
+
+sampling:
+  status: blocked_missing_tokenized_dfm10_base

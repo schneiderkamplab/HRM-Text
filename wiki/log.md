@@ -1,5 +1,22 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-04 - Controlled Koolbardi publication and DFM11 admission
+
+- Finalized 535,930 Danish and 528,926 English audited controlled chats,
+  totaling 2.313B native rendered tokens, while retaining all qualifying
+  surplus rows and preserving minimum complexity-by-length quotas.
+- Published 32-shard language-specific packages as
+  `schneiderkamplab/dfm11-koolbardi-da` and
+  `schneiderkamplab/dfm11-koolbardi-en`, recorded exact Hub revisions, and
+  admitted both complete releases to DFM11 at repeat one.
+- Added an independently validated package builder and documented the compact
+  public schema, provenance, residual risks, and incremental native-template
+  tokenization path.
+- Tokenized all 64 release shards into 3,366,675 assistant targets and 5.316B
+  stored prompt-plus-target tokens with no 4K skips. Hardened incremental input
+  discovery to ignore package metadata and avoid spawning workers for already
+  complete outputs.
+
 ## 2026-09-01 - DFM11 FineInstructions Nemotron admission policy
 
 - Registered the pinned FineInstructions Nemotron metadata without exposing
