@@ -25,7 +25,17 @@ while pgrep -f 'prepare_dfm11_folketing_error_correction.py audit --input export
 done
 
 echo "Resuming/verifying all audit partitions..."
-FINALIZE_ON_COMPLETE=0 bash scripts/run_dfm11_folketing_error_correction_full_audit.sh
+complete_partitions=0
+for partition in 0 1 2 3; do
+  if [[ -f "$RUN_ROOT/full_audit/workers/partition_${partition}/audit.jsonl" ]]; then
+    complete_partitions=$((complete_partitions + 1))
+  fi
+done
+if [[ "$complete_partitions" -eq 4 ]]; then
+  echo "All four final audit files exist; no judge endpoints are needed."
+else
+  FINALIZE_ON_COMPLETE=0 bash scripts/run_dfm11_folketing_error_correction_full_audit.sh
+fi
 
 audit_args=()
 for partition in 0 1 2 3; do

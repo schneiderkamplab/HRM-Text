@@ -1895,5 +1895,14 @@
   partial files and completed verdicts survived the cluster interruption.
 - Restarted four audit-owned vLLM servers and the post-audit pipeline. Raised
   the constrained verdict response ceiling from 256 to 1,024 tokens for 24
-  stubborn rows that did not emit JSON within the smaller budget; acceptance
-  criteria and strict schema remain unchanged.
+  stubborn rows that did not emit JSON within the smaller budget. This resolved
+  20 rows; a 2,048-token ceiling did not resolve the final four. Acceptance
+  criteria and the strict schema remained unchanged.
+- Superseded later the same day: audit-owned vLLM servers on GPUs 0-3 are
+  stopped after all partition audits finalize. Four repeatedly unresolved rows
+  were preserved in a sidecar and excluded fail-closed; no further retries are
+  performed. The post-audit pipeline now skips endpoint checks when all four
+  final decision files already exist.
+- Manually reviewed all four sidecar rows and confirmed rejection: every target
+  retains material OCR corruption, and all contain incomplete or page-derived
+  structure; one is additionally too garbled to provide useful supervision.

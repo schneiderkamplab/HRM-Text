@@ -6,6 +6,7 @@ from scripts.prepare_dfm11_folketing_error_correction import (
     PROMPT_PREFIX,
     corruption_edit_count,
     finalize,
+    sidecar_unresolved,
     target_quality_failure,
     validate_row,
 )
@@ -98,3 +99,41 @@ def test_finalize_removes_rejected_rows_and_writes_package(tmp_path) -> None:
     assert manifest["data_files"][0]["rows"] == 1
     assert (output / "README.md").is_file()
     assert (output / "validate_dataset.py").is_file()
+
+
+def test_sidecar_unresolved_preserves_and_excludes_missing_rows(tmp_path) -> None:
+    source = tmp_path / "source"
+    audit = tmp_path / "audit.jsonl"
+    partial = audit.with_suffix(".jsonl.partial")
+    sidecar = tmp_path / "unresolved.jsonl"
+    data = source / "data" / "train-00000.jsonl.gz"
+    data.parent.mkdir(parents=True)
+    rows = [
+        {"messages": [{"role": "user", "content": "first"}]},
+        {"messages": [{"role": "user", "content": "second"}]},
+    ]
+    with gzip.open(data, "wt", encoding="utf-8") as handle:
+        for item in rows:
+            handle.write(json.dumps(item) + "\n")
+    partial.write_text(
+        json.dumps({"row_id": "train-00000.jsonl.gz:0", "keep": True}) + "\n"
+    )
+
+    sidecar_unresolved(
+        argparse.Namespace(
+            input=source,
+            audit=[audit],
+            sidecar=sidecar,
+            expected_rows=2,
+            expected_unresolved=1,
+            judge_model="judge/test",
+        )
+    )
+
+    decisions = [json.loads(line) for line in audit.read_text().splitlines()]
+    unresolved = [json.loads(line) for line in sidecar.read_text().splitlines()]
+    assert len(decisions) == 2
+    assert decisions[1]["row_id"] == "train-00000.jsonl.gz:1"
+    assert decisions[1]["keep"] is False
+    assert decisions[1]["resolution"] == "fail_closed_exclusion"
+    assert unresolved[0]["row"] == rows[1]

@@ -41,13 +41,13 @@ sources:
 
   folketingets_dokumenter_error_correction:
     repo_id: schneiderkamplab/dfm11-folketingets-dokumenter-error-correction
-    revision: pending_full_audit_upload
+    revision: 2bac151ddb2c81ff7098bd6d970ca59115a362bf
     replaces: schneiderkamplab/dfm10-folketingets-dokumenter-error-correction
-    available_rows: pending_full_audit
+    available_rows: 2485847
     rows_per_epoch: 975000
     repeat: 1
     selection: deterministic_75000_per_shard
-    admission_status: full_task_aware_audit_in_progress
+    admission_status: fully_audited
 
 replacement_task_prefixes:
   - glaive_native_tool_use__

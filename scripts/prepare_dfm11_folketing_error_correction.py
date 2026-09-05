@@ -115,6 +115,17 @@ def parse_args() -> argparse.Namespace:
     audit.add_argument("--force", action="store_true")
     audit.add_argument("--resume", action="store_true")
 
+    sidecar = subparsers.add_parser(
+        "sidecar-unresolved",
+        help="preserve and fail-closed exclude rows unresolved after judge retries",
+    )
+    sidecar.add_argument("--input", type=Path, default=DEFAULT_OUTPUT)
+    sidecar.add_argument("--audit", type=Path, action="append", required=True)
+    sidecar.add_argument("--sidecar", type=Path, required=True)
+    sidecar.add_argument("--expected-rows", type=int, required=True)
+    sidecar.add_argument("--expected-unresolved", type=int, required=True)
+    sidecar.add_argument("--judge-model", required=True)
+
     finalize = subparsers.add_parser("finalize", help="remove full-audit rejections")
     finalize.add_argument("--input", type=Path, default=DEFAULT_OUTPUT)
     finalize.add_argument("--output", type=Path, default=DEFAULT_AUDITED_OUTPUT)
@@ -388,7 +399,7 @@ def call_audit(args: argparse.Namespace, row: dict[str, Any], row_id: str) -> di
         "top_p": 1,
         # A small number of difficult rows consume substantial hidden reasoning
         # before emitting the constrained JSON object.
-        "max_tokens": 1024,
+        "max_tokens": 2048,
         "response_format": {
             "type": "json_schema",
             "json_schema": {
@@ -559,6 +570,124 @@ def audit(args: argparse.Namespace) -> None:
     except BaseException:
         raise
     print(json.dumps({"partition": args.partition_index, **counts}, sort_keys=True))
+
+
+def sidecar_unresolved(args: argparse.Namespace) -> None:
+    """Preserve repeatedly unresolved rows and exclude them fail-closed."""
+    partitions = len(args.audit)
+    completed_by_partition: list[set[str]] = []
+    decision_paths: list[tuple[Path, Path]] = []
+    decision_count = 0
+    for output in args.audit:
+        partial = output.with_suffix(output.suffix + ".partial")
+        source = output if output.exists() else partial
+        if not source.exists():
+            raise FileNotFoundError(source)
+        completed: set[str] = set()
+        with source.open(encoding="utf-8") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                verdict = json.loads(line)
+                if "error" in verdict:
+                    raise ValueError(f"unresolved error verdict remains in {source}")
+                row_id = str(verdict["row_id"])
+                if row_id in completed:
+                    raise ValueError(f"duplicate decision in {source}: {row_id}")
+                completed.add(row_id)
+        completed_by_partition.append(completed)
+        decision_paths.append((source, output))
+        decision_count += len(completed)
+
+    unresolved: list[tuple[int, str, dict[str, Any]]] = []
+    source_rows = 0
+    for source in sorted((args.input / "data").glob("*.jsonl.gz")):
+        with gzip.open(source, "rt", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle):
+                source_rows += 1
+                row_id = f"{source.name}:{line_number}"
+                partition = int.from_bytes(
+                    hashlib.blake2b(row_id.encode(), digest_size=8).digest(), "big"
+                ) % partitions
+                if row_id not in completed_by_partition[partition]:
+                    unresolved.append((partition, row_id, json.loads(line)))
+
+    if source_rows != args.expected_rows:
+        raise ValueError(f"source coverage {source_rows} != {args.expected_rows}")
+    if decision_count + len(unresolved) != args.expected_rows:
+        raise ValueError(
+            f"decision coverage {decision_count} + {len(unresolved)} unresolved "
+            f"!= {args.expected_rows}"
+        )
+    if len(unresolved) != args.expected_unresolved:
+        raise ValueError(
+            f"found {len(unresolved)} unresolved rows, expected {args.expected_unresolved}"
+        )
+
+    args.sidecar.parent.mkdir(parents=True, exist_ok=True)
+    temporary = args.sidecar.with_name(f".{args.sidecar.name}.tmp.{os.getpid()}")
+    with temporary.open("w", encoding="utf-8") as handle:
+        for partition, row_id, row in unresolved:
+            handle.write(
+                json.dumps(
+                    {
+                        "row_id": row_id,
+                        "partition": partition,
+                        "resolution": "fail_closed_exclusion_after_repeated_no_json",
+                        "row": row,
+                    },
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )
+                + "\n"
+            )
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(temporary, args.sidecar)
+
+    unresolved_by_partition: dict[int, list[str]] = {}
+    for partition, row_id, _ in unresolved:
+        unresolved_by_partition.setdefault(partition, []).append(row_id)
+    for partition, (source, output) in enumerate(decision_paths):
+        additions = unresolved_by_partition.get(partition, [])
+        if source == output:
+            if additions:
+                raise ValueError(f"complete partition {partition} has missing rows")
+            continue
+        with source.open("a", encoding="utf-8") as handle:
+            for row_id in additions:
+                handle.write(
+                    json.dumps(
+                        {
+                            "row_id": row_id,
+                            "keep": False,
+                            "primary_failure_type": "unresolved_judge",
+                            "complaint": "excluded after repeated schema-generation failure; preserved in sidecar",
+                            "judge_model": args.judge_model,
+                            "resolution": "fail_closed_exclusion",
+                        },
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    )
+                    + "\n"
+                )
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(source, output)
+
+    print(
+        json.dumps(
+            {
+                "source_rows": source_rows,
+                "existing_decisions": decision_count,
+                "sidecar_unresolved": len(unresolved),
+                "sidecar": str(args.sidecar),
+                "resolution": "fail_closed_exclusion",
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
 
 
 def _filter_audited_shard(work: tuple[Path, Path, set[int]]) -> dict[str, Any]:
@@ -844,6 +973,7 @@ def main() -> None:
         "build": build,
         "sample": sample,
         "audit": audit,
+        "sidecar-unresolved": sidecar_unresolved,
         "finalize": finalize,
         "record-upload": record_upload,
         "gate": gate,

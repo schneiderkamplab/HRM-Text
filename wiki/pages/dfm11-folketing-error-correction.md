@@ -82,9 +82,24 @@ retried by the existing `--resume` path before finalization.
 After the 2026-09-05 cluster power interruption, the full-coverage retry found
 24 rows that repeatedly consumed the original 256-token response budget before
 emitting their constrained JSON verdict. The audit response ceiling is now
-1,024 tokens. This does not relax the JSON schema or acceptance criteria and
-only materially affects difficult rows that need the additional generation
-budget.
+1,024 tokens, resolving 20 of the 24 rows. Raising the ceiling to 2,048 tokens
+did not resolve the remaining four, so further automated retries were stopped.
+This did not relax the JSON schema or acceptance criteria.
+
+Superseded operational decision, 2026-09-05: an earlier instruction said to
+leave the audit-owned vLLM servers running. The later instruction supersedes
+it: stop the servers once all four final audit files exist and no further judge
+requests are needed. Teardown verifies exact PIDs and listening ports before
+terminating only the audit-owned servers on GPUs 0-3. The post-audit script
+skips endpoint verification when all four final audit files already exist.
+
+The four unresolved rows are preserved in
+`logs/dfm11_folketing_error_correction/full_audit/unresolved_rows.jsonl` with
+their full source records and manual reviews. All four were manually rejected:
+three historical rows retain severe OCR corruption plus page/list debris and
+incomplete boundaries; the modern row remains understandable but still has
+multiple OCR errors and begins mid-sentence. Their fail-closed exclusion is
+therefore also supported by substantive review, not merely judge failure.
 
 ## Finalization Contract
 
