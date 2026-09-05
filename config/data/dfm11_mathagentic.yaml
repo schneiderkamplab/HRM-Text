@@ -1,0 +1,45 @@
+# DFM11 admission and epoch-sampling policy for Mathagentic tool trajectories.
+# Source packages remain complete; caps and repeats apply during DFM11 sampling.
+seed: 110041
+
+sources:
+  tinygsm_python:
+    repo_id: schneiderkamplab/dfm11-mathagentic-tinygsm-python
+    revision: 17a3df5ccdd70ce71983485c6c48cce54b60f05e
+    available_rows: 367749
+    rows_per_epoch: 50000
+    repeat: 1
+    selection: deterministic_without_replacement
+    rotate_across_epochs: true
+    admission_status: semantic_verified
+
+  gsm8k_prolog:
+    repo_id: schneiderkamplab/dfm11-mathagentic-gsm8k-prolog
+    revision: 1d32034d3b2467e51a6128b2cb249852969f17d0
+    available_rows: 7473
+    rows_per_epoch: all
+    repeat: 2
+    selection: all_rows
+    admission_status: execution_and_gold_verified
+
+training:
+  chat_template: gemma4_native_chat
+  target_only: true
+  max_seq_len: 4096
+
+tokenization:
+  status: complete
+  output: data/tokenized_dfm11_additions
+  source_rows: 375222
+  assistant_targets: 750444
+  stored_tokens: 207326230
+  skipped_too_long: 0
+  tasks: 5
+  completion_sha256: 7eea9b505f3ebc59056e011ac953bfe3830a6b96d02a088a7d292860cbe04df6
+  tokenizer_info_sha256: 641e62ffb1e0aa74643f0a843b61e3200768eabf4167b5dda26635e7fea5e392
+
+sampling:
+  status: pending
+
+receipts:
+  upload: logs/dfm11_mathagentic_upload_receipts.jsonl

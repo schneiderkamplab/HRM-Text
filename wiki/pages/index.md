@@ -25,6 +25,9 @@
 * [DFM9 Plan Concepts](dfm9-plan/) - Focused DFM9 measurements, implementation records, and continuation operations.
 * [DFM10 Plan](dfm10-plan.md) - DFM9 plus train-only Andersen and Alexandra Institute additions.
 * [DFM11 Plan](dfm11-plan.md) - Deferred task-aware quality repairs from the frozen DFM10 residual audit.
+* [DFM11 Folketing Error-Correction Repair](dfm11-folketing-error-correction.md) - Deterministic rebuild, task-aware full audit, and rejection-removing finalization.
+* [DFM11 Mathagentic Export Packages](dfm11-mathagentic-exports.md) - Audited Python and verified Prolog arithmetic tool-use upload staging.
+* [DFM11 FineInstructions Grounded Chats](dfm11-fineinstructions-grounded-chats.md) - Balanced bilingual chat generation, finalization, and extension policy.
 * [DFM11 Koolbardi Integration](dfm11-koolbardi-integration.md) - Final bilingual controlled release, Hub publication, validation, and DFM11 admission.
 * [DFM10 Publication and Sampling State](dfm10-publication-state.md) - Final 72-package Hub inventory, sampled corpus, and transfer state.
 * [DFM10 XL Epoch-9 Continuation](dfm10-xl-epoch9-continuation.md) - Exact DFM9 endpoint resume into DFM10 and 50K evaluation campaign.

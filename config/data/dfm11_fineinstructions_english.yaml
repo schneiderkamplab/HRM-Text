@@ -1,0 +1,46 @@
+# DFM11 admission policy for grounded English FineInstructions conversations.
+seed: 11031
+
+source:
+  repo_id: schneiderkamplab/dfm11-fineinstructions-en
+  revision: 80f44dfc3cbc0ac8d6e219cc65bee4275db27414
+  package_rows:
+    pairs: 500000
+    chats: 500000
+
+training:
+  controlled_chats:
+    available_rows: 316022
+    rows_per_epoch: all
+    repeat: 1
+  legacy_chats:
+    available_rows: 183978
+    rows_per_epoch: 100000
+    selection: deterministic_source_balanced
+    repeat: 1
+  represented_pairs:
+    rows_per_epoch: 0
+    reason: the complete pair exchange is already present at the start of each admitted chat
+  chat_template: gemma4_native_chat
+  target_only: true
+  max_seq_len: 4096
+
+paths:
+  export: exports_dfm11/dfm11-fineinstructions-en
+  converted: data/converted_dfm11/fineinstructions_english
+  tokenized: data/tokenized_dfm11_additions
+
+materialization:
+  status: complete
+  source_chats: 416022
+  assistant_targets: 1184450
+  skipped_too_long: 0
+  controlled_stored_tokens: 737680897
+  legacy_stored_tokens: 296313853
+  total_stored_tokens: 1033994750
+  tokenization_seconds: 279.8
+  tokenizer_info_sha256: 86158ebd1169e98b0aaf32bf9145e3fb679707f3650ff1ed94f0940fabe3abe7
+  completion_sha256: dba33b6af16398284afc647646eeb979dfe61bf12321ab9c539465547b973bc4
+  selection_receipt_sha256: 1823c3ef5a0452dbe57f720f13502e810b7eb5f31461edddc51d14288b70d42d
+  package_manifest_sha256: dd84ecd73d965abde386f80ae41f42c7e9b825de86dcc9782dcddd3809fabf69
+  aggregate_union_status: blocked_on_missing_local_dfm10_base

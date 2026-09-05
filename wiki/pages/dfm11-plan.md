@@ -4,7 +4,7 @@ title: DFM11 Plan
 description: Deferred quality repair and task-aware admission plan derived from the completed DFM10 residual audit.
 tags: [dfm11, data-quality, filtering, repair, audit, training-data]
 status: draft
-last_updated: 2026-09-01
+last_updated: 2026-09-04
 confidence: medium
 sources:
   - id: magpie-paper
@@ -35,6 +35,18 @@ sources:
     resource: https://commoncrawl.org/terms-of-use
     title: Common Crawl Terms of Use
     author: org:Common-Crawl
+  - id: tinygsm-dataset
+    resource: https://huggingface.co/datasets/TinyGSM/TinyGSM
+    title: TinyGSM dataset
+    author: org:TinyGSM
+  - id: gsm8k-prolog-prover-dataset
+    resource: https://huggingface.co/datasets/niklasm222/gsm8k-prolog-prover
+    title: GSM8K Prolog Prover dataset
+    author: person:Niklas-Mellgren
+  - id: prolog-as-a-tool-code
+    resource: https://github.com/aisilab/Prolog-as-a-Tool
+    title: Prolog as a Tool reference implementation
+    author: org:AISI-Lab
 ---
 # DFM11 Plan
 
@@ -92,27 +104,29 @@ DeepDive intermediate assistant tool calls were similarly judged as incomplete
 final responses. DFM11 must use task-aware verification before excluding either
 family.
 
-## FineInstructions Nemotron admission
+## FineInstructions Nemotron - excluded
 
-DFM11 adds `fineinstructions/fineinstructions_nemotron` as a fail-closed
-English instruction-pretraining candidate. It is not ordinary post-training
+**Decision, 2026-09-04:** DFM11 excludes
+`fineinstructions/fineinstructions_nemotron`. Its Common-Crawl-derived
+provenance, copyright, PII, and deliberate source-copy risks require more
+review than its expected marginal value justifies for Mimir. It has a zero
+token budget, is absent from the downloader manifest, and the retained
+materializer refuses to run. The discussion below is the superseded candidate
+assessment.
+
+The source was considered as a fail-closed English instruction-pretraining
+candidate. It is not ordinary post-training
 SFT: the release contains more than one billion synthetic instruction/answer
 pairs (approximately 300B tokens), generated from Nemotron-CC source documents.
 The FineInstructions experiments used this representation for pretraining from
 scratch and formatted each pair as an instruction and answer.
 
-The pinned revision is
-`b1f556ec27529d09602e4dbe49de4263f5ebd068`. The generic downloader retrieves
-only its card and snapshot metadata. The full corpus is roughly 1.7TB of
-Parquet plus 6.1GB of row-aligned judge scores, so selective materialization is
-owned by `scripts/prepare_dfm11_fineinstructions_nemotron.py` and policy is
-pinned in `config/data/dfm11_fineinstructions_nemotron.yaml`.
-
-### Initial cap and quality policy
+### Superseded cap and quality proposal
 
 - cap the admitted source at **3.0B Gemma-rendered tokens per DFM11 epoch**;
 - use `repeat: 1` and do not compensate for filtering by repetition;
-- retain only upstream judge score 5, not the paper's broader score >=4 gate;
+- retain only upstream judge score 5, with no lower-score fallback to fill the
+  cap; unused budget is preferable to weaker synthetic supervision;
 - deterministically sample paired data/judge shards across the release;
 - materialize approximately 3.45B upstream `synthetic_token_count` tokens, then
   enforce the exact 3.0B cap after Gemma-template tokenization;
@@ -132,9 +146,9 @@ A local 12-shard sample covering 7,972,982 judge labels found 15.15% score 5,
 the initial gate is score 5. The upstream score remains only a quality signal,
 not a privacy, licensing, correctness, or decontamination decision.
 
-### License, provenance, and PII status
+### Exclusion rationale: license, provenance, and PII
 
-Admission remains blocked. The Hugging Face card declares no dataset license.
+Admission is permanently closed for DFM11. The Hugging Face card declares no dataset license.
 FineInstructions says the rows derive from Nemotron-CC, which derives from
 Common Crawl. Nemotron-CC is distributed under the Common Crawl Terms of Use;
 those terms warn that crawled content may remain subject to source-owner terms
@@ -194,6 +208,98 @@ belongs to the bilingual Magpie workstream; the value of FineInstructions here
 is coverage guidance, not another route to unconstrained free generation. Do
 not translate these chats to manufacture Danish balance. Use native Danish
 seeds or the independent Danish Magpie lane for matched Danish coverage.
+
+**Superseded operationally on 2026-09-02 for dataset construction, not
+admission:** the active DFM-owned FineInstructions campaign now targets exactly
+1,000,000 English grounded pairs and 1,000,000 corresponding multi-turn chats.
+This larger artifact remains outside every training mix until quality,
+decontamination, source-copy, PII, and ablation gates pass. The campaign imports
+19,479 stable-ID pilot templates and balances 500,000 document windows equally
+across filtered Common Pile arXiv, Wikimedia, StackExchange, LibreTexts,
+regulations, USGPO, DOAB, Project Gutenberg, PubMed, and news sources. The
+source document is supplied to pair instantiation, chat generation, and the
+independent chat audit, then stripped from final artifacts. This supersedes the
+earlier instruction not to expose source text to chat generation because these
+chats are explicitly source-grounded tasks.
+
+The English campaign lives at `data/fineinstructions/dfm11-english-1m`, uses
+`fineinstructions/configs/dfm11-english-1m.yaml`, and is launched by
+`fineinstructions/scripts/run_dfm11_english_1m.sh`. It uses only GPUs 4-7 on
+the isolated generation node. Grounding corpus admission here does not add raw
+Common Pile continuation text to DFM training.
+
+Query templatization uses the short-request operating point requested on
+2026-09-02: 4,096 concurrent requests per GPU server, `max_num_seqs=4096`, and
+90% vLLM memory utilization. This setting is stage-specific; document-heavy
+instantiation and grounded chat generation retain lower concurrency until
+measured KV-cache behavior supports increasing it.
+
+**Superseded after the completed 2026-09-02 templatizer wave:** 4,096 is a
+stress ceiling, not the selected throughput point. At 512 requests per server,
+the four servers completed 61,617 requests in about 11 minutes (about 93
+requests/s aggregate) while producing roughly 50K tokens/s/GPU. The 4,096-way
+wave completed 20,930 requests in about 5.5 minutes (about 63 requests/s) and,
+while KV cache was saturated, produced only about 23K-25K tokens/s/GPU. The
+second wave contained later and retried rows, so this is not a controlled A/B,
+but it is sufficient to reject blind maximization of request concurrency.
+Future campaigns should sweep 1,024, 2,048, and 3,072 and select on committed
+rows/s plus generated tokens/s, with KV occupancy below sustained saturation.
+
+Retrieval was separately benchmarked because it is a SentenceTransformers plus
+FAISS stage rather than vLLM. On the same 12,000-candidate arXiv slice, encoder
+batches 32, 64, and 128 completed in 185, 194, and 196 seconds. Filling GPU
+memory is therefore not a valid objective for this stage. The active campaign
+uses batch 32 across four stable-hash document shards on GPUs 4-7, shares the
+read-only legacy completed-document ledger, writes isolated shard ledgers and
+candidate files, and atomically validates/deduplicates the merged output. Its
+measured steady interval was about 72.5 documents/s aggregate, versus about 9
+documents/s for the original single-GPU batch-16 process.
+
+The Danish counterpart must not use LexDK or DBC. Its provisional grounding
+families are public/admitted Danish DynaWord subsets, Folketing/Rigsarkivet,
+and other admitted Danish legal/public-sector documents, with explicit source
+caps. Before that lane starts, the published English-trained templatizer,
+retrieval encoder, and instantiator must pass a native-Danish qualification;
+otherwise Gemma 4 generation or newly distilled Danish artifacts replace the
+failing stages.
+
+### Danish FineInstructions qualification status
+
+Update, 2026-09-02. The production Danish campaign has **not** started and no
+production target has yet been approved. A deterministic qualification under
+`data/fineinstructions/danish-artifact-qualification` contains 100 native
+Danish AI Arena opening queries and 100 DynaWord Nordjyllandnews documents.
+The published English query templatizer produced parseable templates for 93
+queries and seven JSON-format failures. Parse acceptance is not quality
+acceptance: inspection found mixed English variable labels, damaged Danish
+spelling, and semantic errors such as interpreting `sengen` as a cooking device
+and turning `nationalret` into a national symbol.
+
+An exact index over those 93 templates yielded only 62 candidates across 44 of
+the 100 documents at the published `0.865` threshold. Candidate scores ranged
+from 0.866 to 0.938. This is not yet a controlled multilingual-retriever verdict
+because the template bank is small and the query/document domains differ, but
+the yield is insufficient for production. No candidate has yet passed through
+the published instantiator, pair audit, chat continuation, or chat audit.
+
+Remaining gates, in order:
+
+1. Run an equal-sized English control to separate multilingual retrieval loss
+   from small-bank/domain mismatch, and inspect below-threshold Danish matches.
+2. Instantiate the 62 existing candidates and judge Danish fluency,
+   instruction-answer coherence, grounding, excerpt reconstruction, source
+   copying, and rendered token length.
+3. Decide whether the published artifacts pass. If not, generate Danish
+   template/instantiation labels with Gemma 4 and distill Danish-aware
+   templatizer/instantiator models; fine-tune or recalibrate the multilingual
+   BGE-M3 retriever only from verified positive pairs and hard negatives.
+4. Define and pin the production source manifest and target. Query seeds may
+   include admitted native Danish chat/instruction sources; grounding documents
+   may include balanced Danish DynaWord, Folketing/Rigsarkivet, and admitted
+   legal/public-sector sources, but must exclude LexDK and DBC.
+5. Add a Danish campaign config/downloader/launcher, source caps, sharded
+   retrieval, resumable generation, independent audits, exact finalization,
+   decontamination, PII/source-copy checks, and publication receipts.
 
 ## Gemma 4 31B Magpie-style chat generation
 
@@ -379,24 +485,172 @@ matching, category-aware caps, richer task verifiers, and publication upload
 remain admission work after the pilot; the current finalizer must not be
 represented as completing those later gates.
 
+### Koolbardi length contract before the pilot
+
+Update, 2026-09-01. Confidence: high from direct inspection with the production
+Gemma 4 template and the installed Transformers 5.12.1 API.
+
+Do not launch the production pilot from commit `d891506` without correcting
+token accounting. In this Transformers version,
+`tokenizer.apply_chat_template(..., tokenize=True)` returns a
+`BatchEncoding` by default. Calling `len()` on it returns the number of fields
+(`2` here), not the number of tokens. Koolbardi's current finalizer therefore
+does not enforce its intended 4K limit. Use `return_dict=False` and count the
+returned token-ID list, or explicitly count `encoded["input_ids"]`. Add a
+regression test that constructs both an accepted 4K-minus row and a rejected
+4K-plus row with the pinned tokenizer/template.
+
+The current implementation generates only one user/assistant exchange. The
+runbook's 2-6-exchange multi-turn subset still requires a continuation phase;
+it must not be inferred from the existing instruction/response phases. That
+phase should use these controls:
+
+1. Keep a hard, exact rendered limit of 4096 tokens and never truncate a turn.
+2. Use a soft generation ceiling of 3968 tokens, leaving 128 tokens for API,
+   tokenizer, and converter-version discrepancies. Final admission still
+   re-renders with the pinned training tokenizer and rejects anything above
+   4096.
+3. Assign each candidate a rendered-token target band before generation. A
+   suitable pilot mix is 20% at 512-1023, 35% at 1024-2047, 35% at
+   2048-3071, and 10% at 3072-3968 tokens. Report and balance accepted rows by
+   language, exchange count, and target band.
+4. Sample a desired 2-6 exchange count, but before every user or assistant
+   generation re-render the complete native history with
+   `add_generation_prompt=True`. Set request `max_tokens` dynamically to the
+   smaller of the row's remaining target budget and
+   `3968 - prompt_token_count`; never reuse the one-turn fixed 3072-token
+   response allowance.
+
+### Koolbardi A4B pilot implementation update
+
+Update, 2026-09-02. Confidence: high from direct end-to-end generation and
+independent re-tokenization with the pinned Gemma 4 tokenizer.
+
+The earlier 31B unfinished-user-prefix pilot specification above is
+**superseded for the current 10,000-chat pilot**. The running pilot uses
+`google/gemma-4-26B-A4B-it`, with 5,000 accepted Danish and 5,000 accepted
+English chats. Direct completion from Gemma 4's unfinished native user turn was
+tested with both rendered text and exact prompt token IDs. Both paths emitted
+control-channel fragments such as `own-`, `way-`, and `thought` before or
+instead of a usable request. Do not restore that path for this checkpoint.
+
+Koolbardi now generates initial and follow-up user turns through explicit
+generation-only native chat meta-requests. These prompts include the language,
+complexity, length band, desired exchange count, and prior transcript where
+applicable, but are retained only as hashes/metadata and never inserted into
+the final training `messages`. Assistant turns similarly receive a temporary
+budget-aware completeness instruction so Gemma closes each answer before its
+per-turn cap; this instruction is also absent from final `messages`.
+
+The exact 4K contract is now enforced in three places:
+
+1. `apply_chat_template(..., return_dict=False)` extracts actual token IDs
+   rather than taking `len(BatchEncoding)`, which was always `2` locally;
+2. generation budgets distribute remaining tokens across all planned user and
+   assistant turns instead of allowing the first answer to consume the row;
+3. finalization independently re-renders the saved messages and rejects rows
+   above 4,096 tokens rather than truncating them.
+
+The final smoke generated and accepted one Danish and one English two-exchange
+conversation. Stored and independently recomputed counts agreed exactly: 974
+tokens for Danish and 887 for English. All four assistant turns passed the
+per-turn judge. The production configuration is
+`koolbardi/configs/dfm11-pilot-10k-a4b.yaml`; its 17,000 raw candidates are
+organized in 512-row shards and balanced after audit to 10,000 accepted chats.
+
+The original pilot runtime used one vLLM server on each of GPUs 0--3, ports
+8100--8103, `gpu_memory_utilization=0.90`, `max_model_len=8192`, and
+`max_num_seqs=128`. That concurrency setting is superseded by the measured
+million-row campaign settings below.
+The larger serving context is required because audit prompts include the
+transcript; it does not relax the final 4,096-token data limit. vLLM must use
+automatic heterogeneous attention selection because Gemma 4 has 256-dimension
+local and 512-dimension global attention heads. Forcing FlashAttention selected
+an incompatible FA2 path and failed on the 512-dimension heads. Use Triton only
+for the MoE backend (`--moe-backend triton`), plus `--language-model-only` and
+`--enforce-eager`; launch through the `audit` conda environment so CUDA tooling
+is available.
+
+Update, 2026-09-02. The million-row campaign preserves all 13,542 accepted
+pilot rows and targets one million accepted conversations in each language.
+The 4,096-way trial used `max_num_seqs=4096`, 32 instruction workers, and four
+response and audit workers, each allowing 128 requests per server.
+Initial-turn generation reached 4,090--4,095 live
+requests per GPU, 81--83% KV-cache occupancy, and 21.6K--22.2K generated
+tokens/s/GPU. The prior 512-request run peaked at 11.7% KV occupancy and about
+9.8K generated tokens/s/GPU. Host available memory remained about 2.1 TiB.
+The saturated first wave also caused approximately 1.3K--1.6K cumulative
+preemptions per server, so compare sustained throughput and preemptions before
+raising this limit further. Long response and audit phases intentionally retain
+the lower aggregate 512 requests/server because their prompts and outputs use
+substantially more KV per request.
+
+The English pilot retained 8,421 of 8,500 audited rows (99.0706%), implying a
+bare minimum raw factor of 1.00938. The preserved queue's 1.01 configuration
+contained only 1,005,700 English candidates after overlapping pilot shard keys,
+which projected below one million usable rows. English oversampling is therefore
+1.05 for the million-row campaign. This adds only incremental shard keys and
+does not discard or regenerate completed work.
+
+Follow-up measurement showed that sustained 4,096-way instruction fan-out can
+drive KV occupancy to 99--100%, create a waiting queue, and accumulate tens of
+thousands of preemptions. Treat 4,096 as a measured upper-load bound, not the
+normal target. A 182-second 3,072-way comparison using 24 workers sustained
+18.3K generated tokens/s/GPU including shard-boundary idle periods and 55.4
+completed 512-row shards/minute. It reached 78--80% peak KV occupancy with zero
+waiting and zero preemptions. This matched the observed 4,096-way row throughput
+(approximately 51--58 shards/minute) more efficiently, so 3,072 is the adopted
+instruction setting. Optimize for sustained generated tokens/second and
+completed rows, not `nvidia-smi` compute percentage or literal 100% KV
+occupancy: A4B autoregressive decode uses only the active experts, consists of
+many routing/small-GEMM kernels, and currently runs in eager mode without CUDA
+graphs.
+
+The resumable production command is:
+
+```bash
+cd /work/mimir/HRM-Text/koolbardi
+scripts/run_campaign.sh configs/dfm11-pilot-10k-a4b.yaml
+```
+
+`reset-stale` recovers abandoned running claims. After correcting the root
+cause of terminal failures, `reset-failed CONFIG --phase PHASE` resets only the
+specified failed phase and its retry counter. The current campaign and its
+four servers are isolated to GPUs 0--3; unrelated workloads on GPUs 4--7 must
+not be inspected, signaled, or terminated.
+5. Continue only when enough budget remains for one complete useful exchange.
+   Reserve at least 64 tokens for the next user request, 192 tokens for its
+   answer, and the native turn overhead. Otherwise end the conversation at the
+   preceding complete assistant turn.
+6. Treat generated length as an audit result, not merely a decoding setting.
+   Reject or separately retry rows below their assigned band's minimum; do not
+   use a large decoder `min_tokens`, which encourages padding and repetition.
+   Prompts may request an appropriate detail level, but semantic completeness
+   and absence of filler remain audit requirements.
+7. Record prompt tokens, generated tokens per turn, final rendered tokens,
+   desired/actual exchange count, target band, finish reason, and whether the
+   row stopped for semantic completion or budget exhaustion.
+
+With the native Gemma 4 template, direct measurement found approximately 11
+template tokens for one complete exchange and about 10 additional template
+tokens per further exchange. This overhead is small, but it must be counted
+from the actual rendered history rather than approximated. The one-turn pilot
+may retain instruction `max_tokens=512`, but response `max_tokens` should also
+be derived from the rendered prompt and row target band so request-time context
+overflow is impossible and the accepted length distribution is intentional.
+
 ## Workstreams
 
 ### 1. Folketing error correction
 
 Keep DFM10's denoising, span-filling, and prefix-continuation families
-unchanged. Rebuild only error correction with deterministic gates that reject:
-
-- normalized source/target identity and negligible edits;
-- targets retaining a high density of obvious OCR corruption;
-- truncated or structurally incomplete targets;
-- transformations that introduce corruption or lose substantive source text.
-
-Re-audit 5,000 stratified final examples. Admit the DFM11 replacement only if
-at least 90% are usable, normalized no-ops are below 1%, truncation is below
-0.5%, and no source stratum has a hidden systematic failure. Do not regenerate
-all 3.1M rows. Estimated cost: 4-12 engineering/CPU hours and 0.2-0.8 B200
-GPU-hours. Full regeneration would cost roughly 780-1,550 B200 GPU-hours and is
-out of scope unless a later experiment demonstrates exceptional marginal value.
+unchanged. **Superseded, 2026-09-04:** the original error-correction workstream
+required deterministic cleanup followed by only a 5,000-row admission gate.
+The deterministic rebuild passed, but the user strengthened admission to a
+strict-schema full audit whose finalizer removes every rejected row. Exact
+requirements, counts, superseded generic-audit findings, recovery behavior,
+paths, and commands live in
+[DFM11 Folketing Error-Correction Repair](dfm11-folketing-error-correction.md).
 
 ### 2. Natural Instructions task selection
 
@@ -438,6 +692,110 @@ deterministic gates. Generic semantic judgment is secondary. Admission requires
 100% structural validity and at least 90% usable sampled trajectories. Estimated
 cost: 3-6 engineering hours and 0.4-1.6 B200 GPU-hours.
 
+#### Proposed grounded arithmetic tool-use family
+
+**Implementation and upload staging completed, 2026-09-03.** Add an offline-executed arithmetic tool-use family
+derived from `TinyGSM/TinyGSM` and
+`niklasm222/gsm8k-prolog-prover`. The purpose is to teach complete native tool
+trajectories, not merely Python or Prolog code completion. Each admitted row has
+this logical structure:
+
+1. a user asks the original word problem;
+2. an assistant emits exactly one Gemma-4-native structured call to either
+   `execute_python` or `execute_prolog`;
+3. a matching `role=tool` message contains a result computed before training;
+4. a terminal assistant response uses that result and contains exactly one
+   canonical `\boxed{...}` answer, with no prose outside the box.
+
+The source program belongs in the tool-call argument. The tool result is
+environment output and must never be rewritten as an assistant message. Calls,
+results, IDs, declarations, and final responses use the repository's existing
+OpenAI-shaped message schema and render through
+`data_io/chat_templates/gemma4_native_chat.jinja`. This creates both a
+tool-call target and a post-result final-answer target while avoiding loss on
+the simulated environment response.
+
+The user-visible contract should explicitly say that, after using the tool, the
+assistant must return only `\boxed{...}`. This is the shared strict form: the
+repository GSM8K scorer checks the last boxed value before numeric parsing, and
+the MATH scorer extracts the last boxed expression. For example, a tool result
+of `{"result": 4}` must lead to the terminal assistant target `\boxed{4}`,
+not `The answer is 4`, `Final answer: 4`, or a second derivation. Retain exact
+symbolic forms inside the box when they are authoritative; canonicalize
+GSM8K-aligned results to their expected integer representation.
+
+Implementation gate, 2026-09-03: the evaluation copy of the native template
+currently handles mapping-valued `role=tool` content before its generic
+sequence branch, while the `data_io` copy does not. A direct render with
+`content: {"result": 4}` therefore succeeds under the evaluation template but
+fails under the current training-data template. Reconcile the two template
+copies and add an exact render regression test before tokenization; do not work
+around the mismatch by changing structured results into assistant text or a
+different response shape.
+
+**Superseded on 2026-09-03:** the canonical `data_io` template now applies the
+mapping check before the sequence branch and is byte-identical to the tested
+Mathagentic template. The complete source was then tokenized through that
+canonical path with zero rejected targets; the gate is satisfied.
+
+The two sources require different admission policies:
+
+- `gsm8k-prolog-prover` has 7,473 cleaned GSM8K-train programs. Join each
+  question to the authoritative GSM8K-train numerical answer, execute
+  `solve(X)` with SWI-Prolog under a timeout, canonicalize rational/decimal
+  output, and retain only exact numerical matches. Reject any row that matches
+  GSM8K test or another protected evaluation split. The HF derivative does not
+  currently declare a dataset license, so publication/admission also requires
+  an explicit provenance/license receipt even though the upstream GSM8K data
+  is MIT-licensed.
+- `TinyGSM` contains 11,846,109 MIT-licensed question/Python pairs and is a
+  candidate reservoir, not an admit-all source. A seeded 200-row inspection
+  found 200/200 syntactically parseable single-function programs, but also
+  concatenated independent problems, irrelevant clauses, and incorrect
+  implementations; one of the first five public rows computes the quadratic
+  height with the wrong sign. Execute only in a locked-down, resource-limited
+  worker after an AST allow-list. Require one coherent question, one finite
+  scalar return value, source-question/docstring agreement, independent
+  question/program/result verification, protected-eval decontamination, and
+  duplicate removal. Never use captured `print` output as the answer when a
+  return value exists.
+
+Start with a stratified TinyGSM pilot, then cap the accepted TinyGSM contribution
+at approximately 500,000 distinct trajectories or 0.5B rendered tokens,
+whichever comes first. Revisit that cap only after held-out execution validity,
+semantic correctness, duplicate rate, rendered-length distribution, and
+tool-format smoke evaluations are reported. The Prolog family may use all
+verified distinct train rows, but should not be inflated enough to dominate
+general arithmetic or native-tool supervision.
+
+Required converter receipts include upstream revision and file hashes, row-level
+source IDs, executor version, exit status, timeout/error class, canonical tool
+result, matched gold answer where available, all rejection counters, dedup and
+decontamination reports, rendered token counts, and a deterministic rerun test.
+No runtime executor is needed during pretraining; inference still requires an
+orchestrator to execute calls and return real tool messages.
+
+The standalone implementation is owned by the `mathagentic` submodule. It
+provides pinned HF downloads, Python `solve()` normalization and restricted
+execution, Prolog `solve/1` execution plus GSM8K-gold verification, atomic
+sharded conversion, structural validation, a bundled Gemma 4 native template,
+and direct HRM task-array tokenization. The capped 500,000-row TinyGSM
+candidate audit completed with 367,749 semantic accepts, and all 7,473 Prolog
+rows passed execution/gold verification. Separate upload-staging packages are
+documented in [DFM11 Mathagentic Export Packages](dfm11-mathagentic-exports.md).
+Manual project approval to publish both packages was recorded on 2026-09-03.
+DFM11 samples all 7,473 Prolog rows at repeat 2 and deterministically caps
+TinyGSM at 50,000 distinct rows per epoch with repeat 1. DFM11 must retain
+`data.target_only=true`: only then are definitions and environment-owned tool
+results masked as instruction context while assistant calls and boxed answers
+remain response targets.
+
+The complete published reservoirs were tokenized on 2026-09-03 into
+`data/tokenized_dfm11`: 375,222 trajectories, 750,444 assistant targets, and
+207,326,230 stored tokens across five shard-level tasks, with no 4,096-token
+rejections. This is a complete backing reservoir only. DFM11 epoch sampling,
+including the TinyGSM 50,000-row cap and Prolog repeat two, remains pending.
+
 ### 5. Sapient math and dialogue families
 
 Audit math under separate `direct` and `cot` contracts:
@@ -471,6 +829,12 @@ not justify broad regeneration. Estimated cost: 2-4 engineering hours and
 0.2-1.0 B200 GPU-hours.
 
 ## Execution sequence
+
+### FineInstructions grounded-chat diversity update
+
+The controlled-mode generation, safe truncation salvage, bilingual contract,
+exact 500K quota, immutable release, and later balanced-extension procedure now
+live in [DFM11 FineInstructions Grounded Chats](dfm11-fineinstructions-grounded-chats.md).
 
 1. Wait for the owning workstream to integrate
    `dfm10-synthetic-values-model-charter-da`, rebuild the union as needed, and

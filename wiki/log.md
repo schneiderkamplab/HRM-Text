@@ -1,5 +1,17 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-04 - Danish FineInstructions retrieval recovery
+
+- Recorded two failed 2,000-document qualifications against the undersized
+  50,000-template silver bank and restored the omitted 500,000-template
+  production-templatization stage.
+- Separated positive and negative silver quotas, corrected negative-label audit
+  semantics and terminal resumability, and added best-checkpoint helper-model
+  training before restarting the gated pipeline on GPUs 4-7.
+- Replaced an OOMing templatizer microbatch of eight with microbatch four and
+  two-step accumulation, preserving the effective global batch of 32 while
+  retaining at least 47 GiB of observed B200 headroom.
+
 ## 2026-09-04 - Controlled Koolbardi publication and DFM11 admission
 
 - Finalized 535,930 Danish and 528,926 English audited controlled chats,
@@ -16,6 +28,150 @@
   stored prompt-plus-target tokens with no 4K skips. Hardened incremental input
   discovery to ignore package metadata and avoid spawning workers for already
   complete outputs.
+
+## 2026-09-04 - English FineInstructions publication and DFM11 admission
+
+- Published the complete 500K-pair/500K-chat English grounded
+  FineInstructions release as `schneiderkamplab/dfm11-fineinstructions-en`.
+- Materialized the approved 316,022 controlled plus source-balanced 100,000
+  legacy chat selection and tokenized it into 1.034B stored tokens at repeat 1.
+- Recorded that this host lacks the inherited DFM10 tokenized base needed to
+  construct and sample the aggregate DFM11 union.
+
+## 2026-09-04 - Full DFM11 Folketing error-correction audit
+
+- Deterministically validated all 3,105,440 DFM10 Folketing error-correction
+  rows and retained 2,548,956 whose complete source/target relationship is
+  exactly explained by 1-8 declared OCR substitutions and whose targets pass
+  conservative text-quality filters.
+- Superseded the generic 60.24%-usable sample judgment after establishing that
+  it incorrectly rejected intentionally sparse corrections. A task-aware,
+  strict-JSON-schema 5,000-row audit passed at 97.7% with no judge errors.
+- Started a resumable full audit on four Gemma 4 26B A4B vLLM servers. The
+  launcher now defaults to stopping after decision generation. Materializing
+  the rejection-filtered package and tokenizing it remain explicitly deferred.
+- Superseded that temporary deferral after explicit user approval. Added and
+  launched a post-audit pipeline that materializes only accepted rows, creates
+  and validates a self-contained HF package, uploads and remotely verifies it,
+  pins its revision, and tokenizes it into the DFM11 additions store.
+- Replaced the inherited Folketing error-correction prefix in DFM11 policy and
+  capped the 13-shard replacement at 75,000 rows per shard, repeat one: at most
+  975,000 rows per epoch. Final union construction remains conditional on the
+  absent `data/tokenized_dfm10` base.
+
+## 2026-09-03 - DFM11 Mathagentic upload staging
+
+- Completed the strict-schema semantic audit of 500,000 TinyGSM candidates:
+  367,749 accepted and 132,251 rejected, with no unresolved request failures.
+- Materialized two deterministic, checksummed packages under `exports_dfm11/`:
+  367,749 audited TinyGSM-Python trajectories and 7,473 execution/gold-verified
+  GSM8K-Prolog trajectories.
+- Validated every packaged row and verified both nested tool schemas through
+  the Hugging Face streaming JSON loader.
+- Recorded manual approval to publish both packages. DFM11 uses every Prolog
+  row at repeat 2 and caps TinyGSM at 50,000 distinct rows per epoch with
+  repeat 1; publication still contains every accepted source row.
+- Uploaded and byte-for-byte verified both packages at final Hub commits
+  `1d32034d3b2467e51a6128b2cb249852969f17d0` (Prolog) and
+  `17a3df5ccdd70ce71983485c6c48cce54b60f05e` (TinyGSM), with receipts under
+  `logs/dfm11_mathagentic_upload_receipts.jsonl`.
+- Added direct compressed-shard and bounded parallel tokenization to
+  Mathagentic, then tokenized both complete reservoirs into
+  `data/tokenized_dfm11`: 375,222 rows, 750,444 assistant targets, and
+  207,326,230 stored tokens with no 4K skips. Sampling remains pending.
+- Reconciled the canonical and package-bundled Gemma templates for structured
+  mapping-valued tool results. Exhaustive verification found exactly one call
+  target and one post-result boxed-answer target for every Mathagentic row and
+  recorded the conventions of the other structured tool families inherited by
+  DFM11.
+- Identified Glaive duplicate `call_0` handling and ToolACE last-call-only
+  response binding as high-priority DFM11 re-conversion risks. Added lower-risk
+  canonicalization and validation actions for Nemotron Agentic, DFM8 synthetic
+  tool calls, OpenHermes, xLAM, and terminal-agent data.
+
+## 2026-09-03 - DFM11 grounded arithmetic tool-use proposal
+
+- Proposed an offline-executed Gemma-4-native tool trajectory family from
+  TinyGSM Python programs and the cleaned GSM8K Prolog corpus.
+- Required exact execution/gold checks for Prolog and a capped, independently
+  verified admission path for noisy TinyGSM rather than wholesale ingestion.
+- Defined the canonical assistant-call, tool-result, terminal-answer structure,
+  sandboxing, decontamination, and reproducibility receipts.
+- Implemented the independently versioned `mathagentic` package with pinned
+  downloads, converters, validators, native rendering, direct HRM array
+  tokenization, tests, and its own OKF bundle. Full conversion remains pending.
+
+## 2026-09-03 - FineInstructions controlled continuation modes
+
+- Froze the existing 183,978 English grounded chats as the intentionally
+  reading-comprehension-heavy first segment and enabled balanced, deterministic
+  assignment of 20 interaction modes for the remaining campaign.
+- Kept the mode implementation independent of Koolbardi while adapting its
+  documented ontology, supplied-material safeguards, retained metadata, and
+  explicit adherence audit.
+- Added safe complete-exchange salvage for token-capped structured chat output,
+  avoiding whole-row rejection when earlier exchanges are complete and valid.
+- Set FineInstructions output to 500K English plus 500K Danish, with exact
+  accepted mode quotas for controlled rows, immutable named final releases,
+  and append-only state that supports later balanced expansion.
+- Split the executable FineInstructions balance and extension contract from the
+  oversized DFM11 aggregate plan into its own indexed OKF concept.
+
+## 2026-09-04 - FineInstructions English 500K finalized
+
+- Finalized the immutable balanced English release at exactly 500,000 aligned
+  pairs and chats. Recorded that DFM11 conversion/tokenization/sampling and Hub
+  packaging remain pending, including removal of local absolute provenance
+  paths and creation of a dataset card, checksums, and upload receipt.
+- Compared every legacy and controlled chat structurally. Controlled chats have
+  exact mode diversity and substantially less repeated turn text, but are much
+  shallower and retain the initial pair's defects; same-checkpoint audit scores
+  do not establish better semantic quality, so independent stratified review is
+  still an admission and upload gate.
+- Proposed an initial non-duplicating DFM11 mix of all 316,022 controlled chats
+  plus 100,000 source-balanced legacy chats at repeat one. Corresponding pairs
+  remain excluded; only a separately audited 50K-100K unmatched-pair ablation
+  should test whether pair-only coverage adds value.
+
+## 2026-09-02 - FineInstructions templatizer concurrency result
+
+- The completed 4,096-request/server wave saturated KV cache and was slower
+  than the earlier 512-request/server wave: about 63 versus 93 completed
+  requests/s aggregate, and about 23K-25K versus 50K generated tokens/s/GPU.
+- Marked 4,096 as a stress ceiling rather than a production default. A future
+  controlled sweep should compare 1,024, 2,048, and 3,072 using committed
+  rows/s, generated tokens/s, and sustained KV occupancy.
+- Benchmarked retrieval batches 32/64/128 at 185/194/196 seconds for the same
+  12K candidates. Replaced the single-GPU batch-16 retrieval with four
+  deterministic batch-32 shards and an atomic validated merge; steady aggregate
+  throughput increased from about 9 to 72.5 documents/s.
+- Recorded the incomplete Danish artifact qualification: 93/100 parseable
+  templates but visible Danish/semantic defects, only 62 retrieval candidates
+  covering 44/100 documents, and no completed instantiation or end-to-end
+  audit. The Danish production campaign remains gated.
+
+## 2026-09-02 - Koolbardi A4B bilingual pilot
+
+- Promoted the campaign to one million accepted chats per language without
+  discarding the 13,542 accepted pilot rows. Measured phase-specific
+  concurrency reached 4,090--4,095 short requests/GPU, 81--83% KV occupancy,
+  and 21.6K--22.2K generated tokens/s/GPU; long response/audit phases remain
+  at an aggregate 512 requests/GPU.
+- Raised English oversampling from 1.01 to 1.05 after the measured 99.0706%
+  usable rate and preserved shard overlap projected fewer than one million
+  usable rows. Initialization adds only new shards.
+- Replaced the preempting 4,096-way instruction setting with 3,072. A
+  182-second comparison sustained 18.3K generated tokens/s/GPU and 55.4
+  shards/minute, peaked at 78--80% KV occupancy, and had no waiting or
+  preemptions.
+- Recorded that sustained 4,096-way instruction concurrency eventually filled
+  KV cache to 99--100% and caused preemption. Future tuning should compare a
+  3,072-request target and optimize generated-token throughput at 70--85% KV
+  occupancy rather than maximizing cache occupancy itself.
+- Recorded the verified Gemma 4 26B-A4B 10K bilingual pilot contract,
+  superseding unfinished-user completion for this checkpoint.
+- Documented exact 4K accounting, distributed per-turn budgets, vLLM runtime
+  settings, smoke results, and terminal queue recovery.
 
 ## 2026-09-01 - DFM11 FineInstructions Nemotron admission policy
 
@@ -1666,3 +1822,78 @@
   seconds/step. Four sampled gradients clipped, including two extreme raw
   norms, but the latest norm recovered to 0.213 and median loss remained 1.073;
   this is contained instability rather than divergence.
+## 2026-09-02 - Source-grounded English FineInstructions 1M campaign
+
+- Started a detached English campaign targeting exactly 1M accepted grounded
+  pairs and 1M corresponding multi-turn chats on owned GPUs 4-7.
+- Imported 19,479 pilot FineTemplates and extracted ten equal 50,000-window
+  grounding lanes from pinned filtered Common Pile sources.
+- Added round-robin source balancing, batched HNSW retrieval, resumable
+  per-document retrieval progress, exact final materialization, and full source
+  context for chat generation and independent chat audit. Final artifacts omit
+  the teacher-only grounding documents.
+- Recorded that a future Danish lane excludes LexDK and DBC and must qualify
+  the published English-trained FineInstructions artifacts before use.
+
+## 2026-09-03 - DFM11 tool-source remediation sizing
+
+- Estimated the outstanding tool-source cleanup as primarily a 16-32-core,
+  64-128-GiB CPU/storage workload. A stratified semantic audit needs about
+  0.5-1.5 B200 GPU-hours; exhaustive LLM judging is neither needed nor advised.
+- Superseded the initial execution envelope for the active remediation: use up
+  to 128 CPU workers and reuse the existing GPU 0-3 vLLM endpoints at
+  concurrency 64 per endpoint (256 aggregate), without managing their servers.
+## 2026-09-04 - DFM11 repaired tool-source packages
+
+- Rebuilt Glaive and ToolACE with source-specific native call/result pairing;
+  canonicalized Nemotron Agentic tool-calling and DFM8 synthetic native calls.
+- Exhaustively structure-validated 926,872 repaired source rows and audited a
+  deterministic 2,000-row sample per package with four existing Gemma 4 26B
+  A4B endpoints at 64 concurrent requests per endpoint (256 aggregate).
+- Retried both truncated audit responses; final result is 7,876 accepted and
+  124 rejected, with zero unresolved request errors.
+- Tokenized the repaired packages plus Mathagentic with 128 CPU workers into
+  `data/tokenized_dfm11_additions`: 2,822,887 training samples and 924,048,714
+  tokens. The final DFM11 union remains blocked on the absent
+  `data/tokenized_dfm10` base store; sampling additions alone is prohibited.
+- Re-tokenized the same complete additions store with the requested 64-worker
+  setting in 267.4 seconds; counts and token totals were unchanged.
+- Uploaded all four repaired replacement packages to `schneiderkamplab/*`,
+  verified every expected remote file and manifest, recorded the final Hub
+  revisions in `config/data/dfm11_tool_replacements.yaml`, and retained the
+  receipt at `logs/dfm11_tool_replacements_upload_receipts.json`.
+
+## 2026-09-04 - FineInstructions score-5-only policy reaffirmed
+
+- Confirmed that DFM11 must not use upstream FineInstructions Nemotron rows
+  scored 1-4, even to fill unused token budget. A stronger target model should
+  not be trained on weaker synthetic supervision merely because it is abundant.
+- Score 5 remains only an eligibility gate; independent correctness, source
+  copying, PII, decontamination, diversity, and licensing checks still apply.
+
+## 2026-09-04 - FineInstructions Nemotron excluded from DFM11
+
+- Superseded the score-5-only candidate policy and excluded the upstream
+  `fineinstructions/fineinstructions_nemotron` corpus from DFM11. Its unresolved
+  Common-Crawl provenance, copyright, PII, and source-copy risks outweigh the
+  expected marginal value for Mimir.
+- Set its cap and repeat to zero, removed it from the downloader manifest, and
+  made its retained selective-materialization script fail closed. No source
+  rows had been downloaded, converted, tokenized, or sampled.
+
+## 2026-09-04 - Folketing full-audit server recovery
+
+- Diagnosed idle GPUs 0-3 as four audit-owned vLLM servers having received
+  `SIGTERM`; the resumable audit clients and partial decisions remained intact.
+- Relaunched only those servers with the `audit` Conda environment's explicit
+  `CUDA_HOME` and `PATH`, restoring audit throughput. The resume pass will drop
+  and retry transport-error decisions created while the endpoints were down.
+
+## 2026-09-05 - Folketing full-audit retry after power interruption
+
+- Confirmed complete first-pass coverage of all 2,548,956 deterministic rows;
+  partial files and completed verdicts survived the cluster interruption.
+- Restarted four audit-owned vLLM servers and the post-audit pipeline. Raised
+  the constrained verdict response ceiling from 256 to 1,024 tokens for 24
+  stubborn rows that did not emit JSON within the smaller budget; acceptance
+  criteria and strict schema remain unchanged.

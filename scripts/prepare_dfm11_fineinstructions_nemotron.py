@@ -168,6 +168,11 @@ def download(repo_id: str, revision: str, filename: str, staging: Path) -> Path:
 
 
 def materialize(args: argparse.Namespace, config: dict[str, Any]) -> None:
+    if config.get("status") == "excluded":
+        raise SystemExit(
+            "fineinstructions/fineinstructions_nemotron is excluded from DFM11: "
+            f"{config.get('exclusion_reason', 'see the DFM11 policy')}"
+        )
     repo_id = str(config["repo_id"])
     revision = str(config["revision"])
     paths = config["paths"]
@@ -288,6 +293,9 @@ def materialize(args: argparse.Namespace, config: dict[str, Any]) -> None:
 
 
 def inventory(config: dict[str, Any]) -> None:
+    print(f"status={config.get('status', 'candidate')}")
+    if config.get("exclusion_reason"):
+        print(f"exclusion_reason={config['exclusion_reason']}")
     pairs = paired_shards(str(config["repo_id"]), str(config["revision"]))
     print(f"paired_shards={len(pairs):,}")
     print(f"paired_train_bytes={sum(x.train_bytes for x in pairs):,}")

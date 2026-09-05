@@ -10,3 +10,6 @@
 [submodule "fineinstructions"]
 	path = fineinstructions
 	url = https://github.com/schneiderkamplab/fineinstructions.git
+[submodule "mathagentic"]
+	path = mathagentic
+	url = https://github.com/schneiderkamplab/mathagentic.git

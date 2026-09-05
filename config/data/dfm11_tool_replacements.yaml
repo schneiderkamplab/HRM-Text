@@ -1,0 +1,60 @@
+# DFM11 tool-source replacements. These are substitutions, not additions:
+# every replaced DFM10 task prefix must be absent from the DFM11 tokenized union.
+workers: 128
+chat_template: gemma4_native_chat
+target_only: true
+max_seq_len: 4096
+
+sources:
+  glaive_native_tool_use_repaired:
+    repo_id: schneiderkamplab/dfm11-glaive-native-tool-use-repaired
+    revision: 270781c192980b2d32a492f92b2b1ba2d694a258
+    replaces: schneiderkamplab/dfm10-glaive-native-tool-use
+    rows: 71376
+    repeat: 1
+    admission_status: structural_validated_semantic_sampled
+
+  toolace_native_tool_use_repaired:
+    repo_id: schneiderkamplab/dfm11-toolace-native-tool-use-repaired
+    revision: 2768a3ff3b65effb60d200042c8e09a10e07cc59
+    replaces: schneiderkamplab/dfm10-toolace-native-tool-use
+    rows: 10378
+    repeat: 1
+    admission_status: structural_validated_semantic_sampled
+
+  nemotron_agentic_tool_calling_repaired:
+    repo_id: schneiderkamplab/dfm11-nemotron-agentic-tool-calling-repaired
+    revision: ad3251630ba1c0435a559fb9737267554ab208ff
+    replaces: nvidia/Nemotron-SFT-Agentic-v2:data/tool_calling.jsonl
+    rows: 8443
+    repeat: 1
+    admission_status: structural_validated_semantic_sampled
+    note: Interactive-agent and search files remain inherited and are not replaced.
+
+  synthetic_native_tool_calling_repaired:
+    repo_id: schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired
+    revision: aef80ae81d10b0bb9d9ca7e7760ba09297df4b56
+    replaces: schneiderkamplab/dfm8-synthetic-native-tool-calling
+    rows: 836675
+    repeat: 4
+    admission_status: structural_validated_semantic_sampled
+
+  folketingets_dokumenter_error_correction:
+    repo_id: schneiderkamplab/dfm11-folketingets-dokumenter-error-correction
+    revision: pending_full_audit_upload
+    replaces: schneiderkamplab/dfm10-folketingets-dokumenter-error-correction
+    available_rows: pending_full_audit
+    rows_per_epoch: 975000
+    repeat: 1
+    selection: deterministic_75000_per_shard
+    admission_status: full_task_aware_audit_in_progress
+
+replacement_task_prefixes:
+  - glaive_native_tool_use__
+  - dfm10-glaive-native-tool-use__
+  - toolace_native_tool_use__
+  - dfm10-toolace-native-tool-use__
+  - nemotron_agentic__data__tool_calling
+  - dfm8-synthetic-native-tool-calling__
+  - dfm8_synthetic_native_tool_calling__
+  - folketingets-dokumenter-error-correction__

@@ -329,6 +329,8 @@ def extract_glaive_tools(system: str) -> list[dict[str, Any]]:
 
 def parse_glaive_chat(chat: str, tool_name_map: Mapping[str, str] | None = None) -> list[dict[str, Any]]:
     messages: list[dict[str, Any]] = []
+    pending_call_ids: list[str] = []
+    call_index = 0
     normalized = chat.replace("<|endoftext|>", "")
     parts = re.split(r"\n*\s*(USER:|ASSISTANT:|FUNCTION RESPONSE:)\s*", normalized)
     idx = 1
@@ -341,11 +343,17 @@ def parse_glaive_chat(chat: str, tool_name_map: Mapping[str, str] | None = None)
         if marker == "USER:":
             messages.append({"role": "user", "content": content})
         elif marker == "FUNCTION RESPONSE:":
-            messages.append({"role": "tool", "content": content, "tool_call_id": "call_0"})
+            if not pending_call_ids:
+                return []
+            messages.append({"role": "tool", "content": content, "tool_call_id": pending_call_ids.pop(0)})
         elif marker == "ASSISTANT:":
-            tool_call = parse_glaive_functioncall(content, tool_name_map)
+            tool_call = parse_glaive_functioncall(content, tool_name_map, call_index)
             if tool_call is not None:
                 messages.append({"role": "assistant", "content": "", "tool_calls": [tool_call]})
+                pending_call_ids.append(tool_call["id"])
+                call_index += 1
+            elif "<functioncall>" in content:
+                return []
             else:
                 messages.append({"role": "assistant", "content": content})
     return messages
@@ -354,6 +362,7 @@ def parse_glaive_chat(chat: str, tool_name_map: Mapping[str, str] | None = None)
 def parse_glaive_functioncall(
     content: str,
     tool_name_map: Mapping[str, str] | None = None,
+    call_index: int = 0,
 ) -> dict[str, Any] | None:
     marker = "<functioncall>"
     if marker not in content:
@@ -383,7 +392,7 @@ def parse_glaive_functioncall(
         return None
     return {
         "type": "function",
-        "id": "call_0",
+        "id": f"call_{call_index}",
         "function": {"name": name.strip(), "arguments": json_safe(dict(arguments))},
     }
 
@@ -425,7 +434,7 @@ def toolace_native_tool_row(row: Mapping[str, Any]) -> dict[str, Any] | None:
         }
     ]
     call_index = 0
-    last_tool_call_id = "call_0"
+    pending_tool_calls: list[dict[str, Any]] = []
     for raw in conversations:
         if not isinstance(raw, Mapping):
             continue
@@ -433,16 +442,37 @@ def toolace_native_tool_row(row: Mapping[str, Any]) -> dict[str, Any] | None:
         content = raw.get("value") or raw.get("content")
         if not isinstance(content, str) or not content.strip():
             continue
+        if pending_tool_calls and role != "tool":
+            # A call may remain unresolved only when it is the final message.
+            return None
         if role == "user":
             messages.append({"role": "user", "content": content.strip()})
         elif role == "tool":
-            messages.append({"role": "tool", "content": content.strip(), "tool_call_id": last_tool_call_id})
+            results = parse_toolace_results(content)
+            if not pending_tool_calls or results is None or len(results) != len(pending_tool_calls):
+                return None
+            for call, result in zip(pending_tool_calls, results, strict=True):
+                result_name = result.get("name")
+                expected_name = call["function"]["name"]
+                if isinstance(result_name, str):
+                    result_name = tool_name_map.get(result_name, result_name)
+                    if result_name != expected_name:
+                        return None
+                payload = result.get("results", result)
+                messages.append({
+                    "role": "tool",
+                    "content": json.dumps(json_safe(payload), ensure_ascii=False, sort_keys=True),
+                    "tool_call_id": call["id"],
+                })
+            pending_tool_calls = []
         elif role == "assistant":
             tool_calls = parse_toolace_tool_calls(content, call_index, tool_name_map)
             if tool_calls:
                 messages.append({"role": "assistant", "content": "", "tool_calls": tool_calls})
                 call_index += len(tool_calls)
-                last_tool_call_id = tool_calls[-1]["id"]
+                pending_tool_calls = tool_calls
+            elif content.strip().startswith("[") and content.strip().endswith("]"):
+                return None
             else:
                 messages.append({"role": "assistant", "content": content.strip()})
     if not has_assistant_content_or_tool_call(messages):
@@ -679,7 +709,7 @@ def parse_toolace_tool_calls(
         return []
     calls: list[dict[str, Any]] = []
     for offset, item in enumerate(split_top_level_commas(body)):
-        parsed = parse_loose_call(item)
+        parsed = parse_declared_toolace_call(item, tool_name_map)
         if parsed is None:
             return []
         name, arguments = parsed
@@ -691,6 +721,35 @@ def parse_toolace_tool_calls(
             "function": {"name": name, "arguments": arguments},
         })
     return calls
+
+
+def parse_declared_toolace_call(
+    value: str,
+    tool_name_map: Mapping[str, str] | None,
+) -> tuple[str, dict[str, Any]] | None:
+    """Parse a ToolACE call while allowing parentheses in declared names."""
+    if tool_name_map:
+        for original in sorted(tool_name_map, key=len, reverse=True):
+            prefix = f"{original}("
+            if value.startswith(prefix) and value.endswith(")"):
+                parsed = parse_loose_call(f"tool({value[len(prefix):-1]})")
+                if parsed is None:
+                    return None
+                return tool_name_map[original], parsed[1]
+    parsed = parse_loose_call(value)
+    if parsed is None:
+        return None
+    name, arguments = parsed
+    return (tool_name_map.get(name, name) if tool_name_map else name), arguments
+
+
+def parse_toolace_results(value: str) -> list[dict[str, Any]] | None:
+    parsed = parse_json_maybe(value)
+    if isinstance(parsed, Mapping):
+        parsed = [parsed]
+    if not isinstance(parsed, list) or not parsed or not all(isinstance(item, Mapping) for item in parsed):
+        return None
+    return [dict(item) for item in parsed]
 
 
 def sanitize_tool_names(tools: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, str]]:

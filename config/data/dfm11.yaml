@@ -1,0 +1,7 @@
+path: data/sampled_dfm11
+target_only: true
+
+# DFM10 baseline plus DFM11 additions and source-specific replacements.
+# Source policies: dfm11_tool_replacements.yaml, dfm11_mathagentic.yaml,
+# dfm11_koolbardi.yaml, and dfm11_fineinstructions_english.yaml. Sampling
+# policy: data_io/prefix_config_dfm11.yaml.
