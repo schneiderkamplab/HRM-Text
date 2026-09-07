@@ -1,5 +1,14 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-07 - Danish FineInstructions publication and DFM11 admission
+
+- Published all 503,740 accepted Danish grounded chats and their matching
+  portable pairs as `schneiderkamplab/dfm11-fineinstructions-da`; admitted all
+  chats at repeat one and tokenized them into 663,788,470 stored tokens.
+- Published and remotely verified the selected Danish 2B query templatizer,
+  4B template instantiator, and both exact helper-training datasets. The local
+  aggregate DFM11 union remains blocked only by the absent DFM10 tokenized base.
+
 ## 2026-09-04 - Danish FineInstructions retrieval recovery
 
 - Recorded two failed 2,000-document qualifications against the undersized

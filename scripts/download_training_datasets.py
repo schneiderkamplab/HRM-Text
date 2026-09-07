@@ -470,6 +470,40 @@ HF_DATASETS: tuple[HFDataset, ...] = (
         revision="80f44dfc3cbc0ac8d6e219cc65bee4275db27414",
     ),
     HFDataset(
+        name="dfm11_fineinstructions_da",
+        repo_id="schneiderkamplab/dfm11-fineinstructions-da",
+        groups=("dfm11", "danish", "instruction", "multi_turn", "synthetic"),
+        allow_patterns=(
+            "pairs/*.jsonl.gz",
+            "chats/*.jsonl.gz",
+            "metadata/*",
+            "metadata/**/*",
+            "README.md",
+        ),
+        note=(
+            "Complete grounded Danish pair/chat release. DFM11 trains on all "
+            "503,740 independently audited chats at repeat 1; matching pair "
+            "rows are published for provenance but are not separately admitted."
+        ),
+        revision="80e37a930948c6e52bcaaffa20408842de87732c",
+    ),
+    HFDataset(
+        name="dfm11_danish_query_templatizer_training",
+        repo_id="schneiderkamplab/dfm11-danish-query-templatizer-training",
+        groups=("dfm11_artifact", "helper_training", "danish", "synthetic"),
+        allow_patterns=("data/*.jsonl.gz", "metadata/*", "README.md"),
+        note="Published supervision for the Danish FineInstructions query templatizer; not a DFM11 language-model training source.",
+        revision="b67725c20718c68609170e0c4e670381141ef0e8",
+    ),
+    HFDataset(
+        name="dfm11_danish_template_instantiator_training",
+        repo_id="schneiderkamplab/dfm11-danish-template-instantiator-training",
+        groups=("dfm11_artifact", "helper_training", "danish", "synthetic"),
+        allow_patterns=("data/*.jsonl.gz", "metadata/*", "README.md"),
+        note="Published independently accepted supervision for the Danish FineInstructions template instantiator; not a DFM11 language-model training source.",
+        revision="3449ffba7e5557453365402a186c8325e3b40894",
+    ),
+    HFDataset(
         name="oliverkinch_machine_translation_da_uk",
         repo_id="oliverkinch/machine-translation-da-uk",
         groups=("danish", "translation"),

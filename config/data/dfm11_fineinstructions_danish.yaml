@@ -1,0 +1,52 @@
+# DFM11 admission policy for grounded Danish FineInstructions conversations.
+seed: 11031
+
+source:
+  repo_id: schneiderkamplab/dfm11-fineinstructions-da
+  revision: 80e37a930948c6e52bcaaffa20408842de87732c
+  package_rows:
+    pairs: 503740
+    chats: 503740
+
+training:
+  chats:
+    available_rows: 503740
+    rows_per_epoch: all
+    repeat: 1
+  represented_pairs:
+    rows_per_epoch: 0
+    reason: the complete pair exchange is already present at the start of each admitted chat
+  chat_template: gemma4_native_chat
+  target_only: true
+  max_seq_len: 4096
+
+paths:
+  export: exports_dfm11/dfm11-fineinstructions-da
+  converted: data/converted_dfm11/fineinstructions_danish
+  tokenized: data/tokenized_dfm11_additions
+
+materialization:
+  status: complete
+  source_chats: 503740
+  release_rendered_tokens: 396108188
+  assistant_targets: 1335942
+  skipped_too_long: 0
+  stored_tokens: 663788470
+  tokenization_seconds: 86.9
+  aggregate_union_status: blocked_on_missing_local_dfm10_base
+
+published_artifacts:
+  query_templatizer_training:
+    repo_id: schneiderkamplab/dfm11-danish-query-templatizer-training
+    revision: b67725c20718c68609170e0c4e670381141ef0e8
+    rows: 49808
+  template_instantiator_training:
+    repo_id: schneiderkamplab/dfm11-danish-template-instantiator-training
+    revision: 3449ffba7e5557453365402a186c8325e3b40894
+    rows: 105000
+  query_templatizer_model:
+    repo_id: schneiderkamplab/dfm11-danish-query-templatizer-qwen3.5-2b
+    revision: 1beb3475b3d1514cf94f3cc3b13b3f887d7d7c31
+  template_instantiator_model:
+    repo_id: schneiderkamplab/dfm11-danish-template-instantiator-qwen3.5-4b
+    revision: c34410ad5209956e671ef59b39fc1094450bf8af
