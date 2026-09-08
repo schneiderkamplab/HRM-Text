@@ -27,6 +27,7 @@
 * [DFM9 Plan Concepts](dfm9-plan/) - Focused DFM9 measurements, implementation records, and continuation operations.
 * [DFM10 Plan](dfm10-plan.md) - DFM9 plus train-only Andersen and Alexandra Institute additions.
 * [DFM11 Plan](dfm11-plan.md) - Deferred task-aware quality repairs from the frozen DFM10 residual audit.
+* [DFM11 Post-Training Subset](dfm11-post-plan.md) - Built quality-weighted behavior mix with 33% broad capability anchors.
 * [DFM11 Portability and Bootstrap](dfm11-portability.md) - Machine-to-machine corpus transfer and reproducible rebuild requirements.
 * [DFM11 Folketing Error-Correction Repair](dfm11-folketing-error-correction.md) - Deterministic rebuild, task-aware full audit, and rejection-removing finalization.
 * [DFM11 Mathagentic Export Packages](dfm11-mathagentic-exports.md) - Audited Python and verified Prolog arithmetic tool-use upload staging.

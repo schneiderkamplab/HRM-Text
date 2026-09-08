@@ -1,5 +1,25 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-08 - DFM11-post quality-weighted revision
+
+- Spot-checked all source families initially >=2% of post tokens; retained
+  stronger grounded sources and reduced noisy or repetitive contributors.
+- Preserved whole conversations in the approximately half-size Koolbardi pools,
+  dropped overlength Agentic answers, reduced selected repeats and anchor weights.
+- Rebuilt ten epochs at 25.511B tokens/epoch with 32.997% broad anchors, without
+  retokenization or changes to full DFM11 or running training. See the
+  [post plan](pages/dfm11-post-plan.md) for evidence, decisions and rollback paths.
+
+## 2026-09-08 - DFM11-post construction
+
+- Added the [DFM11-post plan](pages/dfm11-post-plan.md), separating historical
+  20% anchor proposals from the approved 33% final-token anchor share.
+- Implemented repeat-1/2 behavior selection, inherited exclusion preservation,
+  and square-root-weighted, non-repeated broad anchors. Initial token projection
+  is 23.925B behavior plus 11.783B anchors; sampling ten index sets is running.
+- Source classifications, exclusions, cap allocations and input hashes are
+  recorded in the build manifest; final sampled token fractions are checked.
+
 ## 2026-09-08 - Origin reconciliation audit
 
 - Restored local work after fast-forwarding main; retained the recovery stash.
