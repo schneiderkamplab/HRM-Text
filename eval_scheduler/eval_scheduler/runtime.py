@@ -567,7 +567,9 @@ def run_training_until_step(job: Job, gpus: tuple[int, ...]) -> int:
     replacements = {"stop_after_step": str(target_step)}
     resume_from_tag = str(job.metadata.get("resume_from_tag") or "")
     if resume_from_tag:
+        resume_ckpt_path = str(job.metadata.get("resume_ckpt_path") or job.metadata["ckpt_path"])
         resume_metadata = dict(job.metadata)
+        resume_metadata["ckpt_path"] = resume_ckpt_path
         resume_metadata["ckpt_tag"] = resume_from_tag
         resume_job = job.with_updates(metadata=resume_metadata)
         resume_ready, resume_reason = checkpoint_ready(resume_job)
@@ -577,7 +579,7 @@ def run_training_until_step(job: Job, gpus: tuple[int, ...]) -> int:
             )
         replacements.update(
             {
-                "resume_checkpoint_path": str(job.metadata["ckpt_path"]),
+                "resume_checkpoint_path": resume_ckpt_path,
                 "resume_checkpoint_tag": resume_from_tag,
             }
         )
@@ -723,6 +725,76 @@ def run_export_hf(job: Job, gpu: int) -> int:
     tmp_dir.replace(out_dir)
     with log_path.open("a") as log:
         log.write(f"\n{now()}\texport ready\t{out_dir}\n")
+    return 0
+
+
+def run_prepare_hf_variant(job: Job) -> int:
+    source_dir = Path(str(job.metadata["source_hf_export_dir"]))
+    out_dir = Path(str(job.metadata["hf_export_dir"]))
+    overrides = job.metadata.get("config_overrides")
+    if not isinstance(overrides, dict) or not overrides:
+        raise SchedulerError("prepare_hf_variant requires non-empty metadata.config_overrides")
+    if source_dir.resolve() == out_dir.resolve():
+        raise SchedulerError("prepare_hf_variant source and destination must differ")
+
+    log_path = Path(job.log_dir) / f"prepare_hf_variant_{job.name}.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+
+    def validate(path: Path) -> tuple[bool, str]:
+        model_path = path / "model.safetensors"
+        config_path = path / "config.json"
+        if not model_path.is_file():
+            return False, f"missing {model_path}"
+        try:
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            return False, f"invalid {config_path}: {exc}"
+        mismatches = {
+            key: {"expected": value, "actual": config.get(key)}
+            for key, value in overrides.items()
+            if config.get(key) != value
+        }
+        if mismatches:
+            return False, f"config override mismatch: {mismatches}"
+        return True, "ready"
+
+    if out_dir.exists():
+        ready, reason = validate(out_dir)
+        if ready:
+            log_path.write_text(f"{now()}\texisting HF variant validated\t{out_dir}\n", encoding="utf-8")
+            return 0
+        backup = out_dir.with_name(f"{out_dir.name}.incomplete.{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+        out_dir.rename(backup)
+        with log_path.open("a") as log:
+            log.write(f"{now()}\tmoved invalid existing variant\t{reason}\t{backup}\n")
+
+    source_model = source_dir / "model.safetensors"
+    source_config = source_dir / "config.json"
+    if not source_model.is_file() or not source_config.is_file():
+        with log_path.open("a") as log:
+            log.write(f"{now()}\tsource export incomplete\t{source_dir}\n")
+        return 4
+
+    tmp_dir = out_dir.with_name(f"{out_dir.name}.tmp.{os.getpid()}")
+    shutil.rmtree(tmp_dir, ignore_errors=True)
+    shutil.copytree(source_dir, tmp_dir)
+    config_path = tmp_dir / "config.json"
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    config.update(overrides)
+    config_path.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
+
+    ready, reason = validate(tmp_dir)
+    if not ready:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+        with log_path.open("a") as log:
+            log.write(f"{now()}\tvariant validation failed\t{reason}\n")
+        return 4
+    tmp_dir.replace(out_dir)
+    with log_path.open("a") as log:
+        log.write(
+            f"{now()}\tHF variant ready\tsource={source_dir}\tout={out_dir}"
+            f"\toverrides={json.dumps(overrides, sort_keys=True)}\n"
+        )
     return 0
 
 
@@ -2268,6 +2340,8 @@ def run_job(
     if job.action == Action.EXPORT_HF:
         assert gpu is not None
         return run_export_hf(job, gpu)
+    if job.action == Action.PREPARE_HF_VARIANT:
+        return run_prepare_hf_variant(job)
     if job.action == Action.EVAL_STANDARD:
         assert gpu is not None
         return run_standard(job, gpu, batch, server_pool)

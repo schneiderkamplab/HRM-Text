@@ -22,6 +22,7 @@ class Action(StrEnum):
     TEARDOWN_EVAL = "teardown_eval"
     WAIT_CHECKPOINT = "wait_checkpoint"
     EXPORT_HF = "export_hf"
+    PREPARE_HF_VARIANT = "prepare_hf_variant"
     EVAL_STANDARD = "eval_standard"
     EVAL_DFM = "eval_dfm"
     EVAL_DFM_IFEVAL = "eval_dfm_ifeval"
@@ -57,6 +58,7 @@ ACTION_PROFILES: dict[Action, tuple[ExecutionScope, Capability, int]] = {
     Action.TEARDOWN_EVAL: (ExecutionScope.NODE, Capability.TEARDOWN, 0),
     Action.WAIT_CHECKPOINT: (ExecutionScope.CONTROL, Capability.CONTROL, 0),
     Action.EXPORT_HF: (ExecutionScope.GPU, Capability.EXPORT, 1),
+    Action.PREPARE_HF_VARIANT: (ExecutionScope.CONTROL, Capability.CONTROL, 0),
     Action.EVAL_STANDARD: (ExecutionScope.GPU, Capability.EVAL, 1),
     Action.EVAL_DFM: (ExecutionScope.GPU, Capability.EVAL, 1),
     Action.EVAL_DFM_IFEVAL: (ExecutionScope.GPU, Capability.EVAL, 1),

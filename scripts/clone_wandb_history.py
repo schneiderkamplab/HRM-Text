@@ -65,24 +65,54 @@ def main() -> None:
     parser.add_argument("--dest-run-id", required=True)
     parser.add_argument("--dest-run-name", required=True)
     parser.add_argument("--page-size", type=int, default=5000)
+    parser.add_argument("--min-step", type=int)
+    parser.add_argument("--max-step", type=int)
+    parser.add_argument("--data-path")
+    parser.add_argument("--checkpoint-path")
+    parser.add_argument("--resume-checkpoint-path")
+    parser.add_argument("--resume-checkpoint-tag")
+    parser.add_argument("--arch-l-cycles", type=int)
+    parser.add_argument("--arch-bp-max-steps", type=int)
+    parser.add_argument("--continuation-note", default="8K global/global, epoch 9 onward")
+    parser.add_argument("--tag", action="append", dest="tags")
+    parser.add_argument(
+        "--preserve-source-config",
+        action="store_true",
+        help="Keep source data/attention settings instead of applying the legacy DFM9-8K defaults.",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
     api = wandb.Api(timeout=120)
     source = api.run(f"{args.entity}/{args.source_project}/{args.source_run_id}")
     config = dict(source.config)
-    config.update(
-        {
-            "project_name": args.dest_project,
-            "run_name": args.dest_run_name,
-            "wandb_run_id": args.dest_run_id,
-            "wandb_resume": "allow",
+    config.update({
+        "project_name": args.dest_project,
+        "run_name": args.dest_run_name,
+        "wandb_run_id": args.dest_run_id,
+        "wandb_resume": "allow",
+    })
+    if not args.preserve_source_config:
+        config.update({
             "data": {"path": "data/sampled_dfm9_8k", "target_only": True},
             "long_context_continuation": True,
             "long_context_attention": "global_global",
             "long_context_source_run": f"{args.entity}/{args.source_project}/{args.source_run_id}",
-        }
-    )
+        })
+    if args.data_path:
+        config["data"] = {"path": args.data_path, "target_only": True}
+    if args.checkpoint_path:
+        config["checkpoint_path"] = args.checkpoint_path
+    if args.resume_checkpoint_path:
+        config["resume_checkpoint_path"] = args.resume_checkpoint_path
+    if args.resume_checkpoint_tag:
+        config["resume_checkpoint_tag"] = args.resume_checkpoint_tag
+    if args.arch_l_cycles is not None or args.arch_bp_max_steps is not None:
+        config["arch"] = dict(config["arch"])
+        if args.arch_l_cycles is not None:
+            config["arch"]["L_cycles"] = args.arch_l_cycles
+        if args.arch_bp_max_steps is not None:
+            config["arch"]["bp_max_steps"] = args.arch_bp_max_steps
 
     run = None
     if not args.dry_run:
@@ -93,7 +123,7 @@ def main() -> None:
             name=args.dest_run_name,
             config=config,
             resume="allow",
-            tags=["dfm9", "xl", "8k", "history-clone"],
+            tags=args.tags or ["dfm9", "xl", "8k", "history-clone"],
             settings=wandb.Settings(init_timeout=300),
         )
         assert run is not None
@@ -105,7 +135,11 @@ def main() -> None:
     streamed_min_step: int | None = None
     streamed_max_step: int | None = None
     streamed_eval_rows = 0
-    for raw in source.scan_history(page_size=args.page_size):
+    for raw in source.scan_history(
+        page_size=args.page_size,
+        min_step=args.min_step,
+        max_step=args.max_step,
+    ):
         step, payload = clean_row(raw)
         if step is None or not payload:
             continue
@@ -145,7 +179,7 @@ def main() -> None:
     run.summary["history_clone/source_run"] = f"{args.entity}/{args.source_project}/{args.source_run_id}"
     run.summary["history_clone/source_max_step"] = streamed_max_step
     run.summary["history_clone/rows"] = streamed_rows
-    run.summary["history_clone/continuation"] = "8K global/global, epoch 9 onward"
+    run.summary["history_clone/continuation"] = args.continuation_note
     wandb.finish()
 
 

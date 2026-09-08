@@ -1,5 +1,13 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-08 - Origin reconciliation audit
+
+- Restored local work after fast-forwarding main; retained the recovery stash.
+- Preserved the superseded upstream Nemotron assessment in a separate historical
+  concept instead of losing it when restoring the local replacement plan.
+- All pinned submodule revisions are now available and checked out, including
+  Mathagentic `00f3ded`; existing dfm-evals working changes remain intact.
+
 ## 2026-09-08 - DFM11 portability boundary
 
 - Added a focused DFM11 machine-to-machine bootstrap runbook: Git transfers
@@ -279,6 +287,38 @@
   superseding unfinished-user completion for this checkpoint.
 - Documented exact 4K accounting, distributed per-turn budgets, vLLM runtime
   settings, smoke results, and terminal queue recovery.
+## 2026-09-01 - Koolbardi operational runbook
+
+- Added the verified end-to-end Koolbardi procedure covering submodule setup,
+  `uv pip` installation, eight-server vLLM launch, atomic instruction/response/
+  audit phases, status and stale-claim recovery, balanced finalization, output
+  receipts, and the remaining DFM11 admission boundary.
+
+## 2026-09-01 - DFM11 FineInstructions operating runbook
+
+- Added a focused OKF runbook for the DFM-owned FineInstructions submodule,
+  covering initialization, dependency installation, fail-closed query/document
+  manifests, canonical extraction, the DFM-owned Gaussian retrieval index,
+  instantiation contracts, audit gates, token budgeting, and current pending
+  implementation stages.
+- Recorded the required `--base-dir ..` extraction argument, the local-only
+  `a4442c2` submodule commit and push ordering, and the separate model-artifact
+  use decision required before production.
+
+## 2026-09-01 - DFM-native FineInstructions replacement
+
+- Superseded and removed the proposed upstream FineInstructions Nemotron
+  admission, including its downloader entry, materializer, config, and tests.
+  DFM11 retains no upstream Nemotron rows, real-query rows, FineTemplates, or
+  prebuilt FineTemplates index.
+- Added `schneiderkamplab/fineinstructions` as an Apache-2.0 submodule. Its
+  initial package enforces approved query/document source manifests, canonical
+  streaming extraction, pinned released model revisions, strict excerpt
+  expansion, and a new DFM-owned FAISS index using global-plus-five Gaussian
+  document representations.
+- The learned artifacts remain subject to a model-use decision because their
+  Hugging Face cards declare no licenses. Production generation and judging
+  are not yet represented as complete.
 
 ## 2026-09-01 - DFM11 FineInstructions Nemotron admission policy
 

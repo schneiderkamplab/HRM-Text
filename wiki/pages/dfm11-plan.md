@@ -104,92 +104,86 @@ DeepDive intermediate assistant tool calls were similarly judged as incomplete
 final responses. DFM11 must use task-aware verification before excluding either
 family.
 
-## FineInstructions Nemotron - excluded
+## DFM-native FineInstructions generation
 
-**Decision, 2026-09-04:** DFM11 excludes
-`fineinstructions/fineinstructions_nemotron`. Its Common-Crawl-derived
-provenance, copyright, PII, and deliberate source-copy risks require more
-review than its expected marginal value justifies for Mimir. It has a zero
-token budget, is absent from the downloader manifest, and the retained
-materializer refuses to run. The discussion below is the superseded candidate
-assessment.
+**Superseded 2026-09-01:** DFM11 does not use
+`fineinstructions/fineinstructions_nemotron`, the released `real_queries`, the
+released `finetemplates`, or the prebuilt FineTemplates FAISS index. The prior
+proposal to admit a capped score-5 slice was withdrawn because both its answer
+texts and template provenance fall outside the DFM source-policy boundary.
+The parent-repository downloader, materializer, config, and tests for that
+proposal were removed.
 
-The source was considered as a fail-closed English instruction-pretraining
-candidate. It is not ordinary post-training
-SFT: the release contains more than one billion synthetic instruction/answer
-pairs (approximately 300B tokens), generated from Nemotron-CC source documents.
-The FineInstructions experiments used this representation for pretraining from
-scratch and formatted each pair as an instruction and answer.
+DFM11 instead reproduces the documented FineInstructions method using two
+independently approved pools drawn only from sources already admitted by the
+DFM source policy:
 
-### Superseded cap and quality proposal
+1. realistic queries from admitted DFM instruction/chat sources are converted
+   into new generic FineTemplates;
+2. documents from admitted DFM raw/grounding sources provide all knowledge and
+   answer excerpts;
+3. a new retrieval index is built over the new templates and descriptions;
+4. generated pairs retain both query-template and answer-document provenance.
 
-- cap the admitted source at **3.0B Gemma-rendered tokens per DFM11 epoch**;
-- use `repeat: 1` and do not compensate for filtering by repetition;
-- retain only upstream judge score 5, with no lower-score fallback to fill the
-  cap; unused budget is preferable to weaker synthetic supervision;
-- deterministically sample paired data/judge shards across the release;
-- materialize approximately 3.45B upstream `synthetic_token_count` tokens, then
-  enforce the exact 3.0B cap after Gemma-template tokenization;
-- run exact/near deduplication, protected-eval decontamination, context-length
-  validation, PII review, and source-copy review before admission.
+Implementation lives in the Apache-2.0 `fineinstructions` submodule at
+`https://github.com/schneiderkamplab/fineinstructions.git`. It pins the released
+query-templatizer, retrieval-embedding, and template-instantiator model
+revisions, but it does not import the upstream source datasets. The learned
+model artifacts themselves have no declared Hugging Face license and therefore
+also require a recorded model-use decision before production. Exact setup,
+manifest, extraction, index, and admission commands are maintained in the
+[DFM11 FineInstructions runbook](dfm11-fineinstructions-runbook.md).
 
-The 3B cap is deliberately about 3% of a roughly 100B-token DFM epoch: large
-enough to test the paper's instruction-pretraining effect without allowing one
-English Common-Crawl-derived family to dominate Danish, math/code, native chat,
-or agentic supervision. At the card's aggregate average of approximately 244
-tokens per row, 3B tokens corresponds to roughly 12.3M rows before downstream
-filtering. Revisit the cap only after source-stratified quality and capability
-ablations; 5B tokens is the provisional hard ceiling for DFM11.
+### Reproduction contract
 
-A local 12-shard sample covering 7,972,982 judge labels found 15.15% score 5,
-43.09% score 4, 28.46% score 3, 10.61% score 2, and 2.46% score 1. This is why
-the initial gate is score 5. The upstream score remains only a quality signal,
-not a privacy, licensing, correctness, or decontamination decision.
+- Mine queries broadly across approved English and Danish instruction sources;
+  deduplicate before templatization and cap source/task families so one existing
+  corpus cannot dominate the template bank.
+- Generate `template` and `compatible_document_description` with the pinned
+  `fineinstructions/query_templatizer` artifact.
+- Embed the new descriptions and build a new FAISS index. Match admitted
+  documents using the pinned BGE-M3-derived encoder with one global and five
+  Gaussian-pooled representations, a provisional `0.865` similarity threshold,
+  and complexity reweighting calibrated from the new template distribution.
+- Retrieve six compatible templates per document and instantiate them with the
+  pinned `fineinstructions/template_instantiator` artifact.
+- Preserve the paper's grounded-answer contract: at least 80% excerpt-derived
+  answer content, strict unambiguous excerpt expansion, and no forced match when
+  a template is incompatible.
+- Judge with task-aware quality, grounding, PII, source-copy, and safety gates.
+  The paper's Flow-Judge threshold was >=4; DFM11 should calibrate its own judge
+  and begin with the stricter equivalent of score 5.
+- Keep generated tokens per source document within the source-document token
+  budget when constructing a token-controlled pretraining slice.
+- Decontaminate queries, templates, and final pairs against protected evals,
+  then exact/near-deduplicate before Gemma-native rendering and tokenization.
 
-### Exclusion rationale: license, provenance, and PII
+Start with a bilingual, source-stratified pilot rather than assigning a final
+token cap now. Measure accepted yield, task/domain diversity, excerpt fraction,
+language balance, and marginal benchmark value before setting the DFM11 weight.
 
-Admission is permanently closed for DFM11. The Hugging Face card declares no dataset license.
-FineInstructions says the rows derive from Nemotron-CC, which derives from
-Common Crawl. Nemotron-CC is distributed under the Common Crawl Terms of Use;
-those terms warn that crawled content may remain subject to source-owner terms
-and place copyright, privacy, and lawful-use assessment on the user.
+### Historical rejection evidence
 
-This transformation does not remove the underlying concern. FineInstructions
-requires generated answers to contain at least 80% excerpts from source
-documents, and its paper describes query moderation and benchmark
-decontamination but no PII-removal stage. Therefore:
+The withdrawn upstream-corpus assessment remains useful evidence. Its card has
+no declared dataset license; answer text is Nemotron-CC/Common-Crawl-derived;
+and the paper intentionally requires at least 80% excerpts from source
+documents while documenting no PII-removal stage. A local 7,972,982-label
+sample found only 15.15% score 5. None of those observations are an admission
+signal for DFM11, and no upstream rows are retained.
 
-1. do not represent this source as permissively licensed;
-2. obtain an explicit project-level copyright/provenance decision;
-3. reject obvious emails, phone-like identifiers, IP addresses, credentials,
-   addresses, and other personal identifiers, followed by a stratified semantic
-   PII audit because regexes cannot reliably identify names or contextual PII;
-4. measure long verbatim source spans and domain/source concentration;
-5. fail closed if the source-copy and PII audits cannot establish an acceptable
-   policy for the intended academic use.
+The superseded upstream assessment is preserved in the
+[archived Nemotron assessment](dfm11-nemotron-history.md).
 
-An admitted materialization requires a receipt at
-`data/receipts/dfm11_fineinstructions_nemotron_admission.yaml` affirming the
-license decision, PII audit, source-copy audit, benchmark decontamination, and
-task-quality audit. Review-only pilots remain segregated under `data/review/`:
+### Multi-turn extension
 
-```bash
-python scripts/prepare_dfm11_fineinstructions_nemotron.py inventory
-python scripts/prepare_dfm11_fineinstructions_nemotron.py materialize \
-  --review-only --max-rows 100000
-```
-
-### FineInstructions-seeded multi-turn chats
-
-FineInstructions can seed useful multi-turn generation, but semantic clustering
-should control **coverage and sampling**, not mechanically concatenate or order
-independent question/answer rows. Similar standalone questions rarely form a
-conversation with genuine turn dependencies, and concatenation can combine
-incompatible source contexts or repeat copied passages.
+The new templates and grounded pairs may seed multi-turn generation, but
+semantic clustering controls coverage and sampling rather than mechanically
+ordering independent questions. Similar standalone questions do not by
+themselves form a coherent conversation.
 
 Use a hybrid method:
 
-1. embed and cluster accepted score-5 instructions by domain, task, difficulty,
+1. embed and cluster accepted instructions by domain, task, difficulty,
    and intent; cap large clusters and sample a broad seed distribution;
 2. use one seed, or at most a few source-compatible seeds sharing provenance,
    to construct a latent conversation plan;
@@ -199,15 +193,12 @@ Use a hybrid method:
    text unless the task explicitly requires grounded context;
 5. independently audit every assistant turn for coherence, factual support,
    PII, source reproduction, language, and native Gemma formatting;
-6. deduplicate against both FineInstructions and the separate DFM11 Magpie
+6. deduplicate against both generated FineInstructions and the separate DFM11 Magpie
    corpus, and retain seed IDs and cluster IDs as provenance metadata.
 
-Start with a 20,000-chat pilot and admit at most **100,000-200,000 accepted
-English chats** after an ablation. Free, unseeded Gemma generation already
-belongs to the bilingual Magpie workstream; the value of FineInstructions here
-is coverage guidance, not another route to unconstrained free generation. Do
-not translate these chats to manufacture Danish balance. Use native Danish
-seeds or the independent Danish Magpie lane for matched Danish coverage.
+Start with a 20,000-chat bilingual pilot. Free, unseeded Gemma generation
+already belongs to the Magpie workstream; FineInstructions contributes grounded
+coverage guidance, not another route to unconstrained free generation.
 
 **Superseded operationally on 2026-09-02 for dataset construction, not
 admission:** the active DFM-owned FineInstructions campaign now targets exactly
@@ -638,6 +629,8 @@ from the actual rendered history rather than approximated. The one-turn pilot
 may retain instruction `max_tokens=512`, but response `max_tokens` should also
 be derived from the rendered prompt and row target band so request-time context
 overflow is impossible and the accepted length distribution is intentional.
+Operational commands and recovery procedures are maintained separately in the
+[Koolbardi bilingual synthesis runbook](koolbardi-runbook.md).
 
 ## Workstreams
 

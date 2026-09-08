@@ -19,6 +19,8 @@ The plan is the desired workflow, not just a list of eval shards.  It can
 contain:
 
 - `wait_checkpoint`: wait until a checkpoint is fully written.
+- `prepare_hf_variant`: atomically copy an existing HF export and apply
+  validated `config.json` overrides for an inference-only architecture probe.
 - `train_until_step`: reserve all scheduler GPUs and train to an exact,
   verified regular checkpoint.
 - `terminal_barrier`: wait until dependencies are terminal, including failed
