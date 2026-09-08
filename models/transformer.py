@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import TYPE_CHECKING, Literal, Optional
 import math
 
 import torch
@@ -7,6 +7,9 @@ from torch import Tensor, nn
 from pydantic import BaseModel
 
 from models.layers import SwiGLU, AttnType, Attention, Cache, RotaryEmbedding, find_multiple
+
+if TYPE_CHECKING:
+    from models.stability_diagnostics import StabilityDiagnostics
 
 
 class InitConfig(BaseModel):
@@ -93,13 +96,113 @@ class TransformerBlock(nn.Module):
         self.norm = lambda x: F.rms_norm(x, (x.shape[-1], ), eps=config.norm_eps)
 
     # [Forward logic]
-    def _forward_pre(self, x: Tensor, **seq_info) -> Tensor:  # Pre Norm
+    def _forward_pre(
+        self,
+        x: Tensor,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        stability_scope: Optional[str] = None,
+        **seq_info,
+    ) -> Tensor:  # Pre Norm
+        if stability_diagnostics is not None:
+            if stability_scope is None:
+                raise ValueError("stability_scope is required when diagnostics are enabled")
+            return self._forward_pre_with_diagnostics(
+                x, diagnostics=stability_diagnostics, scope=stability_scope, **seq_info
+            )
         x = x + self.attn(self.norm(x), **seq_info)
         return x + self.mlp(self.norm(x))
     
-    def _forward_post(self, x: Tensor, **seq_info) -> Tensor:  # Post Norm
+    def _forward_post(
+        self,
+        x: Tensor,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        stability_scope: Optional[str] = None,
+        **seq_info,
+    ) -> Tensor:  # Post Norm
+        if stability_diagnostics is not None:
+            if stability_scope is None:
+                raise ValueError("stability_scope is required when diagnostics are enabled")
+            return self._forward_post_with_diagnostics(
+                x, diagnostics=stability_diagnostics, scope=stability_scope, **seq_info
+            )
         x = self.norm(x + self.attn(x, **seq_info))
         return self.norm(x + self.mlp(x))
+
+    def _forward_pre_with_diagnostics(
+        self,
+        x: Tensor,
+        *,
+        diagnostics: "StabilityDiagnostics",
+        scope: str,
+        **seq_info,
+    ) -> Tensor:
+        diagnostics.record_tensor(f"activation/{scope}/input", x, record_gradient=True)
+        attn_norm = self.norm(x)
+        diagnostics.record_tensor(f"activation/{scope}/attn_norm", attn_norm)
+        attn_residual = self.attn(
+            attn_norm,
+            stability_diagnostics=diagnostics,
+            stability_scope=f"{scope}/attention",
+            **seq_info,
+        )
+        diagnostics.record_tensor(
+            f"activation/{scope}/attn_residual", attn_residual, record_gradient=True
+        )
+        diagnostics.record_pair(f"{scope}/attn_input_residual", x, attn_residual)
+        post_attn = x + attn_residual
+        diagnostics.record_tensor(
+            f"activation/{scope}/post_attn", post_attn, record_gradient=True
+        )
+        mlp_norm = self.norm(post_attn)
+        diagnostics.record_tensor(f"activation/{scope}/mlp_norm", mlp_norm)
+        mlp_residual = self.mlp(
+            mlp_norm,
+            stability_diagnostics=diagnostics,
+            stability_scope=f"{scope}/mlp",
+        )
+        diagnostics.record_tensor(
+            f"activation/{scope}/mlp_residual", mlp_residual, record_gradient=True
+        )
+        diagnostics.record_pair(f"{scope}/mlp_input_residual", post_attn, mlp_residual)
+        output = post_attn + mlp_residual
+        diagnostics.record_tensor(f"activation/{scope}/output", output, record_gradient=True)
+        return output
+
+    def _forward_post_with_diagnostics(
+        self,
+        x: Tensor,
+        *,
+        diagnostics: "StabilityDiagnostics",
+        scope: str,
+        **seq_info,
+    ) -> Tensor:
+        diagnostics.record_tensor(f"activation/{scope}/input", x, record_gradient=True)
+        attn_residual = self.attn(
+            x,
+            stability_diagnostics=diagnostics,
+            stability_scope=f"{scope}/attention",
+            **seq_info,
+        )
+        diagnostics.record_tensor(
+            f"activation/{scope}/attn_residual", attn_residual, record_gradient=True
+        )
+        diagnostics.record_pair(f"{scope}/attn_input_residual", x, attn_residual)
+        post_attn = self.norm(x + attn_residual)
+        diagnostics.record_tensor(
+            f"activation/{scope}/post_attn", post_attn, record_gradient=True
+        )
+        mlp_residual = self.mlp(
+            post_attn,
+            stability_diagnostics=diagnostics,
+            stability_scope=f"{scope}/mlp",
+        )
+        diagnostics.record_tensor(
+            f"activation/{scope}/mlp_residual", mlp_residual, record_gradient=True
+        )
+        diagnostics.record_pair(f"{scope}/mlp_input_residual", post_attn, mlp_residual)
+        output = self.norm(post_attn + mlp_residual)
+        diagnostics.record_tensor(f"activation/{scope}/output", output, record_gradient=True)
+        return output
 
 
 class Transformer(nn.Module):
@@ -124,11 +227,35 @@ class Transformer(nn.Module):
         # Create cache function
         self.create_cache = lambda **kwargs: [Cache.create(**kwargs, num_heads=config.num_heads, head_dim=config.hidden_size // config.num_heads) for _i in range(config.n_layers)]
 
-    def forward(self, x: Tensor, cache: Optional[list[Cache]] = None, **seq_info) -> Tensor:
+    def forward(
+        self,
+        x: Tensor,
+        cache: Optional[list[Cache]] = None,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        stability_scope: Optional[str] = None,
+        **seq_info,
+    ) -> Tensor:
         seq_info["cos_sin"] = self.rotary_emb(seq_info.pop("position_ids", None)) if hasattr(self, "rotary_emb") else None
 
         # Forward layers
-        for layer_id, layer in enumerate(self.layers):
-            x = layer(x, **seq_info, cache=cache[layer_id] if cache is not None else None)
+        if stability_diagnostics is None:
+            for layer_id, layer in enumerate(self.layers):
+                x = layer(x, **seq_info, cache=cache[layer_id] if cache is not None else None)
+        else:
+            if stability_scope is None:
+                raise ValueError("stability_scope is required when diagnostics are enabled")
+            for layer_id, layer in enumerate(self.layers):
+                x = layer(
+                    x,
+                    stability_diagnostics=stability_diagnostics,
+                    stability_scope=f"{stability_scope}/layer_{layer_id:03d}",
+                    **seq_info,
+                    cache=cache[layer_id] if cache is not None else None,
+                )
 
-        return self.norm_f(x)
+        output = self.norm_f(x)
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                f"activation/{stability_scope}/final_norm", output, record_gradient=True
+            )
+        return output

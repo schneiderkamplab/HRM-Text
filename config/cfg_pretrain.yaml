@@ -62,3 +62,7 @@ compile_train_batch_mode: default  # default or max-autotune-no-cudagraphs; grap
 memory_log_interval: 0
 empty_cache_interval: 0
 resume_trace: false
+stability_diagnostics_interval: 0  # 0 disables all recorder objects, hooks, reductions, and diagnostic I/O
+stability_diagnostics_max_tokens_per_microbatch: 4096  # Whole leading packed sequences used only by the diagnostic shadow replay
+stability_diagnostics_output: null  # Defaults to <checkpoint_path>/stability_diagnostics.jsonl when enabled
+stability_diagnostics_wandb_detailed: false  # false logs compact stability/* summaries; true also logs all stability_detail/* keys

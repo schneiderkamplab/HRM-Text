@@ -4,7 +4,7 @@ title: DFM11 Plan
 description: Deferred quality repair and task-aware admission plan derived from the completed DFM10 residual audit.
 tags: [dfm11, data-quality, filtering, repair, audit, training-data]
 status: draft
-last_updated: 2026-09-04
+last_updated: 2026-09-08
 confidence: medium
 sources:
   - id: magpie-paper
@@ -856,6 +856,9 @@ live in [DFM11 FineInstructions Grounded Chats](dfm11-fineinstructions-grounded-
    checks before full sampling.
 11. Sample the intended epochs only after all admission receipts and the final
    DFM10-to-DFM11 delta report pass.
+
+The machine-to-machine handoff and rebuild alternatives are documented in
+[DFM11 Portability and Bootstrap](dfm11-portability.md).
 
 ## Budget and stop conditions
 

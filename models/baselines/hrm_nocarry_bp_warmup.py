@@ -1,4 +1,4 @@
-from typing import Tuple, Dict, Any, Optional
+from typing import TYPE_CHECKING, Tuple, Dict, Any, Optional
 
 import torch
 from torch import nn
@@ -6,6 +6,9 @@ from torch import Tensor
 
 from models.common import trunc_normal_init_
 from models.transformer import Transformer, Cache, TransformerConfig
+
+if TYPE_CHECKING:
+    from models.stability_diagnostics import StabilityDiagnostics
 
 
 class HierarchicalReasoningModelConfig(TransformerConfig):
@@ -32,7 +35,14 @@ class HierarchicalReasoningModelRecurrentBlock(nn.Module):
         # Create cache function
         self.create_cache = self.core.create_cache
 
-    def forward(self, hidden_states: Tensor, input_injection: Tensor, **kwargs) -> Tensor:
+    def forward(
+        self,
+        hidden_states: Tensor,
+        input_injection: Tensor,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        stability_scope: Optional[str] = None,
+        **kwargs,
+    ) -> Tensor:
         # Input injection (add)
         # TODO: Try better alternatives, such as GRU / gating in the following papers
         # Alternatively, "fixed" gating that does not depend on hidden state is also worth trying
@@ -41,7 +51,33 @@ class HierarchicalReasoningModelRecurrentBlock(nn.Module):
         # https://arxiv.org/pdf/2202.10447
         
         # TODO: Asymmetric fusion is also worth trying. assign different number of tokens to H and L.
-        return self.core(hidden_states + input_injection, **kwargs)
+        combined = hidden_states + input_injection
+        if stability_diagnostics is not None:
+            if stability_scope is None:
+                raise ValueError("stability_scope is required when diagnostics are enabled")
+            stability_diagnostics.record_tensor(
+                f"recurrent/{stability_scope}/hidden", hidden_states, record_gradient=True
+            )
+            stability_diagnostics.record_tensor(
+                f"recurrent/{stability_scope}/injection", input_injection, record_gradient=True
+            )
+            stability_diagnostics.record_tensor(
+                f"recurrent/{stability_scope}/combined", combined, record_gradient=True
+            )
+            stability_diagnostics.record_pair(
+                f"recurrent/{stability_scope}/hidden_injection", hidden_states, input_injection
+            )
+        output = self.core(
+            combined,
+            stability_diagnostics=stability_diagnostics,
+            stability_scope=stability_scope,
+            **kwargs,
+        )
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                f"recurrent/{stability_scope}/output", output, record_gradient=True
+            )
+        return output
 
 
 class HierarchicalReasoningModel(nn.Module):
@@ -73,7 +109,15 @@ class HierarchicalReasoningModel(nn.Module):
         self.create_cache = lambda **kwargs: dict(H=[self.H_level.create_cache(**kwargs) for _i in range(self.H_cycles)],
                                                   L=[self.L_level.create_cache(**kwargs) for _i in range(self.H_cycles * self.L_cycles)])
 
-    def forward(self, carry: None, x: torch.Tensor, cache: Optional[dict[str, list[list[Cache]]]] = None, bp_steps: int = 2, **seq_info) -> Tuple[None, torch.Tensor]:
+    def forward(
+        self,
+        carry: None,
+        x: torch.Tensor,
+        cache: Optional[dict[str, list[list[Cache]]]] = None,
+        bp_steps: int = 2,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        **seq_info,
+    ) -> Tuple[None, torch.Tensor]:
         z_H, z_L = x, self.zL_init
 
         # Calculate H and L bp_steps
@@ -84,10 +128,24 @@ class HierarchicalReasoningModel(nn.Module):
         for i in range(self.H_cycles):
             for k in range(i * self.L_cycles, (i + 1) * self.L_cycles):
                 with torch.set_grad_enabled(torch.is_grad_enabled() and (k >= self.H_cycles * self.L_cycles - L_bp_steps)):
-                    z_L = self.L_level(z_L, z_H, **seq_info, cache=cache["L"][k] if cache is not None else None)
+                    z_L = self.L_level(
+                        z_L,
+                        z_H,
+                        **seq_info,
+                        cache=cache["L"][k] if cache is not None else None,
+                        stability_diagnostics=stability_diagnostics,
+                        stability_scope=f"L/cycle_{k:03d}" if stability_diagnostics is not None else None,
+                    )
             
             with torch.set_grad_enabled(torch.is_grad_enabled() and (i >= self.H_cycles - H_bp_steps)):
-                z_H = self.H_level(z_H, z_L, **seq_info, cache=cache["H"][i] if cache is not None else None)
+                z_H = self.H_level(
+                    z_H,
+                    z_L,
+                    **seq_info,
+                    cache=cache["H"][i] if cache is not None else None,
+                    stability_diagnostics=stability_diagnostics,
+                    stability_scope=f"H/cycle_{i:03d}" if stability_diagnostics is not None else None,
+                )
 
         return None, z_H
 

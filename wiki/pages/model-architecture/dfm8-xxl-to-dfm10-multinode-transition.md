@@ -4,7 +4,7 @@ title: DFM8 XXL to DFM10 Multi-Node Transition
 description: Planned epoch-boundary transition from the one-node DFM8 XXL run to a four- or eight-node DFM10 continuation.
 tags: [dfm8, dfm10, xxl, multi-node, hsdp, training]
 status: stable
-last_updated: 2026-09-05
+last_updated: 2026-09-07
 confidence: high
 ---
 # DFM8 XXL to DFM10 Multi-Node Transition
@@ -393,3 +393,95 @@ resumed on all eight GPUs with the same optimizer, EMA, data cursor,
 through step 386740 after writing the 386500 checkpoint, resumed W&B metrics
 through that small overlap are expected to be rejected as non-monotonic; this
 does not alter training state.
+
+### Post-resume stability through step 395K
+
+The resumed interval confirms that `lr=1.5e-4` is not acceptably stable for
+this trajectory. Between steps `386745--395130`, 856 of 1,678 logged points
+(51.0%) clipped at norm 1. Mean/median loss were `2.203/1.102`, maximum loss
+was `11.270`, and maximum pre-clipping gradient norm reached `1.96e8`.
+Mean token/exact accuracy across the interval fell to `0.627/0.194`.
+
+The two main collapses were approximately `387655--390040` and
+`392670--393805`, followed by additional shorter bursts through step
+`395030`. The model recovered again by step `395035`: gradients returned
+near `0.22--0.25`, loss returned near `0.9--1.16`, and no point clipped
+through the latest inspected metric at `395130`. This short recovery does not
+offset the sustained instability. The pending post-400K continuation should
+not retain `1.5e-4` without an explicit decision; `1e-4` is the documented
+next conservative LR.
+
+### Stability through step 414K
+
+The interval from `395130--414740` improved in aggregate but remained
+episodically unstable at `lr=1.5e-4`. Across 3,912 logged points, mean/median
+loss were `1.015/0.978`, mean token/exact accuracy were `0.771/0.284`, and
+316 points (8.08%) clipped. Major loss-gradient events occurred around
+`397110--397235`, `399810--400190`, `405180--406765`, and
+`410685--411320`. The largest loss was `9.648`; the largest reported
+pre-clipping gradient norm was `9.11e15`. No non-finite loss occurred.
+
+The trajectory recovered after the last major event. From approximately
+`411325` through `414740`, ordinary loss and accuracy returned near their
+pre-event ranges, with only two isolated clipped points around 414.4K. The
+400K evaluation campaign completed without failed scheduler rows and training
+continued toward 450K. This current recovery does not reverse the documented
+recommendation to use `1e-4` for a conservative continuation; all pending
+training rows still specify `1.5e-4` until explicitly changed.
+
+### Stability through step 442K
+
+The longer `414740--442150` interval was substantially healthier than the
+preceding run segments despite retaining `lr=1.5e-4`. Across 5,483 logged
+points, mean/median loss were `0.954/0.952`, mean token/exact accuracy were
+`0.780/0.296`, and 120 points (2.19%) clipped. Maximum loss was only `2.083`;
+there were no non-finite losses. Several isolated gradient spikes reached high
+pre-clipping norms without disturbing loss.
+
+The only sustained event was approximately `427010--427575`, containing 71
+clipped logged points with maximum gradient norm about `1219` and maximum
+loss `2.083`. It recovered without intervention. From the end of that event
+through step 442150, no further major loss episode occurred; small clipped
+clusters around 432.1K and 441.1K remained loss-contained. This is the
+strongest sustained stability evidence in the recent run, though the historical
+episodic risk at `1.5e-4` remains.
+
+The follow-up from `442150--444395` was entirely clean across 450 logged
+points: no clipping, no gradient norm above 1, no non-finite loss, mean/median
+loss `0.947/0.945`, and mean token/exact accuracy `0.781/0.300`. Maximum
+loss was `1.165` and maximum gradient norm was `0.792`. This extends the
+healthy tail after the last major 427K event, while not invalidating the
+longer-run record of intermittent instability.
+
+### Active instability at step 445K
+
+The clean interval ended at approximately step `444675`. Through step
+`445350`, 83 of 192 newly inspected logged points clipped (43.2%), maximum
+pre-clipping gradient norm reached `7.28e6`, and maximum loss was initially
+`6.173`. The event then worsened at steps `445355--445360`: losses reached
+`9.432` and `8.976`, token accuracy fell to approximately `0.029/0.025`,
+and exact accuracy was zero. The event was still active at the latest inspected
+point. This supersedes the immediately preceding clean-tail assessment and is
+further evidence that continuing at `lr=1.5e-4` carries material instability
+risk despite norm-1 clipping.
+
+### Instability persisted through step 446.9K
+
+The 445K event did not recover. In successive 500-step windows beginning at
+`444500`, `445000`, `445500`, `446000`, and `446500`, the logged clipping
+rates were approximately 52%, 59%, 82%, 95%, and 98%. The final partial
+window through step `446945` had median pre-clipping gradient norm about 240,
+mean/median loss `2.702/2.405`, mean token accuracy `0.520`, and mean exact
+accuracy `0.064`. Its maximum gradient norm was about `4.32e5` and maximum
+loss was `7.016`.
+
+The latest individual point at `446945` remained clipped, with gradient norm
+`13.92`, loss `1.402`, token accuracy `0.694`, and exact accuracy `0.115`.
+This supersedes any interpretation of the 445K burst as a short contained
+outlier: the live `lr=1.5e-4` trajectory is actively unstable despite norm-1
+clipping.
+
+The architectural Jacobian-growth hypothesis, residual and injection scaling
+options, and the opt-in per-cycle/per-layer measurement path are maintained in
+[Training Stability, Jacobian Growth, and Residual
+Scaling](/pages/model-architecture/training-stability-jacobian-and-residual-scaling.md).

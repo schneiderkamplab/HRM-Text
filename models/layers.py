@@ -1,4 +1,4 @@
-from typing import Tuple, Optional, Sequence, Any, NamedTuple, Literal
+from typing import TYPE_CHECKING, Tuple, Optional, Sequence, Any, NamedTuple, Literal
 import math
 
 import torch
@@ -8,6 +8,9 @@ from einops import rearrange
 
 from models.common import trunc_normal_init_, unwrap_tensor
 from models.flash_attention_prefixlm_v2 import flash_attn_varlen_prefixlm
+
+if TYPE_CHECKING:
+    from models.stability_diagnostics import StabilityDiagnostics
 
 
 Carry = dict[str, Any]
@@ -162,7 +165,16 @@ class Attention(nn.Module):
         out = F.scaled_dot_product_attention(q, k, v, attn_mask=attn_mask[:, None], enable_gqa=False)
         return out.transpose(1, 2)
 
-    def forward(self, hidden_states: Tensor, cos_sin: Optional[CosSin], cache: Optional[Cache] = None, cache_lengths: Optional[Tensor] = None, **seq_info) -> Tensor:
+    def forward(
+        self,
+        hidden_states: Tensor,
+        cos_sin: Optional[CosSin],
+        cache: Optional[Cache] = None,
+        cache_lengths: Optional[Tensor] = None,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        stability_scope: Optional[str] = None,
+        **seq_info,
+    ) -> Tensor:
         # hidden_states, gqkv: [..., seq_len, hidden_size]
         gqkv = self.gqkv_proj(hidden_states)
 
@@ -174,6 +186,35 @@ class Attention(nn.Module):
         if cos_sin is not None:
             query = apply_rotary_pos_emb(query, cos_sin)
             key = apply_rotary_pos_emb(key, cos_sin)
+
+        if stability_diagnostics is not None:
+            if stability_scope is None:
+                raise ValueError("stability_scope is required when diagnostics are enabled")
+            gate_values = torch.sigmoid(gate)
+            for name, projected in (
+                ("gate_logits", gate),
+                ("gate_values", gate_values),
+                ("query", query),
+                ("key", key),
+                ("value", value),
+            ):
+                stability_diagnostics.record_tensor(
+                    f"activation/{stability_scope}/{name}", projected, record_gradient=True
+                )
+                stability_diagnostics.record_last_dim_rms(
+                    f"activation/{stability_scope}/{name}_head_rms", projected
+                )
+            stability_diagnostics.record_fraction(
+                f"activation/{stability_scope}/gate_near_zero", gate_values < 0.01
+            )
+            stability_diagnostics.record_fraction(
+                f"activation/{stability_scope}/gate_near_one", gate_values > 0.99
+            )
+            if query.shape[-2] == key.shape[-2]:
+                aligned_qk_score = (query * key).sum(dim=-1) / math.sqrt(self.head_dim)
+                stability_diagnostics.record_tensor(
+                    f"activation/{stability_scope}/aligned_qk_score", aligned_qk_score
+                )
 
         is_causal = self.attn_type == "causal"
         if cache is None:
@@ -194,7 +235,20 @@ class Attention(nn.Module):
 
         # attn_output: [..., seq_len, num_heads, head_dim]
         attn_output = rearrange(torch.sigmoid(gate) * attn_output, "... h hd -> ... (h hd)")  # type: ignore
-        return self.o_proj(attn_output)
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                f"activation/{stability_scope}/gated_attention_output",
+                attn_output,
+                record_gradient=True,
+            )
+        output = self.o_proj(attn_output)
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                f"activation/{stability_scope}/projected_output",
+                output,
+                record_gradient=True,
+            )
+        return output
 
 
 class SwiGLU(nn.Module):
@@ -205,6 +259,27 @@ class SwiGLU(nn.Module):
         self.down_proj    = LinearInit(intermediate_size, hidden_size,
                                        bias=False, init_std=init_std_out, **kwargs)
 
-    def forward(self, x):
+    def forward(
+        self,
+        x,
+        stability_diagnostics: Optional["StabilityDiagnostics"] = None,
+        stability_scope: Optional[str] = None,
+    ):
         gate, up = self.gate_up_proj(x).chunk(2, dim=-1)
-        return self.down_proj(F.silu(gate) * up)
+        product = F.silu(gate) * up
+        if stability_diagnostics is not None:
+            if stability_scope is None:
+                raise ValueError("stability_scope is required when diagnostics are enabled")
+            for name, projected in (("gate", gate), ("up", up), ("product", product)):
+                stability_diagnostics.record_tensor(
+                    f"activation/{stability_scope}/{name}", projected, record_gradient=True
+                )
+                stability_diagnostics.record_last_dim_rms(
+                    f"activation/{stability_scope}/{name}_token_rms", projected
+                )
+        output = self.down_proj(product)
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                f"activation/{stability_scope}/down_output", output, record_gradient=True
+            )
+        return output

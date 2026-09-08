@@ -46,6 +46,11 @@ class LMHead(nn.Module):
     def forward(self, carry: Carry, batch: dict[str, Tensor], **kwargs) -> Tuple[Carry, Tensor] | Tuple[Carry, Tensor, dict[str, Tuple[Tensor, Tensor]]]:
         # Token embedding
         input_embedding = self.embed_tokens(batch["inputs"])
+        stability_diagnostics = kwargs.get("stability_diagnostics")
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                "activation/model/input_embedding", input_embedding, record_gradient=True
+            )
 
         # Model forward
         new_carry, logits = self.model(carry,
@@ -53,6 +58,10 @@ class LMHead(nn.Module):
                                        **{k: v for k, v in batch.items() if k not in ("inputs", "labels")},
                                        **kwargs)
         logits = self.lm_head(logits)
+        if stability_diagnostics is not None:
+            stability_diagnostics.record_tensor(
+                "activation/model/logits", logits, record_gradient=True
+            )
 
         # Loss & Metrics
         if "labels" in batch:

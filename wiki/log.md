@@ -1,5 +1,13 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-08 - DFM11 portability boundary
+
+- Added a focused DFM11 machine-to-machine bootstrap runbook: Git transfers
+  code and pinned submodules, while training requires either the authoritative
+  sampled corpus or the exact DFM10 tokenized base plus DFM11 additions.
+- Recorded that this host currently has the 44 GB DFM11 additions but not the
+  DFM10 tokenized base, final DFM11 union, or sampled DFM11 corpus.
+
 ## 2026-09-07 - Danish FineInstructions publication and DFM11 admission
 
 - Published all 503,740 accepted Danish grounded chats and their matching
@@ -8,6 +16,90 @@
 - Published and remotely verified the selected Danish 2B query templatizer,
   4B template instantiator, and both exact helper-training datasets. The local
   aggregate DFM11 union remains blocked only by the absent DFM10 tokenized base.
+
+## 2026-09-07 - DFM10 XXL diagnostic findings
+
+- Analysis of the 100 step-450500-to-451000 snapshots found finite but severely
+  ill-conditioned behavior: very large internal L residual streams are hidden
+  by final RMS normalization, backward amplification is concentrated in early
+  physical blocks, and L attention gates and Q/K scales are strongly
+  saturated. Recurrent injection itself is stable and is not the leading
+  intervention target.
+
+## 2026-09-07 - Recurrent-depth stability diagnostics
+
+- Corrected Danish chat capacity for the measured controlled-mode tail: the
+  top-80/560K-pair pass cannot fill the least-represented mode, so completion
+  now uses the planned top-112 expansion and a 700K audited-pair target.
+- Replaced modulo-based balanced chat assignment with deterministic
+  deficit-targeted assignment. Existing unused audited pairs now fill only
+  underrepresented modes; deeper retrieval remains a true capacity fallback.
+- Added a focused technical reference for the XXL effective backward depth,
+  Jacobian-growth hypothesis, residual and recurrent-injection scaling options,
+  trainable and scheduled gates, operational safeguards, and controlled
+  experiment order.
+- Documented the null-by-default per-cycle/per-layer diagnostics for activation,
+  residual, gradient-amplification, parameter, and optimizer-state statistics.
+
+## 2026-09-06 - Optimized Qwen3.5 helper-training runtime
+
+- Recorded the initial Danish production yields (665,698 raw pairs, 231,941
+  audited pairs, 214,504 chats), replaced the stale 700K and optimistic 525K
+  planning estimates with a measured 560K audited-pair capacity target for 500K
+  chats, and added resumable top-80 retrieval with a top-112 fallback.
+- Added structured JSON instantiation and a Danish-specific independent pair
+  audit after held-out tests exposed malformed output and an overly permissive
+  generic judge. The initial eight-GPU Danish production pass is running, while
+  the final 500K chat release remains fail-closed on its audited-pair minimum.
+- Changed the Danish handoff to extend and inline-audit every currently accepted
+  pair immediately. The audited-pair minimum still gates final 500K release
+  completion, not incremental resumable chat generation.
+- Increased the Danish instantiation queue to 32,768 aggregate requests after a
+  production measurement showed underfeeding. The resumed run saturates GPU
+  compute and skips prior deterministic decisions while retrying only transport
+  failures.
+- Qualified the final 100,000/5,000 Danish instantiator labels as suitable for
+  helper distillation but not direct general SFT, and recorded the verified
+  FSDP1 activation-checkpointed native-BF16 batch-two training path.
+- Recorded that the instantiator early-stopped after epoch four and exported
+  the restored epoch-two best checkpoint rather than the overfit final epoch.
+- Resumed Danish Qwen3.5-4B instantiator SFT from complete epoch-1
+  `checkpoint-12868` with full Trainer state in `qwen`; measured approximately
+  0.39 s/step instead of 2.3 s/step. The resumable wrapper now skips completed
+  generation/audit stages before validating the final mix and selecting the
+  latest complete checkpoint.
+- Created and verified the dedicated `qwen` environment: Conda owns CUDA 13.2
+  and native build/runtime libraries, `uv pip` owns Python packages, and both
+  FLA gated-delta and source-built causal-convolution kernels pass B200
+  forward/backward smokes. The reproducible installer is
+  `fineinstructions/scripts/create_qwen_conda_env.sh`.
+
+## 2026-09-05 - Danish FineInstructions audited-target recovery
+
+- Implemented `independent-v3` full-pool filtering and launched the resumable
+  production supervisor. The calibrated replay accepted 315/475 positives and
+  25/25 negatives; final helper supervision now requires exactly 100,000/5,000
+  independently accepted in-limit rows with per-row audit provenance.
+- Qualified the 70.6% independent-gate result: it mixes genuine defects with
+  systematic Qwen rubric errors. The revised plan is calibrated full-pool
+  independent filtering plus closed-loop expansion to 100,000 accepted
+  in-limit positives, followed by a separate 95% release sample.
+- Corrected the Danish FineInstructions production runbook: a fixed raw-label
+  target cannot substitute for the audited-positive target. The supervisor now
+  generates and incrementally audits additional unique candidates until the
+  required 120,000 positives are retained.
+- Recorded the subsequent exact 100,000/5,000 materialization and independent
+  quality failure: Qwen2.5-14B accepted 353/500 rows (70.6%), so helper training
+  remains blocked on semantic remediation rather than a lowered threshold.
+
+## 2026-09-05 - Danish FineInstructions qualification correction
+
+- Fixed direct excerpt validation, terminal deterministic-failure handling, and
+  process-all qualification semantics after the v4 run repeatedly reported
+  misleadingly low compatibility.
+- Recorded the clean v5 receipt: 19,827 candidates, 23.29% valid positive yield,
+  and 67.77% document coverage. Both gates passed and production retrieval was
+  released; semantic gate failures now stop rather than retry unchanged work.
 
 ## 2026-09-04 - Danish FineInstructions retrieval recovery
 
@@ -20,6 +112,12 @@
 - Replaced an OOMing templatizer microbatch of eight with microbatch four and
   two-step accumulation, preserving the effective global batch of 32 while
   retaining at least 47 GiB of observed B200 headroom.
+- Verified power-loss recovery after the templatizer had completed: its best
+  checkpoint and 265,669 clean production templates survived, and the resumed
+  append-only stage skipped durable successes and returned to normal throughput.
+- Reassigned all eight B200s to Danish FineInstructions and expanded every
+  parallelizable remaining inference, retrieval, generation, audit, and 4B SFT
+  stage while preserving the completed templatizer receipt.
 
 ## 2026-09-04 - Controlled Koolbardi publication and DFM11 admission
 
@@ -1915,3 +2013,48 @@
 - Manually reviewed all four sidecar rows and confirmed rejection: every target
   retains material OCR corruption, and all contain incomplete or page-derived
   structure; one is additionally too garbled to provide useful supervision.
+
+## 2026-09-05 - Danish FineInstructions silver gate failed
+
+- Recorded that Danish retrieval qualification passed but production
+  instantiation quality did not: 17.45% of the first 3,736 positive labels
+  retained unresolved `<fi>` markers, and the same-model audit accepted all 17
+  such rows in a deterministic 100-row sample. Danish instantiator training is
+  blocked pending deterministic structural rejection and a stronger semantic
+  audit.
+- Resumed raw generation as eight race-free per-GPU workers with 1,024 requests
+  in flight each and an 8,192-row work window. Raised the raw-positive target
+  from 130,000 to 180,000; measured mean KV-cache occupancy was 91.4% and mean
+  GPU utilization was effectively 100% over 30 seconds.
+- Added and launched a fail-closed post-generation supervisor. It requires the
+  strengthened full audit plus at least 95% acceptance and zero structural
+  defects in an independently judged deterministic 500-row sample before the
+  Danish Qwen3.5-4B instantiator training can start.
+- Prevented silent helper-data attrition at the 4,096-token limit: audit targets
+  are now 120,000 positives and 6,000 negatives, followed by exact
+  100,000/5,000 in-limit materialization. A 1,000-row sample had shown 12.5%
+  overlength rows.
+
+## 2026-09-07 - DFM10 XXL per-layer diagnostic interval completed
+
+- Stopped only after the fully written eight-rank `ephemeral_step_450500`, ran
+  100 opt-in per-layer/cycle diagnostic snapshots through a fully written
+  `step_451000`, and resumed the normal compiled continuation toward 500,000.
+- Bounded large-tensor statistics before FP32 conversion and limited only the
+  extra shadow replay to complete leading packed sequences totaling at most
+  4,096 tokens per accumulation microbatch. The production updates retained
+  the full 262,144-token global batch.
+- Stored 456,390,354 bytes of detailed measurements at
+  `logs/stability/dfm10_XXL_step450500_to_451000.jsonl`; diagnostics remain off
+  by default and are explicitly disabled in the continuation row.
+- Analysis found finite but severely ill-conditioned behavior: very large
+  internal L residual streams are hidden by final RMS normalization, backward
+  amplification is concentrated in early physical blocks, and L attention
+  gates and Q/K scales are strongly saturated. Recurrent injection itself is
+  stable and is not the leading intervention target.
+- From the complete `ephemeral_step_452500`, ran matched ten-step, W&B-disabled
+  BP=3 and BP=4 replays. BP=4 introduced a second differentiable L layer-0
+  amplification hotspot (median 62.4x) while BP=3 exposed only the final L
+  hotspot (median 44.3x). The sampled batches were benign, so this establishes
+  a depth-dependent local mechanism but not the reduction in rare-event tails.
+  Normal BP=5 production resumed from the untouched 452500 checkpoint.

@@ -37,6 +37,7 @@ from models.layers import Carry
 from models.activation_checkpointing import apply_activation_checkpointing
 from models.common import IGNORE_LABEL_ID, prepare_prefixlm_batch, wrap_tensor
 from models.gradient_clipping import clip_grad_norm_mean_units
+from models.stability_diagnostics import StabilityDiagnostics, diagnostic_prefixlm_batch
 from models.accelerator import (
     AcceleratorType,
     empty_accelerator_cache,
@@ -106,6 +107,10 @@ class PretrainConfig(pydantic.BaseModel):
     memory_log_interval: int = 0
     empty_cache_interval: int = 0
     resume_trace: bool = False
+    stability_diagnostics_interval: int = pydantic.Field(default=0, ge=0)
+    stability_diagnostics_max_tokens_per_microbatch: int = pydantic.Field(default=4096, ge=1)
+    stability_diagnostics_output: Optional[str] = None
+    stability_diagnostics_wandb_detailed: bool = False
 
     # Names
     project_name: Optional[str] = None
@@ -857,6 +862,7 @@ def train_accumulated_batches(
     batches: list[dict[str, Tensor]],
     use_compiled: bool,
     zero_grad_after_step: bool = True,
+    optimizer_step_enabled: bool = True,
     **kwargs,
 ) -> tuple[dict[str, tuple[Tensor, Tensor]], bool]:
     trace_print(config, rank, f"train_accumulated_begin step={train_state.step} microbatches={len(batches)} compiled={use_compiled}")
@@ -912,6 +918,21 @@ def train_accumulated_batches(
         if isinstance(train_state.model, FSDPModule):
             train_state.model.set_requires_gradient_sync(True, recurse=True)
             train_state.model.set_requires_all_reduce(True, recurse=True)
+
+    stability_diagnostics = kwargs.get("stability_diagnostics")
+    if stability_diagnostics is not None:
+        stability_diagnostics.record_model_state(
+            unwrap_model(train_state.model), train_state.optim
+        )
+        stability_diagnostics.finalize(
+            detailed_wandb=config.stability_diagnostics_wandb_detailed
+        )
+
+    if not optimizer_step_enabled:
+        if zero_grad_after_step:
+            train_state.optim.zero_grad()
+        assert metrics is not None
+        return metrics, False
 
     optimizer_step_skipped = False
     if config.gradient_clip_norm is not None or config.gradient_skip_norm is not None:
@@ -1453,21 +1474,79 @@ def launch(hydra_config: DictConfig):
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = compute_train_extra_args(train_state.model, train_state)
             trace_print(config, RANK, f"train_extra_args step={train_state.step} {train_extra_args}")
+            stability_diagnostics = None
+            if (
+                config.stability_diagnostics_interval > 0
+                and train_state.step % config.stability_diagnostics_interval == 0
+            ):
+                diagnostics_output = config.stability_diagnostics_output or os.path.join(
+                    config.checkpoint_path or "logs", "stability_diagnostics.jsonl"
+                )
+                stability_diagnostics = StabilityDiagnostics(
+                    step=train_state.step,
+                    rank=RANK,
+                    output_path=diagnostics_output,
+                    context={
+                        "epoch": epoch,
+                        "batch_in_epoch": batch_in_epoch,
+                        "bp_steps": train_extra_args.get("bp_steps"),
+                        "lr": lr,
+                        "global_batch_size": config.global_batch_size,
+                        "gradient_accumulation_steps": config.gradient_accumulation_steps,
+                        "distributed_strategy": config.distributed_strategy,
+                        "fwd_bwd_dtype": config.fwd_bwd_dtype,
+                        "gradient_clip_norm": config.gradient_clip_norm,
+                        "gradient_skip_norm": config.gradient_skip_norm,
+                    },
+                )
+            train_call_args = dict(train_extra_args)
             maybe_log_memory(
                 train_state.step,
                 "before_train",
                 device,
                 config.memory_log_interval > 0 and train_state.step % config.memory_log_interval == 0,
             )
+            if stability_diagnostics is not None:
+                if train_state.carry is not None:
+                    raise RuntimeError(
+                        "stability diagnostics shadow replay currently requires a stateless carry"
+                    )
+                rng_devices = (
+                    [device.index] if device.type == "cuda" and device.index is not None else []
+                )
+                with torch.random.fork_rng(devices=rng_devices):
+                    diagnostic_batches = [
+                        diagnostic_prefixlm_batch(
+                            batch,
+                            max_tokens=config.stability_diagnostics_max_tokens_per_microbatch,
+                        )
+                        for batch in accumulation_batches
+                    ]
+                    train_accumulated_batches(
+                        config,
+                        RANK,
+                        train_state,
+                        diagnostic_batches,
+                        use_compiled=False,
+                        optimizer_step_enabled=False,
+                        **train_extra_args,
+                        stability_diagnostics=stability_diagnostics,
+                    )
             metrics, optimizer_step_skipped = train_accumulated_batches(
                 config,
                 RANK,
                 train_state,
                 accumulation_batches,
                 config.compile_train_batch,
-                **train_extra_args,
+                **train_call_args,
             )
             accumulation_batches = []
+            if stability_diagnostics is not None and RANK == 0:
+                wandb.log(
+                    stability_diagnostics.wandb_summary
+                    | stability_diagnostics.wandb_detailed,
+                    step=train_state.step,
+                )
             if config.gradient_skip_norm is not None:
                 if optimizer_step_skipped:
                     consecutive_gradient_skips += 1
