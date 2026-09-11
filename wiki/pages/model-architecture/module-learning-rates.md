@@ -26,6 +26,20 @@ only when those two actual rates agree. Uniform runs without overrides still
 emit only the existing base `train/lr` metric. No per-step deprecation warnings
 are emitted. Existing running training was not restarted.
 
+## Pending Training-Code Review (2026-09-11)
+
+The separate, uncommitted diagnostics/MLP-energy changes default to disabled:
+`mlp_relative_energy_weight=0`, `experiment_metrics_output=null`,
+`experiment_update_probe_interval=0`, and empty `experiment_gradient_probe_steps`.
+Inspection finds unchanged tensor/loss operations in that path, with no added
+probe collectives, CPU weight snapshots, timing synchronizations, or file writes.
+Python conditionals, an empty energy-term list, and helper imports remain;
+this is not a claim of literally zero overhead. Existing CPU tests cover block
+gradient parity, unchanged CE, and probe state/RNG preservation, but do not
+constitute a full eight-GPU disabled-versus-prepatch training parity test.
+Training changes, their two model helpers, and their directly dependent tests
+were intentionally excluded from the support-scripts/documentation commit.
+
 ## Review of origin/lr (2026-09-11)
 
 Fetched `origin/lr` at `044eb5e`; module LR implementation is commit

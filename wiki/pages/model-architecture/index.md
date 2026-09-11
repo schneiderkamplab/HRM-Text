@@ -25,3 +25,8 @@
 * [Optional Global Gradient Clipping](gradient-clipping.md) - Null-by-default clipping, verified FSDP2/DTensor semantics, and AdamATan2-native stability options.
 * [Training Stability, Jacobian Growth, and Residual Scaling](training-stability-jacobian-and-residual-scaling.md) - Recurrent-depth diagnosis, mitigation options, and opt-in per-cycle/per-layer instrumentation.
 * [XL BP-Depth Memory Benchmark](xl-bp-depth-memory-benchmark.md) - Matched BP 6-8 memory and throughput measurements for the DFM10 XL geometry.
+* [MLP Energy Replay Layer Diagnostics](mlp-energy-replay-layer-review.md) - Remaining amplification, downstream changes, and measurement limits in the completed matched replay.
+* [Regularization Alternatives from 453K](mlp-energy-regularization-experiments.md) - Candidate penalties, tail-focused aggregation, and matched replay controls.
+* [Actual AdamATan2 Update Calibration](parameter-update-calibration.md) - Default-off update measurements and isolated 10-step comparisons before nested RMS.
+* [H and L Learning Rates](module-learning-rates.md) - Optional scheduled module rates with unchanged optimizer checkpoint groups.
+* [XXL Restart from 520K](xxl-520k-restart.md) - Isolated half-rate continuation with a cutoff history clone and preserved original trajectory.

@@ -1,5 +1,12 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-11 - Merge origin/lr into main
+
+- Adopted fixed per-parameter LR scales and independent embedding/head rates.
+- Preserved historical LR metric names as deprecated aliases; retained local
+  diagnostics and documented the transition in the module learning-rate page.
+- Kept the pre-merge local-work stash as a recovery copy.
+
 ## 2026-09-08 - DFM11-post quality-weighted revision
 
 - Spot-checked all source families initially >=2% of post tokens; retained
@@ -27,6 +34,74 @@
   concept instead of losing it when restoring the local replacement plan.
 - All pinned submodule revisions are now available and checked out, including
   Mathagentic `00f3ded`; existing dfm-evals working changes remain intact.
+## 2026-09-10 - Separate XXL restart from 520K
+
+- Arranged a stop at complete 532000 and preservation of the original branch.
+- Prepared a cutoff history clone and independent checkpoint/evaluation paths
+  for half-rate H/L/embedding-head training from 520000.
+
+## 2026-09-09 - Module-specific LR from 500K
+
+- Added optional H/L learning rates with single-group optimizer checkpoint
+  compatibility and explicit actual-rate metrics.
+- Updated the remaining XXL training segments to H 7.5e-5, L 5e-5,
+  embeddings/head 1.5e-4, preserving the existing run and optimizer/EMA.
+- Verified CPU optimizer parity, resume scheduling, and DCP round-trip.
+
+## 2026-09-09 - Actual optimizer-update calibration
+
+- Added default-off local CPU shard snapshots and globally reduced per-parameter
+  update RMS, weight RMS, and update/weight ratios around the real optimizer step.
+- CPU state/RNG/update parity tests passed; scheduled three isolated 10-step
+  comparisons at production checkpoint 498500 with automatic same-run recovery.
+- Kept nested RMS explicitly pending global normalization and calibration.
+
+## 2026-09-09 - Alternative regularization experiments
+
+- Recorded six candidate objectives for matched 453K replays and alternatives
+  to arithmetic averaging, including max, top-tail, power mean, and log-sum-exp.
+- Specified aggregation-axis choices, distributed/GAS normalization risks,
+  gradient-based coefficient calibration, and held-out/baseline controls.
+
+## 2026-09-09 - Layer-level review of residual-energy replay
+
+- Compared all 20 probes per branch, separating measured residual reduction
+  from remaining amplification and potentially compensating downstream changes.
+- Added a focused review and reproducible CPU extraction; recorded limits of
+  gate/QK proxies and recommended adaptive-update and attention diagnostics.
+
+## 2026-09-09 - Tenfold MLP residual-energy coefficient replay
+
+- Queued a single 453000-to-454000 branch at 1e-3, reusing the preserved
+  shared prefix and leaving previous results unchanged.
+- Arranged a checkpoint-boundary production pause at 496500, isolated logs
+  and checkpoints, a three-way local report, and automatic same-run recovery.
+
+## 2026-09-08 - Matched diagnostics for MLP replay branches
+
+- Added default-off per-step local telemetry and sparse CE/auxiliary gradient
+  comparisons, with CPU snapshots, RNG restoration, and optimizer-update parity
+  tests. Both branches share probe steps and deterministic sample selection.
+- Updated the replay supervisor without interrupting the shared prefix;
+  scheduled an eight-GPU diagnostic preflight before the baseline branch.
+
+## 2026-09-08 - Isolated shared-prefix MLP regularizer experiment
+
+- Implemented default-off relative MLP energy loss and checked the compiled
+  eight-GPU XXL path with and without it, without W&B logging.
+- Preserved production at 487500 and launched the 451000-to-453000 shared
+  prefix, followed by matched branches to 454000 and automatic main-run resume.
+- Documented checkpoint retention, caveats, logs, and automatic local summaries
+  in the training-stability page. Experimental outcomes remain pending.
+
+## 2026-09-08 - Stability regularization and checkpoint weight comparison
+
+- Recorded optional activation regularization, threshold-free energy penalties,
+  and the limits of weight decay as a remedy for recurrent instability.
+- Compared all XXL model weight parts at 140K and 160K: pooled RMS decreased
+  2.58%, with only 11 of 577 parts growing. Large directional changes coexist
+  with shrinking norms; global weight growth is not supported as the simple
+  explanation for this interval.
 
 ## 2026-09-08 - DFM11 portability boundary
 

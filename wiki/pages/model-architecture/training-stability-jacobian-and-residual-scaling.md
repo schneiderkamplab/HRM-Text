@@ -4,7 +4,7 @@ title: Training Stability, Jacobian Growth, and Residual Scaling
 description: Recurrent-depth stability diagnosis, mitigation options, and opt-in instrumentation for HRM-Text.
 tags: [training, stability, gradients, jacobian, residual-scaling, recurrence]
 status: draft
-last_updated: 2026-09-07
+last_updated: 2026-09-09
 confidence: medium
 ---
 # Training Stability, Jacobian Growth, and Residual Scaling
@@ -478,6 +478,380 @@ had zero clipped logged points, median/p90/p99 gradient norms
 500-step values were similar. This establishes current local stability, but it
 does not invalidate the earlier mechanism or guarantee that another
 batch-triggered burst will not recur.
+
+## Initialization and Checkpoint Editing Assessment, 2026-09-08
+
+The XXL LeCun initializer uses input/attention-output standard deviation
+`1/sqrt(1792) = 0.02362` and MLP-output standard deviation
+`1/sqrt(4864) = 0.01434`. It preserves linear fan-in variance but adds no
+residual-depth attenuation. The existing Megatron alternative uses 36 physical
+blocks after `half_layers` and gives both output projections standard deviation
+approximately 0.002784, reducing attention output initialization by 8.49x and
+MLP output initialization by 5.15x. It does not explicitly account for recurrent
+reuse. The size config's comment that LeCun worked better is an existing
+empirical preference, not proof that it is optimal for this XXL trajectory.
+Changing `init_type` while restoring every trained weight does not repair a
+checkpoint. Initialization can bias the trajectory but the late probe cannot
+establish that initialization caused the instability.
+
+Qualification of earlier causal wording: observed large streams and saturated
+sigmoid output gates establish scale and saturation, not their necessity or
+sufficiency for the collapse. Sigmoid saturation itself reduces the local gate
+derivative. Attention output gates are distinct from softmax attention entropy,
+which was not measured. Large streams also reduce some RMSNorm derivatives.
+Likewise, global clipping bounds the gradient presented to AdamATan2, not the
+subsequent parameter-update norm. Update/parameter ratios and optimizer moments
+must be measured to determine actual damage after a burst.
+
+Candidate disposable-checkpoint experiments, in order of increasing disruption:
+
+- Attenuate selected `mlp.down_proj.weight` matrices by 0.9 or 0.75, then 0.5
+  only if justified. With these bias-free layers this exactly scales the MLP
+  branch output at that instant. It changes the model function and can regrow
+  during training. Compare layer-0-only, L-only, and H/L interventions on known
+  bad batches plus benign held-out batches.
+- Attenuate selected `attn.o_proj.weight` matrices similarly. Treat MLP and
+  attention edits independently to identify the operative mechanism.
+- Scale only Q and K slices of the fused gate/Q/K/V projection: scaling each
+  by sqrt(t) multiplies attention scores by t (RoPE is linear). This preserves
+  weight layout but changes attention. Softmax entropy should be measured
+  before deciding whether this is appropriate. Editing sigmoid gate rows can
+  reopen shut channels and is not automatically stabilizing.
+- Estimate per-matrix spectral norms and attenuate exceptional singular modes
+  or constrain norms during training. A large mode can encode useful content,
+  so magnitude alone is insufficient grounds to remove it. Spectral control
+  has precedent in [sigmaReparam](https://arxiv.org/abs/2303.06296).
+- Blend selected problematic matrices toward an earlier stable checkpoint,
+  or apply an EMA rollback, after matched forward/loss and gradient tests.
+  Interpolation can break co-adapted features and a stable batch window does
+  not establish that the underlying checkpoint is robust.
+
+Edits must operate on an isolated checkpoint with explicit EMA and optimizer
+semantics. Applying the same edit to EMA avoids mixing two different model
+functions. Multiplying weights by alpha does not imply multiplying optimizer
+moments by alpha and alpha squared: that rule applies to particular gradient
+rescalings, not arbitrary function-changing weight edits. Existing-moment and
+selective-reset variants require comparison; neither preserves the trajectory.
+Bias-free V/output or SwiGLU-up/down inverse rescalings can approximately
+preserve the function and change parameter conditioning, but they also preserve
+the mathematical input-output Jacobian and cannot eliminate its amplification.
+
+For a fresh run, compare depth-scaled initialization with small trainable
+residual gates, and consider explicit attention-scale control. Small/zero
+initial residual gates have precedent in
+[ReZero](https://arxiv.org/abs/2003.04887); that evidence does not establish
+optimal scales for this recurrent HRM. A gate initialized to one preserves the
+current function initially but needs constraints or supervision to reliably
+shrink. None of these interventions is enabled in production.
+
+## Optional Loss Regularization Proposal, 2026-09-08
+
+Proposed only; no production loss or weights have been changed. Add separately
+weighted penalties for MLP residual magnitude, attention sigmoid-gate logits,
+and Q/K scale. Start with MLP outputs and assess known burst-producing batches
+plus benign held-out batches. Apply only to already differentiable recurrent
+applications, average across layers/cycles, mask padding, accumulate statistics
+in FP32, and gradually ramp coefficients. Record auxiliary and language-model
+gradient magnitudes separately. Export and inference need no changes.
+
+The initial thresholded proposal uses
+`mean(relu(RMS(residual)/(stopgrad(RMS(stream))+eps)/threshold - 1)^2)`.
+Detaching the denominator avoids a direct gradient encouraging stream inflation,
+although this does not prevent indirect compensation over training.
+
+Simpler continuous alternatives are `mean(residual^2)` for absolute branch
+energy, `mean((RMS(residual)/(stopgrad(RMS(stream))+eps))^2)` for relative
+energy, `mean(gate_logits^2)` for sigmoid gates, and per-head `mean(Q^2 + K^2)`
+for attention scale. They require no hinge threshold but still require a
+coefficient and a choice of normalization. They penalize useful computation as
+well as pathological extremes, so compare small coefficients first. Penalizing
+logits gives a corrective gradient even for saturated sigmoids; it is not the
+same as directly encouraging softmax attention entropy. Maximizing sigmoid
+entropy after saturation can have weak corrective gradients.
+
+Weight L2 and decoupled weight decay are simpler alternatives. Existing
+training already uses weight decay 0.1. Penalizing distance from a reference
+checkpoint discourages all changes, including useful rotations; penalizing
+weight magnitude encourages small norms but cannot directly control alignment,
+spectral concentration, residual activation tails, or products across recurrent
+applications. These alternatives must be assessed against actual weight-growth
+measurements rather than inferred from activation magnitude alone.
+
+### Measured Weight Change: XXL 140K to 160K
+
+Compared actual model weights (not EMA) in
+`checkpoints/dfm8/XXL-1epoch/fsdp2_step_{140000,160000}` with
+`scripts/compare_checkpoint_weight_growth.py`. It reads matching DCP tensor
+chunks on CPU without optimizer state and splits fused projections into gate,
+Q, K, V and MLP gate/up components. Detailed results for all 577 parts are in
+`logs/stability/xxl_weight_growth_140k_160k.json`.
+
+| Parameter group | Pooled RMS change |
+|---|---:|
+| All weights, including LM head | -2.58% |
+| H core | -2.47% |
+| L core | -2.07% |
+| Attention sigmoid gate | -2.60% |
+| Query | -2.09% |
+| Key | -2.16% |
+| Value | -2.24% |
+| Attention output | -2.13% |
+| MLP gate | -2.37% |
+| MLP up | -2.33% |
+| MLP down | -2.17% |
+| LM head | -5.46% |
+
+Only 11 of 577 parameter parts grew in RMS, all in L. The largest increase
+was L layer 3 MLP down (+1.88%). Yet that matrix's relative change norm was
+0.962 and its checkpoint-to-checkpoint cosine was 0.546. This illustrates how
+substantial changes in direction can coexist with nearly constant or declining
+weight norms. These measurements contradict global norm growth as the simple
+explanation for instability in this interval. They do not rule out growth of
+particular singular values or activation-producing alignments, and they do not
+measure the later 450K regime. Plain weight decay already applies; stronger
+weight-magnitude penalties remain experiments rather than a demonstrated fix.
+
+### Available Checkpoint for a Matched Regularizer Replay
+
+Checkpoint inspection selected `step_451000` in
+`checkpoints/dfm10/XXL-from-dfm8-epoch1` as the closest preserved checkpoint
+before the proposed 453400-453500 burst. Its sidecar records the exact batch
+cursor 721664 in epoch 2 and global row cursor 113351658. All 9,577 DCP storage
+entries reference present files with sufficient lengths. No preserved 452500,
+453000, or 459000 checkpoint was found under checkpoints or stability outputs;
+the 452500 replay directory contains diagnostics, not saved training state.
+
+The concrete first comparison is baseline versus relative-MLP-energy
+regularization from 451000 through 454000, using BP=5 and identical resume
+settings/data. Do not jump the data cursor directly to 453000: intervening
+updates affect whether the burst occurs. The historical burst is an observation,
+not a guaranteed deterministic replay outcome; establish it in the new baseline
+before attributing an absent event to regularization. A common unmodified
+451000-to-453000 prefix can be computed once and checkpointed for both branches
+if the intended intervention starts at 453000. This is a proposed experiment;
+checkpoint inspection itself did not interrupt training or launch replays.
+
+### Shared-Prefix Replay Implementation (2026-09-08)
+
+The proposed replay above is now implemented and launched. Production was
+stopped only after `ephemeral_step_487500` was complete, with all DCP storage
+ranges validated. The production snapshot and experimental initial `step_451000`
+are preserved under
+`checkpoints/experiments/xxl_mlp_shared_prefix_20260908/`. Immutable DCP payloads
+are hard-linked, not duplicated; deleting the original checkpoint directory
+cannot remove these preserved links. Do not modify checkpoint payloads in place.
+The archive is outside production's ephemeral-pruning directory.
+
+The opt-in setting is `+arch.mlp_relative_energy_weight=0.0001`, default **zero**.
+The calculation lives in `models/stability_regularization.py`; explicit tensor
+returns propagate it through the differentiable HRM cycles and LMHead. There
+are no forward hooks, new parameters, or checkpoint schema changes. Inference
+and evaluation do not activate it. With zero weight the established tensor
+forward path is retained. Diagnostics and the active regularizer currently
+require separate replays.
+
+For each supervised, non-padding token the objective measures mean-square MLP
+residual divided by detached incoming-stream mean-square (FP32, denominator
+floored at `1e-6`). It averages across blocks within each differentiable cycle,
+then across differentiable cycles; no-grad recurrent applications do not
+contribute. Prompt-only and padding positions are excluded using raw labels,
+independently of optional Goldfish dropping. The token divisor is all-reduced
+in the same way as CE; ordinary GAS scaling applies to both losses. The original
+`train/loss` remains **CE only**, alongside `train/mlp_relative_energy` and
+`train/mlp_regularization_loss`. A small scalar penalty is not by itself proof
+of a small auxiliary gradient.
+
+The supervisor `scripts/run_mlp_shared_prefix_experiment.py` executes:
+
+1. Preserve the production checkpoint, stop its isolated torchrun group, and
+   await the explicit `READY` preflight marker (20-minute timeout).
+2. Replay 451000 to 453000 without regularization into `prefix/`, saving a
+   regular branching checkpoint including optimizer/EMA and exact data cursor.
+3. Replay 453000 to 454000 into `baseline/` with weight zero.
+4. Replay the identical branching checkpoint into `regularized/` with weight
+   `1e-4`, saving a separate final checkpoint at 454000.
+5. In a `finally` recovery path, resume production from its preserved **487500**
+   checkpoint to 500000 with the original LR, BP=5, clipping, and W&B identity.
+   Never continue production from an experimental branch.
+
+All experimental torchruns use `WANDB_MODE=disabled`, `WANDB_DISABLED=true`,
+and null W&B run/resume IDs. Production alone resumes `DFM5/40j5y877`.
+The supervisor is detached and logs to
+`logs/stability/mlp_shared_prefix_20260908_supervisor.log`; experiment stage
+logs, captured commands, and benchmark metric histories are under its archive.
+`production_resume.log` there will contain the restored main training output.
+The existing scheduler is only waiting on future production checkpoints; none
+of the experimental paths satisfy its checkpoint waits.
+
+Preflight: 22 CPU tests passed, including checkpoint preservation helpers,
+existing diagnostics, detached
+denominator gradients, mask behavior, cycle averaging, unchanged evaluation,
+zero-option parity, and compiled energy gradients. Both full eight-GPU XXL
+three-step smokes from 451000 passed using the production FSDP/GAS settings.
+Peak allocated memory was approximately 144.7 GiB baseline versus 149.6 GiB
+regularized. The first CE losses were 6.93987 and 6.93984 respectively: replay
+already starts in a poor state **without** regularization. Small compiled
+numerical differences remain, and subsequent instability makes a three-step
+outcome unsuitable as evidence of benefit. The weighted penalty was ~0.0013;
+the first regularized gradient norm remained very large. These are feasibility
+checks, not a positive stability result.
+
+`scripts/summarize_mlp_shared_prefix_experiment.py <archive> --wait` generates
+`comparison.json` and `comparison.md` after both branches finish, with full-run,
+historical-burst-window (453400-453500), and final-200-step summaries. Metrics
+are sampled at log interval five, not every optimizer step. A detached instance
+has been started. Historical burst reproduction and improvement remain
+unverified until the branch results are reviewed. The nominal 4,000-step
+campaign is roughly three hours plus startup/checkpoint I/O; each stage has a
+four-hour timeout. Recovery covers Python errors/timeouts, not machine failure
+or SIGKILL; the preserved checkpoint and recorded resume command support manual
+recovery in those cases.
+
+### Matched Branch Diagnostics Augmentation (2026-09-08)
+
+User approved augmenting the comparison before either branch started. The
+running prefix remains unchanged. The original supervisor was frozen and then
+replaced by a verified adopter of the **same** prefix process (PID 2309654).
+The replacement supervisor (PID 2365338) logs to
+`logs/stability/mlp_shared_prefix_20260908_supervisor_v2.log`. It retains the
+same production recovery snapshot and command; no prefix steps were rerun.
+
+The earlier five-step-only branch history and lack of layer/component probes
+are **superseded for the two branches**, not for the already-running prefix:
+
+- `steps.jsonl`: rank-zero, flushed after every optimizer step, containing CE,
+  accuracy, exact accuracy, pre-clipping norm, clipping indicators, LR, BP,
+  epoch/data cursor, and training-versus-probe timing. The regularized branch
+  additionally reports raw relative energy and its weighted loss every step.
+  Metrics are also retained in the final `metrics.json` benchmark history.
+- `layers.jsonl`: existing detailed per-layer/cycle recorder every 50 steps,
+  including MLP/stream ratios, activation and gradient RMS/gain, attention
+  proxies, and parameter/optimizer statistics. Both branches explicitly use a
+  **CE-only** shadow backward for comparable layer gradients. No auxiliary
+  gradient is mixed into these layer records.
+- `steps.jsonl.gradients.jsonl`: separate CE and weighted-auxiliary gradients
+  at steps **453001, 453400, 453500, 453950**, including norms, norm ratio,
+  cosine, raw residual energy, supervised-token count, and per-rank input
+  hashes. Baseline probes use the same candidate auxiliary weight `1e-4`, but
+  this does not add it to baseline training.
+
+Layer probes use complete leading packed sequences from each current
+microbatch with nominal budget 1024 tokens. A single sequence can exceed the
+budget (up to the 4096-token training context); sequences are not truncated.
+The separate gradient comparison uses only the **first** such microbatch on
+each rank. Therefore its norms describe the matched diagnostic subset, not the
+full production batch or the threshold used for production clipping. Saved
+fingerprints allow confirming that the subset is identical between branches.
+
+`models/experiment_diagnostics.py` holds the telemetry and component-gradient
+logic. The pretraining options are default-off:
+`+experiment_metrics_output=<path>`,
+`+experiment_gradient_probe_steps=[...]`, and
+`+experiment_gradient_probe_weight=0.0001`.
+Shadow passes require empty incoming gradients and stateless carry, preserve
+Torch CPU/CUDA RNG, do not advance the loader, do not clip or step the optimizer,
+and clear temporary gradients even on exceptions. CE gradients are copied to
+CPU before the auxiliary backward, avoiding a second full gradient copy on
+GPU. Full-world FSDP norms account for this repo's summed-gradient convention;
+hybrid FSDP component probes are explicitly unsupported. The actual training
+objective and coefficient are never mutated for a probe.
+
+CPU tests verify unchanged parameters, optimizer/EMA, RNG, input batch, step,
+carry, and the subsequent training update. The combined focused suite has 24
+passing tests. A two-step eight-GPU `diagnostics_preflight/` is scheduled after
+the shared-prefix checkpoint and **before** baseline, exercising both layer
+and component probes. It does not save a new checkpoint or log to W&B. Failure
+aborts the comparison and triggers the same production-recovery path rather
+than silently running unmatched diagnostics. GPU preflight results are pending.
+
+The comparison writer now reports median training-only time and total probe
+overhead separately. The original benchmark step-time series includes probes
+and should not be used alone to infer regularizer compute cost. Rank zero is
+the sole writer for each telemetry file; branch directories are distinct.
+
+### Replay Status at 22:17 on 2026-09-08
+
+The shared prefix completed and saved 453000. The eight-GPU diagnostic
+preflight subsequently passed; its earlier pending status is superseded.
+Baseline reached 453280 with all eight GPUs active. Over its latest 100 steps,
+median CE was 0.9797, maximum gradient norm 0.3883, and no steps were clipped.
+The historical burst window (453400-453500) had not yet been reached.
+The preflight's matched-subset auxiliary/CE gradient-norm ratio was 0.02286
+and cosine -0.00519, at weight 1e-4. This is one diagnostic subset, not evidence
+of long-term benefit. The regularized branch had not yet started.
+
+### Completed Shared-Prefix Results (2026-09-09)
+
+Both 1000-step branches completed and saved independent `step_454000`
+checkpoints. Production automatically resumed from its preserved 487500 at
+the original checkpoint path and W&B run `DFM5/40j5y877`, with no auxiliary
+loss or experimental diagnostics. It reached approximately 495985 at review.
+Results are in the experiment archive's `comparison.md` and `comparison.json`.
+
+| Whole branch statistic | Baseline | Relative-energy weight 1e-4 |
+|---|---:|---:|
+| Mean CE loss | 2.8171 | 1.6034 |
+| Mean token accuracy | 55.51% | 69.49% |
+| Mean exact accuracy | 16.46% | 20.84% |
+| Steps clipped | 55.6% | 49.2% |
+| Maximum pre-clipping norm | 8.78e13 | 2.53e9 |
+| Median training-only seconds/step | 2.594 | 2.629 |
+
+In the final 200 steps, mean CE was 6.497 versus 3.286 and token accuracy
+14.72% versus 49.49%. Clipping affected 98% versus 100% of these steps: the
+regularized branch also became unstable. At the final single step, CE was
+7.622 versus 1.631; neither the favorable final sample nor the whole-branch
+mean demonstrates a complete fix. In the historical 453400-453500 window,
+baseline/regularized clipping fractions were 20.8%/2.0%, with mean CE
+1.014/0.984. Burst timing changed compared with the original run.
+
+All four component-probe input hashes matched across branches. Matched-subset
+relative energy at 453400 fell from 13.40 (baseline) to 1.245 (regularized),
+and at 453500 from 50.52 to 0.979. Initial auxiliary/CE gradient norm ratio
+was about 2.29% with near-zero cosine in both branches. At 453950 the
+regularized ratio was 4.97% and cosine -0.071, versus 0.56% and +0.009 in
+baseline. These are bounded-subset probes, not full-batch norm estimates.
+
+Interpretation: promising reduction in residual energy and damage from
+instability in this matched replay, with about 1.35% measured training-only
+overhead. It did not eliminate bursts or final-window degradation. This is
+one pair of numerically sensitive trajectories, without held-out evaluation;
+repeat the comparison on another segment and inspect layer diagnostics before
+changing production or attributing all improvement causally to the penalty.
+
+### Higher-Coefficient Replay Scheduled (2026-09-09)
+
+User approved a second intervention from the **same preserved 453000** prefix
+to 454000, this time with relative-energy coefficient **1e-3** (tenfold). The
+runner now supports `--branch-source <completed-prefix> --branch-weight 0.001
+--prepared`, running only the new branch without recomputing prefix or baseline.
+The original baseline and 1e-4 results remain untouched for comparison.
+
+The detached supervisor (PID 2908504) is waiting for production's fully written
+`ephemeral_step_496500`. It validates and preserves that checkpoint, stops only
+the production torchrun group, runs the new branch without W&B, and resumes
+from **496500** into `checkpoints/dfm10/XXL-from-dfm8-epoch1` under the same
+`DFM5/40j5y877` run with original LR 1.5e-4 and no auxiliary loss. The scheduler
+has only future production checkpoint waits active, so this experiment's
+separate paths do not release eval jobs.
+
+Archive: `checkpoints/experiments/xxl_mlp_energy_1e3_20260909/`.
+Supervisor log: `logs/stability/mlp_energy_1e3_20260909_supervisor.log`.
+Branch log once launched: `regularized/train.log` under the archive.
+Per-step metrics, every-50-step layer probes, and component probes at 453001,
+453400, 453500, and 453950 match the earlier schedule. Component probes now
+use weight **1e-3** to measure the actual new auxiliary gradient; compare their
+recorded coefficients when interpreting gradient norms against the old probe.
+
+A detached three-way comparison writer uses `--reference-root` pointing at the
+old archive and writes **only into the new archive**. It reads coefficients
+from captured commands, not hardcoded labels. Results are pending; the earlier
+1e-4 stability findings do not establish that a stronger penalty will be better.
+
+### Layer Diagnostics Review of the Completed Pair (2026-09-09)
+
+See [the focused layer-diagnostics review](mlp-energy-replay-layer-review.md)
+for the completed pair's remaining issues, evidence, and measurement limits.
 
 ## Recommended Experiment Order
 
