@@ -11,6 +11,97 @@ confidence: high
 
 ## XXL-Wide Stability Check, 2026-09-08
 
+### 2026-09-09: sustained BP7 excursion
+
+Superseding the 140K handoff below: the user moved the LR reduction to
+`ephemeral_step_137500`. The old watcher PID 2281104 was terminated while
+still waiting, and its script was updated and relaunched as PID 2349351 at
+09:37 local time. The training process had just reached 137500; the new
+watcher waits for complete ephemeral publication before stopping that process
+and resuming the 150K segment from 137500 with LR 2e-4. The historical script
+and log filenames retain `140k`; their contents now target 137500.
+
+The 137500 handoff completed: checkpoint verified at 09:37:48, captured
+training group terminated, scheduler restarted as PID 2349607 at 09:37:51.
+At 09:38:08 it launched the 150K training segment with lr=2e-4 and
+resume_checkpoint_tag=ephemeral_step_137500, preserving EMA. This verifies
+launch; post-resume metric stability remains to be checked after loading.
+
+Verified after resume through 138935: W&B reports lr=0.0002 and BP7.
+The last 1K steps averaged loss 1.08702, token accuracy 75.6133%, exact
+accuracy 24.3403%, versus 1.15049/74.5480%/22.8553% in the stable 134--135K
+pre-spike window. First 137500--138500 averaged 1.09760/75.4345%/24.2011%.
+No post-handoff loss above 2 or non-finite loss was observed; maximum in
+the first 1K was 1.327. These are encouraging early observations over about
+1.4K steps, not proof of sustained stability or a causal LR-only effect.
+
+User-approved response: reduce LR to 2e-4 from the completed step_140000
+checkpoint, preserving optimizer/EMA and the BP schedule. A detached watcher
+(`scripts/handoff_xxl_wide_lr_140k.py`, PID 2281104 at launch) was started
+at 08:55 local time. It soft-stopped scheduler dispatch while the existing
+training segment continues, updated all six remaining training rows under
+PlanLock, and waits for the 140K sidecar, DCP metadata and eight nonempty
+rank shards. It then terminates only captured training PGID 3821845, waits
+for scheduler PID 2420202 to exit, resets the 150K row to resume step_140000,
+and restarts the persistent-vLLM scheduler. Handoff output is in
+`logs/scheduler/dfm10_XL_epoch9_20260831/lr_140k_handoff.log`. The initial
+watcher launch failed before any mutations due to module discovery; adding
+the repository root to sys.path fixed it. The corrected watcher was verified
+waiting, and all six remaining row commands contain lr=2e-4. The running
+process retains lr=4e-4 until the handoff; BP8 remains at 141386. Completion
+of this future handoff has not yet been verified.
+
+Second excursion: by step 136435 the run was again unstable at BP7/LR 4e-4.
+The first logged loss above 2 was at 135850; the peak was 9.86935 at 136085
+(token accuracy 0.206%, exact accuracy zero). At 136435, loss was still
+7.44893, token accuracy 3.593%, exact accuracy zero. Thus the earlier recovery
+did not persist. The latest ephemeral sidecar was step 136000, already inside
+the event. No training or scheduler changes were made during this status check.
+
+The earlier stable assessments are superseded by new evidence through 133K.
+Loss exceeded 2 in 94 logged points between steps 122660 and 123175, peaking
+at 7.99334 at 122880. Token accuracy reached 1.40% and exact accuracy zero.
+The event occurred during the scheduled BP7 phase, roughly 4.8K steps after
+the 117822 transition. The latest run still used LR 4e-4; the cause of the
+excursion is not established by these metrics.
+
+Mean loss/token/exact accuracy before the event (118--122K) was
+1.14344/74.676%/22.959%. At 124--125K it was 1.18654/73.915%/22.052%, and
+at 131--133K it was 1.15796/74.443%/22.635%. Thus the run recovered but had
+not quite regained its pre-event averages. The active log contained no NaN,
+OOM, traceback, runtime-error, or overflow matches. Training progressed near
+2.60 seconds/step with 33--35 GiB free per GPU. No configuration or scheduler
+changes were made during this read-only status investigation. BP8 remained
+scheduled at 141386 and the next evaluation at 150000.
+
+### Accuracy crossover against final XL
+
+The DFM10 XL endpoint's last 10K logged steps (2472080--2482080) averaged
+loss 1.01282, token accuracy 77.0406%, and exact accuracy 29.0892% in run
+`dfm8-xl-from-dfm6-dfm7-epoch5-clean-full`. At wide step 120495, its last
+10K averaged 74.5747% token and 22.7771% exact accuracy. Continuing the
+recent 10K--20K local slopes linearly would reach the XL token level around
+280K--365K and exact level around 355K--445K. These are conditional arithmetic
+projections, not confidence intervals: learning can flatten and BP8 can change
+the trajectory. Same-data/BP8 observations at 150K and 200K should refine them.
+
+Deep DFM8 XXL already exceeded both numeric thresholds in the 360--370K
+window (77.743% token, 29.250% exact) and 370--380K (77.882%, 29.485%).
+Later instability erased that lead repeatedly; 430--440K again reached
+78.020%/29.771%. These comparisons use different datasets (DFM8 versus
+DFM10), so numerical crossing is not proof of superior same-data capability.
+
+At step 120215 (BP7), regressions on 500-step mean metrics gave the
+following local slopes per 1K optimizer steps. Over the last 20K, loss
+changed by -0.000817, token accuracy by +0.01550 percentage points, and
+exact accuracy by +0.02667 percentage points. Over the last 10K the slopes
+were -0.000408, +0.01003 pp, and +0.01964 pp. Thus all three still improved,
+but more slowly than the 80--90K slopes (-0.002406, +0.03609 pp, +0.06068 pp).
+The first approximately 2.4K BP7 steps had loss/token/exact slopes of
+-0.009192/+0.17365 pp/-0.13816 pp per 1K, illustrating how the short transition
+window can give mixed, unstable slope estimates. These are descriptive local
+trends, not forecasts or an architecture-controlled comparison.
+
 At step 108,325 the active XXL-wide run was at BP6 and LR 4e-4. Remote
 training history from 80K onward contained no non-finite loss values. Mean
 loss/token accuracy/exact accuracy moved from 1.1806/74.06%/21.70% at
@@ -25,6 +116,17 @@ multi-step divergence. The active segment log had no NaN, OOM, traceback,
 runtime error, or overflow matches. All GPUs were at 100% utilization,
 with 42,968--45,272 MiB free, and ordinary BP6 steps took about 2.33 seconds.
 BP7 and BP8 stability remained untested at this observation.
+
+Later on 2026-09-08, BP7 was verified active through step approximately
+118,060, following its 117,822 transition. Over 50 logged samples immediately
+before the transition (117,575--117,820), loss/token accuracy/exact accuracy
+averaged 1.1390/74.80%/22.64%; the first 48 BP7 samples averaged
+1.1711/74.09%/23.05%. This short window shows a modest loss increase, not a
+large excursion; longer observation is needed. Across 110K--118K all losses
+were finite, with maximum 1.425. BP7 device memory was 148,622 MiB on GPU0
+and 146,318 MiB on the other ranks, leaving 33,998--36,302 MiB free. Ordinary
+steps took about 2.60 seconds and all GPUs were fully utilized. No matching
+NaN, OOM, traceback, runtime-error, or overflow messages appeared in the log.
 
 The DFM10 continuation starts from the completed DFM9 XL endpoint at global
 step `2,127,489`. The production resume alias is
