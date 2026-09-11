@@ -32,5 +32,11 @@ def module_lr_metrics(config, lr):
     rates = configured_module_rates(config)
     if not any(value is not None for value in rates.values()):
         return {}
-    return {f'train/lr_{name}': lr * (value / config.lr if value is not None else 1.0)
-            for name, value in rates.items()}
+    metrics = {f'train/lr_{name}': lr * (value / config.lr if value is not None else 1.0)
+               for name, value in rates.items()}
+    # Deprecated aliases retained for existing W&B histories and panels.
+    metrics['train/lr_H'] = metrics['train/lr_h']
+    metrics['train/lr_L'] = metrics['train/lr_l']
+    if metrics['train/lr_embeddings'] == metrics['train/lr_head']:
+        metrics['train/lr_embedding_head'] = metrics['train/lr_embeddings']
+    return metrics

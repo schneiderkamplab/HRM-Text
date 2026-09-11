@@ -63,7 +63,22 @@ def test_metric_schedule():
     c = SimpleNamespace(lr=2e-4, lr_embeddings=3e-4, lr_head=3e-4, lr_h=1.5e-4, lr_l=5e-5)
     assert module_lr_metrics(c, 1e-4) == pytest.approx(dict(
         **{'train/lr_embeddings': 1.5e-4, 'train/lr_head': 1.5e-4,
-           'train/lr_h': 7.5e-5, 'train/lr_l': 2.5e-5}))
+           'train/lr_h': 7.5e-5, 'train/lr_l': 2.5e-5,
+           'train/lr_H': 7.5e-5, 'train/lr_L': 2.5e-5,
+           'train/lr_embedding_head': 1.5e-4}))
+
+
+def test_existing_run_rates_and_deprecated_aliases():
+    c = SimpleNamespace(lr=7.5e-5, lr_embeddings=None, lr_head=None,
+                        lr_h=3.75e-5, lr_l=2.5e-5)
+    metrics = module_lr_metrics(c, c.lr)
+    assert metrics['train/lr_H'] == metrics['train/lr_h'] == c.lr_h
+    assert metrics['train/lr_L'] == metrics['train/lr_l'] == c.lr_l
+    assert metrics['train/lr_embedding_head'] == c.lr
+    c.lr_head = 1e-4
+    metrics = module_lr_metrics(c, c.lr)
+    assert 'train/lr_embedding_head' not in metrics
+    assert metrics['train/lr_head'] == pytest.approx(1e-4)
 
 
 def test_compiled_optimizer_step_matches_eager():
