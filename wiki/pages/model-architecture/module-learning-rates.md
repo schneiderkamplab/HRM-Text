@@ -28,6 +28,10 @@ are emitted. Existing running training was not restarted.
 
 ## Pending Training-Code Review (2026-09-11)
 
+Superseded later on 2026-09-11: regularization and its auxiliary-gradient
+comparison were removed. Only default-off observational diagnostics were
+retained and committed; see [update diagnostics](parameter-update-calibration.md).
+
 The separate, uncommitted diagnostics/MLP-energy changes default to disabled:
 `mlp_relative_energy_weight=0`, `experiment_metrics_output=null`,
 `experiment_update_probe_interval=0`, and empty `experiment_gradient_probe_steps`.

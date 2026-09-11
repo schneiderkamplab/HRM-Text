@@ -4,10 +4,27 @@ title: Actual AdamATan2 Update Calibration
 description: Default-off parameter-update measurements and matched short replays before a nested RMS objective.
 tags: [training, stability, diagnostics, experiments]
 status: draft
-last_updated: 2026-09-09
+last_updated: 2026-09-11
 confidence: high
 ---
 # Actual AdamATan2 Update Calibration
+
+## Retained Diagnostics, Removed Regularization (2026-09-11)
+
+Supersedes the implementation of the auxiliary-loss replays below: MLP energy
+regularization and the CE-versus-auxiliary gradient probe were removed at the
+user's request. Transformer, HRM and LM-head tensor/loss paths match the merged
+main baseline again. Both regularization launchers were deleted; checkpoint
+preservation helpers now live in the safe-stop script. Reports remain evidence
+of the completed experiments, not descriptions of active training features.
+
+Retained options are `experiment_metrics_output=null`,
+`experiment_update_probe_interval=0`, and the existing
+`stability_diagnostics_interval=0` by default. Update probes require a local
+metrics path. Helpers are imported only when enabled; no diagnostic snapshots,
+extra collective reductions or timing synchronizations run when disabled.
+The tests verify default-off configuration and that observing actual updates
+preserves parameters, gradients, optimizer moments, EMA and RNG state.
 
 This follows the [regularization replay review](mlp-energy-replay-layer-review.md)
 and precedes the [nested RMS experiment](mlp-energy-regularization-experiments.md).

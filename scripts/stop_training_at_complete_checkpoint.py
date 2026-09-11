@@ -1,11 +1,47 @@
 """Stop one isolated torchrun group only after preserving a complete checkpoint."""
 import argparse
+import json
 import os
 from pathlib import Path
+import pickle
+import shutil
 import signal
 import time
 
-from run_mlp_shared_prefix_experiment import alive, complete, preserve
+def complete(root, tag):
+    sidecar = root / f"checkpoint_state_{tag}.json"
+    directory = root / f"fsdp2_{tag}"
+    if not sidecar.exists() or not (directory / ".metadata").exists():
+        return False
+    json.loads(sidecar.read_text())
+    with (directory / ".metadata").open("rb") as handle:
+        metadata = pickle.load(handle)
+    sizes = {}
+    for entry in metadata.storage_data.values():
+        path = directory / entry.relative_path
+        if path not in sizes:
+            sizes[path] = path.stat().st_size
+        if sizes[path] < entry.offset + entry.length:
+            return False
+    return bool(sizes)
+
+
+def preserve(source, target, tag):
+    if not complete(source, tag):
+        raise RuntimeError(f"Incomplete checkpoint: {source}/{tag}")
+    target.mkdir(parents=True, exist_ok=True)
+    # DCP checkpoint payloads are immutable; links survive source pruning.
+    shutil.copytree(source / f"fsdp2_{tag}", target / f"fsdp2_{tag}", copy_function=os.link)
+    for path in source.iterdir():
+        if path.is_file() and (tag in path.name or path.suffix in (".yaml", ".json")):
+            if path.name.startswith("checkpoint_state_") and tag not in path.name:
+                continue
+            shutil.copy2(path, target / path.name)
+
+
+def alive(pid):
+    path = Path(f"/proc/{pid}/stat")
+    return path.exists() and path.read_text().split(") ", 1)[1][0] != "Z"
 
 
 def main():

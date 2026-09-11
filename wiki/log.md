@@ -1,5 +1,12 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-11 - Retain diagnostics without regularization
+
+- Removed the uncommitted MLP auxiliary objective and CE/auxiliary comparison.
+- Retained default-off layer diagnostics, local telemetry and parameter-update
+  measurements; deleted both regularization launchers while retaining the
+  safe-stop checkpoint preservation helpers and historical report readers.
+
 ## 2026-09-11 - Merge origin/lr into main
 
 - Adopted fixed per-parameter LR scales and independent embedding/head rates.

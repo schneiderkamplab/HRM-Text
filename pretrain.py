@@ -116,6 +116,8 @@ class PretrainConfig(pydantic.BaseModel):
     stability_diagnostics_max_tokens_per_microbatch: int = pydantic.Field(default=4096, ge=1)
     stability_diagnostics_output: Optional[str] = None
     stability_diagnostics_wandb_detailed: bool = False
+    experiment_metrics_output: Optional[str] = None
+    experiment_update_probe_interval: int = pydantic.Field(default=0, ge=0)
 
     # Names
     project_name: Optional[str] = None
@@ -980,12 +982,28 @@ def train_accumulated_batches(
                 one,
             )
 
+    update_probe = None
+    if config.experiment_update_probe_interval and train_state.step % config.experiment_update_probe_interval == 0:
+        if config.experiment_metrics_output is None:
+            raise ValueError("Update probes require experiment_metrics_output")
+        from models.experiment_diagnostics import ParameterUpdateProbe
+        update_probe = ParameterUpdateProbe(train_state.model)
     if optimizer_step_skipped:
         trace_print(config, rank, f"optim_step_skipped step={train_state.step}")
     else:
         trace_print(config, rank, f"optim_step_begin step={train_state.step}")
         train_state.optim.step()
         trace_print(config, rank, f"optim_step_end step={train_state.step}")
+    if update_probe is not None:
+        from models.experiment_diagnostics import append_jsonl
+        updates = update_probe.finish(next(train_state.model.parameters()).device)
+        if rank == 0:
+            append_jsonl(str(config.experiment_metrics_output) + ".updates.jsonl", {
+                "step": train_state.step,
+                "optimizer_step_skipped": optimizer_step_skipped,
+                "includes_weight_decay": True,
+                "parameters": updates,
+            })
     if zero_grad_after_step:
         trace_print(config, rank, f"zero_grad_after_step_begin step={train_state.step}")
         train_state.optim.zero_grad()
@@ -1506,6 +1524,9 @@ def launch(hydra_config: DictConfig):
                     },
                 )
             train_call_args = dict(train_extra_args)
+            if config.experiment_metrics_output is not None:
+                synchronize_device(device)
+                experiment_start = time.perf_counter()
             maybe_log_memory(
                 train_state.step,
                 "before_train",
@@ -1538,6 +1559,9 @@ def launch(hydra_config: DictConfig):
                         **train_extra_args,
                         stability_diagnostics=stability_diagnostics,
                     )
+            if config.experiment_metrics_output is not None:
+                synchronize_device(device)
+                experiment_train_start = time.perf_counter()
             metrics, optimizer_step_skipped = train_accumulated_batches(
                 config,
                 RANK,
@@ -1547,6 +1571,9 @@ def launch(hydra_config: DictConfig):
                 **train_call_args,
             )
             accumulation_batches = []
+            if config.experiment_metrics_output is not None:
+                synchronize_device(device)
+                experiment_train_end = time.perf_counter()
             if stability_diagnostics is not None and RANK == 0:
                 wandb.log(
                     stability_diagnostics.wandb_summary
@@ -1599,11 +1626,21 @@ def launch(hydra_config: DictConfig):
             )
             maybe_empty_cache(train_state.step, device, config.empty_cache_interval)
 
-            if train_state.step % config.log_interval == 0 or optimizer_step_skipped:
+            if train_state.step % config.log_interval == 0 or optimizer_step_skipped or config.experiment_metrics_output is not None:
                 trace_print(config, RANK, f"reduce_metrics_begin step={train_state.step}")
                 metrics = reduce_metrics(metrics, prefix="train/")
                 trace_print(config, RANK, f"reduce_metrics_end step={train_state.step}")
                 if RANK == 0:
+                    metrics.update(module_lr_metrics(config, lr))
+                    if config.experiment_metrics_output is not None:
+                        from models.experiment_diagnostics import append_jsonl
+                        append_jsonl(config.experiment_metrics_output, {
+                            "step": train_state.step, "epoch": epoch,
+                            "batch_in_epoch": batch_in_epoch, "train/lr": lr,
+                            **train_extra_args, **metrics,
+                            "training_seconds": experiment_train_end - experiment_train_start,
+                            "probe_seconds": experiment_train_start - experiment_start,
+                        })
                     bench_last_metrics = dict(metrics)
                     if config.max_steps is not None:
                         bench_metric_history.append({"step": train_state.step, **metrics})

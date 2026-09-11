@@ -3,7 +3,7 @@ import pickle
 import shutil
 from types import SimpleNamespace
 
-from scripts.run_mlp_shared_prefix_experiment import complete, override, preserve, experiment_stages
+from scripts.stop_training_at_complete_checkpoint import complete, preserve
 
 
 def fixture_checkpoint(root, tag="step_1"):
@@ -33,25 +33,6 @@ def test_preserved_links_survive_source_pruning(tmp_path):
     assert (target / "fsdp2_step_1" / "rank.distcp").stat().st_nlink == 2
     shutil.rmtree(source)
     assert complete(target, "step_1")
-
-
-def test_overrides_replace_instead_of_append_duplicates():
-    assert override(["torchrun", "lr=0.1", "+max_steps=10", "data=dfm10"], lr=0.2, max_steps="null") == [
-        "torchrun", "data=dfm10", "lr=0.2", "max_steps=null"]
-
-
-def test_reused_prefix_only_runs_requested_new_coefficient():
-    assert experiment_stages(1e-3, True) == [
-        ("regularized", "prefix", "step_453000", 454000, 1e-3)]
-    assert [stage[0] for stage in experiment_stages()] == [
-        "prefix", "diagnostics_preflight", "baseline", "regularized"]
-
-
-def test_update_calibration_uses_matched_short_branches():
-    stages = experiment_stages(update_calibration=True)
-    assert [stage[0] for stage in stages] == ["update_control", "update_baseline", "update_regularized"]
-    assert all(stage[2:4] == ("step_453000", 453010) for stage in stages)
-    assert [stage[4] for stage in stages] == [0, 0, 1e-4]
 
 
 def test_three_way_report_leaves_reference_results_untouched(tmp_path, monkeypatch):
