@@ -48,7 +48,7 @@ from models.accelerator import (
 )
 from models.transformer import Transformer, TransformerBlock
 from models.adam_atan2 import AdamATan2
-from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics
+from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics, update_auto_module_rates
 from utils.functions import load_model_class, get_model_source_path
 from dataset_new import V1Dataset, V1DatasetConfig, V1DatasetMeta
 
@@ -83,6 +83,7 @@ class PretrainConfig(pydantic.BaseModel):
     training_total_steps: Optional[int] = pydantic.Field(default=None, ge=1)
 
     lr: float
+    lr_auto: bool = True
     lr_embeddings: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_head: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_h: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
@@ -1497,6 +1498,7 @@ def launch(hydra_config: DictConfig):
             trace_print(config, RANK, f"optimizer_step_start step={train_state.step} batch_in_epoch={batch_in_epoch} lr={lr}")
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = compute_train_extra_args(train_state.model, train_state)
+            update_auto_module_rates(config, train_state.model, train_state.optim, train_extra_args.get('bp_steps'))
             trace_print(config, RANK, f"train_extra_args step={train_state.step} {train_extra_args}")
             stability_diagnostics = None
             if (
@@ -1631,7 +1633,7 @@ def launch(hydra_config: DictConfig):
                 metrics = reduce_metrics(metrics, prefix="train/")
                 trace_print(config, RANK, f"reduce_metrics_end step={train_state.step}")
                 if RANK == 0:
-                    metrics.update(module_lr_metrics(config, lr))
+                    metrics.update(module_lr_metrics(config, lr, train_extra_args.get('bp_steps')))
                     if config.experiment_metrics_output is not None:
                         from models.experiment_diagnostics import append_jsonl
                         append_jsonl(config.experiment_metrics_output, {
@@ -1646,7 +1648,7 @@ def launch(hydra_config: DictConfig):
                         bench_metric_history.append({"step": train_state.step, **metrics})
                     progress_bar.update(train_state.step - progress_bar.n)  # type: ignore
                     trace_print(config, RANK, f"wandb_log_begin step={train_state.step}")
-                    wandb.log(metrics | train_extra_args | {"train/lr": lr} | module_lr_metrics(config, lr), step=train_state.step)
+                    wandb.log(metrics | train_extra_args | {"train/lr": lr}, step=train_state.step)
                     trace_print(config, RANK, f"wandb_log_end step={train_state.step}")
 
             if (

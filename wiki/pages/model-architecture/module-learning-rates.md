@@ -9,6 +9,51 @@ confidence: high
 ---
 # H and L Learning Rates
 
+## Automatic Backward-Count Scaling (2026-09-11)
+
+Auto scaling defaults to `lr_auto=true`. Explicit `lr_embeddings`, `lr_head`, `lr_h`, and
+`lr_l` values always win (including zero). Auto fills only null values; with
+auto off, null values inherit the base LR. This supersedes the initial
+same-day implementation that rejected explicit overrides with auto enabled.
+At the user's subsequent request on 2026-09-11, true replaced the initial
+false default in both Hydra config and the training schema. Use
+`lr_auto=false` for legacy uniform-LR behavior. Future launches with unset
+module rates now use auto scaling; the running process and scheduler command
+strings were not changed. Explicit module rates remain authoritative.
+
+For `baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel`, use the
+current step's `bp_steps` to count gradient-bearing calls:
+
+```text
+H_backward = min(H_cycles, bp_steps - 1)
+L_backward = min(H_cycles * L_cycles, bp_steps - H_backward)
+embedding_lr = head_lr = scheduled_base_lr
+H_lr = scheduled_base_lr / H_backward
+L_lr = scheduled_base_lr / L_backward
+```
+
+The L count is capped at the actual number of recurrent calls. Positive
+cycle counts and BP >= 2 are required. Unsupported architectures fail rather
+than silently using these semantics. No-grad forward calls, activation
+checkpoint recomputation, and gradient accumulation microbatches are not
+additional divisors. This counts gradient-bearing uses per recurrent block,
+not its number of transformer layers. AdamATan2 normalizes gradients, so this
+is an explicit LR heuristic, not a proof of equal parameter update norms.
+
+Ratios refresh before each optimizer update when BP changes, including the
+first update after resume. They retain the single checkpoint optimizer group
+and existing moments/EMA. Compiled optimizer graphs may recompile at BP
+transitions. Effective-rate logs use the same BP value as training and inherit
+warmup/cosine scaling. With H=2, L=3 and lr=3e-4, BP5 gives H=1.5e-4 and
+L=1e-4; BP8 gives H=1.5e-4 and L=5e-5. Embeddings/head remain 3e-4 before
+any common schedule multiplier.
+
+Validation: 21 module-LR tests passed, including explicit-over-auto precedence,
+auto-off inheritance, zero overrides, and actual HRM backward hooks
+with lightweight replacement blocks across cycle/BP combinations, compiled
+optimizer BP-transition parity, schedule scaling, and legacy checkpoint
+restoration. No distributed GPU smoke or W&B logging was performed.
+
 ## Merged Implementation (2026-09-11)
 
 Supersedes the selective-port recommendation below: at the user's request,

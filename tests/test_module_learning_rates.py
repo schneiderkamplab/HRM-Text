@@ -8,6 +8,90 @@ from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict, se
 
 from models.adam_atan2 import AdamATan2
 from models.module_learning_rates import module_lr_scales, module_lr_metrics
+from models.module_learning_rates import backward_call_counts, configured_module_rates, update_auto_module_rates
+
+
+def auto_config():
+    return SimpleNamespace(lr=3e-4, lr_auto=True, lr_embeddings=None, lr_head=None,
+                           lr_h=None, lr_l=None, arch=dict(
+                               name='baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel',
+                               H_cycles=2, L_cycles=3))
+
+
+@pytest.mark.parametrize('h,l,bp', [(2, 3, b) for b in range(2, 11)] + [(3, 4, 7), (1, 2, 2)])
+def test_counts_match_actual_backward(h, l, bp):
+    from models.baselines.hrm_nocarry_bp_warmup import HierarchicalReasoningModel
+
+    class Block(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.weight = nn.Parameter(torch.tensor(0.5))
+            self.backward_calls = 0
+
+        def forward(self, state, injection, **kwargs):
+            result = (state + injection) * self.weight
+            if result.requires_grad:
+                def count(grad):
+                    self.backward_calls += 1
+                result.register_hook(count)
+            return result
+
+    m = HierarchicalReasoningModel.__new__(HierarchicalReasoningModel)
+    nn.Module.__init__(m)
+    m.H_cycles, m.L_cycles = h, l
+    m.H_level, m.L_level = Block(), Block()
+    m.zL_init = torch.tensor(0.)
+    _, out = m(None, torch.tensor(1., requires_grad=True), bp_steps=bp)
+    out.backward()
+    assert backward_call_counts(h, l, bp) == (m.H_level.backward_calls, m.L_level.backward_calls)
+
+
+def test_auto_transition_and_schedule():
+    c = auto_config()
+    m = model()
+    opt = AdamATan2(m.parameters(), lr=c.lr, ema=0.99)
+    for bp, h, l in [(2, 1, 1), (5, 2, 3), (8, 2, 6)]:
+        update_auto_module_rates(c, m, opt, bp)
+        assert opt.parameter_lr_scales[m.model.H_level.weight] == pytest.approx(1 / h)
+        assert opt.parameter_lr_scales[m.model.L_level.weight] == pytest.approx(1 / l)
+        assert module_lr_metrics(c, c.lr * 0.1, bp)['train/lr_l'] == pytest.approx(c.lr * 0.1 / l)
+    c.lr_h = 1e-4
+    assert configured_module_rates(c, 8)['h'] == 1e-4
+
+
+@pytest.mark.parametrize('auto', [False, True])
+def test_explicit_overrides_and_fallbacks(auto):
+    c = auto_config()
+    c.lr_auto = auto
+    c.lr_h = 1e-4
+    c.lr_head = 0.0
+    m = model()
+    scales = module_lr_scales(m, c.lr, configured_module_rates(c, 8))
+    assert scales[m.embed_tokens.weight] == 1
+    assert scales[m.lm_head.weight] == 0
+    assert scales[m.model.H_level.weight] == pytest.approx(1e-4 / c.lr)
+    assert scales[m.model.L_level.weight] == pytest.approx(1 / 6 if auto else 1)
+    metrics = module_lr_metrics(c, c.lr / 2, 8)
+    assert metrics['train/lr_h'] == pytest.approx(5e-5)
+    assert metrics['train/lr_l'] == pytest.approx(c.lr / (12 if auto else 2))
+
+
+def test_compiled_auto_transition():
+    c = auto_config()
+    m = model()
+    ref = copy.deepcopy(m)
+    opt = AdamATan2(m.parameters(), lr=c.lr)
+    other = AdamATan2(ref.parameters(), lr=c.lr)
+    step = torch.compile(opt.step, backend='aot_eager', fullgraph=True)
+    for bp in [2, 5, 8]:
+        for mod, optim in [(m, opt), (ref, other)]:
+            update_auto_module_rates(c, mod, optim, bp)
+            for p in mod.parameters():
+                p.grad = torch.ones_like(p)
+        step()
+        other.step()
+    for p, q in zip(m.parameters(), ref.parameters()):
+        torch.testing.assert_close(p, q)
 
 
 def model():
