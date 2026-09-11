@@ -48,6 +48,7 @@ from models.accelerator import (
 )
 from models.transformer import Transformer, TransformerBlock
 from models.adam_atan2 import AdamATan2
+from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics
 from utils.functions import load_model_class, get_model_source_path
 from dataset_new import V1Dataset, V1DatasetConfig, V1DatasetMeta
 
@@ -82,6 +83,10 @@ class PretrainConfig(pydantic.BaseModel):
     training_total_steps: Optional[int] = pydantic.Field(default=None, ge=1)
 
     lr: float
+    lr_embeddings: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
+    lr_head: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
+    lr_h: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
+    lr_l: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_min_ratio: float
     lr_warmup_steps: int
 
@@ -430,7 +435,8 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
                       betas=(config.beta1, config.beta2),
                       weight_decay=config.weight_decay,
                       ema=config.ema,
-                      ema_dtype=optimizer_ema_dtype(config))
+                      ema_dtype=optimizer_ema_dtype(config),
+                      parameter_lr_scales=module_lr_scales(model, config.lr, configured_module_rates(config)))
 
     return model, carry, optim
 
@@ -1603,7 +1609,7 @@ def launch(hydra_config: DictConfig):
                         bench_metric_history.append({"step": train_state.step, **metrics})
                     progress_bar.update(train_state.step - progress_bar.n)  # type: ignore
                     trace_print(config, RANK, f"wandb_log_begin step={train_state.step}")
-                    wandb.log(metrics | train_extra_args | {"train/lr": lr}, step=train_state.step)
+                    wandb.log(metrics | train_extra_args | {"train/lr": lr} | module_lr_metrics(config, lr), step=train_state.step)
                     trace_print(config, RANK, f"wandb_log_end step={train_state.step}")
 
             if (

@@ -33,6 +33,7 @@ class AdamATan2(Optimizer):
         # Extra features
         ema: Optional[float] = None,
         ema_dtype: Optional[torch.dtype | str] = None,
+        parameter_lr_scales: Optional[dict] = None,
     ):
         # Initialize the Adam-atan2 optimizer
         if isinstance(lr, Tensor):
@@ -55,6 +56,8 @@ class AdamATan2(Optimizer):
             "ema_dtype": _normalize_dtype_name(ema_dtype),
         }
         super().__init__(params, defaults)
+        # Rebuilt from run config, not stored in checkpoint param_groups.
+        self.parameter_lr_scales = parameter_lr_scales
         # Initialize state
         self._init_state()
 
@@ -88,10 +91,13 @@ class AdamATan2(Optimizer):
                 
                 state = self.state[param]
                 grad = param.grad
+                lr = group["lr"]
+                if self.parameter_lr_scales is not None:
+                    lr = lr * self.parameter_lr_scales[param]
 
                 # Weight decay update
                 if group["weight_decay"] != 0:
-                    param.mul_(1 - group["lr"] * group["weight_decay"])
+                    param.mul_(1 - lr * group["weight_decay"])
 
                 # Momentums
                 if "exp_avg" in state:
@@ -101,7 +107,7 @@ class AdamATan2(Optimizer):
                 state["step"] += 1
                 bias_correction1 = 1 - group["betas"][0] ** state["step"]
                 bias_correction2 = 1 - group["betas"][1] ** state["step"]
-                step_size = group["lr"] / bias_correction1
+                step_size = lr / bias_correction1
                 bias_correction2_sqrt = bias_correction2.sqrt()
 
                 denom = state["exp_avg_sq"].sqrt() / bias_correction2_sqrt
@@ -109,7 +115,7 @@ class AdamATan2(Optimizer):
                 if "exp_avg" in state:
                     param.add_(torch.atan2(state["exp_avg"], denom), alpha=-step_size)  # pyright: ignore[reportArgumentType]
                 else:
-                    param.add_(torch.atan2(grad, denom), alpha=-group["lr"])  # pyright: ignore[reportArgumentType]
+                    param.add_(torch.atan2(grad, denom), alpha=-lr)  # pyright: ignore[reportArgumentType]
 
                 # [Extra features] EMA
                 if "param_ema" in state:

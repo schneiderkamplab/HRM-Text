@@ -304,3 +304,47 @@ Its largest selected deficits remain GSM8K (`0.4966` versus `0.7134`), MATH
 (`0.2072` versus `0.3002`), and HumanEval (`0.2317` versus `0.3049`). The
 comparison is equal-step/equal-token, but not architecture-only: it contrasts
 DFM10 with DFM8 and different recurrence schedules.
+
+## XXL-Wide Module Learning Rates From 150K (2026-09-09)
+
+Supersedes the uniform `2e-4` schedule after 150K only. The active
+137500-to-150000 segment stays unchanged. After the 150K evaluation, the
+150000-to-200000 resume and all later scheduled training segments use:
+
+| Parameter category | Config override | Learning rate |
+| --- | --- | --- |
+| Token embeddings | `lr_embeddings` | `3e-4` |
+| LM head | `lr_head` | `3e-4` |
+| H blocks | `lr_h` | `1.5e-4` |
+| L blocks | `lr_l` | `5e-5` |
+
+Base `lr=2e-4`, `lr_min_ratio=1`, BP scheduling, checkpoint paths, and the
+`DFM5/dfm10-xxl-wide` run remain unchanged. These overrides are optional and
+default to null. Their ratios follow the base LR schedule; at this resume
+the original warmup has already finished. W&B records the effective rates as
+`train/lr_embeddings`, `train/lr_head`, `train/lr_h`, and `train/lr_l`;
+`train/lr` remains the base scheduling rate.
+
+`models/module_learning_rates.py` maps parameter names strictly to these four
+categories. AdamATan2 applies the ratio to the update and decoupled weight
+decay without changing optimizer checkpoint groups. Resume retains moments,
+step counters, and EMA; ratios are reconstructed from the new run config.
+
+Five focused tests passed, including legacy optimizer/DCP state restoration
+parity against explicit LR groups and compiled optimizer updates. Hydra
+accepted the overrides; a meta-device XXL-wide model mapped all 130 parameter
+tensors. These are CPU/config tests, not a new distributed production smoke.
+No test logged to W&B or interrupted current training.
+
+The existing `logs/scheduler/dfm10_XL_epoch9_20260831/plan.tsv` was updated
+under `PlanLock` for the five pending `xxlw-train-*` rows ending at 200000,
+250000, 300000, 350000, and 353465. A pre-edit snapshot is stored alongside
+the plan as `plan.tsv.before_module_lrs_150k_20260909`.
+
+Review on 2026-09-11 for branch `lr`: the five focused tests passed again,
+with no blocking findings. Default-null behavior, base-schedule scaling,
+optimizer-state compatibility, and compiled updates were checked. Dedicated
+multi-rank parity tests remain outside this test suite. Production observations
+through 174705 confirmed the requested four rates and BP8, with no logged
+nonfinite losses or losses above 2 since the earlier 137500 LR reduction;
+this observation does not establish causality for the module split.
