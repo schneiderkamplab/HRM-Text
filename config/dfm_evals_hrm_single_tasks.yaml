@@ -527,7 +527,7 @@ sets:
   hrm_gen5_drop:
     description: "Single-task Gen5 suite: DROP (0-shot)."
     tasks:
-      - name: inspect_evals/drop
+      - name: dfm_evals/drop
         args:
           - -T
           - fewshot=false

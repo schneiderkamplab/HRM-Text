@@ -1,5 +1,33 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-08 - DFM11-post quality-weighted revision
+
+- Spot-checked all source families initially >=2% of post tokens; retained
+  stronger grounded sources and reduced noisy or repetitive contributors.
+- Preserved whole conversations in the approximately half-size Koolbardi pools,
+  dropped overlength Agentic answers, reduced selected repeats and anchor weights.
+- Rebuilt ten epochs at 25.511B tokens/epoch with 32.997% broad anchors, without
+  retokenization or changes to full DFM11 or running training. See the
+  [post plan](pages/dfm11-post-plan.md) for evidence, decisions and rollback paths.
+
+## 2026-09-08 - DFM11-post construction
+
+- Added the [DFM11-post plan](pages/dfm11-post-plan.md), separating historical
+  20% anchor proposals from the approved 33% final-token anchor share.
+- Implemented repeat-1/2 behavior selection, inherited exclusion preservation,
+  and square-root-weighted, non-repeated broad anchors. Initial token projection
+  is 23.925B behavior plus 11.783B anchors; sampling ten index sets is running.
+- Source classifications, exclusions, cap allocations and input hashes are
+  recorded in the build manifest; final sampled token fractions are checked.
+
+## 2026-09-08 - Origin reconciliation audit
+
+- Restored local work after fast-forwarding main; retained the recovery stash.
+- Preserved the superseded upstream Nemotron assessment in a separate historical
+  concept instead of losing it when restoring the local replacement plan.
+- All pinned submodule revisions are now available and checked out, including
+  Mathagentic `00f3ded`; existing dfm-evals working changes remain intact.
+
 ## 2026-09-08 - DFM11 portability boundary
 
 - Added a focused DFM11 machine-to-machine bootstrap runbook: Git transfers
@@ -279,6 +307,38 @@
   superseding unfinished-user completion for this checkpoint.
 - Documented exact 4K accounting, distributed per-turn budgets, vLLM runtime
   settings, smoke results, and terminal queue recovery.
+## 2026-09-01 - Koolbardi operational runbook
+
+- Added the verified end-to-end Koolbardi procedure covering submodule setup,
+  `uv pip` installation, eight-server vLLM launch, atomic instruction/response/
+  audit phases, status and stale-claim recovery, balanced finalization, output
+  receipts, and the remaining DFM11 admission boundary.
+
+## 2026-09-01 - DFM11 FineInstructions operating runbook
+
+- Added a focused OKF runbook for the DFM-owned FineInstructions submodule,
+  covering initialization, dependency installation, fail-closed query/document
+  manifests, canonical extraction, the DFM-owned Gaussian retrieval index,
+  instantiation contracts, audit gates, token budgeting, and current pending
+  implementation stages.
+- Recorded the required `--base-dir ..` extraction argument, the local-only
+  `a4442c2` submodule commit and push ordering, and the separate model-artifact
+  use decision required before production.
+
+## 2026-09-01 - DFM-native FineInstructions replacement
+
+- Superseded and removed the proposed upstream FineInstructions Nemotron
+  admission, including its downloader entry, materializer, config, and tests.
+  DFM11 retains no upstream Nemotron rows, real-query rows, FineTemplates, or
+  prebuilt FineTemplates index.
+- Added `schneiderkamplab/fineinstructions` as an Apache-2.0 submodule. Its
+  initial package enforces approved query/document source manifests, canonical
+  streaming extraction, pinned released model revisions, strict excerpt
+  expansion, and a new DFM-owned FAISS index using global-plus-five Gaussian
+  document representations.
+- The learned artifacts remain subject to a model-use decision because their
+  Hugging Face cards declare no licenses. Production generation and judging
+  are not yet represented as complete.
 
 ## 2026-09-01 - DFM11 FineInstructions Nemotron admission policy
 

@@ -4,7 +4,7 @@ title: DFM11 Koolbardi Integration
 description: Final controlled Koolbardi inventory, publication contract, Hub revisions, and DFM11 admission state.
 tags: [dfm11, koolbardi, synthetic-data, danish, english, huggingface]
 status: stable
-last_updated: 2026-09-04
+last_updated: 2026-09-08
 confidence: high
 sources:
   - id: koolbardi-da-hub
@@ -85,3 +85,27 @@ The independently recomputed inventory is retained in
 
 Aggregate union construction and sampling remain blocked on this preparation
 host because the inherited `data/tokenized_dfm10` base is absent.
+
+## Manual quality spot-check, 2026-09-08
+
+A reproducible uniform sample of ten complete conversations per language was
+reviewed with `scripts/sample_koolbardi_review.py`. Full rows, transcripts and
+per-conversation assessments are in
+`logs/dfm11_post/koolbardi_review_20260908/{rows.jsonl,conversations.md,assessment.md}`.
+Language and dialogue continuity were generally good, but positive stored
+audits missed malformed names/punctuation, questionable factual references,
+incorrect technical explanations, code/description mismatches and excessive
+agreement. Audit acceptance must not be interpreted as factual verification.
+
+The review recommends, but does not implement, a provisional 50% conversation
+cap for both languages in DFM11-post, with stratified rotating coverage and a
+larger independent review. Current combined exposure is 5.316B tokens per
+epoch, 14.89% of the post mix (22.22% of behavior tokens). Twenty conversations
+cannot establish a corpus defect rate or a reliable Danish/English ranking.
+At review time, repeat-one admission remained unchanged pending a user decision.
+Superseded later on 2026-09-08 for DFM11-post only: the user approved quality
+undersampling. The rebuilt post pool retains 278,918 DA and 275,106 EN whole
+conversations, stratified by topic/mode/complexity/length, at repeat one.
+Combined post exposure is approximately 2.784B tokens per epoch. Full DFM11
+still admits both complete releases unchanged. See
+[the post plan](dfm11-post-plan.md) for the revised total and other source cuts.

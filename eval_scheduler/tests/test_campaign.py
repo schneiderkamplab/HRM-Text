@@ -74,6 +74,38 @@ def test_export_hf_passes_explicit_tokenizer_override(tmp_path: Path, monkeypatc
     assert captured[-2:] == ["--tokenizer_path", str(tmp_path / "tokenizer")]
 
 
+def test_prepare_hf_variant_copies_export_and_overrides_config(tmp_path: Path) -> None:
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    source.mkdir()
+    (source / "model.safetensors").write_bytes(b"weights")
+    (source / "config.json").write_text(
+        json.dumps({"H_cycles": 2, "L_cycles": 3, "L_bp_cycles": [3, 3]})
+    )
+    (source / "tokenizer.json").write_text("{}")
+    variant_job = Job(
+        job_id="variant",
+        action=Action.PREPARE_HF_VARIANT,
+        family="export",
+        name="step_100_lcycles4",
+        log_dir=str(tmp_path / "logs"),
+        metadata={
+            "source_hf_export_dir": str(source),
+            "hf_export_dir": str(target),
+            "config_overrides": {"L_cycles": 4, "L_bp_cycles": [2, 4]},
+        },
+    )
+
+    assert runtime.run_prepare_hf_variant(variant_job) == 0
+    assert (target / "model.safetensors").read_bytes() == b"weights"
+    assert (target / "tokenizer.json").is_file()
+    config = json.loads((target / "config.json").read_text())
+    assert config["H_cycles"] == 2
+    assert config["L_cycles"] == 4
+    assert config["L_bp_cycles"] == [2, 4]
+    assert runtime.run_prepare_hf_variant(variant_job) == 0
+
+
 def test_long_context_jobs_are_omitted_for_4k_exports(tmp_path: Path) -> None:
     model_dir = tmp_path / "model"
     model_dir.mkdir()
@@ -181,6 +213,51 @@ def test_all_gpu_training_allocation_is_atomic(monkeypatch, tmp_path: Path) -> N
     complete = [0, 1, 2]
     assert runner.select_gpus(training, complete) == (0, 1, 2)
     assert complete == []
+
+
+def test_training_can_resume_from_a_different_checkpoint_root(tmp_path: Path, monkeypatch) -> None:
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    source_shard = source / "fsdp2_step_50"
+    source_shard.mkdir(parents=True)
+    (source_shard / ".metadata").touch()
+    (source / "checkpoint_state_step_50.json").write_text(
+        json.dumps({"step": 50, "checkpoint_kind": "regular", "carry_policy": "none"})
+    )
+    captured: dict[str, object] = {}
+
+    class Completed:
+        pid = 123
+
+        def wait(self):
+            return 7
+
+    def fake_popen(argv, **kwargs):
+        captured["argv"] = argv
+        captured["kwargs"] = kwargs
+        return Completed()
+
+    monkeypatch.setattr(runtime.subprocess, "Popen", fake_popen)
+    training = Job(
+        job_id="train",
+        action=Action.TRAIN_UNTIL_STEP,
+        family="training",
+        name="step_100",
+        log_dir=str(tmp_path / "logs"),
+        metadata={
+            "command": "python pretrain.py checkpoint_path=target",
+            "ckpt_path": str(target),
+            "ckpt_tag": "step_100",
+            "resume_ckpt_path": str(source),
+            "resume_from_tag": "step_50",
+            "stop_after_step": 100,
+        },
+    )
+
+    assert runtime.run_training_until_step(training, (0, 1)) == 7
+    argv = captured["argv"]
+    assert f"resume_checkpoint_path={source}" in argv
+    assert "resume_checkpoint_tag=step_50" in argv
 
 
 def test_training_checkpoint_requires_regular_sidecar(tmp_path: Path) -> None:

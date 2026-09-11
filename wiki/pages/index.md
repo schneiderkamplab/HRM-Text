@@ -1,5 +1,7 @@
 # Operational Knowledge and Plans
 
+* [DFM11 Nemotron Assessment History](dfm11-nemotron-history.md) - Superseded proposal retained during origin/local reconciliation.
+
 ## Operations
 
 * [Current State](current-state.md) - Local repository state, active operations, and verified commands.
@@ -25,11 +27,14 @@
 * [DFM9 Plan Concepts](dfm9-plan/) - Focused DFM9 measurements, implementation records, and continuation operations.
 * [DFM10 Plan](dfm10-plan.md) - DFM9 plus train-only Andersen and Alexandra Institute additions.
 * [DFM11 Plan](dfm11-plan.md) - Deferred task-aware quality repairs from the frozen DFM10 residual audit.
+* [DFM11 Post-Training Subset](dfm11-post-plan.md) - Built quality-weighted behavior mix with 33% broad capability anchors.
 * [DFM11 Portability and Bootstrap](dfm11-portability.md) - Machine-to-machine corpus transfer and reproducible rebuild requirements.
 * [DFM11 Folketing Error-Correction Repair](dfm11-folketing-error-correction.md) - Deterministic rebuild, task-aware full audit, and rejection-removing finalization.
 * [DFM11 Mathagentic Export Packages](dfm11-mathagentic-exports.md) - Audited Python and verified Prolog arithmetic tool-use upload staging.
 * [DFM11 FineInstructions Grounded Chats](dfm11-fineinstructions-grounded-chats.md) - Balanced bilingual chat generation, finalization, and extension policy.
 * [DFM11 Koolbardi Integration](dfm11-koolbardi-integration.md) - Final bilingual controlled release, Hub publication, validation, and DFM11 admission.
+* [Koolbardi Bilingual Synthesis Runbook](koolbardi-runbook.md) - Install, run, monitor, recover, and finalize the resumable Gemma-native Magpie pipeline.
+* [DFM11 FineInstructions Runbook](dfm11-fineinstructions-runbook.md) - Approved-source manifests, extraction, retrieval, generation, and admission procedure for the DFM-owned FineInstructions pipeline.
 * [DFM10 Publication and Sampling State](dfm10-publication-state.md) - Final 72-package Hub inventory, sampled corpus, and transfer state.
 * [DFM10 XL Epoch-9 Continuation](dfm10-xl-epoch9-continuation.md) - Exact DFM9 endpoint resume into DFM10 and 50K evaluation campaign.
 * [DFM10 Medical Data Plan](dfm10-medical-data-plan.md) - License-gated Danish and English medical training and evaluation candidates.

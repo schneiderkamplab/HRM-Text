@@ -24,3 +24,4 @@
 * [DFM8 XXL to DFM10 Multi-Node Transition](dfm8-xxl-to-dfm10-multinode-transition.md) - Epoch-boundary data/topology change, batch geometry, readiness gates, and checkpoint cadence.
 * [Optional Global Gradient Clipping](gradient-clipping.md) - Null-by-default clipping, verified FSDP2/DTensor semantics, and AdamATan2-native stability options.
 * [Training Stability, Jacobian Growth, and Residual Scaling](training-stability-jacobian-and-residual-scaling.md) - Recurrent-depth diagnosis, mitigation options, and opt-in per-cycle/per-layer instrumentation.
+* [XL BP-Depth Memory Benchmark](xl-bp-depth-memory-benchmark.md) - Matched BP 6-8 memory and throughput measurements for the DFM10 XL geometry.
