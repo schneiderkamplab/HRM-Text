@@ -1,5 +1,16 @@
 """Optional HRM learning rates without changing optimizer checkpoint groups."""
 
+import math
+
+
+def windowed_cosine_lr(base_lr, min_ratio, step, start, end):
+    if start is None or end is None or start < 0 or end <= start:
+        raise ValueError('Cosine LR window requires 0 <= start < end')
+    if not 0 <= min_ratio <= 1:
+        raise ValueError('Cosine LR window requires 0 <= lr_min_ratio <= 1')
+    progress = min(1.0, max(0.0, (step - start) / (end - start)))
+    return base_lr * (min_ratio + (1 - min_ratio) * 0.5 * (1 + math.cos(math.pi * progress)))
+
 def module_lr_scales(model, base_lr, rates):
     if not any(value is not None for value in rates.values()):
         return None
@@ -36,10 +47,11 @@ def configured_module_rates(config, bp_steps=None):
     rates = {name: getattr(config, f'lr_{name}') for name in ('embeddings', 'head', 'h', 'l')}
     if not getattr(config, 'lr_auto', False):
         return rates
-    if config.arch['name'] != 'baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel':
+    arch = config.arch.model_dump() if hasattr(config.arch, 'model_dump') else config.arch
+    if arch['name'] != 'baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel':
         raise ValueError('lr_auto only supports hrm_nocarry_bp_warmup backward semantics')
-    h, l = backward_call_counts(config.arch['H_cycles'], config.arch['L_cycles'],
-                               config.arch.get('bp_min_steps', 2) if bp_steps is None else bp_steps)
+    h, l = backward_call_counts(arch['H_cycles'], arch['L_cycles'],
+                               arch.get('bp_min_steps', 2) if bp_steps is None else bp_steps)
     automatic = dict(embeddings=config.lr, head=config.lr, h=config.lr / h, l=config.lr / l)
     return {name: automatic[name] if value is None else value for name, value in rates.items()}
 

@@ -39,6 +39,11 @@ log_interval: 5
 
 lr: 2.2e-4
 lr_auto: true
+lr_rewarm_steps: 0
+lr_rewarm_start_ratio: 0.5
+lr_rewarm_start_step: null
+lr_decay_start_step: null
+lr_decay_end_step: null
 lr_embeddings: null
 lr_head: null
 lr_h: null

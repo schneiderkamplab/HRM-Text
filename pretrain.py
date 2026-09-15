@@ -48,7 +48,8 @@ from models.accelerator import (
 )
 from models.transformer import Transformer, TransformerBlock
 from models.adam_atan2 import AdamATan2
-from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics, update_auto_module_rates
+from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics, update_auto_module_rates, windowed_cosine_lr
+from models.lr_rewarm import resolve_rewarm, rewarm_lr, rewarm_metadata
 from utils.functions import load_model_class, get_model_source_path
 from dataset_new import V1Dataset, V1DatasetConfig, V1DatasetMeta
 
@@ -84,6 +85,11 @@ class PretrainConfig(pydantic.BaseModel):
 
     lr: float
     lr_auto: bool = True
+    lr_rewarm_steps: int = pydantic.Field(default=0, ge=0)
+    lr_rewarm_start_ratio: float = pydantic.Field(default=0.5, ge=0, le=1, allow_inf_nan=False)
+    lr_rewarm_start_step: Optional[int] = pydantic.Field(default=None, ge=0)
+    lr_decay_start_step: Optional[int] = pydantic.Field(default=None, ge=0)
+    lr_decay_end_step: Optional[int] = pydantic.Field(default=None, ge=1)
     lr_embeddings: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_head: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_h: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
@@ -487,7 +493,12 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
 
 def update_lr(config: PretrainConfig, train_state: TrainState) -> float:
     # Linear warmup cosine schedule
-    if train_state.step < config.lr_warmup_steps:
+    if config.lr_rewarm_steps:
+        lr = rewarm_lr(config, train_state.step)
+    elif config.lr_decay_start_step is not None or config.lr_decay_end_step is not None:
+        lr = windowed_cosine_lr(config.lr, config.lr_min_ratio, train_state.step,
+                               config.lr_decay_start_step, config.lr_decay_end_step)
+    elif train_state.step < config.lr_warmup_steps:
         lr = config.lr * min(1.0, train_state.step / config.lr_warmup_steps)
     else:
         progress = (train_state.step - config.lr_warmup_steps) / (train_state.total_steps - config.lr_warmup_steps)
@@ -1140,6 +1151,8 @@ def save_checkpoint_metadata(
         "fsdp_reshard_after_forward": config.fsdp_reshard_after_forward,
         "fsdp_accumulation_sync_mode": config.fsdp_accumulation_sync_mode,
     }
+    if config.lr_rewarm_steps:
+        metadata['lr_rewarm'] = rewarm_metadata(config)
     if resume_info is not None:
         metadata.update({
             "global_row_start_in_epoch": int(resume_info["global_row_start"]),
@@ -1396,6 +1409,9 @@ def launch(hydra_config: DictConfig):
         )
         val_iter = iter(val_loader)
     resume_state = load_train_checkpoint(config, train_state, rank=RANK, local_batch_size=local_batch_size)
+    resolve_rewarm(config, train_state.step if resume_state is not None else None,
+                   load_checkpoint_metadata(config.resume_checkpoint_path, resume_state.tag)
+                   if resume_state is not None and config.lr_rewarm_steps else {})
     if train_state.step > train_state.total_steps:
         raise ValueError(
             f"Loaded checkpoint step {train_state.step} exceeds training_total_steps "

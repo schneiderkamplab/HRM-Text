@@ -9,6 +9,22 @@ from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict, se
 from models.adam_atan2 import AdamATan2
 from models.module_learning_rates import module_lr_scales, module_lr_metrics
 from models.module_learning_rates import backward_call_counts, configured_module_rates, update_auto_module_rates
+from models.module_learning_rates import windowed_cosine_lr
+
+
+@pytest.mark.parametrize('step,ratio', [(0, 1), (200000, 1), (225000, 0.75), (250000, 0.5), (353465, 0.5)])
+def test_windowed_cosine(step, ratio):
+    lr = windowed_cosine_lr(3e-4, 0.5, step, 200000, 250000)
+    assert lr == pytest.approx(3e-4 * ratio)
+    metrics = module_lr_metrics(auto_config(), lr, 8)
+    assert metrics['train/lr_h'] == pytest.approx(1.5e-4 * ratio)
+    assert metrics['train/lr_l'] == pytest.approx(5e-5 * ratio)
+
+
+@pytest.mark.parametrize('start,end', [(None, 250000), (200000, None), (200000, 200000), (250000, 200000)])
+def test_invalid_cosine_window(start, end):
+    with pytest.raises(ValueError):
+        windowed_cosine_lr(3e-4, 0.5, 200001, start, end)
 
 
 def auto_config():
@@ -16,6 +32,18 @@ def auto_config():
                            lr_h=None, lr_l=None, arch=dict(
                                name='baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel',
                                H_cycles=2, L_cycles=3))
+
+
+def test_runtime_arch_config():
+    from pretrain import ArchConfig
+    c = auto_config()
+    c.arch = ArchConfig(**c.arch, head='lm_head@LMHead')
+    assert configured_module_rates(c, 8) == pytest.approx(
+        dict(embeddings=3e-4, head=3e-4, h=1.5e-4, l=5e-5))
+    m = model()
+    opt = AdamATan2(m.parameters(), lr=c.lr)
+    update_auto_module_rates(c, m, opt, 8)
+    assert opt.parameter_lr_scales[m.model.L_level.weight] == pytest.approx(1 / 6)
 
 
 @pytest.mark.parametrize('h,l,bp', [(2, 3, b) for b in range(2, 11)] + [(3, 4, 7), (1, 2, 2)])
