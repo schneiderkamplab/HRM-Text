@@ -36,10 +36,11 @@ def configured_module_rates(config, bp_steps=None):
     rates = {name: getattr(config, f'lr_{name}') for name in ('embeddings', 'head', 'h', 'l')}
     if not getattr(config, 'lr_auto', False):
         return rates
-    if config.arch['name'] != 'baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel':
+    arch = config.arch.model_dump() if hasattr(config.arch, 'model_dump') else config.arch
+    if arch['name'] != 'baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel':
         raise ValueError('lr_auto only supports hrm_nocarry_bp_warmup backward semantics')
-    h, l = backward_call_counts(config.arch['H_cycles'], config.arch['L_cycles'],
-                               config.arch.get('bp_min_steps', 2) if bp_steps is None else bp_steps)
+    h, l = backward_call_counts(arch['H_cycles'], arch['L_cycles'],
+                               arch.get('bp_min_steps', 2) if bp_steps is None else bp_steps)
     automatic = dict(embeddings=config.lr, head=config.lr, h=config.lr / h, l=config.lr / l)
     return {name: automatic[name] if value is None else value for name, value in rates.items()}
 

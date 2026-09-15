@@ -104,6 +104,24 @@ class ActivationCheckpointingTest(unittest.TestCase):
 
         self.assertIsNotNone(model_input.grad)
 
+    def test_h_only_matches_bp8_gradients_and_only_recomputes_h(self):
+        baseline = make_model("none")
+        model = make_model("h_only")
+        model.load_state_dict(copy.deepcopy(baseline.state_dict()))
+        x = torch.randn(4, 8, requires_grad=True)
+        y = x.detach().clone().requires_grad_(True)
+        a = baseline(None, x, bp_steps=8)[1]
+        b = model(None, y, bp_steps=8)[1]
+        a.sum().backward()
+        b.sum().backward()
+        torch.testing.assert_close(a, b)
+        torch.testing.assert_close(x.grad, y.grad)
+        for (name, p), (other_name, q) in zip(baseline.named_parameters(), model.named_parameters()):
+            self.assertEqual(name, other_name)
+            torch.testing.assert_close(p.grad, q.grad)
+        self.assertEqual(model.L_level.core.layers[0].calls, 6)
+        self.assertEqual(model.H_level.core.layers[0].calls, 4)
+
 
 if __name__ == "__main__":
     unittest.main()

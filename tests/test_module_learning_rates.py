@@ -8,6 +8,22 @@ from torch.distributed.checkpoint.state_dict import get_optimizer_state_dict, se
 
 from models.adam_atan2 import AdamATan2
 from models.module_learning_rates import module_lr_scales, module_lr_metrics
+
+
+@pytest.mark.parametrize('bp', [6, 7, 8])
+def test_auto_rates_with_training_arch_config(bp):
+    from pretrain import ArchConfig
+    from models.module_learning_rates import configured_module_rates
+    config = SimpleNamespace(lr=7.5e-5, lr_auto=True, lr_embeddings=None,
+                             lr_head=None, lr_h=None, lr_l=None,
+                             arch=ArchConfig(
+                                 name='baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel',
+                                 head='lm_head@LMHead', H_cycles=2, L_cycles=3,
+                                 bp_min_steps=bp))
+    rates = configured_module_rates(config, bp)
+    assert rates == pytest.approx(dict(embeddings=config.lr, head=config.lr,
+                                      h=config.lr / 2, l=config.lr / (bp - 2)))
+    assert configured_module_rates(config) == rates
 from models.module_learning_rates import backward_call_counts, configured_module_rates, update_auto_module_rates
 
 

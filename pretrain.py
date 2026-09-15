@@ -90,13 +90,14 @@ class PretrainConfig(pydantic.BaseModel):
     lr_l: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_min_ratio: float
     lr_warmup_steps: int
+    lr_cooldown_checkpoint: Optional[str] = None
 
     weight_decay: float
     beta1: float
     beta2: float
     ema: Optional[float] = None
     fwd_bwd_dtype: str = "bfloat16"
-    activation_checkpointing: Literal["none", "full", "l_only"] = "none"
+    activation_checkpointing: Literal["none", "full", "l_only", "h_only"] = "none"
     accelerator_type: AcceleratorType = "sm100"
     distributed_strategy: Literal["fsdp", "ddp", "none"] = "fsdp"
     fsdp_params_precision: Literal["fp32", "bf16"] = "fp32"
@@ -485,9 +486,11 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
     return train_state, train_loader, train_metadata
 
 
-def update_lr(config: PretrainConfig, train_state: TrainState) -> float:
+def update_lr(config: PretrainConfig, train_state: TrainState, cooldown_ratio: Optional[float] = None) -> float:
     # Linear warmup cosine schedule
-    if train_state.step < config.lr_warmup_steps:
+    if cooldown_ratio is not None:
+        lr = config.lr * cooldown_ratio
+    elif train_state.step < config.lr_warmup_steps:
         lr = config.lr * min(1.0, train_state.step / config.lr_warmup_steps)
     else:
         progress = (train_state.step - config.lr_warmup_steps) / (train_state.total_steps - config.lr_warmup_steps)
@@ -1396,6 +1399,11 @@ def launch(hydra_config: DictConfig):
         )
         val_iter = iter(val_loader)
     resume_state = load_train_checkpoint(config, train_state, rank=RANK, local_batch_size=local_batch_size)
+    lr_cooldown = None
+    if config.lr_cooldown_checkpoint is not None:
+        from models.epoch_lr_cooldown import EpochLRCooldown
+        lr_cooldown = EpochLRCooldown(config.lr_cooldown_checkpoint, config.data.path,
+                                     train_state.step, config.lr_min_ratio)
     if train_state.step > train_state.total_steps:
         raise ValueError(
             f"Loaded checkpoint step {train_state.step} exceeds training_total_steps "
@@ -1494,7 +1502,9 @@ def launch(hydra_config: DictConfig):
                 continue
 
             train_state.step += 1            
-            lr = update_lr(config, train_state)
+            cooldown_ratio = (lr_cooldown.ratio(epoch, accumulation_resume_info)
+                              if lr_cooldown is not None else None)
+            lr = update_lr(config, train_state, cooldown_ratio)
             trace_print(config, RANK, f"optimizer_step_start step={train_state.step} batch_in_epoch={batch_in_epoch} lr={lr}")
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = compute_train_extra_args(train_state.model, train_state)
