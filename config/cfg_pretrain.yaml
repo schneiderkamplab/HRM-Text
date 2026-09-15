@@ -50,6 +50,7 @@ lr_h: null
 lr_l: null
 lr_min_ratio: 1.0
 lr_warmup_steps: 2000
+lr_cooldown_checkpoint: null  # Optional metadata sidecar: cosine from its row cursor to epoch end.
 
 weight_decay: 0.1
 beta1: 0.9
@@ -57,7 +58,7 @@ beta2: 0.95
 
 ema: 0.9999
 fwd_bwd_dtype: bfloat16
-activation_checkpointing: none  # none, full, or l_only; checkpoint selected Transformer blocks during backward
+activation_checkpointing: none  # none, full, l_only, or h_only; checkpoint selected Transformer blocks during backward
 accelerator_type: sm100
 distributed_strategy: fsdp
 fsdp_params_precision: fp32  # FSDP only: fp32 persistent sharded weights by default; set bf16 for bf16 optimizer/master params with fp32 EMA

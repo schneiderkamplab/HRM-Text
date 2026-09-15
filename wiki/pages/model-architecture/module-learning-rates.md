@@ -9,6 +9,16 @@ confidence: high
 ---
 # H and L Learning Rates
 
+## Main Merge Schedule Compatibility (2026-09-15)
+
+Merged origin/main through `fc35d95` with the local cosine/rewarm changes.
+Both row-cursor epoch cooldown and step-based decay/rewarm are retained.
+`PretrainConfig` rejects combining `lr_cooldown_checkpoint` with rewarm or
+explicit step-decay bounds, rather than silently ignoring a requested schedule.
+Null row cooldown preserves the existing step-based training schedule.
+Both branches' operational notes below are retained; their XXL and XXL-wide
+campaigns are distinct. The merge did not restart training or edit plans.
+
 ## Existing-Log Uncertainty Analysis (2026-09-15)
 
 Follow-up: `--window-steps 10000 --trend-window-steps 20000 --block-steps 500`
@@ -126,6 +136,84 @@ passed, including real PretrainConfig defaults, actual sidecar roundtrip,
 restart mid-ramp/after-ramp, update_lr integration, auto scaling, and cosine
 handoff; the 31 module-LR tests also passed. No GPU training or W&B logging
 was launched. Distributed resume performance was not benchmarked.
+
+## BP8 Throughput Check (2026-09-14)
+
+Observed BP8/GAS8 throughput is about 5.2--5.3 seconds/update with device
+usage 133--136 GiB (snapshot, not peak). This supersedes the ramp note's
+unmeasured-fit status for GAS8 only. GAS4 at unchanged global batch remains
+untested at BP8; a same-checkpoint, no-W&B timing/memory/parity replay is the
+recommended first throughput experiment, not a production change. Details
+and the independent recurrent-level wrapping candidate are in `docs/optimize.md`.
+
+## Epoch-End Cosine Cooldown from 600K (2026-09-13)
+
+Supersedes constant LR for the final scheduled epoch-2 segment. Its command
+keeps `lr=7.5e-5 lr_auto=true`, sets `lr_min_ratio=0.5`, and adds
+`lr_cooldown_checkpoint=checkpoints/dfm10/XXL-from-520000-half-lr/checkpoint_state_step_600000.json`.
+BP8/GAS8 and other training/evaluation settings are unchanged. Only the pending
+`campaign-dfm10-finish-epoch2` command was edited under PlanLock with a backup.
+
+`models/epoch_lr_cooldown.py` implements the optional schedule. The 600K
+checkpoint supplies the starting global row cursor; the sampled epoch's
+index-array length supplies the end. Base LR is multiplied by
+`0.5 + 0.25 * (1 + cos(pi * progress))`, where progress is the fraction of
+remaining epoch rows consumed. This is cosine in dataset progress, not in an
+estimated step count: it does not assume the 630K safety limit is the actual
+epoch boundary. At the anchor the multiplier is 1; at the end it is 0.5.
+The final optimizer update may precede the final row slightly if a partial
+GAS group is dropped, so its LR approaches the floor rather than guaranteeing
+that a particular numbered step equals it. No dataloader behavior was changed.
+
+At BP8, base/embedding/head LR goes from 7.5e-5 to 3.75e-5, H from
+3.75e-5 to 1.875e-5, and L from 1.25e-5 to 6.25e-6. Preserve the same
+anchor option on intermediate resumes; the original regular 600K metadata
+must remain available. A missing cursor, mismatched dataset or resume before
+the anchor fails rather than silently restarting decay. Default null preserves
+the original step-based LR schedule. Current training was not interrupted.
+
+## Scheduled BP6/7/8 Ramp (2026-09-11)
+
+Supersedes the two-segment schedule below. The existing XXL plan now has:
+
+| Resume | Stop | Fixed BP | GAS | Auto H LR | Auto L LR |
+|---|---|---:|---:|---:|---:|
+| step_550000 | step_575000 | 6 | 8 | 3.75e-5 | 1.875e-5 |
+| step_575000 | step_600000 | 7 | 8 | 3.75e-5 | 1.5e-5 |
+| step_600000 | epoch_2 (630K upper stop) | 8 | 8 | 3.75e-5 | 1.25e-5 |
+
+Each uses equal BP min/max, nonzero warmup ratio 0.2, base `lr=7.5e-5`,
+`lr_auto=true`, no module overrides, and unchanged 262144-token global batch.
+The first waits for the existing 550K eval teardown; the second requires the
+first training row to succeed. Existing 600K evaluations and the final epoch
+evaluation are retained; no 575K eval was added. `stop_after_step=575000`
+saves a regular checkpoint even though 575K is not a 10K checkpoint boundary.
+Current training and all unrelated rows were left unchanged under PlanLock;
+backup: `plan.tsv.before_bp_ramp_*` beside the existing plan.
+
+The current checkpoint metadata contains a global row cursor and no carry.
+GAS8 changes local microbatch tokens from 8192 to 4096; resume must select
+`row_cursor` mode to preserve dataset position. The future 550K checkpoint
+must retain that metadata. Full GPU memory and stability at BP6/7/8 are not
+yet measured; GAS8 is a memory precaution, not a guarantee of fit.
+
+Launch preflight exposed a bug in pulled main `c1fbfd0`: auto LR indexed
+`config.arch` as a dictionary, but `PretrainConfig` supplies `ArchConfig`.
+The helper now normalizes Pydantic architecture configs with `model_dump()`
+while still accepting dictionaries; regression tests cover BP6/7/8.
+
+## Future XXL Segments Use Auto Rates (2026-09-11)
+
+After fast-forwarding main to `c1fbfd0`, the existing plan
+`logs/scheduler/dfm8_XXL_1epoch_steps50k_100k_persistent_vllm_20260725`
+was updated in one short PlanLock transaction. Only the pending
+`campaign-dfm10-train-600000` and `campaign-dfm10-finish-epoch2` command
+fields changed. They now specify `lr=7.5e-5 lr_auto=true`, with no explicit
+H/L/embedding/head overrides. The running 520K-to-550K row is unchanged.
+At BP5 (two H and three L backward calls), derived rates match the current
+explicit rates: H 3.75e-5, L 2.5e-5, embeddings/head 7.5e-5. Checkpoint,
+W&B, resume, clipping and other settings were preserved. A timestamped
+`plan.tsv.before_lr_auto_*` backup resides beside the plan.
 
 ## Automatic Backward-Count Scaling (2026-09-11)
 

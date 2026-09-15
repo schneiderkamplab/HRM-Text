@@ -40,4 +40,6 @@ from euroeval.cli import benchmark  # noqa: E402
 
 
 if __name__ == "__main__":
+    from euroeval_cli_compat import dataset_only_selectors
+    sys.argv[1:] = dataset_only_selectors(sys.argv[1:])
     sys.exit(benchmark())

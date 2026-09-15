@@ -96,13 +96,14 @@ class PretrainConfig(pydantic.BaseModel):
     lr_l: Optional[float] = pydantic.Field(default=None, ge=0, allow_inf_nan=False)
     lr_min_ratio: float
     lr_warmup_steps: int
+    lr_cooldown_checkpoint: Optional[str] = None
 
     weight_decay: float
     beta1: float
     beta2: float
     ema: Optional[float] = None
     fwd_bwd_dtype: str = "bfloat16"
-    activation_checkpointing: Literal["none", "full", "l_only"] = "none"
+    activation_checkpointing: Literal["none", "full", "l_only", "h_only"] = "none"
     accelerator_type: AcceleratorType = "sm100"
     distributed_strategy: Literal["fsdp", "ddp", "none"] = "fsdp"
     fsdp_params_precision: Literal["fp32", "bf16"] = "fp32"
@@ -156,6 +157,11 @@ class PretrainConfig(pydantic.BaseModel):
 
     @pydantic.model_validator(mode='after')
     def check_intervals(self):
+        if self.lr_cooldown_checkpoint is not None and (
+            self.lr_rewarm_steps or self.lr_decay_start_step is not None
+            or self.lr_decay_end_step is not None
+        ):
+            raise ValueError('Row-anchored cooldown cannot be combined with step decay or rewarm')
         if self.checkpoint_interval < 1:
             raise ValueError("checkpoint_interval must be >= 1")
         if self.checkpoint_step_interval is not None and self.checkpoint_step_interval < 1:
@@ -491,9 +497,11 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
     return train_state, train_loader, train_metadata
 
 
-def update_lr(config: PretrainConfig, train_state: TrainState) -> float:
+def update_lr(config: PretrainConfig, train_state: TrainState, cooldown_ratio: Optional[float] = None) -> float:
     # Linear warmup cosine schedule
-    if config.lr_rewarm_steps:
+    if cooldown_ratio is not None:
+        lr = config.lr * cooldown_ratio
+    elif config.lr_rewarm_steps:
         lr = rewarm_lr(config, train_state.step)
     elif config.lr_decay_start_step is not None or config.lr_decay_end_step is not None:
         lr = windowed_cosine_lr(config.lr, config.lr_min_ratio, train_state.step,
@@ -1412,6 +1420,11 @@ def launch(hydra_config: DictConfig):
     resolve_rewarm(config, train_state.step if resume_state is not None else None,
                    load_checkpoint_metadata(config.resume_checkpoint_path, resume_state.tag)
                    if resume_state is not None and config.lr_rewarm_steps else {})
+    lr_cooldown = None
+    if config.lr_cooldown_checkpoint is not None:
+        from models.epoch_lr_cooldown import EpochLRCooldown
+        lr_cooldown = EpochLRCooldown(config.lr_cooldown_checkpoint, config.data.path,
+                                     train_state.step, config.lr_min_ratio)
     if train_state.step > train_state.total_steps:
         raise ValueError(
             f"Loaded checkpoint step {train_state.step} exceeds training_total_steps "
@@ -1510,7 +1523,9 @@ def launch(hydra_config: DictConfig):
                 continue
 
             train_state.step += 1            
-            lr = update_lr(config, train_state)
+            cooldown_ratio = (lr_cooldown.ratio(epoch, accumulation_resume_info)
+                              if lr_cooldown is not None else None)
+            lr = update_lr(config, train_state, cooldown_ratio)
             trace_print(config, RANK, f"optimizer_step_start step={train_state.step} batch_in_epoch={batch_in_epoch} lr={lr}")
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = compute_train_extra_args(train_state.model, train_state)

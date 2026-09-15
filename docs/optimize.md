@@ -2,6 +2,27 @@
 
 Last updated: 2026-06-28
 
+## BP8 XXL Reassessment (2026-09-14)
+
+Current BP8/GAS8 training runs at about 5.2--5.3 seconds/update, global batch
+262144, local microbatch 4096 tokens. Observed device usage is 133--136 GiB;
+this snapshot is not a peak-memory bound. GAS8 was a precaution for the BP
+ramp, not an established optimum. First candidate: a non-W&B replay from one
+checkpoint/data cursor comparing GAS8 and GAS4 at unchanged global batch,
+BP8, precision, and optimizer settings. GAS4 doubles the local microbatch
+to 8192 tokens; it may OOM and must be measured before production adoption.
+Packing/numerical ordering can differ, so compare gradients and loss as well
+as warmed-up timing and peak memory. Do not assume a twofold speedup.
+
+An independent candidate is `fsdp_wrap_policy=recurrent_level`: the earlier
+BP5-era benchmark improved median time 2.6288 to 2.5792 seconds but raised
+reserved memory from 152256 to 164096 MiB. Re-measure at BP8; do not combine
+it with larger microbatches before checking each memory cost. Compiler
+max-autotune was previously neutral. Full activation checkpointing adds
+recomputation and is not intrinsically a throughput improvement. The older
+timings are not directly comparable with BP8/GAS8. See the wiki
+`pages/model-architecture/dfm8-xxl-mfu-baseline.md` for measured profiles.
+
 This file records low-risk ways to improve HRM-Text training throughput without
 intentionally changing the optimization target or data mix. Treat every change
 as a benchmarked experiment: compare tokens/sec, GPU utilization, peak memory,

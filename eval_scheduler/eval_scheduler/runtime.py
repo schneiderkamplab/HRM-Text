@@ -2040,10 +2040,6 @@ def run_euroeval_openai(
             "--force",
             "--no-progress-bar",
             "--save-results",
-            "--language",
-            "da",
-            "--language",
-            "en",
             "--dataset",
             job.name,
         ]

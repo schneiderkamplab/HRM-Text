@@ -96,6 +96,30 @@ def test_real_config_defaults():
     assert c.lr_rewarm_start_step is None
 
 
+@pytest.mark.parametrize('overrides', [dict(lr_rewarm_steps=2000),
+                                     dict(lr_decay_start_step=320000),
+                                     dict(lr_decay_end_step=325000)])
+def test_row_cooldown_rejects_competing_schedules(overrides):
+    from hydra import compose, initialize_config_dir
+    from pathlib import Path
+    from omegaconf import OmegaConf
+    from pretrain import PretrainConfig
+    with initialize_config_dir(config_dir=str(Path('config').resolve()), version_base=None):
+        values = OmegaConf.to_container(compose(config_name='cfg_pretrain'), resolve=True)
+    values.update(lr_cooldown_checkpoint='checkpoint.json', **overrides)
+    with pytest.raises(ValueError, match='cannot be combined'):
+        PretrainConfig(**values)
+
+
+def test_row_cooldown_update_lr():
+    from pretrain import update_lr
+    c = config(lr_rewarm_steps=0)
+    state = SimpleNamespace(step=600000, total_steps=630000,
+                            optim=SimpleNamespace(param_groups=[{'lr': 0.}]))
+    assert update_lr(c, state, cooldown_ratio=.75) == pytest.approx(c.lr * .75)
+    assert state.optim.param_groups[0]['lr'] == pytest.approx(c.lr * .75)
+
+
 def test_checkpoint_sidecar_roundtrip(tmp_path):
     from hydra import compose, initialize_config_dir
     from pathlib import Path
