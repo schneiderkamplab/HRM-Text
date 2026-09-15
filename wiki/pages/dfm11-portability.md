@@ -4,10 +4,79 @@ title: DFM11 Portability and Bootstrap
 description: Transfer and reproducible-rebuild requirements for using DFM11 on another machine.
 tags: [dfm11, portability, bootstrap, training-data]
 status: draft
-last_updated: 2026-09-08
+last_updated: 2026-09-14
 confidence: high
 ---
 # DFM11 Portability and Bootstrap
+
+## XXL Epoch Three Campaign (2026-09-14)
+
+The existing plan `logs/scheduler/dfm8_XXL_1epoch_steps50k_100k_persistent_vllm_20260725`
+is extended by `scripts/schedule_dfm11_epoch3.py append --plan-dir <plan> --apply`.
+It waits for the current DFM10 epoch two evaluation release, then resumes the
+complete `checkpoints/dfm10/XXL-from-520000-half-lr/epoch_2` checkpoint on
+`data=dfm11`, `epochs=3` (dataset index `epoch_2`). New checkpoints go to
+`checkpoints/dfm11/XXL-from-dfm10-epoch2`. W&B remains project DFM5,
+run `xxl-restart520k-20260910`; no new run is created.
+
+Retain BP8, GAS8, global batch 262144, FP32 FSDP parameters, BF16 compute,
+no-sync accumulation, no forward resharding, and clip norm 1.0. The new
+epoch keeps the prior cooldown's final base LR 3.75e-5 with `lr_auto=true`
+and `lr_min_ratio=1`; clear `lr_cooldown_checkpoint` because its anchor
+belongs to DFM10. H/L/embedding-head rates are 1.875e-5/6.25e-6/3.75e-5.
+
+Training pauses for full EMA standard, DFM, and EuroEval suites at 650K,
+then every 50K. The plan reserves boundaries through 1100K as a conservative
+upper bound, not an asserted epoch length. The segment wrapper verifies
+checkpoint completeness after torchrun exits, updates fractional evaluation
+epochs from the DFM11 row cursor, and atomically skips remaining boundaries
+if epoch three has ended. Final `epoch_3` evaluation follows the last actual
+boundary release (or the final training segment if no boundary was reached).
+Its epoch coordinate is exactly 3.0. Later training uses terminal eval barriers,
+so failed evaluations/merges do not strand training. Existing per-task batch,
+judge, native proxy, persistent-server, merge, sync and v3 average settings
+are retained, including 0.95 non-judged / 0.85 judged utilization.
+
+The wrapper is a single-node campaign entry point; do not convert these rows
+to the SSH launcher without preserving its post-training finalization.
+Do not remove it while pending rows reference it. Plan changes use `PlanLock`
+and preserve the pre-extension TSV in `plan.before-dfm11-epoch3.tsv`.
+
+## Transfer to /work/mimir Started (2026-09-13)
+
+Completed, verified on 2026-09-14: `logs/dfm11_transfer/complete.json` exists
+and `data/sampled_dfm11` is published. All ten epochs have 235520711 index
+entries; metadata total_length is 103214604702 tokens/epoch. Transfer took
+about 77.5 minutes. Structural checks and tokenizer vocabulary validation
+passed. The allocation scan measured 10229370482688 bytes (9.30 TiB) while
+transfer was in progress; even adding the full 0.88 TiB transfer leaves ample
+space within the user-confirmed 50 TiB allocation.
+
+Storage limit: the user confirms this instance has a 50 TiB allocation.
+`df` reports shared-filesystem free space (281 TiB at this check), not that
+allocation's remaining quota. Use measured allocation usage against 50 TiB;
+the DFM11 transfer requires approximately 0.88 TiB. The `quota` command is
+not installed on this node.
+
+SSH access to `ucloud@ssh.cloud.sdu.dk` port 6977 now works. The authoritative
+`/work/dfm/HRM-Text/data/sampled_dfm11` contains ten epochs, about 904 GiB,
+and metadata total_length 103214604702. `scripts/transfer_sampled_dfm11.py`
+copies it with one resumable rsync stream capped at 200 MiB/s, running in a
+detached tmux window `dfm11-transfer`. Log: `logs/dfm11_transfer/transfer.log`.
+
+Destination is initially `data/sampled_dfm11.incoming`; after rsync completes,
+NPY headers/file sizes/epoch row counts and tokenizer vocabulary are checked.
+The script copies the exact source tokenizer and chat template to
+`data/dfm11_tokenizer`, preserves source metadata in the transfer log directory,
+and changes only the two local asset paths. It then renames the staged dataset
+to `data/sampled_dfm11` and writes `logs/dfm11_transfer/complete.json`.
+Do not infer completion from the staging directory's existence.
+
+This is the training-ready handoff, not a reconstruction-source transfer:
+the source `tokenized_dfm11` is a symlink tree pointing into multiple older
+corpora. Copying those links alone would not make a usable local union.
+The sampled token array and indices are self-contained and avoid duplicating
+all those backing stores. Existing DFM10 training data is untouched.
 
 Git carries the code, configs, documentation, and pinned submodule commits; it
 does not carry the prepared corpus under `data/`. As of 2026-09-08, this host
