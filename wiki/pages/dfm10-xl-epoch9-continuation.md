@@ -4,10 +4,35 @@ title: DFM10 XL Epoch-9 Continuation
 description: Exact checkpoint, data-index, training, and 50K evaluation campaign for the DFM9 XL to DFM10 transition.
 tags: [dfm10, training, xl, evaluation, resume]
 status: stable
-last_updated: 2026-09-07
+last_updated: 2026-09-15
 confidence: high
 ---
 # DFM10 XL Epoch-9 Continuation
+
+## Whole-Lineage Training Trends, 2026-09-15
+
+The longest XL lineage is run `dfm8-xl-from-dfm6-dfm7-epoch5-clean-full`,
+ending at checkpoint step 2482084 (latest complete logged metric row 2482080).
+`docs/xl-longest-training-10k-trends.{md,json}` contains all 248 complete
+10K windows and trailing 20K HAC trends, using local W&B histories only.
+The incomplete final 2080 steps are not a full table window. The separate
+L4 branch is not included. Dataset and BP transitions prevent interpreting
+the entire lineage as learning on one fixed distribution.
+
+Reproduce with `scripts/analyze_training_log_uncertainty.py`, input glob
+`'wandb/run-*-dfm8-xl-from-dfm6-dfm7-epoch5-clean-full/run-*.wandb'`,
+`--window-steps 10000 --trend-window-steps 20000 --block-steps 500
+--draws 100000 --output docs/xl-longest-training-10k-trends`.
+The larger draw count avoids the 10000-draw p-value resolution floor for
+the 1482 joint Holm comparisons. Two old W&B files end in invalid padding;
+all windows still have at least 97.75% nominal logging coverage, and the
+largest gap is 215 steps. No held-out evaluation or remote logging was run.
+
+At 2460K--2480K, slopes per 10K were loss +0.00049, token accuracy
+-0.0071 percentage points, and exact accuracy -0.0224 pp; all marginal
+95% HAC intervals include zero. This endpoint is locally flat, unlike
+XXL-wide's detectable exact-accuracy improvement at 300K--320K. This is
+descriptive training evidence, not a same-data capability comparison.
 
 ## XXL-Wide Stability Check, 2026-09-08
 

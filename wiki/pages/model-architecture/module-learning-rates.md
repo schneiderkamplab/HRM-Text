@@ -9,6 +9,124 @@ confidence: high
 ---
 # H and L Learning Rates
 
+## Existing-Log Uncertainty Analysis (2026-09-15)
+
+Follow-up: `--window-steps 10000 --trend-window-steps 20000 --block-steps 500`
+adds a trailing 20K OLS slope at each complete 10K endpoint, with
+Bartlett/Newey-West HAC standard errors and normal-approximation intervals.
+Slope units are change per 10K steps (accuracy displayed in percentage points).
+The lag bandwidth uses `--block-steps`, independently of the reporting/trend
+window lengths. Holm correction jointly covers 93 adjacent metric comparisons
+and 93 trend tests. Overlapping trend windows are not independent.
+
+The full 32-row table through 320K and machine-readable results are in
+`docs/xxl-wide-training-10k-trends.{md,json}`. Latest loaded history was 322155;
+the incomplete 320--330K reporting window is deliberately excluded.
+For 300--320K, per-10K slopes are loss -0.004361 (95% interval
+[-0.007908, -0.000814]), token accuracy +0.0761 pp ([+0.0143, +0.1379]),
+and exact accuracy +0.2562 pp ([+0.1712, +0.3413]). Only exact accuracy
+survives joint full-report correction (adjusted p about 5.13e-7); adjusted
+p for loss and token accuracy is about 0.614. The marginal intervals and
+adjusted tests answer different questions. All three 280--300K trends survive.
+These are conditional exploratory log trends, not held-out or causal evidence;
+HAC cannot repair misspecified linear trends across spikes and phase changes.
+Seven tests pass, including trend units and correlated-noise uncertainty.
+
+`scripts/analyze_training_log_uncertainty.py` accepts quoted globs for local
+W&B event files or JSONL history rows. It replaces duplicate global steps
+with the last complete metric row in sorted file order, retains loss spikes,
+and fails on nonfinite metric values rather than dropping them. No remote
+API calls, held-out evaluations, GPU work or W&B writes are performed.
+
+```bash
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  /home/ucloud/miniforge3/envs/hrm/bin/python scripts/analyze_training_log_uncertainty.py \
+  'wandb/run-*-dfm10-xxl-wide/run-*.wandb' \
+  --window-steps 5000 --block-steps 500 --draws 10000 \
+  --output docs/xxl-wide-training-uncertainty-block500
+```
+
+Window size is configurable. Alternatively, `--ranges 300000:305000
+315000:320000` compares explicit non-overlapping intervals, start exclusive
+and end inclusive. Default automatic windows omit the unfinished final
+window. `--block-steps` controls dependence blocks separately from window
+size; the circular block bootstrap converts it to observation counts using
+median logging cadence. Reports expose coverage/gaps and BP ranges; JSON
+also records observed LR ranges. Inputs must describe the same training run.
+
+Full-history outputs are `docs/xxl-wide-training-uncertainty{,-block500}.{md,json}`:
+64 complete 5K windows through 320K, 189 adjacent-window metric comparisons.
+100-step versus 500-step blocks detected 60 versus 59 improvements after
+Holm adjustment across each report's 189 tests. With 500-step blocks, counts
+by destination range were 31 (<=100K), 6 (100--150K), 5 (150--200K),
+9 (200--250K), 8 (250--300K), and zero (300--320K).
+
+The exploratory longer-gap comparison, saved as
+`docs/xxl-wide-training-uncertainty-recent.{md,json}`, compares 300--305K
+with 315--320K. Loss difference was -0.008164 (marginal 95% interval
+[-0.013566, -0.002889]), token accuracy +0.1395 percentage points
+([+0.0482, +0.2318]), exact accuracy +0.3838 pp ([+0.2313, +0.5328]).
+All three pass adjustment within that three-test report, but this post-hoc
+comparison is NOT protected against selection across previous monitoring
+or all alternative intervals. It supports cautious descriptive evidence of
+small cumulative progress, not a confirmatory generalization claim.
+
+Assumptions/limits: step-weighted logged means, different batches and changing
+weights, approximately stationary local dependence. Strong learning trends,
+BP/LR transitions and spikes violate stationarity; intervals in those windows
+are descriptive, not calibrated certainty. Independent bootstrapping of the
+two windows does not capture cross-boundary covariance. Holm cannot repair
+those assumptions or repeated peeking. 100/500-step sensitivity is not proof
+that longer-range correlation is absent. Five tests passed, covering block
+means, correlated-series uncertainty, reproducibility, Holm, and configurable
+CLI windows/ranges. Current training and scheduler were not changed.
+
+## Resume-Relative Rewarm (2026-09-15)
+
+Prepared, not enabled in the current scheduler. `lr_rewarm_steps=0` disables
+the feature and preserves existing schedules. For a new DFM11 stage that
+rewarm-scales the base from 3.75e-5 to 7.5e-5 over 2000 optimizer steps:
+
+```bash
+lr=7.5e-5 lr_auto=true \
+lr_embeddings=null lr_head=null lr_h=null lr_l=null \
+lr_rewarm_steps=2000 lr_rewarm_start_ratio=0.5 \
+lr_rewarm_start_step=null lr_min_ratio=1 \
+lr_decay_start_step=null lr_decay_end_step=null
+```
+
+This is only the LR portion of a future resume command, not a full training
+launch. On first use with an older checkpoint, the anchor resolves to the
+loaded global step. Linear rewarm begins at `lr * lr_rewarm_start_ratio`,
+reaches `lr` after the requested steps, then holds. At BP8/H2/L3 all effective
+module rates follow that same multiplier. Explicit module overrides still
+win. This feature neither resets optimizer/EMA nor modifies BP warmup or
+dataset epoch offsets; these must be configured separately for continuation.
+
+Every new checkpoint sidecar stores `lr_rewarm` with its anchor, duration,
+starting ratio and base LR. Resuming with the same rewarm configuration and
+a null anchor restores that anchor, even after the rewarm has finished. It
+does not restart the ramp at every scheduled segment or interruption. To
+deliberately start another rewarm from a later checkpoint that already has
+rewarm metadata, supply a new explicit `lr_rewarm_start_step`. Conflicting
+saved settings fail unless an explicit anchor is supplied. Old sidecars
+without rewarm metadata require an explicit anchor if a previous rewarm
+must be reconstructed rather than initiated at the loaded checkpoint.
+
+Rewarm requires a checkpoint resume. It supersedes the original global-step
+`lr_warmup_steps` schedule. An optional subsequent explicit cosine window is
+supported only when its start is at/after rewarm completion. Stale/overlapping
+or incomplete decay bounds fail; without explicit decay, `lr_min_ratio=1`
+is required. Thus copied prior cooldown arguments cannot silently suppress
+rewarm or trigger another decay.
+
+Implementation is isolated in `models/lr_rewarm.py`, with checkpoint binding,
+sidecar persistence, and dispatch in `pretrain.py`. Fourteen rewarm tests
+passed, including real PretrainConfig defaults, actual sidecar roundtrip,
+restart mid-ramp/after-ramp, update_lr integration, auto scaling, and cosine
+handoff; the 31 module-LR tests also passed. No GPU training or W&B logging
+was launched. Distributed resume performance was not benchmarked.
+
 ## Automatic Backward-Count Scaling (2026-09-11)
 
 Auto scaling defaults to `lr_auto=true`. Explicit `lr_embeddings`, `lr_head`, `lr_h`, and
@@ -55,6 +173,82 @@ optimizer BP-transition parity, schedule scaling, and legacy checkpoint
 restoration. No distributed GPU smoke or W&B logging was performed.
 
 ## Merged Implementation (2026-09-11)
+
+### Scheduled Cosine Cooldown (2026-09-11)
+
+Verified completion, 2026-09-15: supersedes the pending-handoff status in
+the historical scheduling notes below. The 275K and 320K handoffs completed;
+the current segment resumed from `step_320000`. At logged step 327095,
+BP8 rates were embeddings/head 3.75e-5, H 1.875e-5, and L 6.25e-6,
+confirming completion of the 320K--325K cosine and retention of its floor.
+Before committing these changes, the combined module-LR, rewarm and
+training-log analysis suites passed all 52 tests. No training was interrupted
+and no scheduler configuration changed during this commit preparation.
+
+Third cooldown scheduled 2026-09-15: at the completed regular `step_320000`
+checkpoint, restart with `lr=7.5e-5 lr_auto=true lr_min_ratio=0.5
+lr_decay_start_step=320000 lr_decay_end_step=325000`. At BP8 the final rates
+are embeddings/head 3.75e-5, H 1.875e-5, L 6.25e-6, held through epoch end.
+Only the 350K-target and final training rows are updated. The parameterized
+`scripts/handoff_xxl_wide_cosine_275k.py` handles the safe handoff; output is
+`logs/scheduler/dfm10_XL_epoch9_20260831/cosine_320k_handoff.log`.
+320K is a regular checkpoint boundary, so no ephemeral tag is published there;
+the watcher explicitly uses `--checkpoint-tag step_320000`. Its initial
+ephemeral-tag watcher was stopped and corrected before reaching the boundary.
+This is a scheduled transition, not yet a verified completed handoff.
+
+Second cooldown requested 2026-09-13: supersedes the constant floor after
+275K. `scripts/handoff_xxl_wide_cosine_275k.py` waits for complete
+`ephemeral_step_275000` (sidecar plus DCP storage extents), stops only the
+captured XXL-wide torchrun group, waits for the soft-stopped scheduler to exit,
+then resets the active 300K-target row to resume that checkpoint. It restarts
+the persistent scheduler without resetting any evaluation results. Its log is
+`logs/scheduler/dfm10_XL_epoch9_20260831/cosine_275k_handoff.log`.
+
+The 300K, 350K, and final training rows use `lr=1.5e-4 lr_auto=true
+lr_min_ratio=0.5 lr_decay_start_step=275000 lr_decay_end_step=300000`.
+The currently running process retains its previous settings until the handoff.
+At BP8, embedding/head LR falls from 1.5e-4 to 7.5e-5, H from 7.5e-5 to
+3.75e-5, and L from 2.5e-5 to 1.25e-5. The new floor is held beyond 300K.
+Plan backup: `plan.tsv.before_cosine_275k_300k`. This records scheduling,
+not confirmation that the future handoff completed.
+
+Production startup correction: the 200K resume failed before training because
+auto LR indexed a Pydantic `ArchConfig` as a dictionary. Earlier tests used
+dictionary fixtures and missed this integration error. The helper now converts
+Pydantic architecture configs with `model_dump`; a regression test uses the
+actual `pretrain.ArchConfig`, including optimizer scale initialization.
+All 31 tests passed. Only failed row `xxlw-train-250000` was reset, retaining
+the completed 200K checkpoint/evaluations and all cooldown settings.
+
+Supersedes the constant-rate rollout below after 200K: all four pending
+XXL-wide training segments now specify `lr=3e-4 lr_auto=true lr_min_ratio=0.5
+lr_decay_start_step=200000 lr_decay_end_step=250000`. The optional absolute
+step window replaces the original warmup/whole-run decay schedule when set;
+before its start LR stays at base, and after its end it stays at the floor.
+Both bounds must be supplied with start < end. Null bounds retain the old
+schedule. It does not change total steps, BP warmup, optimizer state, or EMA.
+
+At BP8/H2/L3, base/embedding/head rates are 3e-4 at 200K, 2.25e-4 at 225K,
+and 1.5e-4 at 250K. H goes from 1.5e-4 to 7.5e-5 and L from 5e-5 to
+2.5e-5. All stay at those floors in subsequent segments. The current
+150K-to-200K segment remains untouched. Plan edits used PlanLock and backup
+`plan.tsv.before_cosine_200k_250k_20260911`.
+
+Thirty module-LR tests pass, including cosine endpoints, midpoint, floor
+clamping, invalid bounds, and propagation to auto H/L rates. No GPU training
+or W&B logging was launched during these tests.
+
+Scheduled rollout on 2026-09-11: the four pending XXL-wide training segments
+resuming from 200000, 250000, 300000, and 350000 in
+`logs/scheduler/dfm10_XL_epoch9_20260831/plan.tsv` now use `lr=3e-4
+lr_auto=true`, with all four explicit module LR arguments removed. This
+supersedes their earlier fixed-override command configuration. At their BP8,
+H=2, L=3 settings the effective rates are unchanged: embeddings/head 3e-4,
+H 1.5e-4, L 5e-5. The base `train/lr` metric will change from 2e-4 to 3e-4;
+the module LR metrics remain comparable. The active 150K-to-200K command and
+all non-target rows were verified unchanged. Editing used PlanLock with a
+backup `plan.tsv.before_auto_lr_from_200k_20260911` alongside the plan.
 
 Supersedes the selective-port recommendation below: at the user's request,
 the complete `origin/lr` branch was merged into main, including its other
