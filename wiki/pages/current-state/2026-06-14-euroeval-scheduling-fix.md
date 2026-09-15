@@ -8,13 +8,34 @@ tags:
 - evaluation
 - runtime
 status: stable
-last_updated: 2026-08-10
+last_updated: 2026-09-11
 confidence: high
 part_of: /pages/current-state.md
 ---
 # 2026-06-14 EuroEval Scheduling Fix
 
 Part of [Current State](/pages/current-state.md).
+
+## EuroEval Selector Compatibility (2026-09-11)
+
+At XXL restart520K checkpoint 550K, 17 EuroEval tasks exited with code 2:
+`Only one of --language and --dataset can be specified`. The installed CLI
+rejects the scheduler's redundant language selectors when a dataset ID is
+already specified. This was not a GPU-memory failure. The plan uses an
+unpinned `uv run --no-project --with euroeval` client environment.
+
+The OpenAI scheduler launcher now supplies the explicit dataset without
+languages. The API wrapper also normalizes redundant language arguments for
+already-running scheduler processes (whose imported launcher code is old).
+Language-only selections remain unchanged. Three focused normalization tests
+passed. Only failed rows with this exact logged error were reset under
+PlanLock; attempts/logs and a timestamped plan backup were preserved. No
+running standard evals or persistent servers were interrupted.
+
+The AngryTweets retry progressed past CLI validation into model connection
+and benchmarking at 15:14 on September 11. This verifies startup recovery,
+not completion of all 17 tasks. For reproducibility, future campaigns should
+pin a verified EuroEval version instead of resolving the latest client.
 
 Confidence: high for local script inspection and dry-run queue validation.
 
