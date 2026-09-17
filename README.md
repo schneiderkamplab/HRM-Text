@@ -185,6 +185,10 @@ Architectures live under [`config/arch/net`](config/arch/net):
 | Config | Model |
 | --- | --- |
 | `hrm` | HRM-Text |
+| `hrm1` | One-level HRM with one token-aligned recurrent Transformer state |
+| `hrm3` | Three-level HRM with token-aligned S, M, and H states |
+| `crm2` | Compressed two-level HRM with token-level L state and latent H slots |
+| `crm3` | Compressed three-level HRM with token-level S state and latent M/H slots |
 | `transformer` | Standard Transformer wrapper |
 | `trm` | Tiny Recursive Model baseline |
 | `trm_match_recurrence` | TRM configured to match HRM recurrence with half parameters |
@@ -207,7 +211,7 @@ Sizes live under [`config/arch/size`](config/arch/size):
 | `XXXL` | 96 | 2048 | 16 |
 | `XXXXL` | 128 | 2560 | 20 |
 
-For HRM and RINS, `half_layers: true` splits the configured layer count evenly between the H and L modules.
+For HRM, RINS, TRM match-recurrence, HRM1, and CRM2, `half_layers: true` halves the configured layer count for each recurrent block. For HRM3 and CRM3, `third_layers: true` divides the configured layer count across the S, M, and H blocks and requires `n_layers` to be divisible by 3.
 
 ## Repository Layout
 

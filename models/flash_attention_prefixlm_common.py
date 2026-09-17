@@ -62,7 +62,7 @@ def prefixlm_seq_info_from_tensors(
     cu_seqlens_active = cu_seqlens[:numseqs_int + 1]
     prefix_lens_active = prefix_lens[:numseqs_int]
     causal_lens_active = causal_lens[:numseqs_int]
-    cu_seqlens_shifted = cu_seqlens_active + prefix_lens[:numseqs_int + 1]
+    cu_seqlens_shifted = cu_seqlens_active + torch.nn.functional.pad(prefix_lens_active, (0, 1))
 
     return PrefixLMSeqInfo(
         total_seqlen=total_seqlen_int,

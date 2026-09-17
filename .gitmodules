@@ -13,3 +13,9 @@
 [submodule "mathagentic"]
 	path = mathagentic
 	url = https://github.com/schneiderkamplab/mathagentic.git
+[submodule "mimir"]
+	path = mimir
+	url = https://github.com/schneiderkamplab/mimir.git
+[submodule "llama.cpp"]
+	path = llama.cpp
+	url = https://github.com/schneiderkamplab/llama.cpp.git
