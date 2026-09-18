@@ -6,6 +6,9 @@ Runtime source remains exactly the Linux-tested commit
 `8f4f4ef8f3139d7d262763936f1f34e48ad46d9c`. No CUDA kernel, attention semantics or
 runtime serialization changes accompany this preparation.
 
+The [human reviewer hand-off](HUMAN-REVIEW-HANDOFF.md) maps patch scopes, review
+priorities, known pitfalls and remaining cleanup.
+
 ## Acceptance decisions
 
 | Finding | Disposition and limit |

@@ -9,6 +9,14 @@ confidence: high
 ---
 # Linux PrefixLM qualification
 
+## Human reviewer hand-off (2026-09-18)
+
+`native/mimir/HUMAN-REVIEW-HANDOFF.md` maps the four candidate patches and alternative
+standalone persistence patch to their scope, source/history and review priorities.
+It distinguishes accepted numerical limitations from pending final sanitizer execution,
+intentional support limits and potential upstream cleanup. The candidate guide and
+final qualification checklist link to it. No runtime or acceptance policy changed.
+
 ## Final qualification preparation (2026-09-18)
 
 Supersedes the unresolved-acceptance and push-status statements in the historical

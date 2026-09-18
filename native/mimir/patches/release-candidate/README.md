@@ -34,6 +34,8 @@ main-only header has no sampler snapshot API while standalone persistence has no
 PrefixLM API. It does not modify the checkout or real index. The pinned commit
 objects must exist locally (`git submodule update --init llama.cpp`).
 
+Start with the [human reviewer hand-off](../../HUMAN-REVIEW-HANDOFF.md).
+
 See [final qualification](../../FINAL-QUALIFICATION.md) and the
 [Linux report](../../LINUX-TESTING-REPORT.md) for evidence, accepted limitations and
 the final bounded checks. The latter include matching the candidate's source hashes,

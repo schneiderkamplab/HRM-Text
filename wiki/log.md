@@ -1,5 +1,12 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-18 - Add the human reviewer hand-off
+
+- Added a patch-by-patch scope map, correctness/API review priorities, evidence guide,
+  known limitations, sanitizer pitfalls and final cleanup checklist.
+- Linked the hand-off from the candidate package, final qualification and Linux record;
+  runtime code, package hashes and measured results remain unchanged.
+
 ## 2026-09-18 - Prepare final sanitizer policy and candidate patches
 
 - Recorded accepted numerical limitations without altering measured strict failures.
