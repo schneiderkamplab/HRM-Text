@@ -1,0 +1,641 @@
+[
+  {
+    "file": "oracle-cpu-cpu.json",
+    "passed": true,
+    "steps": 31,
+    "passed_steps": 31,
+    "max_abs": 8.344650268554688e-07,
+    "rmse": 1.2676561395247662e-07,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 7.152557373046875e-07,
+        "rmse": 1.3140247421062705e-07,
+        "top1_matches": 6,
+        "pass": true
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 3.5762786865234375e-07,
+        "rmse": 1.0732618061969785e-07,
+        "top1_matches": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "oracle-cuda-cuda-off.json",
+    "passed": false,
+    "steps": 31,
+    "passed_steps": 2,
+    "max_abs": 0.0023355484008789062,
+    "rmse": 0.0005444847064821146,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 0.002200007438659668,
+        "rmse": 0.0006692567346359583,
+        "top1_matches": 6,
+        "pass": false
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 0.00018322467803955078,
+        "rmse": 6.0858966661442555e-05,
+        "top1_matches": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "file": "oracle-cuda-cuda-on.json",
+    "passed": false,
+    "steps": 31,
+    "passed_steps": 2,
+    "max_abs": 0.002324700355529785,
+    "rmse": 0.000541749267689795,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 0.002149224281311035,
+        "rmse": 0.0006622930381948306,
+        "top1_matches": 6,
+        "pass": false
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 0.00020256638526916504,
+        "rmse": 6.835694847109372e-05,
+        "top1_matches": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "file": "oracle-cuda-fp32-off.json",
+    "passed": false,
+    "steps": 31,
+    "passed_steps": 2,
+    "max_abs": 0.0022693872451782227,
+    "rmse": 0.0005368452810059373,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 0.002116680145263672,
+        "rmse": 0.0006505355545162669,
+        "top1_matches": 6,
+        "pass": false
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 0.00018781423568725586,
+        "rmse": 6.148201729524005e-05,
+        "top1_matches": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "file": "oracle-cuda-fp32-on.json",
+    "passed": false,
+    "steps": 31,
+    "passed_steps": 2,
+    "max_abs": 0.002324700355529785,
+    "rmse": 0.000541749267689795,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 0.002149224281311035,
+        "rmse": 0.0006622930381948306,
+        "top1_matches": 6,
+        "pass": false
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 0.00020256638526916504,
+        "rmse": 6.835694847109372e-05,
+        "top1_matches": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "file": "oracle-main-cpu-cpu.json",
+    "passed": true,
+    "steps": 31,
+    "passed_steps": 31,
+    "max_abs": 8.344650268554688e-07,
+    "rmse": 1.2676561395247662e-07,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 7.152557373046875e-07,
+        "rmse": 1.3140247421062705e-07,
+        "top1_matches": 6,
+        "pass": true
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 3.5762786865234375e-07,
+        "rmse": 1.0732618061969785e-07,
+        "top1_matches": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "oracle-main-cuda-cuda-off.json",
+    "passed": false,
+    "steps": 31,
+    "passed_steps": 2,
+    "max_abs": 0.0023355484008789062,
+    "rmse": 0.0005444847064821146,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 0.002200007438659668,
+        "rmse": 0.0006692567346359583,
+        "top1_matches": 6,
+        "pass": false
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 0.00018322467803955078,
+        "rmse": 6.0858966661442555e-05,
+        "top1_matches": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "file": "oracle-main-cuda-cuda-on.json",
+    "passed": false,
+    "steps": 31,
+    "passed_steps": 2,
+    "max_abs": 0.002324700355529785,
+    "rmse": 0.000541749267689795,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 0.002149224281311035,
+        "rmse": 0.0006622930381948306,
+        "top1_matches": 6,
+        "pass": false
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 0.00020256638526916504,
+        "rmse": 6.835694847109372e-05,
+        "top1_matches": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "file": "oracle-san-san.json",
+    "passed": true,
+    "steps": 31,
+    "passed_steps": 31,
+    "max_abs": 8.344650268554688e-07,
+    "rmse": 1.2676561395247662e-07,
+    "top1_matches": 130,
+    "rows": 130,
+    "shared_owners": [
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 0,
+        "rows": 6,
+        "finite": true,
+        "max_abs": 7.152557373046875e-07,
+        "rmse": 1.3140247421062705e-07,
+        "top1_matches": 6,
+        "pass": true
+      },
+      {
+        "case": "shared-owners",
+        "sequence": 0,
+        "position": 6,
+        "rows": 3,
+        "finite": true,
+        "max_abs": 3.5762786865234375e-07,
+        "rmse": 1.0732618061969785e-07,
+        "top1_matches": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cpu-bf16-off/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 34,
+    "max_abs": 0.06478095054626465,
+    "rmse": 0.011127139936088506,
+    "top1_matches": 88,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.27567856569290417,
+        "reference": 0.27479190804186554,
+        "delta": 0.0008866576510386248
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.853877930171917,
+        "reference": 4.854566798037199,
+        "delta": -0.0006888678652821056
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.2289185109465171,
+        "reference": 0.2283407606852825,
+        "delta": 0.0005777502612346053
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.022636169245182414,
+        "reference": 0.022758747301111493,
+        "delta": -0.000122578055929079
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cpu-q4_k_m-off/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 0,
+    "max_abs": 1.4064841270446777,
+    "rmse": 0.1842141588719812,
+    "top1_matches": 86,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.28431083857616973,
+        "reference": 0.27479190804186554,
+        "delta": 0.009518930534304193
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.721630392831439,
+        "reference": 4.854566798037199,
+        "delta": -0.13293640520576044
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.2425783768132398,
+        "reference": 0.2283407606852825,
+        "delta": 0.014237616127957292
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.03133739026572813,
+        "reference": 0.022758747301111493,
+        "delta": 0.008578642964616634
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cpu-q8_0-off/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 0,
+    "max_abs": 0.28651881217956543,
+    "rmse": 0.02982732310106864,
+    "top1_matches": 86,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.27224400715934216,
+        "reference": 0.27479190804186554,
+        "delta": -0.0025479008825233795
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.865719185306533,
+        "reference": 4.854566798037199,
+        "delta": 0.011152387269333985
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.22740587955947786,
+        "reference": 0.2283407606852825,
+        "delta": -0.000934881125804643
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.02203867236119117,
+        "reference": 0.022758747301111493,
+        "delta": -0.0007200749399203232
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cuda-bf16-off/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 38,
+    "max_abs": 0.12762942910194397,
+    "rmse": 0.007874834010811195,
+    "top1_matches": 88,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.27525250254416395,
+        "reference": 0.27479190804186554,
+        "delta": 0.00046059450229840593
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.855629813251927,
+        "reference": 4.854566798037199,
+        "delta": 0.001063015214727514
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.22894744416812074,
+        "reference": 0.2283407606852825,
+        "delta": 0.0006066834828382384
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.02295447992468902,
+        "reference": 0.022758747301111493,
+        "delta": 0.00019573262357752697
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cuda-bf16-on/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 39,
+    "max_abs": 0.05644798278808594,
+    "rmse": 0.00802154932483195,
+    "top1_matches": 88,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.2752403331590016,
+        "reference": 0.27479190804186554,
+        "delta": 0.00044842511713605315
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.855286357335164,
+        "reference": 4.854566798037199,
+        "delta": 0.0007195592979645227
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.22876733248839962,
+        "reference": 0.2283407606852825,
+        "delta": 0.00042657180311711507
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.022732406947361117,
+        "reference": 0.022758747301111493,
+        "delta": -2.634035375037591e-05
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cuda-q4_k_m-off/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 0,
+    "max_abs": 1.5796113014221191,
+    "rmse": 0.1835111376836938,
+    "top1_matches": 86,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.2874673296421289,
+        "reference": 0.27479190804186554,
+        "delta": 0.012675421600263359
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.813764500171205,
+        "reference": 4.854566798037199,
+        "delta": -0.04080229786599432
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.24096873966228297,
+        "reference": 0.2283407606852825,
+        "delta": 0.012627978977000465
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.031542814449188494,
+        "reference": 0.022758747301111493,
+        "delta": 0.008784067148077002
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cuda-q4_k_m-on/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 0,
+    "max_abs": 1.5997705459594727,
+    "rmse": 0.16870473275655118,
+    "top1_matches": 83,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.28833267111540534,
+        "reference": 0.27479190804186554,
+        "delta": 0.013540763073539797
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.794482233300436,
+        "reference": 4.854566798037199,
+        "delta": -0.060084564736762935
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.2637019265662349,
+        "reference": 0.2283407606852825,
+        "delta": 0.03536116588095242
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.03374288835993067,
+        "reference": 0.022758747301111493,
+        "delta": 0.010984141058819175
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cuda-q8_0-off/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 0,
+    "max_abs": 0.22650146484375,
+    "rmse": 0.028535422286793812,
+    "top1_matches": 86,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.27367652981930757,
+        "reference": 0.27479190804186554,
+        "delta": -0.0011153782225579723
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.851943759124694,
+        "reference": 4.854566798037199,
+        "delta": -0.002623038912505038
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.22814010673475818,
+        "reference": 0.2283407606852825,
+        "delta": -0.000200653950524321
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.022299613674635177,
+        "reference": 0.022758747301111493,
+        "delta": -0.0004591336264763157
+      }
+    ]
+  },
+  {
+    "file": "real-oracle-cuda-q8_0-on/result.json",
+    "passed": false,
+    "steps": 52,
+    "passed_steps": 0,
+    "max_abs": 0.27094578742980957,
+    "rmse": 0.028970735163746993,
+    "top1_matches": 86,
+    "rows": 88,
+    "shared_owners": [],
+    "nll": [
+      {
+        "case": "danish-unicode",
+        "candidate": 0.2721800605719662,
+        "reference": 0.27479190804186554,
+        "delta": -0.002611847469899342
+      },
+      {
+        "case": "english-instruction",
+        "candidate": 4.867048028955831,
+        "reference": 4.854566798037199,
+        "delta": 0.012481230918631958
+      },
+      {
+        "case": "multiturn",
+        "candidate": 0.22808281094808694,
+        "reference": 0.2283407606852825,
+        "delta": -0.0002579497371955619
+      },
+      {
+        "case": "near-limit",
+        "candidate": 0.02291715264761729,
+        "reference": 0.022758747301111493,
+        "delta": 0.00015840534650579663
+      }
+    ]
+  }
+]

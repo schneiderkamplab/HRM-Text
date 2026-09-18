@@ -1,8 +1,8 @@
 {
   "branch": "codex/prefixlm-linux-testing",
   "llama_base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
-  "llama_head": "6f60f7472fead8da5289e06c9d79b47dd4763043",
-  "llama_tree": "aa317a3ff600413d14942083b7a54f0cf4f3dae5",
+  "llama_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "llama_tree": "d73038a33ed550f33de99c8469d0260c93bbeba4",
   "commits": [
     {
       "commit": "c3e60e59dd065fae4679e1d670adffbc3efa96ec",
@@ -19,8 +19,13 @@
     {
       "commit": "6f60f7472fead8da5289e06c9d79b47dd4763043",
       "subject": "server: persist samplers and resume retained text generations"
+    },
+    {
+      "commit": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+      "subject": "llama: restore ordinary causal mask performance"
     }
   ],
-  "source_manifest": "decoder-results.json",
-  "qualification": "Mac results recorded; Linux CPU/CUDA qualification pending. Final PR packaging/review deferred."
+  "source_manifest": "linux-source-manifest.json",
+  "qualification": "Linux qualification executed; causal-prefill regression fixed. Strict numerical and default CUDA memcheck findings remain open; see LINUX-TESTING-REPORT.md.",
+  "received_llama_head": "6f60f7472fead8da5289e06c9d79b47dd4763043"
 }

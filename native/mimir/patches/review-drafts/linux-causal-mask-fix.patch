@@ -1,0 +1,55 @@
+diff --git a/src/llama-context.cpp b/src/llama-context.cpp
+index c44d4129b..563b5244d 100644
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -13,6 +13,7 @@
+ #include "llama-sampler.h"
+ #include "llama.h"
+ 
++#include <algorithm>
+ #include <cinttypes>
+ #include <cmath>
+ #include <cstring>
+diff --git a/src/llama-kv-cache.cpp b/src/llama-kv-cache.cpp
+index 1c7a5979c..385eef23a 100644
+--- a/src/llama-kv-cache.cpp
++++ b/src/llama-kv-cache.cpp
+@@ -1608,7 +1608,7 @@ struct args_set_input_kq_mask {
+     int64_t n_tps;
+ };
+ 
+-template<typename T, bool causal, bool swa, bool is_2d, bool alibi>
++template<typename T, bool causal, bool swa, bool is_2d, bool alibi, bool prefix = false>
+ static void set_input_kq_mask_impl(const args_set_input_kq_mask & args, T * data) {
+   //const auto & hparams = args.hparams;
+     const auto & ubatch  = args.ubatch;
+@@ -1720,8 +1720,12 @@ static void set_input_kq_mask_impl(const args_set_input_kq_mask & args, T * data
+ 
+                 if (causal) {
+                     // mask future tokens
+-                    if (p0 > p1 && !(args.prefixes && args.prefixes->count(seq_id) &&
+-                        p0 < args.prefixes->at(seq_id).end && p1 < args.prefixes->at(seq_id).end)) {
++                    if constexpr (prefix) {
++                        if (p0 > p1 && !(args.prefixes->count(seq_id) &&
++                            p0 < args.prefixes->at(seq_id).end && p1 < args.prefixes->at(seq_id).end)) {
++                            goto skip;
++                        }
++                    } else if (p0 > p1) {
+                         goto skip;
+                     }
+ 
+@@ -1763,7 +1767,13 @@ skip:
+ template<typename T, bool causal, bool swa, bool is_2d>
+ static void set_input_kq_mask_impl(const args_set_input_kq_mask & args, T * data) {
+     const bool alibi = args.hparams.use_alibi;
+-    if (alibi) {
++    if (causal && args.prefixes) {
++        if (alibi) {
++            set_input_kq_mask_impl<T, causal, swa, is_2d, true, true> (args, data);
++        } else {
++            set_input_kq_mask_impl<T, causal, swa, is_2d, false, true>(args, data);
++        }
++    } else if (alibi) {
+         set_input_kq_mask_impl<T, causal, swa, is_2d, true> (args, data);
+     } else {
+         set_input_kq_mask_impl<T, causal, swa, is_2d, false>(args, data);

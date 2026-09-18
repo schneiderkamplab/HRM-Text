@@ -1,6 +1,12 @@
 # PrefixLM Linux testing and CI hand-off
 
-Updated 2026-09-18. Run from the HRM-Text-mps repository root using Bash.
+Updated 2026-09-18. Run from the repository root using Bash.
+
+Linux execution results and the causal-mask performance fix are recorded in
+[native/mimir/LINUX-TESTING-REPORT.md](native/mimir/LINUX-TESTING-REPORT.md).
+The historical Mac-only status below is superseded by that report; unresolved
+numerical and sanitizer findings remain explicit. For current source identity use
+[linux-source-manifest.json](native/mimir/linux-source-manifest.json).
 This is an execution plan, not a claim that Linux/CUDA tests have run.
 The current development host is macOS. CUDA exists in llama.cpp; this PrefixLM
 extension has not yet been qualified on it. On a Linux machine with a supported
@@ -17,8 +23,10 @@ dependency-safe bounded copies and shared physical KV capacity. Read [DECODER-RE
 
 ## Committed checkout for Linux
 
-The complete implementation is committed on `codex/prefixlm-linux-testing` in both repositories.
-The parent repository pins llama.cpp commit `6f60f7472fead8da5289e06c9d79b47dd4763043`. Its four commits separate
+The parent uses `codex/prefixlm-linux-testing`; the Linux fix in llama.cpp is on
+`codex/linux-causal-mask-fix` above the received feature stack.
+The received Linux hand-off pinned llama.cpp commit `6f60f7472fead8da5289e06c9d79b47dd4763043`.
+The current gitlink adds the Linux portability/performance fix. The original four commits separate
 ggml, text codec, PrefixLM and generic persistence; see
 [linux-handoff.json](native/mimir/linux-handoff.json) for exact identities.
 Historical patches are reference artifacts, not steps to apply to this checkout.
@@ -34,8 +42,9 @@ git -C llama.cpp rev-parse HEAD
 
 Use the recorded submodule commit, not a moving upstream branch. Do not transfer
 Mac build directories or its virtual environment. Model weights and generated
-fixtures are prepared below; they are not included in Git. The source manifest is
-`native/mimir/decoder-results.json`. Final PR packaging/review remains after Linux
+fixtures are prepared below; they are not included in Git. The current source manifest is
+`native/mimir/linux-source-manifest.json`; `decoder-results.json` preserves the
+received Mac source and historical evidence. Final PR packaging/review remains after Linux
 qualification.
 
 Before modifying anything on Linux, verify its implementation hashes:
@@ -44,7 +53,7 @@ Before modifying anything on Linux, verify its implementation hashes:
 python3 - <<'PY'
 from pathlib import Path
 import hashlib, json
-r = json.loads(Path('native/mimir/decoder-results.json').read_text())
+r = json.loads(Path('native/mimir/linux-source-manifest.json').read_text())
 for name, expected in r['source_sha256'].items():
     assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == expected, name
 print('Recorded implementation hashes match')
@@ -58,7 +67,8 @@ qualification require a new source manifest and rerunning affected tests.
 ## Current scope and local reference results
 
 Use [DECODER-RESUMPTION.md](native/mimir/DECODER-RESUMPTION.md) and
-[decoder-results.json](native/mimir/decoder-results.json) for current evidence/source identity.
+[LINUX-TESTING-REPORT.md](native/mimir/LINUX-TESTING-REPORT.md) for current Linux evidence/source identity;
+[decoder-results.json](native/mimir/decoder-results.json) retains the Mac evidence.
 The table below is the preceding ownership baseline, retained for context; use its source
 manifest only for that historical revision. Use [SHARING.md](native/mimir/SHARING.md) as the current ownership/copy
 contract. RESUMPTION.md records the preceding implementation; its single-owner and

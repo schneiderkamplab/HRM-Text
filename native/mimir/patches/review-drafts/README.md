@@ -43,3 +43,15 @@ paths were independently apply-checked and compared against their source trees.
 
 See [DECODER-RESUMPTION.md](../../DECODER-RESUMPTION.md) for bounded results and
 [the Linux hand-off](../../../../linux-testing.md) for the remaining qualification.
+
+## Linux follow-up, 2026-09-18
+
+The original reconstruction claims and `manifest.json` above describe the
+received Mac revision. They are superseded for the current Linux-tested source
+by the additive `linux-causal-mask-fix.patch`: it supplies the direct algorithm
+header needed by GCC 15 and specializes the ordinary causal mask loop. Apply it
+after `prefixlm-main.patch` (and after `generation-persistence.patch` when used).
+Do not apply it to standalone persistence, which has no PrefixLM mask changes.
+The original feature patches remain historical review drafts, not newly packaged
+PR submissions. Current evidence is in
+[the Linux report](../../LINUX-TESTING-REPORT.md).

@@ -1,0 +1,198 @@
+{
+  "before": {
+    "summary": [
+      {
+        "variant": "baseline",
+        "round": 0,
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 46199.5,
+        "min_ns": 46029,
+        "max_ns": 49714
+      },
+      {
+        "variant": "candidate",
+        "round": 1,
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 85603.0,
+        "min_ns": 84918,
+        "max_ns": 93140
+      },
+      {
+        "variant": "candidate",
+        "round": 2,
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 81492.0,
+        "min_ns": 81272,
+        "max_ns": 88553
+      },
+      {
+        "variant": "baseline",
+        "round": 3,
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 43430.5,
+        "min_ns": 43225,
+        "max_ns": 46950
+      }
+    ],
+    "samples": {
+      "mask-1-candidate.csv": "1,98358\n1,90355\n1,94141\n1,85979\n1,86159\n1,85669\n1,85799\n1,85698\n1,85679\n1,93140\n1,85869\n1,85529\n1,85668\n1,92980\n1,85538\n1,85048\n1,85679\n1,85428\n1,85418\n1,85298\n1,85298\n1,85128\n1,85038\n1,92509\n1,92589\n1,84918\n",
+      "mask-2-candidate.csv": "1,93581\n1,86850\n1,82183\n1,81512\n1,81432\n1,81492\n1,81563\n1,81833\n1,81813\n1,81473\n1,88553\n1,81522\n1,81642\n1,81423\n1,81272\n1,81463\n1,81502\n1,81433\n1,81682\n1,81362\n1,81332\n1,88463\n1,81382\n1,81482\n1,88373\n1,81482\n",
+      "mask-3-baseline.csv": "1,51398\n1,47792\n1,44657\n1,43766\n1,46800\n1,43406\n1,43415\n1,43485\n1,43585\n1,43535\n1,43786\n1,43385\n1,43726\n1,43595\n1,43415\n1,43335\n1,43325\n1,43475\n1,43445\n1,43336\n1,43436\n1,43225\n1,43375\n1,43355\n1,46950\n1,43425\n",
+      "mask-0-baseline.csv": "1,55373\n1,53039\n1,47551\n1,46290\n1,45989\n1,45919\n1,46180\n1,46280\n1,46780\n1,46139\n1,49714\n1,46069\n1,46289\n1,46029\n1,46170\n1,46149\n1,46420\n1,46400\n1,46610\n1,46359\n1,46169\n1,46190\n1,46209\n1,46130\n1,46360\n1,46109\n"
+    }
+  },
+  "after": {
+    "summary": [
+      {
+        "variant": "baseline",
+        "round": 0,
+        "command": [
+          "taskset",
+          "-c",
+          "16-19",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/baseline-cuda/bin/llama-bench",
+          "-m",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/control-models/control-causal.gguf",
+          "-ngl",
+          "999",
+          "-fa",
+          "0",
+          "-t",
+          "4",
+          "-p",
+          "256",
+          "-n",
+          "0",
+          "-b",
+          "256",
+          "-ub",
+          "256",
+          "-r",
+          "25",
+          "-o",
+          "json"
+        ],
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 42864.5,
+        "min_ns": 42474,
+        "max_ns": 50245
+      },
+      {
+        "variant": "candidate",
+        "round": 1,
+        "command": [
+          "taskset",
+          "-c",
+          "16-19",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/cuda/bin/llama-bench",
+          "-m",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/control-models/control-causal.gguf",
+          "-ngl",
+          "999",
+          "-fa",
+          "0",
+          "-t",
+          "4",
+          "-p",
+          "256",
+          "-n",
+          "0",
+          "-b",
+          "256",
+          "-ub",
+          "256",
+          "-r",
+          "25",
+          "-o",
+          "json"
+        ],
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 43485.0,
+        "min_ns": 43315,
+        "max_ns": 46900
+      },
+      {
+        "variant": "candidate",
+        "round": 2,
+        "command": [
+          "taskset",
+          "-c",
+          "16-19",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/cuda/bin/llama-bench",
+          "-m",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/control-models/control-causal.gguf",
+          "-ngl",
+          "999",
+          "-fa",
+          "0",
+          "-t",
+          "4",
+          "-p",
+          "256",
+          "-n",
+          "0",
+          "-b",
+          "256",
+          "-ub",
+          "256",
+          "-r",
+          "25",
+          "-o",
+          "json"
+        ],
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 44467.0,
+        "min_ns": 43165,
+        "max_ns": 46920
+      },
+      {
+        "variant": "baseline",
+        "round": 3,
+        "command": [
+          "taskset",
+          "-c",
+          "16-19",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/baseline-cuda/bin/llama-bench",
+          "-m",
+          "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/control-models/control-causal.gguf",
+          "-ngl",
+          "999",
+          "-fa",
+          "0",
+          "-t",
+          "4",
+          "-p",
+          "256",
+          "-n",
+          "0",
+          "-b",
+          "256",
+          "-ub",
+          "256",
+          "-r",
+          "25",
+          "-o",
+          "json"
+        ],
+        "exit_code": 0,
+        "count": 20,
+        "median_ns": 44336.5,
+        "min_ns": 44066,
+        "max_ns": 51497
+      }
+    ],
+    "samples": {
+      "mask-3-baseline.csv": "1,51207\n1,46840\n1,45428\n1,44477\n1,44336\n1,47542\n1,44357\n1,44427\n1,44326\n1,44327\n1,44507\n1,44567\n1,44547\n1,44296\n1,44177\n1,44217\n1,44326\n1,44467\n1,44497\n1,51497\n1,44066\n1,44247\n1,44206\n1,44386\n1,44177\n1,44346\n",
+      "mask-1-candidate.csv": "1,51928\n1,46559\n1,45559\n1,43806\n1,43405\n1,43626\n1,43726\n1,43765\n1,43505\n1,43376\n1,43596\n1,43465\n1,43665\n1,43545\n1,43575\n1,43426\n1,43455\n1,43415\n1,44097\n1,43595\n1,43315\n1,43365\n1,43416\n1,46900\n1,43315\n1,43315\n",
+      "mask-0-baseline.csv": "1,51157\n1,47040\n1,44637\n1,43655\n1,45559\n1,43736\n1,43546\n1,43966\n1,50245\n1,44136\n1,44016\n1,42904\n1,42884\n1,42944\n1,42784\n1,42845\n1,42794\n1,42975\n1,42654\n1,42544\n1,42584\n1,42674\n1,47422\n1,42594\n1,42554\n1,42474\n",
+      "mask-2-candidate.csv": "1,51597\n1,47261\n1,44797\n1,48753\n1,44397\n1,44277\n1,44467\n1,44567\n1,44586\n1,44467\n1,44577\n1,44576\n1,44417\n1,44476\n1,44577\n1,44467\n1,44377\n1,46920\n1,44637\n1,44277\n1,44166\n1,43275\n1,43285\n1,44146\n1,43265\n1,43165\n"
+    }
+  }
+}

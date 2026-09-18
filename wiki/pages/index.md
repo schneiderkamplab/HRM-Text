@@ -82,3 +82,5 @@
 * [FlashAttention B200 Records](flashattention-b200/) - Focused platform and build findings.
 * [Model-Architecture Records](model-architecture/) - Focused architecture and runtime concepts.
 * [Original-L Reproduction Records](original-l-reproduction/) - Focused reproduction procedures and observations.
+
+* [Linux PrefixLM qualification](linux-prefixlm-qualification.md) - Linux test environment, evidence, and acceptance gates.
