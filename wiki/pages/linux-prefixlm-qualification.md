@@ -9,6 +9,28 @@ confidence: high
 ---
 # Linux PrefixLM qualification
 
+## Final qualification preparation (2026-09-18)
+
+Supersedes the unresolved-acceptance and push-status statements in the historical
+record below. The Linux results and runtime fix were pushed and received. The user
+accepted the existing tiny CUDA and real BF16/Q8/Q4 numerical findings as nonblocking
+for this PR scope; the original strict thresholds/results remain intact.
+`native/mimir/FINAL-QUALIFICATION.md` records the decision and its limits.
+
+A narrow Compute Sanitizer wrapper accepts only paired graph-update error 910 and
+its matching error-clear call when explicitly enabled. Unknown diagnostics, memory
+errors, missing summaries/completion and application failures reject. Raw logs and
+JSON are retained. Five local policy/runner tests pass, including negative cases;
+actual CUDA validation of the new wrapper is pending. Updated CI runs both engine
+architectures and the backend sampler, using isolated working directories.
+
+Four release-candidate patches fold the Linux mask/include fix into main PrefixLM
+and keep generic persistence separate. `tools/package_patches.py` proves reconstruction
+of the qualified Git tree and checks isolated API boundaries, without rewriting
+history. The current Mac release and CPU UBSan reruns each pass 8/8 CTests. Linux final checks and
+human review remain; runtime source is unchanged from the qualified Linux revision.
+Use `native/mimir/release-source-manifest.json` for the updated harness/CI identity.
+
 The 2026-09-18 Linux run follows the repository `linux-testing.md` hand-off.
 Evidence and the final report belong in `logs/linux-prefixlm/`.
 The received implementation passed all SHA-256 checks in

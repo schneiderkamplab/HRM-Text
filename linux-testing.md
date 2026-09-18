@@ -2,16 +2,15 @@
 
 Updated 2026-09-18. Run from the repository root using Bash.
 
-Linux execution results and the causal-mask performance fix are recorded in
-[native/mimir/LINUX-TESTING-REPORT.md](native/mimir/LINUX-TESTING-REPORT.md).
-The historical Mac-only status below is superseded by that report; unresolved
-numerical and sanitizer findings remain explicit. For current source identity use
-[linux-source-manifest.json](native/mimir/linux-source-manifest.json).
-This is an execution plan, not a claim that Linux/CUDA tests have run.
-The current development host is macOS. CUDA exists in llama.cpp; this PrefixLM
-extension has not yet been qualified on it. On a Linux machine with a supported
-NVIDIA GPU, driver and toolkit, run **both CPU and CUDA**, not just whichever
-backend is fastest. Record unavailable hardware/tooling as untested, never passed.
+Linux CPU/CUDA results and the causal-mask performance fix are recorded in
+[LINUX-TESTING-REPORT.md](native/mimir/LINUX-TESTING-REPORT.md). The agreed numerical
+and sanitizer policy and remaining final checks are in
+[FINAL-QUALIFICATION.md](native/mimir/FINAL-QUALIFICATION.md).
+The runtime source remains at the Linux-qualified revision. Current harness/CI
+identity is [release-source-manifest.json](native/mimir/release-source-manifest.json);
+`linux-source-manifest.json` remains the historical execution manifest.
+Run both CPU and CUDA when available, with an allocated GPU. Do not mark missing
+hardware or unexecuted final checks as passed.
 
 ## Objective and source identity
 
@@ -43,9 +42,9 @@ git -C llama.cpp rev-parse HEAD
 Use the recorded submodule commit, not a moving upstream branch. Do not transfer
 Mac build directories or its virtual environment. Model weights and generated
 fixtures are prepared below; they are not included in Git. The current source manifest is
-`native/mimir/linux-source-manifest.json`; `decoder-results.json` preserves the
-received Mac source and historical evidence. Final PR packaging/review remains after Linux
-qualification.
+`native/mimir/release-source-manifest.json`; the Linux and Mac manifests preserve
+their original source/evidence identities. See `native/mimir/FINAL-QUALIFICATION.md`
+for the remaining final checks.
 
 Before modifying anything on Linux, verify its implementation hashes:
 
@@ -53,7 +52,7 @@ Before modifying anything on Linux, verify its implementation hashes:
 python3 - <<'PY'
 from pathlib import Path
 import hashlib, json
-r = json.loads(Path('native/mimir/linux-source-manifest.json').read_text())
+r = json.loads(Path('native/mimir/release-source-manifest.json').read_text())
 for name, expected in r['source_sha256'].items():
     assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == expected, name
 print('Recorded implementation hashes match')
@@ -302,10 +301,11 @@ ctest --test-dir "$TEST_ROOT/cuda" -R '^test-prefix-lm-' --output-on-failure 2>&
 "$TEST_ROOT/cuda/bin/test-backend-sampler" --device gpu \
   --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction \
   > "$TEST_ROOT/backend-sampler-cuda.log" 2>&1
-compute-sanitizer --tool memcheck --error-exitcode 1 \
+"$TEST_PY" native/mimir/tests/cuda_memcheck.py \
+  --output "$TEST_ROOT/final-sampler-memcheck" \
+  --expect 'backend multi-output dist transaction test PASSED' -- \
   "$TEST_ROOT/cuda/bin/test-backend-sampler" --device gpu \
-  --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction \
-  > "$TEST_ROOT/backend-sampler-cuda-memcheck.log" 2>&1
+  --model "$PWD/logs/prefixlm-comparison/fixture/hrm-false.gguf" --test multi_output_dist_transaction
 for arch in hrm_text llama; do
     "$TEST_ROOT/cuda/bin/test-llama-archs" -a "$arch" -s 42 > "$TEST_ROOT/ordinary-cuda-$arch.log" 2>&1
 done
@@ -319,7 +319,7 @@ set the explicit compute capability supported by the installed toolkit instead.
 The PrefixLM architecture suite enumerates CPU plus every visible GPU and tests
 flash on/off and split/unified memory, including shared ownership and bounded copies.
 With one GPU, the current expected count is 1,940 assertions per architecture
-(4,280 across HRM/Llama); with CPU only it is 1,070 per architecture. Counts may
+(3,880 across HRM/Llama); with CPU only it is 970 per architecture. Counts may
 change with a documented source revision. Confirm CUDA device identification, offloaded layers, actual
 attention implementation and GPU activity in logs; a CPU fallback is not a CUDA pass.
 The legacy native `run_matrix.py` has only CPU/Metal device choices: do not use its
@@ -330,11 +330,20 @@ memcheck. ASan/UBSan do not instrument CUDA kernel memory accesses.
 
 ```bash
 for arch in hrm_text llama; do
-    compute-sanitizer --tool memcheck --error-exitcode 99 \
-      "$TEST_ROOT/cuda/bin/test-llama-archs" --prefix-lm -a "$arch" -s 42 \
-      > "$TEST_ROOT/cuda-memcheck-$arch.log" 2>&1
+    "$TEST_PY" native/mimir/tests/cuda_memcheck.py \
+      --output "$TEST_ROOT/final-memcheck-$arch" --allow-graph-fallback \
+      --expect "PrefixLM engine checks passed ($arch)" -- \
+      "$TEST_ROOT/cuda/bin/test-llama-archs" --prefix-lm -a "$arch" -s 42
 done
 ```
+
+The wrapper creates an isolated working directory, preserves raw logs and application
+exit status, requires the successful-test marker and complete sanitizer summary, and
+accepts only paired `cudaErrorGraphExecUpdateFailure` (910) reports from
+`cudaGraphExecUpdate` followed by `cudaGetLastError`. Unknown diagnostics and all
+memory errors fail. Without `--allow-graph-fallback`, any reported error fails.
+Use fresh output directories and absolute binary/model paths. The wrapper itself
+still requires a final real-CUDA validation; its unit tests do not establish that.
 
 If failures implicate shared memory or synchronization, add targeted `racecheck`
 and `synccheck` runs. These GPU checks are distinct from CPU thread-race detection.
@@ -489,7 +498,7 @@ Required CI job design:
 | `cpu-release` | Linux hosted runner | Generated fixtures, eight integration tests, parser/backend persistence, 31-step oracle, ordinary controls, text parity |
 | `cpu-sanitizers` | Linux hosted runner | Same bounded suite with ASan/UBSan and fatal errors |
 | `cuda-release` | Maintained NVIDIA runner | CPU+GPU engine suite including ownership/copies, 31-step CUDA oracle flash on/off, actual offload verification |
-| `cuda-memcheck` | NVIDIA runner with Compute Sanitizer | Bounded HRM/Llama memcheck, fatal nonzero error exit |
+| `cuda-memcheck` | NVIDIA runner with Compute Sanitizer | Bounded HRM/Llama memcheck; narrow graph-fallback policy, all unexpected findings fatal |
 | `server-qualification` | Reserved CPU/NVIDIA runner with pinned model cache | Matrix above, including process restarts and current Mimir template |
 | `performance` | Dedicated stable CPU/NVIDIA hardware, manual/scheduled | ABBA controls and candidate request timings; retain raw evidence |
 

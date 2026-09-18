@@ -1,0 +1,448 @@
+diff --git a/common/jinja/string.cpp b/common/jinja/string.cpp
+index bde679e4e..8569b1ab8 100644
+--- a/common/jinja/string.cpp
++++ b/common/jinja/string.cpp
+@@ -1,5 +1,6 @@
+ #include "jinja/string.h"
+ #include "jinja/value.h"
++#include "unicode.h"
+ 
+ #include <algorithm>
+ #include <functional>
+@@ -162,21 +163,34 @@ string string::titlecase() {
+ }
+ string string::strip(bool left, bool right, std::optional<const std::string_view> chars) {
+     static auto strip_part = [](const std::string & s, bool left, bool right, std::optional<const std::string_view> chars) -> std::string {
+-        size_t start = 0;
+-        size_t end = s.length();
+-        auto match_char = [&chars](unsigned char c) -> bool {
+-            return chars ? (*chars).find(c) != std::string::npos : isspace(c);
+-        };
+-        if (left) {
+-            while (start < end && match_char(static_cast<unsigned char>(s[start]))) {
+-                ++start;
++        std::vector<uint32_t> strip_chars;
++        if (chars) {
++            for (size_t i = 0; i < chars->size();) {
++                auto cp = common_parse_utf8_codepoint(*chars, i);
++                strip_chars.push_back(cp.status == utf8_parse_result::SUCCESS ? cp.codepoint : uint8_t((*chars)[i]));
++                i += cp.status == utf8_parse_result::SUCCESS ? cp.bytes_consumed : 1;
+             }
+         }
+-        if (right) {
+-            while (end > start && match_char(static_cast<unsigned char>(s[end - 1]))) {
+-                --end;
++        auto match_char = [&](uint32_t c) -> bool {
++            if (chars) {
++                return std::find(strip_chars.begin(), strip_chars.end(), c) != strip_chars.end();
+             }
++            // Python str.strip() whitespace, independent of the process locale.
++            return (c >= 0x09 && c <= 0x0d) || (c >= 0x1c && c <= 0x20) || c == 0x85 ||
++                   c == 0xa0 || c == 0x1680 || (c >= 0x2000 && c <= 0x200a) ||
++                   c == 0x2028 || c == 0x2029 || c == 0x202f || c == 0x205f || c == 0x3000;
++        };
++        std::vector<std::pair<size_t, bool>> points;
++        for (size_t i = 0; i < s.size();) {
++            auto cp = common_parse_utf8_codepoint(s, i);
++            points.emplace_back(i, cp.status == utf8_parse_result::SUCCESS && match_char(cp.codepoint));
++            i += cp.status == utf8_parse_result::SUCCESS ? cp.bytes_consumed : 1;
+         }
++        size_t first = 0, last = points.size();
++        if (left) { while (first < last && points[first].second) { ++first; } }
++        if (right) { while (last > first && points[last - 1].second) { --last; } }
++        const size_t start = first < points.size() ? points[first].first : s.size();
++        const size_t end = last < points.size() ? points[last].first : s.size();
+         return s.substr(start, end - start);
+     };
+     if (parts.empty()) {
+diff --git a/conversion/base.py b/conversion/base.py
+index 8f6b3519c..d9cc66e32 100644
+--- a/conversion/base.py
++++ b/conversion/base.py
+@@ -1521,6 +1521,11 @@ class TextModel(ModelBase):
+         added_vocab = tokenizer.get_added_vocab()  # ty: ignore[unresolved-attribute]
+ 
+         added_tokens_decoder = tokenizer.added_tokens_decoder  # ty: ignore[unresolved-attribute]
++        tokenizer_path = self.dir_model / "tokenizer.json"
++        byte_fallback = False
++        if tokenizer_path.is_file():
++            with tokenizer_path.open(encoding="utf-8") as stream:
++                byte_fallback = json.load(stream).get("model", {}).get("byte_fallback", False)
+ 
+         for i in range(vocab_size):
+             if i not in reverse_vocab:
+@@ -1544,6 +1549,8 @@ class TextModel(ModelBase):
+                         # Encoding and decoding the tokens above isn't sufficient for this case.
+                         token = token.replace(b"\xe2\x96\x81".decode("utf-8"), " ")  # pre-normalize user-defined spaces
+                         toktypes.append(gguf.TokenType.USER_DEFINED)
++                elif byte_fallback and re.fullmatch(r"<0x[0-9A-Fa-f]{2}>", token):
++                    toktypes.append(gguf.TokenType.BYTE)
+                 else:
+                     toktypes.append(gguf.TokenType.NORMAL)
+                 tokens.append(token)
+@@ -1635,7 +1642,7 @@ class TextModel(ModelBase):
+             res = "lfm2"
+         if chkhsh == "846deafc5b0fa786186fa4ae6c7b49903cf2f1d1895bdb80b9120d60be135252":
+             # ref: https://huggingface.co/danish-foundation-models/DFM-Mimir
+-            res = "gemma4"
++            res = "spm-bpe-mistral"
+         if chkhsh == "0a766d034107bc736a3f2dc4968fd62e54a3570f1454443e0c5a4cc6bd7941ed":
+             # ref: https://huggingface.co/XHToken/Spark-X2.5-1.7B
+             res = "spark2_5"
+diff --git a/convert_hf_to_gguf_update.py b/convert_hf_to_gguf_update.py
+index 3a15a6fca..f3eee904f 100755
+--- a/convert_hf_to_gguf_update.py
++++ b/convert_hf_to_gguf_update.py
+@@ -191,10 +191,9 @@ pre_computed_hashes = [
+     {"name": "gpt-2", "tokt": TOKENIZER_TYPE.BPE, "repo": "https://huggingface.co/evilfreelancer/ruGPT3XL", "chkhsh": "0fe1cf6eda062318a1af7270f3331a85c539a01778ff948e24388e949c5282f4"},
+     # lfm2 variants
+     {"name": "lfm2", "tokt": TOKENIZER_TYPE.BPE, "repo": "https://huggingface.co/LiquidAI/LFM2.5-8B-A1B", "chkhsh": "9e454714343b69b99b71795c1d27a68c2a1d15dab111f4d353109f966af29da7"},
+-    # hrm-text (DFM Mimir) is SPM-style BPE: normalizer maps ' ' -> '▁', merges
+-    # over the whole text (fix_mistral_regex inserts a tekken regex that is a
+-    # no-op here); the gemma4 pre (escape ws, split on newlines only) matches it.
+-    {"name": "gemma4", "tokt": TOKENIZER_TYPE.BPE, "repo": "https://huggingface.co/danish-foundation-models/DFM-Mimir", "chkhsh": "846deafc5b0fa786186fa4ae6c7b49903cf2f1d1895bdb80b9120d60be135252"},
++    # DFM Mimir combines SPM space normalization with the explicitly enabled
++    # fix_mistral_regex pre-splitter. The split changes punctuation boundaries.
++    {"name": "spm-bpe-mistral", "tokt": TOKENIZER_TYPE.BPE, "repo": "https://huggingface.co/danish-foundation-models/DFM-Mimir", "chkhsh": "846deafc5b0fa786186fa4ae6c7b49903cf2f1d1895bdb80b9120d60be135252"},
+     {"name": "spark2_5", "tokt": TOKENIZER_TYPE.BPE, "repo": "https://huggingface.co/XHToken/Spark-X2.5-1.7B", "chkhsh": "0a766d034107bc736a3f2dc4968fd62e54a3570f1454443e0c5a4cc6bd7941ed"},
+ ]
+ 
+diff --git a/src/llama-vocab.cpp b/src/llama-vocab.cpp
+index ee65faf23..b80a6afc8 100644
+--- a/src/llama-vocab.cpp
++++ b/src/llama-vocab.cpp
+@@ -414,6 +414,12 @@ struct llm_tokenizer_bpe : llm_tokenizer {
+                     "\\p{N}",
+                 };
+                 break;
++            case LLAMA_VOCAB_PRE_TYPE_SPM_BPE_MISTRAL:
++                byte_encode = false;
++                regex_exprs = {
++                    "[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]*[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]+|[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]+[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]*|\\p{N}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n/]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+",
++                };
++                break;
+             case LLAMA_VOCAB_PRE_TYPE_TEKKEN:
+                 // original regex from tokenizer.json
+                 // "[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]*[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]+|[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]+[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]*|\\p{N}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n/]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
+@@ -2212,6 +2218,10 @@ void llama_vocab::impl::load(llama_model_loader & ml, const LLM_KV & kv) {
+             } else if (
+                     tokenizer_pre == "jais-2") {
+                 pre_type = LLAMA_VOCAB_PRE_TYPE_JAIS2;
++            } else if (tokenizer_pre == "spm-bpe-mistral") {
++                pre_type = LLAMA_VOCAB_PRE_TYPE_SPM_BPE_MISTRAL;
++                escape_whitespaces = true;
++                clean_spaces = false;
+             } else if (
+                     tokenizer_pre == "gemma4" ||
+                     tokenizer_pre == "granite-embed-multi-311m") {
+diff --git a/src/llama-vocab.h b/src/llama-vocab.h
+index 65293c026..2de459c5f 100644
+--- a/src/llama-vocab.h
++++ b/src/llama-vocab.h
+@@ -67,6 +67,7 @@ enum llama_vocab_pre_type {
+     LLAMA_VOCAB_PRE_TYPE_LAGUNA            = 56,
+     LLAMA_VOCAB_PRE_TYPE_HY_V4             = 57,
+     LLAMA_VOCAB_PRE_TYPE_SPARK2_5          = 58,
++    LLAMA_VOCAB_PRE_TYPE_SPM_BPE_MISTRAL   = 59,
+ };
+ 
+ struct LLM_KV;
+diff --git a/src/unicode-letter-case.h b/src/unicode-letter-case.h
+new file mode 100644
+index 000000000..5dbb2957d
+--- /dev/null
++++ b/src/unicode-letter-case.h
+@@ -0,0 +1,195 @@
++// Generated by native/mimir/tests/generate_letter_cases.py using regex 2026.9.10.
++// 1 = Unicode Lu/Lt, 2 = Ll; only exceptions to simple case-mapping flags.
++static const struct { uint32_t first; uint32_t last; uint8_t kind; } unicode_letter_case_exceptions[] = {
++    {0xb5, 0xb5, 2},
++    {0x130, 0x130, 1},
++    {0x131, 0x131, 2},
++    {0x138, 0x138, 2},
++    {0x149, 0x149, 2},
++    {0x17f, 0x17f, 2},
++    {0x18d, 0x18d, 2},
++    {0x19b, 0x19b, 2},
++    {0x1aa, 0x1ab, 2},
++    {0x1ba, 0x1ba, 2},
++    {0x1be, 0x1be, 2},
++    {0x1c5, 0x1c5, 1},
++    {0x1c8, 0x1c8, 1},
++    {0x1cb, 0x1cb, 1},
++    {0x1f0, 0x1f0, 2},
++    {0x1f2, 0x1f2, 1},
++    {0x221, 0x221, 2},
++    {0x234, 0x239, 2},
++    {0x255, 0x255, 2},
++    {0x258, 0x258, 2},
++    {0x25a, 0x25a, 2},
++    {0x25d, 0x25f, 2},
++    {0x262, 0x262, 2},
++    {0x264, 0x264, 2},
++    {0x267, 0x267, 2},
++    {0x26d, 0x26e, 2},
++    {0x270, 0x270, 2},
++    {0x273, 0x274, 2},
++    {0x276, 0x27c, 2},
++    {0x27e, 0x27f, 2},
++    {0x281, 0x281, 2},
++    {0x284, 0x286, 2},
++    {0x28d, 0x291, 2},
++    {0x293, 0x293, 2},
++    {0x296, 0x29c, 2},
++    {0x29f, 0x2af, 2},
++    {0x390, 0x390, 2},
++    {0x3b0, 0x3b0, 2},
++    {0x3c2, 0x3c2, 2},
++    {0x3d0, 0x3d1, 2},
++    {0x3d2, 0x3d4, 1},
++    {0x3d5, 0x3d6, 2},
++    {0x3f0, 0x3f1, 2},
++    {0x3f4, 0x3f4, 1},
++    {0x3f5, 0x3f5, 2},
++    {0x3fc, 0x3fc, 2},
++    {0x560, 0x560, 2},
++    {0x587, 0x588, 2},
++    {0x1c80, 0x1c88, 2},
++    {0x1c89, 0x1c89, 1},
++    {0x1c8a, 0x1c8a, 2},
++    {0x1d00, 0x1d2b, 2},
++    {0x1d6b, 0x1d77, 2},
++    {0x1d7a, 0x1d7c, 2},
++    {0x1d7e, 0x1d8d, 2},
++    {0x1d8f, 0x1d9a, 2},
++    {0x1e96, 0x1e9d, 2},
++    {0x1e9e, 0x1e9e, 1},
++    {0x1e9f, 0x1e9f, 2},
++    {0x1f50, 0x1f50, 2},
++    {0x1f52, 0x1f52, 2},
++    {0x1f54, 0x1f54, 2},
++    {0x1f56, 0x1f56, 2},
++    {0x1fb2, 0x1fb2, 2},
++    {0x1fb4, 0x1fb4, 2},
++    {0x1fb6, 0x1fb7, 2},
++    {0x1fbe, 0x1fbe, 2},
++    {0x1fc2, 0x1fc2, 2},
++    {0x1fc4, 0x1fc4, 2},
++    {0x1fc6, 0x1fc7, 2},
++    {0x1fd2, 0x1fd3, 2},
++    {0x1fd6, 0x1fd7, 2},
++    {0x1fe2, 0x1fe4, 2},
++    {0x1fe6, 0x1fe7, 2},
++    {0x1ff2, 0x1ff2, 2},
++    {0x1ff4, 0x1ff4, 2},
++    {0x1ff6, 0x1ff7, 2},
++    {0x2102, 0x2102, 1},
++    {0x2107, 0x2107, 1},
++    {0x210a, 0x210a, 2},
++    {0x210b, 0x210d, 1},
++    {0x210e, 0x210f, 2},
++    {0x2110, 0x2112, 1},
++    {0x2113, 0x2113, 2},
++    {0x2115, 0x2115, 1},
++    {0x2119, 0x211d, 1},
++    {0x2124, 0x2124, 1},
++    {0x2126, 0x2126, 1},
++    {0x2128, 0x2128, 1},
++    {0x212a, 0x212d, 1},
++    {0x212f, 0x212f, 2},
++    {0x2130, 0x2131, 1},
++    {0x2133, 0x2133, 1},
++    {0x2134, 0x2134, 2},
++    {0x2139, 0x2139, 2},
++    {0x213c, 0x213d, 2},
++    {0x213e, 0x213f, 1},
++    {0x2145, 0x2145, 1},
++    {0x2146, 0x2149, 2},
++    {0x2c71, 0x2c71, 2},
++    {0x2c74, 0x2c74, 2},
++    {0x2c77, 0x2c7b, 2},
++    {0x2ce4, 0x2ce4, 2},
++    {0xa730, 0xa731, 2},
++    {0xa771, 0xa778, 2},
++    {0xa78e, 0xa78e, 2},
++    {0xa795, 0xa795, 2},
++    {0xa7af, 0xa7af, 2},
++    {0xa7cb, 0xa7cc, 1},
++    {0xa7cd, 0xa7cd, 2},
++    {0xa7ce, 0xa7ce, 1},
++    {0xa7cf, 0xa7cf, 2},
++    {0xa7d2, 0xa7d2, 1},
++    {0xa7d3, 0xa7d3, 2},
++    {0xa7d4, 0xa7d4, 1},
++    {0xa7d5, 0xa7d5, 2},
++    {0xa7da, 0xa7da, 1},
++    {0xa7db, 0xa7db, 2},
++    {0xa7dc, 0xa7dc, 1},
++    {0xa7fa, 0xa7fa, 2},
++    {0xab30, 0xab52, 2},
++    {0xab54, 0xab5a, 2},
++    {0xab60, 0xab68, 2},
++    {0xfb00, 0xfb06, 2},
++    {0xfb13, 0xfb17, 2},
++    {0x10d50, 0x10d65, 1},
++    {0x10d70, 0x10d85, 2},
++    {0x16ea0, 0x16eb8, 1},
++    {0x16ebb, 0x16ed3, 2},
++    {0x1d400, 0x1d419, 1},
++    {0x1d41a, 0x1d433, 2},
++    {0x1d434, 0x1d44d, 1},
++    {0x1d44e, 0x1d454, 2},
++    {0x1d456, 0x1d467, 2},
++    {0x1d468, 0x1d481, 1},
++    {0x1d482, 0x1d49b, 2},
++    {0x1d49c, 0x1d49c, 1},
++    {0x1d49e, 0x1d49f, 1},
++    {0x1d4a2, 0x1d4a2, 1},
++    {0x1d4a5, 0x1d4a6, 1},
++    {0x1d4a9, 0x1d4ac, 1},
++    {0x1d4ae, 0x1d4b5, 1},
++    {0x1d4b6, 0x1d4b9, 2},
++    {0x1d4bb, 0x1d4bb, 2},
++    {0x1d4bd, 0x1d4c3, 2},
++    {0x1d4c5, 0x1d4cf, 2},
++    {0x1d4d0, 0x1d4e9, 1},
++    {0x1d4ea, 0x1d503, 2},
++    {0x1d504, 0x1d505, 1},
++    {0x1d507, 0x1d50a, 1},
++    {0x1d50d, 0x1d514, 1},
++    {0x1d516, 0x1d51c, 1},
++    {0x1d51e, 0x1d537, 2},
++    {0x1d538, 0x1d539, 1},
++    {0x1d53b, 0x1d53e, 1},
++    {0x1d540, 0x1d544, 1},
++    {0x1d546, 0x1d546, 1},
++    {0x1d54a, 0x1d550, 1},
++    {0x1d552, 0x1d56b, 2},
++    {0x1d56c, 0x1d585, 1},
++    {0x1d586, 0x1d59f, 2},
++    {0x1d5a0, 0x1d5b9, 1},
++    {0x1d5ba, 0x1d5d3, 2},
++    {0x1d5d4, 0x1d5ed, 1},
++    {0x1d5ee, 0x1d607, 2},
++    {0x1d608, 0x1d621, 1},
++    {0x1d622, 0x1d63b, 2},
++    {0x1d63c, 0x1d655, 1},
++    {0x1d656, 0x1d66f, 2},
++    {0x1d670, 0x1d689, 1},
++    {0x1d68a, 0x1d6a5, 2},
++    {0x1d6a8, 0x1d6c0, 1},
++    {0x1d6c2, 0x1d6da, 2},
++    {0x1d6dc, 0x1d6e1, 2},
++    {0x1d6e2, 0x1d6fa, 1},
++    {0x1d6fc, 0x1d714, 2},
++    {0x1d716, 0x1d71b, 2},
++    {0x1d71c, 0x1d734, 1},
++    {0x1d736, 0x1d74e, 2},
++    {0x1d750, 0x1d755, 2},
++    {0x1d756, 0x1d76e, 1},
++    {0x1d770, 0x1d788, 2},
++    {0x1d78a, 0x1d78f, 2},
++    {0x1d790, 0x1d7a8, 1},
++    {0x1d7aa, 0x1d7c2, 2},
++    {0x1d7c4, 0x1d7c9, 2},
++    {0x1d7ca, 0x1d7ca, 1},
++    {0x1d7cb, 0x1d7cb, 2},
++    {0x1df00, 0x1df09, 2},
++    {0x1df0b, 0x1df1e, 2},
++    {0x1df25, 0x1df2a, 2},
++};
+diff --git a/src/unicode.cpp b/src/unicode.cpp
+index 93996f9dd..aa8c86fa1 100644
+--- a/src/unicode.cpp
++++ b/src/unicode.cpp
+@@ -1047,6 +1047,84 @@ static std::vector<size_t> unicode_regex_split_custom_newlines(const std::string
+     return bpe_offsets;
+ }
+ 
++#include "unicode-letter-case.h"
++
++static int unicode_letter_case(uint32_t cpt, unicode_cpt_flags flags) {
++    const auto * first = std::begin(unicode_letter_case_exceptions);
++    const auto * last = std::end(unicode_letter_case_exceptions);
++    auto it = std::upper_bound(first, last, cpt, [](uint32_t value, const auto & range) { return value < range.first; });
++    if (it != first && cpt <= (it - 1)->last) {
++        return (it - 1)->kind;
++    }
++    return flags.is_uppercase ? 1 : flags.is_lowercase ? 2 : 0;
++}
++
++static std::vector<size_t> unicode_regex_split_custom_mistral(const std::string & text, const std::vector<size_t> & offsets) {
++    const auto cpts = unicode_cpts_from_utf8(text);
++    std::vector<size_t> result;
++    size_t begin = 0;
++    for (size_t length : offsets) {
++        const size_t end = begin + length;
++        auto flags = [&](size_t i) { return i < end ? unicode_cpt_flags_from_cpt(cpts[i]) : unicode_cpt_flags{}; };
++        auto upper = [&](size_t i) {
++            const auto f = flags(i);
++            return i < end && (f.is_accent_mark || (f.is_letter && unicode_letter_case(cpts[i], f) != 2));
++        };
++        auto lower = [&](size_t i) {
++            const auto f = flags(i);
++            return i < end && (f.is_accent_mark || (f.is_letter && unicode_letter_case(cpts[i], f) != 1));
++        };
++        auto punctuation = [&](size_t i) { const auto f = flags(i); return i < end && !f.is_whitespace && !f.is_letter && !f.is_number; };
++        auto whitespace = [&](size_t i) { return i < end && flags(i).is_whitespace; };
++        size_t pos = begin;
++        while (pos < end) {
++            size_t next = pos;
++            const auto f = flags(pos);
++            const bool prefix = cpts[pos] != '\r' && cpts[pos] != '\n' && !f.is_letter && !f.is_number;
++            // Ordered regex alternatives: optional prefix, upper* lower+, upper+ lower*.
++            for (int pattern = 0; pattern < 2 && next == pos; ++pattern) {
++                for (int skip = prefix ? 1 : 0; skip >= 0 && next == pos; --skip) {
++                    size_t start = pos + skip, cursor = start;
++                    while (upper(cursor)) { ++cursor; }
++                    if (pattern == 0) {
++                        while (cursor > start && !lower(cursor)) { --cursor; }
++                        if (lower(cursor)) {
++                            while (lower(cursor)) { ++cursor; }
++                            next = cursor;
++                        }
++                    } else if (cursor > start) {
++                        while (lower(cursor)) { ++cursor; }
++                        next = cursor;
++                    }
++                }
++            }
++            if (next == pos && f.is_number) { next = pos + 1; }
++            if (next == pos) {
++                size_t cursor = pos + (cpts[pos] == ' ' ? 1 : 0);
++                if (punctuation(cursor)) {
++                    while (punctuation(cursor)) { ++cursor; }
++                    while (cursor < end && (cpts[cursor] == '\r' || cpts[cursor] == '\n' || cpts[cursor] == '/')) { ++cursor; }
++                    next = cursor;
++                }
++            }
++            if (next == pos && f.is_whitespace) {
++                size_t cursor = pos, newline_end = pos;
++                while (whitespace(cursor)) {
++                    if (cpts[cursor] == '\r' || cpts[cursor] == '\n') { newline_end = cursor + 1; }
++                    ++cursor;
++                }
++                if (newline_end > pos) { next = newline_end; }
++                else { next = cursor < end && cursor - pos > 1 ? cursor - 1 : cursor; }
++            }
++            if (next == pos) { ++next; }
++            result.push_back(next - pos);
++            pos = next;
++        }
++        begin = end;
++    }
++    return result;
++}
++
+ static std::vector<size_t> unicode_regex_split_custom(const std::string & text, const std::string & regex_expr, const std::vector<size_t> & offsets) {
+     std::vector<size_t> bpe_offsets;
+ 
+@@ -1062,6 +1140,8 @@ static std::vector<size_t> unicode_regex_split_custom(const std::string & text,
+     } else if (
+            regex_expr == "(?:'[sS]|'[tT]|'[rR][eE]|'[vV][eE]|'[mM]|'[lL][lL]|'[dD])|[^\\r\\n\\p{L}\\p{N}]?[\\p{L}\\p{M}]+|\\p{N}| ?[^\\s\\p{L}\\p{M}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+") {
+         bpe_offsets = unicode_regex_split_custom_qwen35(text, offsets);
++    } else if (regex_expr == "[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]*[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]+|[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]+[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]*|\\p{N}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n/]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+") {
++        bpe_offsets = unicode_regex_split_custom_mistral(text, offsets);
+     } else if (regex_expr == "\\p{Han}+") {
+         // K2's first pattern - handle all K2 patterns together
+         bpe_offsets = unicode_regex_split_custom_kimi_k2(text, offsets);

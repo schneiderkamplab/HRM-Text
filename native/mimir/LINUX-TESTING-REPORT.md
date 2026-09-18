@@ -9,6 +9,15 @@ Current implementation identity: [linux-source-manifest.json](linux-source-manif
 Committed samples and diagnostics: [linux-evidence/](linux-evidence/README.md).
 Raw local evidence: `logs/linux-prefixlm/`, with fixed-revision reruns in `postfix/`.
 
+## Subsequent acceptance decision (2026-09-18)
+
+The numerical acceptance and sanitizer-policy questions below are superseded by
+[FINAL-QUALIFICATION.md](FINAL-QUALIFICATION.md). The user accepted the recorded
+numerical differences as nonblocking for this PR scope. The specific handled
+CUDA graph-update fallback now has a narrow policy runner; its final real-CUDA
+validation remains pending. Historical measurements and strict failures below
+remain unchanged.
+
 ## Source and environment
 
 The received parent was `42d2aebc7bf14230eca9bf295a5305b05de13e32`, pinning

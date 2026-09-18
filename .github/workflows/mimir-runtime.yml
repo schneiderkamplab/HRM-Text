@@ -34,10 +34,12 @@ jobs:
           python - <<'PYCODE'
           import hashlib, json
           from pathlib import Path
-          manifest = json.loads(Path('native/mimir/linux-source-manifest.json').read_text())
+          manifest = json.loads(Path('native/mimir/release-source-manifest.json').read_text())
           for path, digest in manifest['source_sha256'].items():
               assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
           PYCODE
+          python native/mimir/tests/test_cuda_memcheck.py
+          python native/mimir/tools/package_patches.py
           python -m pip install -r scripts/prefixlm_comparison/requirements.lock
       - name: Generate independent fixtures
         run: |
@@ -106,10 +108,12 @@ jobs:
           python - <<'PYCODE'
           import hashlib, json
           from pathlib import Path
-          manifest = json.loads(Path('native/mimir/linux-source-manifest.json').read_text())
+          manifest = json.loads(Path('native/mimir/release-source-manifest.json').read_text())
           for path, digest in manifest['source_sha256'].items():
               assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
           PYCODE
+          python native/mimir/tests/test_cuda_memcheck.py
+          python native/mimir/tools/package_patches.py
           python -m pip install -r scripts/prefixlm_comparison/requirements.lock
           PYTHONPATH=llama.cpp/gguf-py python scripts/prefixlm_comparison/fixture.py --output logs/prefixlm-comparison/fixture
           python native/mimir/tests/prepare_text_ci.py
@@ -122,11 +126,21 @@ jobs:
           ctest --test-dir logs/mimir-runtime/cuda --output-on-failure
           logs/mimir-runtime/cuda/mimir-backend-sampler-tests --device gpu \
             --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction
-          compute-sanitizer --tool memcheck --error-exitcode 1 \
-            logs/mimir-runtime/cuda/mimir-backend-sampler-tests --device gpu \
-            --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction
+          python native/mimir/tests/cuda_memcheck.py \
+            --output "$PWD/logs/mimir-final/cuda-sampler" \
+            --expect 'backend multi-output dist transaction test PASSED' -- \
+            "$PWD/logs/mimir-runtime/cuda/mimir-backend-sampler-tests" --device gpu \
+            --model "$PWD/logs/prefixlm-comparison/fixture/hrm-false.gguf" --test multi_output_dist_transaction
+          for arch in hrm_text llama; do
+            python native/mimir/tests/cuda_memcheck.py \
+              --output "$PWD/logs/mimir-final/cuda-$arch" --allow-graph-fallback \
+              --expect "PrefixLM engine checks passed ($arch)" -- \
+              "$PWD/logs/mimir-runtime/cuda/mimir-engine-tests" --prefix-lm -a "$arch" -s 42
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: mimir-cuda-persistence
-          path: logs/mimir-runtime/cuda/Testing/Temporary
+          path: |
+            logs/mimir-runtime/cuda/Testing/Temporary
+            logs/mimir-final

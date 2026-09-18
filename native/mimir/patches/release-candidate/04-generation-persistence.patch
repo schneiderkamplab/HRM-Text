@@ -1,0 +1,1355 @@
+diff --git a/common/reasoning-budget.cpp b/common/reasoning-budget.cpp
+index 4884299f3..bda8007ee 100644
+--- a/common/reasoning-budget.cpp
++++ b/common/reasoning-budget.cpp
+@@ -1,6 +1,7 @@
+ #include "reasoning-budget.h"
+ #include "common.h"
+ #include "trie.h"
++#include "nlohmann/json.hpp"
+ #include "unicode.h"
+ 
+ #include "log.h"
+@@ -308,3 +309,45 @@ bool common_reasoning_budget_force(struct llama_sampler * smpl) {
+ 
+     return true;
+ }
++
++static nlohmann::json reasoning_budget_config(const common_reasoning_budget_ctx & ctx) {
++    return {ctx.start_matcher.seqs, ctx.end_matcher.seqs, ctx.forced_tokens, ctx.budget};
++}
++
++std::vector<uint8_t> common_reasoning_budget_state_save(const llama_sampler * smpl) {
++    if (!smpl) { return {}; }
++    const auto & ctx = *static_cast<const common_reasoning_budget_ctx *>(smpl->ctx);
++    return nlohmann::json::to_cbor(nlohmann::json{
++        {"version", 1}, {"config", reasoning_budget_config(ctx)},
++        {"start", ctx.start_matcher.state}, {"end", ctx.end_matcher.state},
++        {"remaining", ctx.remaining}, {"phase", int(ctx.state)},
++        {"force_pos", ctx.force_pos}, {"end_match", ctx.end_match}});
++}
++
++bool common_reasoning_budget_state_load(llama_sampler * smpl, const std::vector<uint8_t> & data) {
++    if (!smpl) { return data.empty(); }
++    try {
++        auto & ctx = *static_cast<common_reasoning_budget_ctx *>(smpl->ctx);
++        const auto j = nlohmann::json::from_cbor(data);
++        if (j.at("version") != 1 || j.at("config") != reasoning_budget_config(ctx)) { return false; }
++        const auto start = j.at("start").get<uint64_t>();
++        const auto end = j.at("end").get<uint64_t>();
++        const auto remaining = j.at("remaining").get<int64_t>();
++        const auto phase = j.at("phase").get<int64_t>();
++        const auto pos = j.at("force_pos").get<uint64_t>();
++        const auto match = j.at("end_match").get<int64_t>();
++        if (start >= ctx.start_matcher.ac.num_states() || end >= ctx.end_matcher.ac.num_states() ||
++            remaining < std::min(0, ctx.budget) || remaining > std::max(0, ctx.budget) ||
++            phase < REASONING_BUDGET_IDLE || phase > REASONING_BUDGET_DONE ||
++            pos > ctx.forced_tokens.size() || match < -1 || match >= int64_t(ctx.end_matcher.seqs.size())) {
++            return false;
++        }
++        ctx.start_matcher.state = start;
++        ctx.end_matcher.state = end;
++        ctx.remaining = remaining;
++        ctx.state = static_cast<common_reasoning_budget_state>(phase);
++        ctx.force_pos = pos;
++        ctx.end_match = match;
++        return true;
++    } catch (const std::exception &) { return false; }
++}
+diff --git a/common/reasoning-budget.h b/common/reasoning-budget.h
+index 1b89a04c4..fd7fe4cf1 100644
+--- a/common/reasoning-budget.h
++++ b/common/reasoning-budget.h
+@@ -50,3 +50,7 @@ const llama_tokens * common_reasoning_budget_get_end_match(const struct llama_sa
+ // Manually transition the reasoning budget sampler into the FORCING state.
+ // Returns true if the transition occurred.
+ bool common_reasoning_budget_force(struct llama_sampler * smpl);
++
++// Versioned snapshot; restore requires identical delimiter and budget configuration.
++std::vector<uint8_t> common_reasoning_budget_state_save(const llama_sampler * smpl);
++bool common_reasoning_budget_state_load(llama_sampler * smpl, const std::vector<uint8_t> & data);
+diff --git a/common/sampling.cpp b/common/sampling.cpp
+index d91579c4f..e6628ec45 100644
+--- a/common/sampling.cpp
++++ b/common/sampling.cpp
+@@ -2,6 +2,7 @@
+ 
+ #include "common.h"
+ #include "fit.h"
++#include "nlohmann/json.hpp"
+ #include "log.h"
+ #include "reasoning-budget.h"
+ 
+@@ -934,6 +935,48 @@ std::vector<common_sampler_type> common_sampler_types_from_chars(const std::stri
+ }
+ 
+ 
++static std::vector<uint8_t> sampler_snapshot(llama_sampler * sampler) {
++    std::vector<uint8_t> data(llama_sampler_state_get_size(sampler));
++    if (data.empty() || llama_sampler_state_get_data(sampler, data.data(), data.size()) != data.size()) {
++        throw std::runtime_error("unsupported sampler snapshot");
++    }
++    return data;
++}
++
+ bool common_sampler_uses_backend(const common_sampler * sampler) {
+     return sampler && sampler->params.backend_sampling;
+ }
++
++std::vector<uint8_t> common_sampler_state_save(common_sampler * sampler) {
++    if (!sampler) { return {}; }
++    try {
++        return nlohmann::json::to_cbor(nlohmann::json{
++            {"version", 2}, {"prev", sampler->prev.to_vector()},
++            {"grammar", sampler_snapshot(sampler->grmr)},
++            {"reasoning", common_reasoning_budget_state_save(sampler->rbudget)},
++            {"chain", sampler_snapshot(sampler->chain)}});
++    } catch (const std::exception &) { return {}; }
++}
++
++bool common_sampler_state_load(common_sampler * sampler, const std::vector<uint8_t> & data) {
++    if (!sampler || common_sampler_state_save(sampler).empty()) { return false; }
++    try {
++        const auto j = nlohmann::json::from_cbor(data);
++        if (j.at("version") != 2) { return false; }
++        const auto prev = j.at("prev").get<llama_tokens>();
++        const auto grammar = j.at("grammar").get<std::vector<uint8_t>>();
++        const auto reasoning = j.at("reasoning").get<std::vector<uint8_t>>();
++        const auto chain = j.at("chain").get<std::vector<uint8_t>>();
++        if (prev.size() > sampler->prev.capacity) { return false; }
++        common_sampler_ptr copy(common_sampler_clone(sampler));
++        if (!llama_sampler_state_set_data(copy->grmr, grammar.data(), grammar.size()) ||
++            !common_reasoning_budget_state_load(copy->rbudget, reasoning) ||
++            !llama_sampler_state_set_data(copy->chain, chain.data(), chain.size())) { return false; }
++        copy->prev.clear();
++        for (auto token : prev) { copy->prev.push_back(token); }
++        copy->cur.clear();
++        copy->cur_p = {};
++        common_sampler_copy(copy.get(), sampler);
++        return true;
++    } catch (const std::exception &) { return false; }
++}
+diff --git a/common/sampling.h b/common/sampling.h
+index d6ef0275c..9a6bf6de5 100644
+--- a/common/sampling.h
++++ b/common/sampling.h
+@@ -124,6 +124,11 @@ struct common_sampler_deleter {
+ 
+ typedef std::unique_ptr<common_sampler, common_sampler_deleter> common_sampler_ptr;
+ 
++// Host persistence for the common sampler. Empty/false means unsupported or invalid;
++// Includes grammar, reasoning-budget state and backend RNG/history; synchronize attached contexts first.
++std::vector<uint8_t> common_sampler_state_save(struct common_sampler * sampler);
++bool common_sampler_state_load(struct common_sampler * sampler, const std::vector<uint8_t> & data);
++
+ bool common_sampler_uses_backend(const common_sampler * sampler);
+ 
+ // Sample a restored boundary row using an unattached host sampler.
+diff --git a/docs/development/generation-persistence.md b/docs/development/generation-persistence.md
+new file mode 100644
+index 000000000..b2f8e3a5f
+--- /dev/null
++++ b/docs/development/generation-persistence.md
+@@ -0,0 +1,81 @@
++# Sampler persistence and retained server generations
++
++This optional extension is independent of PrefixLM. It applies to ordinary text
++causal decoding and integrates with PrefixLM when that attention patch is present.
++It does not change the library KV format or turn model snapshots into self-contained
++checkpoints. Use the same runtime, model, vocabulary, KV configuration, fixed adapters
++and effective sampling configuration when restoring. Cross-version/hardware bitwise
++reproducibility is not promised.
++
++## Samplers
++
++`llama_sampler_state_get_size/get_data/set_data` preserve built-in sampler RNG,
++adaptation, history and grammar state. Grammar stores rule/element offsets rather
++than pointers, including partial UTF-8 and lazy-trigger buffers. Configuration must
++match; invalid data leaves the destination unchanged. Backend restore uses existing
++graph-safe copy hooks, preserving tensor bindings and committed/transactional state.
++Synchronize the attached context before snapshot or restore. Graph output buffers
++are not snapshots.
++
++Common sampler snapshots also preserve accepted-token history and the complete
++reasoning-budget state machine, including delimiter matchers, UTF-8 waiting and
++manual forcing. Grammar and reasoning constraints retain the ordinary host fallback.
++Unknown custom samplers reject these APIs: their owners serialize application state
++and use existing clone/copy hooks. Encoder/decoder modes have no automatic serializer
++for arbitrary user-defined state either.
++
++The built-in sampler format is SMP2; the common bundle version is 2. Sampler and KV
++snapshots must describe the same boundary. If sampling already selected the next
++token, preserve that pending token instead of sampling it again.
++
++## Server protocol
++
++A single text generation on `/completion`, `/v1/completions`, `/v1/chat/completions`
++or `/v1/responses` may set `retain_state: true` and an explicit `id_slot`. When it
++reaches `n_predict`, the server preserves KV, sampler state, the selected pending
++token and output bookkeeping. Continue with `resume: true`, the original prompt,
++matching sampling/parser settings and a new additional `n_predict` budget. Set
++`retain_state` again to keep the next boundary. A new user turn is a fresh request.
++
++With `--slot-save-path`, `POST /slots/{id}?action=save` and `restore`, with a
++`filename`, persist or restore the retained generation across process restart and
++slot-ID remapping. Retained saves use a temporary file plus rename. Slot metadata
++uses a -2 tag, byte length and version-3 JSON envelope. Ordinary prompt/KV-only
++files retain their existing format and can still be restored; they do not become
++resumable generations. Older development generation envelopes are rejected.
++
++Retained slots are excluded from automatic idle-cache eviction and automatic slot
++selection. Explicitly replacing, erasing or consuming the retained generation
++clears its bookkeeping. Ordinary causal decoding keeps its normal idle prompt/KV
++behavior after generation completes. Live adapter mutation is blocked while retained
++state exists; restore remains the caller's responsibility to configure identically.
++
++OpenAI parsing is reconstructed from saved emitted text and the original parser
++configuration, with stable generated tool-call IDs. Native text and OpenAI streaming
++deltas contain only the continuation. Nonstream OpenAI messages and final Responses
++objects are cumulative. Each resumed HTTP request has fresh response IDs/framing;
++a Responses tool with continuing arguments is reannounced with its logical call ID.
++This is generation continuation, not replay of an interrupted network connection.
++
++Retention requires a single text decoder task, explicit slot, fixed adapters and no
++speculation. Encoder/encoder-decoder models, noncausal attention, multimodal input,
++activated/per-request LoRA, Anthropic transport and parent/child groups reject it.
++Ordinary live `n > 1` scheduling remains unchanged. Persisting an entire scheduling
++group would be a new generic feature, not encoder/decoder parity.
++
++## Bounded tests
++
++Build the existing tests with `LLAMA_BUILD_TESTS=ON`:
++
++```sh
++build/bin/test-chat --parser-continuation
++build/bin/test-reasoning-budget
++build/bin/test-backend-sampler --model tiny-causal.gguf --device cpu --test host_persistence
++build/bin/test-backend-sampler --model tiny-causal.gguf --device cpu --test multi_output_dist_transaction
++build/bin/test-backend-sampler --model tiny-causal.gguf --device gpu --test multi_output_dist_transaction
++```
++
++The consuming project's HTTP harness additionally checks uninterrupted versus split
++generation, pending-token accounting, fresh-process restore, slot remapping, legacy
++prompt files and OpenAI parsing on ordinary causal and PrefixLM paths. Qualify CPU
++and actual GPU execution on each deployment platform before claiming support there.
+diff --git a/include/llama.h b/include/llama.h
+index 07178ef41..c97d9bc35 100644
+--- a/include/llama.h
++++ b/include/llama.h
+@@ -1573,6 +1573,15 @@ extern "C" {
+     // Returns the seed used by the sampler if applicable, LLAMA_DEFAULT_SEED otherwise
+     LLAMA_API uint32_t llama_sampler_get_seed(const struct llama_sampler * smpl);
+ 
++    // Sampler snapshots, independent of model/KV state, including built-in grammar and backend RNG/history.
++    // Recreate the same configuration and vocabulary before loading. Synchronize any attached context first.
++    // Return 0 for unsupported/custom samplers or invalid data. Invalid data leaves the sampler unchanged.
++    // Restore preserves backend graph bindings; graph outputs are not serialized. Not a cross-version format.
++    LLAMA_API size_t llama_sampler_state_get_size(struct llama_sampler * smpl);
++    LLAMA_API size_t llama_sampler_state_get_data(struct llama_sampler * smpl, uint8_t * dst, size_t size);
++    LLAMA_API size_t llama_sampler_state_set_data(struct llama_sampler * smpl, const uint8_t * src, size_t size);
++
++
+     /// @details Sample and accept a token from the idx-th output of the last evaluation
+     // For multiple outputs from one sampler, call this function in output order without gaps.
+     //
+diff --git a/src/llama-grammar.cpp b/src/llama-grammar.cpp
+index deffec8c0..0d8238d6a 100644
+--- a/src/llama-grammar.cpp
++++ b/src/llama-grammar.cpp
+@@ -1404,6 +1404,7 @@ void llama_grammar_accept_impl(struct llama_grammar & grammar, llama_token token
+         if (std::find(grammar.trigger_tokens.begin(), grammar.trigger_tokens.end(), token) != grammar.trigger_tokens.end()) {
+             grammar.awaiting_trigger = false;
+             grammar.trigger_buffer.clear();
++            grammar.trigger_buffer_positions.clear();
+             llama_grammar_accept_token(grammar, token, piece);
+             LLAMA_LOG_DEBUG("Grammar triggered on token %u (`%s`)", token, piece.c_str());
+             return;
+diff --git a/src/llama-sampler.cpp b/src/llama-sampler.cpp
+index 61d28ad8a..5db03a3d4 100644
+--- a/src/llama-sampler.cpp
++++ b/src/llama-sampler.cpp
+@@ -19,6 +19,8 @@
+ #include <random>
+ #include <unordered_map>
+ #include <stdexcept>
++#include <sstream>
++#include <locale>
+ 
+ // the ring buffer works similarly to std::deque, but with a fixed capacity
+ template<typename T>
+@@ -2382,6 +2384,7 @@ static struct llama_sampler * llama_sampler_xtc_clone(const struct llama_sampler
+     {
+         auto * result_ctx = (llama_sampler_xtc *) result->ctx;
+ 
++        result_ctx->seed_cur = ctx->seed_cur;
+         result_ctx->rng = ctx->rng;
+     }
+ 
+@@ -2502,6 +2505,7 @@ static struct llama_sampler * llama_sampler_mirostat_clone(const struct llama_sa
+         auto * result_ctx = (llama_sampler_mirostat *) result->ctx;
+ 
+         result_ctx->mu  = ctx->mu;
++        result_ctx->seed_cur = ctx->seed_cur;
+         result_ctx->rng = ctx->rng;
+     }
+ 
+@@ -2615,6 +2619,7 @@ static struct llama_sampler * llama_sampler_mirostat_v2_clone(const struct llama
+         auto * result_ctx = (llama_sampler_mirostat_v2 *) result->ctx;
+ 
+         result_ctx->mu  = ctx->mu;
++        result_ctx->seed_cur = ctx->seed_cur;
+         result_ctx->rng = ctx->rng;
+     }
+ 
+@@ -3829,7 +3834,10 @@ static struct llama_sampler * llama_sampler_adaptive_p_clone(const struct llama_
+     auto * result     = llama_sampler_init_adaptive_p(ctx->target, ctx->decay, ctx->seed);
+     auto * result_ctx = (llama_sampler_adaptive_p *) result->ctx;
+ 
+-    // copy everything (target, decay, seed, and RNG are already set)
++    // Preserve the complete mutable state, including an advanced RNG.
++    result_ctx->seed_cur          = ctx->seed_cur;
++    result_ctx->rng               = ctx->rng;
++    result_ctx->original_probs    = ctx->original_probs;
+     result_ctx->weighted_sum      = ctx->weighted_sum;
+     result_ctx->total_weight      = ctx->total_weight;
+     result_ctx->pending_token_id  = ctx->pending_token_id;
+@@ -4383,3 +4391,233 @@ void llama_perf_sampler_reset(struct llama_sampler * chain) {
+     ctx->t_sample_us = 0;
+     ctx->n_sample    = 0;
+ }
++
++// Host sampler snapshots. Configuration is checked before committing a cloned state.
++// Unsupported/custom samplers fail explicitly rather than silently resetting randomness.
++namespace {
++struct sampler_state_io {
++    std::vector<uint8_t> bytes;
++    const uint8_t * src = nullptr;
++    size_t left = 0;
++    bool reading = false;
++
++    template<typename T> void value(T & v) {
++        if (reading) {
++            if (left < sizeof(T)) { throw std::runtime_error("truncated sampler state"); }
++            std::memcpy(&v, src, sizeof(T)); src += sizeof(T); left -= sizeof(T);
++        } else {
++            const auto * p = reinterpret_cast<const uint8_t *>(&v);
++            bytes.insert(bytes.end(), p, p + sizeof(T));
++        }
++    }
++    void value(bool & v) {
++        uint8_t byte = v ? 1 : 0;
++        value(byte);
++        if (byte > 1) { throw std::runtime_error("invalid sampler boolean"); }
++        v = byte != 0;
++    }
++    template<typename T> void config(const T & expected) {
++        T saved = expected; value(saved);
++        if (std::memcmp(&saved, &expected, sizeof(T))) { throw std::runtime_error("sampler configuration mismatch"); }
++    }
++    template<typename T> void vector(std::vector<T> & values) {
++        uint64_t size = values.size(); value(size);
++        if (reading) {
++            if (size > left / sizeof(T)) { throw std::runtime_error("invalid sampler vector size"); }
++            values.resize(size);
++        }
++        for (auto & v : values) { value(v); }
++    }
++    void text(std::string & v) {
++        std::vector<char> chars(v.begin(), v.end()); vector(chars);
++        if (reading) { v.assign(chars.begin(), chars.end()); }
++    }
++    void rng(std::mt19937 & rng) {
++        std::ostringstream output; output.imbue(std::locale::classic()); output << rng;
++        std::string state = output.str(); text(state);
++        if (reading) {
++            std::istringstream input(state); input.imbue(std::locale::classic());
++            if (!(input >> rng)) { throw std::runtime_error("invalid sampler RNG state"); }
++            input >> std::ws;
++            if (!input.eof()) { throw std::runtime_error("trailing sampler RNG data"); }
++        }
++    }
++    void history(llama_sampler * sampler, ring_buffer<llama_token> & prev) {
++        auto tokens = prev.to_vector(); vector(tokens);
++        if (reading) {
++            if (tokens.size() > prev.capacity) { throw std::runtime_error("sampler history exceeds capacity"); }
++            llama_sampler_reset(sampler);
++            for (auto token : tokens) { llama_sampler_accept(sampler, token); }
++        }
++    }
++};
++
++void sampler_state_transfer(llama_sampler * sampler, sampler_state_io & io) {
++    const char * sampler_name = sampler ? llama_sampler_name(sampler) : "null";
++    std::string name = sampler_name ? sampler_name : "unnamed";
++    if (!name.empty() && (name.front() == '+' || name.front() == '-')) { name.erase(0, 1); }
++    auto saved_name = name; io.text(saved_name);
++    if (saved_name != name) { throw std::runtime_error("sampler type mismatch"); }
++    if (!sampler) { return; }
++    const auto * type = sampler->iface;
++    if (type == &llama_sampler_chain_i) {
++        const int32_t count = llama_sampler_chain_n(sampler); io.config(count);
++        for (int32_t i = 0; i < count; ++i) { sampler_state_transfer(llama_sampler_chain_get(sampler, i), io); }
++    } else if (type == &llama_sampler_empty_i || type == &llama_sampler_greedy_i || type == &llama_sampler_infill_i) {
++        // No persistent mutable state. Infill requires the same vocabulary, like model KV snapshots.
++    } else if (type == &llama_sampler_dist_i) {
++        auto & s = *static_cast<llama_sampler_dist *>(sampler->ctx);
++        io.config(s.seed); io.value(s.seed_cur); io.rng(s.rng);
++        io.rng(s.rng_backend);
++        io.value(s.n_backend_draws_generated); io.value(s.n_backend_draws_committed);
++        if (s.n_backend_draws_committed > s.n_backend_draws_generated) { throw std::runtime_error("invalid backend draw counters"); }
++    } else if (type == &llama_sampler_top_k_i) {
++        io.config(static_cast<llama_sampler_top_k *>(sampler->ctx)->k);
++    } else if (type == &llama_sampler_top_p_i) {
++        const auto & s = *static_cast<llama_sampler_top_p *>(sampler->ctx); io.config(s.p); io.config(s.min_keep);
++    } else if (type == &llama_sampler_min_p_i) {
++        const auto & s = *static_cast<llama_sampler_min_p *>(sampler->ctx); io.config(s.p); io.config(s.min_keep);
++    } else if (type == &llama_sampler_typical_i) {
++        const auto & s = *static_cast<llama_sampler_typical *>(sampler->ctx); io.config(s.p); io.config(s.min_keep);
++    } else if (type == &llama_sampler_temp_i) {
++        io.config(static_cast<llama_sampler_temp *>(sampler->ctx)->temp);
++    } else if (type == &llama_sampler_temp_ext_i) {
++        const auto & s = *static_cast<llama_sampler_temp_ext *>(sampler->ctx);
++        io.config(s.temp); io.config(s.delta); io.config(s.exponent);
++    } else if (type == &llama_sampler_top_n_sigma_i) {
++        io.config(static_cast<llama_sampler_top_n_sigma *>(sampler->ctx)->n);
++    } else if (type == &llama_sampler_xtc_i) {
++        auto & s = *static_cast<llama_sampler_xtc *>(sampler->ctx);
++        io.config(s.probability); io.config(s.threshold); io.config(s.min_keep); io.config(s.seed);
++        io.value(s.seed_cur); io.rng(s.rng);
++    } else if (type == &llama_sampler_mirostat_i) {
++        auto & s = *static_cast<llama_sampler_mirostat *>(sampler->ctx);
++        io.config(s.n_vocab); io.config(s.seed); io.config(s.tau); io.config(s.eta); io.config(s.m);
++        io.value(s.seed_cur); io.value(s.mu); io.rng(s.rng);
++    } else if (type == &llama_sampler_mirostat_v2_i) {
++        auto & s = *static_cast<llama_sampler_mirostat_v2 *>(sampler->ctx);
++        io.config(s.seed); io.config(s.tau); io.config(s.eta);
++        io.value(s.seed_cur); io.value(s.mu); io.rng(s.rng);
++    } else if (type == &llama_sampler_adaptive_p_i) {
++        auto & s = *static_cast<llama_sampler_adaptive_p *>(sampler->ctx);
++        io.config(s.target); io.config(s.decay); io.config(s.seed);
++        io.value(s.seed_cur); io.rng(s.rng); io.value(s.weighted_sum); io.value(s.total_weight);
++        io.vector(s.original_probs); io.value(s.pending_token_id); io.value(s.pending_token_idx);
++    } else if (type == &llama_sampler_penalties_i) {
++        auto & s = *static_cast<llama_sampler_penalties *>(sampler->ctx);
++        io.config(s.n_vocab); io.config(s.penalty_last_n); io.config(s.penalty_repeat); io.config(s.penalty_freq); io.config(s.penalty_present);
++        io.history(sampler, s.prev);
++    } else if (type == &llama_sampler_dry_i) {
++        auto & s = *static_cast<llama_sampler_dry *>(sampler->ctx);
++        io.config(s.dry_multiplier); io.config(s.dry_base); io.config(s.dry_allowed_length); io.config(s.dry_penalty_last_n);
++        std::vector<std::pair<llama_token, std::vector<llama_token>>> breakers(s.dry_processed_breakers.begin(), s.dry_processed_breakers.end());
++        std::sort(breakers.begin(), breakers.end());
++        io.config(uint64_t(breakers.size()));
++        for (const auto & entry : breakers) {
++            io.config(entry.first); io.config(uint64_t(entry.second.size()));
++            for (auto token : entry.second) { io.config(token); }
++        }
++        io.history(sampler, s.last_tokens);
++    } else if (type == &llama_sampler_grammar_i) {
++        auto & s = *static_cast<llama_sampler_grammar *>(sampler->ctx);
++        auto config_text = [&](const std::string & expected) {
++            auto saved = expected; io.text(saved);
++            if (saved != expected) { throw std::runtime_error("grammar configuration mismatch"); }
++        };
++        config_text(s.grammar_str); config_text(s.grammar_root);
++        io.config(bool(s.grammar));
++        if (!s.grammar) { return; }
++        auto & g = *s.grammar;
++        io.config(g.lazy);
++        io.config(uint64_t(g.trigger_tokens.size()));
++        for (auto token : g.trigger_tokens) { io.config(token); }
++        io.config(uint64_t(g.trigger_patterns.size()));
++        for (const auto & pattern : g.trigger_patterns) { config_text(pattern.pattern); }
++        io.value(g.awaiting_trigger); io.text(g.trigger_buffer);
++        io.value(g.partial_utf8.value); io.value(g.partial_utf8.n_remain);
++        if (g.partial_utf8.n_remain < -1 || g.partial_utf8.n_remain > 3) { throw std::runtime_error("invalid grammar UTF-8 state"); }
++        uint64_t positions = g.trigger_buffer_positions.size(); io.value(positions);
++        if (io.reading) {
++            if (positions > io.left / (sizeof(llama_token) + 2*sizeof(size_t))) { throw std::runtime_error("invalid trigger positions"); }
++            g.trigger_buffer_positions.resize(positions);
++        }
++        for (auto & entry : g.trigger_buffer_positions) {
++            io.value(entry.first); io.value(entry.second.first); io.value(entry.second.second);
++            if (entry.first < 0 || (s.vocab && entry.first >= int(s.vocab->n_tokens())) ||
++                entry.second.first > entry.second.second || entry.second.second > g.trigger_buffer.size()) {
++                throw std::runtime_error("invalid grammar trigger position");
++            }
++        }
++        std::map<const llama_grammar_element *, std::pair<uint32_t, uint32_t>> offsets;
++        for (uint32_t r = 0; r < g.rules.size(); ++r) {
++            for (uint32_t e = 0; e < g.rules[r].size(); ++e) { offsets[&g.rules[r][e]] = {r, e}; }
++        }
++        uint64_t count = g.stacks.size(); io.value(count);
++        if (io.reading) {
++            if (count > io.left / sizeof(uint64_t)) { throw std::runtime_error("invalid grammar stacks"); }
++            g.stacks.resize(count);
++        }
++        for (auto & stack : g.stacks) {
++            uint64_t size = stack.size(); io.value(size);
++            if (io.reading) {
++                if (size > io.left / (2*sizeof(uint32_t))) { throw std::runtime_error("invalid grammar stack"); }
++                stack.resize(size);
++            }
++            for (auto & element : stack) {
++                auto offset = io.reading ? std::make_pair(0u, 0u) : offsets.at(element);
++                io.value(offset.first); io.value(offset.second);
++                if (offset.first >= g.rules.size() || offset.second >= g.rules[offset.first].size()) {
++                    throw std::runtime_error("invalid grammar rule offset");
++                }
++                if (io.reading) { element = &g.rules[offset.first][offset.second]; }
++            }
++        }
++    } else if (type == &llama_sampler_logit_bias_i) {
++        const auto & s = *static_cast<llama_sampler_logit_bias *>(sampler->ctx);
++        io.config(s.n_vocab); io.config(uint64_t(s.logit_bias.size()));
++        for (const auto & bias : s.logit_bias) { io.config(bias.token); io.config(bias.bias); }
++    } else {
++        throw std::runtime_error("sampler does not support persistent state: " + name);
++    }
++}
++
++std::vector<uint8_t> sampler_state_save(llama_sampler * sampler) {
++    sampler_state_io io;
++    io.config(uint32_t(0x53504d32));
++    sampler_state_transfer(sampler, io);
++    return std::move(io.bytes);
++}
++}
++
++size_t llama_sampler_state_get_size(llama_sampler * sampler) {
++    try { return sampler_state_save(sampler).size(); }
++    catch (const std::exception & e) { LLAMA_LOG_ERROR("%s: %s\n", __func__, e.what()); return 0; }
++}
++
++size_t llama_sampler_state_get_data(llama_sampler * sampler, uint8_t * dst, size_t size) {
++    try {
++        auto bytes = sampler_state_save(sampler);
++        if (!dst || size < bytes.size()) { return 0; }
++        std::memcpy(dst, bytes.data(), bytes.size()); return bytes.size();
++    } catch (const std::exception & e) { LLAMA_LOG_ERROR("%s: %s\n", __func__, e.what()); return 0; }
++}
++
++size_t llama_sampler_state_set_data(llama_sampler * sampler, const uint8_t * src, size_t size) {
++    llama_sampler * copy = nullptr;
++    try {
++        if (!src || !size) { return 0; }
++        // Check support before cloning an arbitrary user-provided sampler.
++        sampler_state_save(sampler);
++        copy = sampler ? llama_sampler_clone(sampler) : nullptr;
++        sampler_state_io io; io.src = src; io.left = size; io.reading = true;
++        io.config(uint32_t(0x53504d32));
++        sampler_state_transfer(copy, io);
++        if (io.left) { throw std::runtime_error("trailing sampler state data"); }
++        if (sampler) { llama_sampler_copy(copy, sampler); }
++        llama_sampler_free(copy);
++        return size;
++    } catch (const std::exception & e) {
++        llama_sampler_free(copy);
++        LLAMA_LOG_ERROR("%s: %s\n", __func__, e.what()); return 0;
++    }
++}
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index efb396a1e..06ff16c84 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -163,6 +163,8 @@ if (NOT WIN32 OR NOT BUILD_SHARED_LIBS)
+     llama_build_and_test(test-chat.cpp WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+     target_include_directories(test-chat PRIVATE ${PROJECT_SOURCE_DIR}/tools/server)
+     target_link_libraries(test-chat PRIVATE server-context)
++    target_compile_definitions(test-chat PRIVATE LLAMA_TEST_SERVER_STATE)
++    add_test(NAME test-parser-continuation COMMAND test-chat --parser-continuation)
+     llama_build_and_test(test-json-schema-to-grammar.cpp)
+ 
+     if (NOT GGML_BACKEND_DL)
+diff --git a/tests/test-backend-sampler.cpp b/tests/test-backend-sampler.cpp
+index c23e7248d..d27960098 100644
+--- a/tests/test-backend-sampler.cpp
++++ b/tests/test-backend-sampler.cpp
+@@ -2,6 +2,7 @@
+ #include "llama.h"
+ #include "llama-cpp.h"
+ #include "common.h"
++#include "sampling.h"
+ 
+ #ifdef NDEBUG
+ #undef NDEBUG
+@@ -1711,6 +1712,43 @@ static void test_backend_multi_sequence_multi_output_dist(const test_params & pa
+     printf("backend multi-sequence multi-output dist test PASSED\n");
+ }
+ 
++static void test_host_sampler_persistence(const test_params & params) {
++    auto * model = params.model.get();
++    const int n_vocab = llama_vocab_n_tokens(llama_model_get_vocab(model));
++    auto require = [](bool ok, const char * message) { if (!ok) { throw std::runtime_error(message); } };
++        for (int kind = 0; kind < 4; ++kind) {
++            common_params_sampling sp;
++            sp.seed = 123; sp.temp = 0.8f;
++            sp.penalty_repeat = 1.1f; sp.penalty_last_n = 16;
++            if (kind == 1) { sp.mirostat = 2; sp.seed = LLAMA_DEFAULT_SEED; }
++            if (kind == 2) { sp.adaptive_target = 0.2f; sp.samplers.push_back(COMMON_SAMPLER_TYPE_ADAPTIVE_P); }
++            if (kind == 3) { sp.dry_multiplier = 0.5f; sp.xtc_probability = 0.2f; }
++            common_sampler_ptr sampler(common_sampler_init(model, sp));
++            auto draw = [&](common_sampler * target) {
++                std::vector<llama_token_data> candidates;
++                for (int i = 0; i < n_vocab; ++i) { candidates.push_back({i, std::sin(float(i)), 0.0f}); }
++                llama_token_data_array cur{candidates.data(), candidates.size(), -1, false};
++                llama_sampler_apply(common_sampler_get(target), &cur);
++                const auto token = cur.data[cur.selected].id;
++                common_sampler_accept(target, token, true);
++                return token;
++            };
++            for (int i = 0; i < 7; ++i) { draw(sampler.get()); }
++            const auto state = common_sampler_state_save(sampler.get());
++            require(!state.empty(), "sampler state supported");
++            std::vector<llama_token> continuation;
++            for (int i = 0; i < 20; ++i) { continuation.push_back(draw(sampler.get())); }
++            common_sampler_ptr restored(common_sampler_init(model, sp));
++            require(common_sampler_state_load(restored.get(), state), "sampler state round trip");
++            require(common_sampler_get_seed(restored.get()) == common_sampler_get_seed(sampler.get()), "sampler resolved seed preserved");
++            for (auto token : continuation) { require(draw(restored.get()) == token, "stochastic continuation including sampler history"); }
++            auto truncated = state; truncated.pop_back();
++            require(!common_sampler_state_load(restored.get(), truncated), "truncated sampler rejected atomically");
++            require(draw(restored.get()) == draw(sampler.get()), "failed sampler restore preserves random stream");
++        }
++    printf("host sampler persistence test PASSED\n");
++}
++
+ static void test_backend_multi_output_dist_transaction(const test_params & params) {
+     const llama_seq_id seq_id = 0;
+     const uint32_t seed = 95;
+@@ -1752,7 +1790,7 @@ static void test_backend_multi_output_dist_transaction(const test_params & param
+     auto decode = [&]() {
+         llama_batch batch = llama_batch_init(3, 0, 1);
+         for (int32_t i = 0; i < 3; ++i) {
+-            common_batch_add(batch, llama_vocab_bos(vocab), pos++, { seq_id }, true);
++            common_batch_add(batch, llama_vocab_bos(vocab) == LLAMA_TOKEN_NULL ? 0 : llama_vocab_bos(vocab), pos++, { seq_id }, true);
+         }
+         GGML_ASSERT(llama_decode(test_ctx.ctx.get(), batch) == 0);
+         return batch;
+@@ -1768,11 +1806,17 @@ static void test_backend_multi_output_dist_transaction(const test_params & param
+     llama_batch_free(batch);
+ 
+     batch = decode();
+-    llama_sampler_ptr saved(llama_sampler_clone(chain.get()));
++    llama_synchronize(test_ctx.ctx.get());
++    std::vector<uint8_t> saved(llama_sampler_state_get_size(chain.get()));
++    GGML_ASSERT(!saved.empty());
++    GGML_ASSERT(llama_sampler_state_get_data(chain.get(), saved.data(), saved.size()) == saved.size());
+     verify_random(0, randoms[2]);
+     llama_batch_free(batch);
+ 
+-    llama_sampler_copy(saved.get(), chain.get());
++    GGML_ASSERT(llama_sampler_state_set_data(chain.get(), saved.data(), saved.size()) == saved.size());
++    // Restore into a live graph-bound chain; graph tensor bindings must survive.
++    auto truncated = saved; truncated.pop_back();
++    GGML_ASSERT(llama_sampler_state_set_data(chain.get(), truncated.data(), truncated.size()) == 0);
+ 
+     batch = decode();
+     verify_random(0, randoms[2]);
+@@ -2012,6 +2056,7 @@ static const backend_test_case BACKEND_TESTS[] = {
+     { "set_sampler",     test_backend_set_sampler,             true  },
+     { "multi_output_limit",    test_backend_multi_output_limit,      true },
+     { "multi_sequence_multi_output_dist", test_backend_multi_sequence_multi_output_dist, true },
++    { "host_persistence", test_host_sampler_persistence, true },
+     { "multi_output_dist_transaction", test_backend_multi_output_dist_transaction, true },
+     { "multi_output_sampling_chain", test_backend_multi_output_sampling_chain, true },
+     { "multi_output_cpu",      test_backend_multi_output_cpu_suffix, true },
+diff --git a/tests/test-chat.cpp b/tests/test-chat.cpp
+index 30a7237e3..d9ca8423d 100644
+--- a/tests/test-chat.cpp
++++ b/tests/test-chat.cpp
+@@ -10,6 +10,10 @@
+ #include "../tools/server/server-chat.h"
+ #include "chat-auto-parser.h"
+ #include "chat.h"
++#ifdef LLAMA_TEST_SERVER_STATE
++#include "../tools/server/server-task.h"
++#include "chat-peg-parser.h"
++#endif
+ #include "common.h"
+ #include "ggml.h"
+ #include "log.h"
+@@ -7320,7 +7324,61 @@ static void test_msg_diffs_compute() {
+     }
+ }
+ 
++#ifdef LLAMA_TEST_SERVER_STATE
++static void test_parser_continuation() {
++    common_chat_parser_params params;
++    params.format = COMMON_CHAT_FORMAT_PEG_NATIVE;
++    params.reasoning_format = COMMON_REASONING_FORMAT_AUTO;
++    const auto tools = json::parse(R"([{"type":"function","function":{"name":"weather","parameters":{"type":"object","properties":{"city":{"type":"string"}},"required":["city"]}}}])");
++    params.parser = build_chat_peg_parser([&](common_chat_peg_builder & p) {
++        auto reasoning = p.optional("<think>" + p.reasoning(p.until("</think>")) + "</think>");
++        auto tool = p.standard_json_tools("<tool_call>[", "]</tool_call>", tools, false, false);
++        return p.sequence({reasoning, p.content(p.until("<tool_call>")), p.optional(tool), p.end()});
++    });
++    const std::string text = R"(<think>Check city</think>Looking up<tool_call>[{"name":"weather","arguments":{"city":"Odense"}}]</tool_call>)";
++    // Split within reasoning, the closing delimiter, plain content and tool arguments.
++    for (size_t split : {size_t(10), size_t(21), size_t(29), size_t(85)}) {
++        task_result_state live(params), restored(params);
++        live.prime_resume("", "stable");
++        std::vector<common_chat_msg_diff> ignored, expected, actual;
++        live.update_chat_msg(text.substr(0, split), true, ignored);
++        restored.prime_resume(text.substr(0, split), "stable");
++        const auto a = live.update_chat_msg(text.substr(split), false, expected);
++        const auto b = restored.update_chat_msg(text.substr(split), false, actual);
++        GGML_ASSERT(a == b && a.tool_calls.size() == 1 && a.tool_calls[0].id == "call_stable_0");
++        GGML_ASSERT(expected.size() == actual.size());
++        for (size_t i = 0; i < expected.size(); ++i) {
++            GGML_ASSERT(expected[i].content_delta == actual[i].content_delta);
++            GGML_ASSERT(expected[i].reasoning_content_delta == actual[i].reasoning_content_delta);
++            GGML_ASSERT(expected[i].tool_call_index == actual[i].tool_call_index);
++            GGML_ASSERT(expected[i].tool_call_delta.arguments == actual[i].tool_call_delta.arguments);
++            GGML_ASSERT(expected[i].tool_call_delta.name == actual[i].tool_call_delta.name);
++            GGML_ASSERT(expected[i].tool_call_delta.id == actual[i].tool_call_delta.id);
++        }
++    }
++    task_result_state state(params);
++    server_task_result_cmpl_partial chunk;
++    chunk.res_type = TASK_RESPONSE_TYPE_OAI_RESP;
++    chunk.parser_seed = "stable";
++    chunk.parser_prefix = text.substr(0, 85);
++    chunk.content = text.substr(85);
++    chunk.n_decoded = 1;
++    chunk.update(state);
++    const auto events = chunk.to_json().dump();
++    GGML_ASSERT(events.find("response.output_item.added") != std::string::npos);
++    GGML_ASSERT(events.find("call_stable_0") != std::string::npos);
++    GGML_ASSERT(events.find("weather") != std::string::npos);
++    std::cout << "Parser continuation: 4 split cases and Responses tool stream passed\n";
++}
++#endif
++
+ int main(int argc, char ** argv) {
++#ifdef LLAMA_TEST_SERVER_STATE
++    if (argc == 2 && std::string(argv[1]) == "--parser-continuation") {
++        test_parser_continuation();
++        return 0;
++    }
++#endif
+     bool detailed_debug    = false;
+     bool only_run_filtered = false;
+ 
+diff --git a/tests/test-reasoning-budget.cpp b/tests/test-reasoning-budget.cpp
+index 3bcc77e17..c49b6e808 100644
+--- a/tests/test-reasoning-budget.cpp
++++ b/tests/test-reasoning-budget.cpp
+@@ -358,6 +358,46 @@ static void test_utf8_boundary_detection() {
+     GGML_ASSERT(common_utf8_is_complete(std::string("hello\xC3\xA9", 7)));    // ASCII + complete 2-byte
+ }
+ 
++static void test_persistence() {
++    auto make = [] { return common_reasoning_budget_init(nullptr, {{10, 11}}, {{20, 21}}, {30, 20, 21}, 4); };
++    for (auto phase : {REASONING_BUDGET_IDLE, REASONING_BUDGET_COUNTING, REASONING_BUDGET_FORCING,
++                       REASONING_BUDGET_WAITING_UTF8, REASONING_BUDGET_DONE}) {
++        auto * source = common_reasoning_budget_init(nullptr, {{10, 11}}, {{20, 21}}, {30, 20, 21}, 4, phase);
++        auto * restored = make();
++        GGML_ASSERT(common_reasoning_budget_state_load(restored, common_reasoning_budget_state_save(source)));
++        llama_sampler_accept(source, 30);
++        llama_sampler_accept(restored, 30);
++        GGML_ASSERT(common_reasoning_budget_state_save(source) == common_reasoning_budget_state_save(restored));
++        llama_sampler_free(source);
++        llama_sampler_free(restored);
++    }
++    auto * source = make();
++    // Partial start/end delimiters, counting, manual forcing, partial forcing, DONE and re-arm.
++    size_t step = 0;
++    for (auto token : {10, 11, 40, 20, 21, 10, 11, 30, 20, 21}) {
++        llama_sampler_accept(source, token);
++        if (token == 11 && step > 4) { common_reasoning_budget_force(source); }
++        ++step;
++        auto state = common_reasoning_budget_state_save(source);
++        auto * restored = make();
++        GGML_ASSERT(common_reasoning_budget_state_load(restored, state));
++        GGML_ASSERT(common_reasoning_budget_state_save(restored) == state);
++        auto truncated = state; truncated.pop_back();
++        GGML_ASSERT(!common_reasoning_budget_state_load(restored, truncated));
++        GGML_ASSERT(common_reasoning_budget_state_save(restored) == state);
++        for (auto next : {30, 20, 21, 10, 11}) {
++            auto * expected = llama_sampler_clone(source);
++            llama_sampler_accept(expected, next);
++            llama_sampler_accept(restored, next);
++            GGML_ASSERT(common_reasoning_budget_state_save(restored) == common_reasoning_budget_state_save(expected));
++            llama_sampler_free(expected);
++            GGML_ASSERT(common_reasoning_budget_state_load(restored, state));
++        }
++        llama_sampler_free(restored);
++    }
++    llama_sampler_free(source);
++}
++
+ int main(void) {
+     // Reasoning budget sampler tests
+     printf("Testing reasoning budget sampler... ");
+@@ -490,6 +530,7 @@ int main(void) {
+             SIZE_MAX, SIZE_MAX); // no forcing expected (natural end)
+     }
+ 
++    test_persistence();
+     test_reasoning_budget_clone_mid_counting();
+     test_reasoning_budget_clone_mid_forcing();
+     test_reasoning_budget_force_manual();
+diff --git a/tools/server/README.md b/tools/server/README.md
+index b4c08025b..807d02bfe 100644
+--- a/tools/server/README.md
++++ b/tools/server/README.md
+@@ -2137,3 +2137,22 @@ You can specify default preferences for the web UI using `--ui-config <JSON conf
+ > **Note:** The old flags `--webui-config` and `--webui-config-file` are deprecated but still work as aliases.
+ 
+ You may find available preferences in [settings-keys.ts](../ui/src/lib/constants/settings-keys.ts).
++
++
++### Generation resumption (optional persistence extension)
++
++Ordinary text causal decoders and PrefixLM can set `retain_state: true` with an
++explicit `id_slot` to retain a generation at its token limit. Continue with
++`resume: true`, the original prompt and matching sampling/parser settings, and an
++additional `n_predict` budget. Set `retain_state` again to retain the new boundary.
++A new chat turn is a fresh request.
++
++The native completion and OpenAI Completions, Chat and Responses endpoints support
++this protocol, including built-in grammar, reasoning-budget and backend samplers.
++With `--slot-save-path`, slot save/restore persists KV, sampler state, pending token
++and output/parser bookkeeping across restart and slot remapping. Ordinary prompt/KV
++files keep their existing format but do not contain resumable generations.
++
++See [generation persistence](../../docs/development/generation-persistence.md) for
++matching-configuration requirements, incremental versus cumulative output semantics,
++restrictions and tests.
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+index 1819c65b4..4a1154578 100644
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -236,6 +236,43 @@ struct server_batch {
+     }
+ };
+ 
++static std::vector<uint8_t> sampler_state_bytes(const json & data) {
++    const auto values = data.get<std::vector<int>>();
++    if (!std::all_of(values.begin(), values.end(), [](int x) { return x >= 0 && x <= 255; })) {
++        throw std::runtime_error("invalid sampler bytes");
++    }
++    return {values.begin(), values.end()};
++}
++
++static json generation_resume_settings(const task_params & params) {
++    auto result = params.to_json();
++    for (const char * key : {"max_tokens", "n_predict", "stream", "timings_per_token", "speculative.types"}) {
++        result.erase(key);
++    }
++    // The diagnostic representation uses objects and JSON null for infinity;
++    // persistence needs the request schema's [token, bias] form instead.
++    result["logit_bias"] = json::array();
++    for (const auto & bias : params.sampling.logit_bias) {
++        result["logit_bias"].push_back(json::array({bias.token,
++            bias.bias == -INFINITY ? json(false) : json(bias.bias)}));
++    }
++    const auto & cp = params.chat_parser_params;
++    result["chat_format"] = int(cp.format);
++    result["parser"] = cp.parser.to_json();
++    result["parse_tool_calls"] = cp.parse_tool_calls;
++    result["is_continuation"] = cp.is_continuation;
++    result["echo"] = cp.echo;
++    result["res_type"] = int(params.res_type);
++    auto ends = json::array();
++    for (const auto & end : params.sampling.reasoning_budget_end) { ends.push_back(end); }
++    result["reasoning_state_config"] = json::array({params.sampling.reasoning_budget_tokens,
++        params.sampling.reasoning_budget_start, ends, params.sampling.reasoning_budget_forced, params.sampling.reasoning_control});
++    result["cache_prompt"] = params.cache_prompt;
++    result["n_indent"] = params.n_indent;
++    result["t_max_predict_ms"] = params.t_max_predict_ms;
++    return result;
++}
++
+ struct server_slot {
+     int id;
+ 
+@@ -295,8 +332,27 @@ struct server_slot {
+     slot_state state = SLOT_STATE_IDLE;
+ 
+     server_prompt prompt;
++    json resume_state;
+     llama_tokens exact_prefix_tokens;
+     std::vector<uint8_t> exact_prefix_state;
++    size_t response_start = 0;
++    std::string parser_seed;
++
++    void capture_resume() {
++        if (!task->params.retain_state || stop != STOP_TYPE_LIMIT || !smpl || truncated ||
++            n_predict_max <= 0 || stats.n_gen < n_predict_max || n_sent_text > generated_text.size()) { return; }
++        auto sampler = common_sampler_state_save(smpl.get());
++        if (sampler.empty()) { throw std::runtime_error("sampler cannot be persisted"); }
++        resume_state = {
++            {"version", 3}, {"parser_seed", parser_seed}, {"prompt", prompt.tokens.get_text_tokens()},
++            {"request_prompt", task->tokens.get_text_tokens()},
++            {"sampler", std::vector<int>(sampler.begin(), sampler.end())}, {"pending", sampled},
++            {"settings", generation_resume_settings(task->params)},
++            {"text", generated_text}, {"sent", n_sent_text},
++            {"last_nl", last_nl_pos}, {"has_new_line", has_new_line},
++        };
++    }
++
+ 
+     bool prompt_save(server_prompt_cache & prompt_cache) const {
+         if (prompt.tokens.size() == 0) {
+@@ -339,6 +395,7 @@ struct server_slot {
+         mem.seq_rm(id, -1, -1);
+ 
+         prompt.clear();
++        resume_state = nullptr;
+     }
+ 
+     std::vector<common_adapter_lora_info> lora;
+@@ -375,6 +432,7 @@ struct server_slot {
+ 
+         last_nl_pos    = 0;
+         generated_text = "";
++        response_start = 0;
+         has_new_line   = false;
+         truncated      = false;
+         stop           = STOP_TYPE_NONE;
+@@ -557,7 +615,7 @@ struct server_slot {
+             state = SLOT_STATE_IDLE;
+ 
+             // Retained generations own their KV until resumed, replaced, or explicitly erased.
+-            if (task->is_child() || (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM)) {
++            if (task->is_child() || (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM && resume_state.is_null())) {
+                 prompt_clear();
+             }
+ 
+@@ -693,6 +751,7 @@ struct server_slot {
+ 
+         res = {
+             {"id",            id},
++            {"resume_ready", !resume_state.is_null()},
+             {"n_ctx",         n_ctx},
+             {"speculative",   can_speculate()},
+             {"is_processing", is_processing()},
+@@ -1588,7 +1647,7 @@ private:
+                 }
+ 
+                 // skip the slot if it is not available
+-                if (slot.is_processing()) {
++                if (slot.is_processing() || (task.id_slot == -1 && !slot.resume_state.is_null())) {
+                     SLT_TRC(slot, " - skipping, is_processing = %d\n", slot.is_processing());
+                     continue;
+                 }
+@@ -1636,7 +1695,7 @@ private:
+ 
+             for (server_slot & slot : slots) {
+                 // skip the slot if it is not available
+-                if (slot.is_processing()) {
++                if (slot.is_processing() || (task.id_slot == -1 && !slot.resume_state.is_null())) {
+                     continue;
+                 }
+ 
+@@ -1693,7 +1752,7 @@ private:
+         }
+ 
+         for (auto & slot : slots) {
+-            if (slot.is_processing()) {
++            if (slot.is_processing() || !slot.resume_state.is_null()) {
+                 continue;
+             }
+ 
+@@ -1726,6 +1785,27 @@ private:
+     }
+ 
+     bool launch_slot_with_task(server_slot & slot, server_task && task) {
++        if ((task.params.retain_state || task.params.resume) &&
++            (!llama_model_has_decoder(model_tgt) || llama_model_has_encoder(model_tgt) || !llama_get_memory(ctx_tgt) ||
++             params_base.attention_type == LLAMA_ATTENTION_TYPE_NON_CAUSAL ||
++             task.tokens.has_mtmd || !task.params.lora.empty() || lora_all_alora(params_base.lora_adapters) ||
++             std::any_of(task.params.speculative.types.begin(), task.params.speculative.types.end(),
++                [](common_speculative_type type) { return type != COMMON_SPECULATIVE_TYPE_NONE; }) ||
++             task.type != SERVER_TASK_TYPE_COMPLETION ||
++             (task.params.res_type != TASK_RESPONSE_TYPE_NONE && task.params.res_type != TASK_RESPONSE_TYPE_OAI_CMPL &&
++              task.params.res_type != TASK_RESPONSE_TYPE_OAI_CHAT && task.params.res_type != TASK_RESPONSE_TYPE_OAI_RESP) ||
++             task.is_child() || task.is_parent() || task.id_slot < 0 || task.id_slot != slot.id)) {
++            send_error(task, "resumption requires a single text decoder completion, explicit id_slot, fixed adapters and no speculation", ERROR_TYPE_INVALID_REQUEST);
++            return false;
++        }
++        if (task.params.resume) {
++            if (slot.resume_state.is_null() ||
++                task.tokens.get_text_tokens() != slot.resume_state.at("request_prompt").get<llama_tokens>() ||
++                generation_resume_settings(task.params) != slot.resume_state.at("settings")) {
++                send_error(task, "no compatible saved generation: original prompt and sampling settings must match", ERROR_TYPE_INVALID_REQUEST);
++                return false;
++            }
++        }
+         if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
+             const bool speculative = std::any_of(task.params.speculative.types.begin(), task.params.speculative.types.end(),
+                 [](common_speculative_type type) { return type != COMMON_SPECULATIVE_TYPE_NONE; });
+@@ -1817,6 +1897,12 @@ private:
+         if (task.need_sampling()) {
+             try {
+                 common_sampler_ptr sampler(common_sampler_init(model_tgt, task.params.sampling));
++                if ((task.params.retain_state || task.params.resume) && common_sampler_state_save(sampler.get()).empty()) {
++                    throw std::runtime_error("sampler combination does not support persistent resumption");
++                }
++                if (task.params.resume && !common_sampler_state_load(sampler.get(), sampler_state_bytes(slot.resume_state.at("sampler")))) {
++                    throw std::runtime_error("saved sampler state is incompatible");
++                }
+                 slot.smpl = std::move(sampler);
+             } catch (std::exception & e) {
+                 std::string err_msg = std::string("Failed to initialize samplers: ") + e.what();
+@@ -1856,14 +1942,34 @@ private:
+         // the per-request limit takes priority over the global one
+         slot.n_predict_max = task.params.n_predict != -1 ? task.params.n_predict : params_base.n_predict;
+ 
+-        if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM && !task.params.resume) {
+             slot.prompt_clear();
+         }
++        if (!task.params.resume) {
++            // A replacement task must not resurrect an older retained generation.
++            slot.resume_state = nullptr;
++        }
+         slot.task = std::make_unique<const server_task>(std::move(task));
+ 
+         slot.state = slot.task->is_child()
+             ? SLOT_STATE_WAIT_OTHER // wait for the parent to process prompt
+             : SLOT_STATE_STARTED;
++        slot.parser_seed = slot.task->params.resume ? slot.resume_state.at("parser_seed").get<std::string>()
++            : ((slot.task->params.retain_state) ? slot.task->params.oaicompat_cmpl_id : "");
++        if (slot.task->params.resume) {
++            slot.sampled = slot.resume_state.at("pending").get<llama_token>();
++            slot.generated_text = slot.resume_state.at("text").get<std::string>();
++            slot.n_sent_text = slot.resume_state.at("sent").get<size_t>();
++            slot.response_start = slot.n_sent_text;
++            slot.last_nl_pos = slot.resume_state.at("last_nl").get<size_t>();
++            slot.has_new_line = slot.resume_state.at("has_new_line").get<bool>();
++            slot.stats.update_prompt_start();
++            slot.stats.update_prompt_last();
++            slot.stats.n_prompt_cached = slot.prompt.n_tokens();
++            slot.state = SLOT_STATE_GENERATING;
++            slot.resume_state = nullptr; // consumed; cancellation must not resurrect an older snapshot
++        }
++
+         // reset server kill-switch counter
+         n_empty_consecutive = 0;
+ 
+@@ -2115,6 +2221,8 @@ private:
+         res->res_type          = slot.task->params.res_type;
+         res->oaicompat_model   = slot.task->params.oaicompat_model;
+         res->oaicompat_cmpl_id = slot.task->params.oaicompat_cmpl_id;
++        res->parser_seed = slot.parser_seed;
++        res->parser_prefix = slot.generated_text.substr(0, slot.response_start);
+ 
+         // populate res.probs_output
+         if (slot.task->params.sampling.n_probs > 0) {
+@@ -2130,6 +2238,7 @@ private:
+     }
+ 
+     void send_final_response(server_slot & slot) {
++        slot.capture_resume();
+         auto res = std::make_unique<server_task_result_cmpl_final>();
+ 
+         res->id      = slot.task->id;
+@@ -2147,7 +2256,9 @@ private:
+             res->content     = "";
+             res->tokens      = llama_tokens{};
+         } else {
+-            res->content     = slot.generated_text;
++            const size_t start = std::min(slot.response_start, slot.generated_text.size());
++            const size_t end = slot.resume_state.is_null() ? slot.generated_text.size() : slot.n_sent_text;
++            res->content     = slot.generated_text.substr(start, end - start);
+             res->tokens      = std::move(slot.generated_tokens);
+         }
+         res->stats           = slot.stats;
+@@ -2170,6 +2281,8 @@ private:
+         res->res_type          = slot.task->params.res_type;
+         res->oaicompat_model   = slot.task->params.oaicompat_model;
+         res->oaicompat_cmpl_id = slot.task->params.oaicompat_cmpl_id;
++        res->parser_seed = slot.parser_seed;
++        res->parser_prefix = slot.generated_text.substr(0, slot.response_start);
+ 
+         // populate res.probs_output
+         if (slot.task->params.sampling.n_probs > 0) {
+@@ -2293,7 +2406,7 @@ private:
+     std::vector<server_slot *> get_free_slots(size_t n_slots_needed, int exclude_id_slot) {
+         std::vector<server_slot *> free_slots;
+         for (auto & slot : slots) {
+-            if (!slot.is_processing() && slot.id != exclude_id_slot) {
++            if (!slot.is_processing() && slot.resume_state.is_null() && slot.id != exclude_id_slot) {
+                 free_slots.push_back(&slot);
+             }
+             if (free_slots.size() >= n_slots_needed) {
+@@ -2483,7 +2596,7 @@ private:
+ 
+                     if (params_base.cache_idle_slots) {
+                         for (auto & slot : slots) {
+-                            if (!slot.is_processing()) {
++                            if (!slot.is_processing() && slot.resume_state.is_null()) {
+                                 SLT_TRC(slot, "%s", "saving idle slot to prompt cache\n");
+ 
+                                 if (slot.prompt_save(*prompt_cache)) {
+@@ -2592,10 +2705,6 @@ private:
+                 } break;
+             case SERVER_TASK_TYPE_SLOT_SAVE:
+                 {
+-                    if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
+-                        send_error(task, "PrefixLM slot files require the optional generation-persistence patch", ERROR_TYPE_INVALID_REQUEST);
+-                        break;
+-                    }
+                     const int id_slot = task.slot_action.id_slot;
+                     server_slot * slot = get_slot_by_id(id_slot);
+                     if (slot == nullptr) {
+@@ -2614,19 +2723,38 @@ private:
+                     std::string filename = task.slot_action.filename;
+                     std::string filepath = task.slot_action.filepath;
+ 
++                    if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM && slot->resume_state.is_null()) {
++                        send_error(task, "slot has no retained generation; use retain_state with a token limit", ERROR_TYPE_INVALID_REQUEST);
++                        break;
++                    }
+                     std::vector<char> packed;
+                     try {
+-                        packed = slot->prompt.tokens.serialize();
++                        if (!slot->resume_state.is_null()) {
++                            const auto text = slot->resume_state.dump();
++                            const uint32_t size = text.size();
++                            // Negative marker cannot collide with ordinary token lists or their -1 envelope.
++                            const int32_t marker = -2;
++                            packed.resize(sizeof(marker) + sizeof(size) + text.size());
++                            std::memcpy(packed.data(), &marker, sizeof(marker));
++                            std::memcpy(packed.data() + sizeof(marker), &size, sizeof(size));
++                            std::memcpy(packed.data() + sizeof(marker) + sizeof(size), text.data(), text.size());
++                            while (packed.size() % sizeof(llama_token)) { packed.push_back(0); }
++                        } else {
++                            packed = slot->prompt.tokens.serialize();
++                        }
+                     } catch (const std::exception & err) {
+                         send_error(task, err.what(), ERROR_TYPE_NOT_SUPPORTED);
+                         break;
+                     }
+ 
+                     GGML_ASSERT(packed.size() % sizeof(llama_token) == 0);
++                    const bool retained_state = !slot->resume_state.is_null();
++                    const std::string savepath = retained_state ? filepath + ".tmp-" + std::to_string(task.id) : filepath;
+                     const size_t nwrite = llama_state_seq_save_file(
+-                        ctx_tgt, filepath.c_str(), slot->id,
++                        ctx_tgt, savepath.c_str(), slot->id,
+                         reinterpret_cast<const llama_token *>(packed.data()), packed.size() / sizeof(llama_token));
+-                    if (nwrite == 0) {
++                    if (nwrite == 0 || (retained_state && std::rename(savepath.c_str(), filepath.c_str()) != 0)) {
++                        if (retained_state) { std::remove(savepath.c_str()); }
+                         send_error(task, "Unable to save slot", ERROR_TYPE_SERVER);
+                         break;
+                     }
+@@ -2646,10 +2774,6 @@ private:
+                 } break;
+             case SERVER_TASK_TYPE_SLOT_RESTORE:
+                 {
+-                    if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
+-                        send_error(task, "PrefixLM slot files require the optional generation-persistence patch", ERROR_TYPE_INVALID_REQUEST);
+-                        break;
+-                    }
+                     const int id_slot = task.slot_action.id_slot;
+                     server_slot * slot = get_slot_by_id(id_slot);
+                     if (slot == nullptr) {
+@@ -2674,6 +2798,9 @@ private:
+                         llama_tokens packed;
+                         nread = llama_state_seq_load_file(ctx_tgt, filepath.c_str(), slot->id, nullptr, 0, &n_packed);
+                         if (nread != 0) {
++                            if (n_packed > 16 * 1024 * 1024) {
++                                throw std::runtime_error("session metadata exceeds 64 MiB");
++                            }
+                             packed.resize(std::max<size_t>(1, n_packed));
+                             nread = llama_state_seq_load_file(ctx_tgt, filepath.c_str(), slot->id, packed.data(), packed.size(), &n_packed);
+                         }
+@@ -2682,7 +2809,59 @@ private:
+                         }
+                         packed.resize(n_packed);
+ 
+-                        server_tokens restored = server_tokens::deserialize(packed, mctx != nullptr);
++                        json restored_resume;
++                        server_tokens restored;
++                        if (!packed.empty() && packed.front() == -2) {
++                            const auto * begin = reinterpret_cast<const char *>(packed.data() + 1);
++                            uint32_t size;
++                            if (packed.size() < 2) { throw std::runtime_error("empty resume metadata"); }
++                            std::memcpy(&size, begin, sizeof(size));
++                            if (size > (packed.size() - 2) * sizeof(llama_token)) {
++                                throw std::runtime_error("truncated resume metadata");
++                            }
++                            restored_resume = json::parse(std::string(begin + sizeof(size), size));
++                            if (restored_resume.at("version").get<int>() != 3) { throw std::runtime_error("invalid resume format"); }
++                            const auto tokens = restored_resume.at("prompt").get<llama_tokens>();
++                            const auto request = restored_resume.at("request_prompt").get<llama_tokens>();
++                            const auto pending = restored_resume.at("pending").get<llama_token>();
++                            const auto text = restored_resume.at("text").get<std::string>();
++                            if (tokens.empty() || request.empty() || request.size() > tokens.size() ||
++                                !std::equal(request.begin(), request.end(), tokens.begin()) ||
++                                pending < 0 || pending >= llama_vocab_n_tokens(vocab) ||
++                                llama_memory_seq_pos_max(llama_get_memory(ctx_tgt), slot->id) != llama_pos(tokens.size() - 1) ||
++                                restored_resume.at("sent").get<size_t>() > text.size() ||
++                                restored_resume.at("last_nl").get<size_t>() > text.size()) {
++                                throw std::runtime_error("invalid generation bookkeeping");
++                            }
++                            restored_resume.at("has_new_line").get<bool>();
++                            auto settings = restored_resume.at("settings");
++                            // Saved logit_bias already contains the ignore-EOS bias from schema evaluation.
++                            settings["ignore_eos"] = false;
++                            auto preserved = json::array();
++                            for (const auto & value : settings.at("preserved_tokens")) {
++                                const auto token = value.get<llama_token>();
++                                if (token < 0 || token >= llama_vocab_n_tokens(vocab)) { throw std::runtime_error("invalid preserved token"); }
++                                preserved.push_back(common_token_to_piece(vocab, token, true));
++                            }
++                            settings["preserved_tokens"] = std::move(preserved);
++                            auto params = server_schema::eval_llama_cmpl_schema(vocab, params_base,
++                                params_base.sampling.logit_bias_eog, settings);
++                            const auto & reasoning = settings.at("reasoning_state_config");
++                            params.sampling.reasoning_budget_tokens = reasoning.at(0).get<int32_t>();
++                            params.sampling.reasoning_budget_start = reasoning.at(1).get<llama_tokens>();
++                            params.sampling.reasoning_budget_end.clear();
++                            for (const auto & end : reasoning.at(2)) { params.sampling.reasoning_budget_end.push_back(end.get<llama_tokens>()); }
++                            params.sampling.reasoning_budget_forced = reasoning.at(3).get<llama_tokens>();
++                            params.sampling.reasoning_control = reasoning.at(4).get<bool>();
++                            restored_resume.at("parser_seed").get<std::string>();
++                            common_sampler_ptr sampler(common_sampler_init(model_tgt, params.sampling));
++                            if (!common_sampler_state_load(sampler.get(), sampler_state_bytes(restored_resume.at("sampler")))) {
++                                throw std::runtime_error("invalid saved sampler");
++                            }
++                            restored.insert(tokens);
++                        } else {
++                            restored = server_tokens::deserialize(packed, mctx != nullptr);
++                        }
+ 
+                         if (restored.size() > (size_t) slot->n_ctx) {
+                             throw std::runtime_error("Restored prompt does not fit in the slot context");
+@@ -2694,6 +2873,7 @@ private:
+ 
+                         slot->prompt.clear();
+                         slot->prompt.tokens = std::move(restored);
++                        slot->resume_state = std::move(restored_resume);
+                     } catch (const std::exception & err) {
+                         slot->prompt_clear();
+                         send_error(task, std::string("Unable to restore slot: ") + err.what(), ERROR_TYPE_INVALID_REQUEST);
+@@ -2770,6 +2950,12 @@ private:
+                 } break;
+             case SERVER_TASK_TYPE_SET_LORA:
+                 {
++                    if (std::any_of(slots.begin(), slots.end(), [](const server_slot & slot) {
++                            return !slot.resume_state.is_null() || (slot.is_processing() && slot.task->params.retain_state);
++                        })) {
++                        send_error(task, "erase or finish retained generations before changing adapters", ERROR_TYPE_INVALID_REQUEST);
++                        break;
++                    }
+                     auto new_loras = construct_lora_list(task.set_lora);
+                     // logging
+                     for (size_t i = 0; i < new_loras.size(); ++i) {
+diff --git a/tools/server/server-schema.cpp b/tools/server/server-schema.cpp
+index 42c2812f9..7c0c52d36 100644
+--- a/tools/server/server-schema.cpp
++++ b/tools/server/server-schema.cpp
+@@ -28,6 +28,10 @@ std::vector<std::unique_ptr<field>> make_llama_cmpl_schema(const common_params &
+             ->set_desc("Whether to include usage information in the stream"))
+         ->set_desc("Additional options for streaming responses"));
+ 
++    add((new field_bool("retain_state", params.retain_state))
++        ->set_desc("Text decoder completion: retain generation state at a token-limit stop for explicit resumption"));
++    add((new field_bool("resume", params.resume))
++        ->set_desc("Text decoder completion: resume id_slot with the original prompt and sampling settings"));
+     add((new field_bool("cache_prompt", params.cache_prompt))
+         ->set_desc("Re-use KV cache from a previous request if possible. This way the common prefix does not have to be re-processed, only the suffix that differs between the requests"));
+ 
+diff --git a/tools/server/server-task.cpp b/tools/server/server-task.cpp
+index 0d3beb313..8c1d92996 100644
+--- a/tools/server/server-task.cpp
++++ b/tools/server/server-task.cpp
+@@ -159,6 +159,18 @@ task_result_state::task_result_state(const common_chat_parser_params & chat_pars
+     }
+ }
+ 
++// Parsing is a pure replay of accumulated text. Seed generated tool IDs so replay
++// and fresh-process restore produce the same IDs without serializing parser pointers.
++void task_result_state::prime_resume(const std::string & prefix, const std::string & seed) {
++    if (resume_primed) { return; }
++    resume_primed = true;
++    tool_id_seed = seed;
++    if (!prefix.empty()) {
++        std::vector<common_chat_msg_diff> ignored;
++        update_chat_msg(prefix, true, ignored);
++    }
++}
++
+ common_chat_msg task_result_state::update_chat_msg(
+         const std::string & text_added,
+         bool is_partial,
+@@ -172,7 +184,10 @@ common_chat_msg task_result_state::update_chat_msg(
+         is_partial,
+         chat_parser_params);
+     if (!new_msg.empty()) {
+-        new_msg.set_tool_call_ids(generated_tool_call_ids, gen_tool_call_id);
++        new_msg.set_tool_call_ids(generated_tool_call_ids, [&]() {
++            return tool_id_seed.empty() ? gen_tool_call_id()
++                : "call_" + tool_id_seed + "_" + std::to_string(generated_tool_call_ids.size());
++        });
+         chat_msg = new_msg;
+         auto all_diffs = common_chat_msg_diff::compute_diffs(msg_prv_copy, chat_msg);
+ 
+@@ -987,10 +1002,22 @@ json server_task_result_cmpl_final::to_json_anthropic_stream() {
+ //
+ void server_task_result_cmpl_partial::update(task_result_state & state) {
+     is_updated = true;
++    state.prime_resume(parser_prefix, parser_seed);
+     if (is_begin) {
+         return; // begin marker only flushes headers, skip parsing
+     }
+     state.update_chat_msg(content, true, oaicompat_msg_diffs);
++    // A resumed Responses request opens a new transport stream. Reannounce a tool
++    // whose arguments continue, while keeping its logical call ID stable.
++    if (res_type == TASK_RESPONSE_TYPE_OAI_RESP && !parser_prefix.empty()) {
++        for (auto & diff : oaicompat_msg_diffs) {
++            const auto index = diff.tool_call_index;
++            if (index < state.chat_msg.tool_calls.size() && state.sent_tool_call_names.insert(index).second) {
++                diff.tool_call_delta.name = state.chat_msg.tool_calls[index].name;
++                diff.tool_call_delta.id = state.chat_msg.tool_calls[index].id;
++            }
++        }
++    }
+ 
+     // Copy current state for use in to_json_*() (reflects state BEFORE this chunk)
+     thinking_block_started = state.thinking_block_started;
+diff --git a/tools/server/server-task.h b/tools/server/server-task.h
+index 9c99143f8..338df76c4 100644
+--- a/tools/server/server-task.h
++++ b/tools/server/server-task.h
+@@ -50,6 +50,8 @@ enum stop_type {
+ struct task_params {
+     bool stream          = false;
+     bool include_usage   = false;
++    bool retain_state    = false; // retain a resumable generation at a token-limit stop
++    bool resume          = false; // continue a retained/restored generation, not a new prompt
+     bool cache_prompt    = true; // remember the prompt to avoid reprocessing all prompt
+     bool return_tokens   = false;
+     bool return_progress = false;
+@@ -107,6 +109,9 @@ struct task_result_state {
+     std::vector<common_chat_msg_diff> diffs;
+     common_chat_parser_params chat_parser_params;
+     common_chat_msg chat_msg;
++    bool resume_primed = false;
++    std::string tool_id_seed;
++    void prime_resume(const std::string & prefix, const std::string & seed);
+     std::string generated_text; // append new chunks of generated text here
+     std::vector<std::string> generated_tool_call_ids;
+     std::unordered_set<size_t> sent_tool_call_names;
+@@ -269,6 +274,8 @@ struct result_prompt_progress {
+ };
+ 
+ struct server_task_result {
++    std::string parser_prefix;
++    std::string parser_seed;
+     int id           = -1;
+     int id_slot      = -1;
+ 
+@@ -364,6 +371,7 @@ struct server_task_result_cmpl_final : server_task_result {
+ 
+     virtual void update(task_result_state & state) override {
+         is_updated = true;
++        state.prime_resume(parser_prefix, parser_seed);
+         oaicompat_msg = state.update_chat_msg(content, false, oaicompat_msg_diffs);
+ 
+         oai_resp_id = state.oai_resp_id;

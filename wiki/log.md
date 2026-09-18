@@ -1,5 +1,13 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-18 - Prepare final sanitizer policy and candidate patches
+
+- Recorded accepted numerical limitations without altering measured strict failures.
+- Added a fail-closed CUDA graph-fallback classifier/runner and bounded tests;
+  updated CI and the Linux hand-off, with real-CUDA runner validation still pending.
+- Prepared four reconstructible candidate patches with the Linux fix folded into
+  PrefixLM; retained a standalone generic persistence alternative and source hashes.
+
 ## 2026-09-18 Linux PrefixLM qualification
 
 Added the Linux qualification record, existing Conda environment setup, and user-authorized GPU headroom policy. Fixed the ordinary causal-mask regression, recorded fixed-revision validation and portable evidence in the committed Linux report, and preserved outstanding numerical/sanitizer findings.
