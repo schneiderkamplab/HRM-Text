@@ -1,0 +1,193 @@
+{
+  "date": "2026-09-18",
+  "llama_base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "environment": {
+    "os": "macOS",
+    "device": "Apple M2 Max",
+    "engine_state_KV": "F32",
+    "server_model": "logs/mimir-review/mimir-q8_0.gguf",
+    "server_KV": "F16 default",
+    "chat_template": "Mimir checkpoint template and pinned HF token/answer references",
+    "server_controls": "zero LoRA and control-vector integration fixtures; nonzero semantics exercised in engine suite"
+  },
+  "release": {
+    "ctest_passed": 7,
+    "ctest_total": 7,
+    "engine_checks": {
+      "hrm_text": 2132,
+      "llama": 2132
+    },
+    "engine_total": 4264,
+    "log": "logs/mimir-sharing/release-LastTest.log"
+  },
+  "ubsan": {
+    "ctest_passed": 7,
+    "ctest_total": 7,
+    "engine_checks": {
+      "hrm_text": 1066,
+      "llama": 1066
+    },
+    "engine_total": 2132,
+    "log": "logs/mimir-sharing/ubsan-LastTest.log"
+  },
+  "servers": {
+    "separate": {
+      "checks": 48,
+      "pass": true,
+      "report": "logs/mimir-sharing/server-separate.json",
+      "sha256": "3d60b8ac4db4c4ae7071a089b718bf69527269ed668eda298b6c982b4fc600b2"
+    },
+    "separate-restart": {
+      "checks": 4,
+      "pass": true,
+      "report": "logs/mimir-sharing/server-separate-restart.json",
+      "sha256": "0115d577807b19e3412e1ef5c403af2dc9fe14b9f93f4677f8994ae2962b95bc"
+    },
+    "unified": {
+      "checks": 48,
+      "pass": true,
+      "report": "logs/mimir-sharing/server-unified.json",
+      "sha256": "8c99c51ab8438025a01bcf39edb1156493fbe2fbe71a9363a004de4696b4b027"
+    },
+    "unified-restart": {
+      "checks": 4,
+      "pass": true,
+      "report": "logs/mimir-sharing/server-unified-restart.json",
+      "sha256": "de717d53f1eacd6cf937466fc30b3b5b74d017fb101dd6071bb305b40c54e5a2"
+    }
+  },
+  "server_checks": 104,
+  "independent_reference": {
+    "cpu": {
+      "pass": true,
+      "steps": 31,
+      "passing_steps": 31,
+      "failures": [],
+      "report": "logs/mimir-sharing/reference-cpu.json",
+      "sha256": "e4e6e6366216864702092eae6f14b52128705b67703ed36d1e403678d507899d"
+    },
+    "ubsan": {
+      "pass": true,
+      "steps": 31,
+      "passing_steps": 31,
+      "failures": [],
+      "report": "logs/mimir-sharing/reference-ubsan.json",
+      "sha256": "6522cd4b37afd63fab5cffc25a38520412a3fc152ae2dc7e084ac1ede5f4ceb3"
+    },
+    "metal": {
+      "pass": false,
+      "steps": 31,
+      "passing_steps": 28,
+      "failures": [
+        {
+          "case": "causal-control",
+          "sequence": 0,
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.00010558962821960449,
+          "rmse": 2.374077831360791e-05,
+          "top1_matches": 3,
+          "pass": false
+        },
+        {
+          "case": "mixed-phase",
+          "sequence": 0,
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.0007229745388031006,
+          "rmse": 0.00020916532797093349,
+          "top1_matches": 9,
+          "pass": false
+        },
+        {
+          "case": "causal-full",
+          "sequence": 0,
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.0007294714450836182,
+          "rmse": 0.00021587070427914678,
+          "top1_matches": 9,
+          "pass": false
+        }
+      ],
+      "report": "logs/mimir-sharing/reference-metal.json",
+      "sha256": "154fa66529d5908f1dc4b5c12163fdc980bb01663a50b66873715f568e078301"
+    },
+    "metal-unfused": {
+      "pass": false,
+      "steps": 31,
+      "passing_steps": 29,
+      "failures": [
+        {
+          "case": "mixed-phase",
+          "sequence": 0,
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.0006875395774841309,
+          "rmse": 0.00021132507745609547,
+          "top1_matches": 9,
+          "pass": false
+        },
+        {
+          "case": "causal-full",
+          "sequence": 0,
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.0007398426532745361,
+          "rmse": 0.00021676213889844072,
+          "top1_matches": 9,
+          "pass": false
+        }
+      ],
+      "report": "logs/mimir-sharing/reference-metal-unfused.json",
+      "sha256": "2a9085d0fd6fa0417bc4a516a0a06e9e52ac8211540df7d756fb7e8bc7d2722c"
+    }
+  },
+  "ordinary_arch_regressions": {
+    "hrm_text": {
+      "exit_code": 0,
+      "log": "logs/mimir-sharing/ordinary-hrm_text.log"
+    },
+    "llama": {
+      "exit_code": 0,
+      "log": "logs/mimir-sharing/ordinary-llama.log"
+    }
+  },
+  "source_sha256": {
+    "llama.cpp/src/llama-context.cpp": "a46e27bc6d953bec4531e17da8631314bd16017a996d1e12de1c18e055ca6de2",
+    "llama.cpp/src/llama-context.h": "52629d558c5f05a3087f87b3209ac9083eda574e5258063a6cf750ed3fcdfaa4",
+    "llama.cpp/src/llama-memory.h": "81599f52092cf140aa663dab594619791421d8c93246336420b699e019d34ebb",
+    "llama.cpp/src/llama-kv-cache.cpp": "1b6bc4171e49f6bb6cd44dd8a2c760c0e5a2373e812026e2258a0c7a654ccb9f",
+    "llama.cpp/src/llama-kv-cache.h": "ca4ea7102f9e1c195928036d8d06759e6d860b3e3968e15c4ac93d3aebfd241f",
+    "llama.cpp/src/llama-batch.cpp": "f5e6916fff6c9892ad834e20e189b65177695da5087bfbbb8144a62f09496ed7",
+    "llama.cpp/src/llama-batch.h": "458e75f2c03c17567a8d8a7f4a741d3897f838d6d61ef0d00571fa94733a6499",
+    "llama.cpp/src/llama-sampler.cpp": "816cd57c0b950c2e4e81f8eb14cb86f91643263331eacb46de85c38c691f1821",
+    "llama.cpp/include/llama.h": "f17b9bad74cdf4cc03badd889e7a9f8f14798ac9f28ec9b00ee13a72adfdd648",
+    "llama.cpp/common/sampling.cpp": "6833f2fd5f92880fafc792634174c46377fc8c1df325b4c529cc1a742375d911",
+    "llama.cpp/common/sampling.h": "e8ae7b44519fe0a736421e1b84957714222ee12de3712c0873321de9b3a838e8",
+    "llama.cpp/tools/server/server-context.cpp": "e0452d687ef109dbbb50b25143ca2646aec6c6a30b9955b731cc270ac1b396d4",
+    "llama.cpp/tools/server/server-schema.cpp": "cd0f2d5619b2612a4f8da72e13d6337cc16aa2fc95d4a74abdc490cad634725b",
+    "llama.cpp/tools/server/server-task.h": "a99aeefbe41f612fbff6756a025da8a3ad9100e9b95738c6b3f74f43eb873f02",
+    "llama.cpp/tests/test-llama-archs.cpp": "4e8fdda1865fdf602d97fc3b178867247aa6208f8dee36afec7ac64b532f2229",
+    "llama.cpp/scripts/prefix-lm-reference.py": "278da1ad247512f29e27b8ca36b608d3484cdbeda1fb977573c0e95215f1922b",
+    "native/mimir/tests/server_e2e.py": "4f4f5371b817d1cf40bbe87c4e314ed75d67bb4e6ef71927afe88a39e8183428"
+  },
+  "packaged_patch_sha256": {
+    "native/mimir/patches/prefixlm-engine.patch": "7e6cf04177648c618f46a632c8c75a1383ce87e107bf49002cda633e8bb3f769",
+    "native/mimir/patches/text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+    "native/mimir/patches/ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519"
+  },
+  "limitations": [
+    "Shared input rows require unified KV (existing sequential splitter constraint)",
+    "Nonzero-start range copies require physically shared preceding KV; separately restored/recomputed histories are not assumed identical",
+    "Bounded cross-stream copies reuse full-buffer transfer plus metadata trim",
+    "Linux CPU/CUDA qualification and controlled performance testing pending",
+    "Prior Metal oracle failures unchanged; thresholds retained",
+    "Two unrelated pre-existing benchmark-charts wiki validation errors"
+  ]
+}

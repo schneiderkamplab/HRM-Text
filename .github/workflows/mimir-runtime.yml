@@ -1,0 +1,132 @@
+name: Mimir native session
+on:
+  pull_request:
+    paths: ['native/mimir/**', 'llama.cpp', 'scripts/prefixlm_comparison/**', '.github/workflows/mimir-runtime.yml']
+  workflow_dispatch:
+    inputs:
+      cuda:
+        description: 'Run on the trusted self-hosted Linux CUDA runner'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [release, sanitizers]
+    env:
+      UBSAN_OPTIONS: halt_on_error=1
+      ASAN_OPTIONS: halt_on_error=1:detect_leaks=1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare pinned runtime and reference dependencies
+        run: |
+          git submodule update --init llama.cpp
+          # Verify the pinned submodule and hand-off sources against the tested manifest.
+          # Historical packaged patches must not silently qualify a different implementation.
+          python - <<'PYCODE'
+          import hashlib, json
+          from pathlib import Path
+          manifest = json.loads(Path('native/mimir/decoder-results.json').read_text())
+          for path, digest in manifest['source_sha256'].items():
+              assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
+          PYCODE
+          python -m pip install -r scripts/prefixlm_comparison/requirements.lock
+      - name: Generate independent fixtures
+        run: |
+          PYTHONPATH=llama.cpp/gguf-py python scripts/prefixlm_comparison/fixture.py --output logs/prefixlm-comparison/fixture
+          python native/mimir/tests/long_reference.py --model logs/prefixlm-comparison/fixture/hf --output logs/mimir-runtime/long-fixture
+          python native/mimir/tests/prepare_text_ci.py
+      - name: Build and test CPU session
+        run: |
+          if [ '${{ matrix.mode }}' = sanitizers ]; then
+            cmake -S native/mimir -B logs/mimir-runtime/build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DGGML_METAL=OFF \
+              -DCMAKE_C_FLAGS='-fsanitize=address,undefined -fno-omit-frame-pointer' \
+              -DCMAKE_CXX_FLAGS='-fsanitize=address,undefined -fno-omit-frame-pointer'
+          else
+            cmake -S native/mimir -B logs/mimir-runtime/build -DCMAKE_BUILD_TYPE=Release -DGGML_METAL=OFF
+          fi
+          cmake --build logs/mimir-runtime/build -j 2
+          ctest --test-dir logs/mimir-runtime/build --output-on-failure
+          logs/mimir-runtime/build/mimir-backend-sampler-tests --device cpu \
+            --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test host_persistence
+          logs/mimir-runtime/build/mimir-backend-sampler-tests --device cpu \
+            --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction
+          parser_flags=()
+          if [ '${{ matrix.mode }}' = sanitizers ]; then
+            parser_flags+=("-DCMAKE_C_FLAGS=-fsanitize=address,undefined -fno-omit-frame-pointer")
+            parser_flags+=("-DCMAKE_CXX_FLAGS=-fsanitize=address,undefined -fno-omit-frame-pointer")
+          fi
+          cmake -S llama.cpp -B logs/mimir-parser -DGGML_CUDA=OFF -DGGML_METAL=OFF \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLLAMA_BUILD_TESTS=ON "${parser_flags[@]}"
+          cmake --build logs/mimir-parser --target test-chat -j 2
+          logs/mimir-parser/bin/test-chat --parser-continuation
+          for arch in hrm_text llama; do
+            logs/mimir-runtime/build/mimir-engine-tests -a "$arch" -s 42 > "logs/mimir-runtime/ordinary-$arch.log" 2>&1
+          done
+          python llama.cpp/scripts/prefix-lm-reference.py --output logs/mimir-reference
+          logs/mimir-runtime/build/mimir-engine-tests --prefix-reference logs/mimir-reference/reference.json
+          python native/mimir/tests/run_matrix.py
+          python native/mimir/tests/text_parity.py --client logs/mimir-runtime/build/bin/mimir-chat --model logs/mimir-text-ci/vocab.gguf --reference logs/mimir-text-ci/reference.json --output logs/mimir-text-ci/parity.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mimir-session-results-${{ matrix.mode }}
+          path: |
+            logs/mimir-reference
+            logs/mimir-runtime/matrix
+            logs/mimir-runtime/build/Testing/Temporary
+            logs/mimir-text-ci/parity.*
+            logs/mimir-runtime/ordinary-*.log
+            logs/mimir-parser/Testing/Temporary
+
+  cuda:
+    if: github.event_name == 'workflow_dispatch' && inputs.cuda
+    runs-on: [self-hosted, linux, x64, cuda]
+    concurrency:
+      group: mimir-cuda-qualification
+      cancel-in-progress: false
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify qualified source and prepare fixtures
+        run: |
+          python - <<'PYCODE'
+          import hashlib, json
+          from pathlib import Path
+          manifest = json.loads(Path('native/mimir/decoder-results.json').read_text())
+          for path, digest in manifest['source_sha256'].items():
+              assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
+          PYCODE
+          python -m pip install -r scripts/prefixlm_comparison/requirements.lock
+          PYTHONPATH=llama.cpp/gguf-py python scripts/prefixlm_comparison/fixture.py --output logs/prefixlm-comparison/fixture
+          python native/mimir/tests/prepare_text_ci.py
+      - name: CUDA engine and sampler persistence
+        run: |
+          nvidia-smi
+          nvcc --version
+          cmake -S native/mimir -B logs/mimir-runtime/cuda -DCMAKE_BUILD_TYPE=Release -DGGML_CUDA=ON -DGGML_METAL=OFF
+          cmake --build logs/mimir-runtime/cuda -j 4
+          ctest --test-dir logs/mimir-runtime/cuda --output-on-failure
+          logs/mimir-runtime/cuda/mimir-backend-sampler-tests --device gpu \
+            --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction
+          compute-sanitizer --tool memcheck --error-exitcode 1 \
+            logs/mimir-runtime/cuda/mimir-backend-sampler-tests --device gpu \
+            --model logs/prefixlm-comparison/fixture/hrm-false.gguf --test multi_output_dist_transaction
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mimir-cuda-persistence
+          path: logs/mimir-runtime/cuda/Testing/Temporary

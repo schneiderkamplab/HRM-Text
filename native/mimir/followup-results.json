@@ -1,0 +1,491 @@
+{
+  "date": "2026-09-17",
+  "platform": "macOS-26.4.1-arm64-arm-64bit",
+  "base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "scope": "Safe single-sequence PrefixLM answer-suffix removal and template-verified chat regression",
+  "changes": [
+    "Answer-suffix removal advances the next decode position back to the retained boundary",
+    "Full finite removal and empty intervals follow normal range semantics",
+    "Keeping sequence 0 and self-copying sequence 0 are permitted",
+    "Prefix edits, answer holes and foreign sequence mutations remain rejected",
+    "Chat harness verifies exact Mimir-template token IDs before generation"
+  ],
+  "patch_check": {
+    "pass": true,
+    "matched_files": [
+      "common/arg.cpp",
+      "common/common.cpp",
+      "common/jinja/string.cpp",
+      "conversion/base.py",
+      "convert_hf_to_gguf_update.py",
+      "examples/simple-chat/simple-chat.cpp",
+      "examples/simple/simple.cpp",
+      "ggml/src/ggml.c",
+      "include/llama.h",
+      "src/llama-context.cpp",
+      "src/llama-context.h",
+      "src/llama-memory.h",
+      "src/llama-model.cpp",
+      "src/llama-vocab.cpp",
+      "src/llama-vocab.h",
+      "src/models/hrm-text.cpp",
+      "src/unicode.cpp",
+      "tests/CMakeLists.txt",
+      "tests/test-llama-archs.cpp",
+      "tools/cli/README.md",
+      "tools/imatrix/imatrix.cpp",
+      "tools/llama-bench/llama-bench.cpp",
+      "tools/perplexity/perplexity.cpp",
+      "tools/server/README.md",
+      "tools/server/server-context.cpp",
+      "tools/server/server-schema.cpp",
+      "docs/development/prefix-lm.md",
+      "scripts/prefix-lm-reference.py",
+      "src/unicode-letter-case.h"
+    ],
+    "patch_sha256": {
+      "prefixlm-engine.patch": "7e6cf04177648c618f46a632c8c75a1383ce87e107bf49002cda633e8bb3f769",
+      "text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+      "ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519"
+    }
+  },
+  "source_sha256": {
+    "common/arg.cpp": "af18335788c6f4fb61c068b313bd17fe1a34b5c7fbc2b5f7fb6ccf846b3267f2",
+    "common/common.cpp": "996e936813001bafbcf8b6fa362cb5fc2bce6d330e636d73df83a5d7e8af7069",
+    "common/jinja/string.cpp": "0be6be31a2377e18a8df442b7db9267e97943c8b186f6f1260f0be682b1126b5",
+    "conversion/base.py": "13544cb79354f388046eb2480783111f67f7165416ecf5a9776a732fc66878bf",
+    "convert_hf_to_gguf_update.py": "08fcd70d3c50a7b2a225a5e5e43368f21b08e1a63bdc8e868e2aca59ea095934",
+    "examples/simple-chat/simple-chat.cpp": "69e270bb2c7989426a7bf14b4eee68199b773ccb0ff6fbe382527d722445b159",
+    "examples/simple/simple.cpp": "78fdd89dd5e521dcd0ed830b493cb796a9ab42550c8500aa7d1ba74f6793e835",
+    "ggml/src/ggml.c": "60f533a1ca287dd37900cbd4fcb187e5eab9b051243b83e0219b2a12bda0e9c7",
+    "include/llama.h": "4374e35c095c0eba75a9994b7b1117e1f1b33ad5fbb64e8cf1cd7489ae30cb3a",
+    "src/llama-context.cpp": "012c92e4857311efb88cfa144c8c810fc1f20e5f2cb448c07a0391061995e8a6",
+    "src/llama-context.h": "0f2f0ce117e33e8eee15ff1833167027b2bb61c45502eb08c4e17b3f35a4227c",
+    "src/llama-memory.h": "8fc6561089f01fe3f83411bbdd38286a0a1a9548af427cb5d43804b50b2ceebc",
+    "src/llama-model.cpp": "c995e973f026dfb70f19932704e7fd809fd8b4f88fe4507dbf1bd1b514ba6ce5",
+    "src/llama-vocab.cpp": "a00fa07714a6f6f93aac0551e8f011b0bb3d32a3f0e5a7f3d226272a7ab23c09",
+    "src/llama-vocab.h": "cc36feded87fd23d3d66befa5373b436089c63e41773feee6e374480a2e93c2c",
+    "src/models/hrm-text.cpp": "fd083798c5a13d3231d0936dc4ce8d138994c2eac9e716e05b8ba9b3e109c8fc",
+    "src/unicode.cpp": "c04568ba24fdb9c3c9a0a555abb537d00f2bd4fb71fc4236f1ddeb4e47da895a",
+    "tests/CMakeLists.txt": "1c938cb07079a8e18155c0f46f8c56331067bc866a14ed6e966c9132346e1919",
+    "tests/test-llama-archs.cpp": "d49d317f993fe1d81ecae7943667c1b7e66d5f2b5b7b0ff7bc745b27fa03e542",
+    "tools/cli/README.md": "b8742849b44e63030a7fac5bf2d06add9e792ebee5c357141bfa454276a23c57",
+    "tools/imatrix/imatrix.cpp": "05e9e6fb13fb86bdeb552eb29dece61e9a4fb37a282d02fa6a958260d5c611dd",
+    "tools/llama-bench/llama-bench.cpp": "7bd1ac2f5fecabdf7fd03a3e62646ab3a5d81b55e298e3ef331d66b86e6c048f",
+    "tools/perplexity/perplexity.cpp": "025da5b2e6ad159d05c8e96f595f42ff553f9c660cd70974a4052913c8e1af6e",
+    "tools/server/README.md": "ef3e409cd46407b6ab3b846a1e9ea4a98842eea7c1fe2a2596902d8dc33713e9",
+    "tools/server/server-context.cpp": "e36e93464386bd51fdf79860642808702a47f78d630dafdb5c5717a540008207",
+    "tools/server/server-schema.cpp": "e81540b3efeb1ad39cdd3297aa6d539334e266da38cb450c38b3f9ca8c046a72",
+    "docs/development/prefix-lm.md": "43ba0a01833ad6849b8e8447d66c1af9bce4dc46dcb912e94bd95b643fed4a0f",
+    "scripts/prefix-lm-reference.py": "fed10338216f8d9aeeb148583a4b7cf3ebe988ba588e278607823670cfd98594",
+    "src/unicode-letter-case.h": "66750212f3d27989f5f5d9af45d8f7ba1086128de3d08a49b12833834f0783db"
+  },
+  "chat_harness_sha256": "69ac09e2db6b7dc954e5eb45093c87d037b693e0106600cb07fb067943b4521f",
+  "regression": {
+    "release_ctest": "7/7",
+    "ubsan_ctest": "7/7",
+    "standalone_prefix_ctest": "2/2",
+    "direct_engine_checks": {
+      "cpu_and_metal": 724,
+      "ubsan_cpu": 362
+    },
+    "causal_architectures": [
+      "llama dense/MoE",
+      "hrm_text dense"
+    ]
+  },
+  "independent_reference": {
+    "cpu": {
+      "pass": true,
+      "steps": 18,
+      "failed_steps": [],
+      "rollback_steps": [
+        {
+          "case": "answer-rollback",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 5.960464477539062e-07,
+          "rmse": 1.2412827248794608e-07,
+          "top1_matches": 6,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.0909961229738034e-07,
+          "top1_matches": 3,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 7,
+          "rows": 2,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.1401945449978025e-07,
+          "top1_matches": 2,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.0909961229738034e-07,
+          "top1_matches": 3,
+          "pass": true
+        }
+      ],
+      "report_sha256": "ffcd11694c8ee7f56ac240b94d045175e8be57c0f9a4e26f6a7e3d0c4a2fe6ac"
+    },
+    "metal": {
+      "pass": false,
+      "steps": 18,
+      "failed_steps": [
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.00010558962821960449,
+          "rmse": 2.374077831360791e-05,
+          "top1_matches": 3,
+          "pass": false
+        }
+      ],
+      "rollback_steps": [
+        {
+          "case": "answer-rollback",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 5.981326103210449e-05,
+          "rmse": 1.960008582151875e-05,
+          "top1_matches": 6,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 7.228553295135498e-05,
+          "rmse": 2.1557207324014263e-05,
+          "top1_matches": 3,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 7,
+          "rows": 2,
+          "finite": true,
+          "max_abs": 6.724894046783447e-05,
+          "rmse": 1.9893511334569295e-05,
+          "top1_matches": 2,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 7.228553295135498e-05,
+          "rmse": 2.1557207324014263e-05,
+          "top1_matches": 3,
+          "pass": true
+        }
+      ],
+      "report_sha256": "d8db668154123dc375138d6a71c10da2bc25d4f4034eff6e2bd9ca3b299bd32b"
+    },
+    "metal-unfused": {
+      "pass": true,
+      "steps": 18,
+      "failed_steps": [],
+      "rollback_steps": [
+        {
+          "case": "answer-rollback",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 7.152557373046875e-07,
+          "rmse": 1.3267842064773584e-07,
+          "top1_matches": 6,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.2870316866552682e-07,
+          "top1_matches": 3,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 7,
+          "rows": 2,
+          "finite": true,
+          "max_abs": 4.172325134277344e-07,
+          "rmse": 1.283166656242702e-07,
+          "top1_matches": 2,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.2870316866552682e-07,
+          "top1_matches": 3,
+          "pass": true
+        }
+      ],
+      "report_sha256": "ed389cd826aa151c08f5f0c60f673cef29fc01258ad715b43ae7be9bc798f9fa"
+    },
+    "ubsan": {
+      "pass": true,
+      "steps": 18,
+      "failed_steps": [],
+      "rollback_steps": [
+        {
+          "case": "answer-rollback",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 5.960464477539062e-07,
+          "rmse": 1.2412827248794608e-07,
+          "top1_matches": 6,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.0909961229738034e-07,
+          "top1_matches": 3,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 7,
+          "rows": 2,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.1401945449978025e-07,
+          "top1_matches": 2,
+          "pass": true
+        },
+        {
+          "case": "answer-rollback",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.0909961229738034e-07,
+          "top1_matches": 3,
+          "pass": true
+        }
+      ],
+      "report_sha256": "0f2e615967f7cde57b6dc4b26547446c15fe6de69bdfcf48da22d8d7dbc4f6a9"
+    }
+  },
+  "chat_runs": [
+    {
+      "format": "bf16",
+      "flash": false,
+      "command": [
+        "logs/prefixlm-comparison/venv/bin/python",
+        "native/mimir/tests/chat_e2e.py",
+        "--client",
+        "logs/mimir-runtime/build/bin/mimir-chat",
+        "--model",
+        "logs/mimir-review/mimir-bf16.gguf",
+        "--reference",
+        "logs/mimir-chat/chat-reference.json",
+        "--short-reference",
+        "logs/prefixlm-comparison/real/prompts.json",
+        "--output",
+        "logs/mimir-followup/chat-bf16-unfused.json"
+      ],
+      "exit_code": 0,
+      "report": "logs/mimir-followup/chat-bf16-unfused.json",
+      "pass": true,
+      "checks": 12,
+      "report_sha256": "34eed3423ded744468ec95b2acecec1f1820774dd829b549bfe7f71b8cdb98e1"
+    },
+    {
+      "format": "bf16",
+      "flash": true,
+      "command": [
+        "logs/prefixlm-comparison/venv/bin/python",
+        "native/mimir/tests/chat_e2e.py",
+        "--client",
+        "logs/mimir-runtime/build/bin/mimir-chat",
+        "--model",
+        "logs/mimir-review/mimir-bf16.gguf",
+        "--reference",
+        "logs/mimir-chat/chat-reference.json",
+        "--short-reference",
+        "logs/prefixlm-comparison/real/prompts.json",
+        "--output",
+        "logs/mimir-followup/chat-bf16-flash.json",
+        "--flash"
+      ],
+      "exit_code": 0,
+      "report": "logs/mimir-followup/chat-bf16-flash.json",
+      "pass": true,
+      "checks": 12,
+      "report_sha256": "b4d3995132a606b9a9ee496f99766840b15c1ce4494efc8c684068edfccf0836"
+    },
+    {
+      "format": "q8_0",
+      "flash": false,
+      "command": [
+        "logs/prefixlm-comparison/venv/bin/python",
+        "native/mimir/tests/chat_e2e.py",
+        "--client",
+        "logs/mimir-runtime/build/bin/mimir-chat",
+        "--model",
+        "logs/mimir-review/mimir-q8_0.gguf",
+        "--reference",
+        "logs/mimir-chat/chat-reference.json",
+        "--short-reference",
+        "logs/prefixlm-comparison/real/prompts.json",
+        "--output",
+        "logs/mimir-followup/chat-q8_0-unfused.json"
+      ],
+      "exit_code": 0,
+      "report": "logs/mimir-followup/chat-q8_0-unfused.json",
+      "pass": true,
+      "checks": 12,
+      "report_sha256": "a20cec4c6fc4a81e8153df958ee285c019f247088c285bd06034c6aa659df85e"
+    },
+    {
+      "format": "q8_0",
+      "flash": true,
+      "command": [
+        "logs/prefixlm-comparison/venv/bin/python",
+        "native/mimir/tests/chat_e2e.py",
+        "--client",
+        "logs/mimir-runtime/build/bin/mimir-chat",
+        "--model",
+        "logs/mimir-review/mimir-q8_0.gguf",
+        "--reference",
+        "logs/mimir-chat/chat-reference.json",
+        "--short-reference",
+        "logs/prefixlm-comparison/real/prompts.json",
+        "--output",
+        "logs/mimir-followup/chat-q8_0-flash.json",
+        "--flash"
+      ],
+      "exit_code": 0,
+      "report": "logs/mimir-followup/chat-q8_0-flash.json",
+      "pass": true,
+      "checks": 12,
+      "report_sha256": "d014d5665b5da7ca44e07dcdb12eee0effb962645239a73cef461c5e0fa787bd"
+    },
+    {
+      "format": "q4_k_m",
+      "flash": false,
+      "command": [
+        "logs/prefixlm-comparison/venv/bin/python",
+        "native/mimir/tests/chat_e2e.py",
+        "--client",
+        "logs/mimir-runtime/build/bin/mimir-chat",
+        "--model",
+        "logs/mimir-review/mimir-q4_k_m.gguf",
+        "--reference",
+        "logs/mimir-chat/chat-reference.json",
+        "--short-reference",
+        "logs/prefixlm-comparison/real/prompts.json",
+        "--output",
+        "logs/mimir-followup/chat-q4_k_m-unfused.json"
+      ],
+      "exit_code": 0,
+      "report": "logs/mimir-followup/chat-q4_k_m-unfused.json",
+      "pass": true,
+      "checks": 12,
+      "report_sha256": "fe01003fc2a285fcde34ca28fc68add9fc289487087b437025eaead1fa0465f3"
+    },
+    {
+      "format": "q4_k_m",
+      "flash": true,
+      "command": [
+        "logs/prefixlm-comparison/venv/bin/python",
+        "native/mimir/tests/chat_e2e.py",
+        "--client",
+        "logs/mimir-runtime/build/bin/mimir-chat",
+        "--model",
+        "logs/mimir-review/mimir-q4_k_m.gguf",
+        "--reference",
+        "logs/mimir-chat/chat-reference.json",
+        "--short-reference",
+        "logs/prefixlm-comparison/real/prompts.json",
+        "--output",
+        "logs/mimir-followup/chat-q4_k_m-flash.json",
+        "--flash"
+      ],
+      "exit_code": 0,
+      "report": "logs/mimir-followup/chat-q4_k_m-flash.json",
+      "pass": true,
+      "checks": 12,
+      "report_sha256": "96f89fcaa92964db2506acff156791c0b658fd8e3916833abb5a6d790a130116"
+    }
+  ],
+  "chat_total_checks": 72,
+  "stock_server": {
+    "pass": true,
+    "checks": 23,
+    "report_sha256": "eb75fcf12866d2f51f8a1bec72eedcd559f8ae6f01048bb0ec82f2646b63dc46"
+  },
+  "correction": "The prior Metal reference report already failed the causal-control answer row at max_abs 0.00010558962821960449 > 0.0001. Earlier prose overstated its success. Fixture weights and reference arrays were compared and are identical; the error is unchanged. No threshold was relaxed.",
+  "remaining": [
+    "Sequence-local ownership and parallel scheduling",
+    "Fixed-adapter support",
+    "State persistence and broader client adaptation",
+    "Linux ASan",
+    "Precision-specific tolerances and broader conditional quality/performance qualification"
+  ],
+  "evidence_sha256": {
+    "reference-ubsan.log": "c47a4ee21c8eedbdcde7d7ca134dd69ea4fa27b4d823c75bc3732b141175f9d6",
+    "reference-generate.log": "f0332a70752004ba17be1fe3e8489f0c4f31eea07ca9cf4cd2b5181bfa526931",
+    "chat-q8_0-unfused.log": "4f53425b8e9768218a15ba3818e0deb3e75dd47b70bc117c57ed1de407762497",
+    "chat-bf16-unfused-driver.log": "e6634106bd8e35878b643f6820336edc7747cb44ba6936e02641d2ae8571b3f6",
+    "chat-q8_0-unfused-driver.log": "e6634106bd8e35878b643f6820336edc7747cb44ba6936e02641d2ae8571b3f6",
+    "chat-q4_k_m-unfused-driver.log": "e6634106bd8e35878b643f6820336edc7747cb44ba6936e02641d2ae8571b3f6",
+    "chat-q8_0-flash-driver.log": "e6634106bd8e35878b643f6820336edc7747cb44ba6936e02641d2ae8571b3f6",
+    "wiki-validation.log": "2e6cfba24c54f2ea06e1d1c2859e00a3f5a96cc08d343259b8d2b1beece9e300",
+    "chat-q4_k_m-flash-driver.log": "e6634106bd8e35878b643f6820336edc7747cb44ba6936e02641d2ae8571b3f6",
+    "ubsan-build.log": "7d795d75e9705879783d03a66c44d184ad2094c9de3eb89881c8efc2fb3e9720",
+    "reference-build.log": "85c74daf25beaa898551f3e8eed454bbe42101edc532338b99a0e629b18ca80f",
+    "ubsan-ctest.log": "9b4adc059d517b31f1fe5064394631cb56c0844af4ede78d34fd737af60ad3e8",
+    "causal-llama.log": "147e38c0215534f008a96cc5ea4282ec0ef80ddc2ffe91a0048bd0146a9ef9b2",
+    "chat-bf16-flash-driver.log": "e6634106bd8e35878b643f6820336edc7747cb44ba6936e02641d2ae8571b3f6",
+    "chat-bf16-flash.log": "4f53425b8e9768218a15ba3818e0deb3e75dd47b70bc117c57ed1de407762497",
+    "reference-metal.log": "5305977d06785db1891463b67df19bb0f8465e01406d7dd683221ba20fb0374a",
+    "chat-q4_k_m-flash.log": "4f53425b8e9768218a15ba3818e0deb3e75dd47b70bc117c57ed1de407762497",
+    "engine-ctest.log": "cff6fcaf69d045c40716be918b773ef48867bd0d35eb0496955fd1428932b412",
+    "causal-hrm.log": "7986e9b3ef31023cee7503fe48f171ca4f04a876bb9b9b82aa41076ad48103e5",
+    "reference-cpu.log": "d4a6ce2bb33247b3ae53bd800b9a65865a0504516d34dcbd8176e2bf923fe4ed",
+    "chat-bf16-unfused.log": "4f53425b8e9768218a15ba3818e0deb3e75dd47b70bc117c57ed1de407762497",
+    "chat-matrix.log": "720def7275cc51135ba55aab1f6e811bf7163e9113256558620ea35bba0e9496",
+    "native-ctest.log": "5511847011e4641a4764c28d560a64ce58751624bd4eab15dda6e041ec327041",
+    "server-driver.log": "8db10356e34e4113c1af40b75dd189a108ad0dc1b3e4981599e1541d28e64255",
+    "reference-metal-unfused.log": "d6d284c7b27c09a8ffa149e1d083bb35af822b79a2cca957fea3d3bfe1bf8731",
+    "server.log": "4c764d1b1e38deef0d39aa5939b9a894ff79c37dc5f9149ce7de86c8495b0ef7",
+    "chat-q4_k_m-unfused.log": "4f53425b8e9768218a15ba3818e0deb3e75dd47b70bc117c57ed1de407762497",
+    "native-build.log": "55e25c7c3ef3183e8ca10d73c598a661cd124ac9c94ad88750fab25525a13068",
+    "chat-q8_0-flash.log": "4f53425b8e9768218a15ba3818e0deb3e75dd47b70bc117c57ed1de407762497",
+    "build.log": "eebf9b09df49a6a321981b8198ed2e10c26ad77f577df16254aee1cc66ca0cc1"
+  }
+}
