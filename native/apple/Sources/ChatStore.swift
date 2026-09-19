@@ -17,8 +17,9 @@ final class ChatStore: ObservableObject {
     private let engine = MimirEngine()
     private var storage: ChatStorage?
     private var persistenceEnabled = true
-    let contextTokens = 1024
-    let replyTokens = 128
+    @Published private(set) var generationSettings = GenerationSettings.recommended
+    var contextTokens: Int { generationSettings.contextTokens }
+    var replyTokens: Int { generationSettings.replyTokens }
     var busy: Bool { loading || generating }
     var active: Conversation? { saved.conversations.first { $0.id == selected } }
     var messages: [ChatMessage] { active?.messages ?? [] }
@@ -37,6 +38,9 @@ final class ChatStore: ObservableObject {
             let storage = try suppliedStorage ?? ChatStorage()
             self.storage = storage
             saved = try storage.load()
+            if let settings = saved.generationSettings, settings.validationError == nil {
+                generationSettings = settings
+            }
             selected = saved.conversations.first?.id
         } catch {
             // Keep an unreadable archive intact. Never overwrite it with an empty default.
@@ -61,8 +65,24 @@ final class ChatStore: ObservableObject {
             load(try JSONDecoder().decode(ModelAsset.self, from: Data(contentsOf: url)))
         } catch { notice = "The bundled model information could not be read." }
     }
-    private func load(_ asset: ModelAsset) {
+    func useMemoryDefaults() {
+        applySettings(.recommended, automatic: true)
+    }
+    func applySettings(_ settings: GenerationSettings, automatic: Bool = false) {
+        guard !busy else { return }
+        if let error = settings.validationError { notice = error; return }
+        if let model, automatic || settings.contextTokens != contextTokens || !ready {
+            load(model, settings: settings, automatic: automatic)
+        } else {
+            generationSettings = settings
+            saved.generationSettings = automatic ? nil : settings
+            persist()
+        }
+    }
+    private func load(_ asset: ModelAsset, settings requested: GenerationSettings? = nil, automatic: Bool = false) {
         guard !busy, let path = storage?.modelURL(asset)?.path else { return }
+        let settings = requested ?? generationSettings
+        let chooseAutomatically = automatic || (requested == nil && saved.generationSettings == nil)
         loading = true
         ready = false
         #if targetEnvironment(simulator)
@@ -70,11 +90,14 @@ final class ChatStore: ObservableObject {
         #else
         let gpu = true
         #endif
-        engine.loadModel(path, context: Int32(contextTokens), useGPU: gpu) { [weak self] error in
+        engine.loadModel(path, context: chooseAutomatically ? 0 : Int32(settings.contextTokens), useGPU: gpu) { [weak self] error, loadedContext in
             guard let self else { return }
             self.loading = false
             if let error { self.notice = error; return }
             self.model = asset
+            self.generationSettings = chooseAutomatically
+                ? GenerationSettings.defaults(context: Int(loadedContext)) : settings
+            if requested != nil { self.saved.generationSettings = automatic ? nil : settings }
             self.ready = true
             self.saved.importedModel = asset.bundled ? nil : asset
             self.persist()
@@ -135,7 +158,8 @@ final class ChatStore: ObservableObject {
         pendingPrompt = prompt
         streaming = ""
         generating = true
-        engine.reply(prompt, history: history, budget: Int32(replyTokens), onToken: { [weak self] token in
+        let budget = replyTokens
+        engine.reply(prompt, history: history, budget: Int32(budget), onToken: { [weak self] token in
             self?.streaming += token
         }, completion: { [weak self] error, cancelled, limitReached in
             guard let self else { return }
@@ -153,7 +177,7 @@ final class ChatStore: ObservableObject {
                 chat.title = String(chat.messages.first?.content.prefix(48) ?? "New chat")
                 chat.updated = Date()
                 self.saveConversation(chat)
-                if limitReached { self.notice = "Reply reached the 128-token limit. You can ask a follow-up." }
+                if limitReached { self.notice = "Reply reached the \(budget)-token limit. You can increase the reply budget in settings." }
             }
             self.streaming = ""
         })
@@ -167,5 +191,18 @@ final class ChatStore: ObservableObject {
         guard let storage else { return }
         do { try storage.save(saved) }
         catch { notice = "This chat could not be saved. \(error.localizedDescription)" }
+    }
+}
+
+extension GenerationSettings {
+    @MainActor static var recommended: Self { forModel(bytes: 1200 * 1024 * 1024) }
+    @MainActor static func forModel(bytes: UInt64) -> Self {
+        #if targetEnvironment(simulator)
+        let gpu = false
+        #else
+        let gpu = true
+        #endif
+        let context = Int(MimirEngine.recommendedContext(useGPU: gpu, modelBytes: bytes))
+        return .defaults(context: context)
     }
 }

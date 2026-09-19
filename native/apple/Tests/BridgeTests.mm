@@ -1,6 +1,7 @@
 #import "MimirEngine.h"
 #include <stdexcept>
 #include <iostream>
+#include <climits>
 
 static void require(bool value, const char * message) { if (!value) { throw std::runtime_error(message); } }
 static void wait_for(BOOL & done) {
@@ -17,7 +18,14 @@ int main(int argc, const char ** argv) {
             MimirEngine * engine = [MimirEngine new];
             __block BOOL done = NO;
             __block NSString * failure = nil;
-            [engine loadModel:@(argv[1]) context:1024 useGPU:YES completion:^(NSString * error) {
+            const int recommended = [MimirEngine recommendedContextWithUseGPU:YES modelBytes:1200ULL * 1024 * 1024];
+            require(recommended >= 1024 && recommended <= 8192, "bounded memory defaults");
+            [engine loadModel:@(argv[1]) context:INT_MAX useGPU:YES completion:^(NSString * error, int loadedContext) {
+                failure = error; done = YES;
+            }];
+            wait_for(done); require(failure != nil, "unsafe allocation must be rejected");
+            done = NO;
+            [engine loadModel:@(argv[1]) context:1024 useGPU:YES completion:^(NSString * error, int loadedContext) {
                 failure = error; done = YES;
             }];
             wait_for(done); require(!failure, failure.UTF8String ?: "load");

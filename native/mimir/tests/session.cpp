@@ -332,6 +332,20 @@ int main(int argc, char ** argv) {
         const bool real = llama_vocab_n_tokens(llama_model_get_vocab(model.get())) > 128;
         tolerance = real ? 0.03 : (device == "metal" || flash != "off" ? 0.003 : 1e-4);
         Config cfg{128, 64, 4, flash == "on", flash != "off" ? GGML_TYPE_F16 : GGML_TYPE_F32};
+        if (!real) {
+            Config extended = cfg;
+            extended.context_tokens = uint32_t(llama_model_n_ctx_train(model.get())) + 32;
+            extended.batch_tokens = extended.context_tokens;
+            bool rejected = false;
+            try { Session guarded(model, extended); }
+            catch (const std::invalid_argument &) { rejected = true; }
+            require(rejected, "training context guard remains default");
+            extended.allow_context_extension = true;
+            Session permitted(model, extended);
+            std::vector<llama_token> longer(extended.context_tokens - 4, 1);
+            require(bool(permitted.begin_turn(longer, 4)), "opt-in prefix beyond training context");
+            require(bool(permitted.append({1})), "opt-in decode beyond training context");
+        }
         parity(model, argv[2], cfg);
         lifecycle(model, cfg, device == "cpu");
         if (argc == 7) {

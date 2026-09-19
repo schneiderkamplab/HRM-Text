@@ -153,3 +153,12 @@ unchanged, retaining existing chats. Mac, iOS and simulator Release builds passe
 generated plists contain the DFM Mimir display name and AppIcon entries. Mac and
 iPhone 16 Plus simulator welcome screens were visually inspected with both logos
 present and readable. Dark-mode and physical-device visual checks were not run.
+
+## Configurable context follow-up — 2026-09-19
+
+Superseded: the original fixed 1,024 context / 128 reply limits. Both platforms now
+have memory-based defaults starting at 1,024 / 512, persisted custom controls and
+an explicit wrapper opt-in beyond training context. See
+[CONTEXT-REPORT.md](CONTEXT-REPORT.md) for reproduction, memory measurements and
+qualification limits. Real Q4_K_M / Metal execution crossed 4,096 positions;
+physical-device memory and extended-context answer quality remain unqualified.

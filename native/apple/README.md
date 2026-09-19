@@ -31,10 +31,47 @@ the app's bundle identifier are unchanged.
   untouched; an unsaved-session notice is shown. Storage is excluded from OS backup.
 - Model/llama.cpp license notices and accessible, selectable message text.
 
-The first version deliberately uses greedy sampling, a **1,024-token context** and
-**128-token reply limit**. It does not silently trim old messages. At capacity, start
-another chat. No image/audio input, tools, attachments, cloud sync or automatic model
+The app uses greedy sampling and configurable context/reply limits (see below).
+It does not silently trim old messages. At capacity, increase context, reduce the
+reply budget, or start another chat. No image/audio input, tools, attachments, cloud sync or automatic model
 updates are included. Replies may still be inaccurate, including identity statements.
+
+## Context and reply settings
+
+Open **Model and settings → Context and replies**. Automatic defaults start at
+1,024 context / 512 reply tokens and increase with available memory:
+
+| Context tokens | Reply budget tokens |
+| --- | --- |
+| 1,024 | 512 |
+| 2,048 | 512 |
+| 4,096 | 1,024 |
+| 8,192 | 2,048 |
+
+Context includes the template, conversation and reserved reply. Custom values are
+saved across launches. Context must be at least 1,024; reply budgets may be any
+positive integer leaving at least 256 context tokens for the prompt. A longer
+actual prompt still needs to fit. Context changes reload the model; reply-only
+changes take effect without reloading. Use **Use memory-based defaults** to return
+to automatic selection on each load. Completed chats survive reload failures;
+reduce context and apply again to recover.
+
+There is no 4,096-token settings cap. Larger contexts opt into the native wrapper's
+context-extension option; they are experimental for answer quality beyond Mimir's
+training context. A real Q4_K_M Metal run passed with an 8,192 context and a
+4,530-token templated prompt. Values above 8,192 are also configurable, subject to
+memory admission and the runtime's signed 32-bit token range, but are not qualified
+by that test. See [the context report](CONTEXT-REPORT.md).
+
+Automatic selection and manual admission use 70% of currently available memory,
+with an estimate of GGUF file size + 256 MiB + 2 MiB per context token, plus
+96 × context² bytes for CPU attention. The old model/context is released before
+selection. Physical iOS uses its process memory allowance; Mac and Simulator use host
+free/inactive memory. Defaults can change with other apps and delayed OS memory
+reclamation.
+This is a DFM-Mimir estimate, not an OS allocation guarantee; even the 1,024 minimum
+can be refused if memory is insufficient. Physical iPhone/iPad peak-memory and
+thermal checks remain necessary.
 
 ## Message keyboard behavior
 
@@ -100,7 +137,7 @@ the simulator uses host CPU inference and does not validate real-device Metal,
 memory pressure or thermal behavior.
 
 Memory is materially larger than weight file size. Mimir's recurrent KV expansion
-alone uses about 768 MiB at this context size with F16 KV, plus weights, graph buffers
+alone uses about 768 MiB per 1,024 context tokens with F16 KV, plus weights, graph buffers
 and application memory. Real iPhone/iPad peak memory, thermal behavior and sustained
 throughput still need physical-device measurements. Do not promise compatibility from
 successful cross-compilation alone.

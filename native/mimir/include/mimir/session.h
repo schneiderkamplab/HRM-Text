@@ -25,6 +25,7 @@ struct Config {
     int threads = 4;
     bool flash_attention = false;
     ggml_type cache_type = GGML_TYPE_F16;
+    bool allow_context_extension = false; // Opt in to positions beyond the training context.
 };
 
 // Initialize llama backends before loading the shared model. The session owns its context.

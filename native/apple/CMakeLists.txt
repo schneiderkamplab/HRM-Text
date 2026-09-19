@@ -26,7 +26,7 @@ target_compile_options(mimir-apple-bridge PRIVATE -fobjc-arc)
 set_target_properties(mimir-apple-bridge PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES)
 add_executable(MimirChat MACOSX_BUNDLE
     Sources/MimirApp.swift Sources/ContentView.swift Sources/ChatStore.swift Sources/Conversation.swift
-    Sources/Branding.swift Resources/Brand.xcassets)
+    Sources/Branding.swift Sources/GenerationSettings.swift Sources/SettingsView.swift Resources/Brand.xcassets)
 set_source_files_properties(Resources/Brand.xcassets PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 target_compile_options(MimirChat PRIVATE -import-objc-header "${CMAKE_CURRENT_SOURCE_DIR}/Bridge/MimirEngine.h")
 target_link_libraries(MimirChat PRIVATE mimir-apple-bridge "-framework SwiftUI")
@@ -69,6 +69,9 @@ target_sources(MimirChat PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/llama-LICENSE.txt"
 set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/llama-LICENSE.txt" "${CMAKE_CURRENT_BINARY_DIR}/Mimir-LICENSE.txt"
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    add_executable(mimir-extended-context-tests Tests/ExtendedContextTests.cpp)
+    target_include_directories(mimir-extended-context-tests PRIVATE ../mimir/tools)
+    target_link_libraries(mimir-extended-context-tests PRIVATE mimir-chat-lib)
     add_executable(mimir-bridge-tests Tests/BridgeTests.mm)
     target_include_directories(mimir-bridge-tests PRIVATE Bridge)
     target_compile_options(mimir-bridge-tests PRIVATE -fobjc-arc)

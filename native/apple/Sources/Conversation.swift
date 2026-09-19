@@ -23,6 +23,7 @@ struct SavedChats: Codable {
     var version = 1
     var conversations: [Conversation] = []
     var importedModel: ModelAsset?
+    var generationSettings: GenerationSettings?
 }
 
 struct ChatStorage {

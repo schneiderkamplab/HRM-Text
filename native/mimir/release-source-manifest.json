@@ -55,8 +55,8 @@
     "native/mimir/chat.cpp": "4c45d94a1b2b3481e68990fbf1c3f854b3c9bb3a9dc3467270281d335ce82f5d",
     "native/mimir/export.py": "81592bdd93d4ca99ef49f6831329c00dddbbe0cf1da987418248a1eb6bd874dc",
     "native/mimir/include/mimir/chat.h": "fe6163f1661f89de4ac0ed860640f8887067ef34419fa71c310f5c94b1e47e40",
-    "native/mimir/include/mimir/session.h": "4421a9abf6004133fd4b8793ef1bcf6402f467be7bee521f05a1100194ac0b9d",
-    "native/mimir/session.cpp": "f4405399dff4f8c88b096ffbbed8885a530081a082886a1e9e6c84de73ec3824",
+    "native/mimir/include/mimir/session.h": "708ebd357dcbd44ce10658167ee4551e72c26175df5e1edc41c2d071b8d31b3b",
+    "native/mimir/session.cpp": "7ba5a6447d8f89c8a9f208a2b9d48b8c5ef838c32162fddb72fe86a4f25b25ba",
     "native/mimir/tests/chat_e2e.py": "69ac09e2db6b7dc954e5eb45093c87d037b693e0106600cb07fb067943b4521f",
     "native/mimir/tests/chat_reference.py": "cbcba3ebf2886ff259b09493b1251dc2d58a728845c309945658e51f9436b36b",
     "native/mimir/tests/cuda_memcheck.py": "a0b62d3d16556265cba134d592d9bc442a307487881f2d41e8d1f57d80ffd96e",
@@ -67,7 +67,7 @@
     "native/mimir/tests/qualification_report.py": "b16781d791826c66f5e5563c591030fcf2cde463c8f3dfc6fe4a91572db17a81",
     "native/mimir/tests/run_matrix.py": "881c19bd3715088657b9f9ee22ac4c23da505891855b3618773f3590852af433",
     "native/mimir/tests/server_e2e.py": "1b896aca8cae43720ad816532f4e119c75cba45116a910ff9c9b9fa761903750",
-    "native/mimir/tests/session.cpp": "e2e9d5508b61c2e8d4b973fb2bb06397b5352a501a00bc60815c2b4175e9e999",
+    "native/mimir/tests/session.cpp": "8005f1b7f33b45c29b9ee38f58deb7f7f867eb88a2dee9029e409194b22de8ec",
     "native/mimir/tests/test_cuda_memcheck.py": "8e2274537831faf3b6bba35c2d9f6df8f1993485d02f4b92a86e29b18d4becc8",
     "native/mimir/tests/text.cpp": "3d1f9766893d0a809cefecb1f4e8211a7e497188ac1bd79e40b81e26582d8dd8",
     "native/mimir/tests/text_parity.py": "7848927df373e5e1be8d6539df889d256f554b55c58891f052c5e8c42f1a98f1",
@@ -96,5 +96,14 @@
     ],
     "evidence": "../apple/MVP-REPORT.md",
     "qualification": "Completed transcript restore added to the native chat wrapper and checked on macOS/Metal. Historical Linux measurements do not qualify this new wrapper method. llama.cpp and the candidate patches are unchanged."
+  },
+  "apple_context_extension": {
+    "changed_sources": [
+      "native/mimir/session.cpp",
+      "native/mimir/include/mimir/session.h",
+      "native/mimir/tests/session.cpp"
+    ],
+    "evidence": "../apple/CONTEXT-REPORT.md",
+    "qualification": "Optional context extension added to native wrapper; default training-context guard retained. Mac native tests and real Q4_K_M Metal execution beyond 4096 passed. Not yet Linux qualified. llama.cpp and candidate patches unchanged."
   }
 }

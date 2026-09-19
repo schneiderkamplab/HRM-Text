@@ -11,7 +11,8 @@ Session::Session(std::shared_ptr<llama_model> model, Config config)
     if (!model_ || !config.context_tokens || !config.batch_tokens || config.threads <= 0 ||
         config.batch_tokens > config.context_tokens ||
         config.context_tokens > uint32_t(std::numeric_limits<int32_t>::max()) ||
-        config.context_tokens > uint32_t(llama_model_n_ctx_train(model_.get())) ||
+        (!config.allow_context_extension &&
+         config.context_tokens > uint32_t(llama_model_n_ctx_train(model_.get()))) ||
         (config.cache_type != GGML_TYPE_F32 && config.cache_type != GGML_TYPE_F16) ||
         !llama_model_has_decoder(model_.get()) || llama_model_has_encoder(model_.get()) ||
         llama_model_is_recurrent(model_.get()) || llama_model_is_diffusion(model_.get())) {

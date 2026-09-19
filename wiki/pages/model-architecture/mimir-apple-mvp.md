@@ -137,3 +137,21 @@ Assistant answer headers now show a 20-point Mimir head before “DFM MIMIR”,
 reusing the bundled logo. The shared message renderer covers saved and streaming
 answers on Mac/iOS. The adjacent decorative image is hidden from accessibility
 so the speaker name is announced once. User headers remain text-only.
+
+## Configurable context and replies (2026-09-19)
+
+Superseded: fixed 1,024 context / 128 reply limits. Settings now persist custom
+context and reply budgets; automatic tiers are 1,024/512, 2,048/512, 4,096/1,024,
+and 8,192/2,048, chosen using current available memory and actual model file size.
+Release the old context before recalculating defaults, otherwise reset counts its
+own allocation and can unnecessarily reduce the tier. Manual contexts can exceed
+4,096 and 8,192, subject to integer bounds and memory admission. The native wrapper
+retains the training-length guard unless `allow_context_extension` is enabled.
+llama.cpp and packaged patches are unchanged.
+
+Mac/iOS/Simulator builds, Swift settings tests, real Metal bridge tests and 8/8
+native tests passed. A real 4,530-token Mimir-templated prompt and four decode steps
+ran in an 8,192 context with finite logits. Reported KV was 6 GiB and Metal compute
+about 8 GiB, so weight size alone is a poor memory estimate. Larger-position answer
+quality and physical iOS peak memory are not qualified. See the
+[context report](../../../native/apple/CONTEXT-REPORT.md) for commands and limits.

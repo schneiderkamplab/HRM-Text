@@ -141,5 +141,35 @@
       "answer-mark-simulator-build.log": "b08d5720343ff8495676a0ee45182360309c989573660a954e380e2292408e91"
     },
     "result": "Mac/iOS/simulator Release builds passed. Shared assistant header now includes decorative 20-point Mimir mark."
+  },
+  "context_settings_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/mimir/session.cpp": "7ba5a6447d8f89c8a9f208a2b9d48b8c5ef838c32162fddb72fe86a4f25b25ba",
+      "native/mimir/include/mimir/session.h": "708ebd357dcbd44ce10658167ee4551e72c26175df5e1edc41c2d071b8d31b3b",
+      "native/mimir/tests/session.cpp": "8005f1b7f33b45c29b9ee38f58deb7f7f867eb88a2dee9029e409194b22de8ec",
+      "native/apple/Bridge/MimirEngine.h": "d314b67053d26ad1dc3cb58d889614e8727e4bd28a552f693a294b281039a06e",
+      "native/apple/Bridge/MimirEngine.mm": "224daca022c8e925780eb27aa7e209c3ce3e64d8c95a1e6f95e0cdbde44f94f9",
+      "native/apple/CMakeLists.txt": "2d4572cc1cea5fa48816d9074dcdeae9a827ea2942e4abaada37962c129a99d1",
+      "native/apple/Sources/GenerationSettings.swift": "faf3fe0ffcbdeefb03219399b61db6e72be8d0663ec84536e72fe3db942ad8bb",
+      "native/apple/Sources/SettingsView.swift": "85a6302078e359fdd5722351c589b1a34bc69d51b5097ed0cf9cf0ff18515521",
+      "native/apple/Sources/ChatStore.swift": "7f40b258309a4eb229d7138febcb93da99b1d4bdb3c81934ff0bcf4bcc3ec6da",
+      "native/apple/Sources/ContentView.swift": "40a9b2aa29116820e9a102776c84e563e4f52c5173075a1834c02f561c680c0b",
+      "native/apple/Sources/Conversation.swift": "26cd9c958dbaf000b62ac806f834e029053e52be3c92406513beb56772f26a23",
+      "native/apple/Tests/BridgeTests.mm": "cd525a7f09b2855f6d04c567452bbb88df69279fa0172bfd7aca06cfaa02f7f3",
+      "native/apple/Tests/ExtendedContextTests.cpp": "581dff7f100538bef6701b120812e1224cce824a92e5a8df4f9ea632c6f97b3b",
+      "native/apple/Tests/StoreTests.swift": "2969b298ced34cf9a9ec8f95993810b61c1e68eaf5f496bbf1b08f44a4c72882",
+      "native/apple/Tools/test-swift.sh": "8d8cb02ad328c615fce7e8690427770ca895b4d7d0813e53a5512b694ddbdb70"
+    },
+    "local_log_sha256": {
+      "settings-swift-tests.log": "d7dc6aa5d1713e29b2cd32e3002f4cc187d3fffcddfdc020547ddc3db6281e06",
+      "settings-macos-build.log": "819229582011da6f2497d6320154e9be772cfccc1e07b321a4478751efc55346",
+      "settings-ios-build.log": "3f7ad5aae75f70152f06fa4fe5745d567fcfcc82807989529bb2a0767c9bfd13",
+      "settings-simulator-build.log": "beead2411feaac2b591b3a8212249e405b6de4426305315b98275accdbdbb8f5",
+      "settings-bridge-tests.log": "8d2106bf0a442f45ed6c645514fac15b15851b71a46ae8df3c3f124521fee1bd",
+      "settings-native-ctest.log": "039324bf979a4efc7e271eda68073de931bed87a30c5866b51b98a6675355526",
+      "extended-context-tests.log": "5b180ae5d2a135ea683ef87fa5a851d2676d0ab473d123f74f9a345649191d6a"
+    },
+    "result": "Three Release builds, Swift tests, real Metal bridge tests and 8/8 native tests passed. Real Q4_K_M: 4530-token Mimir-templated prefix and four decode steps in 8192 context passed with finite logits. Mac controls and reset inspected; final Simulator loaded successfully with host-memory estimate. Physical iOS memory and extended-context quality not qualified. Final ContentView difference from built source is trailing whitespace only. iPhone 16 Plus / iOS 18.4 Simulator settings showed active 4096/1024 and both editable controls."
   }
 }

@@ -59,8 +59,10 @@ execution mode before returning; the wrapper no longer toggles attention.
 
 Both prefix and answer calls must fit `batch_tokens`. This first version uses
 the same logical and physical batch size, so prefix splitting is impossible.
-`prompt length + answer budget` must fit `context_tokens`, which cannot exceed
-the model's trained context. The requested limits remain authoritative even
+`prompt length + answer budget` must fit `context_tokens`. By default context
+cannot exceed the model's trained context. `Config::allow_context_extension`
+explicitly opts into larger contexts; the caller must check available memory
+and accept that answer quality beyond training length is unqualified. The requested limits remain authoritative even
 when llama.cpp rounds allocation sizes up. The budget counts answer tokens
 submitted to `append`; callers should stop sampling when it reaches zero.
 

@@ -9,11 +9,15 @@ final class MimirEngine {
     var completion: ((String?, Bool, Bool) -> Void)?
     var history: [[String: String]] = []
     var cancelled = false
+    var loadError: String?
+    var loadedContext: Int32?
+    var replyBudget: Int32?
+    static func recommendedContext(useGPU: Bool, modelBytes: UInt64) -> Int32 { 4096 }
     init() { Self.current = self }
-    func loadModel(_ path: String, context: Int32, useGPU: Bool, completion: (String?) -> Void) { completion(nil) }
+    func loadModel(_ path: String, context: Int32, useGPU: Bool, completion: (String?, Int32) -> Void) { loadedContext = context; completion(loadError, context == 0 ? 4096 : context) }
     func reply(_ prompt: String, history: [[String: String]], budget: Int32,
                onToken: @escaping (String) -> Void, completion: @escaping (String?, Bool, Bool) -> Void) {
-        self.history = history; token = onToken; self.completion = completion
+        self.replyBudget = budget; self.history = history; token = onToken; self.completion = completion
     }
     func cancel() { cancelled = true }
 }
@@ -85,6 +89,37 @@ struct StoreTests {
         engine.token?("Hello")
         engine.completion?(nil, false, false)
         precondition(store.selected == welcomeID && store.saved.conversations.count == 2)
+        precondition(store.contextTokens == 4096 && store.replyTokens == 1024)
+        let completed = store.messages
+        let custom = GenerationSettings(contextTokens: 8192, replyTokens: 512)
+        store.applySettings(custom)
+        precondition(engine.loadedContext == 8192 && store.generationSettings == custom && store.messages == completed)
+        let savedSettings = try storage.load()
+        precondition(savedSettings.generationSettings == custom)
+        let reloadedSettings = ChatStore(storage: storage)
+        precondition(reloadedSettings.generationSettings == custom)
+        engine.loadError = "Not enough memory"
+        store.applySettings(GenerationSettings(contextTokens: 16384, replyTokens: 2048))
+        precondition(!store.ready && store.generationSettings == custom && store.notice == "Not enough memory")
+        engine.loadError = nil
+        store.applySettings(custom)
+        precondition(store.ready && store.messages == completed)
+        store.draft = "Budget check"
+        store.send()
+        precondition(engine.replyBudget == 512)
+        engine.token?("limited")
+        engine.completion?(nil, false, true)
+        precondition(store.notice?.contains("512-token") == true)
+        store.applySettings(.recommended, automatic: true)
+        precondition(store.saved.generationSettings == nil && store.contextTokens == 4096)
+        for invalid in [GenerationSettings(contextTokens: 512, replyTokens: 128),
+                        GenerationSettings(contextTokens: 1024, replyTokens: 1024),
+                        GenerationSettings(contextTokens: Int.max, replyTokens: 512)] {
+            precondition(invalid.validationError != nil)
+            store.applySettings(invalid)
+            precondition(store.contextTokens == 4096)
+        }
+        print("Settings: custom persistence, reload/failure/recovery, budget forwarding, automatic defaults and validation passed")
         print("Store: immediate sidebar identity, first-turn stop/error, empty-chat reload/delete, welcome send; complete-turn persistence, prompt restore, stop/error rollback and model identity isolation passed")
     }
 }
