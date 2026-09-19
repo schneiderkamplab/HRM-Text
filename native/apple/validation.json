@@ -59,5 +59,17 @@
       "native/apple/CMakeLists.txt": "40a1192df768cd29c481ba91e54ec327fa4d9ee41065ff08e9e897565f1997ec"
     },
     "build_log_sha256": "c21e06a9c74cbc4c035f0196fe64656be41bb61f0625bf58759b76dbe1862b95"
+  },
+  "keyboard_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "e7c0714cb37af0d8ef8f41e8e33af9d5f9e459f03c98453ee0657f7f8ca2ae82"
+    },
+    "local_log_sha256": {
+      "keyboard-macos-build.log": "1f4227d5cdc4eac0ee6db4a1a97ebee251d6dd26a62533e3ecf1ac8594a23257",
+      "keyboard-ios-build.log": "b51e75ff7ec1bcdff49b51a7e2759f034a9fef748faae0deaf92b9297729293f",
+      "keyboard-simulator-build.log": "438dcbc4ae51687d7f6b9ee1a1201f29e574995e2ca33f053c85875962daf2a0"
+    },
+    "result": "Three Release builds passed; simulator accessibility confirms dismissal control. Click-through check interrupted by user changing devices."
   }
 }

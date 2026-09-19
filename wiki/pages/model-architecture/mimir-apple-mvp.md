@@ -72,3 +72,15 @@ The first launch stalled in Metal shader initialization despite requesting CPU
 inference: backend registration initialized the compiled-in Metal backend. The
 Apple CMake project now disables `GGML_METAL` for the `iphonesimulator` SDK only.
 The rebuilt app loaded successfully; Mac and physical iOS still enable Metal.
+
+## Keyboard layout fix (2026-09-19)
+
+The composer now uses a bottom safe-area inset, with scrollable welcome content
+and interactive scroll dismissal. An iOS-only Done button in the composer clears
+FocusState, and sending also clears focus. A keyboard toolbar was tried but did
+not reliably display its button in Simulator, so the dismissal control lives in
+the composer instead. Mac, iOS and simulator Release builds pass. The updated
+app was installed on iPhone 16 Pro / iOS 18.4 Simulator; accessibility inspection
+confirmed the Dismiss keyboard control. A click-through dismissal check was
+interrupted by live user window/device changes; no completed UI assertion is
+claimed. Saved conversations were retained during installation.

@@ -4,6 +4,7 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     @ObservedObject var store: ChatStore
     @Environment(\.scenePhase) private var scenePhase
+    @FocusState private var composerFocused: Bool
     @State private var deleting = false
     @State private var compactColumn: NavigationSplitViewColumn = .detail
     var body: some View {
@@ -41,7 +42,11 @@ struct ContentView: View {
                 }.padding(.horizontal, 24).padding(.vertical, 12)
                 Divider()
                 if store.messages.isEmpty && store.pendingPrompt == nil {
-                    welcome.frame(maxWidth: .infinity, maxHeight: .infinity)
+                    ScrollView {
+                        welcome.frame(maxWidth: .infinity)
+                    }
+                    .scrollDismissesKeyboard(.interactively)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     ScrollViewReader { reader in
                         ScrollView {
@@ -56,6 +61,7 @@ struct ContentView: View {
                                 Color.clear.frame(height: 1).id("bottom")
                             }.padding(24).frame(maxWidth: 780).frame(maxWidth: .infinity)
                         }
+                        .scrollDismissesKeyboard(.interactively)
                         .onChange(of: store.streaming) { _, _ in reader.scrollTo("bottom", anchor: .bottom) }
                         .onChange(of: store.pendingPrompt) { _, _ in reader.scrollTo("bottom", anchor: .bottom) }
                         .onChange(of: store.messages.count) { _, _ in reader.scrollTo("bottom", anchor: .bottom) }
@@ -73,7 +79,9 @@ struct ContentView: View {
                     Text("This chat belongs to a different model. Load that model or start a new chat.")
                         .font(.callout).foregroundStyle(.secondary).padding(.horizontal, 24)
                 }
-                composer
+            }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                composer.background(.background)
             }
             .navigationTitle(store.active?.title ?? "Mimir Chat")
             .toolbar {
@@ -102,8 +110,14 @@ struct ContentView: View {
         .onChange(of: scenePhase) { _, phase in if phase == .background { store.stop() } }
     }
     private func newChat() {
+        composerFocused = false
         store.newChat()
         compactColumn = .detail
+    }
+    private func send() {
+        guard store.canSend else { return }
+        composerFocused = false
+        store.send()
     }
     private var welcome: some View {
         VStack(spacing: 20) {
@@ -135,15 +149,27 @@ struct ContentView: View {
     }
     private var composer: some View {
         VStack(spacing: 9) {
+            #if os(iOS)
+            if composerFocused {
+                HStack {
+                    Spacer()
+                    Button("Done", systemImage: "keyboard.chevron.compact.down") {
+                        composerFocused = false
+                    }
+                    .accessibilityLabel("Dismiss keyboard")
+                }
+            }
+            #endif
             HStack(alignment: .bottom, spacing: 12) {
                 TextField("Message Mimir…", text: $store.draft, axis: .vertical)
                     .textFieldStyle(.plain).lineLimit(1...5).padding(12)
+                    .focused($composerFocused)
                     .disabled(store.generating)
                 if store.generating {
                     Button(action: store.stop) { Image(systemName: "stop.fill").frame(width: 26, height: 26) }
                         .buttonStyle(.borderedProminent).accessibilityLabel("Stop reply").padding(6)
                 } else {
-                    Button(action: store.send) { Image(systemName: "arrow.up").fontWeight(.semibold).frame(width: 26, height: 26) }
+                    Button(action: send) { Image(systemName: "arrow.up").fontWeight(.semibold).frame(width: 26, height: 26) }
                         .buttonStyle(.borderedProminent).disabled(!store.canSend).accessibilityLabel("Send message")
                         .keyboardShortcut(.return, modifiers: .command).padding(6)
                 }

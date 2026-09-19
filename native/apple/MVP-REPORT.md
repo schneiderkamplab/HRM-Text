@@ -98,3 +98,12 @@ Initial launch waited in compiled-in Metal backend shader initialization even
 though inference requested CPU. `GGML_METAL` is now disabled specifically for
 `iphonesimulator`; the rebuilt app loaded successfully. Mac/device settings remain
 Metal-enabled. Build log: `logs/mimir-apple/simulator-build.log`.
+
+## Keyboard follow-up — 2026-09-19
+
+The composer now stays in a bottom safe-area inset; welcome content scrolls when
+space is limited. iOS has an explicit Done control that clears composer focus,
+scroll views allow interactive keyboard dismissal, and Send also clears focus.
+Mac, iOS and simulator Release builds pass. The updated iPhone 16 Pro simulator
+app exposes Dismiss keyboard in its accessibility tree. User window/device changes
+interrupted the final click-through check; full UI dismissal is not asserted here.
