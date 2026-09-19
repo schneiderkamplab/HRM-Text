@@ -36,3 +36,16 @@ The llama.cpp submodule and four candidate patches are unchanged. The current
 release source manifest records the Mac-tested wrapper extension separately;
 historical Linux reports are not retroactively rewritten. Hosted Apple CI is
 configured for import-only builds and Swift tests but has not been observed here.
+
+## Confirmed sidebar delay (2026-09-19)
+
+The initial MVP does not insert a conversation when New chat is pressed or when
+its first prompt is sent. `ChatStore.newChat` only clears selection; `send` inserts
+into `saved.conversations` only on successful reply completion. Because the sidebar
+lists that collection directly, the new chat is absent throughout first-response
+generation and never appears if that first response is stopped or fails. The
+initial store test explicitly expects an empty collection while generating, so
+passing tests do not establish the desired immediate-sidebar behavior. This is a
+confirmed UI state issue, not model latency or delayed JSON persistence; no fix
+has been applied yet. A fix should distinguish immediate conversation identity
+from committing completed message pairs.
