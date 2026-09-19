@@ -284,3 +284,16 @@ returned median streaming of 43.75 tokens/s (102-token prefix) and 36.63 tokens/
 Outputs matched the previous run exactly. This supports contention as a major
 contributor, without proving the remaining latency's cause. Both result sets are
 preserved in the [native performance report](../../../native/apple/NATIVE-PERFORMANCE.md).
+
+## Mac icon disappearance investigation (2026-09-19)
+
+The reported missing icon was not reproduced after opening the current Mac app
+by its full build path. The bundle contains AppIcon.icns/Assets.car and correct
+CFBundleIconFile/CFBundleIconName entries. Both NSWorkspace's file icon and
+NSRunningApplication's running-process icon returned the white Mimir head on red
+background; exported images were visually inspected. The in-app sidebar and
+assistant logos were visible as well. Direct Dock UI inspection timed out, so
+this does not establish the prior cause or prove every Dock/cache state fixed.
+No source workaround or system-wide icon cache reset was applied. LaunchServices
+also retains the old mac-xcode build with the same bundle identifier; use
+`logs/mimir-apple/macos/Release/MimirChat.app` for current development verification.
