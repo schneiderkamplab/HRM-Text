@@ -95,5 +95,39 @@
       "send-keys-simulator-build.log": "fccf59c5eb7d7ebf42566df13b4509dd67fe29e8bbba1ea791f985af68e4f91a"
     },
     "result": "Mac Return sent; native Shift-Return inserted newline; Cmd-Return sent multiline prompt. iOS software Return inserted newline without sending. Actual IME composition not tested."
+  },
+  "branding_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/CMakeLists.txt": "5eed0e1bef579aa253b58a6fc5ba0a3a9355b06dee4c3cba7fa260be7eb8fb2e",
+      "native/apple/Sources/Branding.swift": "091e57cb082454666c96cb9b17e0fe8407bbdeff96e5cd07cad1c66fe7a6e2f3",
+      "native/apple/Sources/ContentView.swift": "d89461f0219809f18ff6474b1bba7668a756d7841baf458791f362bbacbb337b",
+      "native/apple/Sources/MimirApp.swift": "98d1d78d373818465d767a25794bccf2e44f619736d315a1c016657195932f4c",
+      "native/apple/Resources/Info.plist.in": "9f4a3df8facfa36559eeb82ba08b3b5f3a0bdc09f3bbe351a02be2aaf6098ece",
+      "native/apple/Resources/BRANDING.md": "7c4c23eb727127aa826a93718fef69777fba9b26f66e423fcb3891080620206f",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/Contents.json": "4713974967516ba60c6e645a366cacb5d0294c3b05f6f2dd148efe1b0036154b",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/ios-1024.png": "29dde4ccb8c9b937b2f1f17fb5e30e79303cbe166a15daf7684daa192ed7a4c8",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-128@1x.png": "00c5f3cb42d9d9f388c8442d9eda03d18c22983d11b3d6a9c077c0c9ea5f2bce",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-128@2x.png": "acdf786dee585e33effd2343d0d6aa74af7ef96c2e14b4adc240fd647db07453",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-16@1x.png": "c09b69ff7c75b3d3ea04b43ed811f5905d62c1b62223a7e4a2ebcd890cd8df6f",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-16@2x.png": "470b69f25bc91abdc131bcf731f4b7e36f6af419b6038a568b79481af720883b",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-256@1x.png": "acdf786dee585e33effd2343d0d6aa74af7ef96c2e14b4adc240fd647db07453",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-256@2x.png": "4adf6c28be01a61effb9eee4d77e337322fc453cfa9130496bc592c9c3e5defe",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-32@1x.png": "470b69f25bc91abdc131bcf731f4b7e36f6af419b6038a568b79481af720883b",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-32@2x.png": "9dafd299007620873c84f9da0e6c641a809ba3d1deb53f33bbc4b5456e590110",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-512@1x.png": "4adf6c28be01a61effb9eee4d77e337322fc453cfa9130496bc592c9c3e5defe",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-512@2x.png": "29dde4ccb8c9b937b2f1f17fb5e30e79303cbe166a15daf7684daa192ed7a4c8",
+      "native/apple/Resources/Brand.xcassets/Contents.json": "f5fb0e1f3a8142892ed092efb5955c1c2cc537003a89ad7bbdb9dade7fe8985f",
+      "native/apple/Resources/Brand.xcassets/DFMLogo.imageset/Contents.json": "26f811d796093a8440c2cb8e3c02d37c2eea628577e63a2ede07775860b8f928",
+      "native/apple/Resources/Brand.xcassets/DFMLogo.imageset/logo.png": "e6874acd788fc1a2979de6cf491da1e0ec988d5ebee2914c30deab9d4c7a71e3",
+      "native/apple/Resources/Brand.xcassets/MimirLogo.imageset/Contents.json": "26f811d796093a8440c2cb8e3c02d37c2eea628577e63a2ede07775860b8f928",
+      "native/apple/Resources/Brand.xcassets/MimirLogo.imageset/logo.png": "cc4ea96c67190a1ea77052a16c49310f512d5b1a754c880523fa52d16095ac47"
+    },
+    "local_log_sha256": {
+      "branding-macos-build.log": "3bfa17b56b3972540db40dfc3308d88036dbc55dc8af5af5867f7c04553ccfb5",
+      "branding-ios-build.log": "6c718256818fcc259b6a80aa5c1ccdf4c1ad2df7e9b9e80cde121d810af02945",
+      "branding-simulator-build.log": "3751923943d044e48d893265feffe0993f0ce2946e14ee9b67cbd6af0f80ced3"
+    },
+    "result": "Three Release builds passed; Mac and iPhone 16 Plus simulator welcome logos visually inspected; app icon plist entries verified. Dark appearance and physical devices not tested."
   }
 }

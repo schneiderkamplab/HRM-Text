@@ -14,8 +14,8 @@ struct ContentView: View {
         NavigationSplitView(preferredCompactColumn: $compactColumn) {
             VStack(alignment: .leading, spacing: 18) {
                 HStack(spacing: 10) {
-                    Image(systemName: "leaf.fill").font(.title2).foregroundStyle(.tint)
-                    Text("Mimir").font(.system(size: 27, weight: .semibold, design: .serif))
+                    MimirMark(size: 38)
+                    Text(MimirBrand.name).font(.system(size: 24, weight: .semibold))
                 }.padding(.horizontal, 20).padding(.top, 22)
                 Button(action: newChat) {
                     Label("New chat", systemImage: "square.and.pencil").frame(maxWidth: .infinity, alignment: .leading)
@@ -38,7 +38,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 HStack {
                     Circle().fill(store.ready ? Color.green : Color.orange).frame(width: 7, height: 7)
-                    Text(store.loading ? "Loading Mimir…" : (store.ready ? store.engineLabel : "Choose a model to begin"))
+                    Text(store.loading ? "Loading DFM Mimir…" : (store.ready ? store.engineLabel : "Choose a model to begin"))
                         .font(.caption).foregroundStyle(.secondary)
                     Spacer()
                     if store.loading { ProgressView().controlSize(.small) }
@@ -58,7 +58,7 @@ struct ContentView: View {
                                 if let prompt = store.pendingPrompt {
                                     messageView("user", prompt)
                                     if store.streaming.isEmpty {
-                                        HStack { ProgressView().controlSize(.small); Text("Mimir is thinking…").foregroundStyle(.secondary) }
+                                        HStack { ProgressView().controlSize(.small); Text("DFM Mimir is thinking…").foregroundStyle(.secondary) }
                                     } else { messageView("assistant", store.streaming) }
                                 }
                                 Color.clear.frame(height: 1).id("bottom")
@@ -86,7 +86,7 @@ struct ContentView: View {
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 composer.background(.background)
             }
-            .navigationTitle(store.active?.title ?? "Mimir Chat")
+            .navigationTitle(store.active?.title ?? MimirBrand.name)
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
                     Button(action: newChat) { Image(systemName: "square.and.pencil") }
@@ -96,7 +96,7 @@ struct ContentView: View {
                     if store.active != nil {
                         Menu {
                             if !store.messages.isEmpty {
-                                ShareLink(item: store.messages.map { "\($0.role == "user" ? "You" : "Mimir")\n\($0.content)" }.joined(separator: "\n\n")) {
+                                ShareLink(item: store.messages.map { "\($0.role == "user" ? "You" : MimirBrand.name)\n\($0.content)" }.joined(separator: "\n\n")) {
                                     Label("Share conversation", systemImage: "square.and.arrow.up")
                                 }
                             }
@@ -124,11 +124,11 @@ struct ContentView: View {
     }
     private var welcome: some View {
         VStack(spacing: 20) {
-            Image(systemName: "leaf.fill").font(.system(size: 42)).foregroundStyle(.tint)
-                .frame(width: 90, height: 90).background(.tint.opacity(0.08), in: RoundedRectangle(cornerRadius: 28))
-            Text("A little space to think.").font(.system(size: 32, weight: .medium, design: .serif)).multilineTextAlignment(.center)
+            MimirMark(size: 88)
+            Text(MimirBrand.name).font(.system(size: 34, weight: .semibold)).multilineTextAlignment(.center)
             Text("Ask, explore, or find the right words.\nYour conversation stays on this device.")
                 .foregroundStyle(.secondary).multilineTextAlignment(.center)
+            FoundationModelsLogo(width: 170)
             VStack(spacing: 10) {
                 suggestion("Forklar noget enkelt", prompt: "Forklar forskellen mellem vejr og klima kort.")
                 suggestion("Help me find the words", prompt: "Help me write a short, friendly thank-you note.")
@@ -144,11 +144,11 @@ struct ContentView: View {
     }
     private func messageView(_ role: String, _ content: String) -> some View {
         VStack(alignment: .leading, spacing: 9) {
-            Text(role == "user" ? "YOU" : "MIMIR").font(.caption2.weight(.bold)).foregroundStyle(.secondary)
+            Text(role == "user" ? "YOU" : "DFM MIMIR").font(.caption2.weight(.bold)).foregroundStyle(.secondary)
             Text(content).font(.body).textSelection(.enabled).lineSpacing(5)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }.padding(role == "user" ? 18 : 0)
-            .background(role == "user" ? Color.accentColor.opacity(0.07) : .clear, in: RoundedRectangle(cornerRadius: 16))
+            .background(role == "user" ? MimirBrand.accent.opacity(0.07) : .clear, in: RoundedRectangle(cornerRadius: 16))
     }
     private var composer: some View {
         VStack(spacing: 9) {
@@ -164,7 +164,7 @@ struct ContentView: View {
             }
             #endif
             HStack(alignment: .bottom, spacing: 12) {
-                TextField("Message Mimir…", text: $store.draft, axis: .vertical)
+                TextField("Message DFM Mimir…", text: $store.draft, axis: .vertical)
                     .textFieldStyle(.plain).lineLimit(1...5).padding(12)
                     .focused($composerFocused)
                     .disabled(store.generating)
@@ -201,7 +201,7 @@ struct ContentView: View {
                 }
             }.background(.background, in: RoundedRectangle(cornerRadius: 18))
                 .overlay(RoundedRectangle(cornerRadius: 18).stroke(.primary.opacity(0.12)))
-            Text("Mimir can make mistakes. Check important details.").font(.caption2).foregroundStyle(.secondary)
+            Text("DFM Mimir can make mistakes. Check important details.").font(.caption2).foregroundStyle(.secondary)
         }.padding(.horizontal, 24).padding(.top, 14).padding(.bottom, 16).frame(maxWidth: 820).frame(maxWidth: .infinity)
     }
 }
@@ -226,12 +226,19 @@ private struct SettingsView: View {
                         .font(.callout).foregroundStyle(.secondary)
                 }
                 Section("About") {
-                    Text("Mimir Chat · MVP 0.1")
+                    HStack(spacing: 12) {
+                        MimirMark(size: 48)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(MimirBrand.name).font(.headline)
+                            Text("MVP 0.1").foregroundStyle(.secondary)
+                        }
+                    }
+                    FoundationModelsLogo(width: 200)
                     NavigationLink("Model license · Apache 2.0") { LicenseView(resource: "DFM-Mimir-LICENSE", title: "Model license") }
                     NavigationLink("llama.cpp license · MIT") { LicenseView(resource: "llama-LICENSE", title: "llama.cpp") }
                     NavigationLink("Mimir code license · MIT") { LicenseView(resource: "Mimir-LICENSE", title: "Mimir code") }
                 }
-            }.formStyle(.grouped).navigationTitle("Mimir settings")
+            }.formStyle(.grouped).navigationTitle("DFM Mimir settings")
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
                 .fileImporter(isPresented: $store.importer, allowedContentTypes: [.data]) { result in
                     switch result {

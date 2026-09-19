@@ -1,9 +1,17 @@
-# Mimir Chat MVP for Apple devices
+# DFM Mimir MVP for Apple devices
 
 Shared SwiftUI app for Apple Silicon Mac, iPhone and iPad. It embeds the patched
 llama.cpp runtime with Metal and optionally bundles a Mimir GGUF for offline first
 launch. There is no inference server, login, analytics, model downloader or network
 entitlement. This is a development MVP, not a signed/notarized App Store release.
+
+## Branding
+
+The app uses **DFM Mimir**, matching the model card: the supplied Mimir head mark
+is the app icon and sidebar/welcome identity, and the Danish Foundation Models
+logo appears on the welcome and About screens. Both original logos are bundled
+offline. See [asset provenance](Resources/BRANDING.md). Saved-chat locations and
+the app's bundle identifier are unchanged.
 
 ## Included
 
@@ -67,7 +75,7 @@ The iOS command builds **unsigned** for arm64 with iOS 17 minimum. For physical-
 installation, open `logs/mimir-apple/ios/MimirApple.xcodeproj`, select the MimirChat target,
 choose your development team under Signing & Capabilities, select your device and run.
 Mac minimum deployment target is macOS 14. Mac builds use ad-hoc signing and App Sandbox.
-Distribution certificates, provisioning, notarization, app icons and App Store metadata
+Distribution certificates, provisioning, notarization and App Store metadata
 are not provided. Simulator builds use CPU; this is not evidence of phone performance.
 
 ### Try it in Simulator

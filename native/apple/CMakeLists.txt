@@ -25,13 +25,16 @@ target_link_libraries(mimir-apple-bridge PRIVATE mimir-chat-lib "-framework Foun
 target_compile_options(mimir-apple-bridge PRIVATE -fobjc-arc)
 set_target_properties(mimir-apple-bridge PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES)
 add_executable(MimirChat MACOSX_BUNDLE
-    Sources/MimirApp.swift Sources/ContentView.swift Sources/ChatStore.swift Sources/Conversation.swift)
+    Sources/MimirApp.swift Sources/ContentView.swift Sources/ChatStore.swift Sources/Conversation.swift
+    Sources/Branding.swift Resources/Brand.xcassets)
+set_source_files_properties(Resources/Brand.xcassets PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 target_compile_options(MimirChat PRIVATE -import-objc-header "${CMAKE_CURRENT_SOURCE_DIR}/Bridge/MimirEngine.h")
 target_link_libraries(MimirChat PRIVATE mimir-apple-bridge "-framework SwiftUI")
 set_target_properties(MimirChat PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Resources/Info.plist.in"
     MACOSX_BUNDLE_GUI_IDENTIFIER "dk.sdu.mimir.chat"
-    MACOSX_BUNDLE_BUNDLE_NAME "Mimir Chat"
+    MACOSX_BUNDLE_BUNDLE_NAME "DFM Mimir"
+    XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "dk.sdu.mimir.chat"
     XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
     XCODE_ATTRIBUTE_SWIFT_VERSION "5.0"
@@ -55,7 +58,7 @@ if(MIMIR_MODEL_FILE)
     file(SHA256 "${MIMIR_MODEL_FILE}" MODEL_SHA256)
     file(CREATE_LINK "${MIMIR_MODEL_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/Mimir.gguf" COPY_ON_ERROR)
     file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/Model.json"
-        "{\"id\":\"${MODEL_SHA256}\",\"name\":\"DFM-Mimir\",\"filename\":\"Mimir.gguf\",\"bundled\":true}\n")
+        "{\"id\":\"${MODEL_SHA256}\",\"name\":\"DFM Mimir\",\"filename\":\"Mimir.gguf\",\"bundled\":true}\n")
     target_sources(MimirChat PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/Mimir.gguf" "${CMAKE_CURRENT_BINARY_DIR}/Model.json")
     set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/Mimir.gguf" "${CMAKE_CURRENT_BINARY_DIR}/Model.json"
         PROPERTIES MACOSX_PACKAGE_LOCATION Resources)

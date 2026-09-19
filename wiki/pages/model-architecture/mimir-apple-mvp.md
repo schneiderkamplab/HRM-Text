@@ -113,3 +113,20 @@ clicking the software Return key inserted newlines without submitting the draft.
 This supersedes the interrupted basic key verification above. IME behavior remains
 protected in code but untested with an actual composition input method. Only test
 messages/drafts were added; existing user conversations were not deleted.
+
+## DFM Mimir branding (2026-09-19)
+
+The app display name, sidebar, welcome screen, assistant labels, composer and About
+screen now use **DFM Mimir**, matching the model-card heading. The DFM wordmark
+comes from the model card's `DFM-logo.png`; the square white-on-red Mimir head is
+copied from the user's `~/sdu/talks/codex/NNF_follow_up_note/figures/assets/mimir-logo.png`.
+Original assets, source hashes and provenance are recorded in
+[BRANDING.md](../../../native/apple/Resources/BRANDING.md). Standard Mac/iOS icon sizes derive from the
+supplied square logo. This supersedes the initial report's missing-app-icon item.
+
+The app uses red accents; the DFM logo keeps a white backing for dark-mode contrast.
+Both logos are offline bundle assets. Bundle identifier and storage locations stay
+unchanged, retaining existing chats. Mac, iOS and simulator Release builds passed;
+generated plists contain the DFM Mimir display name and AppIcon entries. Mac and
+iPhone 16 Plus simulator welcome screens were visually inspected with both logos
+present and readable. Dark-mode and physical-device visual checks were not run.
