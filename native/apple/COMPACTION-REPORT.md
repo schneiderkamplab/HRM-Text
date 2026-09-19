@@ -69,3 +69,26 @@ done
 
 See `validation.json` for final source and local log hashes. This small test set
 establishes mechanics and cancellation, not broad summary-fidelity evaluation.
+
+
+## Mac scrolling hang follow-up (2026-09-19)
+
+The live app beach-balled while scrolling the long compaction-test transcript.
+A three-second process sample placed all 1,747 main-thread samples in SwiftUI
+layout/graph updates, including `SelectionOverlay.updateNSView`, alignment updates
+and NSTextField font invalidation. CPU usage was approximately 99%. This implicates
+the selectable-text layout path; it does not establish a general macOS defect.
+
+Mac message bodies and the summary now share a read-only, selectable `NSTextView`
+representable. It measures wrapped text at the proposed width and changes attributed
+text only when content/font changes. iOS retains SwiftUI selectable text. The
+model, compaction algorithm and saved conversations are unchanged.
+
+The hung process was terminated and the rebuilt app reopened the same saved chat.
+Six alternating three-page up/down scrolls with the summary visible remained
+responsive. Answer and summary text selection/Command-C worked; narrowing and
+restoring the window reflowed the transcript. A subsequent three-second sample
+placed 2,594 of 2,598 main-thread samples waiting in the event loop; observed CPU
+usage was 0.3%. Mac, iOS and Simulator Release builds and Swift tests passed.
+This is a focused regression check on macOS 26.4.1, not exhaustive OS qualification.
+Raw process samples stay local; their hashes are recorded in `validation.json`.

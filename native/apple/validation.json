@@ -244,5 +244,22 @@
       "compaction-exit-active.log": "06874433a7dc72059b2ae86a3faf4b35a3dd619d4ad983957bcd54fc6caf5324"
     },
     "result": "Three Release builds, Swift persistence/rollback/preferences tests, real Metal compaction/continuation/disabled/cancellation tests and three process-exit scenarios passed. Live Mac: Cmd-Q twice without new crash reports; 1024-context compaction produced a visible summary; hide/show and relaunch persistence verified. Automatic context defaults restored. Full transcript retained. Summary quality is lossy; oversized individual turns may still need larger context."
+  },
+  "scroll_hang_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/SelectableChatText.swift": "11909e32cb0261a6faacfa15e72cbf0033f00be0201f7ba83aab9e5486779b01",
+      "native/apple/Sources/ContentView.swift": "8648c7f72c2bd3e97e20b8f44a5846728194e6492b0a5ff19fd833e68d71d030",
+      "native/apple/CMakeLists.txt": "e065d1bd522828763c8236234a9cd226476533cad6a2eff161016d522e8751f8"
+    },
+    "local_evidence_sha256": {
+      "logs/mimir-apple/scroll-macos-build.log": "8142e519e457297e0831f87083bacfc211aa3e19bab73ae688c48c0e595fd053",
+      "logs/mimir-apple/scroll-ios-build.log": "38555d5fc4ec16e0ad6eeae834dbb924475fbbb9c00d1af209892c7a1946e335",
+      "logs/mimir-apple/scroll-simulator-build.log": "02278bdf273b225d152978bd01eae3c2213495d060ea274a4da918bc4a82cf2f",
+      "logs/mimir-apple/scroll-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "/tmp/mimir-scroll-sample.txt": "ee5dc6bb004903b68a094c98fe6fc33cf6aa51a920c519574ef14414dd6987ce",
+      "/tmp/mimir-scroll-fixed-sample.txt": "8210296b45fb7077a61ea8a2290813146c82abbaf390d629f9ced93fe9cd03ca"
+    },
+    "result": "PASS: three Apple builds, Swift tests, live repeated scrolling, answer/summary selection and copy, window resize. Main thread returned to event-loop waiting."
   }
 }

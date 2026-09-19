@@ -47,7 +47,7 @@ struct ContentView: View {
                 if store.compactionSettings.showSummary, let memory = store.active?.memory {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Summary of earlier \(memory.covered / 2) turns").font(.caption.bold())
-                        ScrollView { Text(memory.summary).font(.callout).textSelection(.enabled) }
+                        ScrollView { SelectableChatText(text: memory.summary, compact: true) }
                             .frame(maxHeight: 140)
                         Text("Full history is preserved. Summaries may omit details.")
                             .font(.caption).foregroundStyle(.secondary)
@@ -160,7 +160,7 @@ struct ContentView: View {
                 Text(role == "user" ? "YOU" : "DFM MIMIR")
                     .font(.caption2.weight(.bold)).foregroundStyle(.secondary)
             }
-            Text(content).font(.body).textSelection(.enabled).lineSpacing(5)
+            SelectableChatText(text: content)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }.padding(role == "user" ? 18 : 0)
             .background(role == "user" ? MimirBrand.accent.opacity(0.07) : .clear, in: RoundedRectangle(cornerRadius: 16))

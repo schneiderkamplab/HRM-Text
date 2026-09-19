@@ -220,3 +220,14 @@ chat and showing/hiding its summary. All three Apple builds, Swift tests and rea
 Metal compaction/cancellation tests pass. See
 [the report](../../../native/apple/COMPACTION-REPORT.md) for limitations, including
 oversized individual turns and lossy summary quality. No llama.cpp changes.
+
+
+## Mac selectable-text scrolling hang (2026-09-19)
+
+A live scroll hang in the long compaction test consumed one CPU core; the main
+thread sample remained in SwiftUI selection-overlay/layout updates. Mac message
+and summary text now use a shared native selectable NSTextView with width-aware
+measurement; iOS keeps SwiftUI text. Repeated scrolling, selection/copy and window
+resizing passed in the same saved conversation. The post-fix sample showed normal
+event-loop waiting and 0.3% CPU. All Apple builds and Swift tests passed. See the
+[follow-up evidence](../../../native/apple/COMPACTION-REPORT.md#mac-scrolling-hang-follow-up-2026-09-19).
