@@ -172,3 +172,23 @@ UI/backend calls are serialized; only cancellation crosses the worker boundary.
 Changing model releases the previous runtime before loading the next to bound peak
 memory. A failed import/load can be recovered by selecting the bundled model again.
 Completed transcripts survive app restart; a currently generating partial reply does not.
+
+## Development preview DMG
+
+After building the Mac app with bundled weights, run:
+
+```bash
+native/apple/Tools/package-dmg.sh
+```
+
+Optional arguments select an existing `.app` and an output directory. The default
+output is `logs/mimir-apple/distribution/DFM-Mimir-<version>-arm64-preview.dmg`,
+with a SHA-256 sidecar. Existing output is never overwritten. This packages the
+current build; it does not rebuild it or apply Developer ID signing/notarization.
+
+The compressed read-only image contains `DFM Mimir.app`, an Applications shortcut
+and a Read Me. It targets Apple Silicon and takes its minimum macOS version from
+the app. The bundled model and licenses stay inside the app; user conversations
+and settings remain in Application Support. The script checks the existing app
+signature, model identity, disk-image integrity and mounted contents before
+writing the checksum. Public distribution credentials remain a separate step.

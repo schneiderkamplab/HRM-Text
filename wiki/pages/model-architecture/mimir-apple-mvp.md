@@ -308,3 +308,16 @@ bundled AppIcon.icns to NSApp.applicationIconImage after launch. This targets th
 running Dock tile without resetting global caches or changing iOS assets.
 Mac Release build passes. Direct Dock UI automation remains unavailable, so the
 visible Dock outcome still requires observation rather than another icon lookup.
+
+
+## Development preview DMG (2026-09-19)
+
+The first 0.1.0 Apple Silicon DMG is available under
+`logs/mimir-apple/distribution/DFM-Mimir-0.1.0-arm64-preview.dmg` (1.13 GB).
+It contains the current Mac app, bundled Q4_K_M model/licenses, Applications
+shortcut and Read Me. The app retains its ad-hoc signature; Developer ID and
+notarization remain deferred. `Tools/package-dmg.sh` packages an existing build,
+refuses overwrites and verifies image integrity, mounted app signature and model
+hash before emitting a checksum. It does not package user chats or settings.
+See the [artifact receipt](../../../native/apple/DMG-REPORT.md) and
+[packaging instructions](../../../native/apple/README.md#development-preview-dmg).
