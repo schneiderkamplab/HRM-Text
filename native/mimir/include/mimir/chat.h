@@ -42,6 +42,8 @@ public:
     void request_cancel() noexcept;
     void recover(); // Clears runtime/cancellation, retaining completed history.
     void reset();   // Starts a new conversation, retaining the system message.
+    // Restore completed user/assistant pairs; validates before replacing history.
+    void restore_history(const std::vector<Message> & messages);
     const std::vector<Message> & history() const noexcept { return history_; }
 private:
     TextCodec codec_;

@@ -1,6 +1,7 @@
 #include "mimir/chat.h"
 #include "utf8.h"
 #include <algorithm>
+#include <stdexcept>
 
 namespace mimir {
 Chat::Chat(std::shared_ptr<llama_model> model, Config config, std::string system)
@@ -23,6 +24,21 @@ void Chat::reset() {
     recover();
     history_.clear();
     if (!system_.empty()) { history_.push_back({"system", system_}); }
+}
+
+void Chat::restore_history(const std::vector<Message> & messages) {
+    auto candidate = std::vector<Message>{};
+    if (!system_.empty()) { candidate.push_back({"system", system_}); }
+    if (messages.size() % 2 != 0) { throw std::invalid_argument("history needs completed turn pairs"); }
+    for (size_t i = 0; i < messages.size(); ++i) {
+        if (messages[i].role != (i % 2 ? "assistant" : "user")) {
+            throw std::invalid_argument("history must alternate user and assistant");
+        }
+        detail::require_utf8(messages[i].content);
+        candidate.push_back(messages[i]);
+    }
+    reset();
+    history_ = std::move(candidate);
 }
 
 Reply Chat::reply(const std::string & user, uint32_t max_tokens,

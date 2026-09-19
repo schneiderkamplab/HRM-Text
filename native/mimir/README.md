@@ -1,24 +1,21 @@
 # Mimir native session runtime
 
-A small C++17 inference layer for embedding llama.cpp in the future Apple chat
+A small C++17 inference layer for embedding llama.cpp in the Apple chat
 app. It owns one context and one conversation. The caller supplies tokenized,
 fully rendered messages and chooses sampling and presentation. The optional [text chat layer and terminal client](CHAT.md) add native
 tokenization, template rendering, greedy sampling, EOS, and streaming. Swift
-packaging and a finished chat application remain separate work.
+packaging and the development MVP are now in [native/apple](../apple/README.md).
 
 ## Build
 
-The supported llama.cpp revision is
-`c9a5eeeb34ab8f794ea7510ca52d25da13728a5b` plus the engine PrefixLM patch,
-the graph-size arithmetic fix, and the text-codec patch. All three are applied
-in the current working checkout. On a fresh
-checkout, from the repository root:
+The supported llama.cpp revision is the pinned submodule at
+`8f4f4ef8f3139d7d262763936f1f34e48ad46d9c`, which includes the PrefixLM,
+text-codec, ggml and generation-persistence changes. The earlier instructions
+to apply loose patches on top of `c9a5eeeb` are superseded (2026-09-19).
+On a fresh checkout, from the repository root:
 
 ```sh
 git submodule update --init llama.cpp
-git -C llama.cpp apply ../native/mimir/patches/prefixlm-engine.patch
-git -C llama.cpp apply ../native/mimir/patches/ggml-graph-size.patch
-git -C llama.cpp apply ../native/mimir/patches/text-codec.patch
 cmake -S native/mimir -B logs/mimir-runtime/build -DCMAKE_BUILD_TYPE=Release
 cmake --build logs/mimir-runtime/build -j 8
 ```
@@ -26,8 +23,8 @@ cmake --build logs/mimir-runtime/build -j 8
 Link `mimir-runtime` and include `mimir/session.h`. Initialize llama backends
 before loading a model. Keep backend initialization alive until all models and
 sessions are destroyed. Model ownership is shared; context ownership is private.
-Disable `MIMIR_BUILD_TESTS` when embedding the library. Apple platform packaging
-and device builds remain separate work; the build above targets the host.
+Disable `MIMIR_BUILD_TESTS` when embedding the library. The build above targets
+the host; use the Apple MVP guide for Mac/iOS bundles.
 
 The [engine integration](ENGINE.md) owns PrefixLM phase selection, admission,
 and unsafe-cache rejection. The earlier comparison replacement patch remains

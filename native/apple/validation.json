@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-19",
+  "llama_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "model_sha256": "3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5",
+  "source_sha256": {
+    "native/apple/Bridge/MimirEngine.h": "87902579a0e3192bdf6b6ade444c696ad71a8431c2cc747e758ce67dd3f55bc6",
+    "native/apple/Bridge/MimirEngine.mm": "83f065e74038f529c3ab8d32442aa0e849c7f1c8ce185108a07ad453db93bfb4",
+    "native/apple/CMakeLists.txt": "825e8d19f794c63276b6c858817ce82407b607b59ae99e1a68b02ae67f33ec77",
+    "native/apple/Resources/DFM-Mimir-LICENSE.txt": "eeda8c6bf9bdfbdc04a6e3db30b30b37974dee79faed96ef60c4f2533c017a23",
+    "native/apple/Resources/Info.plist.in": "80b0662a90410e8e032ac3501bf7dfb31c926870e0d59995d24c05d86755d66e",
+    "native/apple/Resources/Mimir.entitlements": "3eb357b249cb8aeeea86c2ae041758dc0e66977bd4a4bdbb8e25c90909e4f076",
+    "native/apple/Sources/ChatStore.swift": "a1490505ee32612d3152c135cc7401e76c67a3365c124c31d6b100e185e5bdd4",
+    "native/apple/Sources/ContentView.swift": "3ee5bc1125659c71e12f4a160491cd64ad44fee50c9d8c87d09d4712dc6d6326",
+    "native/apple/Sources/Conversation.swift": "b05caaa20141db4139a532d389b9086a3c63ba094ed83dd8dbd55b091e57704d",
+    "native/apple/Sources/MimirApp.swift": "f70fab3329d6aadeba0f81dd3d3d9d82ff73e49305b4653615c3d417ead86815",
+    "native/apple/Tests/BridgeTests.mm": "e341e2f5b5060bab80404a912a9fa92ecde0ee7b68bf693afb3cc6f145cbe350",
+    "native/apple/Tests/StorageTests.swift": "40d6acc922b246b0554c7918d186c08d1e782a8b5ff336d82facf6a6c818720e",
+    "native/apple/Tests/StoreTests.swift": "9878259df7c5f7968c34ba57c9ce76cb0575bfea677d9d8ccfc99430824d3769",
+    "native/apple/Tools/test-swift.sh": "d45e1669a8228ef96fb9105838014dd68900fdac131435b256f8cc7b3d64a800",
+    "native/apple/build.sh": "6253c3e6644246ef96f756e8f41e9c7b1519ced1523b384e7da300e3d7e85717",
+    "native/mimir/chat.cpp": "4c45d94a1b2b3481e68990fbf1c3f854b3c9bb3a9dc3467270281d335ce82f5d",
+    "native/mimir/include/mimir/chat.h": "fe6163f1661f89de4ac0ed860640f8887067ef34419fa71c310f5c94b1e47e40",
+    "native/mimir/tests/text.cpp": "3d1f9766893d0a809cefecb1f4e8211a7e497188ac1bd79e40b81e26582d8dd8",
+    ".github/workflows/mimir-apple.yml": "d48d308fa22e6aa2781188902dc95a12455ff196372fd587170531be0c96232d"
+  },
+  "local_log_sha256": {
+    "macos-final-build.log": "f9a716ed621c73165b71df879ffc9d585d684215493299d7e93054d4d055ec64",
+    "ios-final-build.log": "e195f9d8d816fad9a05cb474c8b48d6100c8c82f13685df0ab5d74a074016288",
+    "swift-tests.log": "057509250705bd030c5721cc471e82c05f2327eab3c53de2ee5d400c9a8c8738",
+    "bridge-tests.log": "a85eaa87277602299fab45992736ae74575eb0fb53a1c0612b251e9302725283",
+    "history-tests.log": "2e58f2017f904e142a6d64b7303c247ccc045076004adbad9276204365c38260",
+    "native-ctest.log": "08ecd49c8b020377ff37f3b060e31d84762290bfb3cfb190fc1c1f3f87817ceb"
+  },
+  "limitations": [
+    "iOS cross-compiled only; physical devices and simulator execution not tested",
+    "Hosted CI workflow not run",
+    "UI smoke preceded final identity and compact-navigation edits; final builds and bridge tests cover final source"
+  ]
+}

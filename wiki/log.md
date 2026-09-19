@@ -1,5 +1,11 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-19 - Implement the Apple chat MVP
+
+- Added the shared SwiftUI Mac/iOS app, serialized native bridge and completed-transcript restore.
+- Recorded Mac/Metal and unsigned iOS build evidence, bounded state/storage tests and physical-device gaps.
+- Kept the llama.cpp candidate package and historical Linux evidence unchanged.
+
 ## 2026-09-18 - Add the human reviewer hand-off
 
 - Added a patch-by-patch scope map, correctness/API review priorities, evidence guide,

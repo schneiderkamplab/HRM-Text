@@ -1,0 +1,26 @@
+name: Mimir Apple MVP
+on:
+  pull_request:
+    paths: ['native/apple/**', 'native/mimir/**', 'llama.cpp', '.github/workflows/mimir-apple.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize native sources
+        run: git submodule update --init llama.cpp mimir
+      - name: Test storage and conversation state
+        run: native/apple/Tools/test-swift.sh
+      - name: Build Mac and iOS import-only apps
+        run: |
+          native/apple/build.sh macos > macos-build.log 2>&1
+          native/apple/build.sh ios > ios-build.log 2>&1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: apple-build-logs
+          path: '*-build.log'

@@ -62,6 +62,19 @@ int main(int argc, char ** argv) {
             auto reference = chat.reply(prompt, 4, [&](const auto & text) { streamed += text; });
             require(reference.status == mimir::Status::ok && !reference.tokens.empty(), "real generation");
             require(streamed == reference.text && chat.history().size() == 2, "stream/history agreement");
+            const auto completed = chat.history();
+            auto continued = chat.reply("Uddyb kort.", 4);
+            require(continued.status == mimir::Status::ok, "continued generation");
+            chat.restore_history(completed);
+            require(chat.reply("Uddyb kort.", 4).tokens == continued.tokens, "restored transcript continuation matches");
+            const auto before_invalid = chat.history().size();
+            for (const auto & invalid : std::vector<std::vector<mimir::Message>>{
+                    {{"user", "unfinished"}}, {{"assistant", "wrong role"}, {"user", "bad order"}},
+                    {{"user", "\xc0\xaf"}, {"assistant", "bad UTF-8"}}}) {
+                bool rejected = false;
+                try { chat.restore_history(invalid); } catch (const std::invalid_argument &) { rejected = true; }
+                require(rejected && chat.history().size() == before_invalid, "invalid restore preserves history");
+            }
             chat.reset();
             auto cancelled = chat.reply(prompt, 4, [&](const auto &) { chat.request_cancel(); });
             require(cancelled.finish == mimir::Finish::cancelled && chat.history().empty(), "callback cancellation rollback");

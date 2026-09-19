@@ -1,8 +1,7 @@
 {
-  "date": "2026-09-18",
+  "date": "2026-09-19",
   "llama_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
   "llama_tree": "d73038a33ed550f33de99c8469d0260c93bbeba4",
-  "runtime_unchanged_from": "linux-source-manifest.json",
   "source_sha256": {
     ".github/workflows/mimir-runtime.yml": "5615237697ba81af8e3eb90d8fd05059a5c3cb6a49ba7bf465fe81635d0e5fdb",
     "llama.cpp/common/arg.cpp": "af18335788c6f4fb61c068b313bd17fe1a34b5c7fbc2b5f7fb6ccf846b3267f2",
@@ -53,9 +52,9 @@
     "llama.cpp/tools/server/server-task.cpp": "7da74c69e14464dc6407ac9618a75887769beecf5fa3a749148f1df12d873b10",
     "llama.cpp/tools/server/server-task.h": "b685364338fa2f28bff5b2a89469a90a5631a1e35ba2af2569be6abff5a27038",
     "native/mimir/CMakeLists.txt": "9b1169ca62dfdfc2f374fc7e1a91733a79ac38b3c5479c8fae1952e8fc3d4432",
-    "native/mimir/chat.cpp": "fb930eb3b09d676babdcbbaa6ff3c7617f7de36d68ad098643b0994f8e968be2",
+    "native/mimir/chat.cpp": "4c45d94a1b2b3481e68990fbf1c3f854b3c9bb3a9dc3467270281d335ce82f5d",
     "native/mimir/export.py": "81592bdd93d4ca99ef49f6831329c00dddbbe0cf1da987418248a1eb6bd874dc",
-    "native/mimir/include/mimir/chat.h": "22a62d41f07403fe8b14e89cd66312dc2267af8ce39456dd0eabab82f35dbb9e",
+    "native/mimir/include/mimir/chat.h": "fe6163f1661f89de4ac0ed860640f8887067ef34419fa71c310f5c94b1e47e40",
     "native/mimir/include/mimir/session.h": "4421a9abf6004133fd4b8793ef1bcf6402f467be7bee521f05a1100194ac0b9d",
     "native/mimir/session.cpp": "f4405399dff4f8c88b096ffbbed8885a530081a082886a1e9e6c84de73ec3824",
     "native/mimir/tests/chat_e2e.py": "69ac09e2db6b7dc954e5eb45093c87d037b693e0106600cb07fb067943b4521f",
@@ -70,7 +69,7 @@
     "native/mimir/tests/server_e2e.py": "1b896aca8cae43720ad816532f4e119c75cba45116a910ff9c9b9fa761903750",
     "native/mimir/tests/session.cpp": "e2e9d5508b61c2e8d4b973fb2bb06397b5352a501a00bc60815c2b4175e9e999",
     "native/mimir/tests/test_cuda_memcheck.py": "8e2274537831faf3b6bba35c2d9f6df8f1993485d02f4b92a86e29b18d4becc8",
-    "native/mimir/tests/text.cpp": "a96f3ddd6e37b45d9f7d61cb22f229c301ce9b116da36e593a3df5c9801cc6ff",
+    "native/mimir/tests/text.cpp": "3d1f9766893d0a809cefecb1f4e8211a7e497188ac1bd79e40b81e26582d8dd8",
     "native/mimir/tests/text_parity.py": "7848927df373e5e1be8d6539df889d256f554b55c58891f052c5e8c42f1a98f1",
     "native/mimir/tests/text_reference.py": "b241d528a1326cb3dbaf9f12351fe996a9dd9d74947aa57e178e292d05269bc1",
     "native/mimir/text.cpp": "d85641b43f99d62cf1b744c885b7816e4de8c7cd727323be346925fb38839c43",
@@ -87,5 +86,15 @@
     "scripts/prefixlm_comparison/runner.cpp": "c30fa265eb674b806eeef9da7ec7d9ae7278317de8078780d1b1a1d567b3cecb"
   },
   "package_manifest_sha256": "1c75f0352848e1fe26d551d513dd6f3e3c4b753c468ae0bc70a4c9b54ade312b",
-  "status": "candidate prepared; final Linux runner execution and review pending"
+  "status": "candidate prepared; final Linux runner execution and review pending",
+  "llama_runtime_unchanged_from": "linux-source-manifest.json",
+  "apple_wrapper_extension": {
+    "changed_sources": [
+      "native/mimir/chat.cpp",
+      "native/mimir/include/mimir/chat.h",
+      "native/mimir/tests/text.cpp"
+    ],
+    "evidence": "../apple/MVP-REPORT.md",
+    "qualification": "Completed transcript restore added to the native chat wrapper and checked on macOS/Metal. Historical Linux measurements do not qualify this new wrapper method. llama.cpp and the candidate patches are unchanged."
+  }
 }
