@@ -173,3 +173,18 @@ Mac/iOS/Simulator builds, Swift profile tests and real Metal bridge tests pass.
 No full 32,768 generation or physical-device qualification is claimed. See
 [model profiles](../../../native/apple/MODEL-PROFILES.md) for the new-model workflow
 and exact evidence. llama.cpp and the native wrapper are unchanged by this update.
+
+## Distribution readiness (2026-09-19)
+
+Recommended first channels: Developer ID signed/notarized Mac download and iOS
+TestFlight, followed by App Store release. Existing builds remain development
+artifacts (ad-hoc Mac signing, unsigned iOS). Public packaging needs distribution
+signing, release versioning, and device qualification; App Store submissions also
+need store metadata/privacy disclosures and review.
+
+The tested iOS 18.4 SDK is now too old for App Store Connect uploads: Apple requires
+iOS/iPadOS 26 SDK or newer from April 28, 2026. Upgrade the release toolchain before
+TestFlight/App Store handoff; this does not itself require raising the deployment
+minimum. Sources: [SDK requirement](https://developer.apple.com/news/?id=ueeok6yw),
+[Developer ID](https://developer.apple.com/developer-id/),
+[TestFlight](https://developer.apple.com/testflight/).
