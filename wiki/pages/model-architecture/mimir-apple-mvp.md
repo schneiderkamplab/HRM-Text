@@ -203,3 +203,20 @@ See [the report](../../../native/apple/MVP-REPORT.md#mac-exit-crash-fix--2026-09
 The user deferred both release-toolchain installation and developer-account setup.
 Provisional toolchain/CI edits were removed; Xcode 16.3 remains selected. The SDK
 upgrade requirement above still applies before TestFlight/App Store submission.
+
+## Compaction and completed Cmd-Q verification (2026-09-19)
+
+Superseded: the locked-screen limitation on live Quit verification. Cmd-Q with a
+loaded model terminated the Mac app process, with no new crash report. Existing
+idle/loading/active exit tests still pass after compaction added codec ownership.
+
+Automatic compaction now summarizes older complete turns near 90% context usage,
+aiming for 75%; every size check uses the exact Mimir template/tokenizer. The full
+transcript remains intact. Separate persisted summary/coverage is committed only
+with a successful answer, so cancellation/failure does not replace prior memory.
+Settings independently control compaction and summary visibility. Off mode sends
+full history again. Mac UI verification demonstrated compaction of a 1,024-context
+chat and showing/hiding its summary. All three Apple builds, Swift tests and real
+Metal compaction/cancellation tests pass. See
+[the report](../../../native/apple/COMPACTION-REPORT.md) for limitations, including
+oversized individual turns and lossy summary quality. No llama.cpp changes.

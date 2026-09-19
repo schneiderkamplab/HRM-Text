@@ -9,6 +9,8 @@ final class ChatStore: ObservableObject {
     @Published var pendingPrompt: String?
     @Published var loading = false
     @Published var generating = false
+    @Published var compacting = false
+    @Published private(set) var compactionSettings = CompactionSettings()
     @Published var ready = false
     @Published var notice: String?
     @Published var model: ModelAsset?
@@ -41,6 +43,7 @@ final class ChatStore: ObservableObject {
             let storage = try suppliedStorage ?? ChatStorage()
             self.storage = storage
             saved = try storage.load()
+            compactionSettings = saved.compactionSettings ?? CompactionSettings()
             if let settings = saved.generationSettings, settings.validationError(profile: saved.importedModel?.profile ?? ModelProfile()) == nil {
                 generationSettings = settings
             }
@@ -50,6 +53,13 @@ final class ChatStore: ObservableObject {
             persistenceEnabled = false
             notice = "Saved chats could not be opened. This session will not overwrite them. \(error.localizedDescription)"
         }
+    }
+    func setCompaction(enabled: Bool? = nil, showSummary: Bool? = nil) {
+        guard !busy else { return }
+        if let enabled { compactionSettings.enabled = enabled }
+        if let showSummary { compactionSettings.showSummary = showSummary }
+        saved.compactionSettings = compactionSettings
+        persist()
     }
     func shutdown(completion: @escaping () -> Void) {
         shuttingDown = true
@@ -190,11 +200,15 @@ final class ChatStore: ObservableObject {
         streaming = ""
         generating = true
         let budget = replyTokens
-        engine.reply(prompt, history: history, budget: Int32(budget), onToken: { [weak self] token in
+        engine.reply(prompt, history: history, memory: previous.memory?.dictionary, autoCompact: compactionSettings.enabled, budget: Int32(budget), onCompacting: { [weak self] in
+            self?.compacting = true
+        }, onToken: { [weak self] token in
+            self?.compacting = false
             self?.streaming += token
-        }, completion: { [weak self] error, cancelled, limitReached in
+        }, completion: { [weak self] error, cancelled, limitReached, memory in
             guard let self else { return }
             self.generating = false
+            self.compacting = false
             self.pendingPrompt = nil
             if let error {
                 self.notice = error
@@ -204,6 +218,9 @@ final class ChatStore: ObservableObject {
                 self.draft = prompt
             } else {
                 var chat = previous
+                if let summary = memory?["summary"] as? String, let covered = memory?["covered"] as? Int {
+                    chat.memory = ConversationMemory(summary: summary, covered: covered)
+                }
                 chat.messages += [ChatMessage(role: "user", content: prompt), ChatMessage(role: "assistant", content: self.streaming)]
                 chat.title = String(chat.messages.first?.content.prefix(48) ?? "New chat")
                 chat.updated = Date()

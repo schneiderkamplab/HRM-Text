@@ -1,6 +1,7 @@
 #import "MimirEngine.h"
 #include "mimir/chat.h"
 #include "model.h"
+#include "ContextCompaction.h"
 #include <atomic>
 #include <algorithm>
 #include <mutex>
@@ -53,6 +54,9 @@ NSString * status_text(mimir::Status status) {
 @implementation MimirEngine {
     dispatch_queue_t _worker;
     std::shared_ptr<mimir::Chat> _chat;
+    std::unique_ptr<mimir::TextCodec> _codec;
+    std::string _system;
+    int _context;
     std::mutex _lock;
     std::atomic<bool> _cancelled;
     BOOL _closing; // Main-thread admission; worker operations already queued are drained.
@@ -80,7 +84,7 @@ NSString * status_text(mimir::Status status) {
         @autoreleasepool {
             try {
                 // Release the previous model before loading another to bound peak memory.
-                { std::lock_guard<std::mutex> guard(self->_lock); self->_chat.reset(); }
+                { std::lock_guard<std::mutex> guard(self->_lock); self->_chat.reset(); self->_codec.reset(); }
                 NSDictionary * attributes = [NSFileManager.defaultManager attributesOfItemAtPath:path error:nil];
                 const uint64_t modelBytes = [attributes[NSFileSize] unsignedLongLongValue];
                 const int minimum = [profile[@"minimumContext"] intValue];
@@ -119,7 +123,10 @@ NSString * status_text(mimir::Status status) {
                 config.threads = [profile[@"threads"] intValue];
                 config.allow_context_extension = true;
                 config.flash_attention = useGPU;
-                auto chat = std::make_shared<mimir::Chat>(model, config, cpp_text(profile[@"systemPrompt"]));
+                self->_system = cpp_text(profile[@"systemPrompt"]);
+                auto chat = std::make_shared<mimir::Chat>(model, config, self->_system);
+                self->_codec = std::make_unique<mimir::TextCodec>(model);
+                self->_context = resolvedContext;
                 trainingContext = int(llama_model_n_ctx_train(model.get()));
                 { std::lock_guard<std::mutex> guard(self->_lock); self->_chat = std::move(chat); }
                 loadedContext = resolvedContext;
@@ -129,10 +136,12 @@ NSString * status_text(mimir::Status status) {
     });
 }
 - (void)reply:(NSString *)prompt history:(NSArray<NSDictionary<NSString *,NSString *> *> *)history
-      budget:(int)budget onToken:(void (^)(NSString *))onToken
-  completion:(void (^)(NSString *, BOOL, BOOL))completion {
+      memory:(NSDictionary<NSString *, id> *)memory
+ autoCompact:(BOOL)autoCompact
+      budget:(int)budget onCompacting:(void (^)(void))onCompacting onToken:(void (^)(NSString *))onToken
+  completion:(void (^)(NSString *, BOOL, BOOL, NSDictionary *))completion {
     if (_closing) {
-        dispatch_async(dispatch_get_main_queue(), ^{ completion(@"The model is shutting down.", YES, NO); });
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(@"The model is shutting down.", YES, NO, nil); });
         return;
     }
     _cancelled.store(false);
@@ -140,6 +149,7 @@ NSString * status_text(mimir::Status status) {
         NSString * error = nil;
         BOOL cancelled = NO;
         BOOL limited = NO;
+        NSDictionary * updatedMemory = nil;
         @autoreleasepool {
             std::shared_ptr<mimir::Chat> chat;
             { std::lock_guard<std::mutex> guard(self->_lock); chat = self->_chat; }
@@ -155,7 +165,22 @@ NSString * status_text(mimir::Status status) {
                     restored.push_back({cpp_text(role), cpp_text(content)});
                 }
                 chat->restore_history(restored);
-                if (self->_cancelled.load()) { chat->request_cancel(); }
+                mimir::apple::Memory previous;
+                if (memory) {
+                    NSString * summary = memory[@"summary"];
+                    NSNumber * covered = memory[@"covered"];
+                    if (![summary isKindOfClass:NSString.class] || ![covered isKindOfClass:NSNumber.class] || covered.longLongValue < 0) {
+                        throw std::runtime_error("Invalid saved conversation summary.");
+                    }
+                    previous = {cpp_text(summary), size_t(covered.unsignedLongLongValue)};
+                }
+                const auto prepared = autoCompact ? mimir::apple::compact(*chat, *self->_codec, self->_system,
+                    restored, previous, cpp_text(prompt), self->_context, budget,
+                    [&] { return self->_cancelled.load(); },
+                    [&] { dispatch_async(dispatch_get_main_queue(), onCompacting); })
+                    : mimir::apple::PreparedHistory{restored, previous, false};
+                chat->restore_history(prepared.messages);
+                if (self->_cancelled.load() || prepared.cancelled) { chat->request_cancel(); }
                 auto result = chat->reply(cpp_text(prompt), budget, [&](const std::string & text) {
                     NSString * piece = [[NSString alloc] initWithBytes:text.data() length:text.size() encoding:NSUTF8StringEncoding];
                     dispatch_async(dispatch_get_main_queue(), ^{ onToken(piece ?: @""); });
@@ -163,10 +188,14 @@ NSString * status_text(mimir::Status status) {
                 cancelled = result.finish == mimir::Finish::cancelled || self->_cancelled.load();
                 limited = result.finish == mimir::Finish::length;
                 if (result.status != mimir::Status::ok && !cancelled) { error = status_text(result.status); }
+                if (!error && !cancelled && prepared.memory.covered) {
+                    updatedMemory = @{@"summary": [NSString stringWithUTF8String:prepared.memory.summary.c_str()],
+                                      @"covered": @(prepared.memory.covered)};
+                }
                 chat->recover();
             } catch (const std::exception & failure) { error = error_text(failure); }
         }
-        dispatch_async(dispatch_get_main_queue(), ^{ completion(error, cancelled, limited); });
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(error, cancelled, limited, updatedMemory); });
     });
 }
 - (void)shutdownWithCompletion:(void (^)(void))completion {
@@ -175,7 +204,7 @@ NSString * status_text(mimir::Status status) {
     dispatch_async(_worker, ^{
         @autoreleasepool {
             std::lock_guard<std::mutex> guard(self->_lock);
-            self->_chat.reset();
+            self->_chat.reset(); self->_codec.reset();
         }
         dispatch_async(dispatch_get_main_queue(), completion);
     });

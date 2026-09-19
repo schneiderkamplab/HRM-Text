@@ -55,6 +55,16 @@ struct SettingsView: View {
                         Text(notice).font(.callout).foregroundStyle(.secondary)
                     }
                 }.disabled(store.busy)
+                Section("Conversation compaction") {
+                    Toggle("Automatically summarize older turns", isOn: Binding(
+                        get: { store.compactionSettings.enabled },
+                        set: { store.setCompaction(enabled: $0) }))
+                    Toggle("Show compaction summary", isOn: Binding(
+                        get: { store.compactionSettings.showSummary },
+                        set: { store.setCompaction(showSummary: $0) }))
+                    Text("Summaries make room for new messages. Your full transcript stays saved. Turning compaction off sends the full transcript, which may exceed the context limit.")
+                        .font(.callout).foregroundStyle(.secondary)
+                }.disabled(store.busy)
                 Section("About") {
                     HStack(spacing: 12) {
                         MimirMark(size: 48)

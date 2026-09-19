@@ -38,12 +38,21 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 HStack {
                     Circle().fill(store.ready ? Color.green : Color.orange).frame(width: 7, height: 7)
-                    Text(store.loading ? "Loading DFM Mimir…" : (store.ready ? store.engineLabel : "Choose a model to begin"))
+                    Text(store.compacting ? "Summarizing earlier messages…" : store.loading ? "Loading DFM Mimir…" : (store.ready ? store.engineLabel : "Choose a model to begin"))
                         .font(.caption).foregroundStyle(.secondary)
                     Spacer()
                     if store.loading { ProgressView().controlSize(.small) }
                 }.padding(.horizontal, 24).padding(.vertical, 12)
                 Divider()
+                if store.compactionSettings.showSummary, let memory = store.active?.memory {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Summary of earlier \(memory.covered / 2) turns").font(.caption.bold())
+                        ScrollView { Text(memory.summary).font(.callout).textSelection(.enabled) }
+                            .frame(maxHeight: 140)
+                        Text("Full history is preserved. Summaries may omit details.")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }.padding(.horizontal)
+                }
                 if store.messages.isEmpty && store.pendingPrompt == nil {
                     ScrollView {
                         welcome.frame(maxWidth: .infinity)

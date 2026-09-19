@@ -6,16 +6,20 @@ import SwiftUI
 final class MimirEngine {
     static var current: MimirEngine?
     var token: ((String) -> Void)?
-    var completion: ((String?, Bool, Bool) -> Void)?
+    var completion: ((String?, Bool, Bool, [String: Any]?) -> Void)?
     var history: [[String: String]] = []
     var cancelled = false
     var loadError: String?
     var loadedContext: Int32?
     var replyBudget: Int32?
+    var replyMemory: [String: Any]?
+    var autoCompact = true
+    var onCompacting: (() -> Void)?
     init() { Self.current = self }
     func loadModel(_ path: String, context: Int32, useGPU: Bool, profile: [String: Any], completion: (String?, Int32, Int32) -> Void) { loadedContext = context; completion(loadError, context == 0 ? 4096 : context, 4096) }
-    func reply(_ prompt: String, history: [[String: String]], budget: Int32,
-               onToken: @escaping (String) -> Void, completion: @escaping (String?, Bool, Bool) -> Void) {
+    func reply(_ prompt: String, history: [[String: String]], memory: [String: Any]?, autoCompact: Bool, budget: Int32, onCompacting: @escaping () -> Void,
+               onToken: @escaping (String) -> Void, completion: @escaping (String?, Bool, Bool, [String: Any]?) -> Void) {
+        self.replyMemory = memory; self.autoCompact = autoCompact; self.onCompacting = onCompacting
         self.replyBudget = budget; self.history = history; token = onToken; self.completion = completion
     }
     var shutdownCompletion: (() -> Void)?
@@ -47,7 +51,7 @@ struct StoreTests {
         store.newChat()
         precondition(store.selected == initialID && store.saved.conversations.count == 1)
         engine.token?("Hejsa")
-        engine.completion?(nil, false, false)
+        engine.completion?(nil, false, false, nil)
         precondition(store.messages.count == 2 && store.messages.last?.content == "Hejsa")
         precondition(store.selected == initialID && store.saved.conversations.count == 1)
         let archive = try storage.load()
@@ -58,10 +62,10 @@ struct StoreTests {
         engine.token?("partial")
         store.stop()
         precondition(engine.cancelled)
-        engine.completion?(nil, true, false)
+        engine.completion?(nil, true, false, nil)
         precondition(store.messages.count == 2 && store.draft == "Continue" && !store.generating)
         store.send()
-        engine.completion?("Conversation full", false, false)
+        engine.completion?("Conversation full", false, false, nil)
         precondition(store.messages.count == 2 && store.draft == "Continue" && store.notice == "Conversation full")
         store.model = ModelAsset(id: "different", name: "test", filename: "other.gguf", bundled: false)
         precondition(!store.canSend)
@@ -73,10 +77,10 @@ struct StoreTests {
         store.send()
         engine.token?("partial")
         store.stop()
-        engine.completion?(nil, true, false)
+        engine.completion?(nil, true, false, nil)
         precondition(store.selected == secondID && store.messages.isEmpty && store.draft == "New model")
         store.send()
-        engine.completion?("Failure", false, false)
+        engine.completion?("Failure", false, false, nil)
         precondition(store.selected == secondID && store.saved.conversations.count == 2 && store.messages.isEmpty)
         let restored = ChatStore(storage: storage)
         precondition(restored.active?.id == secondID && restored.messages.isEmpty)
@@ -88,8 +92,34 @@ struct StoreTests {
         let welcomeID = store.selected!
         precondition(welcomeID != initialID && store.active?.title == "From welcome")
         engine.token?("Hello")
-        engine.completion?(nil, false, false)
+        engine.completion?(nil, false, false, nil)
         precondition(store.selected == welcomeID && store.saved.conversations.count == 2)
+        let originalMessages = store.messages
+        store.draft = "Compact this conversation"
+        store.send()
+        engine.onCompacting?()
+        precondition(store.compacting)
+        engine.token?("After summary")
+        precondition(!store.compacting)
+        engine.completion?(nil, false, false, ["summary": "Earlier greeting", "covered": 2])
+        precondition(Array(store.messages.prefix(2)) == originalMessages && store.active?.memory?.covered == 2)
+        let compactedArchive = try storage.load()
+        precondition(compactedArchive.conversations.first?.memory?.summary == "Earlier greeting")
+        store.draft = "Stop compaction"
+        store.send()
+        precondition(engine.replyMemory?["covered"] as? Int == 2)
+        engine.onCompacting?()
+        store.stop()
+        engine.completion?(nil, true, false, ["summary": "Must not persist", "covered": 4])
+        precondition(store.active?.memory?.summary == "Earlier greeting" && !store.compacting)
+        store.setCompaction(enabled: false, showSummary: true)
+        store.send()
+        precondition(!engine.autoCompact && engine.history.count == store.messages.count)
+        engine.completion?("Capacity", false, false, nil)
+        precondition(store.active?.memory?.summary == "Earlier greeting")
+        let savedPreferences = ChatStore(storage: storage)
+        precondition(!savedPreferences.compactionSettings.enabled && savedPreferences.compactionSettings.showSummary)
+        store.setCompaction(enabled: true, showSummary: false)
         precondition(store.contextTokens == 1024 && store.replyTokens == 512)
         let completed = store.messages
         let custom = GenerationSettings(contextTokens: 8192, replyTokens: 512)
@@ -109,7 +139,7 @@ struct StoreTests {
         store.send()
         precondition(engine.replyBudget == 512)
         engine.token?("limited")
-        engine.completion?(nil, false, true)
+        engine.completion?(nil, false, true, nil)
         precondition(store.notice?.contains("512-token") == true)
         store.useMemoryDefaults()
         precondition(store.saved.generationSettings == nil && store.contextTokens == 4096)

@@ -23,7 +23,8 @@ the app's bundle identifier are unchanged.
   off the main thread, identified by SHA-256 and checked by the runtime for HRMText,
   PrefixLM and a usable vocabulary/template. A different model cannot silently continue
   a chat saved under another model hash.
-- Full-conversation prefill through **Mimir's GGUF chat template** for every turn.
+- Prefill through **Mimir's GGUF chat template** for every turn, using full history
+  or a saved summary plus recent turns when compaction is enabled.
   A short system instruction identifies Mimir and asks it to use the user's language.
   No raw untemplated chat path or ordinary causal prompt-cache reuse is introduced.
 - Atomic storage of completed turn pairs. A stopped/failed reply does not enter saved
@@ -32,7 +33,8 @@ the app's bundle identifier are unchanged.
 - Model/llama.cpp license notices and accessible, selectable message text.
 
 The app uses greedy sampling and configurable context/reply limits (see below).
-It does not silently trim old messages. At capacity, increase context, reduce the
+It can summarize older turns near capacity while preserving the full saved
+transcript. If the remaining prompt still cannot fit, increase context, reduce the
 reply budget, or start another chat. No image/audio input, tools, attachments, cloud sync or automatic model
 updates are included. Replies may still be inaccurate, including identity statements.
 
@@ -59,6 +61,16 @@ instruction are configurable via a versioned JSON profile. Profiles can be bundl
 or imported in settings. See [MODEL-PROFILES.md](MODEL-PROFILES.md) for the format,
 new-model workflow and tests. Real-model execution beyond training length has been
 checked at 8,192 allocation / 4,530 prompt tokens, not yet at 32,768.
+
+## Conversation compaction
+
+In **Model and settings → Conversation compaction**, independently enable automatic
+summarization and choose whether its summary is visible. Automatic compaction is
+on by default; summary display is off. Summaries and preferences survive restart.
+The full transcript remains saved and visible. Turning compaction off sends the
+original full history again. Summarization runs locally using Mimir's chat template;
+Stop cancels it without replacing the previous summary. See
+[COMPACTION-REPORT.md](COMPACTION-REPORT.md) for behavior, limitations and tests.
 
 ## Message keyboard behavior
 

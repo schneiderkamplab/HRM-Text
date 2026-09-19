@@ -219,5 +219,30 @@
       "exit-active-tests.log": "4026a66d8bfb34dd0b142632be913662c51c7fad1dc06e19fbeb27e3a0edc043"
     },
     "result": "Existing Xcode 16.3: three Release builds, Swift tests, real Metal bridge tests and idle/loading/active process-exit tests pass. Engine is deliberately retained across process exit in regression cases. Live Cmd-Q UI check unavailable because Mac was locked."
+  },
+  "compaction_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/ContextCompaction.h": "587e3ef62499b9e030293ac8ba8ee814a544af0755515f9eadc991b32293a830",
+      "native/apple/Bridge/MimirEngine.h": "b21a5751ad674e9dfef4e3d8bfa62e9cb45ee38136372f5222778ee27e7ee7aa",
+      "native/apple/Bridge/MimirEngine.mm": "1330c4cbdcc9fab9446ecd8747a9747f0038c2ca0e16a2d1ec0f26d2e1583887",
+      "native/apple/Sources/Conversation.swift": "be32f0824b23c5fe0441d2c889ee905fb886cd1b8af200fc8c582b1b9192f0c3",
+      "native/apple/Sources/ChatStore.swift": "72afd54db0784218314795e704c4974729059ead2afb67fbf624e941af199ae3",
+      "native/apple/Sources/ContentView.swift": "513984a08e4d515e09d18c3301234475e674ee4742fa24b5b106a1b05a03a102",
+      "native/apple/Sources/SettingsView.swift": "5734b93c3ce32c27c5f6cf75fc7511876e06a5b0616f616a55c2a025519efebe",
+      "native/apple/Tests/BridgeTests.mm": "a079fa75441cbae5084944a213f73dfb898eab374082a6a276e5df5fde05902c",
+      "native/apple/Tests/StoreTests.swift": "9a9ce9dbc4027ec01a1ad7503412670ee93364f3e8b9e4195816eadf1341458a"
+    },
+    "local_log_sha256": {
+      "compaction-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "compaction-macos-build.log": "518287f7f557a4fe307d9c587a9b02ffa465843e99216291dacf8126616d8b13",
+      "compaction-ios-build.log": "5aaa505118cdf4faf17cf0346daa56b0d2044f67cd61b63512cf0f47e826ff31",
+      "compaction-simulator-build.log": "def198f61db0005afc84b1f778dd9eb9d435e82d212c2cf80135a27db3b0c536",
+      "compaction-bridge-tests.log": "396ff9f391ae95757cf3ecd2bd99c54be15b98d57190420d70355c356a8052d6",
+      "compaction-exit-idle.log": "2084ee0c197826dcb2d658af86f6dd53940d1b247f22dbfbf23de08ec2797dcb",
+      "compaction-exit-loading.log": "171a26eeeac3dbc050f6336d1a6ef6bb286d83d52f2ce41039e892a92379062b",
+      "compaction-exit-active.log": "06874433a7dc72059b2ae86a3faf4b35a3dd619d4ad983957bcd54fc6caf5324"
+    },
+    "result": "Three Release builds, Swift persistence/rollback/preferences tests, real Metal compaction/continuation/disabled/cancellation tests and three process-exit scenarios passed. Live Mac: Cmd-Q twice without new crash reports; 1024-context compaction produced a visible summary; hide/show and relaunch persistence verified. Automatic context defaults restored. Full transcript retained. Summary quality is lossy; oversized individual turns may still need larger context."
   }
 }

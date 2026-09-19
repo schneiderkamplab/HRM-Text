@@ -6,12 +6,18 @@ struct ChatMessage: Codable, Identifiable, Equatable {
     let role: String
     var content: String
 }
+struct ConversationMemory: Codable, Equatable {
+    var summary: String
+    var covered: Int
+    var dictionary: [String: Any] { ["summary": summary, "covered": covered] }
+}
 struct Conversation: Codable, Identifiable {
     var id = UUID()
     var title = "New chat"
     var updated = Date()
     var messages: [ChatMessage] = []
     var modelID: String?
+    var memory: ConversationMemory?
 }
 struct ModelAsset: Codable, Equatable {
     let id: String
@@ -20,11 +26,16 @@ struct ModelAsset: Codable, Equatable {
     var bundled: Bool
     var profile: ModelProfile?
 }
+struct CompactionSettings: Codable, Equatable {
+    var enabled = true
+    var showSummary = false
+}
 struct SavedChats: Codable {
     var version = 1
     var conversations: [Conversation] = []
     var importedModel: ModelAsset?
     var generationSettings: GenerationSettings?
+    var compactionSettings: CompactionSettings?
 }
 
 struct ChatStorage {
@@ -45,6 +56,7 @@ struct ChatStorage {
         guard data.version == 1,
               Set(data.conversations.map(\.id)).count == data.conversations.count,
               data.conversations.allSatisfy({ chat in
+                  (chat.memory.map { !$0.summary.isEmpty && $0.covered > 0 && $0.covered % 2 == 0 && $0.covered <= chat.messages.count } ?? true) &&
                   chat.messages.count % 2 == 0 && chat.messages.enumerated().allSatisfy {
                       $0.element.role == ($0.offset % 2 == 0 ? "user" : "assistant")
                   }
