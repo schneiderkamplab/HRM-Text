@@ -130,3 +130,10 @@ unchanged, retaining existing chats. Mac, iOS and simulator Release builds passe
 generated plists contain the DFM Mimir display name and AppIcon entries. Mac and
 iPhone 16 Plus simulator welcome screens were visually inspected with both logos
 present and readable. Dark-mode and physical-device visual checks were not run.
+
+## Assistant answer mark (2026-09-19)
+
+Assistant answer headers now show a 20-point Mimir head before “DFM MIMIR”,
+reusing the bundled logo. The shared message renderer covers saved and streaming
+answers on Mac/iOS. The adjacent decorative image is hidden from accessibility
+so the speaker name is announced once. User headers remain text-only.

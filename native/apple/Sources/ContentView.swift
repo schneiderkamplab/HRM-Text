@@ -144,7 +144,13 @@ struct ContentView: View {
     }
     private func messageView(_ role: String, _ content: String) -> some View {
         VStack(alignment: .leading, spacing: 9) {
-            Text(role == "user" ? "YOU" : "DFM MIMIR").font(.caption2.weight(.bold)).foregroundStyle(.secondary)
+            HStack(spacing: 6) {
+                if role == "assistant" {
+                    MimirMark(size: 20).accessibilityHidden(true)
+                }
+                Text(role == "user" ? "YOU" : "DFM MIMIR")
+                    .font(.caption2.weight(.bold)).foregroundStyle(.secondary)
+            }
             Text(content).font(.body).textSelection(.enabled).lineSpacing(5)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }.padding(role == "user" ? 18 : 0)

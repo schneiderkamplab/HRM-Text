@@ -129,5 +129,17 @@
       "branding-simulator-build.log": "3751923943d044e48d893265feffe0993f0ce2946e14ee9b67cbd6af0f80ced3"
     },
     "result": "Three Release builds passed; Mac and iPhone 16 Plus simulator welcome logos visually inspected; app icon plist entries verified. Dark appearance and physical devices not tested."
+  },
+  "answer_mark_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "cf28cbf1cac5f084647b4e648c2228e0ba4010afe97f2a0fd63edd876df24f7c"
+    },
+    "local_log_sha256": {
+      "answer-mark-macos-build.log": "26e5476d597452a29100a7c9bd3891461dfb4aba0953f1b8bd4c908f41dcc151",
+      "answer-mark-ios-build.log": "55ae1dedd1c058ab85c272801ac3ee9048ded5ca33df7b7be05da3bfe19e79d5",
+      "answer-mark-simulator-build.log": "b08d5720343ff8495676a0ee45182360309c989573660a954e380e2292408e91"
+    },
+    "result": "Mac/iOS/simulator Release builds passed. Shared assistant header now includes decorative 20-point Mimir mark."
   }
 }
