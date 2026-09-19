@@ -71,5 +71,17 @@
       "keyboard-simulator-build.log": "438dcbc4ae51687d7f6b9ee1a1201f29e574995e2ca33f053c85875962daf2a0"
     },
     "result": "Three Release builds passed; simulator accessibility confirms dismissal control. Click-through check interrupted by user changing devices."
+  },
+  "send_keys_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "878f49b81742b033d46a3dcc8ed677a5121640d86a7f1ed0182cb1d181f37162"
+    },
+    "local_log_sha256": {
+      "send-keys-macos-build.log": "916e02cbd50d0e35db22b37eaf125d9dd5d34feced31bc5dbcd1c8244ca825d8",
+      "send-keys-ios-build.log": "51b99dc5919525c3a465a2fb3e84ab51ac2e7817c5e5778626260ce0a5ff49bd",
+      "send-keys-simulator-build.log": "42c18d3e176d4006b2d26874a75551548c0159cd8b83bf90a1f18f1c351b4208"
+    },
+    "result": "Mac/iOS/simulator Release builds passed; keyboard smoke test interrupted by live user interaction, IME not exercised."
   }
 }

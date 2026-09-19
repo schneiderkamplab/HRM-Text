@@ -90,3 +90,14 @@ updated app on that device, tapped the message field and observed the software
 keyboard, tapped Dismiss keyboard and observed its removal, then tapped the
 message field again and observed its return. This completes the previously
 interrupted dismissal/reopening check. The keyboard was left visible for the user.
+
+## Platform send keys (2026-09-19)
+
+macOS now handles unmodified Return as send, preserves Shift+Return for newlines,
+and retains Cmd+Return as a send shortcut. Marked-text composition is passed to
+the native editor, preventing plain Return from submitting during IME confirmation.
+iOS keeps native multiline Return and explicit Send; Mac-only shortcuts are not
+installed there. Mac, iOS and simulator Release builds passed. The Mac app was
+opened, but live user interaction interrupted the keyboard smoke test before
+key-by-key verification, so no completed Return/Shift+Return or IME UI test is
+claimed. The existing iOS simulator installation was left running undisturbed.

@@ -28,6 +28,13 @@ The first version deliberately uses greedy sampling, a **1,024-token context** a
 another chat. No image/audio input, tools, attachments, cloud sync or automatic model
 updates are included. Replies may still be inaccurate, including identity statements.
 
+## Message keyboard behavior
+
+On macOS, Return sends, Shift+Return inserts a newline, and Cmd+Return also sends.
+Return used to confirm active IME composition is left to the text system.
+On iOS/iPadOS, Return inserts a newline and the visible Send button submits;
+Done dismisses the keyboard. The Mac-only send shortcuts are not installed on iOS.
+
 ## Build
 
 Requires full Xcode (SwiftUI, Mac/iOS SDKs), CMake >=3.25 and the initialized

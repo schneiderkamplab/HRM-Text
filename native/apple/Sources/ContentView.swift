@@ -1,5 +1,8 @@
 import SwiftUI
 import UniformTypeIdentifiers
+#if os(macOS)
+import AppKit
+#endif
 
 struct ContentView: View {
     @ObservedObject var store: ChatStore
@@ -165,13 +168,29 @@ struct ContentView: View {
                     .textFieldStyle(.plain).lineLimit(1...5).padding(12)
                     .focused($composerFocused)
                     .disabled(store.generating)
+                    #if os(macOS)
+                    .onKeyPress(.return, phases: .down) { press in
+                        // Let the text system finish IME composition and insert modified newlines.
+                        if let editor = NSApp.keyWindow?.firstResponder as? NSTextView,
+                           editor.hasMarkedText() { return .ignored }
+                        if !press.modifiers.intersection([.shift, .option, .control]).isEmpty {
+                            return .ignored
+                        }
+                        send()
+                        return .handled
+                    }
+                    #endif
                 if store.generating {
                     Button(action: store.stop) { Image(systemName: "stop.fill").frame(width: 26, height: 26) }
                         .buttonStyle(.borderedProminent).accessibilityLabel("Stop reply").padding(6)
                 } else {
                     Button(action: send) { Image(systemName: "arrow.up").fontWeight(.semibold).frame(width: 26, height: 26) }
                         .buttonStyle(.borderedProminent).disabled(!store.canSend).accessibilityLabel("Send message")
-                        .keyboardShortcut(.return, modifiers: .command).padding(6)
+                        #if os(macOS)
+                        .keyboardShortcut(.return, modifiers: .command)
+                        .help("Send (Return or ⌘Return). Shift+Return adds a new line.")
+                        #endif
+                        .padding(6)
                 }
             }.background(.background, in: RoundedRectangle(cornerRadius: 18))
                 .overlay(RoundedRectangle(cornerRadius: 18).stroke(.primary.opacity(0.12)))
