@@ -7,6 +7,8 @@ entitlement. This is a development MVP, not a signed/notarized App Store release
 
 ## Included
 
+- New chat appears in the sidebar immediately, including before its first reply.
+  Empty conversations persist and can be deleted; the first prompt supplies the title.
 - Streaming text replies, Stop, new conversations, local history, delete confirmation
   and system sharing of a selected conversation.
 - Model import through the system file picker. Imports are copied into app storage

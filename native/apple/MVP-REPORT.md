@@ -72,3 +72,16 @@ load failure preserves the original archive and disables saving for that session
 there is no repair UI. Model identity is its GGUF hash, so changing quantization
 requires a new conversation. These are app policies, not new PrefixLM engine
 restrictions.
+
+## Sidebar fix follow-up — 2026-09-19
+
+New chat now inserts a selected, persistent empty entry immediately. Sending from
+the welcome screen inserts one before inference; first send sets its title and
+binds its model identity. Reply completion updates the same entry. Stop/error
+retains it without saving partial messages, and empty entries support deletion.
+
+Swift storage/state tests passed with coverage for immediate insertion, stable
+identity, first-turn cancellation/error, reload, delete, welcome-screen send and
+completed-chat model isolation. Mac and unsigned iOS Release builds were rerun.
+The real-model runtime is unchanged; its earlier tests were not rerun for this
+Swift state/UI change. Follow-up hashes are recorded separately in validation.json.

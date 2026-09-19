@@ -24,15 +24,27 @@ struct StoreTests {
         defer { try? FileManager.default.removeItem(at: temp) }
         let storage = try ChatStorage(directory: temp)
         let store = ChatStore(storage: storage)
+        store.newChat()
+        let initialID = store.selected!
+        precondition(store.active?.title == "New chat" && store.active?.modelID == nil)
+        let initialArchive = try storage.load()
+        precondition(initialArchive.conversations.first?.id == initialID)
         store.model = ModelAsset(id: "mimir", name: "test", filename: "test.gguf", bundled: false)
         store.ready = true
         let engine = MimirEngine.current!
         store.draft = "Hej"
         store.send()
-        precondition(store.generating && !store.canSend && store.saved.conversations.isEmpty)
+        precondition(store.generating && !store.canSend && store.saved.conversations.count == 1)
+        precondition(store.selected == initialID && store.active?.title == "Hej" && store.messages.isEmpty)
+        precondition(store.active?.modelID == "mimir")
+        let pendingArchive = try storage.load()
+        precondition(pendingArchive.conversations[0].messages.isEmpty)
+        store.newChat()
+        precondition(store.selected == initialID && store.saved.conversations.count == 1)
         engine.token?("Hejsa")
         engine.completion?(nil, false, false)
         precondition(store.messages.count == 2 && store.messages.last?.content == "Hejsa")
+        precondition(store.selected == initialID && store.saved.conversations.count == 1)
         let archive = try storage.load()
         precondition(archive.conversations[0].messages == store.messages)
         store.draft = "Continue"
@@ -51,6 +63,28 @@ struct StoreTests {
         store.newChat()
         store.draft = "New model"
         precondition(store.canSend)
-        print("Store: complete-turn persistence, prompt restore, stop/error rollback and model identity isolation passed")
+        let secondID = store.selected!
+        precondition(secondID != initialID && store.saved.conversations.count == 2)
+        store.send()
+        engine.token?("partial")
+        store.stop()
+        engine.completion?(nil, true, false)
+        precondition(store.selected == secondID && store.messages.isEmpty && store.draft == "New model")
+        store.send()
+        engine.completion?("Failure", false, false)
+        precondition(store.selected == secondID && store.saved.conversations.count == 2 && store.messages.isEmpty)
+        let restored = ChatStore(storage: storage)
+        precondition(restored.active?.id == secondID && restored.messages.isEmpty)
+        store.deleteActive()
+        precondition(store.saved.conversations.count == 1)
+        // Sending from the initial welcome state also inserts before any callback.
+        store.draft = "From welcome"
+        store.send()
+        let welcomeID = store.selected!
+        precondition(welcomeID != initialID && store.active?.title == "From welcome")
+        engine.token?("Hello")
+        engine.completion?(nil, false, false)
+        precondition(store.selected == welcomeID && store.saved.conversations.count == 2)
+        print("Store: immediate sidebar identity, first-turn stop/error, empty-chat reload/delete, welcome send; complete-turn persistence, prompt restore, stop/error rollback and model identity isolation passed")
     }
 }

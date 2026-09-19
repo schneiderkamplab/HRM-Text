@@ -11,7 +11,7 @@ struct Conversation: Codable, Identifiable {
     var title = "New chat"
     var updated = Date()
     var messages: [ChatMessage] = []
-    let modelID: String
+    var modelID: String?
 }
 struct ModelAsset: Codable, Equatable {
     let id: String

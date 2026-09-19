@@ -35,5 +35,20 @@
     "iOS cross-compiled only; physical devices and simulator execution not tested",
     "Hosted CI workflow not run",
     "UI smoke preceded final identity and compact-navigation edits; final builds and bridge tests cover final source"
-  ]
+  ],
+  "sidebar_fix": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ChatStore.swift": "c1aa1ebc175b92759372397e3ea3a09824f945b165b966788b3c14c6eec120db",
+      "native/apple/Sources/ContentView.swift": "d5e04961f6361a94a5d83de23c1f31a66a30a1833b07303236520ea870caf6c4",
+      "native/apple/Sources/Conversation.swift": "c5fa3a31b2d64c2266115dec89e8bc1481e9cab4670e2d9ce3ddaf2e002255e6",
+      "native/apple/Tests/StoreTests.swift": "d11d567d0f7f4053eb28c52ee58a741a3b3c67ac7cad9cb7cafd4cff91cd5718"
+    },
+    "local_log_sha256": {
+      "sidebar-swift-tests.log": "d3cd29fcb5dab5400212a2da8ba32a36e5766da1aeecde5a0830655fbe1b866c",
+      "sidebar-macos-build.log": "b8d4dadbed9aa82c8127c80843965b658a8051f73102e6d6159dfa9f9301f6bf",
+      "sidebar-ios-build.log": "d7eeb0440b712526924d8e6ddb7804cba16428821d58b692502225cb57288570"
+    },
+    "result": "Swift storage/state tests and Mac/iOS Release builds passed; no new live UI or real-model run."
+  }
 }

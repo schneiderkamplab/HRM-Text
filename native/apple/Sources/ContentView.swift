@@ -82,10 +82,12 @@ struct ContentView: View {
                         .accessibilityLabel("New chat").disabled(store.busy)
                     Button { store.showingSettings = true } label: { Image(systemName: "slider.horizontal.3") }
                         .accessibilityLabel("Model and settings")
-                    if !store.messages.isEmpty {
+                    if store.active != nil {
                         Menu {
-                            ShareLink(item: store.messages.map { "\($0.role == "user" ? "You" : "Mimir")\n\($0.content)" }.joined(separator: "\n\n")) {
-                                Label("Share conversation", systemImage: "square.and.arrow.up")
+                            if !store.messages.isEmpty {
+                                ShareLink(item: store.messages.map { "\($0.role == "user" ? "You" : "Mimir")\n\($0.content)" }.joined(separator: "\n\n")) {
+                                    Label("Share conversation", systemImage: "square.and.arrow.up")
+                                }
                             }
                             Button("Delete conversation", role: .destructive) { deleting = true }.disabled(store.busy)
                         } label: { Image(systemName: "ellipsis.circle") }

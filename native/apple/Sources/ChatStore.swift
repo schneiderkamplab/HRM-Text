@@ -22,7 +22,7 @@ final class ChatStore: ObservableObject {
     var busy: Bool { loading || generating }
     var active: Conversation? { saved.conversations.first { $0.id == selected } }
     var messages: [ChatMessage] { active?.messages ?? [] }
-    var modelMatches: Bool { active == nil || active?.modelID == model?.id }
+    var modelMatches: Bool { messages.isEmpty || active?.modelID == model?.id }
     var canSend: Bool { ready && !busy && modelMatches && !draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
     var engineLabel: String {
         #if targetEnvironment(simulator)
@@ -102,9 +102,15 @@ final class ChatStore: ObservableObject {
     }
     func newChat() {
         guard !busy else { return }
-        selected = nil
         draft = ""
         streaming = ""
+        saveConversation(Conversation(modelID: model?.id))
+    }
+    private func saveConversation(_ chat: Conversation) {
+        saved.conversations.removeAll { $0.id == chat.id }
+        saved.conversations.insert(chat, at: 0)
+        selected = chat.id
+        persist()
     }
     func deleteActive() {
         guard !busy, let selected else { return }
@@ -116,12 +122,19 @@ final class ChatStore: ObservableObject {
         guard canSend, let model else { return }
         let prompt = draft.trimmingCharacters(in: .whitespacesAndNewlines)
         let history = messages.map { ["role": $0.role, "content": $0.content] }
-        let previous = active
+        var conversation = active ?? Conversation(modelID: model.id)
+        if conversation.messages.isEmpty {
+            conversation.modelID = model.id
+            conversation.title = String(prompt.prefix(48))
+        }
+        conversation.updated = Date()
+        let previous = conversation
+        notice = nil
+        saveConversation(conversation)
         draft = ""
         pendingPrompt = prompt
         streaming = ""
         generating = true
-        notice = nil
         engine.reply(prompt, history: history, budget: Int32(replyTokens), onToken: { [weak self] token in
             self?.streaming += token
         }, completion: { [weak self] error, cancelled, limitReached in
@@ -135,14 +148,11 @@ final class ChatStore: ObservableObject {
                 self.notice = "Reply stopped. Your message is back in the composer."
                 self.draft = prompt
             } else {
-                var chat = previous ?? Conversation(modelID: model.id)
+                var chat = previous
                 chat.messages += [ChatMessage(role: "user", content: prompt), ChatMessage(role: "assistant", content: self.streaming)]
                 chat.title = String(chat.messages.first?.content.prefix(48) ?? "New chat")
                 chat.updated = Date()
-                self.saved.conversations.removeAll { $0.id == chat.id }
-                self.saved.conversations.insert(chat, at: 0)
-                self.selected = chat.id
-                self.persist()
+                self.saveConversation(chat)
                 if limitReached { self.notice = "Reply reached the 128-token limit. You can ask a follow-up." }
             }
             self.streaming = ""
