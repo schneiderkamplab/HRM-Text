@@ -107,3 +107,9 @@ scroll views allow interactive keyboard dismissal, and Send also clears focus.
 Mac, iOS and simulator Release builds pass. The updated iPhone 16 Pro simulator
 app exposes Dismiss keyboard in its accessibility tree. User window/device changes
 interrupted the final click-through check; full UI dismissal is not asserted here.
+
+Follow-up verification on iPhone 16 Plus / iOS 18.4 Simulator: installed the same
+updated app on that device, tapped the message field and observed the software
+keyboard, tapped Dismiss keyboard and observed its removal, then tapped the
+message field again and observed its return. This completes the previously
+interrupted dismissal/reopening check. The keyboard was left visible for the user.

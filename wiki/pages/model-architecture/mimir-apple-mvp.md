@@ -84,3 +84,9 @@ app was installed on iPhone 16 Pro / iOS 18.4 Simulator; accessibility inspectio
 confirmed the Dismiss keyboard control. A click-through dismissal check was
 interrupted by live user window/device changes; no completed UI assertion is
 claimed. Saved conversations were retained during installation.
+
+Follow-up verification on iPhone 16 Plus / iOS 18.4 Simulator: installed the same
+updated app on that device, tapped the message field and observed the software
+keyboard, tapped Dismiss keyboard and observed its removal, then tapped the
+message field again and observed its return. This completes the previously
+interrupted dismissal/reopening check. The keyboard was left visible for the user.
