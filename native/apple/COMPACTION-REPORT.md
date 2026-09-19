@@ -117,3 +117,29 @@ history counts, and a prepared-input notification after summarization with a
 positive count within the configured 1,024-token context. Existing generation,
 cancellation and summary-reuse checks pass. Live Mac inspection confirmed the
 counter on the restored conversation. Evidence hashes are in `validation.json`.
+
+## Inline streamed summary (2026-09-19)
+
+Supersedes the fixed summary panel above the transcript. When summary visibility
+is enabled, the current summary appears as a card between turns, immediately
+before the turn that triggered compaction. A separate optional display position
+is saved with summary metadata; it is never inserted into `messages` or exported
+as a user/assistant turn. Older saved summaries lack an event position and appear
+after the last turn they cover. The app still retains the latest rolling summary,
+not an archive of every past summary revision.
+
+Summary generation now forwards cumulative UTF-8 text snapshots to the main thread.
+The inline card follows generation while visible, resets for each summarization
+pass and remains visible during the following answer. Preview text is transient:
+only a successful completed reply commits summary metadata. Cancellation/error
+restores the previous saved card. Hidden summaries do not appear or cause summary
+scrolling. All counting and model inputs still use the existing Mimir template.
+
+Validation: all three Apple Release builds and Swift tests pass. Store tests
+cover hidden/visible previews, display position across persistence, replacement
+snapshots and cancellation rollback. Real Q4_K_M Metal tests verify main-thread
+streaming before answer preparation, cumulative text per pass and equality of the
+final preview with committed summary text, alongside existing count, continuation
+and cancellation checks. Live Mac inspection confirmed the saved card inline
+and scrolling normally. Live animation was checked through bridge/store tests,
+not a separate end-to-end GUI compaction run. See `validation.json` for hashes.

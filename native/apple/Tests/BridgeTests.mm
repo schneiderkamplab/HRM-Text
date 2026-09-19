@@ -61,7 +61,7 @@ int main(int argc, const char ** argv) {
                     }];
                 };
                 if (scenario == "exit-active") {
-                    [engine reply:@"Skriv en lang historie på mindst 500 ord." history:@[] memory:nil autoCompact:YES budget:512 onCompacting:^{} onPrepared:^(int) {}
+                    [engine reply:@"Skriv en lang historie på mindst 500 ord." history:@[] memory:nil autoCompact:YES budget:512 onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {}
                         onToken:^(NSString *) { close(); }
                         completion:^(NSString * error, BOOL cancelled, BOOL limited, NSDictionary * memory) {
                             require(!error, "reply failed before shutdown");
@@ -82,7 +82,7 @@ int main(int argc, const char ** argv) {
             NSString * prompt = @"Svar med ét ord: Hvad er 2 + 2?";
             __block NSMutableString * text = [NSMutableString new];
             done = NO;
-            [engine reply:prompt history:@[] memory:nil autoCompact:YES budget:8 onCompacting:^{} onPrepared:^(int) {} onToken:^(NSString * piece) {
+            [engine reply:prompt history:@[] memory:nil autoCompact:YES budget:8 onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString * piece) {
                 require(NSThread.isMainThread, "stream callback must run on main"); [text appendString:piece];
             } completion:^(NSString * error, BOOL cancelled, BOOL limited, NSDictionary * memory) {
                 failure = error; require(!cancelled, "unexpected cancellation"); done = YES;
@@ -92,22 +92,22 @@ int main(int argc, const char ** argv) {
             NSString * previous = nil;
             for (int repeat = 0; repeat < 2; ++repeat) {
                 done = NO; text = [NSMutableString new];
-                [engine reply:@"Og 3 + 3?" history:history memory:nil autoCompact:YES budget:8 onCompacting:^{} onPrepared:^(int) {} onToken:^(NSString * piece) { [text appendString:piece]; }
+                [engine reply:@"Og 3 + 3?" history:history memory:nil autoCompact:YES budget:8 onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString * piece) { [text appendString:piece]; }
                   completion:^(NSString * error, BOOL cancelled, BOOL limited, NSDictionary * memory) { failure = error; done = YES; }];
                 wait_for(done); require(!failure && text.length, "restored response failed");
                 if (previous) { require([previous isEqualToString:text], "restored continuation differs"); }
                 previous = [text copy];
             }
             done = NO; __block BOOL wasCancelled = NO;
-            [engine reply:@"Skriv en lang historie." history:@[] memory:nil autoCompact:YES budget:128 onCompacting:^{} onPrepared:^(int) {} onToken:^(NSString *) {}
+            [engine reply:@"Skriv en lang historie." history:@[] memory:nil autoCompact:YES budget:128 onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString *) {}
               completion:^(NSString * error, BOOL cancelled, BOOL limited, NSDictionary * memory) { failure = error; wasCancelled = cancelled; done = YES; }];
             [engine cancel]; wait_for(done); require(wasCancelled && !failure, "cancel-before-start failed");
             done = NO;
-            [engine reply:prompt history:@[@{@"role":@"assistant", @"content":@"bad history"}] memory:nil autoCompact:YES budget:8 onCompacting:^{} onPrepared:^(int) {} onToken:^(NSString *) {}
+            [engine reply:prompt history:@[@{@"role":@"assistant", @"content":@"bad history"}] memory:nil autoCompact:YES budget:8 onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString *) {}
               completion:^(NSString * error, BOOL cancelled, BOOL limited, NSDictionary * memory) { failure = error; done = YES; }];
             wait_for(done); require(failure != nil, "invalid transcript accepted");
             done = NO; text = [NSMutableString new];
-            [engine reply:prompt history:@[] memory:nil autoCompact:YES budget:8 onCompacting:^{} onPrepared:^(int) {} onToken:^(NSString * piece) { [text appendString:piece]; }
+            [engine reply:prompt history:@[] memory:nil autoCompact:YES budget:8 onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString * piece) { [text appendString:piece]; }
               completion:^(NSString * error, BOOL cancelled, BOOL limited, NSDictionary * memory) { failure = error; done = YES; }];
             wait_for(done); require(!failure && text.length, "error/cancel recovery failed");
             NSMutableArray * longHistory = [NSMutableArray new];
@@ -119,9 +119,17 @@ int main(int argc, const char ** argv) {
             __block NSDictionary * compacted = nil;
             __block BOOL summarized = NO;
             __block BOOL preparedReply = NO;
+            __block NSString * summaryPreview = @"";
+            __block int summaryUpdates = 0;
             done = NO;
             [engine reply:@"Hvilken mad foretrækker vi?" history:longHistory memory:nil autoCompact:YES budget:8
-              onCompacting:^{ summarized = YES; } onPrepared:^(int tokens) {
+              onCompacting:^{ summarized = YES; } onSummary:^(NSString * text, int covered) {
+                require(NSThread.isMainThread && summarized && !preparedReply && covered > 0 && covered % 2 == 0,
+                    "summary previews must run on main during compaction with complete-pair coverage");
+                if (text.length && summaryPreview.length) { require([text hasPrefix:summaryPreview], "summary snapshots extend within each pass"); }
+                summaryPreview = text;
+                ++summaryUpdates;
+              } onPrepared:^(int tokens) {
                 require(summarized && tokens > 0 && tokens <= 1024, "prepared phase follows compaction with bounded input count");
                 preparedReply = YES;
               }
@@ -131,6 +139,8 @@ int main(int argc, const char ** argv) {
               }];
             wait_for(done); require(!failure && summarized && preparedReply && [compacted[@"covered"] intValue] > 0,
                 failure.UTF8String ?: "long history must compact");
+            require(summaryUpdates > 1 && [summaryPreview isEqualToString:compacted[@"summary"]],
+                "summary must stream before completion and match committed memory");
             __block int fullCount = -1;
             __block int compactCount = -1;
             done = NO;
@@ -142,17 +152,17 @@ int main(int argc, const char ** argv) {
             require(longHistory.count == 60 && [compacted[@"summary"] length] > 0, "preserve original transcript");
             done = NO;
             [engine reply:@"Hvor skal vi hen?" history:longHistory memory:compacted autoCompact:YES budget:8
-              onCompacting:^{} onPrepared:^(int) {} onToken:^(NSString *) {}
+              onCompacting:^{} onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString *) {}
               completion:^(NSString * error, BOOL, BOOL, NSDictionary *) { failure = error; done = YES; }];
             wait_for(done); require(!failure, "saved summary must support continuation");
             done = NO;
             [engine reply:prompt history:longHistory memory:compacted autoCompact:NO budget:8
-              onCompacting:^{ throw std::runtime_error("disabled compaction ran"); } onPrepared:^(int) {} onToken:^(NSString *) {}
+              onCompacting:^{ throw std::runtime_error("disabled compaction ran"); } onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString *) {}
               completion:^(NSString * error, BOOL, BOOL, NSDictionary *) { failure = error; done = YES; }];
             wait_for(done); require(failure != nil, "disabled compaction must use full history");
             done = NO; wasCancelled = NO;
             [engine reply:prompt history:longHistory memory:nil autoCompact:YES budget:8
-              onCompacting:^{ [engine cancel]; } onPrepared:^(int) {} onToken:^(NSString *) {}
+              onCompacting:^{ [engine cancel]; } onSummary:^(NSString *, int) {} onPrepared:^(int) {} onToken:^(NSString *) {}
               completion:^(NSString * error, BOOL cancelled, BOOL, NSDictionary * memory) {
                 failure = error; wasCancelled = cancelled;
                 require(memory == nil, "cancelled compaction must not commit memory"); done = YES;

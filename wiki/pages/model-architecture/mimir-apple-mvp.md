@@ -244,3 +244,17 @@ Both activity indicators distinguish compacting from thinking, with an explicit
 transition after summary preparation. All Apple builds, Swift tests and real
 Metal count/compaction tests pass; the restored Mac chat displays its count. See
 [the report](../../../native/apple/COMPACTION-REPORT.md#context-usage-and-activity-status-2026-09-19).
+
+## Inline summary presentation (2026-09-19)
+
+Supersedes the summary panel above the transcript. The latest summary is now an
+inline card before the turn that triggered compaction, only when visibility is
+on. A separate optional display position persists with summary metadata; original
+messages remain unchanged. Older summaries without this metadata appear after
+the last covered turn. Earlier summary revisions are not archived.
+
+Summary text streams through the native bridge as cumulative UTF-8 snapshots,
+resetting for each compaction pass. The visible card follows generation. Pending
+previews are never persisted and are discarded on cancellation/failure; the prior
+saved summary survives. See the
+[report](../../../native/apple/COMPACTION-REPORT.md#inline-streamed-summary-2026-09-19).

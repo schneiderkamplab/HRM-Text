@@ -49,15 +49,6 @@ struct ContentView: View {
                     if store.loading { ProgressView().controlSize(.small) }
                 }.padding(.horizontal, 24).padding(.vertical, 12)
                 Divider()
-                if store.compactionSettings.showSummary, let memory = store.active?.memory {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Summary of earlier \(memory.covered / 2) turns").font(.caption.bold())
-                        ScrollView { SelectableChatText(text: memory.summary, compact: true) }
-                            .frame(maxHeight: 140)
-                        Text("Full history is preserved. Summaries may omit details.")
-                            .font(.caption).foregroundStyle(.secondary)
-                    }.padding(.horizontal)
-                }
                 if store.messages.isEmpty && store.pendingPrompt == nil {
                     ScrollView {
                         welcome.frame(maxWidth: .infinity)
@@ -68,7 +59,11 @@ struct ContentView: View {
                     ScrollViewReader { reader in
                         ScrollView {
                             LazyVStack(alignment: .leading, spacing: 28) {
-                                ForEach(store.messages) { message in messageView(message.role, message.content) }
+                                if store.summaryPosition == 0 { summaryView }
+                                ForEach(Array(store.messages.enumerated()), id: \.element.id) { index, message in
+                                    messageView(message.role, message.content)
+                                    if store.summaryPosition == index + 1 { summaryView }
+                                }
                                 if let prompt = store.pendingPrompt {
                                     messageView("user", prompt)
                                     if store.streaming.isEmpty {
@@ -79,6 +74,9 @@ struct ContentView: View {
                             }.padding(24).frame(maxWidth: 780).frame(maxWidth: .infinity)
                         }
                         .scrollDismissesKeyboard(.interactively)
+                        .onChange(of: store.summaryPreview) { _, _ in
+                            if store.visibleSummary != nil { reader.scrollTo("summary", anchor: .bottom) }
+                        }
                         .onChange(of: store.streaming) { _, _ in reader.scrollTo("bottom", anchor: .bottom) }
                         .onChange(of: store.pendingPrompt) { _, _ in reader.scrollTo("bottom", anchor: .bottom) }
                         .onChange(of: store.messages.count) { _, _ in reader.scrollTo("bottom", anchor: .bottom) }
@@ -155,6 +153,24 @@ struct ContentView: View {
             HStack { Text(title); Spacer(); Image(systemName: "arrow.up.left") }
                 .padding(13).background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 12))
         }.buttonStyle(.plain).disabled(store.busy)
+    }
+    private var summaryView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: "text.alignleft")
+                Text(store.compacting ? "DFM Mimir is compacting…" : "Conversation summary")
+                    .font(.caption.bold())
+                if store.compacting { ProgressView().controlSize(.small) }
+            }
+            if let memory = store.visibleSummary {
+                if !memory.summary.isEmpty { SelectableChatText(text: memory.summary, compact: true) }
+                Text("Summarizes \(memory.covered / 2) earlier turns. Full history is preserved.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+        }
+        .padding(14).frame(maxWidth: .infinity, alignment: .leading)
+        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 12))
+        .id("summary")
     }
     private func messageView(_ role: String, _ content: String) -> some View {
         VStack(alignment: .leading, spacing: 9) {

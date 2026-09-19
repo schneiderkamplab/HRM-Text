@@ -281,5 +281,27 @@
       "logs/mimir-apple/context-status-bridge.log": "92218412ab07f263e2e13fa971e821d4b93b8cac5179f39f7198090d9db99187"
     },
     "result": "PASS: three Apple builds, Swift store tests, real Metal context counts and compaction/prepared phase transition; live Mac counter inspection."
+  },
+  "inline_summary_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/ContextCompaction.h": "6b5f85b16b5222cb4b613433824548710d2867e97e10e948a13b08cada613d54",
+      "native/apple/Bridge/MimirEngine.h": "9d9e37e6e3192da30d0ad94e9dfec7261b8afb18dd1640299b5221a3b2835ed0",
+      "native/apple/Bridge/MimirEngine.mm": "d91a2a8f8a2de133c7a9407fe9162801e7470458a26f26f51fab4c870c2bd8e4",
+      "native/apple/Sources/ChatStore.swift": "3f79662c516b25325e97063aec0bd852b90424b24c40537c275d229bf2567fcf",
+      "native/apple/Sources/ContentView.swift": "15256589aef4a568c338d4211f8c6dea43f4ec844a9745a2ee77e6b5c28ffd40",
+      "native/apple/Sources/Conversation.swift": "753a049d6a3fb83306f7a9ed47b27bc050d316e8169ecde624365c4e47b0313b",
+      "native/apple/Tests/BridgeTests.mm": "9eda815c8c5c27228793ab8144326848c5521965dfa7034cb2a2e30dde01ee22",
+      "native/apple/Tests/StoreTests.swift": "b344f20ad212bb9b34770c49435112511eaad9b973fff7e090c80141a8ed3f7b"
+    },
+    "local_log_sha256": {
+      "logs/mimir-apple/inline-summary-macos.log": "46f96aa7caf817611d29e93b9c784a2f0373dcf6e7954a44fc45a60a0b2ad7db",
+      "logs/mimir-apple/inline-summary-ios.log": "d6be3483eb1a3edb80453e68d19398170dfe675ad30771a967c0d9f9e5530c00",
+      "logs/mimir-apple/inline-summary-simulator.log": "08dadf0732238c6c1f28dede847346209d49175ceeae1e02911f0390c69f44c4",
+      "logs/mimir-apple/inline-summary-swift.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "logs/mimir-apple/inline-summary-test-build.log": "ea22a2ccf9db113d3afa3bff51916c62e5e54e9e57a28b5f1bc94aeca9e48294",
+      "logs/mimir-apple/inline-summary-bridge.log": "8f9cb0ef22265aedf9057aba5e6c4b42d1cbb99ab6ce8c2221b9d9c3a6d73435"
+    },
+    "result": "PASS: Apple builds, Swift preview/visibility/position/rollback tests, real Metal summary streaming and committed-text match; live Mac inline card and scrolling."
   }
 }

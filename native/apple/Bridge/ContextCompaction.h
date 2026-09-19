@@ -33,7 +33,8 @@ inline std::vector<Message> remembered(const std::vector<Message> & full, const 
 inline PreparedHistory compact(Chat & chat, const TextCodec & codec, const std::string & system,
     const std::vector<Message> & full, Memory memory, const std::string & user,
     size_t context, size_t replyBudget, const std::function<bool()> & cancelled,
-    const std::function<void()> & onCompacting) {
+    const std::function<void()> & onCompacting,
+    const std::function<void(const Memory &)> & onSummary) {
     const auto count = [&](std::vector<Message> messages, const std::string & prompt) {
         if (!system.empty()) { messages.insert(messages.begin(), {"system", system}); }
         messages.push_back({"user", prompt});
@@ -70,7 +71,12 @@ inline PreparedHistory compact(Chat & chat, const TextCodec & codec, const std::
         if (!notified) { onCompacting(); notified = true; }
         chat.restore_history({});
         if (cancelled()) { return {{}, initial, true}; }
-        const auto summary = chat.reply(input, uint32_t(summaryBudget));
+        Memory preview{"", consumed};
+        onSummary(preview);
+        const auto summary = chat.reply(input, uint32_t(summaryBudget), [&](const std::string & piece) {
+            preview.summary += piece;
+            onSummary(preview);
+        });
         if (cancelled() || summary.finish == Finish::cancelled) { return {{}, initial, true}; }
         if (summary.status != Status::ok || summary.text.find_first_not_of(" \r\n\t") == std::string::npos) {
             throw std::runtime_error("Could not summarize earlier turns. Your history is unchanged; try a larger context.");

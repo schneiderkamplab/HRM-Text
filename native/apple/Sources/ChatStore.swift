@@ -10,6 +10,14 @@ final class ChatStore: ObservableObject {
     @Published var loading = false
     @Published var generating = false
     @Published var compacting = false
+    @Published private(set) var summaryPreview: ConversationMemory?
+    var visibleSummary: ConversationMemory? {
+        compactionSettings.showSummary ? (summaryPreview ?? active?.memory) : nil
+    }
+    var summaryPosition: Int? {
+        guard let memory = visibleSummary else { return nil }
+        return min(messages.count, max(0, memory.position ?? memory.covered))
+    }
     @Published private(set) var usedContext: Int?
     private var contextRevision = 0
     var activityLabel: String { compacting ? "DFM Mimir is compacting…" : "DFM Mimir is thinking…" }
@@ -223,6 +231,9 @@ final class ChatStore: ObservableObject {
         let budget = replyTokens
         engine.reply(prompt, history: history, memory: previous.memory?.dictionary, autoCompact: compactionSettings.enabled, budget: Int32(budget), onCompacting: { [weak self] in
             self?.compacting = true
+        }, onSummary: { [weak self] text, covered in
+            guard let self else { return }
+            self.summaryPreview = ConversationMemory(summary: text, covered: Int(covered), position: previous.messages.count)
         }, onPrepared: { [weak self] tokens in
             self?.compacting = false
             self?.usedContext = Int(tokens)
@@ -233,6 +244,7 @@ final class ChatStore: ObservableObject {
             guard let self else { return }
             self.generating = false
             self.compacting = false
+            self.summaryPreview = nil
             self.pendingPrompt = nil
             if let error {
                 self.notice = error
@@ -243,7 +255,9 @@ final class ChatStore: ObservableObject {
             } else {
                 var chat = previous
                 if let summary = memory?["summary"] as? String, let covered = memory?["covered"] as? Int {
-                    chat.memory = ConversationMemory(summary: summary, covered: covered)
+                    let unchanged = previous.memory?.summary == summary && previous.memory?.covered == covered
+                    chat.memory = ConversationMemory(summary: summary, covered: covered,
+                        position: unchanged ? previous.memory?.position : previous.messages.count)
                 }
                 chat.messages += [ChatMessage(role: "user", content: prompt), ChatMessage(role: "assistant", content: self.streaming)]
                 chat.title = String(chat.messages.first?.content.prefix(48) ?? "New chat")

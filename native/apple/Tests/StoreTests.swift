@@ -14,14 +14,15 @@ final class MimirEngine {
     var replyBudget: Int32?
     var replyMemory: [String: Any]?
     var autoCompact = true
+    var onSummary: ((String, Int32) -> Void)?
     var onPrepared: ((Int32) -> Void)?
     func countContext(_ history: [[String: String]], memory: [String: Any]?, completion: (Int32) -> Void) { completion(42) }
     var onCompacting: (() -> Void)?
     init() { Self.current = self }
     func loadModel(_ path: String, context: Int32, useGPU: Bool, profile: [String: Any], completion: (String?, Int32, Int32) -> Void) { loadedContext = context; completion(loadError, context == 0 ? 4096 : context, 4096) }
-    func reply(_ prompt: String, history: [[String: String]], memory: [String: Any]?, autoCompact: Bool, budget: Int32, onCompacting: @escaping () -> Void, onPrepared: @escaping (Int32) -> Void,
+    func reply(_ prompt: String, history: [[String: String]], memory: [String: Any]?, autoCompact: Bool, budget: Int32, onCompacting: @escaping () -> Void, onSummary: @escaping (String, Int32) -> Void, onPrepared: @escaping (Int32) -> Void,
                onToken: @escaping (String) -> Void, completion: @escaping (String?, Bool, Bool, [String: Any]?) -> Void) {
-        self.onPrepared = onPrepared; self.replyMemory = memory; self.autoCompact = autoCompact; self.onCompacting = onCompacting
+        self.onSummary = onSummary; self.onPrepared = onPrepared; self.replyMemory = memory; self.autoCompact = autoCompact; self.onCompacting = onCompacting
         self.replyBudget = budget; self.history = history; token = onToken; self.completion = completion
     }
     var shutdownCompletion: (() -> Void)?
@@ -101,23 +102,33 @@ struct StoreTests {
         store.send()
         engine.onCompacting?()
         precondition(store.compacting && store.activityLabel == "DFM Mimir is compacting…")
+        engine.onSummary?("Partial", 2)
+        precondition(store.summaryPreview?.summary == "Partial" && store.summaryPreview?.position == originalMessages.count)
+        precondition(store.visibleSummary == nil)
+        engine.onSummary?("Complete summary", 2)
+        precondition(store.summaryPreview?.summary == "Complete summary")
         engine.onPrepared?(123)
         precondition(!store.compacting && store.usedContext == 123 && store.activityLabel == "DFM Mimir is thinking…")
         engine.token?("After summary")
         precondition(!store.compacting)
         engine.completion?(nil, false, false, ["summary": "Earlier greeting", "covered": 2])
         precondition(Array(store.messages.prefix(2)) == originalMessages && store.active?.memory?.covered == 2)
-        precondition(store.usedContext == 42)
+        precondition(store.usedContext == 42 && store.summaryPreview == nil)
         let compactedArchive = try storage.load()
-        precondition(compactedArchive.conversations.first?.memory?.summary == "Earlier greeting")
+        precondition(compactedArchive.conversations.first?.memory?.summary == "Earlier greeting" && compactedArchive.conversations.first?.memory?.position == originalMessages.count)
+        store.setCompaction(showSummary: true)
         store.draft = "Stop compaction"
         store.send()
         precondition(engine.replyMemory?["covered"] as? Int == 2)
         engine.onCompacting?()
+        engine.onSummary?("Discard me", 2)
+        precondition(store.visibleSummary?.summary == "Discard me" && store.summaryPosition == store.messages.count)
         store.stop()
         engine.completion?(nil, true, false, ["summary": "Must not persist", "covered": 4])
         precondition(store.active?.memory?.summary == "Earlier greeting" && !store.compacting)
+        precondition(store.summaryPreview == nil)
         store.setCompaction(enabled: false, showSummary: true)
+        precondition(store.visibleSummary?.summary == "Earlier greeting" && store.summaryPosition == originalMessages.count)
         store.send()
         precondition(!engine.autoCompact && engine.history.count == store.messages.count)
         engine.completion?("Capacity", false, false, nil)

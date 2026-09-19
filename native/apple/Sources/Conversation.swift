@@ -9,6 +9,8 @@ struct ChatMessage: Codable, Identifiable, Equatable {
 struct ConversationMemory: Codable, Equatable {
     var summary: String
     var covered: Int
+    // Display location only; summary remains separate from the model transcript.
+    var position: Int?
     var dictionary: [String: Any] { ["summary": summary, "covered": covered] }
 }
 struct Conversation: Codable, Identifiable {

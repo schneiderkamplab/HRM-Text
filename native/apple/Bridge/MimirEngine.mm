@@ -138,7 +138,7 @@ NSString * status_text(mimir::Status status) {
 - (void)reply:(NSString *)prompt history:(NSArray<NSDictionary<NSString *,NSString *> *> *)history
       memory:(NSDictionary<NSString *, id> *)memory
  autoCompact:(BOOL)autoCompact
-      budget:(int)budget onCompacting:(void (^)(void))onCompacting onPrepared:(void (^)(int))onPrepared onToken:(void (^)(NSString *))onToken
+      budget:(int)budget onCompacting:(void (^)(void))onCompacting onSummary:(void (^)(NSString *, int))onSummary onPrepared:(void (^)(int))onPrepared onToken:(void (^)(NSString *))onToken
   completion:(void (^)(NSString *, BOOL, BOOL, NSDictionary *))completion {
     if (_closing) {
         dispatch_async(dispatch_get_main_queue(), ^{ completion(@"The model is shutting down.", YES, NO, nil); });
@@ -177,7 +177,12 @@ NSString * status_text(mimir::Status status) {
                 const auto prepared = autoCompact ? mimir::apple::compact(*chat, *self->_codec, self->_system,
                     restored, previous, cpp_text(prompt), self->_context, budget,
                     [&] { return self->_cancelled.load(); },
-                    [&] { dispatch_async(dispatch_get_main_queue(), onCompacting); })
+                    [&] { dispatch_async(dispatch_get_main_queue(), onCompacting); },
+                    [&](const mimir::apple::Memory & preview) {
+                        NSString * text = [NSString stringWithUTF8String:preview.summary.c_str()];
+                        const int covered = int(preview.covered);
+                        dispatch_async(dispatch_get_main_queue(), ^{ onSummary(text, covered); });
+                    })
                     : mimir::apple::PreparedHistory{restored, previous, false};
                 chat->restore_history(prepared.messages);
                 auto input = prepared.messages;

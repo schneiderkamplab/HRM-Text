@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  autoCompact:(BOOL)autoCompact
       budget:(int)budget
  onCompacting:(void (^)(void))onCompacting
+   onSummary:(void (^)(NSString * text, int covered))onSummary
   onPrepared:(void (^)(int tokens))onPrepared
      onToken:(void (^)(NSString * text))onToken
   completion:(void (^)(NSString * _Nullable error, BOOL cancelled, BOOL limitReached, NSDictionary<NSString *, id> * _Nullable memory))completion;
