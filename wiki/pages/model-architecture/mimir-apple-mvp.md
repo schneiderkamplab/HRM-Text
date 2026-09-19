@@ -272,3 +272,15 @@ Other desktop work remained active. The measurement excludes UI and compaction;
 it establishes native latency but cannot quantify app overhead or explain the
 variance. See [method and results](../../../native/apple/NATIVE-PERFORMANCE.md)
 and [raw sample metrics](../../../native/apple/native-speed-results.json).
+
+
+## Native speed rerun after competing Metal workload stopped (2026-09-19)
+
+Superseded: using the initial native speed run as a baseline without GPU
+competition. After the user stopped another Metal process, the identical benchmark
+returned median streaming of 43.75 tokens/s (102-token prefix) and 36.63 tokens/s
+(1,617-token prefix), respectively 2.89× and 5.87× faster. First-text medians were
+0.26 and 3.85 seconds; longer-prefix first-text latency still ranged 3.14–7.97 s.
+Outputs matched the previous run exactly. This supports contention as a major
+contributor, without proving the remaining latency's cause. Both result sets are
+preserved in the [native performance report](../../../native/apple/NATIVE-PERFORMANCE.md).

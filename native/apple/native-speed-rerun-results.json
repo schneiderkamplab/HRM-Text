@@ -1,0 +1,195 @@
+{
+  "date": "2026-09-19",
+  "hardware": "Apple M2 Max, 96 GiB",
+  "os": "macOS 26.4.1",
+  "llama_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "model_sha256": "3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5",
+  "source_sha256": {
+    "native/apple/Tools/benchmark-native.cpp": "dafe291856da0ba2efa2bebbede940166cfd4a939006ba905ef96ab2472815a8",
+    "native/mimir/chat.cpp": "4c45d94a1b2b3481e68990fbf1c3f854b3c9bb3a9dc3467270281d335ce82f5d",
+    "native/mimir/session.cpp": "7ba5a6447d8f89c8a9f208a2b9d48b8c5ef838c32162fddb72fe86a4f25b25ba",
+    "native/mimir/text.cpp": "d85641b43f99d62cf1b744c885b7816e4de8c7cd727323be346925fb38839c43",
+    "native/apple/Resources/DFM-Mimir-v1.profile.json": "303a96aa9efc98959275d204950b327eec2c2a6be30ee1181b182f279261121b"
+  },
+  "condition": "User stopped another Metal process before this rerun; other desktop activity remains uncontrolled.",
+  "binary_sha256": "6d8ba5a65c4abb90c988a0cfee82ca24a49a0eb9cd43cacd56dbaffa8db8a68d",
+  "raw_log_sha256": "d69a607d0f83c01a4621baf1d257e2a307b8cf551fbb9041f5e3ebd4538f1a7b",
+  "time_log_sha256": "4ec776a66c154e23dbf26cea5de73db2574b6381a8c3f8ea73edcc7d0a914e3e",
+  "setup": {
+    "event": "setup",
+    "load_seconds": 1.081571208,
+    "context": 8192,
+    "batch": 8192,
+    "threads": 4,
+    "reply_budget": 64,
+    "flash_attention": true,
+    "kv": "F16",
+    "sampling": "greedy"
+  },
+  "summary": {
+    "short": {
+      "prompt_tokens": 102,
+      "identical_outputs": true,
+      "matches_previous_outputs": true,
+      "ttft_seconds": {
+        "median": 0.255251208,
+        "min": 0.239404,
+        "max": 0.259685375
+      },
+      "decode_tokens_per_second": {
+        "median": 43.752644665067315,
+        "min": 41.82410060315518,
+        "max": 46.380025227420866
+      },
+      "total_seconds": {
+        "median": 1.695180291,
+        "min": 1.59775475,
+        "max": 1.766028375
+      },
+      "streaming_speedup": 2.8864392301690778
+    },
+    "long": {
+      "prompt_tokens": 1617,
+      "identical_outputs": true,
+      "matches_previous_outputs": true,
+      "ttft_seconds": {
+        "median": 3.849516084,
+        "min": 3.1423825,
+        "max": 7.968725583
+      },
+      "decode_tokens_per_second": {
+        "median": 36.632295206242205,
+        "min": 35.02468023822064,
+        "max": 37.71572609582518
+      },
+      "total_seconds": {
+        "median": 5.519913167,
+        "min": 4.862182792,
+        "max": 9.767472333
+      },
+      "streaming_speedup": 5.866644076286118
+    }
+  },
+  "samples": [
+    {
+      "event": "sample",
+      "warmup": true,
+      "round": 0,
+      "case": "short",
+      "prompt_tokens": 102,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 0.23219225,
+      "decode_tokens_per_second": 56.60923273924313,
+      "total_seconds": 1.345097667,
+      "finish": 1,
+      "output_sha256": "97c4eee87efe5a7608e5bc6d6993d95d67e38f418bfb50153d67d12efedfbc27"
+    },
+    {
+      "event": "sample",
+      "warmup": true,
+      "round": 0,
+      "case": "long",
+      "prompt_tokens": 1617,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 2.01194,
+      "decode_tokens_per_second": 44.27906826264003,
+      "total_seconds": 3.434751208,
+      "finish": 1,
+      "output_sha256": "212b284df19f829ae9d84648800235569146f12177581b2a349e9c96da61111b"
+    },
+    {
+      "event": "sample",
+      "warmup": false,
+      "round": 1,
+      "case": "long",
+      "prompt_tokens": 1617,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 7.968725583,
+      "decode_tokens_per_second": 35.02468023822064,
+      "total_seconds": 9.767472333,
+      "finish": 1,
+      "output_sha256": "212b284df19f829ae9d84648800235569146f12177581b2a349e9c96da61111b"
+    },
+    {
+      "event": "sample",
+      "warmup": false,
+      "round": 1,
+      "case": "short",
+      "prompt_tokens": 102,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 0.255251208,
+      "decode_tokens_per_second": 43.752644665067315,
+      "total_seconds": 1.695180291,
+      "finish": 1,
+      "output_sha256": "97c4eee87efe5a7608e5bc6d6993d95d67e38f418bfb50153d67d12efedfbc27"
+    },
+    {
+      "event": "sample",
+      "warmup": false,
+      "round": 2,
+      "case": "short",
+      "prompt_tokens": 102,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 0.259685375,
+      "decode_tokens_per_second": 41.82410060315518,
+      "total_seconds": 1.766028375,
+      "finish": 1,
+      "output_sha256": "97c4eee87efe5a7608e5bc6d6993d95d67e38f418bfb50153d67d12efedfbc27"
+    },
+    {
+      "event": "sample",
+      "warmup": false,
+      "round": 2,
+      "case": "long",
+      "prompt_tokens": 1617,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 3.849516084,
+      "decode_tokens_per_second": 37.71572609582518,
+      "total_seconds": 5.519913167,
+      "finish": 1,
+      "output_sha256": "212b284df19f829ae9d84648800235569146f12177581b2a349e9c96da61111b"
+    },
+    {
+      "event": "sample",
+      "warmup": false,
+      "round": 3,
+      "case": "long",
+      "prompt_tokens": 1617,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 3.1423825,
+      "decode_tokens_per_second": 36.632295206242205,
+      "total_seconds": 4.862182792,
+      "finish": 1,
+      "output_sha256": "212b284df19f829ae9d84648800235569146f12177581b2a349e9c96da61111b"
+    },
+    {
+      "event": "sample",
+      "warmup": false,
+      "round": 3,
+      "case": "short",
+      "prompt_tokens": 102,
+      "output_tokens": 64,
+      "first_chunk_tokens": 1,
+      "first_chunk": "Det",
+      "ttft_seconds": 0.239404,
+      "decode_tokens_per_second": 46.380025227420866,
+      "total_seconds": 1.59775475,
+      "finish": 1,
+      "output_sha256": "97c4eee87efe5a7608e5bc6d6993d95d67e38f418bfb50153d67d12efedfbc27"
+    }
+  ]
+}

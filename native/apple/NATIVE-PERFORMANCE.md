@@ -64,3 +64,29 @@ No conclusion about the cause of variability is justified without profiling.
 
 Next comparison should use identical native/app workloads and phase timings;
 a controlled repeat and CPU/GPU profiling are needed before choosing an optimization.
+
+## Rerun after competing Metal process stopped (2026-09-19)
+
+The user stopped another Metal process, then the identical binary, model, prompts,
+settings and warmup/repetition protocol were rerun. This supersedes treating the
+earlier run as representative of performance without that competing workload.
+It is still a live desktop measurement, not proof of exclusive GPU access.
+
+| Prompt tokens | First text, seconds | Streaming, tokens/s | Total for 64 tokens, seconds | Streaming speedup |
+|---:|---:|---:|---:|---:|
+| 102 | 0.26 [0.24–0.26] | 43.75 [41.82–46.38] | 1.70 [1.60–1.77] | 2.89× |
+| 1617 | 3.85 [3.14–7.97] | 36.63 [35.02–37.72] | 5.52 [4.86–9.77] | 5.87× |
+
+Values are medians [minimum–maximum] of three measured runs. Every output still
+contains 64 tokens and is byte-identical to its corresponding earlier output.
+Model/context setup took 1.08 seconds.
+
+Streaming is now substantially faster and more consistent. This strongly supports
+the competing workload as a major contributor to the previous slowdown. Longer
+prompt first-text latency remains variable (3.14–7.97 seconds); GPU contention,
+scheduling or other causes cannot be distinguished from these timings alone.
+A reasonable measured streaming baseline for these two workloads is now roughly
+35–46 tokens/s. It is not a guarantee at all context lengths or during compaction.
+
+Per-run metrics and hashes: [rerun results](native-speed-rerun-results.json).
+Original results are preserved for comparison.
