@@ -188,3 +188,18 @@ TestFlight/App Store handoff; this does not itself require raising the deploymen
 minimum. Sources: [SDK requirement](https://developer.apple.com/news/?id=ueeok6yw),
 [Developer ID](https://developer.apple.com/developer-id/),
 [TestFlight](https://developer.apple.com/testflight/).
+
+## Mac shutdown ordering (2026-09-19)
+
+Quitting the SwiftUI app could SIGABRT in `ggml_metal_rsets_free`: global Metal
+cleanup ran while SwiftUI still retained the loaded engine/model buffers. The
+app delegate now delays termination until engine cancellation, worker draining
+and model/context release complete. New work is rejected after shutdown starts.
+Real Metal exit tests deliberately retain the engine until process exit; idle,
+pending-load and active-generation cases all pass. Mac/iOS/Simulator builds and
+Swift/bridge tests pass. Live Cmd-Q inspection was blocked by the locked Mac.
+See [the report](../../../native/apple/MVP-REPORT.md#mac-exit-crash-fix--2026-09-19).
+
+The user deferred both release-toolchain installation and developer-account setup.
+Provisional toolchain/CI edits were removed; Xcode 16.3 remains selected. The SDK
+upgrade requirement above still applies before TestFlight/App Store submission.

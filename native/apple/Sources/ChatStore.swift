@@ -17,12 +17,13 @@ final class ChatStore: ObservableObject {
     private let engine = MimirEngine()
     private var storage: ChatStorage?
     private var persistenceEnabled = true
+    @Published private(set) var shuttingDown = false
     @Published private(set) var generationSettings = ModelProfile().defaults(context: ModelProfile().minimumContext)
     @Published private(set) var trainingContext: Int?
     var profile: ModelProfile { model?.profile ?? ModelProfile() }
     var contextTokens: Int { generationSettings.contextTokens }
     var replyTokens: Int { generationSettings.replyTokens }
-    var busy: Bool { loading || generating }
+    var busy: Bool { shuttingDown || loading || generating }
     var active: Conversation? { saved.conversations.first { $0.id == selected } }
     var messages: [ChatMessage] { active?.messages ?? [] }
     var modelMatches: Bool { messages.isEmpty || active?.modelID == model?.id }
@@ -50,8 +51,13 @@ final class ChatStore: ObservableObject {
             notice = "Saved chats could not be opened. This session will not overwrite them. \(error.localizedDescription)"
         }
     }
+    func shutdown(completion: @escaping () -> Void) {
+        shuttingDown = true
+        ready = false
+        engine.shutdown(completion: completion)
+    }
     func start() {
-        guard model == nil, !loading else { return }
+        guard model == nil, !busy else { return }
         if let imported = saved.importedModel, !imported.bundled, let url = storage?.modelURL(imported),
            FileManager.default.fileExists(atPath: url.path) {
             load(imported)

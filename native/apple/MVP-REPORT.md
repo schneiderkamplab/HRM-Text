@@ -162,3 +162,32 @@ an explicit wrapper opt-in beyond training context. See
 [CONTEXT-REPORT.md](CONTEXT-REPORT.md) for reproduction, memory measurements and
 qualification limits. Real Q4_K_M / Metal execution crossed 4,096 positions;
 physical-device memory and extended-context answer quality remain unqualified.
+
+## Mac exit crash fix — 2026-09-19
+
+The 19:08:10 local crash report shows SIGABRT in `ggml_metal_rsets_free` during
+`NSApplication.terminate` / C++ global destruction. Metal's device resource-set
+assertion requires all model buffers to have been released; SwiftUI still owned
+the engine at process exit. Normal bridge tests previously released it by leaving
+an autorelease scope, so they did not reproduce app termination ownership.
+
+The Mac application delegate now returns `terminateLater`, asks ChatStore to stop
+admitting work, and waits for the engine to cancel/drain its inference queue and
+release Chat/model/context resources. Only then does it reply to AppKit's
+termination request. Shutdown is idempotent and new engine work is rejected.
+No llama.cpp changes or assertion suppression are involved.
+
+Mac, unsigned iOS and Simulator Release builds pass with the existing Xcode 16.3;
+the requested toolchain/account update is deferred. Swift tests and real Q4_K_M
+Metal bridge tests pass. Three separate process-exit cases retain the engine
+through `std::exit` and pass: idle, pending load and active generation (cancelled
+after the first streamed token). Reproduction after the Mac build:
+
+```bash
+for scenario in exit-idle exit-loading exit-active; do
+  logs/mimir-apple/macos/Release/mimir-bridge-tests "$PWD/logs/mimir-review/mimir-q4_k_m.gguf" "$scenario"
+done
+```
+
+The Mac was locked during the final UI attempt, so a live Cmd-Q check of the
+SwiftUI app remains unperformed. Test/source hashes are in `validation.json`.

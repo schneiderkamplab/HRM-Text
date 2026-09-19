@@ -55,6 +55,7 @@ NSString * status_text(mimir::Status status) {
     std::shared_ptr<mimir::Chat> _chat;
     std::mutex _lock;
     std::atomic<bool> _cancelled;
+    BOOL _closing; // Main-thread admission; worker operations already queued are drained.
 }
 - (instancetype)init {
     if ((self = [super init])) {
@@ -68,6 +69,10 @@ NSString * status_text(mimir::Status status) {
 - (void)loadModel:(NSString *)path context:(int)context useGPU:(BOOL)useGPU
          profile:(NSDictionary<NSString *, id> *)profile
       completion:(void (^)(NSString *, int, int))completion {
+    if (_closing) {
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(@"The model is shutting down.", 0, 0); });
+        return;
+    }
     dispatch_async(_worker, ^{
         NSString * error = nil;
         int loadedContext = 0;
@@ -126,6 +131,10 @@ NSString * status_text(mimir::Status status) {
 - (void)reply:(NSString *)prompt history:(NSArray<NSDictionary<NSString *,NSString *> *> *)history
       budget:(int)budget onToken:(void (^)(NSString *))onToken
   completion:(void (^)(NSString *, BOOL, BOOL))completion {
+    if (_closing) {
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(@"The model is shutting down.", YES, NO); });
+        return;
+    }
     _cancelled.store(false);
     dispatch_async(_worker, ^{
         NSString * error = nil;
@@ -158,6 +167,17 @@ NSString * status_text(mimir::Status status) {
             } catch (const std::exception & failure) { error = error_text(failure); }
         }
         dispatch_async(dispatch_get_main_queue(), ^{ completion(error, cancelled, limited); });
+    });
+}
+- (void)shutdownWithCompletion:(void (^)(void))completion {
+    _closing = YES;
+    [self cancel];
+    dispatch_async(_worker, ^{
+        @autoreleasepool {
+            std::lock_guard<std::mutex> guard(self->_lock);
+            self->_chat.reset();
+        }
+        dispatch_async(dispatch_get_main_queue(), completion);
     });
 }
 - (void)cancel {

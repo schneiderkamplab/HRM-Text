@@ -18,6 +18,8 @@ final class MimirEngine {
                onToken: @escaping (String) -> Void, completion: @escaping (String?, Bool, Bool) -> Void) {
         self.replyBudget = budget; self.history = history; token = onToken; self.completion = completion
     }
+    var shutdownCompletion: (() -> Void)?
+    func shutdown(completion: @escaping () -> Void) { cancelled = true; shutdownCompletion = completion }
     func cancel() { cancelled = true }
 }
 @main
@@ -144,6 +146,11 @@ struct StoreTests {
         precondition(example == ModelProfile())
         next.contextTiers = [65536, 1024]
         precondition(next.validationError != nil)
+        var shutdownDone = false
+        profileReload.shutdown { shutdownDone = true }
+        precondition(profileReload.busy && !profileReload.canSend && !shutdownDone)
+        MimirEngine.current!.shutdownCompletion?()
+        precondition(shutdownDone)
         print("Profiles: 32768 context, future-model policy, JSON import, persistence and invalid policy passed")
         print("Settings: custom persistence, reload/failure/recovery, budget forwarding, automatic defaults and validation passed")
         print("Store: immediate sidebar identity, first-turn stop/error, empty-chat reload/delete, welcome send; complete-turn persistence, prompt restore, stop/error rollback and model identity isolation passed")

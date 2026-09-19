@@ -2,6 +2,8 @@
 #include <stdexcept>
 #include <iostream>
 #include <climits>
+#include <cstdlib>
+#include <string>
 
 static void require(bool value, const char * message) { if (!value) { throw std::runtime_error(message); } }
 static void wait_for(BOOL & done) {
@@ -14,7 +16,8 @@ static void wait_for(BOOL & done) {
 int main(int argc, const char ** argv) {
     @autoreleasepool {
         try {
-            require(argc == 2, "provide a Mimir GGUF path");
+            require(argc == 2 || argc == 3, "provide a Mimir GGUF path and optional exit scenario");
+            const std::string scenario = argc == 3 ? argv[2] : "";
             MimirEngine * engine = [MimirEngine new];
             __block BOOL done = NO;
             __block NSString * failure = nil;
@@ -35,7 +38,43 @@ int main(int argc, const char ** argv) {
                 require(error || (loadedContext == 1024 && trainingContext == 4096), "profile tiers and GGUF training context");
                 failure = error; done = YES;
             }];
+            if (scenario == "exit-loading") {
+                __block BOOL closed = NO;
+                [engine shutdownWithCompletion:^{ closed = YES; }];
+                wait_for(closed); require(done && !failure, "shutdown must drain pending load");
+                CFRetain((__bridge CFTypeRef)engine); // Match SwiftUI ownership remaining alive at exit.
+                std::cout << "Shutdown: pending load drained before process exit\n" << std::flush;
+                std::exit(0);
+            }
             wait_for(done); require(!failure, failure.UTF8String ?: "load");
+            if (scenario == "exit-idle" || scenario == "exit-active") {
+                __block BOOL closed = NO;
+                __block BOOL requested = NO;
+                __block BOOL replyFinished = scenario == "exit-idle";
+                __block BOOL cancelledReply = NO;
+                void (^close)(void) = ^{
+                    if (requested) { return; }
+                    requested = YES;
+                    [engine shutdownWithCompletion:^{
+                        require(NSThread.isMainThread && replyFinished, "shutdown completion ordering");
+                        closed = YES;
+                    }];
+                };
+                if (scenario == "exit-active") {
+                    [engine reply:@"Skriv en lang historie på mindst 500 ord." history:@[] budget:512
+                        onToken:^(NSString *) { close(); }
+                        completion:^(NSString * error, BOOL cancelled, BOOL limited) {
+                            require(!error, "reply failed before shutdown");
+                            cancelledReply = cancelled; replyFinished = YES;
+                        }];
+                } else { close(); }
+                wait_for(closed);
+                require(scenario == "exit-idle" || cancelledReply, "shutdown must cancel active generation");
+                CFRetain((__bridge CFTypeRef)engine); // Intentional process-lifetime owner, not an ordinary scope test.
+                std::cout << "Shutdown: " << scenario << " clean process exit with retained engine\n" << std::flush;
+                std::exit(0);
+            }
+
             NSString * prompt = @"Svar med ét ord: Hvad er 2 + 2?";
             __block NSMutableString * text = [NSMutableString new];
             done = NO;
@@ -67,6 +106,16 @@ int main(int argc, const char ** argv) {
             [engine reply:prompt history:@[] budget:8 onToken:^(NSString * piece) { [text appendString:piece]; }
               completion:^(NSString * error, BOOL cancelled, BOOL limited) { failure = error; done = YES; }];
             wait_for(done); require(!failure && text.length, "error/cancel recovery failed");
+            done = NO;
+            [engine shutdownWithCompletion:^{ done = YES; }];
+            wait_for(done);
+            done = NO;
+            [engine loadModel:@(argv[1]) context:1024 useGPU:YES profile:profile
+                completion:^(NSString * error, int, int) { failure = error; done = YES; }];
+            wait_for(done); require(failure != nil, "shutdown must reject new work");
+            done = NO;
+            [engine shutdownWithCompletion:^{ done = YES; }];
+            wait_for(done);
             std::cout << "Bridge: Metal load, real templated generation, main callbacks, transcript restore, cancellation and recovery passed\n";
             return 0;
         } catch (const std::exception & error) { std::cerr << error.what() << '\n'; return 1; }

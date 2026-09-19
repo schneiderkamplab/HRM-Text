@@ -197,5 +197,27 @@
       "profiles-bridge-tests.log": "53fc8d11fb565d2337b3dd4fe81394cbf724258db4a4b79cf5fdd041b58c8247"
     },
     "result": "Mac, unsigned iOS and Simulator builds passed; Mac bundled a JSON profile. Swift tests passed for 32768 settings acceptance, a distinct future-model policy, JSON import/restart persistence and validation. Real Metal bridge tests passed with profile-controlled automatic context and GGUF training-length metadata. No new live UI or full 32768 generation/physical-device qualification."
+  },
+  "shutdown_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/MimirEngine.h": "9d89de117c950a8e11fe0dc861fba5b5c1eef0a1e3ab953aace0ea11e1c53ae3",
+      "native/apple/Bridge/MimirEngine.mm": "9d383c49edc3086f95d276afb379132b880fe7713c8d0e6b1c4c791bc7dbbd0e",
+      "native/apple/Sources/MimirApp.swift": "4d5a000aadd9093b78a12ca35971fb6dc8fe38340366407c13c562e46abbd840",
+      "native/apple/Sources/ChatStore.swift": "133ffcc34d6aa5924da02be931f5679141053698de9aaa915ad80a2db071ed2e",
+      "native/apple/Tests/BridgeTests.mm": "8c6d830ff5b5685bfcb46038f211d29dc4a2562df8116f5861eddd871b245ec7",
+      "native/apple/Tests/StoreTests.swift": "8f2e821ffa9c1939101fbe465bb6ac711430bda7b6623c75381b33e07a41db5c"
+    },
+    "local_log_sha256": {
+      "exit-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "exit-macos-build.log": "9eb7f5bbed47dcf5b22c5a94efac66befa9956b2fc2225cb4decaac99fe4e0fc",
+      "exit-ios-build.log": "1a8f60beff18a45be8b1517f13ce954760668fb560c34bd98a65105eb5d0df9f",
+      "exit-simulator-build.log": "f842210850c7045aaa90cbdf465f551e25ecaf9a655b6bd89e04abc5093252aa",
+      "exit-bridge-tests.log": "c2b4bb454df7b114006cb8d7984eaa7ee3dc869eb050af6be88b1652c7a97748",
+      "exit-idle-tests.log": "783eb49057f6cefcd91ad25e28d380755a4106ffda8b61c87b09d76b91a33110",
+      "exit-loading-tests.log": "0e8fbbdbb15b3c5ecbfbcf12e5215355ec1c4b3b7361fd1cc7e293508002eb86",
+      "exit-active-tests.log": "4026a66d8bfb34dd0b142632be913662c51c7fad1dc06e19fbeb27e3a0edc043"
+    },
+    "result": "Existing Xcode 16.3: three Release builds, Swift tests, real Metal bridge tests and idle/loading/active process-exit tests pass. Engine is deliberately retained across process exit in regression cases. Live Cmd-Q UI check unavailable because Mac was locked."
   }
 }

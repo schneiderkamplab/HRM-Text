@@ -15,5 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
      onToken:(void (^)(NSString * text))onToken
   completion:(void (^)(NSString * _Nullable error, BOOL cancelled, BOOL limitReached))completion;
 - (void)cancel;
+// Terminal operation: cancel, drain the worker and release model resources before exit.
+- (void)shutdownWithCompletion:(void (^)(void))completion NS_SWIFT_NAME(shutdown(completion:));
 @end
 NS_ASSUME_NONNULL_END
