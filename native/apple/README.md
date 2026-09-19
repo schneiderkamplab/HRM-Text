@@ -63,6 +63,27 @@ Mac minimum deployment target is macOS 14. Mac builds use ad-hoc signing and App
 Distribution certificates, provisioning, notarization, app icons and App Store metadata
 are not provided. Simulator builds use CPU; this is not evidence of phone performance.
 
+### Try it in Simulator
+
+No signing team or physical device is needed. Build specifically for the simulator;
+the unsigned `iphoneos` bundle cannot run there:
+
+```bash
+native/apple/build.sh simulator "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+xcrun simctl list devices available
+# Boot a listed iPhone/iPad UUID, or select one in the Simulator app.
+xcrun simctl boot <device-uuid>
+xcrun simctl bootstatus <device-uuid> -b
+xcrun simctl install <device-uuid> logs/mimir-apple/simulator/Release-iphonesimulator/MimirChat.app
+xcrun simctl launch <device-uuid> dk.sdu.mimir.chat
+open -a Simulator
+```
+
+Skip `boot` if the chosen device is already booted. Subsequent launches can use
+the Mimir icon on the simulator's home screen. The bundled model works offline;
+the simulator uses host CPU inference and does not validate real-device Metal,
+memory pressure or thermal behavior.
+
 Memory is materially larger than weight file size. Mimir's recurrent KV expansion
 alone uses about 768 MiB at this context size with F16 KV, plus weights, graph buffers
 and application memory. Real iPhone/iPad peak memory, thermal behavior and sustained

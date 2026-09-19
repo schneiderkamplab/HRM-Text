@@ -50,5 +50,14 @@
       "sidebar-ios-build.log": "d7eeb0440b712526924d8e6ddb7804cba16428821d58b692502225cb57288570"
     },
     "result": "Swift storage/state tests and Mac/iOS Release builds passed; no new live UI or real-model run."
+  },
+  "simulator_followup": {
+    "date": "2026-09-19",
+    "device": "iPhone 16 Pro, iOS 18.4 Simulator, arm64",
+    "result": "Release build, simctl install/launch and UI ready status verified; generation not exercised",
+    "source_sha256": {
+      "native/apple/CMakeLists.txt": "40a1192df768cd29c481ba91e54ec327fa4d9ee41065ff08e9e897565f1997ec"
+    },
+    "build_log_sha256": "c21e06a9c74cbc4c035f0196fe64656be41bb61f0625bf58759b76dbe1862b95"
   }
 }

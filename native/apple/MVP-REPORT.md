@@ -85,3 +85,16 @@ identity, first-turn cancellation/error, reload, delete, welcome-screen send and
 completed-chat model isolation. Mac and unsigned iOS Release builds were rerun.
 The real-model runtime is unchanged; its earlier tests were not rerun for this
 Swift state/UI change. Follow-up hashes are recorded separately in validation.json.
+
+## Simulator follow-up — 2026-09-19
+
+The bundled-Q4 arm64 simulator Release build passed and was installed/launched on
+an iPhone 16 Pro simulator running iOS 18.4. Computer Use verified its welcome UI
+and “On-device · Simulator CPU” ready status. No simulator reply generation or
+physical-device performance measurement is claimed. This supersedes the initial
+absence of simulator execution evidence above.
+
+Initial launch waited in compiled-in Metal backend shader initialization even
+though inference requested CPU. `GGML_METAL` is now disabled specifically for
+`iphonesimulator`; the rebuilt app loaded successfully. Mac/device settings remain
+Metal-enabled. Build log: `logs/mimir-apple/simulator-build.log`.

@@ -58,3 +58,17 @@ first send, while completed conversations retain the model mismatch guard.
 Stop/error keeps the same entry and returns the prompt to the composer without
 saving partial messages. Empty entries can be deleted through the conversation
 menu. Bounded store tests cover these transitions, reload and stable identity.
+
+## Simulator launch verified (2026-09-19)
+
+Built the bundled-Q4 arm64 simulator app and installed/launched it with `simctl`
+on the available iPhone 16 Pro / iOS 18.4 simulator. Computer Use confirmed the
+welcome screen and “On-device · Simulator CPU” ready status. This supersedes the
+initial report's lack of simulator execution evidence, but does not add a generated
+reply or physical-device performance result. Build/install commands are in the
+Apple README.
+
+The first launch stalled in Metal shader initialization despite requesting CPU
+inference: backend registration initialized the compiled-in Metal backend. The
+Apple CMake project now disables `GGML_METAL` for the `iphonesimulator` SDK only.
+The rebuilt app loaded successfully; Mac and physical iOS still enable Metal.
