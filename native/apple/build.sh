@@ -4,6 +4,7 @@ APP_SOURCE="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$APP_SOURCE/../.." && pwd)"
 PLATFORM="${1:-macos}"
 MODEL_FILE="${2:-}"
+MODEL_PROFILE="${3:-}"
 BUILD_ROOT="$REPO_ROOT/logs/mimir-apple/$PLATFORM"
 OPTIONS=(-G Xcode)
 case "$PLATFORM" in
@@ -15,7 +16,7 @@ esac
 if [[ -n "$MODEL_FILE" ]]; then
     MODEL_FILE="$(cd "$(dirname "$MODEL_FILE")" && pwd)/$(basename "$MODEL_FILE")"
 fi
-cmake -S "$APP_SOURCE" -B "$BUILD_ROOT" "${OPTIONS[@]}" -DMIMIR_MODEL_FILE="$MODEL_FILE"
+cmake -S "$APP_SOURCE" -B "$BUILD_ROOT" "${OPTIONS[@]}" -DMIMIR_MODEL_FILE="$MODEL_FILE" -DMIMIR_MODEL_PROFILE="$MODEL_PROFILE"
 if [[ "$PLATFORM" == macos ]]; then
     cmake --build "$BUILD_ROOT" --target MimirChat mimir-bridge-tests --config Release -j "${MIMIR_BUILD_JOBS:-6}"
 else

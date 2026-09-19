@@ -4,6 +4,7 @@ import UniformTypeIdentifiers
 struct SettingsView: View {
     @ObservedObject var store: ChatStore
     @Environment(\.dismiss) private var dismiss
+    @State private var profileImporter = false
     @State private var context = ""
     @State private var reply = ""
     private var proposed: GenerationSettings? {
@@ -23,28 +24,30 @@ struct SettingsView: View {
                         .font(.callout).foregroundStyle(.secondary)
                     Button("Import a Mimir GGUF…") { store.importer = true }.disabled(store.busy)
                     Button("Use bundled model", action: store.useBundledModel).disabled(store.busy)
+                    Text("Profile: \(store.profile.name)")
+                    Button("Import model profile…") { profileImporter = true }.disabled(store.busy || store.model == nil)
                 }
                 Section("Context and replies") {
                     TextField("Context tokens", text: $context)
                     TextField("Reply budget tokens", text: $reply)
                     Text("Active: \(store.contextTokens) context · \(store.replyTokens) reply tokens")
                         .font(.caption).foregroundStyle(.secondary)
-                    if let error = proposed?.validationError {
+                    if let error = proposed?.validationError(profile: store.profile) {
                         Text(error).font(.callout).foregroundStyle(.secondary)
                     } else if proposed == nil {
                         Text("Enter whole numbers for both limits.").font(.callout).foregroundStyle(.secondary)
                     }
-                    if (Int(context) ?? 0) > 4096 {
-                        Text("Beyond the model's 4,096-token training context, answer quality is experimental. Longer contexts also use more memory.")
+                    if let trained = store.trainingContext {
+                        Text("Model trained with a maximum context of \(trained) tokens. Longer contexts may reduce answer quality.")
                             .font(.callout).foregroundStyle(.secondary)
                     }
                     Button("Apply limits") {
                         if let proposed { store.applySettings(proposed) }
-                    }.disabled(store.busy || proposed == nil || proposed?.validationError != nil)
+                    }.disabled(store.busy || proposed == nil || proposed?.validationError(profile: store.profile) != nil)
                     Button("Use memory-based defaults") {
                         store.useMemoryDefaults()
                     }.disabled(store.busy)
-                    Text("The context includes the chat template, conversation and reserved reply budget. Changing context reloads the model. Memory is checked before loading; the OS can still terminate an app under severe memory pressure.")
+                    Text("The context includes the chat template, conversation and reserved reply budget. Changing context reloads the model. Automatic defaults use a memory estimate. Custom values override that estimate; large contexts may fail to load or cause the OS to close the app.")
                         .font(.callout).foregroundStyle(.secondary)
                     Text("Completed chats stay on this device. Stopping a reply returns your message to the composer.")
                         .font(.callout).foregroundStyle(.secondary)
@@ -73,6 +76,12 @@ struct SettingsView: View {
                     case .failure(let error): store.notice = error.localizedDescription
                     }
                 }
+        }
+        .fileImporter(isPresented: $profileImporter, allowedContentTypes: [.json]) { result in
+            switch result {
+            case .success(let url): store.importProfile(url)
+            case .failure(let error): store.notice = error.localizedDescription
+            }
         }
         .onAppear(perform: refresh)
         .onChange(of: store.generationSettings) { _, _ in refresh() }

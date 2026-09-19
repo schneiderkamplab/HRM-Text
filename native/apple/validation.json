@@ -171,5 +171,31 @@
       "extended-context-tests.log": "5b180ae5d2a135ea683ef87fa5a851d2676d0ab473d123f74f9a345649191d6a"
     },
     "result": "Three Release builds, Swift tests, real Metal bridge tests and 8/8 native tests passed. Real Q4_K_M: 4530-token Mimir-templated prefix and four decode steps in 8192 context passed with finite logits. Mac controls and reset inspected; final Simulator loaded successfully with host-memory estimate. Physical iOS memory and extended-context quality not qualified. Final ContentView difference from built source is trailing whitespace only. iPhone 16 Plus / iOS 18.4 Simulator settings showed active 4096/1024 and both editable controls."
+  },
+  "model_profiles_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/MimirEngine.h": "c3a064ebbda2b0bbc9bf6168701af8106ac7987f97e4abf9b98f6fde1dfea5ad",
+      "native/apple/Bridge/MimirEngine.mm": "e119143b7a155ae20bb8ca5e5fce9d96ba8c009676c63db5fc14d6aebb538e17",
+      "native/apple/CMakeLists.txt": "c94392bf84cc68632bb1d365a642b5b1cf246cc6865ac25c67961e79e4882c1b",
+      "native/apple/Sources/ModelProfile.swift": "8873a976bfb103018c50887a12a6aed9392ff5d6a0e78135771ba48ce9dd8537",
+      "native/apple/Sources/GenerationSettings.swift": "bbbe7d77717561a5c011023d8a258bd620f37c3c264997a080652ebcea9429f4",
+      "native/apple/Sources/Conversation.swift": "001fc58aa85c662efe3c76083f1649a6d7faee9eaa50c7a56db905c6b2a3a349",
+      "native/apple/Sources/ChatStore.swift": "b30cf0a3e42697ccc83a9c7165880aa0954314e8881b10100612b8327c1e9516",
+      "native/apple/Sources/SettingsView.swift": "e5ed85a2944682f5a257876f229becac23f8358aad3f98cf938550305fc63e0d",
+      "native/apple/Tests/StoreTests.swift": "9b1fb006f96285d77e789fa4ed876bde3ea26dbe19ff298552643a5db7b29fae",
+      "native/apple/Tests/BridgeTests.mm": "3638c5d2bf3cb5812f72321d4c52e1eed86c9f13cda8b98c15b7083ee8878e3a",
+      "native/apple/Tools/test-swift.sh": "a336f04ba354780fbafe26f254ec29938750b6084dabe9df552a0a9e28d04ec6",
+      "native/apple/build.sh": "c565b1378842134603c678efa7ab70838611630c1a282395581e5800f70fc5aa",
+      "native/apple/Resources/DFM-Mimir-v1.profile.json": "303a96aa9efc98959275d204950b327eec2c2a6be30ee1181b182f279261121b"
+    },
+    "local_log_sha256": {
+      "profiles-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "profiles-macos-build.log": "160a260f17bd96143578770c4c2e52212f113b83de5fbd576346ad6309e9ae8b",
+      "profiles-ios-build.log": "acda4ef6f21eef81bcaa9f3b45c3daefdbc913b95008b72889f019e44a5e2661",
+      "profiles-simulator-build.log": "32524ddde86f5525cf87c21aaa7d42e3536396808eedeca9c20bed4c40aa0033",
+      "profiles-bridge-tests.log": "53fc8d11fb565d2337b3dd4fe81394cbf724258db4a4b79cf5fdd041b58c8247"
+    },
+    "result": "Mac, unsigned iOS and Simulator builds passed; Mac bundled a JSON profile. Swift tests passed for 32768 settings acceptance, a distinct future-model policy, JSON import/restart persistence and validation. Real Metal bridge tests passed with profile-controlled automatic context and GGUF training-length metadata. No new live UI or full 32768 generation/physical-device qualification."
   }
 }

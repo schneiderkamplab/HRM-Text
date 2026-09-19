@@ -17,7 +17,9 @@ final class ChatStore: ObservableObject {
     private let engine = MimirEngine()
     private var storage: ChatStorage?
     private var persistenceEnabled = true
-    @Published private(set) var generationSettings = GenerationSettings.recommended
+    @Published private(set) var generationSettings = ModelProfile().defaults(context: ModelProfile().minimumContext)
+    @Published private(set) var trainingContext: Int?
+    var profile: ModelProfile { model?.profile ?? ModelProfile() }
     var contextTokens: Int { generationSettings.contextTokens }
     var replyTokens: Int { generationSettings.replyTokens }
     var busy: Bool { loading || generating }
@@ -38,7 +40,7 @@ final class ChatStore: ObservableObject {
             let storage = try suppliedStorage ?? ChatStorage()
             self.storage = storage
             saved = try storage.load()
-            if let settings = saved.generationSettings, settings.validationError == nil {
+            if let settings = saved.generationSettings, settings.validationError(profile: saved.importedModel?.profile ?? ModelProfile()) == nil {
                 generationSettings = settings
             }
             selected = saved.conversations.first?.id
@@ -50,7 +52,7 @@ final class ChatStore: ObservableObject {
     }
     func start() {
         guard model == nil, !loading else { return }
-        if let imported = saved.importedModel, let url = storage?.modelURL(imported),
+        if let imported = saved.importedModel, !imported.bundled, let url = storage?.modelURL(imported),
            FileManager.default.fileExists(atPath: url.path) {
             load(imported)
         } else { useBundledModel() }
@@ -62,15 +64,20 @@ final class ChatStore: ObservableObject {
                 notice = "Import a Mimir GGUF model to start chatting."
                 return
             }
-            load(try JSONDecoder().decode(ModelAsset.self, from: Data(contentsOf: url)))
+            var asset = try JSONDecoder().decode(ModelAsset.self, from: Data(contentsOf: url))
+            // A new app bundle may contain different weights: never reuse the old identity.
+            if model == nil, let previous = saved.importedModel, previous.id == asset.id {
+                asset.profile = previous.profile ?? asset.profile
+            }
+            load(asset)
         } catch { notice = "The bundled model information could not be read." }
     }
     func useMemoryDefaults() {
-        applySettings(.recommended, automatic: true)
+        applySettings(profile.defaults(context: profile.minimumContext), automatic: true)
     }
     func applySettings(_ settings: GenerationSettings, automatic: Bool = false) {
         guard !busy else { return }
-        if let error = settings.validationError { notice = error; return }
+        if let error = settings.validationError(profile: profile) { notice = error; return }
         if let model, automatic || settings.contextTokens != contextTokens || !ready {
             load(model, settings: settings, automatic: automatic)
         } else {
@@ -81,8 +88,13 @@ final class ChatStore: ObservableObject {
     }
     private func load(_ asset: ModelAsset, settings requested: GenerationSettings? = nil, automatic: Bool = false) {
         guard !busy, let path = storage?.modelURL(asset)?.path else { return }
+        let policy = asset.profile ?? ModelProfile()
+        if let error = policy.validationError { notice = error; return }
         let settings = requested ?? generationSettings
-        let chooseAutomatically = automatic || (requested == nil && saved.generationSettings == nil)
+        let switchingModel = saved.importedModel.map { $0.id != asset.id } ?? false
+        let chooseAutomatically = automatic || (requested == nil && (saved.generationSettings == nil || switchingModel))
+        if !chooseAutomatically, let error = settings.validationError(profile: policy) { notice = error; return }
+        model = asset
         loading = true
         ready = false
         #if targetEnvironment(simulator)
@@ -90,18 +102,31 @@ final class ChatStore: ObservableObject {
         #else
         let gpu = true
         #endif
-        engine.loadModel(path, context: chooseAutomatically ? 0 : Int32(settings.contextTokens), useGPU: gpu) { [weak self] error, loadedContext in
+        engine.loadModel(path, context: chooseAutomatically ? 0 : Int32(settings.contextTokens), useGPU: gpu, profile: policy.nativeOptions) { [weak self] error, loadedContext, trainedContext in
             guard let self else { return }
             self.loading = false
             if let error { self.notice = error; return }
             self.model = asset
+            self.trainingContext = Int(trainedContext)
+            self.notice = nil
             self.generationSettings = chooseAutomatically
-                ? GenerationSettings.defaults(context: Int(loadedContext)) : settings
-            if requested != nil { self.saved.generationSettings = automatic ? nil : settings }
+                ? policy.defaults(context: Int(loadedContext)) : settings
+            if requested != nil || switchingModel { self.saved.generationSettings = chooseAutomatically ? nil : settings }
             self.ready = true
-            self.saved.importedModel = asset.bundled ? nil : asset
+            self.saved.importedModel = asset
             self.persist()
         }
+    }
+    func importProfile(_ url: URL) {
+        guard !busy, var asset = model else { notice = "Load a model before selecting its profile."; return }
+        let access = url.startAccessingSecurityScopedResource()
+        defer { if access { url.stopAccessingSecurityScopedResource() } }
+        do {
+            let policy = try JSONDecoder().decode(ModelProfile.self, from: Data(contentsOf: url))
+            if let error = policy.validationError { notice = error; return }
+            asset.profile = policy
+            load(asset, settings: policy.defaults(context: policy.minimumContext), automatic: true)
+        } catch { notice = "Could not read model profile. \(error.localizedDescription)" }
     }
     func importModel(_ url: URL) {
         guard !busy, let storage else { return }
@@ -191,18 +216,5 @@ final class ChatStore: ObservableObject {
         guard let storage else { return }
         do { try storage.save(saved) }
         catch { notice = "This chat could not be saved. \(error.localizedDescription)" }
-    }
-}
-
-extension GenerationSettings {
-    @MainActor static var recommended: Self { forModel(bytes: 1200 * 1024 * 1024) }
-    @MainActor static func forModel(bytes: UInt64) -> Self {
-        #if targetEnvironment(simulator)
-        let gpu = false
-        #else
-        let gpu = true
-        #endif
-        let context = Int(MimirEngine.recommendedContext(useGPU: gpu, modelBytes: bytes))
-        return .defaults(context: context)
     }
 }

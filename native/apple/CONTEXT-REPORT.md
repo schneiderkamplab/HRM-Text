@@ -1,5 +1,9 @@
 # Configurable context and reply budgets — 2026-09-19
 
+**Follow-up:** [Model profiles](MODEL-PROFILES.md) supersede this report's 8,192
+automatic-tier ceiling and manual memory-admission policy. Measurements below are
+historical evidence, not a 32,768-context qualification.
+
 This supersedes the initial Apple MVP's fixed 1,024 context / 128 reply limits.
 Settings and memory-based defaults are shared by Mac, iOS and iPadOS. The minimum
 automatic values are 1,024 / 512; tiers rise to 8,192 / 2,048. Manual settings can

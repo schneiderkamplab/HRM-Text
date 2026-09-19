@@ -38,40 +38,27 @@ updates are included. Replies may still be inaccurate, including identity statem
 
 ## Context and reply settings
 
-Open **Model and settings → Context and replies**. Automatic defaults start at
-1,024 context / 512 reply tokens and increase with available memory:
+Open **Model and settings → Context and replies**. Defaults start at 1,024 context /
+512 reply tokens and scale with available memory through 2,048, 4,096, 8,192,
+16,384 and 32,768 context tokens. The default reply budget is a quarter of context,
+bounded to 512–2,048 tokens. Both limits are editable and persist across launches.
 
-| Context tokens | Reply budget tokens |
-| --- | --- |
-| 1,024 | 512 |
-| 2,048 | 512 |
-| 4,096 | 1,024 |
-| 8,192 | 2,048 |
+DFM Mimir v1 allows **1,024–32,768 context tokens**. Settings display the training
+context read from GGUF (4,096 for v1); longer contexts are allowed but may affect
+answer quality. Custom context choices override memory estimates. Large allocations
+can fail or cause the OS to close the app. Automatic defaults still use available
+memory, actual GGUF size and the model profile's runtime memory estimate.
 
-Context includes the template, conversation and reserved reply. Custom values are
-saved across launches. Context must be at least 1,024; reply budgets may be any
-positive integer leaving at least 256 context tokens for the prompt. A longer
-actual prompt still needs to fit. Context changes reload the model; reply-only
-changes take effect without reloading. Use **Use memory-based defaults** to return
-to automatic selection on each load. Completed chats survive reload failures;
-reduce context and apply again to recover.
+The context includes the template, conversation and reserved reply. Custom reply
+budgets must leave the profile's prompt reserve (256 tokens for v1); the actual
+prompt must also fit. Changing context reloads the model, while reply-only changes
+do not. **Use memory-based defaults** resets the custom limits.
 
-There is no 4,096-token settings cap. Larger contexts opt into the native wrapper's
-context-extension option; they are experimental for answer quality beyond Mimir's
-training context. A real Q4_K_M Metal run passed with an 8,192 context and a
-4,530-token templated prompt. Values above 8,192 are also configurable, subject to
-memory admission and the runtime's signed 32-bit token range, but are not qualified
-by that test. See [the context report](CONTEXT-REPORT.md).
-
-Automatic selection and manual admission use 70% of currently available memory,
-with an estimate of GGUF file size + 256 MiB + 2 MiB per context token, plus
-96 × context² bytes for CPU attention. The old model/context is released before
-selection. Physical iOS uses its process memory allowance; Mac and Simulator use host
-free/inactive memory. Defaults can change with other apps and delayed OS memory
-reclamation.
-This is a DFM-Mimir estimate, not an OS allocation guarantee; even the 1,024 minimum
-can be refused if memory is insufficient. Physical iPhone/iPad peak-memory and
-thermal checks remain necessary.
+Model-specific context tiers, reply policy, memory estimates, CPU threads and system
+instruction are configurable via a versioned JSON profile. Profiles can be bundled
+or imported in settings. See [MODEL-PROFILES.md](MODEL-PROFILES.md) for the format,
+new-model workflow and tests. Real-model execution beyond training length has been
+checked at 8,192 allocation / 4,530 prompt tokens, not yet at 32,768.
 
 ## Message keyboard behavior
 

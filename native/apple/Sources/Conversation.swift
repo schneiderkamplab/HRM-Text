@@ -18,6 +18,7 @@ struct ModelAsset: Codable, Equatable {
     let name: String
     let filename: String
     var bundled: Bool
+    var profile: ModelProfile?
 }
 struct SavedChats: Codable {
     var version = 1

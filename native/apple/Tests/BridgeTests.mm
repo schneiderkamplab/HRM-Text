@@ -18,14 +18,21 @@ int main(int argc, const char ** argv) {
             MimirEngine * engine = [MimirEngine new];
             __block BOOL done = NO;
             __block NSString * failure = nil;
-            const int recommended = [MimirEngine recommendedContextWithUseGPU:YES modelBytes:1200ULL * 1024 * 1024];
-            require(recommended >= 1024 && recommended <= 8192, "bounded memory defaults");
-            [engine loadModel:@(argv[1]) context:INT_MAX useGPU:YES completion:^(NSString * error, int loadedContext) {
+            NSDictionary * profile = @{@"minimumContext":@1024, @"maximumContext":@32768,
+                @"contextTiers":@[@1024, @2048, @4096, @8192, @16384, @32768],
+                @"memoryFraction":@0.7, @"fixedMemoryBytes":@(256ULL*1024*1024),
+                @"memoryBytesPerToken":@(2ULL*1024*1024), @"cpuAttentionBytesPerTokenSquared":@96,
+                @"threads":@4, @"systemPrompt":@"Answer in the user's language."};
+            [engine loadModel:@(argv[1]) context:INT_MAX useGPU:YES profile:profile completion:^(NSString * error, int loadedContext, int trainingContext) {
                 failure = error; done = YES;
             }];
             wait_for(done); require(failure != nil, "unsafe allocation must be rejected");
             done = NO;
-            [engine loadModel:@(argv[1]) context:1024 useGPU:YES completion:^(NSString * error, int loadedContext) {
+            NSMutableDictionary * smallProfile = [profile mutableCopy];
+            smallProfile[@"maximumContext"] = @1024;
+            smallProfile[@"contextTiers"] = @[@1024];
+            [engine loadModel:@(argv[1]) context:0 useGPU:YES profile:smallProfile completion:^(NSString * error, int loadedContext, int trainingContext) {
+                require(error || (loadedContext == 1024 && trainingContext == 4096), "profile tiers and GGUF training context");
                 failure = error; done = YES;
             }];
             wait_for(done); require(!failure, failure.UTF8String ?: "load");

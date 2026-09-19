@@ -155,3 +155,21 @@ ran in an 8,192 context with finite logits. Reported KV was 6 GiB and Metal comp
 about 8 GiB, so weight size alone is a poor memory estimate. Larger-position answer
 quality and physical iOS peak memory are not qualified. See the
 [context report](../../../native/apple/CONTEXT-REPORT.md) for commands and limits.
+
+## Model profiles and 32,768 context (2026-09-19)
+
+Superseded: the previous 8,192 automatic ceiling and mandatory manual memory
+admission. The v1 profile now permits 1,024–32,768; automatic tiers extend to
+16,384/32,768. Manual choices bypass the estimate, with an allocation-risk note.
+The training-context label comes from GGUF (4,096 for v1), not a UI constant.
+Versioned JSON profiles configure context/reply policy, memory coefficients,
+threads and system instruction. Actual weight size remains file-derived.
+Profiles can be embedded with `build.sh`'s third argument or imported in settings,
+and persist with the selected model. New bundled weights retain their new SHA
+identity; old profile overrides apply only to matching identities. Switching
+weights resets custom limits to automatic defaults.
+
+Mac/iOS/Simulator builds, Swift profile tests and real Metal bridge tests pass.
+No full 32,768 generation or physical-device qualification is claimed. See
+[model profiles](../../../native/apple/MODEL-PROFILES.md) for the new-model workflow
+and exact evidence. llama.cpp and the native wrapper are unchanged by this update.
