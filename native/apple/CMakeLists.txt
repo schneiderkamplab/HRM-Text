@@ -75,6 +75,9 @@ target_sources(MimirChat PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/llama-LICENSE.txt"
 set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/llama-LICENSE.txt" "${CMAKE_CURRENT_BINARY_DIR}/Mimir-LICENSE.txt"
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    add_executable(mimir-native-bench Tools/benchmark-native.cpp)
+    target_include_directories(mimir-native-bench PRIVATE ../mimir/tools ../../llama.cpp/vendor)
+    target_link_libraries(mimir-native-bench PRIVATE mimir-chat-lib)
     add_executable(mimir-extended-context-tests Tests/ExtendedContextTests.cpp)
     target_include_directories(mimir-extended-context-tests PRIVATE ../mimir/tools)
     target_link_libraries(mimir-extended-context-tests PRIVATE mimir-chat-lib)

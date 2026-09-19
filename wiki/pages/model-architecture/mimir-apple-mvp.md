@@ -258,3 +258,17 @@ resetting for each compaction pass. The visible card follows generation. Pending
 previews are never persisted and are discarded on cancellation/failure; the prior
 saved summary survives. See the
 [report](../../../native/apple/COMPACTION-REPORT.md#inline-streamed-summary-2026-09-19).
+
+## Native speed baseline (2026-09-19)
+
+A Release benchmark now calls the app's native Chat path directly, with the same
+Q4_K_M model, profile system instruction, Mimir template, Metal/flash attention,
+F16 KV, four threads and 8,192 context. After one warmup per case, three repeated
+64-token outputs gave median first-text/streaming/total times of 0.44 s / 15.16
+tokens/s / 4.59 s for a 102-token prefix and 7.47 s / 6.24 tokens/s / 17.64 s for a
+1,617-token prefix. Short-prefix streaming ranged 5.46–41.97 tokens/s, so this is
+not a stable optimal-throughput baseline. Outputs were identical per case.
+Other desktop work remained active. The measurement excludes UI and compaction;
+it establishes native latency but cannot quantify app overhead or explain the
+variance. See [method and results](../../../native/apple/NATIVE-PERFORMANCE.md)
+and [raw sample metrics](../../../native/apple/native-speed-results.json).
