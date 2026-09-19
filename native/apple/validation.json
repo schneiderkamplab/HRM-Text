@@ -261,5 +261,25 @@
       "/tmp/mimir-scroll-fixed-sample.txt": "8210296b45fb7077a61ea8a2290813146c82abbaf390d629f9ced93fe9cd03ca"
     },
     "result": "PASS: three Apple builds, Swift tests, live repeated scrolling, answer/summary selection and copy, window resize. Main thread returned to event-loop waiting."
+  },
+  "context_status_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/MimirEngine.h": "37187a4ac362111b3cec4e0785b41c00786e0a70dcf60fe87009aace18fb82f7",
+      "native/apple/Bridge/MimirEngine.mm": "4e1c501e4be9767ecb2aff8d000b862e5b738b092138b42f183cbbba3b1641ca",
+      "native/apple/Sources/ChatStore.swift": "c453fddd95fc033ffa63a5c551b8cd4c0b4c6e7fda93f059ac9013bb40ac72f9",
+      "native/apple/Sources/ContentView.swift": "a6815e3ce8edc6f4d19f9c30d6eedfeb449d4317baafcf112179ec884c4d753f",
+      "native/apple/Tests/BridgeTests.mm": "57db758f496b708a6d267d9e54ff8b533ed682f9d06af11f992b9276c99d0f06",
+      "native/apple/Tests/StoreTests.swift": "3d28f30d8b5b79406c860faf04a8e2593cab6f946f82cfeff6663b5d954e03b8"
+    },
+    "local_log_sha256": {
+      "logs/mimir-apple/context-status-macos.log": "a21180a2202f653314a8cf411992722063c478197f6e3cfb11e70f4e498833a5",
+      "logs/mimir-apple/context-status-ios.log": "de3cb9953319659b5c48379a4e779d0c36a9739e7e94cb74ec1fc368e72f4976",
+      "logs/mimir-apple/context-status-simulator.log": "2aca054f086eb4ee74249fee62417978ca41460f82a0dcbad98d065482040982",
+      "logs/mimir-apple/context-status-swift.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "logs/mimir-apple/context-status-test-build.log": "21dc7d787143feb7bda808b83d9ab4c3a36d755fa8d99bee98c1d3d801549413",
+      "logs/mimir-apple/context-status-bridge.log": "92218412ab07f263e2e13fa971e821d4b93b8cac5179f39f7198090d9db99187"
+    },
+    "result": "PASS: three Apple builds, Swift store tests, real Metal context counts and compaction/prepared phase transition; live Mac counter inspection."
   }
 }

@@ -92,3 +92,28 @@ placed 2,594 of 2,598 main-thread samples waiting in the event loop; observed CP
 usage was 0.3%. Mac, iOS and Simulator Release builds and Swift tests passed.
 This is a focused regression check on macOS 26.4.1, not exhaustive OS qualification.
 Raw process samples stay local; their hashes are recorded in `validation.json`.
+
+## Context usage and activity status (2026-09-19)
+
+The header shows `Context used/limit`, using the loaded model's tokenizer and chat
+template (including the system instruction). At rest it counts the effective
+completed transcript: summary plus uncovered turns when compaction is enabled,
+full transcript when disabled. During generation it shows the prepared input
+count, then refreshes after completion or rollback. Unsent composer text, reserved
+reply budget and an in-progress answer are excluded. The denominator is the
+configured context, not a hard-coded training limit; an over-limit transcript is
+reported honestly. Counts are recomputed off the UI thread on model load, chat
+selection and compaction-setting changes. Stale callbacks cannot overwrite a
+newer chat's count. Unavailable counts appear as a dash.
+
+Both the header and pending-answer indicator say “DFM Mimir is compacting…” during
+summarization, switching to “DFM Mimir is thinking…” when the final input is
+prepared, before answer generation. The full transcript and saved summary format
+are unchanged.
+
+Validation: Mac/iOS/Simulator Release builds and Swift store tests passed. Real
+Q4_K_M Metal tests cover a valid empty-conversation count, full versus compacted
+history counts, and a prepared-input notification after summarization with a
+positive count within the configured 1,024-token context. Existing generation,
+cancellation and summary-reuse checks pass. Live Mac inspection confirmed the
+counter on the restored conversation. Evidence hashes are in `validation.json`.

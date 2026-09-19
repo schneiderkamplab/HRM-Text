@@ -38,9 +38,14 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 HStack {
                     Circle().fill(store.ready ? Color.green : Color.orange).frame(width: 7, height: 7)
-                    Text(store.compacting ? "Summarizing earlier messages…" : store.loading ? "Loading DFM Mimir…" : (store.ready ? store.engineLabel : "Choose a model to begin"))
+                    Text(store.generating ? store.activityLabel : store.loading ? "Loading DFM Mimir…" : (store.ready ? store.engineLabel : "Choose a model to begin"))
                         .font(.caption).foregroundStyle(.secondary)
                     Spacer()
+                    if store.ready, store.modelMatches {
+                        Text("Context \(store.usedContext.map(String.init) ?? "—")/\(String(store.contextTokens))")
+                            .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                            .help("Tokens in the effective conversation, including its summary and chat template. During a reply: input tokens. Excludes unsent text and reserved reply budget.")
+                    }
                     if store.loading { ProgressView().controlSize(.small) }
                 }.padding(.horizontal, 24).padding(.vertical, 12)
                 Divider()
@@ -67,7 +72,7 @@ struct ContentView: View {
                                 if let prompt = store.pendingPrompt {
                                     messageView("user", prompt)
                                     if store.streaming.isEmpty {
-                                        HStack { ProgressView().controlSize(.small); Text("DFM Mimir is thinking…").foregroundStyle(.secondary) }
+                                        HStack { ProgressView().controlSize(.small); Text(store.activityLabel).foregroundStyle(.secondary) }
                                     } else { messageView("assistant", store.streaming) }
                                 }
                                 Color.clear.frame(height: 1).id("bottom")

@@ -10,6 +10,20 @@ final class ChatStore: ObservableObject {
     @Published var loading = false
     @Published var generating = false
     @Published var compacting = false
+    @Published private(set) var usedContext: Int?
+    private var contextRevision = 0
+    var activityLabel: String { compacting ? "DFM Mimir is compacting…" : "DFM Mimir is thinking…" }
+    func refreshContext() {
+        contextRevision += 1
+        let revision = contextRevision
+        usedContext = nil
+        guard ready, !busy, modelMatches else { return }
+        engine.countContext(messages.map { ["role": $0.role, "content": $0.content] },
+                            memory: compactionSettings.enabled ? active?.memory?.dictionary : nil) { [weak self] tokens in
+            guard let self, self.contextRevision == revision, !self.busy else { return }
+            self.usedContext = tokens >= 0 ? Int(tokens) : nil
+        }
+    }
     @Published private(set) var compactionSettings = CompactionSettings()
     @Published var ready = false
     @Published var notice: String?
@@ -58,6 +72,7 @@ final class ChatStore: ObservableObject {
         guard !busy else { return }
         if let enabled { compactionSettings.enabled = enabled }
         if let showSummary { compactionSettings.showSummary = showSummary }
+        refreshContext()
         saved.compactionSettings = compactionSettings
         persist()
     }
@@ -113,6 +128,7 @@ final class ChatStore: ObservableObject {
         model = asset
         loading = true
         ready = false
+        refreshContext()
         #if targetEnvironment(simulator)
         let gpu = false
         #else
@@ -129,6 +145,7 @@ final class ChatStore: ObservableObject {
                 ? policy.defaults(context: Int(loadedContext)) : settings
             if requested != nil || switchingModel { self.saved.generationSettings = chooseAutomatically ? nil : settings }
             self.ready = true
+            self.refreshContext()
             self.saved.importedModel = asset
             self.persist()
         }
@@ -161,6 +178,7 @@ final class ChatStore: ObservableObject {
     func select(_ id: UUID) {
         guard !busy else { return }
         selected = id
+        refreshContext()
         draft = ""
         streaming = ""
     }
@@ -169,6 +187,7 @@ final class ChatStore: ObservableObject {
         draft = ""
         streaming = ""
         saveConversation(Conversation(modelID: model?.id))
+        refreshContext()
     }
     private func saveConversation(_ chat: Conversation) {
         saved.conversations.removeAll { $0.id == chat.id }
@@ -180,6 +199,7 @@ final class ChatStore: ObservableObject {
         guard !busy, let selected else { return }
         saved.conversations.removeAll { $0.id == selected }
         self.selected = nil
+        refreshContext()
         persist()
     }
     func send() {
@@ -199,9 +219,13 @@ final class ChatStore: ObservableObject {
         pendingPrompt = prompt
         streaming = ""
         generating = true
+        contextRevision += 1
         let budget = replyTokens
         engine.reply(prompt, history: history, memory: previous.memory?.dictionary, autoCompact: compactionSettings.enabled, budget: Int32(budget), onCompacting: { [weak self] in
             self?.compacting = true
+        }, onPrepared: { [weak self] tokens in
+            self?.compacting = false
+            self?.usedContext = Int(tokens)
         }, onToken: { [weak self] token in
             self?.compacting = false
             self?.streaming += token
@@ -228,6 +252,7 @@ final class ChatStore: ObservableObject {
                 if limitReached { self.notice = "Reply reached the \(budget)-token limit. You can increase the reply budget in settings." }
             }
             self.streaming = ""
+            self.refreshContext()
         })
     }
     func stop() { if generating { engine.cancel() } }

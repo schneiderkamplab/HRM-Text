@@ -138,7 +138,7 @@ NSString * status_text(mimir::Status status) {
 - (void)reply:(NSString *)prompt history:(NSArray<NSDictionary<NSString *,NSString *> *> *)history
       memory:(NSDictionary<NSString *, id> *)memory
  autoCompact:(BOOL)autoCompact
-      budget:(int)budget onCompacting:(void (^)(void))onCompacting onToken:(void (^)(NSString *))onToken
+      budget:(int)budget onCompacting:(void (^)(void))onCompacting onPrepared:(void (^)(int))onPrepared onToken:(void (^)(NSString *))onToken
   completion:(void (^)(NSString *, BOOL, BOOL, NSDictionary *))completion {
     if (_closing) {
         dispatch_async(dispatch_get_main_queue(), ^{ completion(@"The model is shutting down.", YES, NO, nil); });
@@ -180,6 +180,11 @@ NSString * status_text(mimir::Status status) {
                     [&] { dispatch_async(dispatch_get_main_queue(), onCompacting); })
                     : mimir::apple::PreparedHistory{restored, previous, false};
                 chat->restore_history(prepared.messages);
+                auto input = prepared.messages;
+                if (!self->_system.empty()) { input.insert(input.begin(), {"system", self->_system}); }
+                input.push_back({"user", cpp_text(prompt)});
+                const int inputTokens = int(self->_codec->prepare(input).tokens.size());
+                dispatch_async(dispatch_get_main_queue(), ^{ onPrepared(inputTokens); });
                 if (self->_cancelled.load() || prepared.cancelled) { chat->request_cancel(); }
                 auto result = chat->reply(cpp_text(prompt), budget, [&](const std::string & text) {
                     NSString * piece = [[NSString alloc] initWithBytes:text.data() length:text.size() encoding:NSUTF8StringEncoding];
@@ -196,6 +201,30 @@ NSString * status_text(mimir::Status status) {
             } catch (const std::exception & failure) { error = error_text(failure); }
         }
         dispatch_async(dispatch_get_main_queue(), ^{ completion(error, cancelled, limited, updatedMemory); });
+    });
+}
+- (void)countContext:(NSArray<NSDictionary<NSString *,NSString *> *> *)history
+              memory:(NSDictionary<NSString *,id> *)memory completion:(void (^)(int))completion {
+    if (_closing) { completion(-1); return; }
+    dispatch_async(_worker, ^{
+        int count = -1;
+        @autoreleasepool {
+            try {
+                if (self->_codec) {
+                    std::vector<mimir::Message> messages;
+                    for (NSDictionary * entry in history) {
+                        messages.push_back({cpp_text(entry[@"role"]), cpp_text(entry[@"content"])});
+                    }
+                    if (memory) {
+                        messages = mimir::apple::remembered(messages,
+                            {cpp_text(memory[@"summary"]), [memory[@"covered"] unsignedLongLongValue]});
+                    }
+                    if (!self->_system.empty()) { messages.insert(messages.begin(), {"system", self->_system}); }
+                    count = messages.empty() ? 0 : int(self->_codec->prepare(messages, false).tokens.size());
+                }
+            } catch (const std::exception &) { /* Unknown count is preferable to an estimate. */ }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(count); });
     });
 }
 - (void)shutdownWithCompletion:(void (^)(void))completion {

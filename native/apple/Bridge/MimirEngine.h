@@ -15,8 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
  autoCompact:(BOOL)autoCompact
       budget:(int)budget
  onCompacting:(void (^)(void))onCompacting
+  onPrepared:(void (^)(int tokens))onPrepared
      onToken:(void (^)(NSString * text))onToken
   completion:(void (^)(NSString * _Nullable error, BOOL cancelled, BOOL limitReached, NSDictionary<NSString *, id> * _Nullable memory))completion;
+// Counts the effective completed transcript, including system/template tokens.
+- (void)countContext:(NSArray<NSDictionary<NSString *, NSString *> *> *)history
+              memory:(NSDictionary<NSString *, id> * _Nullable)memory
+          completion:(void (^)(int tokens))completion;
 - (void)cancel;
 // Terminal operation: cancel, drain the worker and release model resources before exit.
 - (void)shutdownWithCompletion:(void (^)(void))completion NS_SWIFT_NAME(shutdown(completion:));

@@ -231,3 +231,16 @@ measurement; iOS keeps SwiftUI text. Repeated scrolling, selection/copy and wind
 resizing passed in the same saved conversation. The post-fix sample showed normal
 event-loop waiting and 0.3% CPU. All Apple builds and Swift tests passed. See the
 [follow-up evidence](../../../native/apple/COMPACTION-REPORT.md#mac-scrolling-hang-follow-up-2026-09-19).
+
+
+## Context indicator and compaction activity (2026-09-19)
+
+The app now displays exact tokenizer/template counts for the effective completed
+conversation against its configured context. During generation it displays the
+prepared input count; after completion/cancellation it recomputes the saved
+conversation count. Draft text, reserved reply budget and the streaming answer
+are excluded. Counting runs on the engine worker and ignores stale UI callbacks.
+Both activity indicators distinguish compacting from thinking, with an explicit
+transition after summary preparation. All Apple builds, Swift tests and real
+Metal count/compaction tests pass; the restored Mac chat displays its count. See
+[the report](../../../native/apple/COMPACTION-REPORT.md#context-usage-and-activity-status-2026-09-19).

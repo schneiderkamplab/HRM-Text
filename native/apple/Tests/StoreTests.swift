@@ -14,12 +14,14 @@ final class MimirEngine {
     var replyBudget: Int32?
     var replyMemory: [String: Any]?
     var autoCompact = true
+    var onPrepared: ((Int32) -> Void)?
+    func countContext(_ history: [[String: String]], memory: [String: Any]?, completion: (Int32) -> Void) { completion(42) }
     var onCompacting: (() -> Void)?
     init() { Self.current = self }
     func loadModel(_ path: String, context: Int32, useGPU: Bool, profile: [String: Any], completion: (String?, Int32, Int32) -> Void) { loadedContext = context; completion(loadError, context == 0 ? 4096 : context, 4096) }
-    func reply(_ prompt: String, history: [[String: String]], memory: [String: Any]?, autoCompact: Bool, budget: Int32, onCompacting: @escaping () -> Void,
+    func reply(_ prompt: String, history: [[String: String]], memory: [String: Any]?, autoCompact: Bool, budget: Int32, onCompacting: @escaping () -> Void, onPrepared: @escaping (Int32) -> Void,
                onToken: @escaping (String) -> Void, completion: @escaping (String?, Bool, Bool, [String: Any]?) -> Void) {
-        self.replyMemory = memory; self.autoCompact = autoCompact; self.onCompacting = onCompacting
+        self.onPrepared = onPrepared; self.replyMemory = memory; self.autoCompact = autoCompact; self.onCompacting = onCompacting
         self.replyBudget = budget; self.history = history; token = onToken; self.completion = completion
     }
     var shutdownCompletion: (() -> Void)?
@@ -98,11 +100,14 @@ struct StoreTests {
         store.draft = "Compact this conversation"
         store.send()
         engine.onCompacting?()
-        precondition(store.compacting)
+        precondition(store.compacting && store.activityLabel == "DFM Mimir is compacting…")
+        engine.onPrepared?(123)
+        precondition(!store.compacting && store.usedContext == 123 && store.activityLabel == "DFM Mimir is thinking…")
         engine.token?("After summary")
         precondition(!store.compacting)
         engine.completion?(nil, false, false, ["summary": "Earlier greeting", "covered": 2])
         precondition(Array(store.messages.prefix(2)) == originalMessages && store.active?.memory?.covered == 2)
+        precondition(store.usedContext == 42)
         let compactedArchive = try storage.load()
         precondition(compactedArchive.conversations.first?.memory?.summary == "Earlier greeting")
         store.draft = "Stop compaction"
