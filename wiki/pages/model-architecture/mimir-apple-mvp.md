@@ -297,3 +297,14 @@ this does not establish the prior cause or prove every Dock/cache state fixed.
 No source workaround or system-wide icon cache reset was applied. LaunchServices
 also retains the old mac-xcode build with the same bundle identifier; use
 `logs/mimir-apple/macos/Release/MimirChat.app` for current development verification.
+
+## Explicit running Dock icon (2026-09-19)
+
+Supersedes the earlier icon lookup as sufficient verification: the user's Dock
+screenshot still showed a generic icon despite correct NSWorkspace and
+NSRunningApplication icon results. Those APIs therefore did not establish the
+visible Dock tile's state. The Mac app delegate now explicitly assigns the
+bundled AppIcon.icns to NSApp.applicationIconImage after launch. This targets the
+running Dock tile without resetting global caches or changing iOS assets.
+Mac Release build passes. Direct Dock UI automation remains unavailable, so the
+visible Dock outcome still requires observation rather than another icon lookup.

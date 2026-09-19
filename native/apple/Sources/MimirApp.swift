@@ -32,6 +32,15 @@ final class MimirAppDelegate: NSObject, NSApplicationDelegate {
     var store: ChatStore?
     private var terminating = false
 
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Supply the running Dock tile explicitly: development launches can retain
+        // a generic tile even when LaunchServices resolves the bundle icon correctly.
+        if let url = Bundle.main.url(forResource: "AppIcon", withExtension: "icns"),
+           let icon = NSImage(contentsOf: url) {
+            NSApp.applicationIconImage = icon
+        }
+    }
+
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard let store else { return .terminateNow }
         if !terminating {
