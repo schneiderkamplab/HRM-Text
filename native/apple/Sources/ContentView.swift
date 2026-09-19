@@ -173,7 +173,14 @@ struct ContentView: View {
                         // Let the text system finish IME composition and insert modified newlines.
                         if let editor = NSApp.keyWindow?.firstResponder as? NSTextView,
                            editor.hasMarkedText() { return .ignored }
-                        if !press.modifiers.intersection([.shift, .option, .control]).isEmpty {
+                        if press.modifiers.contains(.shift) {
+                            if let editor = NSApp.keyWindow?.firstResponder as? NSTextView {
+                                editor.insertNewlineIgnoringFieldEditor(nil)
+                                return .handled
+                            }
+                            return .ignored
+                        }
+                        if !press.modifiers.intersection([.option, .control]).isEmpty {
                             return .ignored
                         }
                         send()

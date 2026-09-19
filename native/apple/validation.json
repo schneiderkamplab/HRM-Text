@@ -83,5 +83,17 @@
       "send-keys-simulator-build.log": "42c18d3e176d4006b2d26874a75551548c0159cd8b83bf90a1f18f1c351b4208"
     },
     "result": "Mac/iOS/simulator Release builds passed; keyboard smoke test interrupted by live user interaction, IME not exercised."
+  },
+  "send_keys_verified": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "097f1439aa1a7ebcb4ea7960dbc60210b3e85c359e14b8a20ef52d66e143d33b"
+    },
+    "local_log_sha256": {
+      "send-keys-macos-build.log": "51e36b1d19626ac7f9d43d3d08beea0008ddff49fc31f6e3a307b67c54f0862b",
+      "send-keys-ios-build.log": "55cb3baf40c65fd8ab81f3c5a3306190f72499dbc6506fdb8297408fd1403788",
+      "send-keys-simulator-build.log": "fccf59c5eb7d7ebf42566df13b4509dd67fe29e8bbba1ea791f985af68e4f91a"
+    },
+    "result": "Mac Return sent; native Shift-Return inserted newline; Cmd-Return sent multiline prompt. iOS software Return inserted newline without sending. Actual IME composition not tested."
   }
 }

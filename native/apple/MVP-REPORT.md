@@ -124,3 +124,15 @@ installed there. Mac, iOS and simulator Release builds passed. The Mac app was
 opened, but live user interaction interrupted the keyboard smoke test before
 key-by-key verification, so no completed Return/Shift+Return or IME UI test is
 claimed. The existing iOS simulator installation was left running undisturbed.
+
+### Completed live send-key checks (2026-09-19)
+
+After the user paused interaction, Mac Return submitted a test prompt and produced
+a reply. The initial Shift+Return pass-through failed to insert a newline; the
+Mac handler now calls the native field editor's `insertNewlineIgnoringFieldEditor`
+for Shift+Return. The repeated UI check showed a two-line draft, and Cmd+Return
+submitted both lines and generated a reply. On iPhone 16 Plus / iOS 18.4 Simulator,
+clicking the software Return key inserted newlines without submitting the draft.
+This supersedes the interrupted basic key verification above. IME behavior remains
+protected in code but untested with an actual composition input method. Only test
+messages/drafts were added; existing user conversations were not deleted.
