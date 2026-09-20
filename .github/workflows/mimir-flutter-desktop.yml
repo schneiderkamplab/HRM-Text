@@ -38,14 +38,17 @@ jobs:
           ctest --test-dir logs/policy -C Release -R backend-policy --output-on-failure
       - name: Prepare import-only asset for Flutter tests
         run: python -c "from pathlib import Path; Path('native/flutter/assets/model.gguf').touch()"
-      - name: Build portable CPU package
-        run: python native/flutter/tool/package_desktop.py --without-model --output logs/packages
+      - name: Resolve Flutter dependencies
+        working-directory: native/flutter
+        run: flutter pub get
       - name: Check Flutter
         working-directory: native/flutter
         run: flutter analyze
       - name: Host tests
         working-directory: native/flutter
         run: flutter test
+      - name: Build portable CPU package
+        run: python native/flutter/tool/package_desktop.py --without-model --output logs/packages
       - uses: actions/upload-artifact@v4
         with:
           name: mimir-${{ runner.os }}-cpu-import-only

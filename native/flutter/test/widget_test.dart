@@ -65,10 +65,11 @@ void main() {
         s.automatic = false;
         s.context = 2048;
         e.handler = (command, _) async {
-          if (command['op'] == 'count')
+          if (command['op'] == 'count') {
             return [
               {'type': 'count', 'tokens': 42},
             ];
+          }
           expect(command['device'], 'auto');
           expect(command['context'], 2048);
           return [
