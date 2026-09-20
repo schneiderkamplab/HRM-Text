@@ -293,3 +293,49 @@ proof of Android GPU execution or performance. Real Adreno/Mali testing, includi
 CPU fallback on unsupported devices, remains necessary. The app depends on the
 system Vulkan loader being present; this APK does not dynamically isolate an
 absent loader library.
+
+## Desktop API and headless qualification — 2026-09-20
+
+Implementation source: `232fc26`. Desktop Settings can start a loopback HTTP API;
+packages include an independently compiled `dfm-mimir-server` companion executable
+(`.exe` on Windows). [API.md](API.md) documents the supported text Chat Completions
+subset, launch options, authentication, queueing and limitations.
+
+Local checks on this Mac:
+
+- Flutter analyzer: clean. **14 tests passed**, including API response/SSE schema,
+  UTF-8, usage, strict validation, optional authentication, origin rejection,
+  queue limits, shutdown/deadline cancellation, and UI conversation isolation.
+  The final isolation test was added after the CI source revision; CI ran the
+  preceding 13-test suite.
+- **9 native regression tests passed**, retaining chat-template, PrefixLM,
+  persistence and reasoning coverage after adding per-request sampling.
+- Real Q4_K_M CPU HTTP checks passed: model listing, nonstreaming/streaming
+  generation, seeded sampling repeatability, concurrent clients, validation and
+  context overflow, disconnect cancellation and follow-up generation.
+- The headless executable inside the final mounted DMG passed the same real-model
+  checks on **MTL0**, using bundled paths from an unrelated working directory.
+  CPU and packaged Metal processes exited cleanly on SIGTERM. The mounted DMG's
+  app signature and model hash also verified.
+
+Evidence: `logs/api-analyze.log`, `logs/api-flutter-tests-final.log`,
+`logs/api-native-ctest.log`, `logs/api-real-cpu-checks.log`,
+`logs/api-packaged-metal-checks.log`, `logs/api-packaged-metal-server.log`, and
+`logs/api-macos-package-final.log`. All generation uses the GGUF chat template.
+Disconnect recovery completed in about 5.5 seconds on CPU and 5.2 on Metal in
+these bounded checks; these are not performance benchmarks.
+
+The Linux and Windows jobs in [CI run 35506872015](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35506872015)
+passed protocol/UI tests, native backend policy, native-library startup and
+missing-backend probes, and headless executable compilation/`--help`. Weighted
+release archives reuse those tested binaries and have verified archive/file/model
+hashes. These CI checks do not substitute for clean-host real-model generation on
+Linux/Windows or GPU qualification there.
+
+Refreshed bundled desktop artifact SHA-256 values:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `dfm-mimir-0.1.0-macos-arm64.dmg` | `6a61b8ef8b4c1d48d431d4f31bd52d6a78401b0ab2a9ef255f9020f874ad8e83` |
+| `dfm-mimir-0.1.0-linux-x64.tar.gz` | `45419a0c138c9099e6a3449133b6e327233961d9cae4ad74688a7db3c73c8712` |
+| `dfm-mimir-0.1.0-windows-x64.zip` | `3d5c3ced4520c74dd3e6401ca05fd0e3c6459bd12ee49e97bd98712129fea45a` |

@@ -208,6 +208,12 @@ so Linux headless operation does not require a display or Flutter engine. Native
 commands serialize UI/API work, isolate request cancellation, and reset API
 system/sampling state without editing saved chats. Exact templated PrefixLM API
 requests do not use compaction or MixedLM reuse. Supported API subset and limits
-are documented in [API.md](../../../native/flutter/API.md). Local real-model CPU
-HTTP checks and nine native regression tests pass; desktop packaging qualification
-is in progress.
+are documented in [API.md](../../../native/flutter/API.md). Local real-model CPU and packaged Metal HTTP checks, nine native regression
+tests, and fourteen Flutter/API/UI tests pass. Linux and Windows packaging CI
+(run 35506872015, source `232fc26`) passed the preceding thirteen-test suite,
+native startup/backend probes, and headless compilation/`--help`. Packages include
+the bundled weights and headless executable; clean-host real-model Linux/Windows
+generation and GPU qualification remain outstanding. Settings displays the active
+URL and permits toggling the API and editing its port while stopped. The bind
+address is fixed to IPv4 loopback; toggle/port settings are session-only.
+See [validation evidence](../../../native/flutter/VALIDATION.md).

@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mimir_api/native_engine.dart';
 import 'package:mimir_api/api/server.dart';
 
+import 'widget_test.dart' show FakeEngine, fixture;
+
 class ApiEngine implements InferenceEngine {
   final calls = <Json>[];
   Completer<void>? hold;
@@ -90,6 +92,66 @@ void main() {
     client.close(force: true);
   });
 
+  test(
+    'API generation blocks UI send and never edits its conversation',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'mimir-api-store-',
+      );
+      final engine = FakeEngine();
+      final store = fixture(engine, directory);
+      final started = Completer<void>(), finish = Completer<void>();
+      engine.handler = (command, onEvent) async {
+        expect(command['op'], 'completion');
+        started.complete();
+        await finish.future;
+        onEvent?.call({'type': 'prepared', 'tokens': 4});
+        return [
+          {
+            'type': 'reply',
+            'text': 'API answer',
+            'limited': false,
+            'cancelled': false,
+            'completionTokens': 2,
+          },
+        ];
+      };
+      final client = HttpClient();
+      try {
+        store.updateDraft('Unsent UI draft');
+        final selected = store.selected;
+        await store.setApiEnabled(true, port: 0);
+        final request = await client.postUrl(
+          Uri.parse('${store.apiServer!.address}/chat/completions'),
+        );
+        request.write(
+          jsonEncode({
+            'model': 'dfm-mimir',
+            'messages': [
+              {'role': 'user', 'content': 'Independent API request'},
+            ],
+          }),
+        );
+        final response = request.close();
+        await started.future;
+        expect(store.apiBusy, true);
+        expect(store.canSend, false);
+        finish.complete();
+        expect((await response).statusCode, 200);
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+        expect(store.apiBusy, false);
+        expect(store.canSend, true);
+        expect(store.selected, selected);
+        expect(store.messages, isEmpty);
+        expect(store.draft, 'Unsent UI draft');
+      } finally {
+        if (!finish.isCompleted) finish.complete();
+        await store.shutdown();
+        client.close(force: true);
+        await directory.delete(recursive: true);
+      }
+    },
+  );
   test('models and completion schema, system prompt and sampling', () async {
     final req = await client.getUrl(Uri.parse('${server.address}/models'));
     req.headers.set('authorization', 'Bearer test-key');
