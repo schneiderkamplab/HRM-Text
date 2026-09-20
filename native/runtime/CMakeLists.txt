@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.20)
+project(MimirRuntime LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(MIMIR_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GGML_METAL_EMBED_LIBRARY ON CACHE BOOL "" FORCE)
+add_subdirectory(../mimir mimir)
+add_library(MimirRuntime SHARED mimir_ffi.cpp)
+target_include_directories(MimirRuntime PRIVATE ../mimir/tools ../../llama.cpp/vendor)
+target_link_libraries(MimirRuntime PRIVATE mimir-chat-lib)
+if(APPLE)
+    set_target_properties(MimirRuntime PROPERTIES FRAMEWORK TRUE FRAMEWORK_VERSION A
+        MACOSX_FRAMEWORK_IDENTIFIER dk.sdu.mimir.runtime PUBLIC_HEADER mimir_ffi.h
+        XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED NO INSTALL_NAME_DIR "@rpath")
+endif()

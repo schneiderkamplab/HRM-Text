@@ -1,0 +1,468 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+
+import 'engine.dart';
+import 'models.dart';
+
+class ChatStore extends ChangeNotifier {
+  final InferenceEngine engine;
+  Directory? directory;
+  ChatStore({InferenceEngine? engine, this.directory})
+    : engine = engine ?? NativeEngine();
+  List<Conversation> chats = [];
+  String? selected, notice;
+  String draft = '',
+      streaming = '',
+      device = 'auto',
+      engineLabel = 'Not loaded';
+  String? pending;
+  Json? preview, model;
+  late ModelProfile profile;
+  bool initialized = false,
+      ready = false,
+      loading = false,
+      generating = false,
+      compacting = false,
+      closing = false;
+  bool compact = true,
+      showSummary = false,
+      automatic = true,
+      persistence = true;
+  int context = 1024, reply = 512;
+  int? training, used;
+  List<Json> devices = [];
+  int _countRevision = 0;
+  Future<void> _saving = Future.value();
+  bool get busy => loading || generating || closing;
+  Conversation? get active => chats.where((c) => c.id == selected).firstOrNull;
+  List<Json> get messages => active?.messages ?? [];
+  bool get modelMatches => messages.isEmpty || active?.modelID == model?['id'];
+  bool get canSend => ready && !busy && modelMatches && draft.trim().isNotEmpty;
+  Json? get visibleSummary => showSummary ? (preview ?? active?.memory) : null;
+  int? get summaryPosition => visibleSummary == null
+      ? null
+      : (visibleSummary!['position'] ?? visibleSummary!['covered'] as int)
+                .clamp(0, messages.length)
+            as int;
+  String get activity =>
+      compacting ? 'DFM Mimir is compacting…' : 'DFM Mimir is thinking…';
+  void setNotice(String? value) {
+    notice = value;
+    notifyListeners();
+  }
+
+  void updateDraft(String text) {
+    draft = text;
+    notifyListeners();
+  }
+
+  Future<void> initialize() async {
+    loading = true;
+    notifyListeners();
+    try {
+      profile = ModelProfile(
+        Json.from(
+          jsonDecode(await rootBundle.loadString('assets/profile.json')),
+        ),
+      );
+      directory ??= Directory(
+        p.join(
+          (await getApplicationSupportDirectory()).path,
+          'DFM Mimir Flutter',
+        ),
+      );
+      await directory!.create(recursive: true);
+      final file = File(p.join(directory!.path, 'conversations.json'));
+      if (await file.exists()) {
+        try {
+          final j = jsonDecode(await file.readAsString()) as Json;
+          if (j['version'] != 1) {
+            throw const FormatException('Unknown archive version');
+          }
+          chats = (j['chats'] as List)
+              .map((c) => Conversation.fromJson(Json.from(c)))
+              .toList();
+          if (chats.map((c) => c.id).toSet().length != chats.length) {
+            throw const FormatException('Duplicate chats');
+          }
+          selected = j['selected'];
+          compact = j['compact'] ?? true;
+          showSummary = j['showSummary'] ?? false;
+          automatic = j['automatic'] ?? true;
+          context = j['context'] ?? 1024;
+          reply = j['reply'] ?? 512;
+          device = j['device'] ?? 'auto';
+          model = j['model'];
+          if (model?['profile'] != null) {
+            profile = ModelProfile(Json.from(model!['profile']));
+          }
+          if (profile.limitsError(context, reply) != null) {
+            automatic = true;
+            context = profile.number('minimumContext');
+            reply = profile.defaultReply(context);
+          }
+        } catch (e) {
+          persistence = false;
+          notice =
+              'Saved chats could not be opened. The original archive will not be overwritten: $e';
+        }
+      }
+      final events = await engine.command({'op': 'devices'});
+      devices =
+          (events.firstWhere((e) => e['type'] == 'devices')['devices'] as List)
+              .map((e) => Json.from(e))
+              .toList();
+      initialized = true;
+      loading = false;
+      if (model == null ||
+          !await File(model!['path']).exists() ||
+          model!['bundled'] == true) {
+        await useBundled();
+      } else {
+        await load();
+      }
+    } catch (e) {
+      notice = '$e';
+      loading = false;
+      initialized = true;
+      notifyListeners();
+    }
+  }
+
+  Future<void> useBundled() async {
+    if (busy) return;
+    loading = true;
+    notifyListeners();
+    try {
+      final path = bundledModelPath();
+      final file = File(path);
+      final id = (await sha256.bind(file.openRead()).first).toString();
+      final previous = model;
+      if (previous?['id'] != id) {
+        profile = ModelProfile(
+          Json.from(
+            jsonDecode(await rootBundle.loadString('assets/profile.json')),
+          ),
+        );
+        automatic = true;
+      }
+      model = {
+        'id': id,
+        'name': 'DFM Mimir v1',
+        'path': path,
+        'bundled': true,
+        'profile': profile.data,
+      };
+      loading = false;
+      await load();
+    } catch (e) {
+      loading = false;
+      notice = 'Could not open bundled model: $e';
+      notifyListeners();
+    }
+  }
+
+  Future<void> importModel(String source) async {
+    if (busy) return;
+    loading = true;
+    notifyListeners();
+    try {
+      final file = File(source);
+      final id = (await sha256.bind(file.openRead()).first).toString();
+      final target = p.join(directory!.path, 'models', '$id.gguf');
+      await Directory(p.dirname(target)).create(recursive: true);
+      if (!await File(target).exists()) {
+        final temp = '$target.importing';
+        await file.copy(temp);
+        await File(temp).rename(target);
+      }
+      profile = ModelProfile(
+        Json.from(
+          jsonDecode(await rootBundle.loadString('assets/profile.json')),
+        ),
+      );
+      model = {
+        'id': id,
+        'name': p.basename(source),
+        'path': target,
+        'bundled': false,
+        'profile': profile.data,
+      };
+      automatic = true;
+      loading = false;
+      await load();
+    } catch (e) {
+      loading = false;
+      notice = 'Model import failed: $e';
+      notifyListeners();
+    }
+  }
+
+  Future<void> importProfile(String path) async {
+    if (busy || model == null) return;
+    try {
+      profile = ModelProfile(
+        Json.from(jsonDecode(await File(path).readAsString())),
+      );
+      model!['profile'] = profile.data;
+      automatic = true;
+      await load();
+    } catch (e) {
+      notice = 'Profile import failed: $e';
+      notifyListeners();
+    }
+  }
+
+  Future<void> load() async {
+    loading = true;
+    ready = false;
+    used = null;
+    _countRevision++;
+    notifyListeners();
+    try {
+      final events = await engine.command({
+        'op': 'load',
+        'path': model!['path'],
+        'profile': profile.data,
+        'modelBytes': await File(model!['path']).length(),
+        'context': automatic ? 0 : context,
+        'device': device,
+      });
+      final loaded = events.firstWhere((e) => e['type'] == 'loaded');
+      context = loaded['context'];
+      training = loaded['trainingContext'];
+      engineLabel = 'On-device · ${loaded['device']}';
+      if (automatic) reply = profile.defaultReply(context);
+      ready = true;
+      if (persistence) notice = null;
+    } catch (e) {
+      notice = 'Model load failed: $e';
+    }
+    loading = false;
+    notifyListeners();
+    await save();
+    await refreshCount();
+  }
+
+  Future<void> setLimits(
+    int c,
+    int r, {
+    bool auto = false,
+    String? backend,
+  }) async {
+    if (busy) return;
+    final error = profile.limitsError(c, r);
+    if (!auto && error != null) {
+      notice = error;
+      notifyListeners();
+      return;
+    }
+    context = c;
+    reply = r;
+    automatic = auto;
+    if (backend != null) device = backend;
+    await load();
+  }
+
+  void newChat() {
+    if (busy) return;
+    final c = Conversation(modelID: model?['id']);
+    chats.insert(0, c);
+    selected = c.id;
+    draft = '';
+    streaming = '';
+    notifyListeners();
+    save();
+    refreshCount();
+  }
+
+  void select(String id) {
+    if (busy) return;
+    selected = id;
+    draft = '';
+    streaming = '';
+    notifyListeners();
+    save();
+    refreshCount();
+  }
+
+  void deleteActive() {
+    if (busy) return;
+    chats.removeWhere((c) => c.id == selected);
+    selected = null;
+    draft = '';
+    notifyListeners();
+    save();
+    refreshCount();
+  }
+
+  void setCompaction({bool? enabled, bool? visible}) {
+    if (busy) return;
+    compact = enabled ?? compact;
+    showSummary = visible ?? showSummary;
+    notifyListeners();
+    save();
+    refreshCount();
+  }
+
+  Future<void> refreshCount() async {
+    final revision = ++_countRevision;
+    if (!ready || busy || !modelMatches) {
+      used = null;
+      notifyListeners();
+      return;
+    }
+    try {
+      final events = await engine.command({
+        'op': 'count',
+        'history': messages,
+        'memory': active?.memory,
+        'compact': compact,
+      });
+      if (revision == _countRevision && !busy) {
+        used = events.firstWhere((e) => e['type'] == 'count')['tokens'];
+      }
+    } catch (_) {
+      if (revision == _countRevision) used = null;
+    }
+    notifyListeners();
+  }
+
+  Future<void> send() async {
+    if (!canSend) return;
+    final prompt = draft.trim();
+    if (active == null) newChat();
+    final c = active!;
+    if (c.messages.isEmpty) {
+      c.title = String.fromCharCodes(prompt.runes.take(48));
+      c.modelID = model?['id'];
+    }
+    c.updated = DateTime.now();
+    chats.remove(c);
+    chats.insert(0, c);
+    draft = '';
+    pending = prompt;
+    streaming = '';
+    preview = null;
+    generating = true;
+    compacting = false;
+    notice = null;
+    _countRevision++;
+    notifyListeners();
+    await save();
+    try {
+      final events = await engine.command(
+        {
+          'op': 'reply',
+          'history': c.messages,
+          'memory': c.memory,
+          'compact': compact,
+          'prompt': prompt,
+          'budget': reply,
+        },
+        onEvent: (e) {
+          switch (e['type']) {
+            case 'compacting':
+              compacting = true;
+            case 'summary':
+              preview = {
+                'summary': e['text'],
+                'covered': e['covered'],
+                'position': c.messages.length,
+              };
+            case 'prepared':
+              compacting = false;
+              used = e['tokens'];
+            case 'token':
+              streaming += e['text'] as String;
+          }
+          notifyListeners();
+        },
+      );
+      final result = events.firstWhere((e) => e['type'] == 'reply');
+      if (result['cancelled'] == true) {
+        draft = prompt;
+        notice = 'Reply stopped. Your message is back in the composer.';
+      } else {
+        if (result['memory'] != null) {
+          final m = Json.from(result['memory']);
+          final unchanged =
+              m['summary'] == (c.memory?['summary']) &&
+              m['covered'] == (c.memory?['covered']);
+          m['position'] = unchanged
+              ? (c.memory?['position'])
+              : c.messages.length;
+          c.memory = m;
+        }
+        c.messages.addAll([
+          {'role': 'user', 'content': prompt},
+          {'role': 'assistant', 'content': result['text']},
+        ]);
+        c.updated = DateTime.now();
+        if (result['limited'] == true) {
+          notice =
+              'Reply reached the $reply-token limit. Increase the reply budget in settings.';
+        }
+      }
+    } catch (e) {
+      draft = prompt;
+      notice = '$e';
+    } finally {
+      generating = false;
+      compacting = false;
+      pending = null;
+      streaming = '';
+      preview = null;
+      notifyListeners();
+      await save();
+      await refreshCount();
+    }
+  }
+
+  void stop() {
+    if (generating) engine.cancel();
+  }
+
+  Future<void> save() {
+    if (!persistence || directory == null) return Future.value();
+    final data = jsonEncode({
+      'version': 1,
+      'chats': chats.map((c) => c.toJson()).toList(),
+      'selected': selected,
+      'model': model,
+      'compact': compact,
+      'showSummary': showSummary,
+      'automatic': automatic,
+      'context': context,
+      'reply': reply,
+      'device': device,
+    });
+    _saving = _saving.then((_) async {
+      try {
+        final file = File(p.join(directory!.path, 'conversations.json'));
+        final temp = File('${file.path}.tmp');
+        await temp.writeAsString(data, flush: true);
+        await temp.rename(file.path);
+      } catch (e) {
+        notice = 'Could not save chats: $e';
+        notifyListeners();
+      }
+    });
+    return _saving;
+  }
+
+  Future<void> shutdown() async {
+    if (closing) return;
+    stop();
+    closing = true;
+    notifyListeners();
+    await engine.close();
+    await _saving;
+  }
+}

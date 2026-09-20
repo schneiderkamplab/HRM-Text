@@ -1,0 +1,85 @@
+# Flutter MVP validation — 2026-09-20
+
+Scope: Apple Silicon Mac and arm64 iOS simulator with Q4_K_M DFM-Mimir-v1,
+using the model's own chat template. No network inference service. The native
+selection matrix is in [BACKENDS.md](../mimir/BACKENDS.md).
+
+Environment: M2 Max / 96 GiB, macOS 27.0 (26A428), Xcode 16.3,
+Flutter 3.47.5 / Dart 3.13.4 / CocoaPods 1.17.0, iOS 18.4 iPhone 16 Plus simulator.
+GGUF SHA256: `3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5`.
+
+## Automated evidence
+
+| Check | Result |
+| --- | --- |
+| Native text suite | 73 checks each on CPU, Metal, Accelerate, Vulkan/MoltenVK |
+| Native framework builds | Mac arm64 + iOS simulator arm64; frameworks contain static ggml/llama dependencies |
+| Real C ABI smoke | Device enumeration, model load, templated generation, stream/final text agreement, cancellation and recovery, multi-turn streamed compaction, shutdown during active generation |
+| Existing SwiftUI bridge regression | Metal load, generation, main-thread callbacks, transcript restore, cancellation/recovery and compaction tests passed after shared-header extraction |
+| Dart store/profile tests | Profile bounds and future limits; summary stream/commit/archive placement; cancelled summary rollback; first-send draft preservation |
+| Widget test | Branding/sidebar, editable composer, Shift-Enter does not send, Enter sends, immediate new-conversation identity |
+| Static analysis | `flutter analyze`: no issues |
+| App builds | Mac release and iOS simulator debug; native runtime embedded in both |
+
+The first-send test was added after live testing exposed draft loss when starting
+from an empty archive. The prompt is now captured before creating its conversation.
+The original widget test also exposed a sidebar overflow, which was fixed.
+
+Local logs (not committed): `logs/flutter-{tests-final,analyze-final,native-smoke,
+shared-apple-test,macos-build,ios-build}.log` and
+`logs/flutter-native-package.log`. Use [README.md](README.md) to reproduce.
+
+## Live checks
+
+Computer Use observed the branded Mac UI, accepted typed text and Return, showed
+native Metal generation returning `4` to a Danish arithmetic prompt, and exercised Cmd-Q. The process exited after native
+Metal resource destruction, with no new app crash report.
+
+On the iOS simulator, the app loaded the bundled model on CPU with an automatically
+selected 4,096-token context and 1,024-token reply budget. A real Danish arithmetic
+prompt produced `2 + 2 er 4.` Return added a newline without sending; the send
+button submitted the prompt. Toggling the simulator software keyboard exposed
+Done, which dismissed it. Model/profile/context controls, training-context notice,
+licenses and compaction visibility were visible. The summary visibility switch
+was exercised. The conversation survived reinstalling/relaunching the simulator build. Simulator timing is not a physical-iPhone performance result.
+
+Native compaction generation and stream ordering are tested with a real model;
+placement, persistence and cancelled-preview rollback are tested in Dart. This is
+not a claim that every long-history compaction gesture was manually repeated in
+both packaged UIs.
+
+## Remaining qualification and release work
+
+- **Accessibility diagnostic resolved:** a development-only forced semantics
+  handle produced AX-tree errors and one crash during an active-generation quit.
+  Removing that handle and letting Flutter activate semantics normally restored
+  the live Mac tree. The temporary tooltip restriction was also removed; the
+  shipped source uses normal tooltips and an unmodified Flutter SDK. Earlier
+  upstream tooltip/OverlayPortal issues were diagnostic leads, not a confirmed
+  cause. Final live tree and exit checks are recorded below. A full VoiceOver /
+  TalkBack acceptance audit remains outstanding.
+- The local FFI plugin uses CocoaPods; Flutter warns that a Swift Package Manager
+  manifest will be needed in a future release. Current builds work with Xcode 16.3.
+- GGUF/profile import, share-sheet delivery and corrupt-archive UI recovery need
+  broader manual acceptance checks. Atomic persistence and state behavior are
+  covered at the bounded test level; no existing SwiftUI chats are migrated.
+- Physical iPhone/iPad memory, performance, thermals, signing and distribution are
+  deferred. Mac builds currently target arm64 only.
+- Android/Linux/Windows runners are scaffolds, pending native packaging, assets,
+  memory probes and hardware testing. No tested-product claim for those targets.
+- No controlled Flutter-versus-SwiftUI speed comparison or newly enabled backend
+  BF16/Q8 numerical qualification was performed in this pass.
+
+## Final Mac lifecycle rerun
+
+With normal tooltips and no forced semantics handle, Computer Use read the full
+live chat tree, observed `DFM Mimir is thinking…` after a long-story submission,
+and sent Cmd-Q while the request was active. The directly launched process
+returned **exit code 0**. `logs/flutter-mac-qualified.log` shows Metal resource
+release and contains no `AXTree`/`ERROR` entries. No new Flutter crash report was
+created. The earlier diagnostic crash report is retained locally for traceability.
+The cancelled long-story turn was absent from the saved completed transcript.
+
+Staged OKF concepts validate with zero errors. Full-worktree validation encounters
+two unrelated errors in the untracked benchmark-charts page; those files were
+preserved and excluded from this change.

@@ -1,5 +1,11 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-20 - Add the Flutter client and portable backend selection
+
+- Added a separate Apple-first Flutter client with shared native compaction and a worker-based C ABI.
+- Recorded CPU/Metal/Accelerate/Vulkan checks, existing CUDA evidence, live simulator checks and the Mac accessibility-lifecycle correction.
+- Documented reproducible framework packaging and unqualified future platforms.
+
 ## 2026-09-19 - Implement the Apple chat MVP
 
 - Added the shared SwiftUI Mac/iOS app, serialized native bridge and completed-transcript restore.

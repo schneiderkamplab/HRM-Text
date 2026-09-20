@@ -38,3 +38,5 @@
 * [H and L Learning Rates](module-learning-rates.md) - Optional scheduled module rates with unchanged optimizer checkpoint groups.
 * [XXL Restart from 520K](xxl-520k-restart.md) - Isolated half-rate continuation with a cutoff history clone and preserved original trajectory.
 * [Mimir Apple Chat MVP](mimir-apple-mvp.md) - Shared SwiftUI app, Metal bridge, local conversations and device validation gaps.
+
+* [Mimir Flutter and Portable Backends](mimir-flutter.md) - Shared C ABI, Apple-first Flutter client and backend qualification matrix.

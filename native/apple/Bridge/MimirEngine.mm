@@ -1,7 +1,7 @@
 #import "MimirEngine.h"
 #include "mimir/chat.h"
 #include "model.h"
-#include "ContextCompaction.h"
+#include "mimir/compaction.h"
 #include <atomic>
 #include <algorithm>
 #include <mutex>
@@ -165,7 +165,7 @@ NSString * status_text(mimir::Status status) {
                     restored.push_back({cpp_text(role), cpp_text(content)});
                 }
                 chat->restore_history(restored);
-                mimir::apple::Memory previous;
+                mimir::compaction::Memory previous;
                 if (memory) {
                     NSString * summary = memory[@"summary"];
                     NSNumber * covered = memory[@"covered"];
@@ -174,16 +174,16 @@ NSString * status_text(mimir::Status status) {
                     }
                     previous = {cpp_text(summary), size_t(covered.unsignedLongLongValue)};
                 }
-                const auto prepared = autoCompact ? mimir::apple::compact(*chat, *self->_codec, self->_system,
+                const auto prepared = autoCompact ? mimir::compaction::compact(*chat, *self->_codec, self->_system,
                     restored, previous, cpp_text(prompt), self->_context, budget,
                     [&] { return self->_cancelled.load(); },
                     [&] { dispatch_async(dispatch_get_main_queue(), onCompacting); },
-                    [&](const mimir::apple::Memory & preview) {
+                    [&](const mimir::compaction::Memory & preview) {
                         NSString * text = [NSString stringWithUTF8String:preview.summary.c_str()];
                         const int covered = int(preview.covered);
                         dispatch_async(dispatch_get_main_queue(), ^{ onSummary(text, covered); });
                     })
-                    : mimir::apple::PreparedHistory{restored, previous, false};
+                    : mimir::compaction::PreparedHistory{restored, previous, false};
                 chat->restore_history(prepared.messages);
                 auto input = prepared.messages;
                 if (!self->_system.empty()) { input.insert(input.begin(), {"system", self->_system}); }
@@ -221,7 +221,7 @@ NSString * status_text(mimir::Status status) {
                         messages.push_back({cpp_text(entry[@"role"]), cpp_text(entry[@"content"])});
                     }
                     if (memory) {
-                        messages = mimir::apple::remembered(messages,
+                        messages = mimir::compaction::remembered(messages,
                             {cpp_text(memory[@"summary"]), [memory[@"covered"] unsignedLongLongValue]});
                     }
                     if (!self->_system.empty()) { messages.insert(messages.begin(), {"system", self->_system}); }

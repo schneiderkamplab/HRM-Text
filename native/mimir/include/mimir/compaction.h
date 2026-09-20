@@ -4,7 +4,7 @@
 #include <functional>
 #include <stdexcept>
 
-namespace mimir::apple {
+namespace mimir::compaction {
 struct Memory {
     std::string summary;
     size_t covered = 0; // Number of original messages represented by summary; always complete pairs.
