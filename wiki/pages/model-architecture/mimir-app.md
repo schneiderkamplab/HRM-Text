@@ -266,3 +266,8 @@ execution/storage, not all Worker request processing. References:
 [Workers setup](https://developers.cloudflare.com/workers/get-started/guide/),
 [D1 setup](https://developers.cloudflare.com/d1/get-started/), and
 [D1 jurisdictions](https://developers.cloudflare.com/d1/configuration/data-location/).
+
+Wrangler 4.135.0 OAuth login and `wrangler whoami` succeeded on the development
+Mac on 2026-09-20; Workers and D1 write access were verified. Credentials remain
+in Wrangler's local configuration, outside the repository. No remote feedback
+resources have been provisioned yet; the public team contact email is pending.
