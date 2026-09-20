@@ -215,3 +215,25 @@ library SONAME aliases; keep upstream native SDK installation out of the app
 bundle. The last issue produced an unevaluated target-based Windows install path
 and duplicate Linux backend/SDK files. Explicit build dependencies preserve every
 bundled native library while Flutter owns their final installation.
+
+## Bundled-model desktop downloads — 2026-09-20
+
+The tested `6eb48b9` CPU packages were assembled with the same Q4_K_M weights
+used by the Mac smoke tests. The model SHA-256 is
+`3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5`.
+`tool/bundle_model.py` verifies the original archive and file manifest, embeds
+weights at the existing Flutter asset path, then updates hashes and records the
+original archive checksum. Binary source revisions remain unchanged.
+
+| Package | Bytes | SHA-256 |
+| --- | --- | --- |
+| Linux x64 tar.gz | 1,129,386,077 | `e6fe3928e5b8e9ca9f4bc1ec5cf36573fc5aee2f97d53e4f7324b407923e69d5` |
+| Windows x64 ZIP | 1,122,701,500 | `dc51577ad6f0a95612c229da9839e61c30ade2f9f7223e89eb86bad3b045b2d9` |
+
+Every archive/file hash was checked after assembly, including the embedded model.
+Comparison with the original manifests confirms that only the model asset and
+README changed; Linux executable permissions remain intact. A corrupt source
+checksum is rejected before extraction. Evidence is in
+`logs/packaging-bundled-verification.log`; archives are in
+`logs/packages/with-model/{linux,windows}/`. These checks verify packaging, not a
+new Linux/Windows real-model generation run. Clean-host acceptance still applies.

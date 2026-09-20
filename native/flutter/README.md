@@ -117,7 +117,7 @@ app entry point.
 
 ## Linux and Windows development packages
 
-Build on the matching host with Flutter 3.47.5, Python 3.11+, CMake and the
+Build on the matching host with Flutter 3.47.5, Python 3.12+, CMake and the
 [Flutter desktop prerequisites](https://docs.flutter.dev/platform-integration).
 Linux also needs GTK3 development libraries, clang, Ninja and pkg-config;
 Windows needs Visual Studio's Desktop development with C++ workload.
@@ -162,3 +162,22 @@ not implemented yet; they remain in the plan.
 **Model and settings → MixedLM mode** enables approximate reuse of older prompt
 representations. It is off by default; switching reloads the model context.
 See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
+
+### Include weights in a previously tested desktop package
+
+The recommended ready-to-use downloads include the tested Mimir Q4_K_M weights.
+CI's smaller import-only bundles can be assembled on any host without recompiling
+their native binaries:
+
+```sh
+python native/flutter/tool/bundle_model.py dfm-mimir-linux-x64.tar.gz \
+  --model /absolute/path/mimir-q4_k_m.gguf --output logs/packages/with-model/linux
+python native/flutter/tool/bundle_model.py dfm-mimir-windows-x64.zip \
+  --model /absolute/path/mimir-q4_k_m.gguf --output logs/packages/with-model/windows
+```
+
+Keep the source archive's `.sha256` sidecar next to it. The tool verifies the
+archive and every manifest entry before replacing the declared Flutter model
+asset. The new manifest retains the binary source revisions, records the original
+archive checksum and the bundled model checksum, and updates all file hashes.
+First launch finds the weights locally; no import or model download is needed.

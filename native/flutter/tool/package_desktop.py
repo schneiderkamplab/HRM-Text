@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Build a relocatable Linux/Windows Flutter bundle on its native host."""
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,13 +10,10 @@ import subprocess
 import sys
 import tempfile
 
+from package_archive import digest, write_archive
+
 ROOT = Path(__file__).resolve().parents[3]
 APP = ROOT / 'native/flutter'
-
-
-def digest(path):
-    with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
 def run(*args, env=None):
@@ -104,10 +100,7 @@ def main():
         }
         (stage / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
         # A complete archive replaces its previous version only after creation succeeds.
-        archive = Path(shutil.make_archive(str(Path(temporary) / name), 'gztar' if target == 'linux' else 'zip', temporary, name))
-        destination = output / archive.name
-        os.replace(archive, destination)
-        (output / (destination.name + '.sha256')).write_text(digest(destination) + '  ' + destination.name + '\n', encoding='utf-8')
+        destination = write_archive(stage, output, target)
         print(destination)
 
 

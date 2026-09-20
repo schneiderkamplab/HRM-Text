@@ -138,3 +138,15 @@ Upstream llama.cpp SDK installation must be excluded from the Flutter plugin
 bundle: its relative destinations do not resolve Flutter's target-based Windows
 install prefix. Explicit native build dependencies plus Flutter's library list
 retain the required binaries without duplicate SDK/header installation.
+
+### Bundled weights — 2026-09-20
+
+Ready-to-use desktop packages now include the tested Q4_K_M model (hash and archive
+checksums in the validation report), replacing the initial import-only delivery
+choice. `native/flutter/tool/bundle_model.py` can assemble either host's verified
+CI archive on any platform without recompilation. It validates source/file hashes,
+replaces the declared Flutter model asset and records model/source archive hashes.
+The native binaries retain the original `6eb48b9` provenance; post-assembly checks
+confirmed unchanged binaries and Linux executable permissions. Each weighted
+archive is approximately 1.12–1.13 GB. Routine CI still provides smaller import-only
+builds, while ready-to-use distribution includes weights.
