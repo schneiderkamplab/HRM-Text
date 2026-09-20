@@ -6,8 +6,14 @@ not a llama.cpp kernel whitelist. The loader now accepts every registered ggml
 backend or device name. No new kernel implementations or changes to the four
 llama.cpp patch scopes are needed for this selection change.
 
-`mimir-chat --list-devices` lists compiled/available devices. `--device auto`
-selects the first GPU/IGPU, otherwise CPU; `cpu` explicitly uses CPU. `metal` remains
+`mimir-chat --list-devices` lists compiled/available devices. The original
+first-GPU automatic selector is **superseded (2026-09-20)** by ranked candidates:
+Metal, CUDA, Vulkan, other registered accelerators, then CPU. Automatic model
+loading retries recoverable failures; the Flutter runtime also retries context
+initialization, including disabling implicit GPU flash attention. CLI context
+initialization does not yet have that additional retry. See the
+[portable package plan](../flutter/PACKAGING-PLAN.md) for current limits;
+ `cpu` explicitly uses CPU. `metal` remains
 the human-readable alias for ggml's `MTL`. Other names are case-insensitive,
 including exact device identifiers such as `Vulkan0`, `CUDA0` or `SYCL0` when
 reported by that build. Explicit unavailable selections fail, rather than silently
@@ -61,7 +67,7 @@ logs/mimir-multiplatform/bin/mimir-text-tests logs/mimir-review/mimir-q4_k_m.ggu
 Prioritize an allocated, idle GPU and compare the same model bytes and templated
 inputs against CPU. Build the matching ggml option, enumerate actual device IDs,
 then run `mimir-text-tests MODEL DEVICE` and the existing PrefixLM regression,
-numerical and sanitizer procedures in [linux-testing.md](linux-testing.md).
+numerical and sanitizer procedures in [linux-testing.md](../../linux-testing.md).
 
 1. **NVIDIA:** repeat CUDA qualification and try Vulkan on a driver supporting it.
 2. **AMD:** HIP/ROCm and Vulkan on supported Radeon/Instinct hardware.
@@ -78,3 +84,13 @@ numerical and sanitizer procedures in [linux-testing.md](linux-testing.md).
 
 Test BF16, Q8_0 and Q4_K_M where supported; report unsupported format/operator
 combinations explicitly. Build availability alone is never the pass criterion.
+
+The new Flutter desktop package probes and remaining hardware acceptance steps
+are described in [desktop testing](../flutter/DESKTOP-TESTING.md). Optional
+CUDA/Vulkan build switches do not imply qualification of those release artifacts.
+The pinned llama.cpp context also initializes registered `ACCEL` devices (such
+as BLAS) independently of the model's GPU device list. Explicit CPU selection
+therefore does not disable every specialty accelerator registered in the process;
+qualify that behavior before adding such modules to distributable packages.
+The initial Linux/Windows CPU packages disable BLAS and contain no specialty
+accelerator modules. BLAS on Apple remains a CPU acceleration library.

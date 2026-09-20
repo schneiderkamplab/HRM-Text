@@ -14,8 +14,8 @@ package CI runs on Linux/Windows; real hardware qualification is separate.
 
 Mac static CPU and dynamic CPU/Metal real-model smoke tests pass, as do nine
 native regression cases and seven Flutter tests. Optional backend absence and
-missing-CPU diagnostics are exercised in fresh processes. No Linux/Windows
-execution claim is made until CI results are recorded in VALIDATION.md.
+missing-CPU diagnostics are exercised in fresh processes. Hosted package results and their limits are recorded in
+[VALIDATION.md](VALIDATION.md); clean-host real-model acceptance remains separate.
 
 Not yet implemented: layer-offload reduction, retry during a failing generation,
 crash-relaunch recovery, Android Vulkan, model downloads/asset packs, installers,
@@ -51,6 +51,11 @@ experiments. Neural Engine, arbitrary Android NPUs and Windows NPUs are not
 implicitly supported by exposing llama.cpp devices: Mimir operators, recurrent
 execution, PrefixLM masks and model formats all require backend qualification.
 No automatic multi-GPU splitting or remote RPC is needed for this first release.
+
+## Original implementation checklist
+
+The sections below preserve the initial design and baseline observations. The
+status above and validation report distinguish completed work from remaining work.
 
 ## 1. Finish portable native integration
 

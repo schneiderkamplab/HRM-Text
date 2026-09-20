@@ -18,7 +18,7 @@ weights, frameworks, SDK, Pods and generated build products are not in Git.
 
 ## Build on Apple Silicon
 
-Prerequisites used: Flutter **3.47.5** / Dart **3.13.4**, Xcode **16.3**, CMake,
+Prerequisites used: Flutter **3.47.5** / Dart **3.13.4**, Xcode **27.0**, CMake,
 CocoaPods **1.17.0**, iOS 18.4 simulator runtime. No developer account is required
 for these targets. Put Flutter on PATH; the local installation is
 `logs/toolchains/flutter/bin/flutter` from the repository root.
@@ -144,7 +144,8 @@ The package command probes the C ABI from another working directory and checks
 that removing CPU backend files produces a readable error in a fresh process.
 CI builds and uploads CPU/import-only packages on Linux and Windows. Artifact
 creation is separate from real-model/hardware qualification. See
-[PACKAGING-PLAN.md](PACKAGING-PLAN.md) for the remaining release stages.
+[PACKAGING-PLAN.md](PACKAGING-PLAN.md) for the remaining release stages and
+[DESKTOP-TESTING.md](DESKTOP-TESTING.md) for package/hardware acceptance.
 
 Automatic loading ranks Metal, CUDA and Vulkan before other registered
 accelerators, with CPU last. Recoverable model/context initialization failures

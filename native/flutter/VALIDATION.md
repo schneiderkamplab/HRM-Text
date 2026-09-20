@@ -155,3 +155,63 @@ input workaround was added.
 Reproduce with `flutter test integration_test/android_smoke_test.dart -d DEVICE`;
 despite its historical filename, the same test runs on either simulator. Logs:
 `logs/mixedlm-android-test.log` and `logs/mixedlm-ios-test.log`.
+
+## Portable desktop packaging and initialization fallback — 2026-09-20
+
+This milestone adds Linux/Windows package builds and automatic recoverable
+model/context initialization retries. It does not qualify every optional GPU
+backend or implement recovery during generation. Explicit device choices remain
+strict; Settings reports the selected device and reasons for fallback.
+
+Local validation on Apple M2 Max (96 GB), macOS 27 / Xcode 27.0, using Flutter
+3.47.5 and the Q4_K_M model with SHA-256
+`3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5`:
+
+| Check | Result | Local evidence |
+| --- | --- | --- |
+| Native regression suite, including injected backend failure/cleanup policy | 9/9 pass | `logs/packaging-ctest.log` |
+| Flutter analyzer and unit/widget tests | clean; 7/7 pass | `logs/packaging-final-analyze.log`, `logs/packaging-final-flutter-tests.log` |
+| Real-model static CPU C ABI smoke, compaction/cancellation and MixedLM | pass | `logs/packaging-final-cpu-smoke.log` |
+| Dynamic CPU-only and Metal+CPU builds, real-model automatic selection | pass | `logs/packaging-dynamic-cpu.log`, `logs/packaging-dynamic-metal.log` |
+| Relocated native-library probe and missing-CPU diagnostic | pass on Mac | `logs/packaging-probe-mac.log` |
+| Mac/simulator/device XCFramework slices | build pass | `logs/packaging-apple-native-verified.log` |
+| Mac release and unsigned physical iOS release app | build pass | `logs/packaging-macos-build.log`, `logs/packaging-ios-device.log` |
+| Android ARM64 debug APK | build pass | `logs/packaging-android-build.log` |
+| Mac real-model Flutter integration flow, including MixedLM toggles | pass | `logs/packaging-macos-integration.log` |
+
+Physical iOS generation still requires a provisioned device. The Android build
+above is CPU-only. Apple build success is not a new signing/distribution claim.
+Every chat smoke/integration check uses the Mimir GGUF chat template.
+
+### Hosted package evidence
+
+The Linux and Windows CPU/import-only jobs at commit `6eb48b9` passed in
+[Actions run 35499701323](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35499701323).
+They built on Ubuntu 22.04 x86-64 and Windows Server 2022 x64, passed the
+shared backend-policy test, Flutter analyzer and seven host tests, and loaded
+each packaged C ABI from an unrelated working directory. A fresh process with CPU modules removed reported the
+intended missing-backend error. Downloaded archive checksums and every manifest
+file hash verified locally: Linux has 52 files (25,627,038-byte tarball), Windows
+has 51 files (18,857,190-byte ZIP). Windows includes the release VC runtime DLLs.
+Both manifests pin llama.cpp to
+`43139122aa30557a34b985979d10f13e9634a3cb` and record no bundled model.
+
+Download the `mimir-Linux-cpu-import-only` and `mimir-Windows-cpu-import-only`
+artifacts from that run. Local verified copies are in
+`logs/desktop-packages/6eb48b9/{linux,windows}/`. They are unsigned development
+packages. The full source revision is `6eb48b926e012f2650d0327bcdcce0455efb739d`.
+
+The CI probes enumerate CPU devices; they do not generate with real weights or
+exercise a desktop window. Complete the [desktop acceptance checks](DESKTOP-TESTING.md)
+on clean Linux/Windows hosts with a Mimir GGUF, then qualify GPU packages on
+actual CUDA/Vulkan hardware. Earlier native CUDA results do not automatically
+qualify these new archives or MixedLM. Run the existing Linux release/sanitizer
+handoff before final production packaging and review.
+
+Packaging fixes found by hosted CI: resolve native sources relative to the Flutter
+runner (Windows junctions do not reliably resolve with CMake REALPATH); track the
+Windows runner manifest despite the repository-wide ignore; include Linux shared
+library SONAME aliases; keep upstream native SDK installation out of the app
+bundle. The last issue produced an unevaluated target-based Windows install path
+and duplicate Linux backend/SDK files. Explicit build dependencies preserve every
+bundled native library while Flutter owns their final installation.

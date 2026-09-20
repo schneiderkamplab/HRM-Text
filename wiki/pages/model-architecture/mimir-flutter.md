@@ -120,7 +120,21 @@ implemented. Initialization retries use a shared ranked policy with CPU last;
 explicit selection remains strict. App Settings reports actual device and
 fallback reasons. Mac dynamic CPU/Metal real-model checks, missing-backend
 probes, nine native tests and seven Flutter tests pass. Physical iOS Metal is
-included in the XCFramework builder. Linux/Windows CI is being qualified;
+included in the XCFramework builder; the unsigned physical iOS release app
+builds. Linux and Windows CPU/import-only archives at `6eb48b9` passed hosted CI,
+including policy/Flutter tests and packaged startup/missing-backend probes.
+Downloaded archive and per-file checksums verified;
 [the README](../../../native/flutter/README.md) gives build commands and
 [the plan](../../../native/flutter/PACKAGING-PLAN.md) distinguishes remaining
 mid-generation/crash recovery, Android GPU and distribution work.
+
+The [desktop acceptance handoff](../../../native/flutter/DESKTOP-TESTING.md)
+separates CI build/startup evidence from clean-host real-model generation and GPU
+qualification. Mac real-model Flutter integration, nine native tests and seven
+Flutter tests passed after the fallback changes. User-requested Linux sanitizers
+remain a prerequisite for final production packaging/review.
+
+Upstream llama.cpp SDK installation must be excluded from the Flutter plugin
+bundle: its relative destinations do not resolve Flutter's target-based Windows
+install prefix. Explicit native build dependencies plus Flutter's library list
+retain the required binaries without duplicate SDK/header installation.
