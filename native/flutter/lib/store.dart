@@ -24,6 +24,7 @@ class ChatStore extends ChangeNotifier {
   String? pending;
   Json? preview, model;
   late ModelProfile profile;
+  bool conversationsReady = false;
   bool initialized = false,
       ready = false,
       loading = false,
@@ -40,6 +41,8 @@ class ChatStore extends ChangeNotifier {
   int _countRevision = 0;
   Future<void> _saving = Future.value();
   bool get busy => loading || generating || closing;
+  // Restore the archive before allowing edits; inference loading is independent.
+  bool get canCreateChat => conversationsReady && !generating && !closing;
   Conversation? get active => chats.where((c) => c.id == selected).firstOrNull;
   List<Json> get messages => active?.messages ?? [];
   bool get modelMatches => messages.isEmpty || active?.modelID == model?['id'];
@@ -113,6 +116,8 @@ class ChatStore extends ChangeNotifier {
               'Saved chats could not be opened. The original archive will not be overwritten: $e';
         }
       }
+      conversationsReady = true;
+      notifyListeners();
       final events = await engine.command({'op': 'devices'});
       devices =
           (events.firstWhere((e) => e['type'] == 'devices')['devices'] as List)
@@ -271,7 +276,7 @@ class ChatStore extends ChangeNotifier {
   }
 
   void newChat() {
-    if (busy) return;
+    if (!canCreateChat) return;
     final c = Conversation(modelID: model?['id']);
     chats.insert(0, c);
     selected = c.id;

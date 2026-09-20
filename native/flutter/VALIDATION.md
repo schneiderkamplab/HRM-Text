@@ -83,3 +83,11 @@ The cancelled long-story turn was absent from the saved completed transcript.
 Staged OKF concepts validate with zero errors. Full-worktree validation encounters
 two unrelated errors in the untracked benchmark-charts page; those files were
 preserved and excluded from this change.
+
+## Startup new-chat correction
+
+The original shared busy flag disabled new-chat creation throughout model loading.
+Creation now waits for archive restoration only; the toolbar and sidebar actions
+are enabled during model loading, and sending remains disabled. A regression test
+checks both controls, immediate selection, drafting during loading and the active
+generation restriction.

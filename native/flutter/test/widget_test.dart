@@ -42,6 +42,7 @@ ChatStore fixture(FakeEngine e, Directory directory, {bool persist = true}) {
   );
   s.persistence = persist;
   s.initialized = true;
+  s.conversationsReady = true;
   s.ready = true;
   s.model = {'id': 'model', 'path': 'fake', 'name': 'Test Mimir'};
   s.newChat();
@@ -164,6 +165,53 @@ void main() {
     await s.shutdown();
     d.deleteSync(recursive: true);
   });
+  testWidgets(
+    'new chat is available during model loading, after archive restore',
+    (tester) async {
+      final d = Directory.systemTemp.createTempSync('mimir-startup');
+      final s = fixture(FakeEngine(), d, persist: false);
+      s.loading = true;
+      s.ready = false;
+      s.conversationsReady = false;
+      await tester.binding.setSurfaceSize(const Size(1100, 800));
+      await tester.pumpWidget(MaterialApp(home: ChatView(store: s)));
+      final toolbar = find.byWidgetPredicate(
+        (w) => w is IconButton && w.tooltip == 'New chat',
+      );
+      expect(tester.widget<IconButton>(toolbar).onPressed, isNull);
+      s.newChat();
+      expect(s.chats.length, 1);
+      s.conversationsReady = true;
+      s.updateDraft('');
+      await tester.pump();
+      await tester.tap(toolbar);
+      await tester.pump();
+      expect(s.chats.length, 2);
+      final selected = s.selected;
+      await tester.tap(find.widgetWithText(FilledButton, 'New chat'));
+      await tester.pump();
+      expect(s.chats.length, 3);
+      expect(s.selected, isNot(selected));
+      await tester.enterText(
+        find.byKey(const Key('composer')),
+        'Draft while loading',
+      );
+      expect(s.draft, 'Draft while loading');
+      expect(s.canSend, isFalse);
+      s.loading = false;
+      s.ready = true;
+      expect(s.canSend, isTrue);
+      s.generating = true;
+      expect(s.canCreateChat, isFalse);
+      s.generating = false;
+      await tester.pumpWidget(const SizedBox());
+      await s.shutdown();
+      await tester.runAsync(() async {
+        await d.delete(recursive: true);
+      });
+      await tester.binding.setSurfaceSize(null);
+    },
+  );
   testWidgets('sidebar identity, branding and composer send', (tester) async {
     final directory = Directory.systemTemp.createTempSync(
       'mimir-flutter-widget',

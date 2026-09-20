@@ -40,3 +40,13 @@ Verified build dependencies: Flutter 3.47.5, Dart 3.13.4, Xcode 16.3 and CocoaPo
 pod root; CocoaPods did not discover the vendored XCFramework through a directory
 symlink. Both runners intentionally build arm64. `build_native.py` reproduces
 native packaging; model weights and generated binaries stay outside Git.
+
+## Startup chat creation — 2026-09-20
+
+New-chat creation now waits only for local archive restoration, not backend
+enumeration, model hashing or model loading. A separate `conversationsReady`
+state prevents startup edits from being overwritten by archive hydration. Both
+new-chat buttons use the same eligibility check; drafts can be composed while
+the model loads, while sending still requires a ready engine. Active generation
+and shutdown continue to block conversation creation. A widget regression test
+covers archive gating, both buttons, immediate selection and draft readiness.

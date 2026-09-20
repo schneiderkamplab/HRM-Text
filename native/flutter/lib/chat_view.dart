@@ -95,7 +95,7 @@ class _ChatViewState extends State<ChatView> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: FilledButton.tonalIcon(
-            onPressed: s.busy
+            onPressed: !s.canCreateChat
                 ? null
                 : () {
                     s.newChat();
@@ -370,7 +370,7 @@ class _ChatViewState extends State<ChatView> {
           ),
           actions: [
             IconButton(
-              onPressed: s.busy ? null : s.newChat,
+              onPressed: s.canCreateChat ? s.newChat : null,
               tooltip: 'New chat',
               icon: const Icon(Icons.edit_square),
             ),
