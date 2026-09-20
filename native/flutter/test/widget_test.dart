@@ -212,6 +212,43 @@ void main() {
       await tester.binding.setSurfaceSize(null);
     },
   );
+  testWidgets('iOS swipes over message text scroll the transcript', (
+    tester,
+  ) async {
+    final d = Directory.systemTemp.createTempSync('mimir-ios-scroll');
+    final s = fixture(FakeEngine(), d, persist: false);
+    s.active!.messages.addAll([
+      {'role': 'user', 'content': 'A long answer please'},
+      {
+        'role': 'assistant',
+        'content': List.generate(
+          70,
+          (i) => 'Line $i of the answer.',
+        ).join('\n'),
+      },
+    ]);
+    await tester.binding.setSurfaceSize(const Size(430, 800));
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(platform: TargetPlatform.iOS),
+        home: ChatView(store: s),
+      ),
+    );
+    await tester.pump();
+    final transcript = tester.widget<SingleChildScrollView>(
+      find.byType(SingleChildScrollView),
+    );
+    expect(transcript.controller!.position.maxScrollExtent, greaterThan(200));
+    await tester.dragFrom(const Offset(150, 350), const Offset(0, -220));
+    await tester.pumpAndSettle();
+    expect(transcript.controller!.offset, greaterThan(100));
+    await tester.pumpWidget(const SizedBox());
+    await s.shutdown();
+    await tester.runAsync(() async {
+      await d.delete(recursive: true);
+    });
+    await tester.binding.setSurfaceSize(null);
+  });
   testWidgets('sidebar identity, branding and composer send', (tester) async {
     final directory = Directory.systemTemp.createTempSync(
       'mimir-flutter-widget',
