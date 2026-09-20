@@ -57,19 +57,21 @@ void quiet_log(ggml_log_level level, const char * text, void *) {
 
 int main(int argc, char ** argv) {
     try {
-        std::string model_path, device = "metal", system;
+        std::string model_path, device = "auto", system;
         mimir::Config config;
         uint32_t max_tokens = 256;
-        bool json_mode = false, inspect = false, verbose = false;
+        bool json_mode = false, inspect = false, verbose = false, list_devices = false;
         for (int i = 1; i < argc; ++i) {
             std::string arg = argv[i];
+            if (arg == "--list-devices") { list_devices = true; continue; }
             if (arg == "--json") { json_mode = true; continue; }
             if (arg == "--inspect") { inspect = true; continue; }
             if (arg == "--verbose") { verbose = true; continue; }
             if (arg == "--flash") { config.flash_attention = true; continue; }
             if (arg == "--help") {
-                std::cout << "mimir-chat --model MODEL [--device cpu|metal] [--ctx 2048] [--batch 1024]\n"
+                std::cout << "mimir-chat --model MODEL [--device auto|cpu|BACKEND|DEVICE] [--ctx 2048] [--batch 1024]\n"
                              "           [--max-tokens 256] [--system TEXT] [--flash] [--json] [--inspect] [--verbose]\n"
+                             "           --list-devices lists compiled/available backends without a model.\n"
                              "Greedy text chat. /reset starts a new conversation; /quit exits; Ctrl-C cancels generation.\n"
                              "--json reads one request per line and emits start/delta/done/error events.\n"
                              "--inspect loads vocabulary only; supports tokenize/prepare/reset, not generation.\n";
@@ -85,11 +87,19 @@ int main(int argc, char ** argv) {
             else if (arg == "--max-tokens") { max_tokens = parse_limit(value); }
             else { throw std::invalid_argument("unknown option: " + arg); }
         }
-        if (model_path.empty()) { throw std::invalid_argument("--model is required; use --help"); }
+        if (model_path.empty() && !list_devices) { throw std::invalid_argument("--model is required; use --help"); }
         if (inspect && !json_mode) { throw std::invalid_argument("--inspect requires --json"); }
         if (!verbose) { llama_log_set(quiet_log, nullptr); ggml_log_set(quiet_log, nullptr); }
         ggml_backend_load_all();
         llama_backend_init();
+        if (list_devices) {
+            for (size_t i = 0; i < ggml_backend_dev_count(); ++i) {
+                auto dev = ggml_backend_dev_get(i);
+                event({{"device", ggml_backend_dev_name(dev)}, {"description", ggml_backend_dev_description(dev)},
+                    {"backend", ggml_backend_reg_name(ggml_backend_dev_backend_reg(dev))}});
+            }
+            return 0;
+        }
         const auto model = mimir::tools::load_model(model_path, device, inspect);
         mimir::TextCodec codec(model);
         std::unique_ptr<mimir::Chat> chat;
