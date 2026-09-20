@@ -72,3 +72,15 @@ packages and all checksum sidecars were uploaded to the existing draft release
 `untagged-bf1f441765506ebccc3d`. Its draft status/tag were preserved. Remote digests,
 file sizes and uploaded states matched all eight local files; last upload completed
 at 13:36:09 UTC. The feedback testing report records artifact IDs and checksums.
+
+## Public release — 2026-09-20
+
+The draft-release status above is **superseded** by the user's explicit request
+to publish. Release ID `392369107` is now public, with tag
+[`dfm-mimir-v0.1.0`](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.0),
+name "DFM Mimir 0.1.0 — bundled weights", and `draft=false`, `prerelease=false`.
+The tag targets `7d56a56c5e5226d4db0ea961ef7fd2cd590395cf`, the verified release
+assembly record. All four packages and four checksum files were preserved.
+Publication time: 2026-09-20 19:57:14 UTC. An unauthenticated GitHub API request
+verified public visibility and all eight assets. Existing development-signing and
+hardware-qualification limitations remain documented in the release notes.
