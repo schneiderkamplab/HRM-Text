@@ -19,6 +19,9 @@ Session::Session(std::shared_ptr<llama_model> model, Config config)
         throw std::invalid_argument("unsupported model or session configuration");
     }
     prefix_lm_ = llama_model_is_prefix_lm(model_.get());
+    if (config.mixed_lm && !prefix_lm_) {
+        throw std::invalid_argument("MixedLM requires a PrefixLM model");
+    }
     vocab_size_ = llama_vocab_n_tokens(llama_model_get_vocab(model_.get()));
     if (vocab_size_ <= 0) {
         throw std::invalid_argument("model has no token vocabulary size");
@@ -27,6 +30,7 @@ Session::Session(std::shared_ptr<llama_model> model, Config config)
     params.n_ctx = config.context_tokens;
     params.n_batch = params.n_ubatch = config.batch_tokens;
     params.n_seq_max = 1;
+    params.mixed_lm = config.mixed_lm;
     params.n_threads = params.n_threads_batch = config.threads;
     params.type_k = params.type_v = config.cache_type;
     params.flash_attn_type = config.flash_attention ? LLAMA_FLASH_ATTN_TYPE_ENABLED : LLAMA_FLASH_ATTN_TYPE_DISABLED;
@@ -58,6 +62,7 @@ void Session::invalidate() {
     llama_memory_clear(llama_get_memory(context_.get()), true);
     position_ = remaining_ = 0;
     ready_ = false;
+    prefix_tokens_.clear();
 }
 
 void Session::reset() {
@@ -89,14 +94,24 @@ Result Session::begin_turn(const std::vector<llama_token> & prompt, uint32_t ans
     if (uint64_t(prompt.size()) + answer_budget > config_.context_tokens) {
         return {Status::capacity, 0, {}};
     }
-    if (prefix_lm_) {
+    const uint32_t reused = config_.mixed_lm && !all_logits && !prefix_tokens_.empty() &&
+        prompt.size() > prefix_tokens_.size() &&
+        std::equal(prefix_tokens_.begin(), prefix_tokens_.end(), prompt.begin()) ? prefix_tokens_.size() : 0;
+    auto next_prefix = config_.mixed_lm ? prompt : std::vector<llama_token>{};
+    std::vector<llama_token> suffix;
+    if (reused) {
+        suffix.assign(prompt.begin() + reused, prompt.end());
+        position_ = reused;
+    } else if (prefix_lm_) {
         position_ = remaining_ = 0;
         ready_ = false;
     } else {
         invalidate();
     }
-    auto result = execute(prompt, prefix_lm_, all_logits);
+    auto result = execute(reused ? suffix : prompt, prefix_lm_, all_logits, reused != 0);
     if (result) {
+        prefix_tokens_ = std::move(next_prefix);
+        result.reused_tokens = reused;
         remaining_ = answer_budget;
         ready_ = true;
     }
@@ -125,7 +140,7 @@ Result Session::append(const std::vector<llama_token> & answer, bool all_logits)
     return result;
 }
 
-Result Session::execute(const std::vector<llama_token> & tokens, bool prefix, bool all_logits) {
+Result Session::execute(const std::vector<llama_token> & tokens, bool prefix, bool all_logits, bool mixed) {
     // Allocate host buffers before entering the backend. Any exception invalidates KV.
     try {
         const size_t rows = all_logits ? tokens.size() : 1;
@@ -147,6 +162,7 @@ Result Session::execute(const std::vector<llama_token> & tokens, bool prefix, bo
                           positions.data(), counts.data(), sequences.data(), outputs.data()};
         {
             result.backend_code = decode_ ? decode_(context_.get(), batch) :
+                mixed ? llama_decode_mixed_lm(context_.get(), batch) :
                 prefix ? llama_decode_prefix(context_.get(), batch) : llama_decode(context_.get(), batch);
             llama_synchronize(context_.get());
         }

@@ -16,6 +16,7 @@ struct Result {
     int backend_code = 0;
     // Owned row-major logits. Normally one row; all_logits requests one per input token.
     std::vector<float> logits;
+    uint32_t reused_tokens = 0;
     explicit operator bool() const noexcept { return status == Status::ok; }
 };
 
@@ -26,6 +27,7 @@ struct Config {
     bool flash_attention = false;
     ggml_type cache_type = GGML_TYPE_F16;
     bool allow_context_extension = false; // Opt in to positions beyond the training context.
+    bool mixed_lm = false; // Approximate frozen-prefix reuse; PrefixLM only.
 };
 
 // Initialize llama backends before loading the shared model. The session owns its context.
@@ -41,8 +43,9 @@ public:
     Session & operator=(Session &&) = delete;
 
     // Supply the entire rendered conversation, including the assistant generation header.
-    // Each successful begin discards previous KV and makes the complete prompt bidirectional
-    // for PrefixLM models. Ordinary causal models retain causal prompt processing.
+    // By default each begin discards KV and makes the complete PrefixLM prompt bidirectional.
+    // MixedLM retains the previous prompt KV only when its tokens match exactly, and
+    // recomputes the suffix bidirectionally. Ordinary causal models use causal processing.
     // Reserve a positive answer budget; prompt + budget must fit the configured context.
     Result begin_turn(const std::vector<llama_token> & prompt, uint32_t answer_budget, bool all_logits = false);
     Result append(const std::vector<llama_token> & answer, bool all_logits = false);
@@ -60,7 +63,7 @@ private:
     friend struct SessionTestPeer;
     static bool abort_requested(void * data);
     Status validate(const std::vector<llama_token> & tokens) const;
-    Result execute(const std::vector<llama_token> & tokens, bool prefix, bool all_logits);
+    Result execute(const std::vector<llama_token> & tokens, bool prefix, bool all_logits, bool mixed = false);
     void invalidate();
 
     std::shared_ptr<llama_model> model_;
@@ -72,6 +75,7 @@ private:
     bool ready_ = false;
     bool prefix_lm_ = false;
     int32_t vocab_size_ = 0;
+    std::vector<llama_token> prefix_tokens_;
     // Private seam for deterministic tests of failures after partial KV writes.
     int32_t (*decode_)(llama_context *, llama_batch) = nullptr;
 };

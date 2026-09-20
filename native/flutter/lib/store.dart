@@ -32,11 +32,13 @@ class ChatStore extends ChangeNotifier {
       compacting = false,
       closing = false;
   bool compact = true,
+      mixedLM = false,
       showSummary = false,
       automatic = true,
       persistence = true;
   int context = 1024, reply = 512;
   int? training, used;
+  int lastReusedTokens = 0;
   List<Json> devices = [];
   int _countRevision = 0;
   Future<void> _saving = Future.value();
@@ -96,6 +98,7 @@ class ChatStore extends ChangeNotifier {
           }
           selected = j['selected'];
           compact = j['compact'] ?? true;
+          mixedLM = j['mixedLM'] ?? false;
           showSummary = j['showSummary'] ?? false;
           automatic = j['automatic'] ?? true;
           context = j['context'] ?? 1024;
@@ -238,11 +241,13 @@ class ChatStore extends ChangeNotifier {
         'modelBytes': await File(model!['path']).length(),
         'context': automatic ? 0 : context,
         'device': device,
+        'mixedLM': mixedLM,
       });
       final loaded = events.firstWhere((e) => e['type'] == 'loaded');
       context = loaded['context'];
       training = loaded['trainingContext'];
-      engineLabel = 'On-device · ${loaded['device']}';
+      engineLabel =
+          'On-device · ${loaded['device']}${mixedLM ? ' · MixedLM' : ''}';
       if (automatic) reply = profile.defaultReply(context);
       ready = true;
       if (persistence) notice = null;
@@ -273,6 +278,13 @@ class ChatStore extends ChangeNotifier {
     automatic = auto;
     if (backend != null) device = backend;
     await load();
+  }
+
+  Future<void> setMixedLM(bool enabled) async {
+    if (busy || model == null || mixedLM == enabled) return;
+    mixedLM = enabled;
+    lastReusedTokens = 0;
+    await load(); // A new context separates exact and approximate KV state.
   }
 
   void newChat() {
@@ -365,6 +377,7 @@ class ChatStore extends ChangeNotifier {
       final events = await engine.command(
         {
           'op': 'reply',
+          'conversation': c.id,
           'history': c.messages,
           'memory': c.memory,
           'compact': compact,
@@ -391,6 +404,7 @@ class ChatStore extends ChangeNotifier {
         },
       );
       final result = events.firstWhere((e) => e['type'] == 'reply');
+      lastReusedTokens = result['reusedPrefixTokens'] ?? 0;
       if (result['cancelled'] == true) {
         draft = prompt;
         notice = 'Reply stopped. Your message is back in the composer.';
@@ -442,6 +456,7 @@ class ChatStore extends ChangeNotifier {
       'selected': selected,
       'model': model,
       'compact': compact,
+      'mixedLM': mixedLM,
       'showSummary': showSummary,
       'automatic': automatic,
       'context': context,

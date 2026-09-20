@@ -175,6 +175,17 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               const Divider(),
               SwitchListTile(
+                key: const Key('mixed-lm-setting'),
+                contentPadding: EdgeInsets.zero,
+                title: const Text('MixedLM mode'),
+                subtitle: const Text(
+                  'Experimental. Reuses older context to reduce the wait before replies. '
+                  'May change answer quality. Off uses exact PrefixLM.',
+                ),
+                value: s.mixedLM,
+                onChanged: s.busy || s.model == null ? null : s.setMixedLM,
+              ),
+              SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Automatically summarize older turns'),
                 value: s.compact,

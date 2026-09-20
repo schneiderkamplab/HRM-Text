@@ -296,6 +296,39 @@ static void full_context(std::shared_ptr<llama_model> model, Config cfg) {
             "real full-context session starts shorter new turn");
 }
 
+static void mixed_turns(std::shared_ptr<llama_model> model, Config config) {
+    config.mixed_lm = true;
+    if (!llama_model_is_prefix_lm(model.get())) {
+        bool rejected = false;
+        try { Session unsupported(model, config); } catch (const std::invalid_argument &) { rejected = true; }
+        require(rejected, "MixedLM rejects causal model");
+        return;
+    }
+    Session session(model, config);
+    auto cold = session.begin_turn({2, 11, 23}, 8);
+    require(bool(cold) && cold.reused_tokens == 0, "MixedLM first turn is exact");
+    require(bool(session.append({37, 41})), "MixedLM causal answer");
+    std::vector<llama_token> prompt{2, 11, 23, 37, 41, 53, 61};
+    auto warm = session.begin_turn(prompt, 8);
+    require(bool(warm) && warm.reused_tokens == 3 && session.position() == prompt.size(), "MixedLM reuses previous prompt only");
+    require(session.begin_turn(prompt, 0).status == Status::invalid_input, "invalid MixedLM budget preserves cache");
+    prompt.push_back(73);
+    auto third = session.begin_turn(prompt, 8);
+    require(bool(third) && third.reused_tokens == 7, "MixedLM advances frozen boundary");
+    prompt[0] = 3;
+    auto edited = session.begin_turn(prompt, 8);
+    require(bool(edited) && edited.reused_tokens == 0, "token mismatch forces exact refresh");
+    config.mixed_lm = false;
+    Session exact(model, config);
+    close(edited.logits, exact.begin_turn(prompt, 8).logits, "edited prefix equals exact computation");
+    auto all = session.begin_turn(prompt, 8, true);
+    require(bool(all) && all.reused_tokens == 0 && all.logits.size() == prompt.size() * cold.logits.size(), "all-logit requests refresh every token");
+    session.request_cancel();
+    require(session.begin_turn(prompt, 8).status == Status::cancelled, "MixedLM cancellation");
+    session.reset();
+    require(session.begin_turn(prompt, 8).reused_tokens == 0, "MixedLM reset discards cached identity");
+}
+
 int main(int argc, char ** argv) {
     if (argc != 6 && (argc != 7 || std::string(argv[6]) != "full-context")) {
         std::cerr << "usage: mimir-session-tests MODEL FIXTURE cpu|metal off|off-f16|on OUTPUT_DIR [full-context]\n";
@@ -348,6 +381,7 @@ int main(int argc, char ** argv) {
         }
         parity(model, argv[2], cfg);
         lifecycle(model, cfg, device == "cpu");
+        mixed_turns(model, cfg);
         if (argc == 7) {
             full_context(model, cfg);
         }

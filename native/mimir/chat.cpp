@@ -26,17 +26,25 @@ void Chat::reset() {
     if (!system_.empty()) { history_.push_back({"system", system_}); }
 }
 
-void Chat::restore_history(const std::vector<Message> & messages) {
-    auto candidate = std::vector<Message>{};
-    if (!system_.empty()) { candidate.push_back({"system", system_}); }
+void Chat::validate_history(const std::vector<Message> & messages) {
     if (messages.size() % 2 != 0) { throw std::invalid_argument("history needs completed turn pairs"); }
     for (size_t i = 0; i < messages.size(); ++i) {
         if (messages[i].role != (i % 2 ? "assistant" : "user")) {
             throw std::invalid_argument("history must alternate user and assistant");
         }
         detail::require_utf8(messages[i].content);
-        candidate.push_back(messages[i]);
     }
+}
+
+void Chat::restore_history(const std::vector<Message> & messages, bool preserve_cache) {
+    validate_history(messages);
+    auto candidate = std::vector<Message>{};
+    if (!system_.empty()) { candidate.push_back({"system", system_}); }
+    candidate.insert(candidate.end(), messages.begin(), messages.end());
+    if (preserve_cache && candidate.size() == history_.size() &&
+        std::equal(candidate.begin(), candidate.end(), history_.begin(), [](const Message & a, const Message & b) {
+            return a.role == b.role && a.content == b.content;
+        })) { return; }
     reset();
     history_ = std::move(candidate);
 }
@@ -60,6 +68,7 @@ Reply Chat::reply(const std::string & user, uint32_t max_tokens,
     };
     try {
         auto next = session_.begin_turn(prompt.tokens, max_tokens);
+        reply.reused_tokens = next.reused_tokens;
         if (!next) {
             reply.status = next.status;
             reply.finish = next.status == Status::cancelled ? Finish::cancelled : Finish::error;

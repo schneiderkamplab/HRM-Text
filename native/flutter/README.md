@@ -124,3 +124,9 @@ to carry over, while ggml backend selection follows available devices. Linux and
 Windows minimum requirements must be set after actual builds and driver tests.
 Physical iOS signing, distribution, App Store/TestFlight, notarization and release
 credentials remain deferred as requested.
+
+## Experimental MixedLM
+
+**Model and settings → MixedLM mode** enables approximate reuse of older prompt
+representations. It is off by default; switching reloads the model context.
+See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).

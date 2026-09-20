@@ -1,5 +1,11 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-20 - Add experimental MixedLM
+
+- Added opt-in frozen-prefix reuse in llama.cpp and the Flutter client, defaulting off.
+- Recorded CPU/Metal correctness evidence, illustrative latency and an observed quality regression.
+- Superseded the Xcode license blocker with verified Xcode 27.0 setup and native framework builds.
+
 ## 2026-09-20 - Add the Flutter client and portable backend selection
 
 - Added a separate Apple-first Flutter client with shared native compaction and a worker-based C ABI.

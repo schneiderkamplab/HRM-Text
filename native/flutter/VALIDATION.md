@@ -128,3 +128,30 @@ Creation now waits for archive restoration only; the toolbar and sidebar actions
 are enabled during model loading, and sending remains disabled. A regression test
 checks both controls, immediate selection, drafting during loading and the active
 generation restriction.
+
+## MixedLM and Xcode 27 qualification — 2026-09-20
+
+Xcode 27.0 (27A266a) now passes first-launch checks; the earlier license blocker
+is resolved. The native macOS Metal/BLAS and iOS simulator CPU frameworks both
+build, as do the Flutter macOS release app and iOS simulator app. Six host
+unit/widget tests pass. CocoaPods still warns about future Swift Package Manager
+requirements; it does not block these builds.
+
+The [MixedLM report](../mimir/MIXEDLM.md) covers eight native regression cases,
+real Q4_K_M CPU exact/MixedLM and Metal MixedLM checks, invalidation behavior,
+illustrative timings and a demonstrated response-quality regression. MixedLM is
+experimental and off by default. These results do not qualify Linux/CUDA or
+physical phones for the approximation.
+
+The real-model integration flow passes on both the ARM64 Android API 36 emulator
+and iPhone 16 Plus / iOS 18.4 simulator. It verifies default-off arithmetic,
+toggling MixedLM on through Settings, a cold first request, reused-prefix tokens
+on the next request, persisted settings, toggling off, and exact-mode arithmetic
+again. Archives are isolated from the user's conversations. The Android rerun
+needed an explicit composer tap after closing Settings to reconnect platform
+text input; the earlier failure occurred before submitting a prompt. No app
+input workaround was added.
+
+Reproduce with `flutter test integration_test/android_smoke_test.dart -d DEVICE`;
+despite its historical filename, the same test runs on either simulator. Logs:
+`logs/mixedlm-android-test.log` and `logs/mixedlm-ios-test.log`.

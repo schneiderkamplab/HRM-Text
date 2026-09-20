@@ -30,6 +30,7 @@ struct Reply {
     std::string text;
     std::vector<llama_token> tokens;
     llama_token stop_token = LLAMA_TOKEN_NULL;
+    uint32_t reused_tokens = 0;
 };
 
 // Serialize all methods except request_cancel(). Failed/cancelled turns do not
@@ -40,10 +41,13 @@ public:
     Reply reply(const std::string & user, uint32_t max_tokens,
                 const std::function<void(const std::string &)> & stream = {});
     void request_cancel() noexcept;
+    bool cancelled() const noexcept { return cancelled_.load(std::memory_order_relaxed); }
     void recover(); // Clears runtime/cancellation, retaining completed history.
     void reset();   // Starts a new conversation, retaining the system message.
     // Restore completed user/assistant pairs; validates before replacing history.
-    void restore_history(const std::vector<Message> & messages);
+    // preserve_cache skips reset only if the validated history is identical.
+    void restore_history(const std::vector<Message> & messages, bool preserve_cache = false);
+    static void validate_history(const std::vector<Message> & messages);
     const std::vector<Message> & history() const noexcept { return history_; }
 private:
     TextCodec codec_;

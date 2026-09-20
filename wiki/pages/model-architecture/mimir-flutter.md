@@ -79,3 +79,23 @@ See the [Android build recipe](../../../native/flutter/README.md#android-develop
 and [validation report](../../../native/flutter/VALIDATION.md) for execution
 evidence and remaining limits. Physical Android devices and store distribution
 remain unqualified.
+
+## MixedLM and Xcode update — 2026-09-20
+
+The earlier pending Xcode-license blocker is **superseded**: Xcode 27.0
+(27A266a) is selected, first-launch checks pass, and the Metal compiler and iOS
+18.4 simulator runtime are available. Flutter's six host unit/widget tests pass.
+
+Experimental [MixedLM](../../../native/mimir/MIXEDLM.md) lives on the
+`codex/mixedlm` llama.cpp branch and is available through an off-by-default
+Flutter setting. It retains older prompt KV and recomputes the previous answer
+plus new prompt bidirectionally. Exact token-prefix validation and conversation
+identity prevent inappropriate reuse. Native CPU regression tests and real
+Q4_K_M CPU/Metal smoke tests pass. The report records an observed instruction-
+following regression; the mode is an approximation, not exact PrefixLM parity.
+
+The final real-model Settings/toggle/reuse test passes on Android API 36 and the
+iOS 18.4 simulator. Mac release and iOS simulator builds pass with Xcode 27.0.
+An initial Android automation failure was resolved by tapping the composer after
+closing Settings before injecting test input; no application workaround was
+needed. See the validation report for the reproducible command.
