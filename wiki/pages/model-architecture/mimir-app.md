@@ -271,3 +271,14 @@ Wrangler 4.135.0 OAuth login and `wrangler whoami` succeeded on the development
 Mac on 2026-09-20; Workers and D1 write access were verified. Credentials remain
 in Wrangler's local configuration, outside the repository. No remote feedback
 resources have been provisioned yet; the public team contact email is pending.
+
+The contact-email placeholder is **superseded**: the user selected
+`petersk@imada.sdu.dk` as the public feedback contact. Following the user-requested
+[Cloudflare agent setup](https://developers.cloudflare.com/agent-setup/prompt.md),
+14 Cloudflare skills were installed under `~/.codex/skills` using Codex's
+skill installer, and five MCP servers were registered in `~/.codex/config.toml`.
+Cloudflare API, bindings, builds and observability OAuth authorizations are saved;
+the docs server is public. Existing Codex settings were preserved (the CLI only
+normalized an empty argument list). Restart Codex to load the new MCP tools;
+Wrangler deployment access is already available. This configures development
+tools only: no feedback endpoint or D1 database has been deployed yet.
