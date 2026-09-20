@@ -9,7 +9,7 @@ confidence: high
 ---
 # Mimir Flutter and portable backends
 
-The [Flutter client](../../../native/flutter/README.md) is separate from the
+The [Flutter client](../../../native/app/README.md) is separate from the
 [SwiftUI app](mimir-apple-mvp.md), with bundle ID `dk.sdu.mimirFlutter` and a
 separate local archive. Initial packaged targets are Apple Silicon Mac and arm64
 iOS simulator. Android was initially only a runner scaffold; the Android
@@ -21,7 +21,7 @@ Apple-local header was moved without algorithm changes, and the real SwiftUI
 bridge regression suite passed. Flutter uses a C ABI with a native worker and
 polled JSON events; teardown drains and joins away from the UI thread.
 
-[Validation](../../../native/flutter/VALIDATION.md) records real generation,
+[Validation](../../../native/app/VALIDATION.md) records real generation,
 cancellation/recovery, compaction streaming and storage tests, app builds, iOS
 keyboard/send behavior and Mac exit checks. A diagnostic forced-semantics handle caused Mac AX-tree errors and was removed;
 normal Flutter accessibility activation restored the live tree. A full
@@ -75,8 +75,8 @@ Xcode license acceptance was still pending; direct SDK/JDK installation and
 `DEVELOPER_DIR=/Library/Developer/CommandLineTools` allowed Android tooling to
 proceed without changing the user's selected Xcode installation.
 
-See the [Android build recipe](../../../native/flutter/README.md#android-development-emulator)
-and [validation report](../../../native/flutter/VALIDATION.md) for execution
+See the [Android build recipe](../../../native/app/README.md#android-development-emulator)
+and [validation report](../../../native/app/VALIDATION.md) for execution
 evidence and remaining limits. Physical Android devices and store distribution
 remain unqualified.
 
@@ -102,7 +102,7 @@ needed. See the validation report for the reproducible command.
 
 ## Proposed cross-platform release plan — 2026-09-20
 
-The [packaging plan](../../../native/flutter/PACKAGING-PLAN.md) proposes portable
+The [packaging plan](../../../native/app/PACKAGING-PLAN.md) proposes portable
 CPU packages plus qualified Metal/CUDA/Vulkan acceleration across all five OS
 families. Inspection confirmed that current automatic device selection only
 falls back when no GPU exists; model/context load failures do not yet trigger a
@@ -124,11 +124,11 @@ included in the XCFramework builder; the unsigned physical iOS release app
 builds. Linux and Windows CPU/import-only archives at `6eb48b9` passed hosted CI,
 including policy/Flutter tests and packaged startup/missing-backend probes.
 Downloaded archive and per-file checksums verified;
-[the README](../../../native/flutter/README.md) gives build commands and
-[the plan](../../../native/flutter/PACKAGING-PLAN.md) distinguishes remaining
+[the README](../../../native/app/README.md) gives build commands and
+[the plan](../../../native/app/PACKAGING-PLAN.md) distinguishes remaining
 mid-generation/crash recovery, Android GPU and distribution work.
 
-The [desktop acceptance handoff](../../../native/flutter/DESKTOP-TESTING.md)
+The [desktop acceptance handoff](../../../native/app/DESKTOP-TESTING.md)
 separates CI build/startup evidence from clean-host real-model generation and GPU
 qualification. Mac real-model Flutter integration, nine native tests and seven
 Flutter tests passed after the fallback changes. User-requested Linux sanitizers
@@ -143,7 +143,7 @@ retain the required binaries without duplicate SDK/header installation.
 
 Ready-to-use desktop packages now include the tested Q4_K_M model (hash and archive
 checksums in the validation report), replacing the initial import-only delivery
-choice. `native/flutter/tool/bundle_model.py` can assemble either host's verified
+choice. `native/app/tool/bundle_model.py` can assemble either host's verified
 CI archive on any platform without recompilation. It validates source/file hashes,
 replaces the declared Flutter model asset and records model/source archive hashes.
 The native binaries retain the original `6eb48b9` provenance; post-assembly checks
@@ -153,7 +153,7 @@ builds, while ready-to-use distribution includes weights.
 
 ### Flutter macOS DMG — 2026-09-20
 
-`native/flutter/tool/package_macos.py` packages the Flutter release app with
+`native/app/tool/package_macos.py` packages the Flutter release app with
 weights, Applications shortcut and source/model metadata. It verifies the disk
 image and mounted app signature/model hash. The app retains its separate Flutter
 identity; SwiftUI packaging is unchanged. The preview requires Apple Silicon and
@@ -208,7 +208,7 @@ so Linux headless operation does not require a display or Flutter engine. Native
 commands serialize UI/API work, isolate request cancellation, and reset API
 system/sampling state without editing saved chats. Exact templated PrefixLM API
 requests do not use compaction or MixedLM reuse. Supported API subset and limits
-are documented in [API.md](../../../native/flutter/API.md). Local real-model CPU and packaged Metal HTTP checks, nine native regression
+are documented in [API.md](../../../native/app/API.md). Local real-model CPU and packaged Metal HTTP checks, nine native regression
 tests, and fourteen Flutter/API/UI tests pass. Linux and Windows packaging CI
 (run 35506872015, source `232fc26`) passed the preceding thirteen-test suite,
 native startup/backend probes, and headless compilation/`--help`. Packages include
@@ -216,7 +216,7 @@ the bundled weights and headless executable; clean-host real-model Linux/Windows
 generation and GPU qualification remain outstanding. Settings displays the active
 URL and permits toggling the API and editing its port while stopped. The bind
 address is fixed to IPv4 loopback; toggle/port settings are session-only.
-See [validation evidence](../../../native/flutter/VALIDATION.md).
+See [validation evidence](../../../native/app/VALIDATION.md).
 
 ### Display branding — 2026-09-20
 
@@ -235,3 +235,16 @@ CFBundleName also uses DFM Mimir. Windows conversation storage is explicitly
 anchored to its existing `dk.sdu/mimir_flutter` directory because path_provider
 derives the default directory from ProductName. Bundle IDs, Dart package names
 and storage identifiers are intentionally stable implementation identities.
+
+The storage-preservation decision above is **superseded** by the user's explicit
+clarification (2026-09-20): there are no existing users. Use the new DFM Mimir
+conversation directory directly, including Windows' ProductName-derived root,
+without migration or legacy-path logic. Existing development data stays at its
+old location; new builds use the new path.
+
+The subsequent naming instruction also supersedes retaining app-owned Flutter
+identifiers: sources now live under `native/app`, the Dart app package is
+`dfm_mimir`, platform application IDs are `dk.sdu.mimir`, and CI uses
+`mimir-desktop.yml`. The SDK's required Flutter framework files and build
+commands retain their actual framework names. All platforms use new storage
+locations, with no migration or compatibility paths.

@@ -96,7 +96,7 @@ Run the real-model C ABI check with:
 
 ```sh
 python3 native/runtime/tests/smoke.py /path/to/MimirRuntime /path/to/model.gguf \
-  native/flutter/assets/profile.json cpu --mixed-lm --report mixed-cpu.json
+  native/app/assets/profile.json cpu --mixed-lm --report mixed-cpu.json
 ```
 
 Omit `--mixed-lm` for the exact baseline; use `metal` for a Metal build. Local
