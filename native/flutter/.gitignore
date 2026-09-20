@@ -57,3 +57,6 @@ app.*.map.json
 !lib/**
 !packages/mimir_native/lib/
 !packages/mimir_native/lib/**
+
+# Windows runner source, not a generated dependency manifest.
+!windows/runner/runner.exe.manifest
