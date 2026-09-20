@@ -166,7 +166,7 @@ See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
 ### Include weights in a previously tested desktop package
 
 The recommended ready-to-use downloads include the tested Mimir Q4_K_M weights.
-They are available in the [bundled-weight desktop preview draft](https://github.com/schneiderkamplab/HRM-Text/releases/tag/untagged-e98901cc5b389f42408c)
+They are available in the [bundled-weight desktop preview draft](https://github.com/schneiderkamplab/HRM-Text/releases)
 (requires a GitHub account with access to repository drafts).
 CI's smaller import-only bundles can be assembled on any host without recompiling
 their native binaries:
@@ -183,3 +183,19 @@ archive and every manifest entry before replacing the declared Flutter model
 asset. The new manifest retains the binary source revisions, records the original
 archive checksum and the bundled model checksum, and updates all file hashes.
 First launch finds the weights locally; no import or model download is needed.
+
+### macOS DMG with weights
+
+After `flutter build macos --release`, package the Apple Silicon app with:
+
+```sh
+python native/flutter/tool/package_macos.py \
+  --model-sha256 3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5
+```
+
+The DMG contains `DFM Mimir Flutter.app`, an Applications shortcut, a readme and
+source/model metadata. The tool verifies the app signature and model hash before
+packaging, verifies and mounts the image, then repeats signature/model checks.
+It preserves the Flutter app identity and does not replace the separate SwiftUI
+app. The preview requires Apple Silicon and macOS 14 or later; it is not Developer
+ID signed or notarized. Its checksum sidecar accompanies the draft-release asset.

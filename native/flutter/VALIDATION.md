@@ -237,3 +237,21 @@ checksum is rejected before extraction. Evidence is in
 `logs/packaging-bundled-verification.log`; archives are in
 `logs/packages/with-model/{linux,windows}/`. These checks verify packaging, not a
 new Linux/Windows real-model generation run. Clean-host acceptance still applies.
+
+## Flutter macOS DMG — 2026-09-20
+
+A fresh release build passed with Xcode 27. The Apple Silicon DMG contains the
+Flutter app, the same verified Q4_K_M weights, an Applications shortcut, readme
+and source/model metadata. It requires macOS 14 or later and retains the Flutter
+bundle identity. Metal/CPU runtime evidence above applies; packaging does not
+introduce new engine changes.
+
+`hdiutil verify` passed. After mounting read-only, strict/deep app signature
+verification, model SHA-256 and Applications shortcut checks passed. The image
+was cleanly detached. Logs: `logs/packaging-flutter-dmg-build.log` and
+`logs/packaging-flutter-dmg.log`. Asset:
+`DFM-Mimir-Flutter-0.1.0-macos-arm64-preview.dmg`, SHA-256
+`e0e047cfda62a0a931bc848b91e0a1f81827c8aae5331fd835faccc854c5c429`.
+This is an ad-hoc development preview, without Developer ID or notarization.
+The DMG and checksum are added to the existing bundled-weight desktop draft
+release (GitHub release ID `392369107`; draft URLs can change when edited).

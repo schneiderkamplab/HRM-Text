@@ -150,3 +150,17 @@ The native binaries retain the original `6eb48b9` provenance; post-assembly chec
 confirmed unchanged binaries and Linux executable permissions. Each weighted
 archive is approximately 1.12–1.13 GB. Routine CI still provides smaller import-only
 builds, while ready-to-use distribution includes weights.
+
+### Flutter macOS DMG — 2026-09-20
+
+`native/flutter/tool/package_macos.py` packages the Flutter release app with
+weights, Applications shortcut and source/model metadata. It verifies the disk
+image and mounted app signature/model hash. The app retains its separate Flutter
+identity; SwiftUI packaging is unchanged. The preview requires Apple Silicon and
+macOS 14+, uses Metal/CPU, and has no Developer ID/notarization.
+
+Android Vulkan is disabled in Gradle (`GGML_VULKAN=OFF`), rather than rejected by
+the PrefixLM implementation. Existing 73-check MoltenVK evidence is Mac-only.
+Android enablement needs cross-compilation/shader tooling, package-level optional
+Vulkan loading/CPU fallback and real Adreno/Mali correctness/memory/performance
+checks; simulator graphics acceleration cannot qualify phone inference drivers.
