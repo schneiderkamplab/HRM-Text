@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+import 'feedback.dart';
+import 'feedback_dialog.dart';
 
 import 'store.dart';
 import 'chat_widgets.dart';
@@ -189,6 +193,71 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
+  Future<void> feedback(String rating) async {
+    final conversation = s.active;
+    final directory = s.directory;
+    if (conversation == null || directory == null || s.busy) {
+      return;
+    }
+    if (!s.onlineFeedback) {
+      final allowed = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Allow online feedback?'),
+          content: const Text(
+            'DFM Mimir can connect to the Mimir feedback service when you confirm a submission. This is optional. Declining keeps feedback off and you can continue chatting offline.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Not now'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Allow feedback'),
+            ),
+          ],
+        ),
+      );
+      if (allowed != true || !mounted) return;
+      s.setOnlineFeedback(true);
+    }
+    try {
+      // Capture the conversation before opening the submission dialog.
+      final version = await PackageInfo.fromPlatform();
+      if (!mounted || s.busy || s.active != conversation) return;
+      final snapshot = FeedbackSnapshot(
+        conversation: conversation,
+        appVersion: '${version.version}+${version.buildNumber}',
+        contextTokens: s.context,
+        replyTokens: s.reply,
+        mixedLM: s.mixedLM,
+      );
+      final identity = FeedbackIdentity(directory);
+      final pseudonym = await identity.load();
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => FeedbackDialog(
+          snapshot: snapshot,
+          rating: rating,
+          pseudonym: pseudonym,
+          savePseudonym: identity.save,
+          submit: FeedbackClient(Uri.parse(feedbackEndpoint)).submit,
+        ),
+      );
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not open feedback. Please try again.'),
+          ),
+        );
+      }
+    }
+  }
+
   Widget transcript() {
     final children = <Widget>[];
     if (s.summaryPosition == 0) children.add(summary());
@@ -196,6 +265,25 @@ class _ChatViewState extends State<ChatView> {
       final m = s.messages[i];
       children.add(ChatMessage(role: m['role'], content: m['content']));
       if (s.summaryPosition == i + 1) children.add(summary());
+    }
+    if (s.messages.isNotEmpty && feedbackEndpoint.isNotEmpty) {
+      children.add(
+        Row(
+          children: [
+            const Expanded(child: Text('Give feedback on this chat')),
+            IconButton(
+              tooltip: 'Positive feedback',
+              onPressed: s.busy ? null : () => feedback('up'),
+              icon: const Icon(Icons.thumb_up_outlined),
+            ),
+            IconButton(
+              tooltip: 'Negative feedback',
+              onPressed: s.busy ? null : () => feedback('down'),
+              icon: const Icon(Icons.thumb_down_outlined),
+            ),
+          ],
+        ),
+      );
     }
     if (s.pending != null) {
       children.add(ChatMessage(role: 'user', content: s.pending!));

@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 
+from audit_feedback_bundle import audit
 from package_archive import app_version, compile_server, digest, package_name, write_archive
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -103,6 +104,7 @@ def main():
             'files': {p.relative_to(stage).as_posix(): digest(p) for p in sorted(stage.rglob('*')) if p.is_file()},
         }
         (stage / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+        audit(stage)
         # A complete archive replaces its previous version only after creation succeeds.
         destination = write_archive(stage, output, target)
         print(destination)

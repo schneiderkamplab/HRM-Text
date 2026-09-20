@@ -6,6 +6,8 @@ PODS:
   - integration_test (0.0.1):
     - Flutter
   - mimir_native (0.1.0)
+  - package_info_plus (0.4.5):
+    - Flutter
   - share_plus (0.0.1):
     - Flutter
 
@@ -14,6 +16,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - mimir_native (from `.symlinks/plugins/mimir_native/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
 
 EXTERNAL SOURCES:
@@ -25,6 +28,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   mimir_native:
     :path: ".symlinks/plugins/mimir_native/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
 
@@ -33,6 +38,7 @@ SPEC CHECKSUMS:
   Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   mimir_native: e86d8e7341c18be92d2b10adf50b01686d7fe3fa
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
 
 PODFILE CHECKSUM: ff27725071ee85e03f9bfa3e5a70da322b99d5a6

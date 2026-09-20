@@ -40,3 +40,5 @@
 * [Mimir Apple Chat MVP](mimir-apple-mvp.md) - Shared SwiftUI app, Metal bridge, local conversations and device validation gaps.
 
 * [DFM Mimir App and Portable Backends](mimir-app.md) - Shared C ABI, Apple-first Flutter client and backend qualification matrix.
+
+* [DFM Mimir Optional Chat Feedback](mimir-feedback.md) - Opt-in feedback, private EU D1 intake, authenticated review and test evidence.

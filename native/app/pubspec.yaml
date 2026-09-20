@@ -45,6 +45,7 @@ dependencies:
   crypto: ^3.0.7
   path: ^1.9.1
   uuid: ^4.6.0
+  package_info_plus: ^10.2.1
 
 dev_dependencies:
   integration_test:

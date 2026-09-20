@@ -71,6 +71,15 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ],
               ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Allow online feedback'),
+                subtitle: const Text(
+                  'Off by default. Allows feedback uploads; each upload still requires confirmation. Chat and generation stay on this device.',
+                ),
+                value: s.onlineFeedback,
+                onChanged: s.setOnlineFeedback,
+              ),
               Text('Profile: ${s.profile.name}'),
               Text(s.engineLabel),
               if (s.desktop) ...[

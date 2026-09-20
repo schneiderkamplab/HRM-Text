@@ -35,6 +35,13 @@ class ChatStore extends ChangeNotifier {
       generating = false,
       compacting = false,
       closing = false;
+  bool onlineFeedback = false;
+  void setOnlineFeedback(bool enabled) {
+    onlineFeedback = enabled;
+    notifyListeners();
+    save();
+  }
+
   bool compact = true,
       mixedLM = false,
       showSummary = false,
@@ -139,6 +146,7 @@ class ChatStore extends ChangeNotifier {
             throw const FormatException('Duplicate chats');
           }
           selected = j['selected'];
+          onlineFeedback = j['onlineFeedback'] == true;
           compact = j['compact'] ?? true;
           mixedLM = j['mixedLM'] ?? false;
           showSummary = j['showSummary'] ?? false;
@@ -511,6 +519,7 @@ class ChatStore extends ChangeNotifier {
       'chats': chats.map((c) => c.toJson()).toList(),
       'selected': selected,
       'model': model,
+      'onlineFeedback': onlineFeedback,
       'compact': compact,
       'mixedLM': mixedLM,
       'showSummary': showSummary,

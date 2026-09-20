@@ -292,3 +292,11 @@ Database ID: `fe4f6f32-9602-4215-80a6-848b0027f28b`. A subsequent `d1 info
 read replication disabled and zero user tables. The database is empty; schema,
 Worker endpoint and app feedback UI are still to be implemented. No Worker has
 been deployed as part of this database-creation step.
+
+### Feedback implementation — 2026-09-20
+
+The previous empty-database/no-implementation status is **superseded**. The
+portable app now has optional confirmed feedback and the Worker/D1 service is
+deployed. The user chose one build with app-level permission, default off; no
+separate offline edition. See [Optional Chat Feedback](mimir-feedback.md) for
+consent, network semantics, administrative separation and verified evidence.

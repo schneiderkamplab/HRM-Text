@@ -8,6 +8,7 @@ import subprocess
 import shutil
 import tempfile
 
+from audit_feedback_bundle import audit
 from package_archive import compile_server, digest, package_name
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -52,6 +53,7 @@ def main():
         run('codesign', '--force', '--sign', '-', server)
         run('codesign', '--force', '--sign', '-', '--entitlements',
             ROOT / 'native/app/macos/Runner/Release.entitlements', stage / app.name)
+        audit(stage / app.name)
         (stage / 'Applications').symlink_to('/Applications')
         (stage / 'Read Me.txt').write_text(
             f"DFM Mimir — development preview\n\nApple Silicon; macOS {info['LSMinimumSystemVersion']} or later.\n"
