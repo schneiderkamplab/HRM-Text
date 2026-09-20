@@ -53,9 +53,12 @@ infrastructure IDs and recognizable credential markers before archiving.
 
 Verified locally: 22 app tests, clean Dart analysis, five workerd/D1 integration
 tests, remote EU migration, synthetic live submission/retry/private-public checks,
-public read/admin rejection and cleanup. macOS release built successfully and
-bundle audit passed. Follow the evidence document for additional platform builds
-and CI results rather than inferring hardware qualification from host tests.
+public read/admin rejection and cleanup. macOS release, iOS simulator and Android ARM64 release builds succeeded; their
+bundle audits passed. Linux/Windows CI 35512788804 passed app tests, CPU package
+builds and bundle audits; service CI 35513144102 passed. The local verified DMG is
+under `logs/packages/feedback/macos`; existing GitHub release downloads were not
+replaced. Follow the evidence document for exact commands and limitations rather
+than inferring physical device/GPU qualification from host tests.
 
 Before significant collection, decide/operate a retention schedule, monitor D1
 capacity and abuse, and perform human publication review. The current CLI export

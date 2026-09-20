@@ -52,11 +52,13 @@ APK audit passed (77 files, excluding weights); iOS simulator bundle audit passe
 `aapt dump permissions` confirmed
 INTERNET is declared. No physical-device networking test was performed.
 
-Service CI [35512788816](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35512788816)
-passed on Ubuntu. Linux/Windows package CI is running at
-[35512788804](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35512788804). Platform build evidence
-will be recorded after the corresponding runs; successful Dart tests alone do not
-establish Android/iOS native integration or device behavior.
+Service CI [35513144102](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35513144102)
+passed on Ubuntu for `91ae6af` (including the extended live-test tooling).
+Linux/Windows package CI [35512788804](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35512788804)
+**passed on both platforms** for app implementation `c813ba3`: native fallback-policy
+checks, Dart analysis, all 22 app tests, release builds, headless server packaging,
+bundle audits and artifact upload. These CI artifacts are import-only CPU test
+packages; this does not qualify physical GPUs or mobile device networking.
 
 The local bundled-weight macOS DMG is
 `logs/packages/feedback/macos/dfm-mimir-0.1.0-macos-arm64.dmg`. Its final staged
