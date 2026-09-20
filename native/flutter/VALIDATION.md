@@ -339,3 +339,16 @@ Refreshed bundled desktop artifact SHA-256 values:
 | `dfm-mimir-0.1.0-macos-arm64.dmg` | `6a61b8ef8b4c1d48d431d4f31bd52d6a78401b0ab2a9ef255f9020f874ad8e83` |
 | `dfm-mimir-0.1.0-linux-x64.tar.gz` | `45419a0c138c9099e6a3449133b6e327233961d9cae4ad74688a7db3c73c8712` |
 | `dfm-mimir-0.1.0-windows-x64.zip` | `3d5c3ced4520c74dd3e6401ca05fd0e3c6459bd12ee49e97bd98712129fea45a` |
+
+### macOS display-name refresh — 2026-09-20
+
+The macOS artifact above is superseded by a branding-only rebuild from `6174e9d`.
+The app/executable/DMG volume now use **DFM Mimir**; bundle identity and conversation
+storage remain unchanged. Xcode project/plist syntax, release build, bundled
+headless `--help`, disk image verification, mounted app signature and bundled
+model hash all pass. Evidence: `logs/macos-branding-build.log` and
+`logs/macos-branding-package.log`. The iOS display name was corrected in source;
+no iOS package was rebuilt for this macOS refresh.
+
+Replacement `dfm-mimir-0.1.0-macos-arm64.dmg` SHA-256:
+`59bd36d9be121f0148a7f7e493fc321b0fcfcaf141fe240ac46c05772aba8871`.
