@@ -5,7 +5,7 @@ REPO_ROOT="$(cd "$APP_SOURCE/../.." && pwd)"
 PLATFORM="${1:-macos}"
 MODEL_FILE="${2:-}"
 MODEL_PROFILE="${3:-}"
-BUILD_ROOT="$REPO_ROOT/logs/mimir-apple/$PLATFORM"
+BUILD_ROOT="${MIMIR_APPLE_BUILD_ROOT:-$REPO_ROOT/logs/mimir-apple/$PLATFORM}"
 OPTIONS=(-G Xcode)
 case "$PLATFORM" in
     macos) OPTIONS+=(-DCMAKE_OSX_DEPLOYMENT_TARGET=14.0) ;;

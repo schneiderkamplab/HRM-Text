@@ -321,3 +321,15 @@ refuses overwrites and verifies image integrity, mounted app signature and model
 hash before emitting a checksum. It does not package user chats or settings.
 See the [artifact receipt](../../../native/apple/DMG-REPORT.md) and
 [packaging instructions](../../../native/apple/README.md#development-preview-dmg).
+
+## Toolchain upgrade started (2026-09-20)
+
+Supersedes the earlier user deferral of toolchain installation: the user now
+requested the upgrade. Host macOS is 27.0; selected Xcode is still 16.3. Apple and
+the App Store list stable Xcode 27.0. Homebrew mas 7.0.0 is installed, but its update
+requires administrator authentication unavailable to this session. Installation
+and new-SDK validation are pending the owner's local terminal authentication.
+The build script now accepts MIMIR_APPLE_BUILD_ROOT for fresh per-SDK/per-platform
+build directories, preserving prior app/DMG artifacts. No developer credentials
+or distribution signing were configured. See the
+[upgrade handoff](../../../native/apple/TOOLCHAIN-UPGRADE.md).

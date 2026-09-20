@@ -95,6 +95,17 @@ native/apple/build.sh macos "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
 open logs/mimir-apple/macos/Release/MimirChat.app
 ```
 
+When changing Xcode/SDK versions, use a fresh build directory to avoid reusing
+CMake's cached compiler checks. `DEVELOPER_DIR` can select a particular Xcode;
+`MIMIR_APPLE_BUILD_ROOT` selects the directory for this invocation, for example:
+
+```bash
+MIMIR_APPLE_BUILD_ROOT="$PWD/logs/mimir-apple/xcode27/macos" \
+  native/apple/build.sh macos "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+```
+
+Use a different directory per platform. The default paths remain unchanged.
+
 Pass a corrected GGUF from the existing Mimir conversion/qualification workflow.
 The local Q4_K_M is the default tested artifact; this command does not download weights.
 Omit the model argument for an import-only app. The model is copied into the bundle
