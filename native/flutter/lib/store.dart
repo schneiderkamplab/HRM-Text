@@ -145,7 +145,7 @@ class ChatStore extends ChangeNotifier {
     loading = true;
     notifyListeners();
     try {
-      final path = bundledModelPath();
+      final path = await bundledModelPath();
       final file = File(path);
       final id = (await sha256.bind(file.openRead()).first).toString();
       final previous = model;

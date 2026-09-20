@@ -1,12 +1,49 @@
 # Flutter MVP validation — 2026-09-20
 
-Scope: Apple Silicon Mac and arm64 iOS simulator with Q4_K_M DFM-Mimir-v1,
+Scope: Apple Silicon Mac, arm64 iOS simulator and Android ARM64 emulator with Q4_K_M DFM-Mimir-v1,
 using the model's own chat template. No network inference service. The native
 selection matrix is in [BACKENDS.md](../mimir/BACKENDS.md).
 
 Environment: M2 Max / 96 GiB, macOS 27.0 (26A428), Xcode 16.3,
 Flutter 3.47.5 / Dart 3.13.4 / CocoaPods 1.17.0, iOS 18.4 iPhone 16 Plus simulator.
 GGUF SHA256: `3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5`.
+
+## Android emulator — 2026-09-20
+
+Installed Android command-line tools 19.0, emulator 37.1.11, API 36 Google APIs
+ARM64 image, platform/build tools 36, NDK 28.2.13676358, CMake 3.22.1 and Temurin
+21.0.12.1. Plugin dependencies also installed SDK platform 35. AVD
+`DFM_Mimir_API_36` uses Pixel 7 configuration, 8 GB RAM and a 16 GB data partition.
+`emulator -accel-check` passed with Hypervisor.Framework on macOS 27.0.
+
+| Check | Result |
+|---|---|
+| Dart static analysis | No issues |
+| Debug APK + shared C++ engine | Built successfully, ARM64 only; CPU inference |
+| APK contents | `libMimirRuntime.so` present; bundled 1,167,417,504-byte GGUF stored uncompressed |
+| Real-model integration test | Passed in 23 seconds after build/install |
+| Test coverage | Native loading, minimum context, UI Send, Mimir-templated Danish arithmetic prompt, completed reply containing `4`, context count and saved archive |
+| Normal app | Reinstalled regular APK after test and launched successfully |
+
+The test in `integration_test/android_smoke_test.dart` uses an isolated archive;
+it does not change the user's conversations. It is a functional smoke test, not
+an accuracy or throughput benchmark. Host Computer Use did not recognize the
+standalone emulator executable, so no separate manual GUI audit is claimed.
+Physical devices, Android GPU inference, low-memory behavior, background/resume,
+and the full import/share/compaction UI matrix remain unqualified on Android.
+
+The first build inadvertently included Flutter's default 32-bit ABI and failed
+in ARM intrinsics; explicitly clearing those default ABI filters fixed packaging.
+The successful APK contains only `arm64-v8a`. Xcode license acceptance remained
+pending, so Apple rebuilds were not attempted; Android tooling ran using the
+CommandLineTools developer directory and the separately installed JDK/SDK.
+
+Local evidence: `logs/android-build-retry.log`, `logs/android-integration-test.log`,
+`logs/android-flutter-analyze.log`, `logs/mimir-android-debug.apk`.
+
+An additional iOS-themed touch-drag widget test passed during the preceding
+scrolling investigation. The user subsequently confirmed simulator swiping works;
+no production scrolling change was needed.
 
 ## Automated evidence
 

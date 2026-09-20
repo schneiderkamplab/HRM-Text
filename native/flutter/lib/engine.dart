@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:ffi/ffi.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 typedef Json = Map<String, dynamic>;
@@ -21,7 +22,12 @@ String runtimePath() {
   return Platform.isWindows ? 'MimirRuntime.dll' : 'libMimirRuntime.so';
 }
 
-String bundledModelPath() {
+Future<String> bundledModelPath() async {
+  if (Platform.isAndroid) {
+    // Copy from the APK using native streaming I/O, not a gigabyte Dart buffer.
+    return (await const MethodChannel('dk.sdu.mimir/assets')
+        .invokeMethod<String>('bundledModelPath'))!;
+  }
   final base = File(Platform.resolvedExecutable).parent.path;
   if (Platform.isMacOS) {
     return p.normalize(

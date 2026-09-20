@@ -10,6 +10,10 @@
 #include <deque>
 #include <mutex>
 #include <thread>
+#if defined(__linux__)
+#include <fstream>
+#include <sstream>
+#endif
 #if defined(__APPLE__)
 #include <mach/mach.h>
 #include <TargetConditionals.h>
@@ -32,6 +36,20 @@ uint64_t available_memory() {
     mach_port_deallocate(mach_task_self(), host);
     return status == KERN_SUCCESS ? (uint64_t(stats.free_count) + stats.inactive_count) * page : 1024ull*1024*1024;
 #endif
+#elif defined(__linux__)
+    // MemAvailable includes reclaimable cache, unlike MemFree. This also covers
+    // Android; it is a sizing hint, not a guarantee against memory pressure.
+    std::ifstream info("/proc/meminfo");
+    std::string line;
+    while (std::getline(info, line)) {
+        std::istringstream fields(line);
+        std::string key, unit;
+        uint64_t value;
+        if (fields >> key >> value >> unit && key == "MemAvailable:" && unit == "kB") {
+            return value * 1024;
+        }
+    }
+    return 1024ull*1024*1024;
 #else
     // Conservative until a platform-specific available-memory probe is qualified.
     return 1024ull*1024*1024;

@@ -9,6 +9,14 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
+    externalNativeBuild {
+        cmake {
+            path = file("../../../runtime/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
+    androidResources { noCompress += "gguf" }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -17,6 +25,21 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "dk.sdu.mimir_flutter"
+        ndk {
+            // Flutter prepopulates all supported ABIs; this port is ARM64 only.
+            abiFilters.clear()
+            abiFilters += "arm64-v8a"
+        }
+        externalNativeBuild {
+            cmake {
+                targets += "MimirRuntime"
+                arguments += listOf(
+                    "-DGGML_METAL=OFF", "-DGGML_BLAS=OFF", "-DGGML_OPENMP=OFF",
+                    "-DGGML_VULKAN=OFF", "-DGGML_CPU_ARM_ARCH=armv8-a",
+                    "-DLLAMA_CURL=OFF", "-DCMAKE_BUILD_TYPE=Release",
+                )
+            }
+        }
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
