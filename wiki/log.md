@@ -1,5 +1,11 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-20 - Start portable packages and automatic backend fallback
+
+- Added desktop native packaging, platform paths/memory probes, ranked initialization retries and fallback diagnostics.
+- Added Linux/Windows package CI and a physical iOS Metal framework slice.
+- Recorded local CPU/Metal regression checks and separated development artifacts from remaining hardware/release qualification.
+
 ## 2026-09-20 - Add experimental MixedLM
 
 - Added opt-in frozen-prefix reuse in llama.cpp and the Flutter client, defaulting off.

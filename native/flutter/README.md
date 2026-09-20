@@ -35,12 +35,12 @@ flutter build macos --release
 flutter build ios --simulator --debug
 ```
 
-The native script builds self-contained frameworks: Metal/Accelerate on Mac and
-CPU on the simulator. It copies an XCFramework inside each local CocoaPod
+The native script builds self-contained frameworks: Metal/Accelerate on Mac,
+Metal on physical iOS, and CPU on the simulator. It copies an XCFramework inside each local CocoaPod
 (CocoaPods does not traverse a directory symlink here), and links the selected
 GGUF into Flutter assets. Generated previous frameworks are retained under logs
-when rebuilding. Xcode targets intentionally use arm64; Intel Mac and physical
-iOS device slices have not been built. CocoaPods fallback currently produces a
+when rebuilding. Xcode targets intentionally use arm64. Intel Mac remains unqualified; physical
+iOS builds need signing/provisioning before installation. CocoaPods fallback currently produces a
 Flutter warning that this local FFI plugin has no Swift Package Manager manifest.
 
 Mac product: `build/macos/Build/Products/Release/DFM Mimir Flutter.app`.
@@ -115,15 +115,46 @@ remain unqualified. Emulator graphics acceleration does not imply model GPU
 offload. After integration tests, reinstall the regular APK to restore the normal
 app entry point.
 
-## Next platforms
+## Linux and Windows development packages
 
-Linux and Windows runner scaffolds are present. They are **not yet
-packaged or qualified products**: native library/asset deployment still needs
-integration. The C ABI and shared Dart UI are designed
-to carry over, while ggml backend selection follows available devices. Linux and
-Windows minimum requirements must be set after actual builds and driver tests.
-Physical iOS signing, distribution, App Store/TestFlight, notarization and release
-credentials remain deferred as requested.
+Build on the matching host with Flutter 3.47.5, Python 3.11+, CMake and the
+[Flutter desktop prerequisites](https://docs.flutter.dev/platform-integration).
+Linux also needs GTK3 development libraries, clang, Ninja and pkg-config;
+Windows needs Visual Studio's Desktop development with C++ workload.
+
+```sh
+python native/flutter/tool/package_desktop.py --model /absolute/path/model.gguf
+# Or a smaller package which asks the user to import a model:
+python native/flutter/tool/package_desktop.py --without-model
+# Optional GPU builds require the matching CUDA/Vulkan SDK at build time:
+python native/flutter/tool/package_desktop.py --without-model --backends cpu,cuda,vulkan
+```
+
+Outputs go to `logs/packages`: Linux tar.gz or Windows ZIP, SHA-256 sidecar,
+and a per-file/source/model manifest inside the archive. These are unsigned
+development bundles. Extract the whole folder and run `mimir_flutter` or
+`mimir_flutter.exe`. CPU is always included; optional backend libraries are
+loaded from the runtime's directory, not the current working directory. CPU
+variants are selected at runtime on x64. Windows bundles include the release CRT.
+CUDA bundles include CUDA user-space runtime libraries; the system GPU driver
+and Vulkan loader are OS/driver prerequisites. License redistribution checks
+and real hardware qualification remain required before public releases.
+
+The package command probes the C ABI from another working directory and checks
+that removing CPU backend files produces a readable error in a fresh process.
+CI builds and uploads CPU/import-only packages on Linux and Windows. Artifact
+creation is separate from real-model/hardware qualification. See
+[PACKAGING-PLAN.md](PACKAGING-PLAN.md) for the remaining release stages.
+
+Automatic loading ranks Metal, CUDA and Vulkan before other registered
+accelerators, with CPU last. Recoverable model/context initialization failures
+advance to the next device; implicit GPU flash attention is retried disabled.
+Explicit device selection stays strict. Settings shows the actual backend and
+fallback reasons. Automatic memory limits are recalculated for each candidate;
+explicit context limits are retained. Invalid metadata/templates/profile limits
+fail before retries. CPU cannot rescue a model too large for host memory.
+Mid-generation recovery, reduced layer offload and crash-relaunch recovery are
+not implemented yet; they remain in the plan.
 
 ## Experimental MixedLM
 

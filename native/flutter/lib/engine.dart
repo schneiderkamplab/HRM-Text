@@ -19,7 +19,9 @@ String runtimePath() {
   if (Platform.isIOS) {
     return p.join(base, 'Frameworks/MimirRuntime.framework/MimirRuntime');
   }
-  return Platform.isWindows ? 'MimirRuntime.dll' : 'libMimirRuntime.so';
+  if (Platform.isWindows) return p.join(base, 'MimirRuntime.dll');
+  if (Platform.isLinux) return p.join(base, 'lib', 'libMimirRuntime.so');
+  return 'libMimirRuntime.so';
 }
 
 Future<String> bundledModelPath() async {
@@ -36,6 +38,9 @@ Future<String> bundledModelPath() async {
         '../Frameworks/App.framework/Resources/flutter_assets/assets/model.gguf',
       ),
     );
+  }
+  if (Platform.isLinux || Platform.isWindows) {
+    return p.join(base, 'data', 'flutter_assets', 'assets', 'model.gguf');
   }
   return p.join(
     base,

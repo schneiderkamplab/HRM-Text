@@ -22,6 +22,8 @@ class ChatStore extends ChangeNotifier {
       device = 'auto',
       engineLabel = 'Not loaded';
   String? pending;
+  List<String> backendFallbackReasons = [];
+  String actualBackend = '';
   Json? preview, model;
   late ModelProfile profile;
   bool conversationsReady = false;
@@ -150,6 +152,13 @@ class ChatStore extends ChangeNotifier {
     try {
       final path = await bundledModelPath();
       final file = File(path);
+      if (!await file.exists() || await file.length() == 0) {
+        loading = false;
+        ready = false;
+        notice = 'This package has no bundled model. Import a Mimir GGUF in Model and settings.';
+        notifyListeners();
+        return;
+      }
       final id = (await sha256.bind(file.openRead()).first).toString();
       final previous = model;
       if (previous?['id'] != id) {
@@ -244,6 +253,10 @@ class ChatStore extends ChangeNotifier {
         'mixedLM': mixedLM,
       });
       final loaded = events.firstWhere((e) => e['type'] == 'loaded');
+      backendFallbackReasons = List<String>.from(
+        loaded['fallbackReasons'] ?? [],
+      );
+      actualBackend = loaded['backend'] ?? loaded['device'];
       context = loaded['context'];
       training = loaded['trainingContext'];
       engineLabel =

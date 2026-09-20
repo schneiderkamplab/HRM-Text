@@ -70,6 +70,11 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
               Text('Profile: ${s.profile.name}'),
+              Text(s.engineLabel),
+              if (s.backendFallbackReasons.isNotEmpty)
+                Text(
+                  'Automatic fallback: ${s.backendFallbackReasons.join('; ')}',
+                ),
               TextButton(
                 onPressed: s.busy || s.model == null ? null : () => pick(true),
                 child: const Text('Import model profile…'),

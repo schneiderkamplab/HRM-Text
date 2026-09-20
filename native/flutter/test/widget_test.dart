@@ -50,6 +50,49 @@ ChatStore fixture(FakeEngine e, Directory directory, {bool persist = true}) {
 }
 
 void main() {
+  test(
+    'load exposes actual fallback backend and keeps explicit limits',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'mimir-backend-test',
+      );
+      final e = FakeEngine();
+      final s = fixture(e, directory);
+      try {
+        final model = File('${directory.path}/model.gguf');
+        await model.writeAsBytes([0]);
+        s.model!['path'] = model.path;
+        s.automatic = false;
+        s.context = 2048;
+        e.handler = (command, _) async {
+          if (command['op'] == 'count')
+            return [
+              {'type': 'count', 'tokens': 42},
+            ];
+          expect(command['device'], 'auto');
+          expect(command['context'], 2048);
+          return [
+            {
+              'type': 'loaded',
+              'device': 'CPU',
+              'backend': 'CPU',
+              'context': 2048,
+              'trainingContext': 4096,
+              'fallbackReasons': ['CUDA0: allocation failed'],
+            },
+          ];
+        };
+        await s.load();
+        expect(s.ready, isTrue);
+        expect(s.context, 2048);
+        expect(s.engineLabel, contains('CPU'));
+        expect(s.backendFallbackReasons.single, contains('CUDA0'));
+      } finally {
+        await s.shutdown();
+        await directory.delete(recursive: true);
+      }
+    },
+  );
   test('profile bounds and future model settings', () {
     final data = Map<String, dynamic>.from(
       jsonDecode(File('assets/profile.json').readAsStringSync()),

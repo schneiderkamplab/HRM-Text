@@ -11,3 +11,7 @@ flutter:
         ffiPlugin: true
       ios:
         ffiPlugin: true
+      linux:
+        ffiPlugin: true
+      windows:
+        ffiPlugin: true

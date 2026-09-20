@@ -10,51 +10,10 @@
 #include <deque>
 #include <mutex>
 #include <thread>
-#if defined(__linux__)
-#include <fstream>
-#include <sstream>
-#endif
-#if defined(__APPLE__)
-#include <mach/mach.h>
-#include <TargetConditionals.h>
-#if TARGET_OS_IOS && !TARGET_OS_SIMULATOR
-#include <os/proc.h>
-#endif
-#else
-#include <limits>
-#endif
+#include "loading.h"
+#include "backend_loader.h"
 using Json = nlohmann::json;
 namespace {
-uint64_t available_memory() {
-#if defined(__APPLE__)
-#if TARGET_OS_IOS && !TARGET_OS_SIMULATOR
-    return os_proc_available_memory();
-#else
-    vm_statistics64_data_t stats{}; mach_msg_type_number_t n = HOST_VM_INFO64_COUNT;
-    mach_port_t host = mach_host_self(); vm_size_t page = 0; host_page_size(host, &page);
-    auto status = host_statistics64(host, HOST_VM_INFO64, reinterpret_cast<host_info64_t>(&stats), &n);
-    mach_port_deallocate(mach_task_self(), host);
-    return status == KERN_SUCCESS ? (uint64_t(stats.free_count) + stats.inactive_count) * page : 1024ull*1024*1024;
-#endif
-#elif defined(__linux__)
-    // MemAvailable includes reclaimable cache, unlike MemFree. This also covers
-    // Android; it is a sizing hint, not a guarantee against memory pressure.
-    std::ifstream info("/proc/meminfo");
-    std::string line;
-    while (std::getline(info, line)) {
-        std::istringstream fields(line);
-        std::string key, unit;
-        uint64_t value;
-        if (fields >> key >> value >> unit && key == "MemAvailable:" && unit == "kB") {
-            return value * 1024;
-        }
-    }
-    return 1024ull*1024*1024;
-#else
-    // Conservative until a platform-specific available-memory probe is qualified.
-    return 1024ull*1024*1024;
-#endif
-}
 std::vector<mimir::Message> history(const Json & command) {
     std::vector<mimir::Message> out;
     for (const auto & m : command.value("history", Json::array())) out.push_back({m.at("role"),m.at("content")});
@@ -100,35 +59,14 @@ struct Engine {
         }
         if(op=="load") {
             {std::lock_guard<std::mutex> lock(mutex); chat.reset();} codec.reset();model.reset();
-            auto profile=c.at("profile");const auto path=c.at("path").get<std::string>();
-            auto device=c.value("device", "auto");auto selected=mimir::tools::select_device(device);
-            bool gpu=selected && (ggml_backend_dev_type(selected)==GGML_BACKEND_DEVICE_TYPE_GPU ||
-                ggml_backend_dev_type(selected)==GGML_BACKEND_DEVICE_TYPE_IGPU);
-            const int minimum=profile.at("minimumContext"),maximum=profile.at("maximumContext");
-            context=c.value("context",0);
-            if(!context) {
-                context=minimum;const auto available=available_memory()*profile.at("memoryFraction").get<double>();
-                for(int tier:profile.at("contextTiers")) {
-                    long double required=c.at("modelBytes").get<uint64_t>()+profile.at("fixedMemoryBytes").get<uint64_t>()+
-                        (long double)tier*profile.at("memoryBytesPerToken").get<uint64_t>()+
-                        (gpu?0:(long double)tier*tier*profile.at("cpuAttentionBytesPerTokenSquared").get<uint64_t>());
-                    if(required<=available) context=tier;
-                }
-            }
-            if(context<minimum || context>maximum) throw std::runtime_error("Context is outside the model profile limits.");
-            model=mimir::tools::load_model(path,device);
-            char architecture[64]{};llama_model_meta_val_str(model.get(),"general.architecture",architecture,sizeof architecture);
-            if(std::string(architecture)!="hrm_text" || !llama_model_is_prefix_lm(model.get())) throw std::runtime_error("Choose a PrefixLM HRMText Mimir GGUF.");
-            system=profile.at("systemPrompt");
-            mimir::Config config;config.context_tokens=config.batch_tokens=context;
-            mixed_lm=c.value("mixedLM",false);config.mixed_lm=mixed_lm;conversation.clear();
-            config.threads=profile.at("threads");config.allow_context_extension=true;
-            config.flash_attention=c.value("flash",gpu);
-            auto next=std::make_shared<mimir::Chat>(model,config,system);
-            codec=std::make_unique<mimir::TextCodec>(model);
-            {std::lock_guard<std::mutex> lock(mutex);chat=next;}
+            auto loaded=mimir::runtime::load(c);
+            model=std::move(loaded.model);codec=std::move(loaded.codec);
+            system=c.at("profile").at("systemPrompt");context=loaded.context;
+            mixed_lm=c.value("mixedLM",false);conversation.clear();
+            {std::lock_guard<std::mutex> lock(mutex);chat=std::move(loaded.chat);}
             emit({{"type","loaded"},{"context",context},{"trainingContext",llama_model_n_ctx_train(model.get())},
-                {"device",selected?ggml_backend_dev_name(selected):"CPU"}});return;
+                {"device",loaded.device.id},{"backend",loaded.device.backend},
+                {"fallbackReasons",loaded.failures},{"flashAttention",loaded.flash}});return;
         }
         if(!chat || !codec) throw std::runtime_error("Load a model first.");
         auto full=history(c);
@@ -166,7 +104,7 @@ struct Engine {
         for(;;) {
             Json c;{std::unique_lock<std::mutex> lock(mutex);wake.wait(lock,[&]{return closing||!commands.empty();});
                 if(closing) break;c=std::move(commands.front());commands.pop_front();}
-            try{static std::once_flag once;std::call_once(once,[]{ggml_backend_load_all();llama_backend_init();});execute(c);}catch(const std::exception & e){if(chat) chat->recover();emit({{"type","error"},{"message",e.what()}});}
+            try{static std::once_flag once;std::call_once(once,[]{mimir::runtime::initialize_backends();});execute(c);}catch(const std::exception & e){if(chat) chat->recover();emit({{"type","error"},{"message",e.what()}});}
             // Clear busy before publishing completion, so the consumer can submit its next operation.
             busy=false;emit({{"type","done"}});
         }

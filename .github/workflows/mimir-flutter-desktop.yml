@@ -1,0 +1,52 @@
+name: Mimir Flutter desktop packages
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/mimir-apple-mvp']
+    paths: ['native/flutter/**', 'native/runtime/**', 'native/mimir/**', 'llama.cpp', '.github/workflows/mimir-flutter-desktop.yml']
+  pull_request:
+    paths: ['native/flutter/**', 'native/runtime/**', 'native/mimir/**', 'llama.cpp', '.github/workflows/mimir-flutter-desktop.yml']
+permissions:
+  contents: read
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: git submodule update --init llama.cpp
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+      - name: Linux desktop dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+      - name: Test shared fallback policy
+        shell: bash
+        run: |
+          cmake -S native/runtime -B logs/policy -DMIMIR_BUILD_TESTS=ON -DGGML_METAL=OFF -DGGML_OPENMP=OFF -DLLAMA_CURL=OFF
+          cmake --build logs/policy --config Release --target mimir-backend-policy-tests --parallel 2
+          ctest --test-dir logs/policy -C Release -R backend-policy --output-on-failure
+      - name: Prepare import-only asset for Flutter tests
+        run: python -c "from pathlib import Path; Path('native/flutter/assets/model.gguf').touch()"
+      - name: Build portable CPU package
+        run: python native/flutter/tool/package_desktop.py --without-model --output logs/packages
+      - name: Check Flutter
+        working-directory: native/flutter
+        run: flutter analyze
+      - name: Host tests
+        working-directory: native/flutter
+        run: flutter test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mimir-${{ runner.os }}-cpu-import-only
+          path: logs/packages/*

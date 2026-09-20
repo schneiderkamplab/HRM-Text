@@ -1,6 +1,25 @@
 # Cross-platform package and acceleration plan
 
-Proposed 2026-09-20; implementation is not implied by this document.
+Proposed 2026-09-20. See the implementation status below; unchecked design
+items are still planned, not implemented.
+
+## First implementation status — 2026-09-20
+
+Implemented Linux/Windows FFI plugin builds and relocatable package tooling,
+CPU variants, optional dynamic CUDA/Vulkan modules, platform asset paths and
+Windows available-memory probing. Added ranked initialization retries, flash-off
+context retry, strict explicit selection and Settings fallback diagnostics.
+Added physical iOS Metal to the Apple XCFramework builder. CPU/import-only
+package CI runs on Linux/Windows; real hardware qualification is separate.
+
+Mac static CPU and dynamic CPU/Metal real-model smoke tests pass, as do nine
+native regression cases and seven Flutter tests. Optional backend absence and
+missing-CPU diagnostics are exercised in fresh processes. No Linux/Windows
+execution claim is made until CI results are recorded in VALIDATION.md.
+
+Not yet implemented: layer-offload reduction, retry during a failing generation,
+crash-relaunch recovery, Android Vulkan, model downloads/asset packs, installers,
+and signing. The baseline is development packaging, not a production release.
 
 ## Target
 

@@ -110,3 +110,17 @@ CPU retry. Desktop dynamic backend deployment also requires replacing the forced
 static build configuration, and Linux/Windows model paths/native packaging are
 unfinished. These are planned changes, not implemented capabilities. Specialty
 backends and additional architectures follow real hardware qualification.
+
+## Portable package implementation — 2026-09-20
+
+The planned loader/desktop packaging gaps above are now **partly superseded**.
+Linux/Windows FFI plugin targets, relocatable library/model paths, Windows memory
+probing, dynamic backend packaging and a native-host package script are
+implemented. Initialization retries use a shared ranked policy with CPU last;
+explicit selection remains strict. App Settings reports actual device and
+fallback reasons. Mac dynamic CPU/Metal real-model checks, missing-backend
+probes, nine native tests and seven Flutter tests pass. Physical iOS Metal is
+included in the XCFramework builder. Linux/Windows CI is being qualified;
+[the README](../../../native/flutter/README.md) gives build commands and
+[the plan](../../../native/flutter/PACKAGING-PLAN.md) distinguishes remaining
+mid-generation/crash recovery, Android GPU and distribution work.
