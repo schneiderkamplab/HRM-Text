@@ -35,9 +35,17 @@ android {
                 targets += "MimirRuntime"
                 arguments += listOf(
                     "-DGGML_METAL=OFF", "-DGGML_BLAS=OFF", "-DGGML_OPENMP=OFF",
-                    "-DGGML_VULKAN=OFF", "-DGGML_CPU_ARM_ARCH=armv8-a",
+                    "-DGGML_VULKAN=ON", "-DGGML_CPU_ARM_ARCH=armv8-a",
                     "-DLLAMA_CURL=OFF", "-DCMAKE_BUILD_TYPE=Release",
                 )
+                // Host shader compiler and header-only SDK dependencies for cross-compilation.
+                mapOf(
+                    "MIMIR_VULKAN_HEADERS" to "Vulkan_INCLUDE_DIR",
+                    "MIMIR_SPIRV_HEADERS_DIR" to "SPIRV-Headers_DIR",
+                    "MIMIR_GLSLC" to "Vulkan_GLSLC_EXECUTABLE",
+                ).forEach { (environment, option) ->
+                    System.getenv(environment)?.let { arguments += "-D$option=$it" }
+                }
             }
         }
         // You can update the following values to match your application needs.

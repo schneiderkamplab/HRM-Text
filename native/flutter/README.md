@@ -75,7 +75,7 @@ See [VALIDATION.md](VALIDATION.md) for observed results and limitations, and
 ## Android development emulator
 
 The Android runner builds the shared runtime through Gradle/CMake for
-**arm64-v8a**, currently with CPU inference. Prerequisites: JDK 21, Android SDK
+**arm64-v8a**, with CPU and Vulkan inference compiled in. Prerequisites: JDK 21, Android SDK
 36, build-tools 36.0.0, NDK 28.2.13676358 and SDK CMake 3.22.1. The bundled GGUF
 must already be linked at `assets/model.gguf` (the Apple build script above sets
 this up, or create that symlink directly without building Apple frameworks).
@@ -93,8 +93,16 @@ avdmanager create avd --name DFM_Mimir_API_36 \
 # Configure 8 GB RAM and a 16 GB data partition in this AVD's config.ini.
 "$ANDROID_HOME/emulator/emulator" -avd DFM_Mimir_API_36 -no-snapshot -gpu auto
 
-# In another terminal, from native/flutter:
+# Host build dependencies (Mac/Homebrew): shaderc, vulkan-headers, spirv-headers.
+# These supply a native glslc executable and header-only SDK dependencies.
+export MIMIR_GLSLC="$(brew --prefix shaderc)/bin/glslc"
+export MIMIR_VULKAN_HEADERS="$(brew --prefix vulkan-headers)/include"
+export MIMIR_SPIRV_HEADERS_DIR="$(brew --prefix spirv-headers)/share/cmake/SPIRV-Headers"
+export PATH="$ANDROID_HOME/cmake/3.22.1/bin:$PATH" # Ninja for host shader generation
+
+# In another terminal with these exports, from native/flutter:
 flutter build apk --debug --target-platform android-arm64
+# Or use --release for the optimized, development-signed APK.
 adb install -r build/app/outputs/flutter-apk/app-debug.apk
 adb shell am start -n dk.sdu.mimir_flutter/.MainActivity
 # Optional real-model test; uses an isolated conversation archive:
@@ -110,8 +118,10 @@ Android/Linux; available memory is a hint, not protection from Android's low-mem
 killer. The emulator's RAM and host CPU do not represent a physical phone.
 
 This is a development APK signed with the debug key, not a Play Store release.
-GPU inference, physical devices, low-memory behavior and Android distribution
-remain unqualified. Emulator graphics acceleration does not imply model GPU
+Vulkan requires a supported Vulkan 1.2+ device; physical GPU inference, low-memory
+behavior and Android distribution remain unqualified. The build links the Android
+system Vulkan loader and includes the CPU backend; registration failures are
+handled by llama.cpp, while recoverable model/context failures use our fallback policy. Emulator graphics acceleration does not imply model GPU
 offload. After integration tests, reinstall the regular APK to restore the normal
 app entry point.
 

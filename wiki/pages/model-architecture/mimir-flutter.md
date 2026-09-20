@@ -164,3 +164,15 @@ the PrefixLM implementation. Existing 73-check MoltenVK evidence is Mac-only.
 Android enablement needs cross-compilation/shader tooling, package-level optional
 Vulkan loading/CPU fallback and real Adreno/Mali correctness/memory/performance
 checks; simulator graphics acceleration cannot qualify phone inference drivers.
+
+### Android Vulkan enabled — 2026-09-20
+
+The disabled-build statement above is **superseded**. Android now builds CPU plus
+Vulkan into a development-signed ARM64 release APK with the usual Q4_K_M weights.
+The APK passes signature, model hash, ABI and 16 KiB ZIP/ELF alignment checks.
+llama.cpp `d49631be2` fixes SPIR-V header propagation, uses the existing dynamic
+Vulkan dispatcher for features2 queries (avoiding API 24 link errors), and checks
+for an absent loader version-query entry point. Mac MoltenVK's 73 text checks
+pass after these changes. Host Ninja must be on PATH for shader generation;
+README environment overrides locate glslc and the header-only SDK dependencies.
+Android GPU execution remains unqualified; no physical device was connected.

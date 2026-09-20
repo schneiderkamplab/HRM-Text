@@ -255,3 +255,41 @@ was cleanly detached. Logs: `logs/packaging-flutter-dmg-build.log` and
 This is an ad-hoc development preview, without Developer ID or notarization.
 The DMG and checksum are added to the existing bundled-weight desktop draft
 release (GitHub release ID `392369107`; draft URLs can change when edited).
+
+## Android ARM64 Vulkan build — 2026-09-20
+
+The previous Android CPU-only build status is superseded: Gradle now enables
+`GGML_VULKAN`, retaining the CPU backend. An optimized ARM64-only release APK
+with Q4_K_M weights was built using NDK 28.2.13676358, SDK CMake 3.22.1, JDK 21,
+Flutter 3.47.5, host glslc and Khronos Vulkan/SPIR-V headers. Host Ninja must be on
+PATH because llama.cpp builds a host shader generator while cross-compiling.
+Header and glslc overrides are documented in the README.
+
+Cross-compilation exposed two upstream build issues, fixed in llama.cpp commit
+`d49631be2`: link the SPIR-V header interface target so its include path propagates;
+use the existing dynamic Vulkan dispatcher for three features2 calls rather than
+requiring Android API 24's loader library to export the newer core symbol. A
+missing Vulkan 1.1 version-query entry point now follows the existing unsupported
+Vulkan-version path instead of calling a null function. The backend requires
+Vulkan 1.2; the APK's minimum Android API remains 24.
+
+Validation:
+
+- Release APK build passed (`logs/android-vulkan-release-build.log`).
+- APK signature verification passed; this preview uses the development/debug
+  signing key, not a production distribution identity.
+- `zipalign -c -P 16 4` passed; every included native library has ELF LOAD alignment
+  of at least 16 KiB. Libraries are exclusively `arm64-v8a`.
+- `libMimirRuntime.so` links Android's `libvulkan.so`; CPU remains compiled in.
+- Embedded model SHA-256 matches the previously tested Q4_K_M weights.
+- Native Mac Vulkan/MoltenVK regression suite after the source fixes: **73 checks
+  passed** (`logs/android-vulkan-mac-regression.log`).
+
+APK: `DFM-Mimir-Flutter-0.1.0-android-arm64-vulkan-preview.apk`, 1,236,377,679 bytes,
+SHA-256 `48341e044aba10b32490e1158061d4f51613939f8dac5b5ca97f93b6c24d7745`.
+The APK and checksum accompany the existing preview draft release. No Android
+device was connected during this build; these are build/package checks, not
+proof of Android GPU execution or performance. Real Adreno/Mali testing, including
+CPU fallback on unsupported devices, remains necessary. The app depends on the
+system Vulkan loader being present; this APK does not dynamically isolate an
+absent loader library.

@@ -18,8 +18,11 @@ missing-CPU diagnostics are exercised in fresh processes. Hosted package results
 [VALIDATION.md](VALIDATION.md); clean-host real-model acceptance remains separate.
 
 Not yet implemented: layer-offload reduction, retry during a failing generation,
-crash-relaunch recovery, Android Vulkan, model downloads/asset packs, installers,
+crash-relaunch recovery, model downloads/asset packs, installers,
 and signing. The baseline is development packaging, not a production release.
+
+Android ARM64 Vulkan is now compiled into the development APK; physical-device
+qualification remains pending. See the validation report for build fixes and limits.
 
 ## Target
 
