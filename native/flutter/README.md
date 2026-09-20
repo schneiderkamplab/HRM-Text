@@ -182,9 +182,9 @@ CI's smaller import-only bundles can be assembled on any host without recompilin
 their native binaries:
 
 ```sh
-python native/flutter/tool/bundle_model.py dfm-mimir-linux-x64.tar.gz \
+python native/flutter/tool/bundle_model.py dfm-mimir-0.1.0-linux-x64.tar.gz \
   --model /absolute/path/mimir-q4_k_m.gguf --output logs/packages/with-model/linux
-python native/flutter/tool/bundle_model.py dfm-mimir-windows-x64.zip \
+python native/flutter/tool/bundle_model.py dfm-mimir-0.1.0-windows-x64.zip \
   --model /absolute/path/mimir-q4_k_m.gguf --output logs/packages/with-model/windows
 ```
 
@@ -209,3 +209,9 @@ packaging, verifies and mounts the image, then repeats signature/model checks.
 It preserves the Flutter app identity and does not replace the separate SwiftUI
 app. The preview requires Apple Silicon and macOS 14 or later; it is not Developer
 ID signed or notarized. Its checksum sidecar accompanies the draft-release asset.
+
+Distribution filenames follow `dfm-mimir-VERSION-PLATFORM-ARCH.EXT`, for example
+`dfm-mimir-0.1.0-android-arm64.apk`, `dfm-mimir-0.1.0-macos-arm64.dmg`,
+`dfm-mimir-0.1.0-linux-x64.tar.gz` and `dfm-mimir-0.1.0-windows-x64.zip`.
+Checksum sidecars append `.sha256`. Backend and development-signing details belong
+in release notes rather than filenames.

@@ -250,7 +250,7 @@ introduce new engine changes.
 verification, model SHA-256 and Applications shortcut checks passed. The image
 was cleanly detached. Logs: `logs/packaging-flutter-dmg-build.log` and
 `logs/packaging-flutter-dmg.log`. Asset:
-`DFM-Mimir-Flutter-0.1.0-macos-arm64-preview.dmg`, SHA-256
+`dfm-mimir-0.1.0-macos-arm64.dmg`, SHA-256
 `e0e047cfda62a0a931bc848b91e0a1f81827c8aae5331fd835faccc854c5c429`.
 This is an ad-hoc development preview, without Developer ID or notarization.
 The DMG and checksum are added to the existing bundled-weight desktop draft
@@ -285,7 +285,7 @@ Validation:
 - Native Mac Vulkan/MoltenVK regression suite after the source fixes: **73 checks
   passed** (`logs/android-vulkan-mac-regression.log`).
 
-APK: `DFM-Mimir-Flutter-0.1.0-android-arm64-vulkan-preview.apk`, 1,236,377,679 bytes,
+APK: `dfm-mimir-0.1.0-android-arm64.apk`, 1,236,377,679 bytes,
 SHA-256 `48341e044aba10b32490e1158061d4f51613939f8dac5b5ca97f93b6c24d7745`.
 The APK and checksum accompany the existing preview draft release. No Android
 device was connected during this build; these are build/package checks, not

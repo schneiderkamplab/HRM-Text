@@ -10,7 +10,7 @@ import subprocess
 import sys
 import tempfile
 
-from package_archive import digest, write_archive
+from package_archive import app_version, digest, package_name, write_archive
 
 ROOT = Path(__file__).resolve().parents[3]
 APP = ROOT / 'native/flutter'
@@ -76,7 +76,7 @@ def main():
         raise RuntimeError(f'Missing Flutter bundle: {bundle}')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    name = f'dfm-mimir-{target}-{arch}'
+    name = package_name(app_version(), target, arch)
     with tempfile.TemporaryDirectory(prefix='package-', dir=output) as temporary:
         stage = Path(temporary) / name
         shutil.copytree(bundle, stage)

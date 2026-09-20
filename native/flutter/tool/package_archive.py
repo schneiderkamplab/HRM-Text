@@ -1,6 +1,7 @@
 """Shared archive and checksum operations for desktop packages."""
 import hashlib
 import os
+import re
 from pathlib import Path
 import shutil
 
@@ -19,3 +20,15 @@ def write_archive(stage, output, target):
     (output / (destination.name + '.sha256')).write_text(
         digest(destination) + '  ' + destination.name + '\n', encoding='utf-8')
     return destination
+
+
+def app_version():
+    pubspec = Path(__file__).resolve().parents[1] / 'pubspec.yaml'
+    match = re.search(r'^version:\s*([^\s+]+)', pubspec.read_text(), re.MULTILINE)
+    if not match:
+        raise ValueError('Missing app version in pubspec.yaml')
+    return match.group(1)
+
+
+def package_name(version, platform, architecture):
+    return f'dfm-mimir-{version}-{platform}-{architecture}'

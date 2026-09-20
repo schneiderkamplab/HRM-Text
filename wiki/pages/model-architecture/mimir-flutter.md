@@ -176,3 +176,14 @@ for an absent loader version-query entry point. Mac MoltenVK's 73 text checks
 pass after these changes. Host Ninja must be on PATH for shader generation;
 README environment overrides locate glslc and the header-only SDK dependencies.
 Android GPU execution remains unqualified; no physical device was connected.
+
+### Distribution filenames — 2026-09-20
+
+Use `dfm-mimir-VERSION-PLATFORM-ARCH.EXT` for downloadable packages, with lowercase
+platforms `android`, `macos`, `linux`, `windows`, and architectures `arm64` or
+`x64`. Omit Flutter, backend and preview qualifiers from filenames. Checksum files
+append `.sha256` and name the matching archive inside. Existing release assets
+were renamed in place (binary content and hashes unchanged); packaging tools
+read the app version rather than hardcoding it. This supersedes earlier preview
+and unversioned filenames. Draft release tags may differ from their initial name;
+resolve the current tag from the release ID before uploading assets.

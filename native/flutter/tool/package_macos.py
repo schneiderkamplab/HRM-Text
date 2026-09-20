@@ -7,7 +7,7 @@ import plistlib
 import subprocess
 import tempfile
 
-from package_archive import digest
+from package_archive import digest, package_name
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -32,7 +32,7 @@ def main():
         raise ValueError('Bundled model checksum mismatch')
     run('codesign', '--verify', '--deep', '--strict', app)
     output.mkdir(parents=True, exist_ok=True)
-    name = f"DFM-Mimir-Flutter-{info['CFBundleShortVersionString']}-macos-arm64-preview.dmg"
+    name = package_name(info['CFBundleShortVersionString'], 'macos', arch) + '.dmg'
     destination = output / name
     if destination.exists():
         raise FileExistsError(destination)
