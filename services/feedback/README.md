@@ -22,7 +22,9 @@ Closing/reopening creates a new submission (there is no persistent retry queue).
 
 Android's normal INTERNET permission and macOS's network.client sandbox entitlement
 are declared in the standard build. Neither is a runtime OS permission prompt;
-the app asks for consent and enforces its own setting. A permission-free binary is
+the app asks for consent and enforces its own setting. See the official
+[Android network permission documentation](https://developer.android.com/develop/connectivity/network-ops/connecting)
+and [macOS network entitlement](https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.security.network.client). A permission-free binary is
 not promised. iOS likewise has no general Internet runtime prompt. Users may also
 block the app with their firewall; local chat does not require connectivity.
 The desktop's separate opt-in local OpenAI API remains unchanged.

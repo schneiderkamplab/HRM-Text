@@ -33,8 +33,9 @@ real local D1 and rate-limiter bindings:
 
 Actual EU D1 migration applied successfully. `tools/smoke.mjs` on the deployed
 endpoint verified synthetic private/public submissions, duplicate receipts,
-reviewed-export eligibility and rejected read/admin routes. Both test rows were
-deleted. No user chats were uploaded by testing.
+the actual authenticated CLI approval/export path, CC BY attribution, refusal to
+overwrite an existing export, and rejected read/admin routes. Both test rows and
+the temporary export were deleted. No user chats were uploaded by testing.
 
 ## Packaging
 
@@ -46,9 +47,20 @@ credential markers. Codesign inspection confirmed the sandbox and outgoing-netwo
 entitlement. Tests are not a claim that a network-blocking firewall was exercised.
 
 Android ARM64 release APK built successfully with Vulkan/CPU support unchanged.
-APK audit passed (77 files, excluding weights); `aapt dump permissions` confirmed
+APK audit passed (77 files, excluding weights); iOS simulator bundle audit passed
+(88 files). A synthetic credential-marker fixture was correctly rejected.
+`aapt dump permissions` confirmed
 INTERNET is declared. No physical-device networking test was performed.
 
-Linux/Windows package CI and service CI are configured. Platform build evidence
+Service CI [35512788816](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35512788816)
+passed on Ubuntu. Linux/Windows package CI is running at
+[35512788804](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35512788804). Platform build evidence
 will be recorded after the corresponding runs; successful Dart tests alone do not
 establish Android/iOS native integration or device behavior.
+
+The local bundled-weight macOS DMG is
+`logs/packages/feedback/macos/dfm-mimir-0.1.0-macos-arm64.dmg`. Its final staged
+app (including the headless server) passed the audit with 63 files. DMG integrity,
+mounted-app signature and model checksum verification passed. SHA-256:
+`ddd06c02f9898957abfbfcb49e8a80785901c25d8a7bc8f9829b90229b5fc7da`.
+Existing GitHub release downloads were not replaced by this implementation task.
