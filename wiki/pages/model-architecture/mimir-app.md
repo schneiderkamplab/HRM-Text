@@ -282,3 +282,13 @@ the docs server is public. Existing Codex settings were preserved (the CLI only
 normalized an empty argument list). Restart Codex to load the new MCP tools;
 Wrangler deployment access is already available. This configures development
 tools only: no feedback endpoint or D1 database has been deployed yet.
+
+### Feedback D1 provisioning — 2026-09-20
+
+The previous "no database deployed" status is **superseded**. Created the remote
+`dfm-mimir-feedback` database using Wrangler 4.135.0 with `--jurisdiction=eu`.
+Database ID: `fe4f6f32-9602-4215-80a6-848b0027f28b`. A subsequent `d1 info
+ dfm-mimir-feedback --json` verified `jurisdiction: eu`, execution region `EEUR`,
+read replication disabled and zero user tables. The database is empty; schema,
+Worker endpoint and app feedback UI are still to be implemented. No Worker has
+been deployed as part of this database-creation step.
