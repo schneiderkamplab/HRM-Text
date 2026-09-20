@@ -166,6 +166,8 @@ See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
 ### Include weights in a previously tested desktop package
 
 The recommended ready-to-use downloads include the tested Mimir Q4_K_M weights.
+They are available in the [bundled-weight desktop preview draft](https://github.com/schneiderkamplab/HRM-Text/releases/tag/untagged-e98901cc5b389f42408c)
+(requires a GitHub account with access to repository drafts).
 CI's smaller import-only bundles can be assembled on any host without recompiling
 their native binaries:
 
