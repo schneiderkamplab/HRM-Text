@@ -248,3 +248,21 @@ identifiers: sources now live under `native/app`, the Dart app package is
 `mimir-desktop.yml`. The SDK's required Flutter framework files and build
 commands retain their actual framework names. All platforms use new storage
 locations, with no migration or compatibility paths.
+
+### Feedback collection decision — 2026-09-20
+
+The user selected Cloudflare Workers + D1 for the planned feedback service,
+following evaluation of Supabase's inactivity pausing. No feedback service has
+been implemented or deployed yet. Requirements: thumbs up/down on a conversation;
+explicit confirmation before sending the current chat to the Mimir team to improve
+Mimir and other DFM models; a separate publication permission under CC BY, on by
+default; and an offered device-generated attribution pseudonym. The proposed
+pseudonym uses locally stored randomness, not a hardware identifier. Publication
+is a separate reviewed export, not automatic on submission. Account creation and
+Wrangler browser login precede remote provisioning; local implementation does not
+require credentials. Proposed deployment uses the free tier, a workers.dev URL,
+and a D1 EU jurisdiction selected at creation. D1 jurisdiction covers database
+execution/storage, not all Worker request processing. References:
+[Workers setup](https://developers.cloudflare.com/workers/get-started/guide/),
+[D1 setup](https://developers.cloudflare.com/d1/get-started/), and
+[D1 jurisdictions](https://developers.cloudflare.com/d1/configuration/data-location/).
