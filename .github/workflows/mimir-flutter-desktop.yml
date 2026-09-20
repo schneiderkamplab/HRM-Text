@@ -40,7 +40,9 @@ jobs:
         run: python -c "from pathlib import Path; Path('native/flutter/assets/model.gguf').touch()"
       - name: Resolve Flutter dependencies
         working-directory: native/flutter
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart pub get --directory packages/mimir_api
       - name: Check Flutter
         working-directory: native/flutter
         run: flutter analyze

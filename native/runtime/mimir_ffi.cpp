@@ -69,6 +69,38 @@ struct Engine {
                 {"fallbackReasons",loaded.failures},{"flashAttention",loaded.flash}});return;
         }
         if(!chat || !codec) throw std::runtime_error("Load a model first.");
+        if (op == "completion") {
+            const auto full = history(c);
+            mimir::Chat::validate_history(full);
+            const std::string prompt = c.at("prompt");
+            const int budget = c.at("budget");
+            if (budget < 1 || budget >= context) throw std::invalid_argument("Invalid reply budget.");
+            const auto request_system = c.value("system", system);
+            struct Restore {
+                mimir::Chat & chat; const std::string & system;
+                ~Restore() { chat.set_system(system); }
+            } restore{*chat, system};
+            conversation.clear();
+            chat->set_system(request_system);
+            chat->restore_history(full);
+            auto input = full;
+            if (!request_system.empty()) input.insert(input.begin(), {"system", request_system});
+            input.push_back({"user", prompt});
+            emit({{"type", "prepared"}, {"tokens", codec->prepare(input).tokens.size()}});
+            if (cancelled) chat->request_cancel();
+            mimir::Sampling sampling{c.value("temperature", 0.0f), c.value("top_p", 1.0f), c.value("seed", uint32_t(0))};
+            auto result = chat->reply(prompt, budget, [&](const std::string & text) {
+                emit({{"type", "token"}, {"text", text}});
+            }, sampling);
+            if (result.status != mimir::Status::ok && result.status != mimir::Status::cancelled) {
+                throw std::runtime_error(result.status == mimir::Status::capacity ?
+                    "Messages and reply exceed context." : "Native generation failed.");
+            }
+            emit({{"type", "reply"}, {"text", result.text}, {"cancelled", cancelled.load()},
+                {"limited", result.finish == mimir::Finish::length},
+                {"completionTokens", result.tokens.size() + (result.finish == mimir::Finish::eos ? 1 : 0)}});
+            return;
+        }
         auto full=history(c);
         mimir::Chat::validate_history(full);
         auto previous=memory(c);bool compact=c.value("compact",true);

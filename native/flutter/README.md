@@ -215,3 +215,9 @@ Distribution filenames follow `dfm-mimir-VERSION-PLATFORM-ARCH.EXT`, for example
 `dfm-mimir-0.1.0-linux-x64.tar.gz` and `dfm-mimir-0.1.0-windows-x64.zip`.
 Checksum sidecars append `.sha256`. Backend and development-signing details belong
 in release notes rather than filenames.
+
+## Local API and headless use
+
+Desktop apps can expose a local OpenAI-compatible text chat API, off by default.
+Packages also include `dfm-mimir-server` for headless operation without a display.
+See [API.md](API.md) for Settings, commands, supported fields, limits and tests.

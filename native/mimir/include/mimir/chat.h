@@ -23,6 +23,8 @@ private:
     std::unique_ptr<Impl> impl_;
 };
 
+struct Sampling { float temperature = 0; float top_p = 1; uint32_t seed = 0; };
+
 enum class Finish { eos, length, cancelled, error };
 struct Reply {
     Status status = Status::ok;
@@ -39,10 +41,11 @@ class Chat {
 public:
     Chat(std::shared_ptr<llama_model> model, Config config, std::string system = "");
     Reply reply(const std::string & user, uint32_t max_tokens,
-                const std::function<void(const std::string &)> & stream = {});
+                const std::function<void(const std::string &)> & stream = {}, Sampling sampling = {});
     void request_cancel() noexcept;
     bool cancelled() const noexcept { return cancelled_.load(std::memory_order_relaxed); }
     void recover(); // Clears runtime/cancellation, retaining completed history.
+    void set_system(const std::string & system);
     void reset();   // Starts a new conversation, retaining the system message.
     // Restore completed user/assistant pairs; validates before replacing history.
     // preserve_cache skips reset only if the validated history is identical.

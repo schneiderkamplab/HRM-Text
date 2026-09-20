@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
 import 'models.dart';
+import 'package:mimir_api/api/server.dart';
 
 class ChatStore extends ChangeNotifier {
   final InferenceEngine engine;
@@ -44,7 +45,48 @@ class ChatStore extends ChangeNotifier {
   List<Json> devices = [];
   int _countRevision = 0;
   Future<void> _saving = Future.value();
-  bool get busy => loading || generating || closing;
+  LocalApiServer? apiServer;
+  bool apiBusy = false;
+  int apiPort = 8080;
+  bool get desktop =>
+      Platform.isMacOS || Platform.isLinux || Platform.isWindows;
+  bool get busy => loading || generating || closing || apiBusy;
+  Future<void> setApiEnabled(bool enabled, {int? port}) async {
+    if (!desktop) return;
+    if (!enabled) {
+      final previous = apiServer;
+      apiServer = null;
+      await previous?.stop();
+      apiBusy = false;
+      notifyListeners();
+      return;
+    }
+    if (apiServer != null) return;
+    try {
+      late final LocalApiServer server;
+      server = LocalApiServer(
+        engine: engine,
+        ready: () => ready && !loading && !closing,
+        context: () => context,
+        budget: () => reply,
+        apiKey: Platform.environment['MIMIR_API_KEY'],
+        onBusy: (value) {
+          if (identical(apiServer, server)) {
+            apiBusy = value;
+            notifyListeners();
+          }
+        },
+      );
+      apiServer = server;
+      apiPort = port ?? apiPort;
+      await server.start(port: apiPort);
+    } catch (error) {
+      apiServer = null;
+      notice = 'Could not start local API: $error';
+    }
+    notifyListeners();
+  }
+
   // Restore the archive before allowing edits; inference loading is independent.
   bool get canCreateChat => conversationsReady && !generating && !closing;
   Conversation? get active => chats.where((c) => c.id == selected).firstOrNull;
@@ -498,6 +540,7 @@ class ChatStore extends ChangeNotifier {
     stop();
     closing = true;
     notifyListeners();
+    await setApiEnabled(false);
     await engine.close();
     await _saving;
   }

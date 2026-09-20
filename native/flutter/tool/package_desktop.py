@@ -10,7 +10,7 @@ import subprocess
 import sys
 import tempfile
 
-from package_archive import app_version, digest, package_name, write_archive
+from package_archive import app_version, compile_server, digest, package_name, write_archive
 
 ROOT = Path(__file__).resolve().parents[3]
 APP = ROOT / 'native/flutter'
@@ -74,6 +74,10 @@ def main():
     bundle = APP / 'build' / target / arch / ('release/bundle' if target == 'linux' else 'runner/Release')
     if not bundle.is_dir():
         raise RuntimeError(f'Missing Flutter bundle: {bundle}')
+    dart = Path(flutter).parent / ('dart.bat' if target == 'windows' else 'dart')
+    server = bundle / ('dfm-mimir-server.exe' if target == 'windows' else 'dfm-mimir-server')
+    compile_server(dart, server)
+    run(server, '--help')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     name = package_name(app_version(), target, arch)

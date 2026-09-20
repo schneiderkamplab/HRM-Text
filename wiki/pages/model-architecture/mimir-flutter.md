@@ -198,3 +198,16 @@ would need request arbitration with UI generation plus request-level prompt and
 sampling semantics; merely forwarding arbitrary Chat Completions JSON is not
 sufficient. The separate patched `llama-server` implements `/v1/models` and
 `/v1/chat/completions`, but is not launched or bundled by these apps.
+
+### Desktop API implementation — 2026-09-20
+
+The earlier no-API statement is **superseded**. Desktop Settings now exposes an
+opt-in localhost Chat Completions server. A plain Dart `mimir_api` package shares
+FFI/HTTP code between Flutter and an AOT `dfm-mimir-server` companion executable,
+so Linux headless operation does not require a display or Flutter engine. Native
+commands serialize UI/API work, isolate request cancellation, and reset API
+system/sampling state without editing saved chats. Exact templated PrefixLM API
+requests do not use compaction or MixedLM reuse. Supported API subset and limits
+are documented in [API.md](../../../native/flutter/API.md). Local real-model CPU
+HTTP checks and nine native regression tests pass; desktop packaging qualification
+is in progress.

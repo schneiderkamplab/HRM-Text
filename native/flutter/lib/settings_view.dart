@@ -14,9 +14,11 @@ class _SettingsViewState extends State<SettingsView> {
   late final c = TextEditingController(text: '${s.context}'),
       r = TextEditingController(text: '${s.reply}');
   late String device = s.device;
+  late final apiPort = TextEditingController(text: '${s.apiPort}');
   ChatStore get s => widget.store;
   @override
   void dispose() {
+    apiPort.dispose();
     c.dispose();
     r.dispose();
     super.dispose();
@@ -71,6 +73,34 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               Text('Profile: ${s.profile.name}'),
               Text(s.engineLabel),
+              if (s.desktop) ...[
+                const Divider(),
+                TextField(
+                  controller: apiPort,
+                  enabled: s.apiServer == null,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Local API port',
+                  ),
+                ),
+                SwitchListTile(
+                  title: const Text('OpenAI-compatible local API'),
+                  subtitle: Text(
+                    s.apiServer?.address ?? 'Off · localhost only',
+                  ),
+                  value: s.apiServer != null,
+                  onChanged: (enabled) async {
+                    final port = int.tryParse(apiPort.text);
+                    if (port == null || port < 1 || port > 65535) {
+                      s.setNotice('API port must be 1–65535.');
+                      return;
+                    }
+                    await s.setApiEnabled(enabled, port: port);
+                  },
+                ),
+                if (s.apiBusy) const Text('Serving API requests…'),
+                const Divider(),
+              ],
               if (s.backendFallbackReasons.isNotEmpty)
                 Text(
                   'Automatic fallback: ${s.backendFallbackReasons.join('; ')}',

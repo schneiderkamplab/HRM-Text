@@ -4,6 +4,7 @@ import os
 import re
 from pathlib import Path
 import shutil
+import subprocess
 
 
 def digest(path):
@@ -32,3 +33,10 @@ def app_version():
 
 def package_name(version, platform, architecture):
     return f'dfm-mimir-{version}-{platform}-{architecture}'
+
+
+def compile_server(dart, output):
+    package = Path(__file__).resolve().parents[1] / 'packages/mimir_api'
+    subprocess.run([str(dart), 'pub', 'get'], cwd=package, check=True)
+    subprocess.run([str(dart), 'compile', 'exe', 'bin/server.dart', '-o', str(output)],
+                   cwd=package, check=True)

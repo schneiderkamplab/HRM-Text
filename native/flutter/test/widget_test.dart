@@ -13,7 +13,11 @@ class FakeEngine implements InferenceEngine {
   bool stopped = false, closed = false;
   Future<List<Json>> Function(Json, void Function(Json)?)? handler;
   @override
-  Future<List<Json>> command(Json c, {void Function(Json)? onEvent}) async {
+  Future<List<Json>> command(
+    Json c, {
+    void Function(Json)? onEvent,
+    Cancellation? cancellation,
+  }) async {
     if (handler != null) return handler!(c, onEvent);
     return c['op'] == 'count'
         ? [

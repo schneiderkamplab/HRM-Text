@@ -2,6 +2,7 @@
 #include "utf8.h"
 #include <algorithm>
 #include <stdexcept>
+#include <cmath>
 
 namespace mimir {
 Chat::Chat(std::shared_ptr<llama_model> model, Config config, std::string system)
@@ -18,6 +19,12 @@ void Chat::request_cancel() noexcept {
 void Chat::recover() {
     session_.reset();
     cancelled_.store(false, std::memory_order_relaxed);
+}
+
+void Chat::set_system(const std::string & system) {
+    detail::require_utf8(system);
+    system_ = system;
+    reset();
 }
 
 void Chat::reset() {
@@ -50,7 +57,20 @@ void Chat::restore_history(const std::vector<Message> & messages, bool preserve_
 }
 
 Reply Chat::reply(const std::string & user, uint32_t max_tokens,
-                  const std::function<void(const std::string &)> & stream) {
+                  const std::function<void(const std::string &)> & stream, Sampling sampling) {
+    if (!std::isfinite(sampling.temperature) || sampling.temperature < 0 || sampling.temperature > 2 ||
+        !std::isfinite(sampling.top_p) || sampling.top_p <= 0 || sampling.top_p > 1) {
+        throw std::invalid_argument("Invalid sampling parameters");
+    }
+    auto sampler = std::unique_ptr<llama_sampler, decltype(&llama_sampler_free)>(
+        llama_sampler_chain_init(llama_sampler_chain_default_params()), llama_sampler_free);
+    if (sampling.temperature > 0) {
+        llama_sampler_chain_add(sampler.get(), llama_sampler_init_top_p(sampling.top_p, 1));
+        llama_sampler_chain_add(sampler.get(), llama_sampler_init_temp(sampling.temperature));
+        llama_sampler_chain_add(sampler.get(), llama_sampler_init_dist(sampling.seed));
+    } else {
+        llama_sampler_chain_add(sampler.get(), llama_sampler_init_greedy());
+    }
     if (cancelled_.load(std::memory_order_relaxed)) {
         Reply reply;
         reply.status = Status::cancelled;
@@ -76,8 +96,13 @@ Reply Chat::reply(const std::string & user, uint32_t max_tokens,
         }
         for (uint32_t i = 0; i < max_tokens; ++i) {
             if (cancelled_.load(std::memory_order_relaxed)) { break; }
-            // Greedy sampling is intentionally deterministic for the first text path.
-            const auto token = llama_token(std::max_element(next.logits.begin(), next.logits.end()) - next.logits.begin());
+            std::vector<llama_token_data> candidates;
+            candidates.reserve(next.logits.size());
+            for (size_t j = 0; j < next.logits.size(); ++j) candidates.push_back({llama_token(j), next.logits[j], 0});
+            llama_token_data_array probabilities{candidates.data(), candidates.size(), -1, false};
+            llama_sampler_apply(sampler.get(), &probabilities);
+            const auto token = probabilities.data[probabilities.selected].id;
+            llama_sampler_accept(sampler.get(), token);
             if (codec_.is_end(token)) {
                 reply.finish = Finish::eos;
                 reply.stop_token = token;

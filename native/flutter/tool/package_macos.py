@@ -5,9 +5,10 @@ import json
 from pathlib import Path
 import plistlib
 import subprocess
+import shutil
 import tempfile
 
-from package_archive import digest, package_name
+from package_archive import compile_server, digest, package_name
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -21,6 +22,7 @@ def main():
     parser.add_argument('--app', type=Path, default=ROOT / 'native/flutter/build/macos/Build/Products/Release/DFM Mimir Flutter.app')
     parser.add_argument('--model-sha256', required=True)
     parser.add_argument('--output', type=Path, default=ROOT / 'logs/packages/with-model/macos')
+    parser.add_argument('--dart', default='dart', help='Dart SDK executable from Flutter')
     args = parser.parse_args()
     app, output = args.app.resolve(strict=True), args.output.resolve()
     info = plistlib.loads((app / 'Contents/Info.plist').read_bytes())
@@ -41,6 +43,15 @@ def main():
         stage, mount = work / 'stage', work / 'mount'
         stage.mkdir(); mount.mkdir()
         run('ditto', app, stage / app.name)
+        dart = shutil.which(args.dart)
+        if not dart:
+            raise ValueError('Dart compiler not found; pass --dart from your Flutter SDK')
+        server = stage / app.name / 'Contents/MacOS/dfm-mimir-server'
+        compile_server(dart, server)
+        run(server, '--help')
+        run('codesign', '--force', '--sign', '-', server)
+        run('codesign', '--force', '--sign', '-', '--entitlements',
+            ROOT / 'native/flutter/macos/Runner/Release.entitlements', stage / app.name)
         (stage / 'Applications').symlink_to('/Applications')
         (stage / 'Read Me.txt').write_text(
             f"DFM Mimir Flutter — development preview\n\nApple Silicon; macOS {info['LSMinimumSystemVersion']} or later.\n"
