@@ -217,3 +217,13 @@ generation and GPU qualification remain outstanding. Settings displays the activ
 URL and permits toggling the API and editing its port while stopped. The bind
 address is fixed to IPv4 loopback; toggle/port settings are session-only.
 See [validation evidence](../../../native/flutter/VALIDATION.md).
+
+### Display branding — 2026-09-20
+
+The macOS product, DMG volume/readme and iOS display name now use **DFM Mimir**;
+the previous **DFM Mimir Flutter** display branding is superseded. Bundle IDs and
+the existing conversation storage directory remain stable to preserve user data.
+Android and Linux/Windows window titles already use DFM Mimir. Linux/Windows
+executable filenames remain `mimir_flutter`/`mimir_flutter.exe`; Windows version
+metadata still uses that internal name. Download filenames retain the uniform
+`dfm-mimir-0.1.0-platform-arch.extension` convention.

@@ -43,7 +43,7 @@ when rebuilding. Xcode targets intentionally use arm64. Intel Mac remains unqual
 iOS builds need signing/provisioning before installation. CocoaPods fallback currently produces a
 Flutter warning that this local FFI plugin has no Swift Package Manager manifest.
 
-Mac product: `build/macos/Build/Products/Release/DFM Mimir Flutter.app`.
+Mac product: `build/macos/Build/Products/Release/DFM Mimir.app`.
 iOS product: `build/ios/iphonesimulator/Runner.app`. Install using
 `xcrun simctl install booted build/ios/iphonesimulator/Runner.app`, then launch
 `xcrun simctl launch booted dk.sdu.mimirFlutter` (or `flutter run -d DEVICE_ID`).
@@ -203,7 +203,7 @@ python native/flutter/tool/package_macos.py \
   --model-sha256 3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5
 ```
 
-The DMG contains `DFM Mimir Flutter.app`, an Applications shortcut, a readme and
+The DMG contains `DFM Mimir.app`, an Applications shortcut, a readme and
 source/model metadata. The tool verifies the app signature and model hash before
 packaging, verifies and mounts the image, then repeats signature/model checks.
 It preserves the Flutter app identity and does not replace the separate SwiftUI

@@ -19,7 +19,7 @@ def run(*args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--app', type=Path, default=ROOT / 'native/flutter/build/macos/Build/Products/Release/DFM Mimir Flutter.app')
+    parser.add_argument('--app', type=Path, default=ROOT / 'native/flutter/build/macos/Build/Products/Release/DFM Mimir.app')
     parser.add_argument('--model-sha256', required=True)
     parser.add_argument('--output', type=Path, default=ROOT / 'logs/packages/with-model/macos')
     parser.add_argument('--dart', default='dart', help='Dart SDK executable from Flutter')
@@ -54,7 +54,7 @@ def main():
             ROOT / 'native/flutter/macos/Runner/Release.entitlements', stage / app.name)
         (stage / 'Applications').symlink_to('/Applications')
         (stage / 'Read Me.txt').write_text(
-            f"DFM Mimir Flutter — development preview\n\nApple Silicon; macOS {info['LSMinimumSystemVersion']} or later.\n"
+            f"DFM Mimir — development preview\n\nApple Silicon; macOS {info['LSMinimumSystemVersion']} or later.\n"
             f"Drag {app.name} to Applications, then open it there and eject this disk image.\n"
             'Mimir Q4_K_M weights are included. Chat works offline with Metal or CPU.\n'
             'This preview is not Developer ID signed or notarized. If Gatekeeper blocks it,\n'
@@ -70,7 +70,7 @@ def main():
         }
         (stage / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
         image = work / name
-        run('hdiutil', 'create', '-volname', 'DFM Mimir Flutter', '-srcfolder', stage, '-format', 'UDZO', '-fs', 'HFS+', image)
+        run('hdiutil', 'create', '-volname', 'DFM Mimir', '-srcfolder', stage, '-format', 'UDZO', '-fs', 'HFS+', image)
         run('hdiutil', 'verify', image)
         run('hdiutil', 'attach', image, '-readonly', '-nobrowse', '-mountpoint', mount)
         try:

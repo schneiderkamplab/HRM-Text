@@ -28,7 +28,7 @@ weights but needs no Flutter window or display server. Keep the package together
 # Linux, from the extracted package:
 ./dfm-mimir-server --port 8080
 # macOS, from the installed app:
-"/Applications/DFM Mimir Flutter.app/Contents/MacOS/dfm-mimir-server" --port 8080
+"/Applications/DFM Mimir.app/Contents/MacOS/dfm-mimir-server" --port 8080
 # Windows PowerShell, from the extracted package:
 .\dfm-mimir-server.exe --port 8080
 ```
