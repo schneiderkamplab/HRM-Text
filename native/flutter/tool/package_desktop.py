@@ -59,7 +59,17 @@ def main():
             else:
                 asset.touch()
             run(flutter, 'pub', 'get', env=env)
-            run(flutter, 'build', target, '--release', env=env)
+            try:
+                run(flutter, 'build', target, '--release', env=env)
+            except subprocess.CalledProcessError:
+                # Flutter's MSBuild summary can hide the actual install failure.
+                # Re-run only installation to expose its error without recompiling.
+                if target == 'windows':
+                    builds = list((APP / 'build/windows').glob('*/cmake_install.cmake'))
+                    for install_script in builds:
+                        subprocess.run(['cmake', '--install', str(install_script.parent),
+                                        '--config', 'Release', '--verbose'], env=env)
+                raise
         finally:
             asset.unlink(missing_ok=True)
             if had_asset:
