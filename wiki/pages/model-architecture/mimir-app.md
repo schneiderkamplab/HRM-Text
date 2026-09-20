@@ -1,16 +1,16 @@
 ---
 type: Technical Reference
-title: Mimir Flutter client and portable backend selection
+title: DFM Mimir app and portable backend selection
 description: Separate Flutter client, shared native engine, local backend evidence and remaining platform qualification.
 tags: [mimir, flutter, desktop, mobile, backends]
 status: draft
 last_updated: 2026-09-20
 confidence: high
 ---
-# Mimir Flutter and portable backends
+# DFM Mimir app and portable backends
 
 The [Flutter client](../../../native/app/README.md) is separate from the
-[SwiftUI app](mimir-apple-mvp.md), with bundle ID `dk.sdu.mimirFlutter` and a
+[SwiftUI app](mimir-apple-mvp.md), with bundle ID `dk.sdu.mimir` and a
 separate local archive. Initial packaged targets are Apple Silicon Mac and arm64
 iOS simulator. Android was initially only a runner scaffold; the Android
 development integration below supersedes that status. Linux/Windows remain

@@ -112,7 +112,7 @@ void main() {
   });
   test('streamed summary, successful commit, cancellation rollback and archive position', () async {
     final directory = await Directory.systemTemp.createTemp(
-      'mimir-flutter-test',
+      'dfm-mimir-test',
     );
     final e = FakeEngine();
     final s = fixture(e, directory);
@@ -299,7 +299,7 @@ void main() {
   });
   testWidgets('sidebar identity, branding and composer send', (tester) async {
     final directory = Directory.systemTemp.createTempSync(
-      'mimir-flutter-widget',
+      'dfm-mimir-widget',
     );
     final e = FakeEngine();
     final s = fixture(e, directory, persist: false);

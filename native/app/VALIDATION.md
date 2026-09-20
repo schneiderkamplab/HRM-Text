@@ -352,3 +352,46 @@ no iOS package was rebuilt for this macOS refresh.
 
 Replacement `dfm-mimir-0.1.0-macos-arm64.dmg` SHA-256:
 `59bd36d9be121f0148a7f7e493fc321b0fcfcaf141fe240ac46c05772aba8871`.
+
+### Complete app identity refresh — 2026-09-20
+
+The earlier storage-preservation decision and branding-only artifacts are
+**superseded** by the user's instruction to use new identities and locations
+without migration. Source `e48401c` uses `native/app`, Dart package `dfm_mimir`,
+platform ID `dk.sdu.mimir`, and the `DFM Mimir` conversation directory. Linux and
+Windows GUI executables are `dfm-mimir` and `dfm-mimir.exe`; Windows product and
+file-description metadata use DFM Mimir. Framework SDK names remain unchanged.
+
+- Analyzer clean; **14 tests passed** locally and on both CI hosts.
+- [Linux/Windows CI run 35509226004](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35509226004)
+  passed protocol/UI tests, backend policy, portable package builds, native
+  startup/backend probes and headless compilation/startup.
+- macOS release build and DMG verification passed, including signature, model
+  hash, new bundle identity and headless startup. Real-model generation from the
+  mounted DMG using Metal returned `2 + 2 = 4.` and stopped cleanly on SIGTERM.
+- Android ARM64 release build passed; inspected package ID `dk.sdu.mimir` and
+  label DFM Mimir, signature verification, 16 KiB ZIP alignment, ARM64-only native
+  libraries and the bundled model hash. Physical Android GPU testing remains
+  outstanding.
+- iOS simulator debug build passed; inspected CFBundleName/DisplayName DFM Mimir
+  and CFBundleIdentifier `dk.sdu.mimir`. No iOS distribution package was produced.
+
+Evidence: `logs/app-identity-{analyze,tests,desktop-ci}.log`,
+`logs/app-identity-macos-{build,package}.log`,
+`logs/app-identity-packaged-{api,server}.log`, and
+`logs/app-identity-{android,ios}-build.log`. Linux/Windows archive checks include
+all file/model hashes, executable names, and Linux execute permissions / Windows
+version-resource fields. This remains build/package qualification on those two
+hosts, not real-model hardware qualification.
+
+The knowledge-bundle validator reports only two pre-existing errors in the
+unrelated benchmark-charts page (missing frontmatter and index coverage).
+
+Refreshed artifact SHA-256 values:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `dfm-mimir-0.1.0-macos-arm64.dmg` | `ee1dd114cf3afc9b812c964523c8202f2cea18f783dafe12e117980bc376a27e` |
+| `dfm-mimir-0.1.0-linux-x64.tar.gz` | `a06fa1538e6ec1e5c7ee4344f3892b681509d0bd2788512483e83c0f3427e0ff` |
+| `dfm-mimir-0.1.0-windows-x64.zip` | `229f8e38449263474f5d3dd7adfa416d193c7bf7e131601495e218b745e351b8` |
+| `dfm-mimir-0.1.0-android-arm64.apk` | `3dfa756b77c7b36418a1d905427ac0fa4e52eb472fcc8082a017962ea0d87883` |

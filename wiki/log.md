@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-20: Renamed the portable app source directory to `native/app` and its knowledge page to [DFM Mimir App](pages/model-architecture/mimir-app.md); standardized product identities and fresh storage locations.
+
 ## 2026-09-20 - Start portable packages and automatic backend fallback
 
 - Added desktop native packaging, platform paths/memory probes, ranked initialization retries and fallback diagnostics.

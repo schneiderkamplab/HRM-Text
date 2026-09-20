@@ -1,4 +1,4 @@
-# DFM Mimir — Flutter
+# DFM Mimir
 
 A separate Flutter client sharing Mimir's C++ chat and compaction implementation
 with the SwiftUI app. Initial packaged targets are **Apple Silicon macOS 14+** and
@@ -65,7 +65,7 @@ Debug simulator execution is not a physical-iPhone performance measurement.
 ```sh
 # From repository root after native build:
 python3 native/runtime/tests/smoke.py \
-  logs/mimir-flutter-native/macos/Release/MimirRuntime.framework/MimirRuntime \
+  logs/mimir-app-native/macos/Release/MimirRuntime.framework/MimirRuntime \
   /absolute/path/mimir-q4_k_m.gguf native/app/assets/profile.json
 ```
 
