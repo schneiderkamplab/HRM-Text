@@ -66,3 +66,25 @@ app (including the headless server) passed the audit with 63 files. DMG integrit
 mounted-app signature and model checksum verification passed. SHA-256:
 `ddd06c02f9898957abfbfcb49e8a80785901c25d8a7bc8f9829b90229b5fc7da`.
 Existing GitHub release downloads were not replaced by this implementation task.
+
+## Release download replacement — 2026-09-20
+
+The prior statement that release downloads were unchanged is **superseded** by
+the user's subsequent request to replace them. All four platform packages and
+their SHA-256 sidecars were replaced in the existing
+[DFM Mimir bundled-weight draft release](https://github.com/schneiderkamplab/HRM-Text/releases/tag/untagged-bf1f441765506ebccc3d).
+The draft status and tag were preserved; release notes now describe opt-in feedback.
+
+Linux/Windows reuse the successful `c813ba3` CI binaries, with the existing verified
+Q4_K_M weights added through `bundle_model.py`. Repacked archive/file/model hashes
+and Linux executable permissions passed. Android was rebuilt from the final source;
+APK signing, ARM64 ABI and 16 KiB ZIP/ELF alignment passed. All package audits passed.
+GitHub's reported SHA-256, size and uploaded state matched all eight local files.
+Remote uploads completed by 2026-09-20 13:36:09 UTC (15:36:09 Copenhagen).
+
+| Package | SHA-256 | GitHub asset ID |
+|---|---|---|
+| `dfm-mimir-0.1.0-macos-arm64.dmg` | `ddd06c02f9898957abfbfcb49e8a80785901c25d8a7bc8f9829b90229b5fc7da` | `576867503` |
+| `dfm-mimir-0.1.0-linux-x64.tar.gz` | `060e7968ad8f825285a0c38db9ee7b3f1147b5a211ab3870fae205098c9327d0` | `576869694` |
+| `dfm-mimir-0.1.0-windows-x64.zip` | `18671940d233dfb8fc97b6f3cb4a553b5e1076d764bfc8e03388a6869a7f832b` | `576869697` |
+| `dfm-mimir-0.1.0-android-arm64.apk` | `b6ce6ea3ea31c8c1a7c7e4df93204bd1ada054897e385fce1c4e57695fca7f17` | `576869701` |

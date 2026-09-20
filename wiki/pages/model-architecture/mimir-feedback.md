@@ -63,3 +63,12 @@ than inferring physical device/GPU qualification from host tests.
 Before significant collection, decide/operate a retention schedule, monitor D1
 capacity and abuse, and perform human publication review. The current CLI export
 is intended for small reviewed datasets; add paging before large exports.
+
+## Release replacement — 2026-09-20
+
+The previous "downloads not replaced" status is **superseded** by the user's
+explicit replacement request. macOS, Linux, Windows and Android bundled-weight
+packages and all checksum sidecars were uploaded to the existing draft release
+`untagged-bf1f441765506ebccc3d`. Its draft status/tag were preserved. Remote digests,
+file sizes and uploaded states matched all eight local files; last upload completed
+at 13:36:09 UTC. The feedback testing report records artifact IDs and checksums.
