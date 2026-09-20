@@ -99,3 +99,14 @@ iOS 18.4 simulator. Mac release and iOS simulator builds pass with Xcode 27.0.
 An initial Android automation failure was resolved by tapping the composer after
 closing Settings before injecting test input; no application workaround was
 needed. See the validation report for the reproducible command.
+
+## Proposed cross-platform release plan — 2026-09-20
+
+The [packaging plan](../../../native/flutter/PACKAGING-PLAN.md) proposes portable
+CPU packages plus qualified Metal/CUDA/Vulkan acceleration across all five OS
+families. Inspection confirmed that current automatic device selection only
+falls back when no GPU exists; model/context load failures do not yet trigger a
+CPU retry. Desktop dynamic backend deployment also requires replacing the forced
+static build configuration, and Linux/Windows model paths/native packaging are
+unfinished. These are planned changes, not implemented capabilities. Specialty
+backends and additional architectures follow real hardware qualification.
