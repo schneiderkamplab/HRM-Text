@@ -187,3 +187,14 @@ were renamed in place (binary content and hashes unchanged); packaging tools
 read the app version rather than hardcoding it. This supersedes earlier preview
 and unversioned filenames. Draft release tags may differ from their initial name;
 resolve the current tag from the release ID before uploading assets.
+
+### API availability — 2026-09-20
+
+The packaged apps do not start an HTTP listener or expose an OpenAI-compatible
+endpoint. Flutter talks to the in-process C ABI (`native/runtime/mimir_ffi.*`),
+which accepts one command at a time and streams polled events. The current chat
+path uses greedy sampling and a system prompt selected at model load. An app API
+would need request arbitration with UI generation plus request-level prompt and
+sampling semantics; merely forwarding arbitrary Chat Completions JSON is not
+sufficient. The separate patched `llama-server` implements `/v1/models` and
+`/v1/chat/completions`, but is not launched or bundled by these apps.
