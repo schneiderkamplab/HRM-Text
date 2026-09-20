@@ -9,7 +9,7 @@ A CI-produced CPU/import-only archive is a development artifact, not GPU evidenc
    workflow. Extract the outer Actions artifact and then the tar.gz/ZIP inside it.
    Verify the SHA-256 sidecar and retain the included source/model/file manifest.
 2. Keep the complete extracted directory together. Move it to another directory
-   (also test a path containing spaces) and launch `mimir_flutter` / `mimir_flutter.exe`
+   (also test a path containing spaces) and launch `dfm-mimir` / `dfm-mimir.exe`
    from a different working directory. On Linux, use a supported desktop with GTK3;
    the Ubuntu 22.04 build does not promise portability to every distribution.
 3. For import-only packages, open Model and settings and import the same Mimir

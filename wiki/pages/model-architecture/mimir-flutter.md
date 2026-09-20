@@ -227,3 +227,11 @@ Android and Linux/Windows window titles already use DFM Mimir. Linux/Windows
 executable filenames remain `mimir_flutter`/`mimir_flutter.exe`; Windows version
 metadata still uses that internal name. Download filenames retain the uniform
 `dfm-mimir-0.1.0-platform-arch.extension` convention.
+
+The remaining executable/metadata naming limits above are **superseded** by the
+follow-up: Linux/Windows GUI binaries are `dfm-mimir`/`dfm-mimir.exe`; Windows
+ProductName/FileDescription are DFM Mimir and InternalName is dfm-mimir. iOS
+CFBundleName also uses DFM Mimir. Windows conversation storage is explicitly
+anchored to its existing `dk.sdu/mimir_flutter` directory because path_provider
+derives the default directory from ProductName. Bundle IDs, Dart package names
+and storage identifiers are intentionally stable implementation identities.

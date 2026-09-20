@@ -9,7 +9,18 @@ import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
 import 'models.dart';
+
 import 'package:mimir_api/api/server.dart';
+
+// Storage identity is independent of display branding. On Windows path_provider
+// derives the last directory component from the executable's ProductName.
+String conversationStoragePath(String supportPath, {required bool windows}) {
+  final paths = windows ? p.windows : p.posix;
+  final root = windows
+      ? paths.join(paths.dirname(supportPath), 'mimir_flutter')
+      : supportPath;
+  return paths.join(root, 'DFM Mimir Flutter');
+}
 
 class ChatStore extends ChangeNotifier {
   final InferenceEngine engine;
@@ -121,9 +132,9 @@ class ChatStore extends ChangeNotifier {
         ),
       );
       directory ??= Directory(
-        p.join(
+        conversationStoragePath(
           (await getApplicationSupportDirectory()).path,
-          'DFM Mimir Flutter',
+          windows: Platform.isWindows,
         ),
       );
       await directory!.create(recursive: true);

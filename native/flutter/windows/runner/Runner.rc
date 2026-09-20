@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "dk.sdu" "\0"
-            VALUE "FileDescription", "mimir_flutter" "\0"
+            VALUE "FileDescription", "DFM Mimir" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mimir_flutter" "\0"
+            VALUE "InternalName", "dfm-mimir" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 dk.sdu. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mimir_flutter.exe" "\0"
-            VALUE "ProductName", "mimir_flutter" "\0"
+            VALUE "OriginalFilename", "dfm-mimir.exe" "\0"
+            VALUE "ProductName", "DFM Mimir" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

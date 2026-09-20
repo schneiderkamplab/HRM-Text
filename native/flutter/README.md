@@ -142,8 +142,8 @@ python native/flutter/tool/package_desktop.py --without-model --backends cpu,cud
 
 Outputs go to `logs/packages`: Linux tar.gz or Windows ZIP, SHA-256 sidecar,
 and a per-file/source/model manifest inside the archive. These are unsigned
-development bundles. Extract the whole folder and run `mimir_flutter` or
-`mimir_flutter.exe`. CPU is always included; optional backend libraries are
+development bundles. Extract the whole folder and run `dfm-mimir` or
+`dfm-mimir.exe`. CPU is always included; optional backend libraries are
 loaded from the runtime's directory, not the current working directory. CPU
 variants are selected at runtime on x64. Windows bundles include the release CRT.
 CUDA bundles include CUDA user-space runtime libraries; the system GPU driver

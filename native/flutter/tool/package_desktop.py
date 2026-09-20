@@ -88,7 +88,7 @@ def main():
         shutil.copy2(APP / 'PACKAGING-PLAN.md', stage / 'PACKAGING-PLAN.md')
         shutil.copytree(APP / 'assets/licenses', stage / 'licenses', dirs_exist_ok=True)
         (stage / 'README.txt').write_text(
-            'DFM Mimir\nRun mimir_flutter' + ('.exe' if target == 'windows' else '') +
+            'DFM Mimir\nRun dfm-mimir' + ('.exe' if target == 'windows' else '') +
             '.\nKeep the complete folder together. No SDK/compiler is required.\n'
             'A compatible OS and system GPU driver are still required for acceleration.\n'
             'Use Model and settings to import a PrefixLM Mimir GGUF or select CPU.\n'

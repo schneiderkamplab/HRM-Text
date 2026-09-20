@@ -54,6 +54,22 @@ ChatStore fixture(FakeEngine e, Directory directory, {bool persist = true}) {
 }
 
 void main() {
+  test('display branding keeps existing conversation storage identity', () {
+    expect(
+      conversationStoragePath(
+        r'C:\Users\user\AppData\Roaming\dk.sdu\DFM Mimir',
+        windows: true,
+      ),
+      r'C:\Users\user\AppData\Roaming\dk.sdu\mimir_flutter\DFM Mimir Flutter',
+    );
+    expect(
+      conversationStoragePath(
+        '/home/user/.local/share/dk.sdu.mimir_flutter',
+        windows: false,
+      ),
+      '/home/user/.local/share/dk.sdu.mimir_flutter/DFM Mimir Flutter',
+    );
+  });
   test(
     'load exposes actual fallback backend and keeps explicit limits',
     () async {
