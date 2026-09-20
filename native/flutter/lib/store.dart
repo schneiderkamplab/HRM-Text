@@ -237,6 +237,9 @@ class ChatStore extends ChangeNotifier {
   }
 
   Future<void> load() async {
+    backendFallbackReasons = [];
+    actualBackend = '';
+    engineLabel = 'Loading model…';
     loading = true;
     ready = false;
     used = null;

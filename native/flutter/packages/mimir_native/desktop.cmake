@@ -1,5 +1,6 @@
-# The plugin symlink resolves back into this repository before locating native code.
-get_filename_component(MIMIR_NATIVE_ROOT "${MIMIR_PLUGIN_ROOT}/../../.." ABSOLUTE)
+# Resolve relative to the Flutter runner, not plugin junctions (Windows REALPATH
+# does not consistently resolve Flutter's directory junctions).
+get_filename_component(MIMIR_NATIVE_ROOT "${CMAKE_SOURCE_DIR}/../.." ABSOLUTE)
 set(MIMIR_DYNAMIC_BACKENDS ON CACHE BOOL "" FORCE)
 set(MIMIR_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GGML_METAL OFF CACHE BOOL "" FORCE)
@@ -34,6 +35,9 @@ function(mimir_collect_libraries directory output)
         get_target_property(kind ${target} TYPE)
         if(kind STREQUAL "SHARED_LIBRARY" OR kind STREQUAL "MODULE_LIBRARY")
             list(APPEND libraries "$<TARGET_FILE:${target}>")
+            if(UNIX AND kind STREQUAL "SHARED_LIBRARY")
+                list(APPEND libraries "$<TARGET_SONAME_FILE:${target}>")
+            endif()
         endif()
     endforeach()
     get_property(children DIRECTORY "${directory}" PROPERTY SUBDIRECTORIES)

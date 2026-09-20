@@ -46,41 +46,47 @@ inline Loaded load(const Json & command) {
     const auto host_available = available_memory();
     result.device = try_backends(candidates, [&](const BackendCandidate & candidate) {
         auto selected = tools::select_device(candidate.id);
+        const bool gpu = selected && (ggml_backend_dev_type(selected) == GGML_BACKEND_DEVICE_TYPE_GPU ||
+                                      ggml_backend_dev_type(selected) == GGML_BACKEND_DEVICE_TYPE_IGPU);
         uint64_t available = host_available;
         if (selected && ggml_backend_dev_type(selected) == GGML_BACKEND_DEVICE_TYPE_GPU) {
             size_t free = 0, total = 0; ggml_backend_dev_memory(selected, &free, &total);
             if (free) { available = std::min(available, uint64_t(free)); }
         }
-        int context = explicit_context ? explicit_context : minimum;
-        if (!explicit_context) {
-            for (int tier : profile.at("contextTiers")) {
-                if (tier < minimum || tier > maximum) { throw std::invalid_argument("Invalid context tier."); }
-                const long double required = command.at("modelBytes").get<uint64_t>() +
-                    profile.at("fixedMemoryBytes").get<uint64_t>() +
-                    (long double)tier * profile.at("memoryBytesPerToken").get<uint64_t>() +
-                    (candidate.accelerator ? 0 : (long double)tier * tier * profile.at("cpuAttentionBytesPerTokenSquared").get<uint64_t>());
-                if (required <= available * fraction) { context = std::max(context, tier); }
+        const auto choose_context = [&](bool flash) {
+            int context = explicit_context ? explicit_context : minimum;
+            if (!explicit_context) {
+                for (int tier : profile.at("contextTiers")) {
+                    if (tier < minimum || tier > maximum) { throw std::invalid_argument("Invalid context tier."); }
+                    const long double required = command.at("modelBytes").get<uint64_t>() +
+                        profile.at("fixedMemoryBytes").get<uint64_t>() +
+                        (long double)tier * profile.at("memoryBytesPerToken").get<uint64_t>() +
+                        (flash ? 0 : (long double)tier * tier * profile.at("cpuAttentionBytesPerTokenSquared").get<uint64_t>());
+                    if (required <= available * fraction) { context = std::max(context, tier); }
+                }
             }
-        }
+            return context;
+        };
         // Local ownership releases failed models/contexts before the next attempt.
         auto model = tools::load_model(path, candidate.id);
         Config config;
-        config.context_tokens = config.batch_tokens = context;
+        config.flash_attention = command.value("flash", gpu);
+        config.context_tokens = config.batch_tokens = choose_context(config.flash_attention);
         config.threads = threads; config.allow_context_extension = true;
         config.mixed_lm = command.value("mixedLM", false);
-        config.flash_attention = command.value("flash", candidate.accelerator);
         std::shared_ptr<Chat> chat;
         try { chat = std::make_shared<Chat>(model, config, system); }
         catch (const std::runtime_error & e) {
             if (!candidate.accelerator || command.contains("flash") || !config.flash_attention) { throw BackendFailure(e.what()); }
             result.failures.push_back(candidate.id + ": context with flash attention failed; retrying without flash attention");
             config.flash_attention = false;
+            config.context_tokens = config.batch_tokens = choose_context(false);
             try { chat = std::make_shared<Chat>(model, config, system); }
             catch (const std::runtime_error & retry) { throw BackendFailure(retry.what()); }
         }
         auto codec = std::make_unique<TextCodec>(model);
         result.model = std::move(model); result.chat = std::move(chat); result.codec = std::move(codec);
-        result.context = context; result.flash = config.flash_attention;
+        result.context = config.context_tokens; result.flash = config.flash_attention;
     }, result.failures);
     return result;
 }

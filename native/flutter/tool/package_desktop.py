@@ -55,7 +55,7 @@ def main():
         try:
             if model_path:
                 # Copy rather than symlink: Windows developer mode is not required.
-                shutil.copyfile(model_path, asset)
+                shutil.copyfile(backup if model_path == asset.resolve() and had_asset else model_path, asset)
             else:
                 asset.touch()
             run(flutter, 'pub', 'get', env=env)
