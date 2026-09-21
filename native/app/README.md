@@ -254,3 +254,8 @@ in release notes rather than filenames.
 Desktop apps can expose a local OpenAI-compatible text chat API, off by default.
 Packages also include `dfm-mimir-server` for headless operation without a display.
 See [API.md](API.md) for Settings, commands, supported fields, limits and tests.
+
+## Model library
+
+See [Models and downloads](MODELS.md) for the bundled HF source, available
+precisions, optional downloads, selector behavior, and adding future versions.

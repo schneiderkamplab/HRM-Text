@@ -74,6 +74,7 @@ flutter:
     - assets/mimir.png
     - assets/dfm.png
     - assets/licenses/
+    - assets/models.json
     - assets/profile.json
     - assets/model.gguf
 

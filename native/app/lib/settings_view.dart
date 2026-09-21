@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'store.dart';
+import 'model_library_view.dart';
 
 class SettingsView extends StatefulWidget {
   final ChatStore store;
@@ -57,6 +58,13 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               const Text(
                 'Mimir runs on your device using its own chat template. No account or server required.',
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.storage),
+                label: const Text('Choose or download a model…'),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (_) => ModelLibraryView(store: s),
+                )),
               ),
               Wrap(
                 spacing: 8,

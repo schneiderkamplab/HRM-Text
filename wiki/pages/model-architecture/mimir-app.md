@@ -419,3 +419,33 @@ Local artifacts: `logs/packages/release-0.1.1/` (desktop) and
 `logs/package-0.1.1-macos.log`, `logs/release-0.1.1-packaged-api.log`,
 `logs/release-0.1.1-{linux,windows}-verify.log`, and
 `logs/release-0.1.1-checksums.txt`. No distributable iOS package was published.
+
+
+## 2026-09-21: optional model library and public checkpoint inventory
+
+The portable client now has a model selector with installed/imported history,
+explicit selection, unselected-file removal, pinned HF downloads with progress,
+SHA-256/size/GGUF checks and cancellation. Model-network permission is independent
+of feedback consent and defaults off. Startup never fetches the catalog. Android
+selection remains unloaded until the user explicitly starts the engine.
+
+[Model inventory and maintainer workflow](../../../native/app/MODELS.md) documents
+seven public HF repositories, current bundled Q4_K_M provenance, conversion needs
+and model-specific catalog profiles. Catalog refresh from the repository branch
+can add supported newer GGUFs without rebuilding the client. HF-discovered
+repositories remain separate from catalog-approved download entries; names alone
+cannot establish architecture/template compatibility. This is portable UI work;
+the separate SwiftUI UI and headless CLI were not extended with a selector.
+
+A real noctrex Q8_0 download passed its pinned hash and a Danish generation smoke
+check on macOS Metal. Its rendered chat templates matched our qualified export
+on four prompts, but token IDs matched only two: ` ø` and ` Hvad` examples differ.
+Therefore these third-party catalog entries are explicitly experimental. Recommended
+alternative precisions still need publication of our qualified GGUFs. This adds
+concrete evidence to the earlier policy of using our own tokenizer-corrected exports.
+
+Static analysis and 37 app tests pass; the ten new tests cover offline permission,
+selector UI, discovery separation, valid download, hash/size/magic rejection,
+mid-stream revocation, pinned metadata and persisted Android selection/removal.
+The macOS release and iOS simulator builds pass. Download retries restart from zero; background
+OS transfers are not implemented. See the linked document for full limitations.

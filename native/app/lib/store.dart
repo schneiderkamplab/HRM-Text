@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
 import 'models.dart';
+import 'model_library.dart';
 
 import 'package:mimir_api/api/server.dart';
 
@@ -20,6 +21,7 @@ class ChatStore extends ChangeNotifier {
   ChatStore({InferenceEngine? engine, this.directory, bool? manualStartup})
     : manualStartup = manualStartup ?? Platform.isAndroid,
       engine = engine ?? NativeEngine();
+  final ModelLibrary library = ModelLibrary();
   List<Conversation> chats = [];
   String? selected, notice;
   String draft = '',
@@ -135,6 +137,7 @@ class ChatStore extends ChangeNotifier {
         p.join((await getApplicationSupportDirectory()).path, 'DFM Mimir'),
       );
       await directory!.create(recursive: true);
+      String? cachedCatalog;
       final file = File(p.join(directory!.path, 'conversations.json'));
       if (await file.exists()) {
         try {
@@ -158,6 +161,11 @@ class ChatStore extends ChangeNotifier {
           reply = j['reply'] ?? 512;
           device = j['device'] ?? 'auto';
           model = j['model'];
+          cachedCatalog = j['modelCatalog'] == null ? null : jsonEncode(j['modelCatalog']);
+          library.online = j['modelNetwork'] == true;
+          library.installed = (j['installedModels'] as List? ?? [])
+              .map((m) => Json.from(m)).toList();
+          library.discovered = (j['discoveredModels'] as List? ?? []).cast<String>();
           if (model?['profile'] != null) {
             profile = ModelProfile(Json.from(model!['profile']));
           }
@@ -172,6 +180,15 @@ class ChatStore extends ChangeNotifier {
               'Saved chats could not be opened. The original archive will not be overwritten: $e';
         }
       }
+      library.directory = directory;
+      library.readCatalog(await rootBundle.loadString('assets/models.json'));
+      if (cachedCatalog != null) {
+        try { library.readCatalog(cachedCatalog); }
+        catch (_) { notice = 'Saved model catalog could not be read; using the bundled catalog.'; }
+      }
+      library.addListener(notifyListeners);
+      library.onChanged = save;
+      if (model != null) library.remember(model!);
       conversationsReady = true;
       notifyListeners();
       if (manualStartup) {
@@ -245,11 +262,14 @@ class ChatStore extends ChangeNotifier {
       }
       model = {
         'id': id,
-        'name': 'DFM Mimir v1',
+        'name': 'DFM Mimir v1 Q4_K_M',
         'path': path,
+        'bytes': await file.length(),
+        'repo': 'danish-foundation-models/DFM-Mimir',
         'bundled': true,
         'profile': profile.data,
       };
+      library.remember(model!);
       loading = false;
       if (loadModel) {
         await load();
@@ -287,10 +307,12 @@ class ChatStore extends ChangeNotifier {
       model = {
         'id': id,
         'name': p.basename(source),
+        'bytes': await file.length(),
         'path': target,
         'bundled': false,
         'profile': profile.data,
       };
+      library.remember(model!);
       automatic = !manualStartup;
       loading = false;
       if (manualStartup) {
@@ -305,6 +327,50 @@ class ChatStore extends ChangeNotifier {
     } catch (e) {
       loading = false;
       notice = 'Model import failed: $e';
+      notifyListeners();
+    }
+  }
+
+  Future<void> selectModel(Json entry) async {
+    if (busy) return;
+    if (!await File(entry['path']).exists()) {
+      setNotice('Model file is missing. Download or import it again.');
+      return;
+    }
+    if (busy) return;
+    model = Json.from(entry);
+    profile = ModelProfile(Json.from(entry['profile']));
+    automatic = !manualStartup;
+    ready = false;
+    context = profile.number('minimumContext');
+    reply = profile.defaultReply(context);
+    loading = true;
+    notifyListeners();
+    await save();
+    loading = false;
+    if (!manualStartup) await load();
+    notifyListeners();
+  }
+
+  Future<void> deleteModel(Json entry) async {
+    if (busy || entry['bundled'] == true || entry['id'] == model?['id'] ||
+        entry['id'] == library.downloading) {
+      return;
+    }
+    loading = true;
+    notifyListeners();
+    try {
+      final file = File(entry['path']);
+      // Only delete app-owned files, never an arbitrary imported source path.
+      final owned = p.join(directory!.path, 'models', "${entry['id']}.gguf");
+      if (p.equals(file.path, owned) && await file.exists()) await file.delete();
+      library.installed.removeWhere((m) => m['id'] == entry['id']);
+      await save();
+      notifyListeners();
+    } catch (e) {
+      setNotice('Could not remove model: $e');
+    } finally {
+      loading = false;
       notifyListeners();
     }
   }
@@ -613,12 +679,18 @@ class ChatStore extends ChangeNotifier {
 
   Future<void> save() {
     if (!persistence || directory == null) return Future.value();
+    final installedIndex = library.installed.indexWhere((m) => m['id'] == model?['id']);
+    if (installedIndex >= 0) library.installed[installedIndex] = Json.from(model!);
     final data = jsonEncode({
       'version': 1,
       'chats': chats.map((c) => c.toJson()).toList(),
       'selected': selected,
       'model': model,
       'onlineFeedback': onlineFeedback,
+      'modelNetwork': library.online,
+      'modelCatalog': {'version': 1, 'models': library.catalog.map((a) => a.data).toList()},
+      'installedModels': library.installed,
+      'discoveredModels': library.discovered,
       'compact': compact,
       'mixedLM': mixedLM,
       'showSummary': showSummary,
@@ -647,6 +719,7 @@ class ChatStore extends ChangeNotifier {
     closing = true;
     notifyListeners();
     await setApiEnabled(false);
+    await library.close();
     await engine.close();
     await _saving;
   }

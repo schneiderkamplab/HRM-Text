@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "156083036084217814592c86d07b596c40a229a9660c08d7b57b983582ee7670",
+      "name": "DFM Mimir v1 BF16",
+      "repo": "noctrex/DFM-Mimir",
+      "revision": "837955affd3eb783df325f977d0125da61e07411",
+      "file": "DFM-Mimir-BF16.gguf",
+      "bytes": 3588301312,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Experimental, unqualified third-party export. The Q8_0 export in this repository has known tokenizer differences."
+    },
+    {
+      "id": "1eac8476501eca9fb2b890e44035e2ad3cf92f47b8854be10d79903629fadbd4",
+      "name": "DFM Mimir v1 F16",
+      "repo": "noctrex/DFM-Mimir",
+      "revision": "837955affd3eb783df325f977d0125da61e07411",
+      "file": "DFM-Mimir-F16.gguf",
+      "bytes": 3588301312,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Experimental, unqualified third-party export. The Q8_0 export in this repository has known tokenizer differences."
+    },
+    {
+      "id": "d7dddfc14a1f8f35b96ae6ca630d9ca3dbe6611cc5991e45b626d953b58ee201",
+      "name": "DFM Mimir v1 Q8_0",
+      "repo": "noctrex/DFM-Mimir",
+      "revision": "837955affd3eb783df325f977d0125da61e07411",
+      "file": "DFM-Mimir-Q8_0.gguf",
+      "bytes": 1913201152,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Experimental: macOS Metal generation passed, but tokenization differs from our tested conversion in 2 of 4 checks. Prefer the bundled model."
+    }
+  ]
+}
