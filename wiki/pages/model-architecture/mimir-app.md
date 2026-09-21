@@ -347,7 +347,7 @@ user/assistant pairs, split oversized source at UTF-8/nearby whitespace boundari
 and include previous notes in each bounded request. Exact template/tokenizer counts
 include the system message and reserved summary/reply output. Chunk sizing also
 bounds temporary tokenizer input; every pass consumes source bytes. Periodic
-compaction starts above 90% occupancy and targets 75%, consuming further recent
+compaction starts above 90% occupancy and targets 50%, consuming further recent
 pairs when needed instead of stopping as soon as the request barely fits.
 
 The portable app preserves original message content and stores an optional
@@ -369,3 +369,14 @@ See [app validation](../../../native/app/VALIDATION.md) for planner/sanitizer, m
 and UI tests. The Linux/Windows package workflow now includes the deterministic
 compaction planner suite. Public release assets have not yet been refreshed for
 this compaction feature; the previously uploaded Android 0.1.1+2 is the startup fix.
+
+The user subsequently requested at least 50% free context: this **supersedes** the
+initial 75%-occupancy target. Compaction now aims for at most 50% occupancy,
+including reply reservation. It consumes all eligible turns if needed; when fixed
+system/current-prompt/reply costs prevent reaching that target, a fitting request
+may still proceed. The new prompt is shortened only when required to fit.
+
+Windows CI exposed a pending-save cleanup race in the Android settings widget
+test introduced with startup recovery. The widget test now disables disk persistence (already covered in ordinary async
+tests) and shuts down the store before cleanup. Real I/O must not depend on the
+widget test fake clock or an arbitrary delay.

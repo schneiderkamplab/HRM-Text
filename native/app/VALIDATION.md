@@ -434,7 +434,7 @@ The public 0.1.0 assets were not modified.
 - Deterministic native planner tests pass with AddressSanitizer and
   UndefinedBehaviorSanitizer. They cover exact source-byte coverage for long Danish
   text/emoji, bounded inference requests, multi-turn packing, an oversized historical
-  turn, reply reservation, 75% headroom, cancellation before/during reduction,
+  turn, reply reservation, 50% occupancy target, cancellation before/during reduction,
   empty/error summaries, excessive system overhead, and no-gain rollback.
 - Real Q4_K_M Mimir with Metal, context 1024: native smoke suite passed with both
   exact PrefixLM and MixedLM, including oversized new prompts and old turns,

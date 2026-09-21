@@ -117,7 +117,6 @@ void main() {
     'settings remain editable before model preparation; Load is explicit',
     (tester) async {
       final directory = Directory.systemTemp.createTempSync('mimir-startup-ui');
-      addTearDown(() => directory.deleteSync(recursive: true));
       final engine = FakeEngine();
       engine.handler = (_, _) => throw StateError('Unexpected native work');
       final store = ChatStore(
@@ -125,6 +124,10 @@ void main() {
         directory: directory,
         manualStartup: true,
       );
+      // Persistence is covered by the non-widget tests above. Avoid real file
+      // writes on the widget test's fake clock (Windows retains open handles).
+      store.persistence = false;
+      addTearDown(() => directory.deleteSync(recursive: true));
       await tester.runAsync(store.initialize);
       await tester.binding.setSurfaceSize(const Size(430, 850));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -140,12 +143,11 @@ void main() {
       await tester.enterText(contextField, '2048');
       await tester.ensureVisible(find.text('Apply limits'));
       await tester.tap(find.text('Apply limits'));
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)),
-      );
       await tester.pumpAndSettle();
       expect(store.context, 2048);
       expect(store.ready, false);
+      await tester.pumpWidget(const SizedBox());
+      await store.shutdown();
     },
   );
 }

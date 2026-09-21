@@ -80,7 +80,7 @@ int main() {
         require(packed.memory.covered > 2, "only one turn compacted");
         require(model.calls.front().find("Turn 1:") != std::string::npos, "whole turns not packed");
         auto effective = packed.messages; effective.push_back({"user", packed.prompt});
-        require(codec.prepare(effective).tokens.size() + 128 <= 768, "headroom target not reached");
+        require(codec.prepare(effective).tokens.size() + 128 <= 512, "headroom target not reached");
         model.calls.clear();
         model.output = std::string(128, 'n');
         const std::vector<Message> tiny = {{"user", "Hi"}, {"assistant", "OK"}};

@@ -32,7 +32,9 @@ cannot fit with the reply budget. It packs complete turns into bounded summary
 requests, splitting oversized turns or prompts at UTF-8 boundaries when needed.
 Every inference request uses the model's chat template and tokenizer for sizing.
 Regular compaction starts above 90% occupancy (including the reply reservation)
-and aims for 75%, retaining recent turns verbatim when that target permits.
+and aims for at most 50%, retaining recent turns verbatim when that target permits.
+If fixed system/prompt/reply costs make 50% unattainable, it summarizes all eligible
+history and accepts the result only if the request fits.
 
 The original prompt stays in the transcript. Its shortened form is saved separately
 and reused for follow-up context; **Show compaction summary in chat** reveals it

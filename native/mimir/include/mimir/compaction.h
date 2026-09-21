@@ -168,7 +168,7 @@ PreparedHistory compact(ChatType & chat, const CodecType & codec, const std::str
         }
         auto occupied = count(messages, prompt) + replyBudget;
         if (occupied > context * 9 / 10) {
-            while (occupied > context * 3 / 4 && memory.covered < full.size()) {
+            while (occupied > context / 2 && memory.covered < full.size()) {
                 check();
                 const size_t remaining = full.size() - memory.covered;
                 // Initially keep two recent pairs; consume more pairs if the
