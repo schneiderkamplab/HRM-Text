@@ -130,7 +130,7 @@ changing catalog hosting or schema requires a client change.
 **Updated 2026-09-21:** the earlier policy of listing HF discoveries only as
 repository references is superseded for the official organization. Refresh now
 merges the curated catalog with **all GGUF files** in public repositories owned by
-`danish-foundation-models` whose repository name contains `mimir`, case-insensitively.
+`danish-foundation-models` whose repository name contains **both `mimir` and `gguf`**, case-insensitively.
 Repository and recursive file pagination are followed; matching does not depend
 on HF search casing. Each discovered file is pinned to the current commit, byte
 size and LFS SHA-256. Curated entries win for duplicate hashes or the same
@@ -146,7 +146,8 @@ update. Split/sharded GGUFs and files lacking SHA-256/size metadata are listed w
 size and a reason, but cannot yet be downloaded through the verified single-file
 loader. No checkpoint or shard is silently treated as an independently usable model.
 
-The curated catalog can still include files from any publisher. To update it:
+The curated catalog follows the same official-owner and two-name-term restriction.
+This supersedes the earlier policy allowing any publisher (2026-09-21). To update it:
 
 ```sh
 # Edit native/app/assets/models.json: add/remove entries or adjust profiles.
@@ -163,7 +164,7 @@ and a clear `qualification` description. The embedded JSON is the offline starti
 point; refreshed entries are saved locally. Either catalog or HF failure preserves
 that source's cached entries and reports the failure while refreshing the other.
 
-As checked on 2026-09-21, the official organization currently has one matching
+**Historical check, superseded by the publication below:** the official organization had one matching
 repository (`DFM-Mimir`) and no GGUF files, so the merged downloadable list still
 contains the three curated noctrex entries. Future official GGUF uploads will be
 picked up automatically on refresh.
@@ -208,7 +209,11 @@ without authentication. The repository includes a model card, original Apache
 license, checksums, provenance and validation results.
 
 The curated catalog now lists these official artifacts first, with the validated
-Mimir v1 profile and pinned revision. The three third-party entries remain available.
+Mimir v1 profile and pinned revision. The earlier retention of three third-party
+entries is **superseded** by the official-only policy (2026-09-21): those entries
+have been removed. Embedded, remote and cached catalogs all use the same filter
+as HF discovery; stale cached discovery listings are filtered on startup too.
+Already installed models and manual imports remain usable.
 Official automatic discovery also finds the new repository; curated metadata wins
 for duplicate files. Refresh the catalog with model networking enabled to see them.
 Existing preview packages have not been rebuilt, and their bundled weights remain

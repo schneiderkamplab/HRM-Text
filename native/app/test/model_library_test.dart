@@ -89,7 +89,7 @@ void main() {
     descriptor = {
       'id': sha256.convert(bytes).toString(),
       'name': 'Test Mimir',
-      'repo': 'example/DFM-Mimir',
+      'repo': 'danish-foundation-models/DFM-Mimir-GGUF',
       'revision': 'a' * 40,
       'file': 'test.gguf',
       'bytes': bytes.length,
@@ -142,7 +142,7 @@ void main() {
             'models': [descriptor],
           }),
           jsonResponse([
-            {'id': 'someone/DFM-Mimir-v2'},
+            {'id': 'someone/DFM-Mimir-GGUF-v2'},
           ]),
         ],
       );
@@ -162,7 +162,7 @@ void main() {
       return Response(Stream.value(body), body.length);
     }
 
-    final official = {...descriptor, 'repo': 'danish-foundation-models/MIMIR'};
+    final official = {...descriptor, 'repo': 'danish-foundation-models/MIMIR-GGUF'};
     List<Response> discovery() => [
       reply([
         {'id': official['repo']},
@@ -272,6 +272,47 @@ void main() {
       expect(await Directory('${dir.path}/models').list().toList(), isEmpty);
     },
   );
+  test('catalog filters old or remote entries with the same official policy', () {
+    final library = ModelLibrary();
+    library.readCatalog(jsonEncode({
+      'version': 1,
+      'models': [
+        {...descriptor, 'repo': 'danish-foundation-models/MiMiR-GgUf'},
+        {...descriptor, 'repo': 'noctrex/DFM-Mimir-GGUF'},
+        {...descriptor, 'repo': 'danish-foundation-models/DFM-Mimir'},
+        {...descriptor, 'repo': 'danish-foundation-models/DFM-GGUF'},
+      ],
+    }));
+    expect(library.catalog.single.data['repo'], 'danish-foundation-models/MiMiR-GgUf');
+  });
+  test('stale discovery listings are filtered offline on restart', () async {
+    final store = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
+    await store.initialize();
+    final allowed = descriptor['repo'] as String;
+    const excluded = 'noctrex/DFM-Mimir';
+    store.library.readCatalog(jsonEncode({'version': 1, 'models': [descriptor]}));
+    store.library.discovered = [allowed, excluded, 'danish-foundation-models/Mimir'];
+    store.library.unavailable = [
+      {'repo': allowed, 'file': 'split.gguf'},
+      {'repo': excluded, 'file': 'split.gguf'},
+    ];
+    await store.save();
+    await store.shutdown();
+    final reopened = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
+    await reopened.initialize();
+    expect(reopened.library.online, false);
+    expect(reopened.library.discovered, [allowed]);
+    expect(reopened.library.unavailable.single['repo'], allowed);
+    expect(reopened.library.catalog.single.data['repo'], allowed);
+    await reopened.shutdown();
+  });
+  test('disallowed artifact cannot be downloaded directly', () async {
+    final client = Client(Response(const Stream.empty(), 0));
+    final library = ModelLibrary(clientFactory: () => client)..online = true;
+    await library.download(ModelArtifact({...descriptor, 'repo': 'noctrex/DFM-Mimir'}));
+    expect(client.requests, 0);
+    expect(library.error, contains('Only official'));
+  });
   test('catalog validation rejects unpinned revisions and unsafe paths', () {
     expect(
       () => ModelArtifact({...descriptor, 'revision': 'main'}),

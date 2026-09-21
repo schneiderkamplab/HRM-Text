@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Restricted the [model catalog and discovery](pages/model-architecture/mimir-app.md#official-only-model-catalog-policy-2026-09-21) to official repositories whose names contain both Mimir and GGUF, including cached listings.
+
 - 2026-09-21: Published the [official corrected GGUF repository](pages/model-architecture/mimir-app.md#official-gguf-publication-completed-2026-09-21), verified public hashes/sizes, and pinned all three precisions in the app catalog.
 
 - 2026-09-21: Prepared [corrected BF16/Q8_0/Q4_K_M GGUFs](pages/model-architecture/mimir-app.md#corrected-4816-bit-artifacts-prepared-2026-09-21), fixed HRM conversion/reference loading, and recorded 724-case tokenizer plus CPU/Metal generation evidence for each precision.

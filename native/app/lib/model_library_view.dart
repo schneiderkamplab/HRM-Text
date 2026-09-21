@@ -143,7 +143,7 @@ class ModelLibraryView extends StatelessWidget {
               ),
               const Text(
                 'GGUF files from danish-foundation-models repositories whose names '
-                'contain “mimir” are added automatically on refresh. Discovery '
+                'contain both “mimir” and “gguf” (case-insensitive) are added automatically on refresh. Discovery '
                 'does not guarantee engine compatibility.',
               ),
               for (final file in library.unavailable)

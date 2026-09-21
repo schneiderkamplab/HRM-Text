@@ -71,6 +71,7 @@ class ModelLibrary extends ChangeNotifier {
       throw const FormatException('Unknown catalog version');
     }
     final entries = (json['models'] as List)
+        .where((e) => isOfficialMimirGgufRepository(e['repo']))
         .map((e) => ModelArtifact(Json.from(e)))
         .toList();
     if (entries.map((e) => e.id).toSet().length != entries.length) {
@@ -204,6 +205,11 @@ class ModelLibrary extends ChangeNotifier {
   });
 
   Future<void> download(ModelArtifact artifact) => _run(() async {
+    if (!isOfficialMimirGgufRepository(artifact.data['repo'])) {
+      throw const FormatException(
+        'Only official Mimir GGUF repositories are supported for downloading',
+      );
+    }
     downloading = artifact.id;
     received = 0;
     notifyListeners();

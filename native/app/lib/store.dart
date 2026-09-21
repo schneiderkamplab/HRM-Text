@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
+import 'hf_model_discovery.dart';
 import 'models.dart';
 import 'model_library.dart';
 
@@ -165,8 +166,14 @@ class ChatStore extends ChangeNotifier {
           library.online = j['modelNetwork'] == true;
           library.installed = (j['installedModels'] as List? ?? [])
               .map((m) => Json.from(m)).toList();
-          library.unavailable = (j['unavailableModels'] as List? ?? []).map((m) => Json.from(m)).toList();
-          library.discovered = (j['discoveredModels'] as List? ?? []).cast<String>();
+          library.unavailable = (j['unavailableModels'] as List? ?? [])
+              .map((m) => Json.from(m))
+              .where((m) => isOfficialMimirGgufRepository(m['repo']))
+              .toList();
+          library.discovered = (j['discoveredModels'] as List? ?? [])
+              .where(isOfficialMimirGgufRepository)
+              .cast<String>()
+              .toList();
           if (model?['profile'] != null) {
             profile = ModelProfile(Json.from(model!['profile']));
           }

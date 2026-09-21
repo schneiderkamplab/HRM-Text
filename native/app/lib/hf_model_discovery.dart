@@ -1,5 +1,15 @@
 import 'engine.dart';
 
+/// Shared policy for curated, cached and discovered downloadable models.
+bool isOfficialMimirGgufRepository(Object? repository) {
+  if (repository is! String) return false;
+  final parts = repository.toLowerCase().split('/');
+  return parts.length == 2 &&
+      parts.first == HfModelDiscovery.owner &&
+      parts.last.contains('mimir') &&
+      parts.last.contains('gguf');
+}
+
 class DiscoveryPage {
   final Object? data;
   final Uri? next;
@@ -41,9 +51,7 @@ class HfModelDiscovery {
     )) {
       final repo = model['id'] as String;
       final parts = repo.split('/');
-      if (parts.length != 2 ||
-          parts.first.toLowerCase() != owner ||
-          !parts.last.toLowerCase().contains('mimir')) {
+      if (!isOfficialMimirGgufRepository(repo)) {
         continue;
       }
       repositories.add(repo);

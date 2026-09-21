@@ -535,3 +535,19 @@ were rebuilt/replaced in this publication step.
 
 Publication/catalog validation: static analysis clean and all 41 app tests pass
 with the expanded six-entry curated catalog.
+
+
+### Official-only model catalog policy, 2026-09-21
+
+The previous retained-third-party and Mimir-only discovery policies are
+**superseded**. Both curated catalog loading (embedded, remote and cached) and
+HF discovery require owner `danish-foundation-models` and repository names
+containing both `mimir` and `gguf`, case-insensitively. The embedded catalog now
+contains only the three corrected official exports. Cached discovery listings
+are filtered at startup, and direct downloads enforce the same repository rule.
+Already installed models and manual imports remain usable; networking is still
+optional. No app packages were rebuilt for this source/catalog change.
+
+Validation: Flutter analysis clean; all 44 app tests pass, including repository
+filtering, offline cache restoration and blocked direct downloads. OKF validation
+still reports the two pre-existing benchmark-charts index/frontmatter errors.

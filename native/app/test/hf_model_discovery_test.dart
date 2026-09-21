@@ -17,13 +17,15 @@ void main() {
       if (uri.path == '/api/models') {
         if (uri.queryParameters['cursor'] == 'next') {
           return DiscoveryPage([
-            {'id': 'danish-foundation-models/DFM-MiMiR-v2'},
+            {'id': 'danish-foundation-models/DFM-MiMiR-GgUf-v2'},
           ]);
         }
         expect(uri.queryParameters['author'], 'danish-foundation-models');
         return DiscoveryPage([
-          {'id': 'someone/DFM-Mimir'},
+          {'id': 'someone/DFM-Mimir-GGUF'},
           {'id': 'danish-foundation-models/not-a-match'},
+          {'id': 'danish-foundation-models/DFM-Mimir'},
+          {'id': 'danish-foundation-models/DFM-GGUF'},
         ], Uri.https('huggingface.co', '/api/models', {'cursor': 'next'}));
       }
       if (!uri.path.contains('/tree/')) return DiscoveryPage({'sha': 'a' * 40});
@@ -45,7 +47,7 @@ void main() {
     });
     await discovery.discover(profile);
     expect(requests.length, 5);
-    expect(discovery.repositories, ['danish-foundation-models/DFM-MiMiR-v2']);
+    expect(discovery.repositories, ['danish-foundation-models/DFM-MiMiR-GgUf-v2']);
     final artifact = ModelArtifact(discovery.artifacts.single);
     expect(artifact.id, 'b' * 64);
     expect(artifact.bytes, 42);
@@ -61,7 +63,7 @@ void main() {
       final discovery = HfModelDiscovery((uri) async {
         if (uri.path == '/api/models') {
           return DiscoveryPage([
-            {'id': 'danish-foundation-models/mimir'},
+            {'id': 'danish-foundation-models/mimir-gguf'},
           ]);
         }
         if (!uri.path.contains('/tree/')) {
