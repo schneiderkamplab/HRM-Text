@@ -8,11 +8,40 @@ tags:
 - training
 - evaluation
 status: stable
-last_updated: 2026-06-28
+last_updated: 2026-09-21
 confidence: high
 part_of: /pages/dfm6-plan.md
 ---
 # Current DFM6 Evaluation Contract
+
+## Regex patch mismatch discovered 2026-09-21
+
+Supersedes the June claim below that enabling `fix_mistral_regex` ensures
+the intended training tokenization. It changes token IDs relative to the
+actual raw Gemma tokenizer used by our data-preparation path. Do not infer
+train/eval parity merely from this flag being present or the warning disappearing.
+
+`scripts/tokenize_chat_template.py` loads `tokenizers.Tokenizer.from_file`
+directly; DFM10/11 metadata names
+`/work/dfm/brainsurgery/models/gemma4_31b/tokenizer.json`. Training reads
+precomputed `tokens.npy`, not AutoTokenizer. The raw pre-tokenizer is a
+space Split with MergedWithPrevious behavior, with no Mistral regex patch.
+Conversely, `conversion/convert_to_hf.py` persists `fix_mistral_regex=true`.
+The current 450K DFM11 XXL-wide export and XL 1650K export contain that flag.
+Loading through hrm Transformers 5.12.1 inserts an additional regex Split.
+
+CPU-only verification, no special tokens, input `Hello, world!  Test\nNext.`:
+raw training tokenizer IDs were
+`[9259,236764,1902,236888,138,3694,107,9272,236761]`;
+patched export IDs were
+`[9259,236764,236743,12392,236888,138,3694,107,9272,236761]`.
+The latter also appeared using brainsurgery Transformers 5.10.0.dev0 on
+the locally cached `schneiderkamplab/HRM-Mimir-v1` used by HRM-test and on
+the local XL 1650K export. HRM-test's per-model server launcher does not
+override the tokenizer. This confirms a training-versus-evaluation mismatch
+for these Gemma-based checkpoints, but does not quantify metric impact.
+Other HRM-test models may use different tokenizer settings.
+No tokenizer files, training data, exports, evaluations, or model code were changed.
 
 Part of [DFM6 Plan](/pages/dfm6-plan.md).
 
