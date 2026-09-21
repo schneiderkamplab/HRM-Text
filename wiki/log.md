@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Made [0.1.2 release documentation self-contained](pages/model-architecture/mimir-app.md#self-contained-release-descriptions-2026-09-21), including desktop API/headless instructions, installation, model/context controls and feedback consent; versioned the notes for maintenance.
+
 - 2026-09-21: Separated [0.1.0, 0.1.1 and 0.1.2 release history](pages/model-architecture/mimir-app.md#separate-release-history-2026-09-21) into three tags/releases with version-specific assets; verified hashes before removing the old mixed-version copies.
 
 - 2026-09-21: Published and verified [all four 0.1.2 packages](pages/model-architecture/mimir-app.md#012-publication-completed-2026-09-21), with corrected official Q4_K_M weights, 46 passing tests, CI/native/package evidence and matching remote hashes.

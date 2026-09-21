@@ -646,3 +646,17 @@ platform packages and four SHA-256 sidecars:
 no longer apply. Historical combined-release links elsewhere on this page describe
 the previous arrangement. Verification/backup records:
 `logs/release-separation/{before,verified}.json` and `finish.log`.
+
+
+### Self-contained release descriptions, 2026-09-21
+
+Release descriptions must explain the shipped app without relying on earlier
+release notes. The 0.1.2 description is now maintained in
+[the versioned release document](../../../native/app/releases/0.1.2.md), with
+[maintenance guidance](../../../native/app/releases/README.md). It includes
+installation/backend/signing limits; model selection and network consent;
+context/compaction/MixedLM; desktop API settings, address/authentication, requests
+and limitations; per-platform headless commands; feedback consent/publication
+choices; and preserved provenance, validation and checksums. Examples/UI labels
+were checked against the shipped source and API guide. Publishing this description
+does not change any package, checksum, tag or release status.
