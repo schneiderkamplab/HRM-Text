@@ -50,7 +50,7 @@ int main() {
         auto shortReply = run({}, "Hello");
         require(model.calls.empty() && shortReply.prompt == "Hello", "short prompt changed");
         std::string huge;
-        for (int i=0;i<1000;++i) huge += "Dansk æøå 😀 tekst\n";
+        for (int i=0;i<1000;++i) huge += u8"Dansk \u00e6\u00f8\u00e5 \U0001f600 tekst\n";
         auto shortened = run({}, huge, 512);
         require(shortened.prompt.find(model.output) != std::string::npos && model.calls.size() > 1 && promptUpdates > 1, "oversized prompt not chunked");
         std::string source;
@@ -81,6 +81,15 @@ int main() {
         require(model.calls.front().find("Turn 1:") != std::string::npos, "whole turns not packed");
         auto effective = packed.messages; effective.push_back({"user", packed.prompt});
         require(codec.prepare(effective).tokens.size() + 128 <= 512, "headroom target not reached");
+        std::vector<Message> medium;
+        for (int i=0;i<3;++i) {
+            medium.push_back({"user", std::string(150, 'u')});
+            medium.push_back({"assistant", std::string(150, 'a')});
+        }
+        auto half = run(medium, "Next");
+        require(half.memory.covered == 6, "stopped between 50% and 75% occupancy");
+        auto fixed = run({{"user", std::string(200, 'u')}, {"assistant", std::string(200, 'a')}}, std::string(100, 'p'), 600);
+        require(fixed.memory.covered == 2 && fixed.prompt == std::string(100, 'p'), "unattainable target rewrote a fitting prompt");
         model.calls.clear();
         model.output = std::string(128, 'n');
         const std::vector<Message> tiny = {{"user", "Hi"}, {"assistant", "OK"}};

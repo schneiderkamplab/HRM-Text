@@ -465,3 +465,15 @@ CMake target `mimir-compaction-tests` / CTest `compaction-planner` also run in
 Linux/Windows package CI. Local evidence: `logs/compaction-metal{,-mixed}.{log,json}`
 and `logs/compaction-apple-bridge-build.log`. Portable source version is 0.1.1+3;
 the published Android 0.1.1+2 asset has not been replaced as part of this change.
+
+Final local build checks for the 50% target passed: native frameworks for macOS,
+iOS simulator and physical iOS; Flutter macOS release, iOS simulator debug and
+Android ARM64 release. Physical iOS compilation is not device execution evidence.
+Android 0.1.1+3 signature, 16 KiB ZIP alignment and feedback bundle audit passed.
+Local APK: `logs/packages/compaction/dfm-mimir-0.1.1-android-arm64.apk`.
+SHA-256: `271fc01df15953945a519c97e31831c2434e6287b97a71f9ebe9ccb1d2d328e3`.
+Build logs: `logs/compaction-{frameworks,macos-build,ios-build,android-build}.log`.
+The planner additionally verifies that regular compaction continues past 75% to
+reach 50%, and that an unattainable target does not itself rewrite a fitting prompt.
+The Windows startup-widget fixture now isolates UI behavior from disk writes;
+persistence remains covered by ordinary asynchronous tests.
