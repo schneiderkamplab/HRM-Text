@@ -470,3 +470,11 @@ explain direct JSON edits/pushes and the no-edit path of uploading official GGUF
 Validation: static analysis clean and all 41 app tests pass, including official
 case-insensitive matching, nested file/repository pagination, pinned metadata,
 curated precedence, partial-source failure recovery and unsupported-file listing.
+
+
+Follow-up inspection of the public noctrex Q8_0 and bundled Q4_K_M GGUF headers
+confirmed the tokenizer mismatch: public Q8_0 uses `gemma4` pre-tokenization with
+zero byte-fallback token types, while the qualified export uses
+`spm-bpe-mistral` with 256 byte-fallback tokens, matching the original checkpoint's
+`fix_mistral_regex=true` configuration. This is independent of weight precision;
+other public GGUF precisions have not been independently checked.

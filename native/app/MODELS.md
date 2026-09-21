@@ -46,6 +46,11 @@ Pinned noctrex revision `837955affd3eb783df325f977d0125da61e07411`, artifact
 - Four chat-template/tokenization comparisons with our qualified bundled export:
   template text matches 4/4, token IDs match only 2/4. Differences include ` ø`
   and ` Hvad` in a multi-turn conversation. This is **not** equivalent tokenization.
+- Follow-up metadata inspection identifies the cause: our export declares
+  `tokenizer.ggml.pre = spm-bpe-mistral` and marks 256 byte-fallback tokens;
+  this noctrex Q8_0 declares `gemma4` and marks zero byte-fallback tokens.
+  The original checkpoint's tokenizer config has `fix_mistral_regex=true`.
+  This is a tokenizer/conversion mismatch, not a consequence of Q8 quantization.
 - The other two noctrex precisions were not independently downloaded/qualified.
   They remain experimental. This spot check is not quality or cross-device qualification.
 
