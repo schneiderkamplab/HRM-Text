@@ -570,3 +570,14 @@ Validation: all 46 app tests pass and Flutter analysis is clean. Coverage includ
 UI add/remove, offline persistence of IDs and cached models, invalid IDs,
 case-insensitive deduplication, verified downloads, failed lookup fallback and
 revoked download access. The two existing benchmark-charts OKF errors remain.
+
+
+### 0.1.2 package preparation, 2026-09-21
+
+Portable app source is 0.1.2+4. The bundled-model policy supersedes 0.1.1:
+use corrected official Q4_K_M SHA-256
+`8c811ca72589112f00306e8b3a23f83944751d13d3fce6dfdb39df8b31726e49`
+from HF `danish-foundation-models/DFM-Mimir-GGUF` revision
+`4364aaa61279c187b7cd202375915ea962b79afb`. Includes model selection,
+official discovery and user-specified third-party repositories. Packaging and
+publication verification are pending below.

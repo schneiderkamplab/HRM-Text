@@ -273,7 +273,7 @@ class ChatStore extends ChangeNotifier {
         'name': 'DFM Mimir v1 Q4_K_M',
         'path': path,
         'bytes': await file.length(),
-        'repo': 'danish-foundation-models/DFM-Mimir',
+        'repo': 'danish-foundation-models/DFM-Mimir-GGUF',
         'bundled': true,
         'profile': profile.data,
       };

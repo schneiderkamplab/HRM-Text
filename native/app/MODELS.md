@@ -2,6 +2,16 @@
 
 ## Current package
 
+Version **0.1.2 (build 4)** bundles the corrected, training-faithful **Q4_K_M**
+from [`danish-foundation-models/DFM-Mimir-GGUF`](https://huggingface.co/danish-foundation-models/DFM-Mimir-GGUF),
+revision `4364aaa61279c187b7cd202375915ea962b79afb`, file `dfm-mimir-q4_k_m.gguf`.
+Size: 1,167,417,504 bytes. SHA-256:
+`8c811ca72589112f00306e8b3a23f83944751d13d3fce6dfdb39df8b31726e49`.
+This supersedes the bundled artifact below; it corrects tokenization without
+changing the model architecture or trained context limit.
+
+### Previous 0.1.1 package (superseded)
+
 The 0.1.1 packages bundle our **Q4_K_M GGUF**, 1,167,417,504 bytes (1.17 GB).
 Its source is [`danish-foundation-models/DFM-Mimir`](https://huggingface.co/danish-foundation-models/DFM-Mimir),
 revision `2844f0178e695d7d9ce182cb660671fd34c76ce5`.

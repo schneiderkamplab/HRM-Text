@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Prepared [0.1.2 packages](pages/model-architecture/mimir-app.md#012-package-preparation-2026-09-21) with corrected official Q4_K_M bundled weights.
+
 - 2026-09-21: Added [user-specified third-party HF repositories](pages/model-architecture/mimir-app.md#explicit-third-party-repository-selection-2026-09-21) as local opt-in exceptions to official model discovery and download admission.
 
 - 2026-09-21: Restricted the [model catalog and discovery](pages/model-architecture/mimir-app.md#official-only-model-catalog-policy-2026-09-21) to official repositories whose names contain both Mimir and GGUF, including cached listings.

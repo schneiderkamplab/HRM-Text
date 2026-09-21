@@ -93,7 +93,7 @@ class ModelLibraryView extends StatelessWidget {
                 title: const Text('DFM Mimir v1 Q4_K_M'),
                 subtitle: const Text(
                   'Bundled · 1.17 GB · no download needed\n'
-                  'Source: danish-foundation-models/DFM-Mimir\n'
+                  'Source: danish-foundation-models/DFM-Mimir-GGUF\n'
                   'Our tested GGUF conversion · trained context 4096',
                 ),
                 trailing: TextButton(
