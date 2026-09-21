@@ -33,7 +33,37 @@ Q4_K_M and FP8 conversion paths. GGUF Q8_0 and Q4_K_M are integer quantizations;
 they are not interchangeable names for FP8/FP4. Converting FP8 to Q8 does not
 preserve the original dynamic activation quantization.
 
-### Public Q8_0 spot check
+### Training-reference correction (2026-09-21)
+
+**The earlier conclusion below that noctrex's pre-tokenization was wrong is
+superseded.** Tracing the local training path shows `scripts/tokenize_chat_template.py`
+loads `tokenizers.Tokenizer.from_file(tokenizer.json)` and encodes the rendered
+chat directly, without Transformers' `fix_mistral_regex` transformation.
+`dataset_new.py` consumes those stored token IDs. The HF exporter subsequently
+adds `fix_mistral_regex=true` in `conversion/convert_to_hf.py`; this flag is not
+evidence of the training-time pre-tokenizer.
+
+Direct execution of the training loader against the original HF tokenizer JSON
+matches noctrex Q8_0 on **19/19** templated cases, and our bundled GGUF on **15/19**.
+On the original four cases, the corresponding counts are **4/4** and **2/4**.
+The local `dfm67_1150k/tokenizer.json` is byte-identical to the pinned original HF
+JSON (SHA-256 `12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6`).
+The historical external Gemma tokenizer path and production tokenized corpus are
+not present on this Mac; this audit reproduces the local training loader using
+that exported tokenizer, not a replay of the complete original corpus.
+
+[Audit evidence](../mimir/training-tokenizer-audit.json) records all rendered
+prompts, expected/actual IDs, versions and hashes. Cases include Danish,
+multi-turn/system messages, punctuation, spacing, combining marks, multiple
+scripts, emoji, rare code points and literal byte-token text. All comparisons
+use Mimir's embedded chat template. This is tokenization evidence, not a complete
+quality or decoder/byte-fallback qualification. The `gemma4` pre-tokenizer matches
+the training path; our `spm-bpe-mistral` choice instead tracked post-export HF
+behavior. Bundled weights and runtime have **not** been changed by this audit.
+Correcting the export/reference pipeline and regenerating/requalifying the
+bundled GGUF remains necessary.
+
+### Public Q8_0 spot check (historical; interpretation corrected above)
 
 Pinned noctrex revision `837955affd3eb783df325f977d0125da61e07411`, artifact
 `DFM-Mimir-Q8_0.gguf`, SHA-256

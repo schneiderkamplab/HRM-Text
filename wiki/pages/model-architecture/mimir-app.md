@@ -478,3 +478,24 @@ zero byte-fallback token types, while the qualified export uses
 `spm-bpe-mistral` with 256 byte-fallback tokens, matching the original checkpoint's
 `fix_mistral_regex=true` configuration. This is independent of weight precision;
 other public GGUF precisions have not been independently checked.
+
+
+### Training tokenizer reference correction, 2026-09-21
+
+**Supersedes the inference above that the public `gemma4` pre-tokenizer is wrong.**
+The training path loads raw `tokenizer.json` using `tokenizers.Tokenizer.from_file`
+and encodes templated prompts directly; training consumes the resulting stored
+IDs. `fix_mistral_regex=true` is injected later by the HF exporter, so it is not
+a training specification. Reproducing the training loader with the pinned HF
+JSON (byte-identical to local `dfm67_1150k/tokenizer.json`) matches public noctrex
+Q8_0 on 19/19 cases and our bundled Q4_K_M on 15/19. Thus noctrex's **pre-tokenization**
+is the match to the local training pipeline. Other tokenizer/decoder metadata and
+weight quality still require independent qualification; differing byte-token type
+counts alone do not establish which complete conversion is correct.
+
+[Full evidence](../../../native/mimir/training-tokenizer-audit.json) records the
+cases and token IDs; [app model notes](../../../native/app/MODELS.md#training-reference-correction-2026-09-21)
+record provenance limits and next steps. The historical external tokenizer path
+and original production tokenized corpus are absent locally, so this is a pipeline
+reproduction against the exported JSON, not a complete corpus audit. No model,
+exporter behavior or release asset was replaced by this investigation.

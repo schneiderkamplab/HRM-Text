@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Corrected the [Mimir tokenizer reference conclusion](pages/model-architecture/mimir-app.md#training-tokenizer-reference-correction-2026-09-21): direct training-loader replay matches noctrex pre-tokenization, not the exported-HF regex fix followed by our bundled GGUF. Saved 19-case evidence; model correction/requalification remains pending.
+
 - 2026-09-21: Extended the [model library](pages/model-architecture/mimir-app.md#official-gguf-discovery-extension-2026-09-21) to merge the curated catalog with official, case-insensitive Mimir GGUF discovery; documented catalog maintenance and unsupported shard handling.
 
 - 2026-09-21: Added the [optional model library](pages/model-architecture/mimir-app.md#2026-09-21-optional-model-library-and-public-checkpoint-inventory), pinned HF downloads and future-model catalog workflow. Recorded seven public repositories and a tokenizer mismatch in the public Q8_0 export.
