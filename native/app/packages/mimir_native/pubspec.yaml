@@ -1,0 +1,17 @@
+name: mimir_native
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+  flutter: '>=3.27.0'
+flutter:
+  plugin:
+    platforms:
+      macos:
+        ffiPlugin: true
+      ios:
+        ffiPlugin: true
+      linux:
+        ffiPlugin: true
+      windows:
+        ffiPlugin: true

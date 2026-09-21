@@ -1,0 +1,23 @@
+name: DFM Mimir feedback service
+on:
+  push:
+    paths: ['services/feedback/**', '.github/workflows/mimir-feedback.yml']
+  pull_request:
+    paths: ['services/feedback/**', '.github/workflows/mimir-feedback.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: services/feedback
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: services/feedback/package-lock.json
+      - run: npm ci
+      - run: npm run types && npm run check && npm test

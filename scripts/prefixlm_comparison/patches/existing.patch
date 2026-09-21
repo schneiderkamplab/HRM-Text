@@ -1,0 +1,109 @@
+diff --git a/include/llama.h b/include/llama.h
+index 3ab935939..3fac78f51 100644
+--- a/include/llama.h
++++ b/include/llama.h
+@@ -665,6 +665,11 @@ extern "C" {
+     // Returns true if the model is diffusion-based (like LLaDA, Dream, etc.)
+     LLAMA_API bool llama_model_is_diffusion(const struct llama_model * model);
+ 
++    // Returns true if the model is a prefix LM: prompt tokens attend to each other in both
++    // directions and only generated tokens are causal (like hrm-text with prefix_lm set).
++    // Prompts must be processed in a single ubatch and cached prompt prefixes must not be reused.
++    LLAMA_API bool llama_model_is_prefix_lm(const struct llama_model * model);
++
+     // Returns 0 on success
+     LLAMA_API uint32_t llama_model_quantize(
+             const char * fname_inp,
+diff --git a/src/llama-context.cpp b/src/llama-context.cpp
+index ef53728d1..06ffd523c 100644
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -1735,6 +1735,11 @@ int llama_context::decode(const llama_batch & batch_inp) {
+ 
+     GGML_ASSERT((cparams.causal_attn || cparams.n_ubatch >= n_tokens_all) && "non-causal attention requires n_ubatch >= n_tokens");
+ 
++    if (model.hparams.hrm_prefix_lm && n_tokens_all > cparams.n_ubatch) {
++        LLAMA_LOG_WARN("%s: prefix-LM: a batch of %d tokens is split into ubatches of %d; prompt tokens in different ubatches do not see each other (use -ub >= the longest prompt)\n",
++                __func__, n_tokens_all, cparams.n_ubatch);
++    }
++
+     // TODO: this clear of the buffer can easily be forgotten - need something better
+     // sync first so any in-flight async copies into embd_seq complete before it is freed
+     if (!embd_seq.empty()) {
+diff --git a/src/llama-kv-cache.cpp b/src/llama-kv-cache.cpp
+index a342ee119..0cbdeb724 100644
+--- a/src/llama-kv-cache.cpp
++++ b/src/llama-kv-cache.cpp
+@@ -1744,6 +1744,16 @@ static void set_input_kq_mask_impl(const args_set_input_kq_mask & args, T * data
+ void llama_kv_cache::set_input_kq_mask(ggml_tensor * dst, const llama_ubatch * ubatch, bool causal_attn) const {
+     const uint32_t n_tokens = ubatch->n_tokens;
+ 
++    // prefix-LM models (hrm-text with prefix_lm set): a token attends to every token of its own
++    // sequence that is in the cache or in the current ubatch. Generation appends one token per
++    // sequence per step, so generated tokens still see only earlier tokens. The result is
++    // bidirectional attention over the prompt and causal attention over the answer, which is the
++    // mask these models are trained with. The prompt has to be processed in one ubatch for this
++    // to hold; llama_context::decode warns when it is not.
++    if (hparams.hrm_prefix_lm) {
++        causal_attn = false;
++    }
++
+     GGML_ASSERT(ggml_backend_buffer_is_host(dst->buffer));
+ 
+     const int64_t n_kv     = dst->ne[0];
+diff --git a/src/llama-model.cpp b/src/llama-model.cpp
+index 3607bacd6..208b04135 100644
+--- a/src/llama-model.cpp
++++ b/src/llama-model.cpp
+@@ -3214,6 +3214,10 @@ bool llama_model_is_diffusion(const llama_model * model) {
+     return llm_arch_is_diffusion(model->arch);
+ }
+ 
++bool llama_model_is_prefix_lm(const llama_model * model) {
++    return model->hparams.hrm_prefix_lm;
++}
++
+ const std::vector<std::pair<std::string, ggml_tensor *>> & llama_internal_get_tensor_map(const llama_model * model) {
+     return model->tensors_by_name;
+ }
+diff --git a/src/models/hrm-text.cpp b/src/models/hrm-text.cpp
+index 4a9a67b6c..c399d9e32 100644
+--- a/src/models/hrm-text.cpp
++++ b/src/models/hrm-text.cpp
+@@ -11,7 +11,7 @@ void llama_model_hrm_text::load_arch_hparams(llama_model_loader & ml) {
+     ml.get_key(LLM_KV_HRM_H_CYCLES, hparams.n_hrm_h_cycles);
+     ml.get_key(LLM_KV_HRM_L_CYCLES, hparams.n_hrm_l_cycles);
+ 
+-    // prefix-LM prefill is not implemented (causal attention only); kept for round-trip
++    // prefix-LM: prompt tokens attend to each other in both directions (see llama_kv_cache::set_input_kq_mask)
+     ml.get_key(LLM_KV_HRM_PREFIX_LM, hparams.hrm_prefix_lm, false);
+ 
+     GGML_ASSERT(hparams.n_hrm_layers_per_stack > 0);
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+index b6835e434..c2de42b47 100644
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -1106,6 +1106,11 @@ private:
+             return false;
+         }
+ 
++        if (llama_model_is_prefix_lm(model_tgt) && params_base.cache_prompt) {
++            SRV_WRN("%s", "prefix-LM model: prompt caching disabled, a cached prompt prefix would have been computed without the tokens that follow it\n");
++            params_base.cache_prompt = false;
++        }
++
+         if (ctx_tgt == nullptr) {
+             SRV_ERR("failed to create_context with model '%s'\n", params_base.model.path.c_str());
+             return false;
+@@ -1705,6 +1710,11 @@ private:
+     }
+ 
+     bool launch_slot_with_task(server_slot & slot, server_task && task) {
++        // prefix-LM models: the whole prompt is recomputed for every request
++        if (task.params.cache_prompt && llama_model_is_prefix_lm(model_tgt)) {
++            task.params.cache_prompt = false;
++        }
++
+         // process per-request lora adapters
+         if (!task.params.lora.empty()) {
+             auto task_loras = construct_lora_list(task.params.lora);

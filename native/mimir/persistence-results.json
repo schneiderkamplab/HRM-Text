@@ -1,0 +1,181 @@
+{
+  "date": "2026-09-18",
+  "llama_base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "environment": {
+    "os": "macOS",
+    "device": "Apple M2 Max",
+    "engine_state_KV": "F32",
+    "server_model": "logs/mimir-review/mimir-q8_0.gguf",
+    "server_KV": "F16 default",
+    "chat_template": "Mimir checkpoint template and pinned HF token/answer references",
+    "server_controls": "zero LoRA and control-vector integration fixtures; nonzero semantics exercised in engine suite"
+  },
+  "source_sha256": {
+    ".github/workflows/mimir-runtime.yml": "a783ed1c4650ed6ae87e1805a024c8cf44678592794a890729a0bb065a7a6225",
+    "llama.cpp/common/arg.cpp": "af18335788c6f4fb61c068b313bd17fe1a34b5c7fbc2b5f7fb6ccf846b3267f2",
+    "llama.cpp/common/common.cpp": "238e05ec0d1039e7c8a7116acf8cc2da7add26fa4475c96b6ffaedb0e63c7a75",
+    "llama.cpp/common/jinja/string.cpp": "0be6be31a2377e18a8df442b7db9267e97943c8b186f6f1260f0be682b1126b5",
+    "llama.cpp/common/reasoning-budget.cpp": "eca4ff4c89ef6c33af9a319050f53657d532384353bec6a717a4933433b83f64",
+    "llama.cpp/common/reasoning-budget.h": "686dab9e80953a8e6160f841905b9e638ff7c1eebb1e591e94520f043ede2c72",
+    "llama.cpp/common/sampling.cpp": "54e014357d2d66442a8631ebee103663f752555c152dcd497c609436e66f66c4",
+    "llama.cpp/common/sampling.h": "35932df824da9429a9b8f7b957a7fdcba118b5d3949a9b2b77b93f6cf66fa0fd",
+    "llama.cpp/conversion/base.py": "13544cb79354f388046eb2480783111f67f7165416ecf5a9776a732fc66878bf",
+    "llama.cpp/convert_hf_to_gguf_update.py": "08fcd70d3c50a7b2a225a5e5e43368f21b08e1a63bdc8e868e2aca59ea095934",
+    "llama.cpp/docs/development/prefix-lm.md": "0d66cad21ffdd530320c9516379de2549477d2754d58d7cdac973ee31df1368a",
+    "llama.cpp/examples/simple-chat/simple-chat.cpp": "69e270bb2c7989426a7bf14b4eee68199b773ccb0ff6fbe382527d722445b159",
+    "llama.cpp/examples/simple/simple.cpp": "78fdd89dd5e521dcd0ed830b493cb796a9ab42550c8500aa7d1ba74f6793e835",
+    "llama.cpp/ggml/src/ggml.c": "60f533a1ca287dd37900cbd4fcb187e5eab9b051243b83e0219b2a12bda0e9c7",
+    "llama.cpp/include/llama.h": "d63fd1aa7f388f2f214cab5840361fd34f16a9d0e428c318fd3c0971abdea2f1",
+    "llama.cpp/scripts/prefix-lm-reference.py": "278da1ad247512f29e27b8ca36b608d3484cdbeda1fb977573c0e95215f1922b",
+    "llama.cpp/src/llama-batch.cpp": "f5e6916fff6c9892ad834e20e189b65177695da5087bfbbb8144a62f09496ed7",
+    "llama.cpp/src/llama-batch.h": "458e75f2c03c17567a8d8a7f4a741d3897f838d6d61ef0d00571fa94733a6499",
+    "llama.cpp/src/llama-context.cpp": "a46e27bc6d953bec4531e17da8631314bd16017a996d1e12de1c18e055ca6de2",
+    "llama.cpp/src/llama-context.h": "52629d558c5f05a3087f87b3209ac9083eda574e5258063a6cf750ed3fcdfaa4",
+    "llama.cpp/src/llama-grammar.cpp": "068934660a76f90de453f9dbe38f13bcabfc226330a482abe6089c1bcf6a1c87",
+    "llama.cpp/src/llama-kv-cache.cpp": "1b6bc4171e49f6bb6cd44dd8a2c760c0e5a2373e812026e2258a0c7a654ccb9f",
+    "llama.cpp/src/llama-kv-cache.h": "ca4ea7102f9e1c195928036d8d06759e6d860b3e3968e15c4ac93d3aebfd241f",
+    "llama.cpp/src/llama-memory.h": "81599f52092cf140aa663dab594619791421d8c93246336420b699e019d34ebb",
+    "llama.cpp/src/llama-model.cpp": "c995e973f026dfb70f19932704e7fd809fd8b4f88fe4507dbf1bd1b514ba6ce5",
+    "llama.cpp/src/llama-sampler.cpp": "a10afd1290410376c2aef2f6d82704203b1852bbdb790d16fcc31a63c4a643e2",
+    "llama.cpp/src/llama-vocab.cpp": "a00fa07714a6f6f93aac0551e8f011b0bb3d32a3f0e5a7f3d226272a7ab23c09",
+    "llama.cpp/src/llama-vocab.h": "cc36feded87fd23d3d66befa5373b436089c63e41773feee6e374480a2e93c2c",
+    "llama.cpp/src/models/hrm-text.cpp": "fd083798c5a13d3231d0936dc4ce8d138994c2eac9e716e05b8ba9b3e109c8fc",
+    "llama.cpp/src/unicode-letter-case.h": "66750212f3d27989f5f5d9af45d8f7ba1086128de3d08a49b12833834f0783db",
+    "llama.cpp/src/unicode.cpp": "c04568ba24fdb9c3c9a0a555abb537d00f2bd4fb71fc4236f1ddeb4e47da895a",
+    "llama.cpp/tests/CMakeLists.txt": "0966cc964ee1fc667550c2857aeb9b65d4ca147783e9c73d65a78eb65e4716de",
+    "llama.cpp/tests/test-backend-sampler.cpp": "3944d6ef18dd51ee5cce2393c3fcfc1c4442d02cfce8acd715cb43432e413f92",
+    "llama.cpp/tests/test-chat.cpp": "a38fd6ae6db858e4372cce2110175b8f18c940a9f315791f893618c002490bab",
+    "llama.cpp/tests/test-llama-archs.cpp": "2c69c4f72d381669ec28be15f04e228810cd212108f8fad776db60b4ca1787b7",
+    "llama.cpp/tests/test-reasoning-budget.cpp": "25e565d9572ffe97dda5c2daa0e3b23c6654d468a27e57a1804da09a817b3a5c",
+    "llama.cpp/tools/cli/README.md": "736d8d1365bc8d2d0978f993c846f0cccee4c1a965e59c7e49f8fbcd7e513a55",
+    "llama.cpp/tools/imatrix/imatrix.cpp": "05e9e6fb13fb86bdeb552eb29dece61e9a4fb37a282d02fa6a958260d5c611dd",
+    "llama.cpp/tools/llama-bench/llama-bench.cpp": "7bd1ac2f5fecabdf7fd03a3e62646ab3a5d81b55e298e3ef331d66b86e6c048f",
+    "llama.cpp/tools/perplexity/perplexity.cpp": "025da5b2e6ad159d05c8e96f595f42ff553f9c660cd70974a4052913c8e1af6e",
+    "llama.cpp/tools/server/README.md": "c8932c8c5f2bfc8a1859cfd35c1c3a618e6f33291d6c32c48addd75b85bfdca1",
+    "llama.cpp/tools/server/server-common.cpp": "d456239b3658394a8651a85edbfc63ff2e5f78b6e404f7a0a86e78027fbfaf5b",
+    "llama.cpp/tools/server/server-common.h": "3bc7529ca2eee9d48fd13df1cb1a5303c599fde0ac040f444ecbff9bbe33adda",
+    "llama.cpp/tools/server/server-context.cpp": "fd5bf76ecb51996f7a14cb7fb03f460ddd0a323adc6da316f28e434a225045d1",
+    "llama.cpp/tools/server/server-schema.cpp": "cd0f2d5619b2612a4f8da72e13d6337cc16aa2fc95d4a74abdc490cad634725b",
+    "llama.cpp/tools/server/server-task.cpp": "7da74c69e14464dc6407ac9618a75887769beecf5fa3a749148f1df12d873b10",
+    "llama.cpp/tools/server/server-task.h": "b685364338fa2f28bff5b2a89469a90a5631a1e35ba2af2569be6abff5a27038",
+    "native/mimir/CMakeLists.txt": "9b1169ca62dfdfc2f374fc7e1a91733a79ac38b3c5479c8fae1952e8fc3d4432",
+    "native/mimir/chat.cpp": "fb930eb3b09d676babdcbbaa6ff3c7617f7de36d68ad098643b0994f8e968be2",
+    "native/mimir/export.py": "81592bdd93d4ca99ef49f6831329c00dddbbe0cf1da987418248a1eb6bd874dc",
+    "native/mimir/include/mimir/chat.h": "22a62d41f07403fe8b14e89cd66312dc2267af8ce39456dd0eabab82f35dbb9e",
+    "native/mimir/include/mimir/session.h": "4421a9abf6004133fd4b8793ef1bcf6402f467be7bee521f05a1100194ac0b9d",
+    "native/mimir/session.cpp": "f4405399dff4f8c88b096ffbbed8885a530081a082886a1e9e6c84de73ec3824",
+    "native/mimir/tests/chat_e2e.py": "69ac09e2db6b7dc954e5eb45093c87d037b693e0106600cb07fb067943b4521f",
+    "native/mimir/tests/chat_reference.py": "cbcba3ebf2886ff259b09493b1251dc2d58a728845c309945658e51f9436b36b",
+    "native/mimir/tests/generate_letter_cases.py": "ec550245523258299236417294b3091e77810920b9cb61534a22e02beba6e4ca",
+    "native/mimir/tests/long_reference.py": "a9d05025ff4806acf1654d43afb2d19327b5929af122e35ee6f11b8cb708b053",
+    "native/mimir/tests/prepare_text_ci.py": "87bced9c9cc6973e28c5866fb14da96b7eee4ec889eb6f6e6181f82c687c73c1",
+    "native/mimir/tests/qualification.py": "e287688da470ae1c109a8ab58f22ec8638f2731f2cd69558a6c5c673b972bc4f",
+    "native/mimir/tests/qualification_report.py": "b16781d791826c66f5e5563c591030fcf2cde463c8f3dfc6fe4a91572db17a81",
+    "native/mimir/tests/run_matrix.py": "881c19bd3715088657b9f9ee22ac4c23da505891855b3618773f3590852af433",
+    "native/mimir/tests/server_e2e.py": "9aaf1dfa8935988e22008e4074fb4d3161005c9c95894d40581af6dc4b419971",
+    "native/mimir/tests/session.cpp": "e2e9d5508b61c2e8d4b973fb2bb06397b5352a501a00bc60815c2b4175e9e999",
+    "native/mimir/tests/text.cpp": "a96f3ddd6e37b45d9f7d61cb22f229c301ce9b116da36e593a3df5c9801cc6ff",
+    "native/mimir/tests/text_parity.py": "7848927df373e5e1be8d6539df889d256f554b55c58891f052c5e8c42f1a98f1",
+    "native/mimir/tests/text_reference.py": "b241d528a1326cb3dbaf9f12351fe996a9dd9d74947aa57e178e292d05269bc1",
+    "native/mimir/text.cpp": "d85641b43f99d62cf1b744c885b7816e4de8c7cd727323be346925fb38839c43",
+    "native/mimir/tools/chat.cpp": "fb34c8f116072068f3f5d167a53dc4f8ac2e800dcbad26ccfc03f4ec3832ccc1",
+    "native/mimir/tools/model.h": "a728fa9ec9507dc8b5174def533f0d683b5a370222abf215f0d530de32b5aba1",
+    "native/mimir/utf8.h": "a728747b8b1b25337c9d5ceccf6cd0ea51a940d3b5eabc6dcb683ec163457653",
+    "scripts/prefixlm_comparison/CMakeLists.txt": "95b3ea14586c5cbcffdcbc6d2dc37f7914cb1c2a56ebc8a6a248f4d092decf96",
+    "scripts/prefixlm_comparison/compare.py": "c3ddb7ea59094109e5d90c5ec448d0571af25439fb3e627d99a53b2d7a5356f4",
+    "scripts/prefixlm_comparison/fixture.py": "dd1f5549beb905ea154c6917ecde74e58056ce90bd9b304582aacef5c9d69e87",
+    "scripts/prefixlm_comparison/prepare.py": "66a89007cb0d8b3bffa2ae36cac6666b05ab03e143fe701aab03ebd3d6c39ba6",
+    "scripts/prefixlm_comparison/real_model.py": "5442a27da9089f8d2d9fc30550e846cc00e28ecc246f881f8ffde4d2f372e9e5",
+    "scripts/prefixlm_comparison/requirements.lock": "39d98e9c6cb2f32ca56c636afeccf440bc611f86c4e1ed7deaca4f938df56657",
+    "scripts/prefixlm_comparison/runner.cpp": "c30fa265eb674b806eeef9da7ec7d9ae7278317de8078780d1b1a1d567b3cecb"
+  },
+  "packaged_patch_sha256": {
+    "native/mimir/patches/prefixlm-engine.patch": "7e6cf04177648c618f46a632c8c75a1383ce87e107bf49002cda633e8bb3f769",
+    "native/mimir/patches/text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+    "native/mimir/patches/ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519"
+  },
+  "release": {
+    "pass": true,
+    "ctests": 8,
+    "engine_assertions": 4280,
+    "log": "logs/mimir-persistence/ctest-release.log",
+    "sha256": "038e75a7c6a679ec39e3f3164ead4ca631d25267b194e8d7f8e735c1d8074cb4"
+  },
+  "ubsan": {
+    "pass": true,
+    "ctests": 8,
+    "engine_assertions": 2140,
+    "log": "logs/mimir-persistence/ctest-ubsan.log",
+    "sha256": "119bdc93dbdf5843832ffca706a03bb308b9c99686817b22f5f5382b6d09f9eb"
+  },
+  "servers": {
+    "separate": {
+      "pass": true,
+      "checks": 77,
+      "report": "logs/mimir-persistence/server-separate.json",
+      "sha256": "860e9aa869cc1e60ab55d26dcae6bc8a911eaada024d42949f2db2dcaeae40c8"
+    },
+    "separate-restart": {
+      "pass": true,
+      "checks": 14,
+      "report": "logs/mimir-persistence/server-separate-restart.json",
+      "sha256": "72bf925fd930a100329e7f6929b767c7fd7b5a38691a856f6880f189dac5e8ef"
+    },
+    "unified": {
+      "pass": true,
+      "checks": 77,
+      "report": "logs/mimir-persistence/server-unified.json",
+      "sha256": "30002384bbef68587f686f16de2d8412e833525bd09f02b0ee4e5a4d1360a204"
+    },
+    "unified-restart": {
+      "pass": true,
+      "checks": 14,
+      "report": "logs/mimir-persistence/server-unified-restart.json",
+      "sha256": "6d134233e33ce39f5a0851f80da9643079f3292c7a80d15923349b4d6b96284a"
+    }
+  },
+  "backend_sampler": {
+    "cpu": {
+      "pass": true,
+      "log": "logs/mimir-persistence/backend-cpu.log",
+      "sha256": "4b9a9ea943b244a086268c00bb1968112515cdcd9a01acb918e88cfde2c1cf9d"
+    },
+    "metal": {
+      "pass": true,
+      "log": "logs/mimir-persistence/backend-metal.log",
+      "sha256": "a43d2304c4e2a497fad1ef8dbef4b806a00f44cd981011d6c1783199505ef003"
+    },
+    "ubsan": {
+      "pass": true,
+      "log": "logs/mimir-persistence/backend-ubsan.log",
+      "sha256": "18dbbe266b0844c61d9491fb7fd033451569ff674354f2d1b09f30d48f3901dd"
+    }
+  },
+  "parser": {
+    "pass": true,
+    "split_cases": 4,
+    "responses_tool_stream": true,
+    "log": "logs/mimir-persistence/parser.log",
+    "sha256": "6e3f8aa33efbdccd5af22e448a99814a5cf23796a007dffd016573292402b4ed"
+  },
+  "independent_cpu": {
+    "pass": true,
+    "steps": 31,
+    "report": "logs/mimir-persistence/reference-cpu.json",
+    "sha256": "e21ba15b81915d5119b1747e25309a9a94a45c894f4855f1610a46a8fd3a9e9a"
+  },
+  "historical_metal_oracle": "native/mimir/sharing-results.json (not requalified by this sampler/parser follow-up)",
+  "linux_cuda_status": "Not run; source transfer, Linux CPU/CUDA/sanitizers and controlled timing precede packaging/review.",
+  "limitations": [
+    "Same runtime/model/configuration snapshots, not portable model checkpoints.",
+    "Custom objects and retained parent/child scheduler groups have no ordinary encoder/decoder serializer either.",
+    "Cache-enabled requests use host sampling; n>1 takes ordinary prefill/fork path.",
+    "Full host state only; partial/device state, mutable live adapters, speculation, multimodal and other memory architectures remain outside qualification.",
+    "Workflow syntax checked; GitHub CI cannot qualify uncommitted submodule changes."
+  ],
+  "server_checks": 182,
+  "validation_notes": [
+    "Workflow YAML, harness Python syntax and git diff whitespace checks pass.",
+    "OKF validator has the same two pre-existing benchmark-charts indexing/frontmatter errors; no new wiki errors."
+  ]
+}

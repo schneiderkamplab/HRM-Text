@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-18",
+  "runtime_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "runtime_changes": false,
+  "accepted_nonblocking_findings": [
+    "Recorded tiny CUDA drift",
+    "Recorded BF16/Q8/Q4 FP32-reference differences"
+  ],
+  "pending": [
+    "Final Linux execution of the new graph-enabled CUDA sanitizer runner",
+    "Final Linux CPU ASan/UBSan candidate checks",
+    "Human patch review"
+  ],
+  "checks": {
+    "macos_release": {
+      "pass": true,
+      "log": "logs/mimir-final/ctest-macos-release.log",
+      "sha256": "ad716edd842eb9c45a496a8042bcc254fd6213a756421af2104d9fc6260b1abc",
+      "output": "Test project /Users/petersk/Nobackup/HRM-Text-mps/logs/mimir-runtime/build\n    Start 1: text-unit\n1/8 Test #1: text-unit ........................   Passed    2.06 sec\n    Start 2: jinja-regression\n2/8 Test #2: jinja-regression .................   Passed    0.26 sec\n    Start 3: reasoning-persistence\n3/8 Test #3: reasoning-persistence ............   Passed    0.25 sec\n    Start 4: prefix-engine-hrm_text\n4/8 Test #4: prefix-engine-hrm_text ...........   Passed    5.14 sec\n    Start 5: prefix-engine-llama\n5/8 Test #5: prefix-engine-llama ..............   Passed    2.07 sec\n    Start 6: session-cpu-true\n6/8 Test #6: session-cpu-true .................   Passed    0.41 sec\n    Start 7: session-cpu-false\n7/8 Test #7: session-cpu-false ................   Passed    0.13 sec\n    Start 8: session-cpu-absent\n8/8 Test #8: session-cpu-absent ...............   Passed    0.22 sec\n\n100% tests passed, 0 tests failed out of 8\n\nTotal Test time (real) =  10.55 sec\n"
+    },
+    "macos_cpu_ubsan": {
+      "pass": true,
+      "log": "logs/mimir-final/ctest-macos-ubsan.log",
+      "sha256": "1772a5b6959878c80aec127fa6f929822b660a5da0c2f96a33f5f7fafb8adfda",
+      "output": "Test project /Users/petersk/Nobackup/HRM-Text-mps/logs/mimir-runtime/ubsan\n    Start 1: text-unit\n1/8 Test #1: text-unit ........................   Passed    2.45 sec\n    Start 2: jinja-regression\n2/8 Test #2: jinja-regression .................   Passed    0.28 sec\n    Start 3: reasoning-persistence\n3/8 Test #3: reasoning-persistence ............   Passed    0.25 sec\n    Start 4: prefix-engine-hrm_text\n4/8 Test #4: prefix-engine-hrm_text ...........   Passed    2.95 sec\n    Start 5: prefix-engine-llama\n5/8 Test #5: prefix-engine-llama ..............   Passed    0.59 sec\n    Start 6: session-cpu-true\n6/8 Test #6: session-cpu-true .................   Passed    0.72 sec\n    Start 7: session-cpu-false\n7/8 Test #7: session-cpu-false ................   Passed    0.27 sec\n    Start 8: session-cpu-absent\n8/8 Test #8: session-cpu-absent ...............   Passed    0.25 sec\n\n100% tests passed, 0 tests failed out of 8\n\nTotal Test time (real) =   7.78 sec\n"
+    },
+    "sanitizer_policy": {
+      "pass": true,
+      "log": "logs/mimir-final/sanitizer-policy-tests.log",
+      "sha256": "605ef967bd6afa5e1da3aa10d00a27034d74dde2cdda318b79b2c91773516ca6",
+      "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.565s\n\nOK\n"
+    },
+    "package_reconstruction": {
+      "pass": true,
+      "log": "logs/mimir-final/package-verification.log",
+      "sha256": "548a1c7bd0307fbfb870972a8cbb29b135c3b1d8a27f279ebeec2909ed5ed20c",
+      "output": "Verified four-patch reconstruction, main-only boundary and standalone persistence\n"
+    }
+  }
+}

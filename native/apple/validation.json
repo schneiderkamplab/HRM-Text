@@ -1,0 +1,307 @@
+{
+  "date": "2026-09-19",
+  "llama_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "model_sha256": "3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5",
+  "source_sha256": {
+    "native/apple/Bridge/MimirEngine.h": "87902579a0e3192bdf6b6ade444c696ad71a8431c2cc747e758ce67dd3f55bc6",
+    "native/apple/Bridge/MimirEngine.mm": "83f065e74038f529c3ab8d32442aa0e849c7f1c8ce185108a07ad453db93bfb4",
+    "native/apple/CMakeLists.txt": "825e8d19f794c63276b6c858817ce82407b607b59ae99e1a68b02ae67f33ec77",
+    "native/apple/Resources/DFM-Mimir-LICENSE.txt": "eeda8c6bf9bdfbdc04a6e3db30b30b37974dee79faed96ef60c4f2533c017a23",
+    "native/apple/Resources/Info.plist.in": "80b0662a90410e8e032ac3501bf7dfb31c926870e0d59995d24c05d86755d66e",
+    "native/apple/Resources/Mimir.entitlements": "3eb357b249cb8aeeea86c2ae041758dc0e66977bd4a4bdbb8e25c90909e4f076",
+    "native/apple/Sources/ChatStore.swift": "a1490505ee32612d3152c135cc7401e76c67a3365c124c31d6b100e185e5bdd4",
+    "native/apple/Sources/ContentView.swift": "3ee5bc1125659c71e12f4a160491cd64ad44fee50c9d8c87d09d4712dc6d6326",
+    "native/apple/Sources/Conversation.swift": "b05caaa20141db4139a532d389b9086a3c63ba094ed83dd8dbd55b091e57704d",
+    "native/apple/Sources/MimirApp.swift": "f70fab3329d6aadeba0f81dd3d3d9d82ff73e49305b4653615c3d417ead86815",
+    "native/apple/Tests/BridgeTests.mm": "e341e2f5b5060bab80404a912a9fa92ecde0ee7b68bf693afb3cc6f145cbe350",
+    "native/apple/Tests/StorageTests.swift": "40d6acc922b246b0554c7918d186c08d1e782a8b5ff336d82facf6a6c818720e",
+    "native/apple/Tests/StoreTests.swift": "9878259df7c5f7968c34ba57c9ce76cb0575bfea677d9d8ccfc99430824d3769",
+    "native/apple/Tools/test-swift.sh": "d45e1669a8228ef96fb9105838014dd68900fdac131435b256f8cc7b3d64a800",
+    "native/apple/build.sh": "6253c3e6644246ef96f756e8f41e9c7b1519ced1523b384e7da300e3d7e85717",
+    "native/mimir/chat.cpp": "4c45d94a1b2b3481e68990fbf1c3f854b3c9bb3a9dc3467270281d335ce82f5d",
+    "native/mimir/include/mimir/chat.h": "fe6163f1661f89de4ac0ed860640f8887067ef34419fa71c310f5c94b1e47e40",
+    "native/mimir/tests/text.cpp": "3d1f9766893d0a809cefecb1f4e8211a7e497188ac1bd79e40b81e26582d8dd8",
+    ".github/workflows/mimir-apple.yml": "d48d308fa22e6aa2781188902dc95a12455ff196372fd587170531be0c96232d"
+  },
+  "local_log_sha256": {
+    "macos-final-build.log": "f9a716ed621c73165b71df879ffc9d585d684215493299d7e93054d4d055ec64",
+    "ios-final-build.log": "e195f9d8d816fad9a05cb474c8b48d6100c8c82f13685df0ab5d74a074016288",
+    "swift-tests.log": "057509250705bd030c5721cc471e82c05f2327eab3c53de2ee5d400c9a8c8738",
+    "bridge-tests.log": "a85eaa87277602299fab45992736ae74575eb0fb53a1c0612b251e9302725283",
+    "history-tests.log": "2e58f2017f904e142a6d64b7303c247ccc045076004adbad9276204365c38260",
+    "native-ctest.log": "08ecd49c8b020377ff37f3b060e31d84762290bfb3cfb190fc1c1f3f87817ceb"
+  },
+  "limitations": [
+    "iOS cross-compiled only; physical devices and simulator execution not tested",
+    "Hosted CI workflow not run",
+    "UI smoke preceded final identity and compact-navigation edits; final builds and bridge tests cover final source"
+  ],
+  "sidebar_fix": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ChatStore.swift": "c1aa1ebc175b92759372397e3ea3a09824f945b165b966788b3c14c6eec120db",
+      "native/apple/Sources/ContentView.swift": "d5e04961f6361a94a5d83de23c1f31a66a30a1833b07303236520ea870caf6c4",
+      "native/apple/Sources/Conversation.swift": "c5fa3a31b2d64c2266115dec89e8bc1481e9cab4670e2d9ce3ddaf2e002255e6",
+      "native/apple/Tests/StoreTests.swift": "d11d567d0f7f4053eb28c52ee58a741a3b3c67ac7cad9cb7cafd4cff91cd5718"
+    },
+    "local_log_sha256": {
+      "sidebar-swift-tests.log": "d3cd29fcb5dab5400212a2da8ba32a36e5766da1aeecde5a0830655fbe1b866c",
+      "sidebar-macos-build.log": "b8d4dadbed9aa82c8127c80843965b658a8051f73102e6d6159dfa9f9301f6bf",
+      "sidebar-ios-build.log": "d7eeb0440b712526924d8e6ddb7804cba16428821d58b692502225cb57288570"
+    },
+    "result": "Swift storage/state tests and Mac/iOS Release builds passed; no new live UI or real-model run."
+  },
+  "simulator_followup": {
+    "date": "2026-09-19",
+    "device": "iPhone 16 Pro, iOS 18.4 Simulator, arm64",
+    "result": "Release build, simctl install/launch and UI ready status verified; generation not exercised",
+    "source_sha256": {
+      "native/apple/CMakeLists.txt": "40a1192df768cd29c481ba91e54ec327fa4d9ee41065ff08e9e897565f1997ec"
+    },
+    "build_log_sha256": "c21e06a9c74cbc4c035f0196fe64656be41bb61f0625bf58759b76dbe1862b95"
+  },
+  "keyboard_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "e7c0714cb37af0d8ef8f41e8e33af9d5f9e459f03c98453ee0657f7f8ca2ae82"
+    },
+    "local_log_sha256": {
+      "keyboard-macos-build.log": "1f4227d5cdc4eac0ee6db4a1a97ebee251d6dd26a62533e3ecf1ac8594a23257",
+      "keyboard-ios-build.log": "b51e75ff7ec1bcdff49b51a7e2759f034a9fef748faae0deaf92b9297729293f",
+      "keyboard-simulator-build.log": "438dcbc4ae51687d7f6b9ee1a1201f29e574995e2ca33f053c85875962daf2a0"
+    },
+    "result": "Three Release builds passed; simulator accessibility confirms dismissal control. Click-through check interrupted by user changing devices."
+  },
+  "send_keys_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "878f49b81742b033d46a3dcc8ed677a5121640d86a7f1ed0182cb1d181f37162"
+    },
+    "local_log_sha256": {
+      "send-keys-macos-build.log": "916e02cbd50d0e35db22b37eaf125d9dd5d34feced31bc5dbcd1c8244ca825d8",
+      "send-keys-ios-build.log": "51b99dc5919525c3a465a2fb3e84ab51ac2e7817c5e5778626260ce0a5ff49bd",
+      "send-keys-simulator-build.log": "42c18d3e176d4006b2d26874a75551548c0159cd8b83bf90a1f18f1c351b4208"
+    },
+    "result": "Mac/iOS/simulator Release builds passed; keyboard smoke test interrupted by live user interaction, IME not exercised."
+  },
+  "send_keys_verified": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "097f1439aa1a7ebcb4ea7960dbc60210b3e85c359e14b8a20ef52d66e143d33b"
+    },
+    "local_log_sha256": {
+      "send-keys-macos-build.log": "51e36b1d19626ac7f9d43d3d08beea0008ddff49fc31f6e3a307b67c54f0862b",
+      "send-keys-ios-build.log": "55cb3baf40c65fd8ab81f3c5a3306190f72499dbc6506fdb8297408fd1403788",
+      "send-keys-simulator-build.log": "fccf59c5eb7d7ebf42566df13b4509dd67fe29e8bbba1ea791f985af68e4f91a"
+    },
+    "result": "Mac Return sent; native Shift-Return inserted newline; Cmd-Return sent multiline prompt. iOS software Return inserted newline without sending. Actual IME composition not tested."
+  },
+  "branding_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/CMakeLists.txt": "5eed0e1bef579aa253b58a6fc5ba0a3a9355b06dee4c3cba7fa260be7eb8fb2e",
+      "native/apple/Sources/Branding.swift": "091e57cb082454666c96cb9b17e0fe8407bbdeff96e5cd07cad1c66fe7a6e2f3",
+      "native/apple/Sources/ContentView.swift": "d89461f0219809f18ff6474b1bba7668a756d7841baf458791f362bbacbb337b",
+      "native/apple/Sources/MimirApp.swift": "98d1d78d373818465d767a25794bccf2e44f619736d315a1c016657195932f4c",
+      "native/apple/Resources/Info.plist.in": "9f4a3df8facfa36559eeb82ba08b3b5f3a0bdc09f3bbe351a02be2aaf6098ece",
+      "native/apple/Resources/BRANDING.md": "7c4c23eb727127aa826a93718fef69777fba9b26f66e423fcb3891080620206f",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/Contents.json": "4713974967516ba60c6e645a366cacb5d0294c3b05f6f2dd148efe1b0036154b",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/ios-1024.png": "29dde4ccb8c9b937b2f1f17fb5e30e79303cbe166a15daf7684daa192ed7a4c8",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-128@1x.png": "00c5f3cb42d9d9f388c8442d9eda03d18c22983d11b3d6a9c077c0c9ea5f2bce",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-128@2x.png": "acdf786dee585e33effd2343d0d6aa74af7ef96c2e14b4adc240fd647db07453",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-16@1x.png": "c09b69ff7c75b3d3ea04b43ed811f5905d62c1b62223a7e4a2ebcd890cd8df6f",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-16@2x.png": "470b69f25bc91abdc131bcf731f4b7e36f6af419b6038a568b79481af720883b",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-256@1x.png": "acdf786dee585e33effd2343d0d6aa74af7ef96c2e14b4adc240fd647db07453",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-256@2x.png": "4adf6c28be01a61effb9eee4d77e337322fc453cfa9130496bc592c9c3e5defe",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-32@1x.png": "470b69f25bc91abdc131bcf731f4b7e36f6af419b6038a568b79481af720883b",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-32@2x.png": "9dafd299007620873c84f9da0e6c641a809ba3d1deb53f33bbc4b5456e590110",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-512@1x.png": "4adf6c28be01a61effb9eee4d77e337322fc453cfa9130496bc592c9c3e5defe",
+      "native/apple/Resources/Brand.xcassets/AppIcon.appiconset/mac-512@2x.png": "29dde4ccb8c9b937b2f1f17fb5e30e79303cbe166a15daf7684daa192ed7a4c8",
+      "native/apple/Resources/Brand.xcassets/Contents.json": "f5fb0e1f3a8142892ed092efb5955c1c2cc537003a89ad7bbdb9dade7fe8985f",
+      "native/apple/Resources/Brand.xcassets/DFMLogo.imageset/Contents.json": "26f811d796093a8440c2cb8e3c02d37c2eea628577e63a2ede07775860b8f928",
+      "native/apple/Resources/Brand.xcassets/DFMLogo.imageset/logo.png": "e6874acd788fc1a2979de6cf491da1e0ec988d5ebee2914c30deab9d4c7a71e3",
+      "native/apple/Resources/Brand.xcassets/MimirLogo.imageset/Contents.json": "26f811d796093a8440c2cb8e3c02d37c2eea628577e63a2ede07775860b8f928",
+      "native/apple/Resources/Brand.xcassets/MimirLogo.imageset/logo.png": "cc4ea96c67190a1ea77052a16c49310f512d5b1a754c880523fa52d16095ac47"
+    },
+    "local_log_sha256": {
+      "branding-macos-build.log": "3bfa17b56b3972540db40dfc3308d88036dbc55dc8af5af5867f7c04553ccfb5",
+      "branding-ios-build.log": "6c718256818fcc259b6a80aa5c1ccdf4c1ad2df7e9b9e80cde121d810af02945",
+      "branding-simulator-build.log": "3751923943d044e48d893265feffe0993f0ce2946e14ee9b67cbd6af0f80ced3"
+    },
+    "result": "Three Release builds passed; Mac and iPhone 16 Plus simulator welcome logos visually inspected; app icon plist entries verified. Dark appearance and physical devices not tested."
+  },
+  "answer_mark_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/ContentView.swift": "cf28cbf1cac5f084647b4e648c2228e0ba4010afe97f2a0fd63edd876df24f7c"
+    },
+    "local_log_sha256": {
+      "answer-mark-macos-build.log": "26e5476d597452a29100a7c9bd3891461dfb4aba0953f1b8bd4c908f41dcc151",
+      "answer-mark-ios-build.log": "55ae1dedd1c058ab85c272801ac3ee9048ded5ca33df7b7be05da3bfe19e79d5",
+      "answer-mark-simulator-build.log": "b08d5720343ff8495676a0ee45182360309c989573660a954e380e2292408e91"
+    },
+    "result": "Mac/iOS/simulator Release builds passed. Shared assistant header now includes decorative 20-point Mimir mark."
+  },
+  "context_settings_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/mimir/session.cpp": "7ba5a6447d8f89c8a9f208a2b9d48b8c5ef838c32162fddb72fe86a4f25b25ba",
+      "native/mimir/include/mimir/session.h": "708ebd357dcbd44ce10658167ee4551e72c26175df5e1edc41c2d071b8d31b3b",
+      "native/mimir/tests/session.cpp": "8005f1b7f33b45c29b9ee38f58deb7f7f867eb88a2dee9029e409194b22de8ec",
+      "native/apple/Bridge/MimirEngine.h": "d314b67053d26ad1dc3cb58d889614e8727e4bd28a552f693a294b281039a06e",
+      "native/apple/Bridge/MimirEngine.mm": "224daca022c8e925780eb27aa7e209c3ce3e64d8c95a1e6f95e0cdbde44f94f9",
+      "native/apple/CMakeLists.txt": "2d4572cc1cea5fa48816d9074dcdeae9a827ea2942e4abaada37962c129a99d1",
+      "native/apple/Sources/GenerationSettings.swift": "faf3fe0ffcbdeefb03219399b61db6e72be8d0663ec84536e72fe3db942ad8bb",
+      "native/apple/Sources/SettingsView.swift": "85a6302078e359fdd5722351c589b1a34bc69d51b5097ed0cf9cf0ff18515521",
+      "native/apple/Sources/ChatStore.swift": "7f40b258309a4eb229d7138febcb93da99b1d4bdb3c81934ff0bcf4bcc3ec6da",
+      "native/apple/Sources/ContentView.swift": "40a9b2aa29116820e9a102776c84e563e4f52c5173075a1834c02f561c680c0b",
+      "native/apple/Sources/Conversation.swift": "26cd9c958dbaf000b62ac806f834e029053e52be3c92406513beb56772f26a23",
+      "native/apple/Tests/BridgeTests.mm": "cd525a7f09b2855f6d04c567452bbb88df69279fa0172bfd7aca06cfaa02f7f3",
+      "native/apple/Tests/ExtendedContextTests.cpp": "581dff7f100538bef6701b120812e1224cce824a92e5a8df4f9ea632c6f97b3b",
+      "native/apple/Tests/StoreTests.swift": "2969b298ced34cf9a9ec8f95993810b61c1e68eaf5f496bbf1b08f44a4c72882",
+      "native/apple/Tools/test-swift.sh": "8d8cb02ad328c615fce7e8690427770ca895b4d7d0813e53a5512b694ddbdb70"
+    },
+    "local_log_sha256": {
+      "settings-swift-tests.log": "d7dc6aa5d1713e29b2cd32e3002f4cc187d3fffcddfdc020547ddc3db6281e06",
+      "settings-macos-build.log": "819229582011da6f2497d6320154e9be772cfccc1e07b321a4478751efc55346",
+      "settings-ios-build.log": "3f7ad5aae75f70152f06fa4fe5745d567fcfcc82807989529bb2a0767c9bfd13",
+      "settings-simulator-build.log": "beead2411feaac2b591b3a8212249e405b6de4426305315b98275accdbdbb8f5",
+      "settings-bridge-tests.log": "8d2106bf0a442f45ed6c645514fac15b15851b71a46ae8df3c3f124521fee1bd",
+      "settings-native-ctest.log": "039324bf979a4efc7e271eda68073de931bed87a30c5866b51b98a6675355526",
+      "extended-context-tests.log": "5b180ae5d2a135ea683ef87fa5a851d2676d0ab473d123f74f9a345649191d6a"
+    },
+    "result": "Three Release builds, Swift tests, real Metal bridge tests and 8/8 native tests passed. Real Q4_K_M: 4530-token Mimir-templated prefix and four decode steps in 8192 context passed with finite logits. Mac controls and reset inspected; final Simulator loaded successfully with host-memory estimate. Physical iOS memory and extended-context quality not qualified. Final ContentView difference from built source is trailing whitespace only. iPhone 16 Plus / iOS 18.4 Simulator settings showed active 4096/1024 and both editable controls."
+  },
+  "model_profiles_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/MimirEngine.h": "c3a064ebbda2b0bbc9bf6168701af8106ac7987f97e4abf9b98f6fde1dfea5ad",
+      "native/apple/Bridge/MimirEngine.mm": "e119143b7a155ae20bb8ca5e5fce9d96ba8c009676c63db5fc14d6aebb538e17",
+      "native/apple/CMakeLists.txt": "c94392bf84cc68632bb1d365a642b5b1cf246cc6865ac25c67961e79e4882c1b",
+      "native/apple/Sources/ModelProfile.swift": "8873a976bfb103018c50887a12a6aed9392ff5d6a0e78135771ba48ce9dd8537",
+      "native/apple/Sources/GenerationSettings.swift": "bbbe7d77717561a5c011023d8a258bd620f37c3c264997a080652ebcea9429f4",
+      "native/apple/Sources/Conversation.swift": "001fc58aa85c662efe3c76083f1649a6d7faee9eaa50c7a56db905c6b2a3a349",
+      "native/apple/Sources/ChatStore.swift": "b30cf0a3e42697ccc83a9c7165880aa0954314e8881b10100612b8327c1e9516",
+      "native/apple/Sources/SettingsView.swift": "e5ed85a2944682f5a257876f229becac23f8358aad3f98cf938550305fc63e0d",
+      "native/apple/Tests/StoreTests.swift": "9b1fb006f96285d77e789fa4ed876bde3ea26dbe19ff298552643a5db7b29fae",
+      "native/apple/Tests/BridgeTests.mm": "3638c5d2bf3cb5812f72321d4c52e1eed86c9f13cda8b98c15b7083ee8878e3a",
+      "native/apple/Tools/test-swift.sh": "a336f04ba354780fbafe26f254ec29938750b6084dabe9df552a0a9e28d04ec6",
+      "native/apple/build.sh": "c565b1378842134603c678efa7ab70838611630c1a282395581e5800f70fc5aa",
+      "native/apple/Resources/DFM-Mimir-v1.profile.json": "303a96aa9efc98959275d204950b327eec2c2a6be30ee1181b182f279261121b"
+    },
+    "local_log_sha256": {
+      "profiles-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "profiles-macos-build.log": "160a260f17bd96143578770c4c2e52212f113b83de5fbd576346ad6309e9ae8b",
+      "profiles-ios-build.log": "acda4ef6f21eef81bcaa9f3b45c3daefdbc913b95008b72889f019e44a5e2661",
+      "profiles-simulator-build.log": "32524ddde86f5525cf87c21aaa7d42e3536396808eedeca9c20bed4c40aa0033",
+      "profiles-bridge-tests.log": "53fc8d11fb565d2337b3dd4fe81394cbf724258db4a4b79cf5fdd041b58c8247"
+    },
+    "result": "Mac, unsigned iOS and Simulator builds passed; Mac bundled a JSON profile. Swift tests passed for 32768 settings acceptance, a distinct future-model policy, JSON import/restart persistence and validation. Real Metal bridge tests passed with profile-controlled automatic context and GGUF training-length metadata. No new live UI or full 32768 generation/physical-device qualification."
+  },
+  "shutdown_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/MimirEngine.h": "9d89de117c950a8e11fe0dc861fba5b5c1eef0a1e3ab953aace0ea11e1c53ae3",
+      "native/apple/Bridge/MimirEngine.mm": "9d383c49edc3086f95d276afb379132b880fe7713c8d0e6b1c4c791bc7dbbd0e",
+      "native/apple/Sources/MimirApp.swift": "4d5a000aadd9093b78a12ca35971fb6dc8fe38340366407c13c562e46abbd840",
+      "native/apple/Sources/ChatStore.swift": "133ffcc34d6aa5924da02be931f5679141053698de9aaa915ad80a2db071ed2e",
+      "native/apple/Tests/BridgeTests.mm": "8c6d830ff5b5685bfcb46038f211d29dc4a2562df8116f5861eddd871b245ec7",
+      "native/apple/Tests/StoreTests.swift": "8f2e821ffa9c1939101fbe465bb6ac711430bda7b6623c75381b33e07a41db5c"
+    },
+    "local_log_sha256": {
+      "exit-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "exit-macos-build.log": "9eb7f5bbed47dcf5b22c5a94efac66befa9956b2fc2225cb4decaac99fe4e0fc",
+      "exit-ios-build.log": "1a8f60beff18a45be8b1517f13ce954760668fb560c34bd98a65105eb5d0df9f",
+      "exit-simulator-build.log": "f842210850c7045aaa90cbdf465f551e25ecaf9a655b6bd89e04abc5093252aa",
+      "exit-bridge-tests.log": "c2b4bb454df7b114006cb8d7984eaa7ee3dc869eb050af6be88b1652c7a97748",
+      "exit-idle-tests.log": "783eb49057f6cefcd91ad25e28d380755a4106ffda8b61c87b09d76b91a33110",
+      "exit-loading-tests.log": "0e8fbbdbb15b3c5ecbfbcf12e5215355ec1c4b3b7361fd1cc7e293508002eb86",
+      "exit-active-tests.log": "4026a66d8bfb34dd0b142632be913662c51c7fad1dc06e19fbeb27e3a0edc043"
+    },
+    "result": "Existing Xcode 16.3: three Release builds, Swift tests, real Metal bridge tests and idle/loading/active process-exit tests pass. Engine is deliberately retained across process exit in regression cases. Live Cmd-Q UI check unavailable because Mac was locked."
+  },
+  "compaction_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/ContextCompaction.h": "587e3ef62499b9e030293ac8ba8ee814a544af0755515f9eadc991b32293a830",
+      "native/apple/Bridge/MimirEngine.h": "b21a5751ad674e9dfef4e3d8bfa62e9cb45ee38136372f5222778ee27e7ee7aa",
+      "native/apple/Bridge/MimirEngine.mm": "1330c4cbdcc9fab9446ecd8747a9747f0038c2ca0e16a2d1ec0f26d2e1583887",
+      "native/apple/Sources/Conversation.swift": "be32f0824b23c5fe0441d2c889ee905fb886cd1b8af200fc8c582b1b9192f0c3",
+      "native/apple/Sources/ChatStore.swift": "72afd54db0784218314795e704c4974729059ead2afb67fbf624e941af199ae3",
+      "native/apple/Sources/ContentView.swift": "513984a08e4d515e09d18c3301234475e674ee4742fa24b5b106a1b05a03a102",
+      "native/apple/Sources/SettingsView.swift": "5734b93c3ce32c27c5f6cf75fc7511876e06a5b0616f616a55c2a025519efebe",
+      "native/apple/Tests/BridgeTests.mm": "a079fa75441cbae5084944a213f73dfb898eab374082a6a276e5df5fde05902c",
+      "native/apple/Tests/StoreTests.swift": "9a9ce9dbc4027ec01a1ad7503412670ee93364f3e8b9e4195816eadf1341458a"
+    },
+    "local_log_sha256": {
+      "compaction-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "compaction-macos-build.log": "518287f7f557a4fe307d9c587a9b02ffa465843e99216291dacf8126616d8b13",
+      "compaction-ios-build.log": "5aaa505118cdf4faf17cf0346daa56b0d2044f67cd61b63512cf0f47e826ff31",
+      "compaction-simulator-build.log": "def198f61db0005afc84b1f778dd9eb9d435e82d212c2cf80135a27db3b0c536",
+      "compaction-bridge-tests.log": "396ff9f391ae95757cf3ecd2bd99c54be15b98d57190420d70355c356a8052d6",
+      "compaction-exit-idle.log": "2084ee0c197826dcb2d658af86f6dd53940d1b247f22dbfbf23de08ec2797dcb",
+      "compaction-exit-loading.log": "171a26eeeac3dbc050f6336d1a6ef6bb286d83d52f2ce41039e892a92379062b",
+      "compaction-exit-active.log": "06874433a7dc72059b2ae86a3faf4b35a3dd619d4ad983957bcd54fc6caf5324"
+    },
+    "result": "Three Release builds, Swift persistence/rollback/preferences tests, real Metal compaction/continuation/disabled/cancellation tests and three process-exit scenarios passed. Live Mac: Cmd-Q twice without new crash reports; 1024-context compaction produced a visible summary; hide/show and relaunch persistence verified. Automatic context defaults restored. Full transcript retained. Summary quality is lossy; oversized individual turns may still need larger context."
+  },
+  "scroll_hang_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Sources/SelectableChatText.swift": "11909e32cb0261a6faacfa15e72cbf0033f00be0201f7ba83aab9e5486779b01",
+      "native/apple/Sources/ContentView.swift": "8648c7f72c2bd3e97e20b8f44a5846728194e6492b0a5ff19fd833e68d71d030",
+      "native/apple/CMakeLists.txt": "e065d1bd522828763c8236234a9cd226476533cad6a2eff161016d522e8751f8"
+    },
+    "local_evidence_sha256": {
+      "logs/mimir-apple/scroll-macos-build.log": "8142e519e457297e0831f87083bacfc211aa3e19bab73ae688c48c0e595fd053",
+      "logs/mimir-apple/scroll-ios-build.log": "38555d5fc4ec16e0ad6eeae834dbb924475fbbb9c00d1af209892c7a1946e335",
+      "logs/mimir-apple/scroll-simulator-build.log": "02278bdf273b225d152978bd01eae3c2213495d060ea274a4da918bc4a82cf2f",
+      "logs/mimir-apple/scroll-swift-tests.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "/tmp/mimir-scroll-sample.txt": "ee5dc6bb004903b68a094c98fe6fc33cf6aa51a920c519574ef14414dd6987ce",
+      "/tmp/mimir-scroll-fixed-sample.txt": "8210296b45fb7077a61ea8a2290813146c82abbaf390d629f9ced93fe9cd03ca"
+    },
+    "result": "PASS: three Apple builds, Swift tests, live repeated scrolling, answer/summary selection and copy, window resize. Main thread returned to event-loop waiting."
+  },
+  "context_status_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/MimirEngine.h": "37187a4ac362111b3cec4e0785b41c00786e0a70dcf60fe87009aace18fb82f7",
+      "native/apple/Bridge/MimirEngine.mm": "4e1c501e4be9767ecb2aff8d000b862e5b738b092138b42f183cbbba3b1641ca",
+      "native/apple/Sources/ChatStore.swift": "c453fddd95fc033ffa63a5c551b8cd4c0b4c6e7fda93f059ac9013bb40ac72f9",
+      "native/apple/Sources/ContentView.swift": "a6815e3ce8edc6f4d19f9c30d6eedfeb449d4317baafcf112179ec884c4d753f",
+      "native/apple/Tests/BridgeTests.mm": "57db758f496b708a6d267d9e54ff8b533ed682f9d06af11f992b9276c99d0f06",
+      "native/apple/Tests/StoreTests.swift": "3d28f30d8b5b79406c860faf04a8e2593cab6f946f82cfeff6663b5d954e03b8"
+    },
+    "local_log_sha256": {
+      "logs/mimir-apple/context-status-macos.log": "a21180a2202f653314a8cf411992722063c478197f6e3cfb11e70f4e498833a5",
+      "logs/mimir-apple/context-status-ios.log": "de3cb9953319659b5c48379a4e779d0c36a9739e7e94cb74ec1fc368e72f4976",
+      "logs/mimir-apple/context-status-simulator.log": "2aca054f086eb4ee74249fee62417978ca41460f82a0dcbad98d065482040982",
+      "logs/mimir-apple/context-status-swift.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "logs/mimir-apple/context-status-test-build.log": "21dc7d787143feb7bda808b83d9ab4c3a36d755fa8d99bee98c1d3d801549413",
+      "logs/mimir-apple/context-status-bridge.log": "92218412ab07f263e2e13fa971e821d4b93b8cac5179f39f7198090d9db99187"
+    },
+    "result": "PASS: three Apple builds, Swift store tests, real Metal context counts and compaction/prepared phase transition; live Mac counter inspection."
+  },
+  "inline_summary_followup": {
+    "date": "2026-09-19",
+    "source_sha256": {
+      "native/apple/Bridge/ContextCompaction.h": "6b5f85b16b5222cb4b613433824548710d2867e97e10e948a13b08cada613d54",
+      "native/apple/Bridge/MimirEngine.h": "9d9e37e6e3192da30d0ad94e9dfec7261b8afb18dd1640299b5221a3b2835ed0",
+      "native/apple/Bridge/MimirEngine.mm": "d91a2a8f8a2de133c7a9407fe9162801e7470458a26f26f51fab4c870c2bd8e4",
+      "native/apple/Sources/ChatStore.swift": "3f79662c516b25325e97063aec0bd852b90424b24c40537c275d229bf2567fcf",
+      "native/apple/Sources/ContentView.swift": "15256589aef4a568c338d4211f8c6dea43f4ec844a9745a2ee77e6b5c28ffd40",
+      "native/apple/Sources/Conversation.swift": "753a049d6a3fb83306f7a9ed47b27bc050d316e8169ecde624365c4e47b0313b",
+      "native/apple/Tests/BridgeTests.mm": "9eda815c8c5c27228793ab8144326848c5521965dfa7034cb2a2e30dde01ee22",
+      "native/apple/Tests/StoreTests.swift": "b344f20ad212bb9b34770c49435112511eaad9b973fff7e090c80141a8ed3f7b"
+    },
+    "local_log_sha256": {
+      "logs/mimir-apple/inline-summary-macos.log": "46f96aa7caf817611d29e93b9c784a2f0373dcf6e7954a44fc45a60a0b2ad7db",
+      "logs/mimir-apple/inline-summary-ios.log": "d6be3483eb1a3edb80453e68d19398170dfe675ad30771a967c0d9f9e5530c00",
+      "logs/mimir-apple/inline-summary-simulator.log": "08dadf0732238c6c1f28dede847346209d49175ceeae1e02911f0390c69f44c4",
+      "logs/mimir-apple/inline-summary-swift.log": "afc1d401ffa6bb84e701a4595c7ae3e0c6ea9683aed551b801721f9497c6531a",
+      "logs/mimir-apple/inline-summary-test-build.log": "ea22a2ccf9db113d3afa3bff51916c62e5e54e9e57a28b5f1bc94aeca9e48294",
+      "logs/mimir-apple/inline-summary-bridge.log": "8f9cb0ef22265aedf9057aba5e6c4b42d1cbb99ab6ce8c2221b9d9c3a6d73435"
+    },
+    "result": "PASS: Apple builds, Swift preview/visibility/position/rollback tests, real Metal summary streaming and committed-text match; live Mac inline card and scrolling."
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "date": "2026-09-17",
+  "scope": "Bounded single-sequence first-class PrefixLM engine/common/server/CLI integration; uncommitted private fork changes",
+  "platform": "macOS-26.4.1-arm64-arm-64bit",
+  "base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "model_revision": "2844f0178e695d7d9ce182cb660671fd34c76ce5",
+  "model_gguf_sha256": "5013b7f29a32f84614db7ede0c5da329601cb9c58350b0663d0bd091a6dcf4ea",
+  "patch_check": {
+    "pass": true,
+    "base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+    "patch_sha256": {
+      "prefixlm-engine": "9693f28283344eaa3ffc1db6b7ee79419e444ccc0c1a0896be4af9b04380ee58",
+      "ggml-graph-size": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519",
+      "text-codec": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071"
+    },
+    "matched_files": [
+      "common/arg.cpp",
+      "common/common.cpp",
+      "common/jinja/string.cpp",
+      "conversion/base.py",
+      "convert_hf_to_gguf_update.py",
+      "ggml/src/ggml.c",
+      "include/llama.h",
+      "src/llama-context.cpp",
+      "src/llama-context.h",
+      "src/llama-memory.h",
+      "src/llama-model.cpp",
+      "src/llama-vocab.cpp",
+      "src/llama-vocab.h",
+      "src/models/hrm-text.cpp",
+      "src/unicode.cpp",
+      "tests/CMakeLists.txt",
+      "tests/test-llama-archs.cpp",
+      "tools/cli/README.md",
+      "tools/server/README.md",
+      "tools/server/server-context.cpp",
+      "tools/server/server-schema.cpp",
+      "docs/development/prefix-lm.md",
+      "src/unicode-letter-case.h"
+    ]
+  },
+  "suites": {
+    "final-matrix": {
+      "pass": true,
+      "runs": 23,
+      "checks": 3243,
+      "report": "logs/mimir-engine/final-matrix/summary.json",
+      "sha256": "c605dff49c06f87bddb4d3fc2e7bc7db0d7f73fa6dbeabbeed614b9abe934de5"
+    },
+    "ubsan-final-matrix": {
+      "pass": true,
+      "runs": 8,
+      "checks": 1128,
+      "report": "logs/mimir-engine/ubsan-final-matrix/summary.json",
+      "sha256": "c3f52f88ee43f95f7e015bad9b274925f84a30c50b0e0e16c00ad6073173ffbb"
+    },
+    "server-final-e2e": {
+      "pass": true,
+      "checks": 23,
+      "report": "logs/mimir-engine/server-final-e2e.json",
+      "sha256": "d705a441280db482227141659b1b9c5cd5be80c74308dd5bba5a98c0974941be"
+    },
+    "server-cpu-e2e": {
+      "pass": true,
+      "checks": 23,
+      "report": "logs/mimir-engine/server-cpu-e2e.json",
+      "sha256": "61c806973d387dde70925ae8e48d13727fef5f5a046c31b574aba8023b50acff"
+    },
+    "chat-cpu": {
+      "pass": true,
+      "checks": 8,
+      "report": "logs/mimir-engine/chat-cpu.json",
+      "sha256": "097886cea4fd70214da3c7513a78ae0f94f0d41d28d82edd99ac918fa4dd778f"
+    },
+    "chat-metal": {
+      "pass": true,
+      "checks": 8,
+      "report": "logs/mimir-engine/chat-metal.json",
+      "sha256": "9deb669e07da48ecae9f3ff01ea3a8ee787b7d885a8bc85b3db0664c4ac57caa"
+    },
+    "chat-flash": {
+      "pass": true,
+      "checks": 8,
+      "report": "logs/mimir-engine/chat-flash.json",
+      "sha256": "c37390d990fb0cf2bff134fe67762bf2609b9026096c278c4fcb744c16a84daf"
+    },
+    "ubsan-text-parity": {
+      "pass": true,
+      "checks": 724,
+      "report": "logs/mimir-engine/ubsan-text-parity.json",
+      "sha256": "fad400bfdb73c8947d109ed9b8bce2d31c9e3450e3fca92cfaa07a08d063f039"
+    },
+    "ctest": {
+      "pass": true,
+      "tests": 7,
+      "report": "logs/mimir-engine/ctest.log",
+      "sha256": "17ee83438d9250d2aabdf77bad07503f604aedce17da032e24587274dc788d37"
+    },
+    "ubsan-ctest": {
+      "pass": true,
+      "tests": 7,
+      "report": "logs/mimir-engine/ubsan-ctest.log",
+      "sha256": "6e7d32216f6d22cb3e101346966c53aaf1016eea12004d5f854aaaed2e8d59e3"
+    },
+    "stock-ctest": {
+      "pass": true,
+      "tests": 2,
+      "report": "logs/mimir-engine/stock-ctest.log",
+      "sha256": "0bbf2c8d19deccaccc76bbcc62f084440dc7cdb638057c08c8321e374e90c1aa"
+    },
+    "cli": {
+      "pass": true,
+      "answer": "4",
+      "report": "logs/mimir-engine/cli.out",
+      "sha256": "1ef0058254059794572766328415574180edf0d78ba384fb599f16a8d0827ea1"
+    },
+    "cli-standalone": {
+      "pass": true,
+      "answer": "4",
+      "report": "logs/mimir-engine/cli-standalone.out",
+      "sha256": "6dd6b365b54759ff2e8dda6d16772718985f6e1361996ec45c2cf8024e19dafa"
+    },
+    "release-direct-engine": {
+      "pass": true,
+      "checks_by_arch": {
+        "hrm_text": 254,
+        "llama": 254
+      },
+      "report": "logs/mimir-runtime/build/Testing/Temporary/LastTest.log",
+      "sha256": "746de07c4574ab26f8086b03c1f293b9a90bb9a199d09a2dcbee7cf2ac56f734"
+    },
+    "ubsan-direct-engine": {
+      "pass": true,
+      "checks_by_arch": {
+        "hrm_text": 127,
+        "llama": 127
+      },
+      "report": "logs/mimir-runtime/ubsan/Testing/Temporary/LastTest.log",
+      "sha256": "99c3b12ec800b6aa200c96d58df5903ffa1ad05681bbe1dc90c5af90729c0bda"
+    }
+  },
+  "source_sha256": {
+    ".github/workflows/mimir-runtime.yml": "02f291c91c2dc210ed18bd2e5b510a0f9c5fcce451351622073e3adf7ecdf8b7",
+    "llama.cpp/common/arg.cpp": "07b25436f3fe3ea817c41cad00d5d8ba41489bb76fe8cfe602b3b285d5451e76",
+    "llama.cpp/common/common.cpp": "996e936813001bafbcf8b6fa362cb5fc2bce6d330e636d73df83a5d7e8af7069",
+    "llama.cpp/common/jinja/string.cpp": "0be6be31a2377e18a8df442b7db9267e97943c8b186f6f1260f0be682b1126b5",
+    "llama.cpp/conversion/base.py": "13544cb79354f388046eb2480783111f67f7165416ecf5a9776a732fc66878bf",
+    "llama.cpp/convert_hf_to_gguf_update.py": "08fcd70d3c50a7b2a225a5e5e43368f21b08e1a63bdc8e868e2aca59ea095934",
+    "llama.cpp/docs/development/prefix-lm.md": "1f9b887930dd8987d16e787576b8ad53b2bc84512fc0e36f3ea41e02c57e5d38",
+    "llama.cpp/ggml/src/ggml.c": "60f533a1ca287dd37900cbd4fcb187e5eab9b051243b83e0219b2a12bda0e9c7",
+    "llama.cpp/include/llama.h": "6452dbc8f03b71de1d7172d9591f7e784af1b7fe08fdd48758965607f8369e14",
+    "llama.cpp/src/llama-context.cpp": "af32ed1df18e96daf81ccc49acd86cc7e9d97000061a85b51eb0f6bad1641bd1",
+    "llama.cpp/src/llama-context.h": "0f2f0ce117e33e8eee15ff1833167027b2bb61c45502eb08c4e17b3f35a4227c",
+    "llama.cpp/src/llama-memory.h": "8fc6561089f01fe3f83411bbdd38286a0a1a9548af427cb5d43804b50b2ceebc",
+    "llama.cpp/src/llama-model.cpp": "c995e973f026dfb70f19932704e7fd809fd8b4f88fe4507dbf1bd1b514ba6ce5",
+    "llama.cpp/src/llama-vocab.cpp": "a00fa07714a6f6f93aac0551e8f011b0bb3d32a3f0e5a7f3d226272a7ab23c09",
+    "llama.cpp/src/llama-vocab.h": "cc36feded87fd23d3d66befa5373b436089c63e41773feee6e374480a2e93c2c",
+    "llama.cpp/src/models/hrm-text.cpp": "fd083798c5a13d3231d0936dc4ce8d138994c2eac9e716e05b8ba9b3e109c8fc",
+    "llama.cpp/src/unicode-letter-case.h": "66750212f3d27989f5f5d9af45d8f7ba1086128de3d08a49b12833834f0783db",
+    "llama.cpp/src/unicode.cpp": "c04568ba24fdb9c3c9a0a555abb537d00f2bd4fb71fc4236f1ddeb4e47da895a",
+    "llama.cpp/tests/CMakeLists.txt": "1c938cb07079a8e18155c0f46f8c56331067bc866a14ed6e966c9132346e1919",
+    "llama.cpp/tests/test-llama-archs.cpp": "1bfa1f11b1c1492212e9b50533f8f42a288fb63feb5b1983b4598402f0523946",
+    "llama.cpp/tools/cli/README.md": "b8742849b44e63030a7fac5bf2d06add9e792ebee5c357141bfa454276a23c57",
+    "llama.cpp/tools/server/README.md": "ef3e409cd46407b6ab3b846a1e9ea4a98842eea7c1fe2a2596902d8dc33713e9",
+    "llama.cpp/tools/server/server-context.cpp": "e36e93464386bd51fdf79860642808702a47f78d630dafdb5c5717a540008207",
+    "llama.cpp/tools/server/server-schema.cpp": "e81540b3efeb1ad39cdd3297aa6d539334e266da38cb450c38b3f9ca8c046a72",
+    "native/mimir/CMakeLists.txt": "c32c345545543023b488f44ce5b3625c2ec93e323591ac7f2c9bad261445721e",
+    "native/mimir/chat.cpp": "fb930eb3b09d676babdcbbaa6ff3c7617f7de36d68ad098643b0994f8e968be2",
+    "native/mimir/export.py": "81592bdd93d4ca99ef49f6831329c00dddbbe0cf1da987418248a1eb6bd874dc",
+    "native/mimir/include/mimir/chat.h": "22a62d41f07403fe8b14e89cd66312dc2267af8ce39456dd0eabab82f35dbb9e",
+    "native/mimir/include/mimir/session.h": "4421a9abf6004133fd4b8793ef1bcf6402f467be7bee521f05a1100194ac0b9d",
+    "native/mimir/patches/ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519",
+    "native/mimir/patches/prefixlm-engine.patch": "9693f28283344eaa3ffc1db6b7ee79419e444ccc0c1a0896be4af9b04380ee58",
+    "native/mimir/patches/text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+    "native/mimir/session.cpp": "f4405399dff4f8c88b096ffbbed8885a530081a082886a1e9e6c84de73ec3824",
+    "native/mimir/tests/chat_e2e.py": "1f75c96387c9501468a8c6e6a158e615e089b2bf04afde4ba3e3e457cfa3f961",
+    "native/mimir/tests/chat_reference.py": "cbcba3ebf2886ff259b09493b1251dc2d58a728845c309945658e51f9436b36b",
+    "native/mimir/tests/generate_letter_cases.py": "ec550245523258299236417294b3091e77810920b9cb61534a22e02beba6e4ca",
+    "native/mimir/tests/long_reference.py": "a9d05025ff4806acf1654d43afb2d19327b5929af122e35ee6f11b8cb708b053",
+    "native/mimir/tests/prepare_text_ci.py": "87bced9c9cc6973e28c5866fb14da96b7eee4ec889eb6f6e6181f82c687c73c1",
+    "native/mimir/tests/run_matrix.py": "881c19bd3715088657b9f9ee22ac4c23da505891855b3618773f3590852af433",
+    "native/mimir/tests/server_e2e.py": "0d977c3e59bfbc8daf5a1cff79d0fe959cf024f748ac0aaf8af19468461a5ace",
+    "native/mimir/tests/session.cpp": "e2e9d5508b61c2e8d4b973fb2bb06397b5352a501a00bc60815c2b4175e9e999",
+    "native/mimir/tests/text.cpp": "a96f3ddd6e37b45d9f7d61cb22f229c301ce9b116da36e593a3df5c9801cc6ff",
+    "native/mimir/tests/text_parity.py": "7848927df373e5e1be8d6539df889d256f554b55c58891f052c5e8c42f1a98f1",
+    "native/mimir/tests/text_reference.py": "b241d528a1326cb3dbaf9f12351fe996a9dd9d74947aa57e178e292d05269bc1",
+    "native/mimir/text.cpp": "d85641b43f99d62cf1b744c885b7816e4de8c7cd727323be346925fb38839c43",
+    "native/mimir/tools/chat.cpp": "fb34c8f116072068f3f5d167a53dc4f8ac2e800dcbad26ccfc03f4ec3832ccc1",
+    "native/mimir/tools/model.h": "a728fa9ec9507dc8b5174def533f0d683b5a370222abf215f0d530de32b5aba1",
+    "native/mimir/utf8.h": "a728747b8b1b25337c9d5ceccf6cd0ea51a940d3b5eabc6dcb683ec163457653"
+  },
+  "artifact_sha256": {
+    "logs/mimir-runtime/build/mimir-engine-tests": "12a17cbcc4541ee9245eb07072c5e804a560d613623377235815b1ac3e74b8a9",
+    "logs/mimir-runtime/build/bin/libggml-metal.0.24.0.dylib": "582a806ff7edd7369703e9501735124df240e1b1f2fa65e5e01b2daed28f3b37",
+    "logs/mimir-runtime/build/bin/libggml-cpu.0.24.0.dylib": "82c89037bfdba9d04515382363ca188f22b2b35767200e728060a37a7e1371fa",
+    "logs/mimir-runtime/build/bin/libggml.0.24.0.dylib": "aa314c93143b721214e4976b8155c209ae7f94309e1f452be10912de1810b704",
+    "logs/mimir-runtime/build/bin/libllama.0.4.1.dylib": "00f78a289bd7ea7e22f7c00bd9287895c68925a0c441120da3044485b69c3dcb",
+    "logs/mimir-runtime/build/bin/libllama-common.0.4.1.dylib": "00ab1051b03671d698caf4ecf60a070eb7c7d0cdc73db6a8f162546afbbca765",
+    "logs/mimir-runtime/build/bin/libggml-blas.0.24.0.dylib": "8b93a4e09c51fdb97a69b889909cf2d715ed97cc395fd9d7df18dc58f0f92814",
+    "logs/mimir-runtime/build/bin/mimir-session-tests": "cc5586664fad01e6fdee6407d8df7adc1743e5d4cedbd8970b17c7ae241b463f",
+    "logs/mimir-runtime/build/bin/mimir-chat": "99d46e1d77d74518f14e1c232e19e0e706f75cda8c42583a27a8ee2f62d81619",
+    "logs/mimir-runtime/build/bin/libggml-base.0.24.0.dylib": "52b7a6318b9db781164d57786e491e9695496ad00c0f86886ecd44576fe5ba30",
+    "logs/mimir-runtime/ubsan/mimir-engine-tests": "178f92a1782059135f3dcd42b89fb5908c0d0f03a7bbb9e5ef512e075ce1ab16",
+    "logs/mimir-runtime/ubsan/bin/libggml-cpu.0.24.0.dylib": "b1b20a67d38fbc47be9a373eb205310a1ad8661d8c3cdab992067a3dc520786f",
+    "logs/mimir-runtime/ubsan/bin/libggml.0.24.0.dylib": "ad3914d49fb4d2f4178d8d53941d90d7c6613a7416743091e22481071c36eb46",
+    "logs/mimir-runtime/ubsan/bin/libllama.0.4.1.dylib": "80b0d84a187031f5a973631bbcb85a73623ae43ddbead3a4700df00331253051",
+    "logs/mimir-runtime/ubsan/bin/libllama-common.0.4.1.dylib": "6b9860a4cd93b19f9597fed52b29ddcacbca5fac5dd58dff302e95b0f50422ec",
+    "logs/mimir-runtime/ubsan/bin/libggml-blas.0.24.0.dylib": "767023863f7558df50a76d5114389d22096d13596765d6dc29ec99147dfd0353",
+    "logs/mimir-runtime/ubsan/bin/mimir-session-tests": "8f3455c9c17362eba575c9c9d19db0d76df32e1714b583b9973b8320a330ad32",
+    "logs/mimir-runtime/ubsan/bin/mimir-chat": "fdc26cd73949e55c0a940c1405af72437aadcf880449f9a1f7e0eaaa07a373f6",
+    "logs/mimir-runtime/ubsan/bin/libggml-base.0.24.0.dylib": "f31943333de5a8175791b44803cfa9fb72e5365a72767dc95c26231d8f61fcfc",
+    "logs/mimir-engine/build/bin/llama-cli": "ed4ecaa3d9c7e0824ad19755ea865fa80f5855077942264e858300ad2dab84cf",
+    "logs/mimir-engine/build/bin/libggml-metal.0.24.0.dylib": "28885b8ef4ccc434c327b1adcce66fa6c94edc7d30576fd903c52cad730ba5a7",
+    "logs/mimir-engine/build/bin/libggml-cpu.0.24.0.dylib": "14d58d4fbed250943d4d4eebbfc4dedf9afbcb8b4eab21a8f42f80426a1f8ec5",
+    "logs/mimir-engine/build/bin/libggml.0.24.0.dylib": "0a66fa555ab5c1aab586eee120a022e8f994e5c5ba8efe9e531c3f2561aa6125",
+    "logs/mimir-engine/build/bin/libmtmd.0.4.1.dylib": "df0fa49c25b9515cc487340514c4ee5bf32395332a890f60823efbabbaf31805",
+    "logs/mimir-engine/build/bin/libllama.0.4.1.dylib": "8c6d27abb9031b54046b52a06162c59209002f0d89e6e86bc173b5836bd04566",
+    "logs/mimir-engine/build/bin/libllama-common.0.4.1.dylib": "dc8e37f15718a536f95b8c3577855bf22071466a148595c66b07b086d70b26c2",
+    "logs/mimir-engine/build/bin/libggml-blas.0.24.0.dylib": "aac44eae26855e3567f168b86c47798b86a49921abb5da1e90d299793d7535ff",
+    "logs/mimir-engine/build/bin/libllama-server-impl.dylib": "ea57fe1bb5234a6f6fd8b505849e3cf669a4ef3bd556a81a67579a1f739aaf95",
+    "logs/mimir-engine/build/bin/libllama-cli-impl.dylib": "1ead0653f8de4503ffd567bb23030e172827c7d0f34bdf2ce945c2f8492d0de8",
+    "logs/mimir-engine/build/bin/llama-server": "c6933a78c6710b5207cc4e72917783a22cc0c19f5103967486c49f2eb26901b6",
+    "logs/mimir-engine/build/bin/libggml-base.0.24.0.dylib": "52b7a6318b9db781164d57786e491e9695496ad00c0f86886ecd44576fe5ba30",
+    "logs/mimir-engine/build/bin/test-llama-archs": "83152592ab15644bb497760408a0d2512e827c75db28e6603d15ab6540aea0d1"
+  },
+  "limitations": [
+    "One text sequence; full prefix fits one physical batch.",
+    "Cache persistence/partial edits, parallel PrefixLM execution, speculation, adapters and multimodal paths are unsupported.",
+    "Local ASan startup remains blocked; remote CI not run.",
+    "Quantized weights and non-Apple GPU backends are unqualified.",
+    "Wiki validator reports two pre-existing benchmark-charts errors."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "dfm-mimir-feedback", "private": true, "type": "module",
+  "scripts": {
+    "types": "wrangler types",
+    "check": "tsc --noEmit",
+    "test": "node --test test/*.test.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "admin": "node tools/admin.mjs"
+  },
+  "devDependencies": { "wrangler": "4.135.0", "typescript": "5.9.3", "miniflare": "5.20260918.0-alpha", "esbuild": "0.25.12" }
+}

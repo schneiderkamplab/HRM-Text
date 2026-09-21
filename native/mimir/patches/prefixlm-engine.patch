@@ -1,0 +1,1624 @@
+diff --git a/common/arg.cpp b/common/arg.cpp
+index c4c4e143c..e0271bca1 100644
+--- a/common/arg.cpp
++++ b/common/arg.cpp
+@@ -2319,14 +2319,15 @@ common_params_context common_params_parser_init(common_params & params, llama_ex
+         }
+     ).set_examples({LLAMA_EXAMPLE_EMBEDDING, LLAMA_EXAMPLE_RETRIEVAL, LLAMA_EXAMPLE_SERVER, LLAMA_EXAMPLE_DEBUG}).set_env("LLAMA_ARG_POOLING"));
+     add_opt(common_arg(
+-        {"--attention"}, "{causal,non-causal}",
+-        "attention type for embeddings, use model default if unspecified",
++        {"--attention"}, "{causal,non-causal,prefix-lm}",
++        "attention type, use model default if unspecified",
+         [](common_params & params, const std::string & value) {
+             /**/ if (value == "causal") { params.attention_type = LLAMA_ATTENTION_TYPE_CAUSAL; }
+             else if (value == "non-causal") { params.attention_type = LLAMA_ATTENTION_TYPE_NON_CAUSAL; }
++            else if (value == "prefix-lm") { params.attention_type = LLAMA_ATTENTION_TYPE_PREFIX_LM; }
+             else { throw std::invalid_argument("invalid value"); }
+         }
+-    ).set_examples({LLAMA_EXAMPLE_EMBEDDING}));
++    ).set_examples({LLAMA_EXAMPLE_EMBEDDING, LLAMA_EXAMPLE_SERVER, LLAMA_EXAMPLE_CLI, LLAMA_EXAMPLE_PERPLEXITY, LLAMA_EXAMPLE_IMATRIX}));
+     add_opt(common_arg(
+         {"--rope-scaling"}, "{none,linear,yarn}",
+         "RoPE frequency scaling method, defaults to linear unless specified by the model",
+diff --git a/common/common.cpp b/common/common.cpp
+index d8319cd9a..682c9e5d0 100644
+--- a/common/common.cpp
++++ b/common/common.cpp
+@@ -1536,7 +1536,12 @@ common_init_result_ptr common_init_from_params(common_params & params, bool mode
+             tmp.push_back(decoder_start_token_id);
+         }
+         if (llama_model_has_decoder(model)) {
+-            llama_decode(lctx, llama_batch_get_one(tmp.data(), std::min(tmp.size(), (size_t) params.n_batch)));
++            const auto batch = llama_batch_get_one(tmp.data(), std::min(tmp.size(), (size_t) params.n_ubatch));
++            if (llama_get_attention_type(lctx) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++                llama_decode_prefix(lctx, batch);
++            } else {
++                llama_decode(lctx, batch);
++            }
+         }
+         llama_memory_clear(llama_get_memory(lctx), true);
+         llama_synchronize(lctx);
+@@ -1581,6 +1586,9 @@ char * common_get_model_or_exit(int argc, char * argv[]) {
+ }
+ 
+ common_context_seq_rm_type common_context_can_seq_rm(llama_context * ctx) {
++    if (llama_get_attention_type(ctx) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        return COMMON_CONTEXT_SEQ_RM_TYPE_NO;
++    }
+     auto * mem = llama_get_memory(ctx);
+     if (mem == nullptr) {
+         return COMMON_CONTEXT_SEQ_RM_TYPE_NO;
+@@ -2206,6 +2214,17 @@ bool common_prompt_batch_decode(
+                                int   n_batch,
+                   std::string_view   state_path,
+                               bool   save_state) {
++    if (llama_get_attention_type(ctx) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        if (save_state || n_past != 0 || n_new != int(all_tokens.size())) {
++            COM_ERR("%s", "PrefixLM requires the full prompt without cache reuse or state saving\n");
++            return false;
++        }
++        if (llama_decode_prefix(ctx, llama_batch_get_one(const_cast<llama_token *>(all_tokens.data()), n_new))) {
++            return false;
++        }
++        n_past = n_new;
++        return true;
++    }
+     if (n_new == 0) {
+         return true;
+     }
+diff --git a/examples/simple-chat/simple-chat.cpp b/examples/simple-chat/simple-chat.cpp
+index 97e9dc984..5b21ebd29 100644
+--- a/examples/simple-chat/simple-chat.cpp
++++ b/examples/simple-chat/simple-chat.cpp
+@@ -84,6 +84,7 @@ int main(int argc, char ** argv) {
+     llama_context_params ctx_params = llama_context_default_params();
+     ctx_params.n_ctx = n_ctx;
+     ctx_params.n_batch = n_ctx;
++    if (llama_model_is_prefix_lm(model)) { ctx_params.n_ubatch = n_ctx; }
+ 
+     llama_context * ctx = llama_init_from_model(model, ctx_params);
+     if (!ctx) {
+@@ -97,11 +98,13 @@ int main(int argc, char ** argv) {
+     llama_sampler_chain_add(smpl, llama_sampler_init_temp(0.8f));
+     llama_sampler_chain_add(smpl, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
+ 
++    const bool prefix_lm = llama_get_attention_type(ctx) == LLAMA_ATTENTION_TYPE_PREFIX_LM;
++
+     // helper function to evaluate a prompt and generate a response
+     auto generate = [&](const std::string & prompt) {
+         std::string response;
+ 
+-        const bool is_first = llama_memory_seq_pos_max(llama_get_memory(ctx), 0) == -1;
++        const bool is_first = prefix_lm || llama_memory_seq_pos_max(llama_get_memory(ctx), 0) == -1;
+ 
+         // tokenize the prompt
+         const int n_prompt_tokens = -llama_tokenize(vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
+@@ -113,17 +116,19 @@ int main(int argc, char ** argv) {
+         // prepare a batch for the prompt
+         llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
+         llama_token new_token_id;
++        bool prefix = prefix_lm;
+         while (true) {
+             // check if we have enough space in the context to evaluate this batch
+-            int n_ctx = llama_n_ctx(ctx);
+-            int n_ctx_used = llama_memory_seq_pos_max(llama_get_memory(ctx), 0) + 1;
++            int n_ctx = llama_n_ctx_seq(ctx);
++            int n_ctx_used = prefix ? 0 : llama_memory_seq_pos_max(llama_get_memory(ctx), 0) + 1;
+             if (n_ctx_used + batch.n_tokens > n_ctx) {
+                 printf("\033[0m\n");
+                 fprintf(stderr, "context size exceeded\n");
+                 exit(0);
+             }
+ 
+-            int ret = llama_decode(ctx, batch);
++            int ret = prefix ? llama_decode_prefix(ctx, batch) : llama_decode(ctx, batch);
++            prefix = false;
+             if (ret != 0) {
+                 GGML_ABORT("failed to decode, ret = %d\n", ret);
+             }
+@@ -182,7 +187,7 @@ int main(int argc, char ** argv) {
+         }
+ 
+         // remove previous messages to obtain the prompt to generate the response
+-        std::string prompt(formatted.begin() + prev_len, formatted.begin() + new_len);
++        std::string prompt(formatted.begin() + (prefix_lm ? 0 : prev_len), formatted.begin() + new_len);
+ 
+         // generate a response
+         printf("\033[33m");
+diff --git a/examples/simple/simple.cpp b/examples/simple/simple.cpp
+index 9f0a25d71..ec6a48bb5 100644
+--- a/examples/simple/simple.cpp
++++ b/examples/simple/simple.cpp
+@@ -113,6 +113,7 @@ int main(int argc, char ** argv) {
+     ctx_params.n_ctx = n_prompt + n_predict - 1;
+     // n_batch is the maximum number of tokens that can be processed in a single call to llama_decode
+     ctx_params.n_batch = n_prompt;
++    if (llama_model_is_prefix_lm(model)) { ctx_params.n_ubatch = n_prompt; }
+     // enable performance counters
+     ctx_params.no_perf = false;
+ 
+@@ -170,7 +171,8 @@ int main(int argc, char ** argv) {
+ 
+     for (int n_pos = 0; n_pos + batch.n_tokens < n_prompt + n_predict; ) {
+         // evaluate the current batch with the transformer model
+-        if (llama_decode(ctx, batch)) {
++        const bool prefix = n_pos == 0 && llama_get_attention_type(ctx) == LLAMA_ATTENTION_TYPE_PREFIX_LM;
++        if (prefix ? llama_decode_prefix(ctx, batch) : llama_decode(ctx, batch)) {
+             fprintf(stderr, "%s : failed to eval, return code %d\n", __func__, 1);
+             return 1;
+         }
+diff --git a/include/llama.h b/include/llama.h
+index 3ab935939..0c656972d 100644
+--- a/include/llama.h
++++ b/include/llama.h
+@@ -185,6 +185,7 @@ extern "C" {
+         LLAMA_ATTENTION_TYPE_UNSPECIFIED = -1,
+         LLAMA_ATTENTION_TYPE_CAUSAL      = 0,
+         LLAMA_ATTENTION_TYPE_NON_CAUSAL  = 1,
++        LLAMA_ATTENTION_TYPE_PREFIX_LM   = 2,
+     };
+ 
+     enum llama_flash_attn_type {
+@@ -370,7 +371,7 @@ extern "C" {
+         enum llama_context_type      ctx_type;          // set the context type (e.g. MTP)
+         enum llama_rope_scaling_type rope_scaling_type; // RoPE scaling type, from `enum llama_rope_scaling_type`
+         enum llama_pooling_type      pooling_type;      // whether to pool (sum) embedding results by sequence id
+-        enum llama_attention_type    attention_type;    // attention type to use for embeddings
++        enum llama_attention_type    attention_type;    // unspecified selects the model default
+         enum llama_flash_attn_type   flash_attn_type;   // when to enable Flash Attention
+ 
+         // ref: https://github.com/ggml-org/llama.cpp/pull/2054
+@@ -665,6 +666,10 @@ extern "C" {
+     // Returns true if the model is diffusion-based (like LLaDA, Dream, etc.)
+     LLAMA_API bool llama_model_is_diffusion(const struct llama_model * model);
+ 
++    // Returns true if the model supports a bidirectional prompt followed by causal generation.
++    // Unspecified context attention selects PREFIX_LM for these models.
++    LLAMA_API bool llama_model_is_prefix_lm(const struct llama_model * model);
++
+     // Returns 0 on success
+     LLAMA_API uint32_t llama_model_quantize(
+             const char * fname_inp,
+@@ -742,6 +747,7 @@ extern "C" {
+ 
+     // Removes all tokens that belong to the specified sequence and have positions in [p0, p1)
+     // Returns false if a partial sequence cannot be removed. Removing a whole sequence never fails
++    // PrefixLM permits full removal or a causal answer suffix; it rejects prefix edits and answer holes.
+     // seq_id < 0 : match any sequence [TAG_LLAMA_SEQ_ID_NEG]
+     // p0 < 0     : [0,  p1]
+     // p1 < 0     : [p0, inf)
+@@ -991,6 +997,18 @@ extern "C" {
+             struct llama_context * ctx,
+               struct llama_batch   batch);
+ 
++    // Return the selected attention mode (never UNSPECIFIED).
++    LLAMA_API enum llama_attention_type llama_get_attention_type(const struct llama_context * ctx);
++
++    // Start a new PrefixLM request with the complete bidirectional prefix.
++    // Requires PREFIX_LM attention, token input, sequence 0, contiguous positions from 0,
++    // and the entire prefix in one physical batch. A valid request replaces all old memory.
++    // Continue with llama_decode(), which is causal and accepts contiguous answer chunks.
++    // Invalid input returns -1 without changing memory. Execution failure/abort clears memory.
++    // PrefixLM currently supports one sequence, no state restore, shifting, or partial removal.
++    // These calls synchronize before returning. Other attention modes are unchanged.
++    LLAMA_API int32_t llama_decode_prefix(struct llama_context * ctx, struct llama_batch batch);
++
+     // Set the number of threads used for decoding
+     // n_threads is the number of threads used for generation (single token)
+     // n_threads_batch is the number of threads used for prompt and batch processing (multiple tokens)
+@@ -1008,6 +1026,7 @@ extern "C" {
+ 
+     // Set whether to use causal attention or not
+     // If set to true, the model will only attend to the past tokens
++    // Not allowed for PREFIX_LM contexts; use llama_decode_prefix() and llama_decode().
+     LLAMA_API void llama_set_causal_attn(struct llama_context * ctx, bool causal_attn);
+ 
+     // Set whether the model is in warmup mode or not
+diff --git a/src/llama-context.cpp b/src/llama-context.cpp
+index ef53728d1..65eb7aefa 100644
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -220,11 +220,23 @@ llama_context::llama_context(
+         }
+     }
+ 
+-    if (params.attention_type == LLAMA_ATTENTION_TYPE_UNSPECIFIED) {
+-        cparams.causal_attn = hparams.causal_attn;
+-    } else {
+-        cparams.causal_attn = params.attention_type == LLAMA_ATTENTION_TYPE_CAUSAL;
++    attention_type = params.attention_type;
++    if (attention_type == LLAMA_ATTENTION_TYPE_UNSPECIFIED) {
++        attention_type = hparams.hrm_prefix_lm ? LLAMA_ATTENTION_TYPE_PREFIX_LM :
++            hparams.causal_attn ? LLAMA_ATTENTION_TYPE_CAUSAL : LLAMA_ATTENTION_TYPE_NON_CAUSAL;
++    }
++    if (attention_type != LLAMA_ATTENTION_TYPE_CAUSAL && attention_type != LLAMA_ATTENTION_TYPE_NON_CAUSAL &&
++        attention_type != LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        throw std::runtime_error("invalid attention type");
++    }
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM &&
++        (cparams.n_seq_max != 1 || params.embeddings || params.ctx_type != LLAMA_CONTEXT_TYPE_DEFAULT ||
++         llama_model_has_encoder(&model) || !llama_model_has_decoder(&model) || llama_model_is_recurrent(&model) ||
++         llama_model_is_hybrid(&model) || llama_model_is_diffusion(&model) ||
++         hparams.n_swa != 0 || hparams.n_pos_per_embd() != 1)) {
++        throw std::runtime_error("PrefixLM requires one text sequence and a full-attention decoder");
+     }
++    cparams.causal_attn = attention_type != LLAMA_ATTENTION_TYPE_NON_CAUSAL;
+ 
+     cparams.flash_attn = params.flash_attn_type != LLAMA_FLASH_ATTN_TYPE_DISABLED;
+     cparams.auto_fa    = params.flash_attn_type == LLAMA_FLASH_ATTN_TYPE_AUTO;
+@@ -285,6 +297,7 @@ llama_context::llama_context(
+     }
+ 
+     // ref: https://github.com/ggml-org/llama.cpp/pull/17046#discussion_r2503085732
++    prefix_context_limit = cparams.n_ctx;
+     cparams.n_ctx = GGML_PAD(cparams.n_ctx, 256);
+ 
+     if (cparams.kv_unified) {
+@@ -393,6 +406,10 @@ llama_context::llama_context(
+         };
+ 
+         memory.reset(model.create_memory(params_mem, cparams));
++        if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++            if (!memory) { throw std::runtime_error("PrefixLM requires KV memory"); }
++            memory->prefix_lm = true;
++        }
+     }
+ 
+     // init backends
+@@ -767,7 +784,7 @@ uint32_t llama_context::n_ctx() const {
+ }
+ 
+ uint32_t llama_context::n_ctx_seq() const {
+-    return cparams.n_ctx_seq;
++    return attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM ? prefix_context_limit : cparams.n_ctx_seq;
+ }
+ 
+ uint32_t llama_context::n_batch() const {
+@@ -1416,6 +1433,10 @@ llm_graph_result * llama_context::process_ubatch(const llama_ubatch & ubatch, ll
+ }
+ 
+ int llama_context::encode(const llama_batch & batch_inp) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: use llama_decode_prefix for PrefixLM\n", __func__);
++        return -1;
++    }
+     // MTP hook batches carry both token (next-token id) and embd (h_nextn row),
+     // so accept either present rather than requiring exactly one.
+     GGML_ASSERT(batch_inp.token || batch_inp.embd);
+@@ -1654,6 +1675,63 @@ static bool needs_raw_logits(const llama_ubatch & ubatch, const std::map<llama_s
+ }
+ 
+ int llama_context::decode(const llama_batch & batch_inp) {
++    return attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM ? decode_prefix_lm(batch_inp, false) : decode_impl(batch_inp);
++}
++
++int llama_context::decode_prefix(const llama_batch & batch_inp) {
++    if (attention_type != LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: context is not PrefixLM\n", __func__);
++        return -1;
++    }
++    return decode_prefix_lm(batch_inp, true);
++}
++
++int llama_context::decode_prefix_lm(const llama_batch & batch, bool prefix) {
++    const llama_pos start = prefix ? 0 : memory->prefix_next;
++    if (!batch.token || batch.embd || batch.n_tokens <= 0 || start < 0 ||
++        uint32_t(batch.n_tokens) > cparams.n_batch ||
++        (prefix && uint32_t(batch.n_tokens) > cparams.n_ubatch) ||
++        int64_t(start) + batch.n_tokens > prefix_context_limit) {
++        LLAMA_LOG_ERROR("%s: invalid PrefixLM batch, capacity, or missing complete prefix\n", __func__);
++        return -1;
++    }
++    for (int32_t i = 0; i < batch.n_tokens; ++i) {
++        if (batch.token[i] < 0 || uint32_t(batch.token[i]) >= model.vocab.n_tokens() ||
++            (batch.pos && batch.pos[i] != start + i) ||
++            (batch.n_seq_id && batch.n_seq_id[i] != 1) ||
++            (batch.seq_id && (!batch.seq_id[i] || batch.seq_id[i][0] != 0))) {
++            LLAMA_LOG_ERROR("%s: PrefixLM requires valid tokens and contiguous sequence 0 positions\n", __func__);
++            return -1;
++        }
++    }
++    auto reset = [&] {
++        synchronize();
++        memory->clear(true);
++        memory->prefix_reset();
++        n_outputs = 0;
++        set_causal_attn(true);
++    };
++    try {
++        if (prefix) { reset(); }
++        set_causal_attn(!prefix);
++        const int result = decode_impl(batch);
++        synchronize();
++        set_causal_attn(true);
++        if (result != 0 || (abort_callback && abort_callback(abort_callback_data))) {
++            reset();
++            return result != 0 ? result : 2;
++        }
++        if (prefix) { memory->prefix_end = batch.n_tokens; }
++        memory->prefix_next = start + batch.n_tokens;
++        return 0;
++    } catch (const std::exception & error) {
++        reset();
++        LLAMA_LOG_ERROR("%s: %s\n", __func__, error.what());
++        return -3;
++    }
++}
++
++int llama_context::decode_impl(const llama_batch & batch_inp) {
+     // MTP hook batches carry both token (next-token id) and embd (h_nextn row),
+     // so accept either present rather than requiring exactly one.
+     GGML_ASSERT(batch_inp.token || batch_inp.embd);
+@@ -1663,8 +1741,13 @@ int llama_context::decode(const llama_batch & batch_inp) {
+         return encode(batch_inp);
+     }
+ 
+-    if (batch_inp.n_tokens == 0) {
+-        LLAMA_LOG_ERROR("%s: n_tokens == 0\n", __func__);
++    if (batch_inp.n_tokens <= 0 || uint32_t(batch_inp.n_tokens) > cparams.n_batch) {
++        LLAMA_LOG_ERROR("%s: invalid batch size %d (maximum %u)\n", __func__, batch_inp.n_tokens, cparams.n_batch);
++        return -1;
++    }
++    if (!cparams.causal_attn && uint32_t(batch_inp.n_tokens) > cparams.n_ubatch) {
++        LLAMA_LOG_ERROR("%s: non-causal input (%d tokens) must fit in one physical batch (%u tokens)\n",
++                __func__, batch_inp.n_tokens, cparams.n_ubatch);
+         return -1;
+     }
+ 
+@@ -3061,6 +3144,10 @@ private:
+ };
+ 
+ size_t llama_context::state_get_size() {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_io_write_dummy io(false);
+     try {
+         return state_write_data(io);
+@@ -3071,6 +3158,10 @@ size_t llama_context::state_get_size() {
+ }
+ 
+ size_t llama_context::state_get_data(uint8_t * dst, size_t size) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_io_write_host io(dst, size);
+     try {
+         return state_write_data(io);
+@@ -3081,6 +3172,10 @@ size_t llama_context::state_get_data(uint8_t * dst, size_t size) {
+ }
+ 
+ size_t llama_context::state_set_data(const uint8_t * src, size_t size) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_io_read_host io(src, size);
+     try {
+         return state_read_data(io);
+@@ -3093,6 +3188,10 @@ size_t llama_context::state_set_data(const uint8_t * src, size_t size) {
+ static constexpr uint32_t io_magic = 0xaf143cd8;
+ 
+ size_t llama_context::state_seq_get_size(llama_seq_id seq_id, llama_state_seq_flags flags) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_io_write_dummy io(flags & LLAMA_STATE_SEQ_FLAGS_ON_DEVICE);
+     try {
+         io.write(&io_magic, sizeof(io_magic));
+@@ -3106,6 +3205,10 @@ size_t llama_context::state_seq_get_size(llama_seq_id seq_id, llama_state_seq_fl
+ }
+ 
+ size_t llama_context::state_seq_get_data(llama_seq_id seq_id, uint8_t * dst, size_t size, llama_state_seq_flags flags) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     std::unique_ptr<llama_io_write_i> io;
+     if (flags & LLAMA_STATE_SEQ_FLAGS_ON_DEVICE) {
+         io = std::make_unique<llama_io_write_device>(dst, size, mem_storage[seq_id]);
+@@ -3125,6 +3228,10 @@ size_t llama_context::state_seq_get_data(llama_seq_id seq_id, uint8_t * dst, siz
+ }
+ 
+ size_t llama_context::state_seq_set_data(llama_seq_id seq_id, const uint8_t * src, size_t size, llama_state_seq_flags flags) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     std::unique_ptr<llama_io_read_i> io;
+     if (flags & LLAMA_STATE_SEQ_FLAGS_ON_DEVICE) {
+         // create a temporary io to read the magic and the src seq_id
+@@ -3164,6 +3271,10 @@ size_t llama_context::state_seq_set_data(llama_seq_id seq_id, const uint8_t * sr
+ }
+ 
+ bool llama_context::state_load_file(const char * filepath, llama_token * tokens_out, size_t n_token_capacity, size_t * n_token_count_out) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_file file(filepath, "rb");
+ 
+     // sanity checks
+@@ -3207,6 +3318,10 @@ bool llama_context::state_load_file(const char * filepath, llama_token * tokens_
+ }
+ 
+ bool llama_context::state_save_file(const char * filepath, const llama_token * tokens, size_t n_token_count) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_file file(filepath, "wb");
+ 
+     file.write_u32(LLAMA_SESSION_MAGIC);
+@@ -3224,6 +3339,10 @@ bool llama_context::state_save_file(const char * filepath, const llama_token * t
+ }
+ 
+ size_t llama_context::state_seq_load_file(llama_seq_id seq_id, const char * filepath, llama_token * tokens_out, size_t n_token_capacity, size_t * n_token_count_out) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_file file(filepath, "rb");
+ 
+     // version checks
+@@ -3278,6 +3397,10 @@ size_t llama_context::state_seq_load_file(llama_seq_id seq_id, const char * file
+ }
+ 
+ size_t llama_context::state_seq_save_file(llama_seq_id seq_id, const char * filepath, const llama_token * tokens, size_t n_token_count) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM state serialization is not supported\n", __func__);
++        return 0;
++    }
+     llama_file file(filepath, "wb");
+ 
+     file.write_u32(LLAMA_STATE_SEQ_MAGIC);
+@@ -3298,6 +3421,9 @@ size_t llama_context::state_seq_save_file(llama_seq_id seq_id, const char * file
+ }
+ 
+ size_t llama_context::state_write_data(llama_io_write_i & io) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        throw std::runtime_error("PrefixLM state serialization is not supported");
++    }
+     LLAMA_LOG_DEBUG("%s: writing state\n", __func__);
+ 
+     // write model info
+@@ -3318,6 +3444,9 @@ size_t llama_context::state_write_data(llama_io_write_i & io) {
+ }
+ 
+ size_t llama_context::state_read_data(llama_io_read_i & io) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        throw std::runtime_error("PrefixLM state serialization is not supported");
++    }
+     LLAMA_LOG_DEBUG("%s: reading state\n", __func__);
+ 
+     // read model info
+@@ -3344,6 +3473,9 @@ size_t llama_context::state_read_data(llama_io_read_i & io) {
+ }
+ 
+ size_t llama_context::state_seq_write_data(llama_io_write_i & io, llama_seq_id seq_id, llama_state_seq_flags flags) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        throw std::runtime_error("PrefixLM state serialization is not supported");
++    }
+     if (memory) {
+         memory->state_write(io, seq_id, flags);
+     }
+@@ -3352,6 +3484,9 @@ size_t llama_context::state_seq_write_data(llama_io_write_i & io, llama_seq_id s
+ }
+ 
+ size_t llama_context::state_seq_read_data(llama_io_read_i & io, llama_seq_id seq_id, llama_state_seq_flags flags) {
++    if (attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        throw std::runtime_error("PrefixLM state serialization is not supported");
++    }
+     if (memory) {
+         memory->state_read(io, seq_id, flags);
+     }
+@@ -3865,10 +4000,18 @@ void llama_set_abort_callback(llama_context * ctx, bool (*abort_callback)(void *
+ }
+ 
+ void llama_set_embeddings(llama_context * ctx, bool embeddings) {
++    if (embeddings && ctx->get_attention_type() == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM does not support embedding output\n", __func__);
++        return;
++    }
+     ctx->set_embeddings(embeddings);
+ }
+ 
+ void llama_set_causal_attn(llama_context * ctx, bool causal_attn) {
++    if (ctx->get_attention_type() == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: PrefixLM attention is controlled by the decode API\n", __func__);
++        return;
++    }
+     ctx->set_causal_attn(causal_attn);
+ }
+ 
+@@ -4026,6 +4169,10 @@ int32_t llama_set_adapters_lora(
+         GGML_ASSERT(n_adapters == 0 && "invalid llama_set_adapters_lora call");
+     }
+ 
++    if (ctx->get_attention_type() == LLAMA_ATTENTION_TYPE_PREFIX_LM && n_adapters != 0) {
++        LLAMA_LOG_ERROR("%s: adapters are not supported for PrefixLM\n", __func__);
++        return -1;
++    }
+     ctx->set_adapters_lora(adapters, n_adapters, scales);
+ 
+     return 0;
+@@ -4038,6 +4185,10 @@ int32_t llama_set_adapter_cvec(
+               int32_t   n_embd,
+               int32_t   il_start,
+               int32_t   il_end) {
++    if (ctx->get_attention_type() == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        LLAMA_LOG_ERROR("%s: control vectors are not supported for PrefixLM\n", __func__);
++        return -1;
++    }
+     bool res = ctx->set_adapter_cvec(data, len, n_embd, il_start, il_end);
+ 
+     return res ? 0 : -1;
+@@ -4053,6 +4204,7 @@ void llama_memory_clear(llama_memory_t mem, bool data) {
+     }
+ 
+     mem->clear(data);
++    mem->prefix_reset();
+ }
+ 
+ bool llama_memory_seq_rm(
+@@ -4064,6 +4216,31 @@ bool llama_memory_seq_rm(
+         return true;
+     }
+ 
++    if (mem->prefix_lm) {
++        if (seq_id != -1 && seq_id != 0) {
++            LLAMA_LOG_ERROR("%s: PrefixLM requires sequence 0\n", __func__);
++            return false;
++        }
++        const llama_pos begin = std::max<llama_pos>(0, p0);
++        const llama_pos end = p1 < 0 ? std::numeric_limits<llama_pos>::max() : p1;
++        if (end <= begin || begin >= mem->prefix_next) {
++            return true;
++        }
++        const bool full = begin == 0 && end >= mem->prefix_next;
++        if (!full && (begin < mem->prefix_end || end < mem->prefix_next)) {
++            LLAMA_LOG_ERROR("%s: PrefixLM removal must clear the request or trim an answer suffix\n", __func__);
++            return false;
++        }
++        if (!mem->seq_rm(seq_id, p0, p1)) {
++            return false;
++        }
++        if (full) {
++            mem->prefix_reset();
++        } else {
++            mem->prefix_next = begin;
++        }
++        return true;
++    }
+     return mem->seq_rm(seq_id, p0, p1);
+ }
+ 
+@@ -4077,6 +4254,10 @@ void llama_memory_seq_cp(
+         return;
+     }
+ 
++    if (mem->prefix_lm && (seq_id_src != 0 || seq_id_dst != 0)) {
++        LLAMA_LOG_ERROR("%s: operation is not supported for PrefixLM\n", __func__);
++        return;
++    }
+     mem->seq_cp(seq_id_src, seq_id_dst, p0, p1);
+ }
+ 
+@@ -4087,6 +4268,10 @@ void llama_memory_seq_keep(
+         return;
+     }
+ 
++    if (mem->prefix_lm && seq_id != 0) {
++        LLAMA_LOG_ERROR("%s: operation is not supported for PrefixLM\n", __func__);
++        return;
++    }
+     mem->seq_keep(seq_id);
+ }
+ 
+@@ -4100,6 +4285,10 @@ void llama_memory_seq_add(
+         return;
+     }
+ 
++    if (mem->prefix_lm) {
++        LLAMA_LOG_ERROR("%s: operation is not supported for PrefixLM\n", __func__);
++        return;
++    }
+     mem->seq_add(seq_id, p0, p1, delta);
+ }
+ 
+@@ -4113,6 +4302,10 @@ void llama_memory_seq_div(
+         return;
+     }
+ 
++    if (mem->prefix_lm) {
++        LLAMA_LOG_ERROR("%s: operation is not supported for PrefixLM\n", __func__);
++        return;
++    }
+     mem->seq_div(seq_id, p0, p1, d);
+ }
+ 
+@@ -4141,7 +4334,7 @@ bool llama_memory_can_shift(llama_memory_t mem) {
+         return false;
+     }
+ 
+-    return mem->get_can_shift();
++    return !mem->prefix_lm && mem->get_can_shift();
+ }
+ 
+ // llama state API
+@@ -4361,3 +4554,11 @@ llama_memory_breakdown llama_get_memory_breakdown(const struct llama_context * c
+ llama_context * llama_get_ctx_other(struct llama_context * ctx) {
+     return ctx->get_cparams().ctx_other;
+ }
++
++llama_attention_type llama_get_attention_type(const llama_context * ctx) {
++    return ctx->get_attention_type();
++}
++
++int32_t llama_decode_prefix(llama_context * ctx, llama_batch batch) {
++    return ctx->decode_prefix(batch);
++}
+diff --git a/src/llama-context.h b/src/llama-context.h
+index b7a9db591..06868cbc4 100644
+--- a/src/llama-context.h
++++ b/src/llama-context.h
+@@ -143,6 +143,11 @@ struct llama_context {
+ 
+     int encode(const llama_batch & batch_inp);
+     int decode(const llama_batch & batch_inp);
++    int decode_prefix(const llama_batch & batch_inp);
++    llama_attention_type get_attention_type() const {
++        return attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM ? attention_type :
++            cparams.causal_attn ? LLAMA_ATTENTION_TYPE_CAUSAL : LLAMA_ATTENTION_TYPE_NON_CAUSAL;
++    }
+ 
+     //
+     // state save/load
+@@ -290,6 +295,10 @@ private:
+     llama_cross cross; // TODO: tmp for handling cross-attention - need something better probably
+ 
+     llama_memory_ptr memory;
++    llama_attention_type attention_type = LLAMA_ATTENTION_TYPE_UNSPECIFIED;
++    uint32_t prefix_context_limit = 0;
++    int decode_impl(const llama_batch & batch_inp);
++    int decode_prefix_lm(const llama_batch & batch_inp, bool prefix);
+ 
+     // decode output (2-dimensional array: [n_outputs][n_vocab])
+     buffer_view<float> logits = {nullptr, 0};
+diff --git a/src/llama-memory.h b/src/llama-memory.h
+index db8253966..863199fdc 100644
+--- a/src/llama-memory.h
++++ b/src/llama-memory.h
+@@ -82,6 +82,12 @@ struct llama_memory_i {
+ 
+     virtual ~llama_memory_i() = default;
+ 
++    // PrefixLM request state. Public memory mutations must preserve these invariants.
++    bool prefix_lm = false;
++    llama_pos prefix_end = -1;
++    llama_pos prefix_next = -1;
++    void prefix_reset() { prefix_end = prefix_next = -1; }
++
+     // split the input batch into a set of ubatches and verify that they can fit into the cache
+     // return a context object containing the ubatches and memory state required to process them
+     // check the llama_memory_context_i::get_status() for the result
+diff --git a/src/llama-model.cpp b/src/llama-model.cpp
+index 3607bacd6..208b04135 100644
+--- a/src/llama-model.cpp
++++ b/src/llama-model.cpp
+@@ -3214,6 +3214,10 @@ bool llama_model_is_diffusion(const llama_model * model) {
+     return llm_arch_is_diffusion(model->arch);
+ }
+ 
++bool llama_model_is_prefix_lm(const llama_model * model) {
++    return model->hparams.hrm_prefix_lm;
++}
++
+ const std::vector<std::pair<std::string, ggml_tensor *>> & llama_internal_get_tensor_map(const llama_model * model) {
+     return model->tensors_by_name;
+ }
+diff --git a/src/models/hrm-text.cpp b/src/models/hrm-text.cpp
+index 4a9a67b6c..9a4d37372 100644
+--- a/src/models/hrm-text.cpp
++++ b/src/models/hrm-text.cpp
+@@ -11,7 +11,7 @@ void llama_model_hrm_text::load_arch_hparams(llama_model_loader & ml) {
+     ml.get_key(LLM_KV_HRM_H_CYCLES, hparams.n_hrm_h_cycles);
+     ml.get_key(LLM_KV_HRM_L_CYCLES, hparams.n_hrm_l_cycles);
+ 
+-    // prefix-LM prefill is not implemented (causal attention only); kept for round-trip
++    // Unspecified context attention selects PrefixLM when this flag is set.
+     ml.get_key(LLM_KV_HRM_PREFIX_LM, hparams.hrm_prefix_lm, false);
+ 
+     GGML_ASSERT(hparams.n_hrm_layers_per_stack > 0);
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index a398344c8..efb396a1e 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -194,6 +194,11 @@ if (NOT WIN32 OR NOT BUILD_SHARED_LIBS)
+ 
+     llama_build(test-llama-archs.cpp)
+ 
++    foreach(PREFIX_ARCH hrm_text llama)
++        llama_test(test-llama-archs NAME test-prefix-lm-${PREFIX_ARCH} LABEL main
++            ARGS --prefix-lm --arch ${PREFIX_ARCH} --seed 42)
++    endforeach()
++
+     set(MODEL_DIR "${CMAKE_CURRENT_BINARY_DIR}/test-models/")
+     file(MAKE_DIRECTORY "${MODEL_DIR}")
+ 
+diff --git a/tests/test-llama-archs.cpp b/tests/test-llama-archs.cpp
+index 568f7234c..bb8f3859f 100644
+--- a/tests/test-llama-archs.cpp
++++ b/tests/test-llama-archs.cpp
+@@ -6,6 +6,11 @@
+ #include "ggml-cpp.h"
+ #include "llama.h"
+ #include "llama-cpp.h"
++#include "nlohmann/json.hpp"
++
++#include <fstream>
++#include <cmath>
++#include <algorithm>
+ 
+ // TODO: replace with #include "llama-ext.h" in the future
+ #include "../src/llama-arch.h"
+@@ -65,7 +70,7 @@ static void set_tensor_data(struct ggml_tensor * tensor, void * userdata) {
+ }
+ 
+ static void usage(char ** argv) {
+-    printf("Usage: %s [-a/--arch arch] [-s/--seed seed] [-o/--out dir] [-v N] [-h/--help]\n", argv[0]);
++    printf("Usage: %s [-a/--arch arch] [-s/--seed seed] [-o/--out dir] [-v N] [--prefix-lm] [--prefix-reference FILE] [-h/--help]\n", argv[0]);
+ }
+ 
+ static std::vector<llama_token> get_tokens(const uint32_t n_tokens, const uint32_t n_vocab, const size_t seed){
+@@ -825,6 +830,267 @@ static int test_backends(const llm_arch target_arch, const size_t seed, const in
+     return all_ok ? 0 : 1;
+ }
+ 
++static int test_prefix_reference(const std::string & path) {
++    using json = nlohmann::ordered_json;
++    std::ifstream input(path);
++    const auto spec = json::parse(input);
++    auto mp = llama_model_default_params();
++    mp.n_gpu_layers = spec.value("n_gpu_layers", 0);
++    llama_model_ptr model(llama_model_load_from_file(spec.at("model").get<std::string>().c_str(), mp));
++    if (!model) { throw std::runtime_error("reference model load failed"); }
++    const int nv = llama_vocab_n_tokens(llama_model_get_vocab(model.get()));
++    json results = json::array();
++    bool passed = true;
++    for (const auto & item : spec.at("cases")) {
++        auto cp = llama_context_default_params();
++        cp.n_ctx = spec.value("n_ctx", 128);
++        cp.n_batch = cp.n_ctx;
++        cp.n_ubatch = spec.value("n_ubatch", 64);
++        cp.n_threads = cp.n_threads_batch = 4;
++        cp.type_k = cp.type_v = GGML_TYPE_F32;
++        cp.flash_attn_type = spec.value("flash", false) ? LLAMA_FLASH_ATTN_TYPE_ENABLED : LLAMA_FLASH_ATTN_TYPE_DISABLED;
++        cp.attention_type = item.value("causal", false) ? LLAMA_ATTENTION_TYPE_CAUSAL : LLAMA_ATTENTION_TYPE_PREFIX_LM;
++        llama_context_ptr ctx(llama_init_from_model(model.get(), cp));
++        if (!ctx) { throw std::runtime_error("reference context init failed"); }
++        int pos = 0;
++        for (const auto & step : item.at("steps")) {
++            if (step.contains("rewind_to")) {
++                const auto target = step.at("rewind_to").get<llama_pos>();
++                if (!llama_memory_seq_rm(llama_get_memory(ctx.get()), 0, target, -1)) {
++                    throw std::runtime_error("reference answer rollback failed");
++                }
++                pos = target;
++            }
++            const auto tokens = step.at("tokens").get<std::vector<llama_token>>();
++            const bool all = step.value("all_logits", true);
++            auto batch = llama_batch_init(tokens.size(), 0, 1);
++            for (size_t i = 0; i < tokens.size(); ++i) {
++                common_batch_add(batch, tokens[i], pos + i, {0}, all || i + 1 == tokens.size());
++            }
++            const int ret = step.at("prefix").get<bool>() ? llama_decode_prefix(ctx.get(), batch) : llama_decode(ctx.get(), batch);
++            llama_batch_free(batch);
++            if (ret != 0) { throw std::runtime_error("reference decode failed"); }
++            const size_t rows = all ? tokens.size() : 1;
++            std::vector<float> expected(rows * nv);
++            std::ifstream ref(step.at("reference").get<std::string>(), std::ios::binary);
++            ref.read(reinterpret_cast<char *>(expected.data()), expected.size() * sizeof(float));
++            if (!ref || ref.peek() != EOF) { throw std::runtime_error("invalid reference logit size"); }
++            std::ofstream dump;
++            if (spec.contains("logits_dir")) {
++                dump.open(spec.at("logits_dir").get<std::string>() + "/" + item.at("name").get<std::string>() + "-" + std::to_string(pos) + ".f32", std::ios::binary);
++                if (!dump) { throw std::runtime_error("cannot write logits"); }
++            }
++            double max_abs = 0, squared = 0;
++            int same_top = 0;
++            bool finite = true;
++            for (size_t i = 0; i < rows; ++i) {
++                const float * got = llama_get_logits_ith(ctx.get(), all ? i : tokens.size() - 1);
++                if (dump.is_open()) { dump.write(reinterpret_cast<const char *>(got), nv * sizeof(float)); }
++                const float * want = expected.data() + i * nv;
++                same_top += std::max_element(got, got + nv) - got == std::max_element(want, want + nv) - want;
++                for (int j = 0; j < nv; ++j) {
++                    finite &= std::isfinite(got[j]) && std::isfinite(want[j]);
++                    const double delta = double(got[j]) - want[j];
++                    max_abs = std::max(max_abs, std::abs(delta));
++                    squared += delta * delta;
++                }
++            }
++            if (dump.is_open() && !dump) { throw std::runtime_error("logit write failed"); }
++            const bool ok = finite && max_abs <= spec.value("max_abs", 0.0001);
++            passed &= ok;
++            results.push_back({{"case", item.at("name")}, {"position", pos}, {"rows", rows},
++                               {"finite", finite}, {"max_abs", max_abs}, {"rmse", std::sqrt(squared / expected.size())},
++                               {"top1_matches", same_top}, {"pass", ok}});
++            pos += tokens.size();
++        }
++    }
++    json report = {{"pass", passed}, {"specification", spec}, {"steps", results}};
++    std::ofstream output(spec.at("report").get<std::string>());
++    output << report.dump(2) << '\n';
++    if (!output) { throw std::runtime_error("cannot write reference result"); }
++    printf("independent reference: %zu steps, pass=%d\n", results.size(), passed);
++    return passed ? 0 : 1;
++}
++
++static int test_prefix_lm(const llm_arch arch, size_t seed) {
++    if (arch != LLM_ARCH_HRM_TEXT && arch != LLM_ARCH_LLAMA) {
++        throw std::runtime_error("--prefix-lm requires --arch hrm_text or llama");
++    }
++    int checks = 0;
++    auto require = [&](bool ok, const char * message) {
++        if (!ok) { throw std::runtime_error(message); }
++        ++checks;
++    };
++    std::vector<std::vector<ggml_backend_dev_t>> devices = {{}};
++    for (size_t i = 0; i < ggml_backend_dev_count(); ++i) {
++        auto * device = ggml_backend_dev_get(i);
++        if (ggml_backend_dev_type(device) == GGML_BACKEND_DEVICE_TYPE_GPU) { devices.push_back({device}); }
++    }
++    for (const auto & devs : devices) {
++        auto gguf = get_gguf_ctx(arch, false);
++        if (arch == LLM_ARCH_HRM_TEXT) {
++            llama_model_saver(arch, gguf.get()).add_kv(LLM_KV_HRM_PREFIX_LM, true);
++        }
++        auto owner = get_model_and_ctx(gguf.get(), nullptr, seed, devs);
++        auto * model = owner.first.get();
++        require(llama_get_attention_type(owner.second.get()) ==
++                (arch == LLM_ARCH_HRM_TEXT ? LLAMA_ATTENTION_TYPE_PREFIX_LM : LLAMA_ATTENTION_TYPE_CAUSAL), "model default attention");
++        const int n_vocab = llama_vocab_n_tokens(llama_model_get_vocab(model));
++        for (bool flash : {false, true}) {
++            auto params = llama_context_default_params();
++            params.n_ctx = 128;
++            params.n_batch = 128;
++            params.n_ubatch = 64;
++            params.n_threads = params.n_threads_batch = 4;
++            params.type_k = params.type_v = GGML_TYPE_F32;
++            params.flash_attn_type = flash ? LLAMA_FLASH_ATTN_TYPE_ENABLED : LLAMA_FLASH_ATTN_TYPE_DISABLED;
++            params.attention_type = LLAMA_ATTENTION_TYPE_PREFIX_LM;
++            llama_context_ptr ctx(llama_init_from_model(model, params));
++            require(bool(ctx), "create explicit PrefixLM context");
++            require(llama_get_attention_type(ctx.get()) == LLAMA_ATTENTION_TYPE_PREFIX_LM, "selected mode");
++            auto * mem = llama_get_memory(ctx.get());
++            auto input = get_tokens(8, n_vocab, seed);
++            auto answer = get_tokens(4, n_vocab, seed + 1);
++            auto run = [&](llama_context * target, const std::vector<llama_token> & tokens, int pos, bool prefix) {
++                auto batch = llama_batch_init(tokens.size(), 0, 1);
++                for (size_t i = 0; i < tokens.size(); ++i) { common_batch_add(batch, tokens[i], pos + i, {0}, true); }
++                const int code = prefix ? llama_decode_prefix(target, batch) : llama_decode(target, batch);
++                llama_batch_free(batch);
++                require(code == 0, "decode");
++                std::vector<float> result;
++                for (size_t i = 0; i < tokens.size(); ++i) {
++                    const auto * logits = llama_get_logits_ith(target, i);
++                    result.insert(result.end(), logits, logits + n_vocab);
++                }
++                return result;
++            };
++            auto equal = [&](const std::vector<float> & a, const std::vector<float> & b) {
++                require(nmse(a, b) < 1e-6, "logit parity");
++            };
++            require(llama_decode(ctx.get(), llama_batch_get_one(input.data(), input.size())) == -1, "answer without prefix rejected");
++            auto reference = run(ctx.get(), input, 0, true);
++            auto chunk = run(ctx.get(), answer, input.size(), false);
++            run(ctx.get(), input, 0, true);
++            std::vector<float> singles;
++            for (size_t i = 0; i < answer.size(); ++i) {
++                auto logits = run(ctx.get(), {answer[i]}, input.size() + i, false);
++                singles.insert(singles.end(), logits.begin(), logits.end());
++            }
++            equal(chunk, singles);
++            auto long_answer = get_tokens(65, n_vocab, seed + 2);
++            run(ctx.get(), input, 0, true);
++            auto split_internal = run(ctx.get(), long_answer, input.size(), false);
++            run(ctx.get(), input, 0, true);
++            auto split_explicit = run(ctx.get(), std::vector<llama_token>(long_answer.begin(), long_answer.begin() + 32), input.size(), false);
++            auto tail = run(ctx.get(), std::vector<llama_token>(long_answer.begin() + 32, long_answer.end()), input.size() + 32, false);
++            split_explicit.insert(split_explicit.end(), tail.begin(), tail.end());
++            equal(split_internal, split_explicit);
++            auto changed_answer = answer;
++            changed_answer.back() = (changed_answer.back() + 1) % n_vocab;
++            run(ctx.get(), input, 0, true);
++            auto changed = run(ctx.get(), changed_answer, input.size(), false);
++            equal(std::vector<float>(chunk.begin(), chunk.end() - n_vocab), std::vector<float>(changed.begin(), changed.end() - n_vocab));
++            auto changed_input = input;
++            changed_input.back() = (changed_input.back() + 1) % n_vocab;
++            auto future = run(ctx.get(), changed_input, 0, true);
++            const double visibility = nmse(std::vector<float>(reference.begin(), reference.begin() + n_vocab),
++                                           std::vector<float>(future.begin(), future.begin() + n_vocab));
++            printf("prefix visibility nmse = %.12g\n", visibility);
++            require(visibility > 0, "prefix future visibility");
++            equal(reference, run(ctx.get(), input, 0, true));
++            const auto pos = llama_memory_seq_pos_max(mem, 0);
++            auto oversized = get_tokens(65, n_vocab, seed);
++            require(llama_decode_prefix(ctx.get(), llama_batch_get_one(oversized.data(), oversized.size())) == -1, "no split prefix");
++            require(llama_memory_seq_pos_max(mem, 0) == pos, "invalid prefix preserves memory");
++            llama_token bad = n_vocab;
++            require(llama_decode_prefix(ctx.get(), llama_batch_get_one(&bad, 1)) == -1, "invalid token rejected");
++            auto batch = llama_batch_init(1, 0, 1);
++            common_batch_add(batch, input[0], 0, {1}, true);
++            require(llama_decode_prefix(ctx.get(), batch) == -1, "foreign sequence rejected");
++            batch.seq_id[0][0] = 0;
++            require(llama_decode(ctx.get(), batch) == -1, "rewriting prefix rejected");
++            llama_batch_free(batch);
++            require(!llama_memory_seq_rm(mem, 0, 1, -1), "partial removal rejected");
++            require(!llama_memory_can_shift(mem), "shift capability disabled");
++            llama_memory_seq_add(mem, 0, 0, -1, 1);
++            llama_memory_seq_div(mem, 0, 0, -1, 2);
++            llama_memory_seq_cp(mem, 0, 1, 0, -1);
++            llama_memory_seq_keep(mem, 1);
++            require(llama_memory_seq_pos_max(mem, 0) == pos && llama_memory_seq_pos_max(mem, 1) == -1, "unsafe memory operations preserve state");
++            require(llama_state_get_size(ctx.get()) == 0, "state saving rejected");
++            require(llama_state_seq_get_size(ctx.get(), 0) == 0, "sequence saving rejected");
++            require(llama_state_set_data(ctx.get(), nullptr, 0) == 0, "state loading rejected before reading input");
++            require(llama_state_seq_set_data(ctx.get(), nullptr, 0, 0) == 0, "sequence loading rejected");
++            llama_set_causal_attn(ctx.get(), false);
++            require(llama_get_attention_type(ctx.get()) == LLAMA_ATTENTION_TYPE_PREFIX_LM, "raw phase override rejected");
++            equal(chunk, run(ctx.get(), answer, input.size(), false));
++            const int next = input.size() + answer.size();
++            require(llama_memory_seq_rm(mem, 0, 2, 2), "empty prefix interval is a no-op");
++            require(llama_memory_seq_rm(mem, -1, 3, 1), "reversed interval is a no-op");
++            require(llama_memory_seq_rm(mem, 0, next, -1), "removal after answer is a no-op");
++            require(!llama_memory_seq_rm(mem, 0, input.size(), next - 1), "answer hole rejected");
++            require(!llama_memory_seq_rm(mem, -1, 0, input.size()), "prefix-only removal rejected");
++            llama_memory_seq_keep(mem, 0);
++            llama_memory_seq_cp(mem, 0, 0, 1, 3);
++            require(llama_memory_seq_pos_max(mem, 0) == next - 1, "safe memory operations preserve positions");
++            for (const auto range : std::vector<std::pair<int, int>>{{0, -1}, {-1, next}, {0, next + 10}}) {
++                const int trim = input.size() + 1;
++                require(llama_memory_seq_rm(mem, range.first, trim, range.second), "answer suffix removed");
++                require(llama_memory_seq_pos_max(mem, 0) == trim - 1, "suffix positions updated");
++                equal(std::vector<float>(chunk.begin() + n_vocab, chunk.end()),
++                      run(ctx.get(), std::vector<llama_token>(answer.begin() + 1, answer.end()), trim, false));
++            }
++            require(llama_memory_seq_rm(mem, -1, input.size(), -1), "all answer tokens removed");
++            equal(chunk, run(ctx.get(), answer, input.size(), false));
++            require(llama_memory_seq_rm(mem, 0, -1, next), "finite full removal");
++            require(llama_memory_seq_pos_max(mem, 0) == -1, "full removal clears KV");
++            require(llama_decode(ctx.get(), llama_batch_get_one(answer.data(), 1)) == -1, "full removal invalidates phase");
++            require(llama_memory_seq_rm(mem, 0, 1, 2), "empty request removal is a no-op");
++            equal(reference, run(ctx.get(), input, 0, true));
++            llama_memory_clear(mem, true);
++            require(llama_decode(ctx.get(), llama_batch_get_one(answer.data(), answer.size())) == -1, "clear invalidates prefix state");
++            run(ctx.get(), {input[0]}, 0, true);
++            run(ctx.get(), {answer[0]}, 1, false);
++            auto full = get_tokens(64, n_vocab, seed);
++            run(ctx.get(), full, 0, true);
++            run(ctx.get(), full, 64, false);
++            require(llama_decode(ctx.get(), llama_batch_get_one(answer.data(), 1)) == -1, "context overflow rejected");
++            bool abort = true;
++            llama_set_abort_callback(ctx.get(), [](void * data) { return *static_cast<bool *>(data); }, &abort);
++            require(llama_decode_prefix(ctx.get(), llama_batch_get_one(input.data(), input.size())) == 2, "abort returned");
++            require(llama_memory_seq_pos_max(mem, 0) == -1, "abort clears all KV");
++            require(llama_decode(ctx.get(), llama_batch_get_one(answer.data(), 1)) == -1, "aborted prefix cannot continue");
++            abort = false;
++            equal(reference, run(ctx.get(), input, 0, true));
++            abort = true;
++            require(llama_decode(ctx.get(), llama_batch_get_one(answer.data(), answer.size())) == 2, "answer abort returned");
++            require(llama_memory_seq_pos_max(mem, 0) == -1, "answer abort clears prefix and answer KV");
++            abort = false;
++            equal(reference, run(ctx.get(), input, 0, true));
++            llama_set_abort_callback(ctx.get(), nullptr, nullptr);
++            params.attention_type = LLAMA_ATTENTION_TYPE_NON_CAUSAL;
++            llama_context_ptr bidir(llama_init_from_model(model, params));
++            require(bool(bidir), "bidirectional context");
++            equal(reference, run(bidir.get(), input, 0, false));
++            require(llama_decode_prefix(bidir.get(), llama_batch_get_one(input.data(), input.size())) == -1, "prefix API requires prefix mode");
++            params.attention_type = LLAMA_ATTENTION_TYPE_CAUSAL;
++            llama_context_ptr causal(llama_init_from_model(model, params));
++            require(bool(causal), "causal context");
++            auto causal_ref = run(causal.get(), input, 0, false);
++            llama_memory_clear(llama_get_memory(causal.get()), true);
++            auto causal_changed = run(causal.get(), changed_input, 0, false);
++            equal(std::vector<float>(causal_ref.begin(), causal_ref.begin() + n_vocab),
++                  std::vector<float>(causal_changed.begin(), causal_changed.begin() + n_vocab));
++            params.attention_type = LLAMA_ATTENTION_TYPE_PREFIX_LM;
++            params.n_seq_max = 2;
++            llama_context_ptr invalid(llama_init_from_model(model, params));
++            require(!invalid, "parallel configuration rejected");
++        }
++    }
++    printf("%d PrefixLM engine checks passed (%s)\n", checks, llm_arch_name(arch));
++    return 0;
++}
++
+ int main(int argc, char ** argv) {
+     // init the logger at max verbosity. filter with a custom callback respecting the user-configure verbosity
+     common_log_set_verbosity_thold(LOG_LEVEL_DEBUG);
+@@ -837,8 +1103,12 @@ int main(int argc, char ** argv) {
+     std::string out;
+ 
+     int verbosity = LOG_LEVEL_ERROR;
++    bool prefix_lm = false;
++    std::string prefix_reference;
+ 
+     for (int i = 1; i < argc; i++) {
++        if (strcmp(argv[i], "--prefix-reference") == 0 && i + 1 < argc) { prefix_reference = argv[++i]; continue; }
++        if (strcmp(argv[i], "--prefix-lm") == 0) { prefix_lm = true; }
+         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+             usage(argv);
+             return 0;
+@@ -884,6 +1154,8 @@ int main(int argc, char ** argv) {
+     printf("%s: using seed %zu\n", __func__, seed);
+ 
+     try {
++        if (!prefix_reference.empty()) { return test_prefix_reference(prefix_reference); }
++        if (prefix_lm) { return test_prefix_lm(arch, seed); }
+         if (!out.empty()) {
+             return save_models(arch, seed, verbosity, out);
+         }
+diff --git a/tools/cli/README.md b/tools/cli/README.md
+index ea1f7aaf8..f95832c53 100644
+--- a/tools/cli/README.md
++++ b/tools/cli/README.md
+@@ -27,6 +27,7 @@
+ | `--prio-batch N` | set process/thread priority : 0-normal, 1-medium, 2-high, 3-realtime (default: 0) |
+ | `--poll-batch <0\|1>` | use polling to wait for work (default: same as --poll) |
+ | `-c, --ctx-size N` | size of the prompt context (default: 0, 0 = loaded from model)<br/>(env: LLAMA_ARG_CTX_SIZE) |
++| `--attention {causal,non-causal,prefix-lm}` | Attention mode; defaults to model metadata. PrefixLM requires one sequence and complete-prefix prefill. See [PrefixLM](../../docs/development/prefix-lm.md). |
+ | `-n, --predict, --n-predict N` | number of tokens to predict (default: -1, -1 = infinity)<br/>(env: LLAMA_ARG_N_PREDICT) |
+ | `-b, --batch-size N` | logical maximum batch size (default: 2048)<br/>(env: LLAMA_ARG_BATCH) |
+ | `-ub, --ubatch-size N` | physical maximum batch size (default: 512)<br/>(env: LLAMA_ARG_UBATCH) |
+diff --git a/tools/imatrix/imatrix.cpp b/tools/imatrix/imatrix.cpp
+index f5fee6218..b483f5875 100644
+--- a/tools/imatrix/imatrix.cpp
++++ b/tools/imatrix/imatrix.cpp
+@@ -1146,6 +1146,16 @@ int main(int argc, char ** argv) {
+         return 0;
+     }
+ 
++    // This tool consumes unlabelled text, so it has no PrefixLM boundary.
++    if (params.attention_type == LLAMA_ATTENTION_TYPE_UNSPECIFIED) {
++        params.attention_type = LLAMA_ATTENTION_TYPE_CAUSAL;
++    }
++    if (params.attention_type != LLAMA_ATTENTION_TYPE_CAUSAL) {
++        LOG_ERR("%s: this tool requires causal attention; conditional PrefixLM scoring needs labelled prefix boundaries\n", __func__);
++        return 1;
++    }
++    LOG_INF("%s: using causal attention\n", __func__);
++
+     llama_backend_init();
+     llama_numa_init(params.numa);
+ 
+diff --git a/tools/llama-bench/llama-bench.cpp b/tools/llama-bench/llama-bench.cpp
+index 6541bb507..8d50fdaae 100644
+--- a/tools/llama-bench/llama-bench.cpp
++++ b/tools/llama-bench/llama-bench.cpp
+@@ -1459,6 +1459,7 @@ struct test {
+     const std::string        gpu_info;
+     std::string              model_filename;
+     std::string              model_type;
++    std::string              attention;
+     uint64_t                 model_size;
+     uint64_t                 model_n_params;
+     int                      n_batch;
+@@ -1499,6 +1500,9 @@ struct test {
+         char buf[128];
+         llama_model_desc(lmodel, buf, sizeof(buf));
+         model_type     = buf;
++        const auto mode = llama_get_attention_type(ctx);
++        attention = mode == LLAMA_ATTENTION_TYPE_PREFIX_LM ? "prefix-lm" :
++                    mode == LLAMA_ATTENTION_TYPE_CAUSAL ? "causal" : "non-causal";
+         model_size     = llama_model_size(lmodel);
+         model_n_params = llama_model_n_params(lmodel);
+         n_batch        = inst.n_batch;
+@@ -1577,7 +1581,7 @@ struct test {
+     static const std::vector<std::string> & get_fields() {
+         static const std::vector<std::string> fields = {
+             "build_commit",   "build_number",   "cpu_info",      "gpu_info",       "backends",
+-            "model_filename", "model_type",     "model_size",    "model_n_params", "n_batch",
++            "model_filename", "model_type", "attention", "model_size",    "model_n_params", "n_batch",
+             "n_ubatch",       "n_threads",      "cpu_mask",      "cpu_strict",     "poll",
+             "type_k",         "type_v",         "n_gpu_layers",  "n_cpu_moe",      "split_mode",
+             "main_gpu",       "no_kv_offload",  "flash_attn",    "devices",        "tensor_split",
+@@ -1657,6 +1661,7 @@ struct test {
+                                             get_backend(),
+                                             model_filename,
+                                             model_type,
++                                            attention,
+                                             std::to_string(model_size),
+                                             std::to_string(model_n_params),
+                                             std::to_string(n_batch),
+@@ -2141,6 +2146,14 @@ static bool test_prompt(llama_context * ctx, int n_prompt, int n_batch, int n_th
+     const llama_vocab * vocab   = llama_model_get_vocab(model);
+     const int32_t       n_vocab = llama_vocab_n_tokens(vocab);
+ 
++    const bool prefix = llama_get_attention_type(ctx) == LLAMA_ATTENTION_TYPE_PREFIX_LM;
++    if (prefix) {
++        if (n_prompt > (int) llama_n_batch(ctx) || n_prompt > (int) llama_n_ubatch(ctx)) {
++            fprintf(stderr, "%s: PrefixLM needs the complete prompt within -b and -ub\n", __func__);
++            return false;
++        }
++        n_batch = n_prompt;
++    }
+     std::vector<llama_token> tokens(n_batch);
+ 
+     int n_processed = 0;
+@@ -2151,7 +2164,8 @@ static bool test_prompt(llama_context * ctx, int n_prompt, int n_batch, int n_th
+         for (int i = 1; i < n_tokens; i++) {
+             tokens[i] = std::rand() % n_vocab;
+         }
+-        int res = llama_decode(ctx, llama_batch_get_one(tokens.data(), n_tokens));
++        auto batch = llama_batch_get_one(tokens.data(), n_tokens);
++        int res = prefix ? llama_decode_prefix(ctx, batch) : llama_decode(ctx, batch);
+         if (res != 0) {
+             fprintf(stderr, "%s: failed to decode prompt batch, res = %d\n", __func__, res);
+             return false;
+@@ -2335,6 +2349,15 @@ int llama_bench(int argc, char ** argv) {
+             prev_inst = &inst;
+         }
+ 
++        const bool prefix = llama_model_is_prefix_lm(lmodel);
++        if (prefix && inst.n_depth > 0) {
++            fprintf(stderr, "%s: PrefixLM does not support cached depth benchmarks\n", __func__);
++            llama_model_free(lmodel);
++            return 1;
++        }
++        // Generation-only measurements need an untimed seed prefix.
++        if (prefix && inst.n_prompt == 0) { ++cparams.n_ctx; }
++
+         llama_context * ctx = llama_init_from_model(lmodel, cparams);
+         if (ctx == NULL) {
+             fprintf(stderr, "%s: error: failed to create context with model '%s'\n", __func__, inst.model.c_str());
+@@ -2372,8 +2395,16 @@ int llama_bench(int argc, char ** argv) {
+ 
+         llama_attach_threadpool(ctx, threadpool, NULL);
+ 
++        auto seed_prefix = [&]() {
++            if (prefix && t.n_prompt == 0 && !test_prompt(ctx, 1, t.n_batch, t.n_threads)) {
++                fprintf(stderr, "%s: failed to initialize PrefixLM generation benchmark\n", __func__);
++                exit(1);
++            }
++        };
++
+         // warmup run
+         if (!params.no_warmup) {
++            seed_prefix();
+             if (t.n_prompt > 0) {
+                 if (params.progress) {
+                     fprintf(stderr, "llama-bench: benchmark %d/%zu: warmup prompt run\n", params_idx, params_count);
+@@ -2441,6 +2472,7 @@ int llama_bench(int argc, char ** argv) {
+                 }
+             }
+ 
++            seed_prefix();
+             uint64_t t_start = get_time_ns();
+ 
+             if (t.n_prompt > 0) {
+diff --git a/tools/perplexity/perplexity.cpp b/tools/perplexity/perplexity.cpp
+index ba41287d8..27502df69 100644
+--- a/tools/perplexity/perplexity.cpp
++++ b/tools/perplexity/perplexity.cpp
+@@ -2043,6 +2043,16 @@ int llama_perplexity(int argc, char ** argv) {
+         params.n_ctx += params.ppl_stride/2;
+     }
+ 
++    // This tool consumes unlabelled text, so it has no PrefixLM boundary.
++    if (params.attention_type == LLAMA_ATTENTION_TYPE_UNSPECIFIED) {
++        params.attention_type = LLAMA_ATTENTION_TYPE_CAUSAL;
++    }
++    if (params.attention_type != LLAMA_ATTENTION_TYPE_CAUSAL) {
++        LOG_ERR("%s: this tool requires causal attention; conditional PrefixLM scoring needs labelled prefix boundaries\n", __func__);
++        return 1;
++    }
++    LOG_INF("%s: using causal attention\n", __func__);
++
+     llama_backend_init();
+     llama_numa_init(params.numa);
+ 
+diff --git a/tools/server/README.md b/tools/server/README.md
+index ef9033404..9a1f27144 100644
+--- a/tools/server/README.md
++++ b/tools/server/README.md
+@@ -48,6 +48,7 @@ For the full list of features, please refer to [server's changelog](https://gith
+ | `--prio-batch N` | set process/thread priority : 0-normal, 1-medium, 2-high, 3-realtime (default: 0) |
+ | `--poll-batch <0\|1>` | use polling to wait for work (default: same as --poll) |
+ | `-c, --ctx-size N` | size of the prompt context (default: 0, 0 = loaded from model)<br/>(env: LLAMA_ARG_CTX_SIZE) |
++| `--attention {causal,non-causal,prefix-lm}` | Attention mode; defaults to model metadata. PrefixLM requires one sequence and complete-prefix prefill. See [PrefixLM](../../docs/development/prefix-lm.md). |
+ | `-n, --predict, --n-predict N` | number of tokens to predict (default: -1, -1 = infinity)<br/>(env: LLAMA_ARG_N_PREDICT) |
+ | `-b, --batch-size N` | logical maximum batch size (default: 2048)<br/>(env: LLAMA_ARG_BATCH) |
+ | `-ub, --ubatch-size N` | physical maximum batch size (default: 512)<br/>(env: LLAMA_ARG_UBATCH) |
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+index b6835e434..6770a4b5d 100644
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -441,6 +441,9 @@ struct server_slot {
+     bool can_split() const {
+         GGML_ASSERT(task);
+ 
++        if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++            return false;
++        }
+         return
+             !task->need_embd() ||
+             (llama_get_memory(ctx_tgt) && llama_pooling_type(ctx_tgt) == LLAMA_POOLING_TYPE_LAST);
+@@ -1111,6 +1114,22 @@ private:
+             return false;
+         }
+ 
++        params_base.attention_type = llama_get_attention_type(ctx_tgt);
++        if (params_base.attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++            const bool speculative = std::any_of(params_base.speculative.types.begin(), params_base.speculative.types.end(),
++                [](common_speculative_type type) { return type != COMMON_SPECULATIVE_TYPE_NONE; });
++            if (has_mmproj || has_draft || speculative || params_base.n_cache_reuse != 0 || !params_base.lora_adapters.empty()) {
++                SRV_ERR("%s", "PrefixLM does not support multimodal input, speculation, cache shifting, or adapters\n");
++                return false;
++            }
++            params_base.cache_prompt = false;
++            params_base.cache_idle_slots = false;
++            params_base.cache_ram_mib = 0;
++            params_base.n_ctx_checkpoints = 0;
++            params_base.ctx_shift = false;
++            SRV_INF("%s", "PrefixLM: complete-prefix requests; cache reuse, checkpoints and context shifting disabled\n");
++        }
++
+         vocab = llama_model_get_vocab(model_tgt);
+ 
+         n_ctx = llama_n_ctx(ctx_tgt);
+@@ -1705,6 +1724,22 @@ private:
+     }
+ 
+     bool launch_slot_with_task(server_slot & slot, server_task && task) {
++        if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++            const bool speculative = std::any_of(task.params.speculative.types.begin(), task.params.speculative.types.end(),
++                [](common_speculative_type type) { return type != COMMON_SPECULATIVE_TYPE_NONE; });
++            if (task.type != SERVER_TASK_TYPE_COMPLETION || task.params.cache_prompt || task.params.n_cache_reuse != 0 ||
++                speculative || !task.params.lora.empty() || task.tokens.has_mtmd) {
++                send_error(task, "PrefixLM requires text completion without cache reuse, speculation, or adapters", ERROR_TYPE_INVALID_REQUEST);
++                return false;
++            }
++            if (task.n_tokens() > int(llama_n_ubatch(ctx_tgt)) || task.n_tokens() > int(llama_n_batch(ctx_tgt)) ||
++                task.n_tokens() >= slot.n_ctx) {
++                send_error(task.id, "PrefixLM requires the complete prefix within batch and context capacity",
++                           ERROR_TYPE_EXCEED_CONTEXT_SIZE, task.n_tokens(), slot.n_ctx);
++                return false;
++            }
++            slot.prompt_clear();
++        }
+         // process per-request lora adapters
+         if (!task.params.lora.empty()) {
+             auto task_loras = construct_lora_list(task.params.lora);
+@@ -2379,6 +2414,12 @@ private:
+             return false;
+         }
+ 
++        if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM &&
++            (!task.child_tasks.empty() || task.type == SERVER_TASK_TYPE_SLOT_SAVE || task.type == SERVER_TASK_TYPE_SLOT_RESTORE ||
++             task.type == SERVER_TASK_TYPE_SET_LORA)) {
++            send_error(task, "PrefixLM does not support shared-prefix children, state save/restore, or adapter changes", ERROR_TYPE_INVALID_REQUEST);
++            return true;
++        }
+         switch (task.type) {
+             case SERVER_TASK_TYPE_COMPLETION:
+             case SERVER_TASK_TYPE_INFILL:
+@@ -2457,6 +2498,9 @@ private:
+                     for (auto & slot : slots) {
+                         if (slot.task && slot.task->id == task.id_target) {
+                             slot.release();
++                            if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++                                slot.prompt_clear();
++                            }
+                             break;
+                         }
+                     }
+@@ -3679,7 +3723,9 @@ private:
+         // note: the sync is done here too, so that the wait is also covered by the yield
+         int ret = 0;
+         queue_tasks.yield_to_queue([&]() {
+-            ret = llama_decode(ctx_tgt, batch_view);
++            const bool prefix = llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM &&
++                slots.front().state == SLOT_STATE_DONE_PROMPT;
++            ret = prefix ? llama_decode_prefix(ctx_tgt, batch_view) : llama_decode(ctx_tgt, batch_view);
+             if (ret == 0 && has_output) {
+                 llama_synchronize(ctx_tgt);
+             }
+@@ -3688,6 +3734,9 @@ private:
+         if (ret != 0) {
+             {
+                 std::string err;
++                if (llama_get_attention_type(ctx_tgt) == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++                    err = "PrefixLM execution failed; the request was cleared and cannot be split for retry.";
++                }
+ 
+                 if (n_batch == 1 && ret == 1) {
+                     // TODO: try to terminate only the largest active slot/sequence and continue with the rest
+diff --git a/tools/server/server-schema.cpp b/tools/server/server-schema.cpp
+index 27ecafb7a..42c2812f9 100644
+--- a/tools/server/server-schema.cpp
++++ b/tools/server/server-schema.cpp
+@@ -539,6 +539,13 @@ task_params eval_llama_cmpl_schema(
+     params.chat_parser_params.reasoning_format = params_base.reasoning_format;
+ 
+     // create context and schema
++    if (params_base.attention_type == LLAMA_ATTENTION_TYPE_PREFIX_LM) {
++        for (auto it = data.begin(); it != data.end(); ++it) {
++            if (it.key() == "speculative" || it.key().find("speculative.") == 0) {
++                throw std::invalid_argument("PrefixLM does not support speculative request options");
++            }
++        }
++    }
+     field_eval_context ctx(params);
+     ctx.vocab          = vocab;
+     ctx.logit_bias_eog = &logit_bias_eog;
+diff --git a/docs/development/prefix-lm.md b/docs/development/prefix-lm.md
+new file mode 100644
+index 000000000..f26d95ef6
+--- /dev/null
++++ b/docs/development/prefix-lm.md
+@@ -0,0 +1,166 @@
++# PrefixLM attention
++
++`LLAMA_ATTENTION_TYPE_PREFIX_LM` is a decoder attention mode. Unspecified
++context attention selects it when the model declares PrefixLM capability.
++Explicit causal and non-causal overrides remain available. The implementation
++uses existing CPU/GPU attention kernels and masks; it adds request semantics,
++not a new HRM graph or Metal kernel.
++
++For a complete prefix ending at position P, a query can attend to valid keys
++in its sequence when `key <= query` or both positions are below P. This
++implementation evaluates the complete prefix bidirectionally in one physical
++batch, then uses causal attention for answer tokens, including answer chunks.
++Each recurrent invocation therefore sees the full prefix. Splitting a prefix
++into successive token batches is not supported.
++
++## Library contract
++
++```cpp
++auto params = llama_context_default_params();
++params.attention_type = LLAMA_ATTENTION_TYPE_PREFIX_LM;
++params.n_seq_max = 1;
++params.n_ctx = 4096;
++params.n_batch = params.n_ubatch = 4096;
++auto * ctx = llama_init_from_model(model, params);
++// Check initialization and every decode result.
++int result = llama_decode_prefix(ctx, complete_prompt_batch);
++// Sample from the final prefix position, then continue causally:
++result = llama_decode(ctx, answer_batch);
++```
++
++`llama_decode_prefix` is an explicit new-request operation, even for a
++one-token prefix. It validates the entire input before replacing old memory.
++Every new chat request supplies all retained conversation tokens, including
++previous assistant turns and the generation header. No application-side
++attention toggling is needed. `llama_get_attention_type` reports the active
++mode. `llama_set_causal_attn` cannot override a PrefixLM context.
++
++The initial supported contract is one token-input sequence (ID 0), positions
++starting at zero, and contiguous answer positions. Absent position arrays
++use these positions automatically. The complete prefix must fit both logical
++and physical batch capacity. Answer chunks may be split internally because
++they are causal. Requested context capacity is enforced even if allocation is
++rounded up; `llama_n_ctx_seq` returns the usable PrefixLM capacity.
++
++Invalid input returns -1 without changing the current request. Backend
++failure, exception during execution, or abort clears the full request; a new
++complete prefix is then required. PrefixLM calls synchronize before returning,
++restore the internal causal execution mode, and check the abort callback after
++synchronization, including on backends that cannot abort mid-compute. Serialize
++all context and memory operations; the abort callback's application state may
++be signaled safely from another thread.
++
++Public memory clear and full sequence removal invalidate the prefix state.
++Removing a causal answer suffix updates the next answer position and preserves
++prefix KV. Empty intervals are no-ops. Deleting any part of a retained prefix
++or creating a hole in the answer returns false without mutation. Full removal
++also accepts a finite upper bound covering the request. Keeping sequence 0 and
++copying it to itself are supported; other sequence operations, shifting and
++dividing remain rejected. Memory edits do not recompute logits: preserve the
++logits at the rollback boundary, or decode again before sampling. State save
++and restore return failure before serializing or reading data. They do not yet
++serialize prefix boundaries or phase, so replay cannot silently lose them.
++Encoder, recurrent/hybrid, diffusion, SWA, multi-position, multi-sequence,
++embedding-output and adapter paths are outside this initial contract.
++Unsupported configurations or entry points fail explicitly.
++
++## Common processing, server and CLI
++
++The common prompt helper submits a complete prefix and rejects incremental
++prompt reuse or state saving in PrefixLM mode. Warmup also uses the prefix API.
++
++The server (also used by llama-cli) runs with `--parallel 1`. Model metadata
++selects the attention mode automatically; `--attention prefix-lm` selects it
++explicitly and `--attention causal` retains the causal control path. Each new
++request reprocesses its entire prompt. Cache reuse, RAM prompt caches,
++checkpoints and context shifting are disabled with a startup message.
++Explicit incompatible request options fail. Slot save/restore, shared-prefix
++children (`n > 1`), speculative decoding, multimodal input and adapters are not
++supported. Requests may queue, but decoding uses one active sequence.
++
++The scheduler submits a prefix in one physical batch, separate from answer
++decoding. Admission rejects oversized input before clearing the previous slot.
++Execution failures terminate the request without retrying smaller prefix
++chunks. Cancellation clears the slot before a subsequent request. Context
++exhaustion is visible to the caller; prompts are not silently truncated.
++
++## Tests
++
++Existing architecture tests include a bounded PrefixLM suite:
++
++```sh
++cmake --build build --target test-llama-archs
++build/bin/test-llama-archs --prefix-lm --arch hrm_text --seed 42
++build/bin/test-llama-archs --prefix-lm --arch llama --seed 42
++```
++
++It exercises CPU and available GPU devices, fused/unfused attention, metadata
++defaults and explicit overrides, prefix visibility, answer causality,
++chunk/single-token parity, answer rollback, admission, forbidden cache operations, one-token
++prefixes, full context, abort/recovery and causal/bidirectional controls.
++Independent tiny-model HF logits can be generated within this patch as described below.
++Tokenizer and stock-server references remain in the consuming project's harness. Quantized weights, other backends,
++parallel PrefixLM scheduling and persistent state formats require separate
++qualification.
++
++## Tool audit
++
++There are two existing public inference functions, `llama_encode` and
++`llama_decode`. This patch adds `llama_decode_prefix`; backend graph execution,
++common helpers and HTTP endpoints are callers, not additional public model
++inference APIs.
++
++- `llama-cli`, `llama-server`, common warmup/prompt processing, `llama-simple`
++  and `llama-simple-chat` submit a complete prefix explicitly. Simple chat
++  renders the whole retained conversation again each turn.
++- `llama-bench` supports prompt processing, generation and combined runs.
++  Generation-only runs prepare one seed prefix before timing. Cached depth
++  runs reject because PrefixLM state serialization is not implemented. Prompts
++  must fit `-b` and `-ub`; benchmark comparisons must record attention mode.
++- `llama-perplexity` and `llama-imatrix` explicitly use causal attention for
++  unlabelled text. Non-causal and PrefixLM overrides reject. These measure
++  causal likelihood/calibration, not conditional PrefixLM likelihood.
++- Batched/parallel examples, batched-bench, lookup/lookahead, speculative
++  decoding, passkey cache editing and Android incremental chat have no
++  PrefixLM scheduler adaptation. The library rejects their incompatible
++  context or decode operation. They are not qualified PrefixLM clients.
++- Embedding/retrieval, diffusion, cvector, mtmd, debug, idle, eval-callback and
++  results paths have no implicit prefix boundary. They are outside this
++  supported client list; passing a model with PrefixLM metadata does not
++  authorize silently treating their first ordinary decode as a prefix.
++- Legacy completion uses the adapted common prompt helper, but its cache,
++  interactive continuation and context-shifting paths are not qualified.
++  Use CLI/server for PrefixLM chat.
++
++The decode guard is intentional: first-call detection would misclassify a
++one-token prefix, a resumed sequence or a new conversation turn. Existing
++clients must declare the boundary instead of obtaining plausible but incorrect
++causal output. This audit is a support inventory, not a claim that every
++example has an appropriate user-facing rejection message.
++
++## Independent reference
++
++The existing architecture test can also consume full-forward Transformers
++logits. Generate a small model with the normal converter, without a tokenizer
++or model download:
++
++```sh
++python -m pip install -r requirements/requirements-convert_hf_to_gguf.txt
++python -m pip install "transformers @ git+https://github.com/huggingface/transformers.git@ff2421c67f35cc83a0fbabbc2633c96734685918"
++python scripts/prefix-lm-reference.py --output /tmp/prefix-reference
++build/bin/test-llama-archs --prefix-reference /tmp/prefix-reference/reference.json
++```
++
++The JSON specification records model, reference files, context/batch limits,
++backend selection, tolerance and output path. `n_gpu_layers` and `flash` select
++GPU execution and fused attention. The report contains finiteness, maximum
++absolute error, RMS error and top-token agreement per step. Full-forward
++references cover bidirectional prefix visibility, causal answers, answer rollback, chunk and
++single-token answers, a one-token prefix and a causal control. Generation uses
++an explicit seed and records package versions and the GGUF hash. Re-generating
++references avoids assuming random weights are identical across platforms.
++
++The same reader accepts real-model and quantized-model references. A failure
++against a strict full-precision tolerance is retained as a failure; quantized
++logit drift must be assessed separately from attention semantics and language
++quality. Optional `logits_dir` writes the tested rows for additional comparisons. A step may specify `rewind_to` to remove an answer suffix before decoding its tokens.
+diff --git a/scripts/prefix-lm-reference.py b/scripts/prefix-lm-reference.py
+new file mode 100644
+index 000000000..4435a7208
+--- /dev/null
++++ b/scripts/prefix-lm-reference.py
+@@ -0,0 +1,86 @@
++"""Generate a small Transformers PrefixLM oracle using the normal GGUF converter.
++
++Requires the converter dependencies and Transformers commit
++ff2421c67f35cc83a0fbabbc2633c96734685918. No model download is needed.
++"""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import sys
++
++import torch
++import transformers
++from transformers import HrmTextConfig, HrmTextForCausalLM
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
++from conversion import get_model_class  # noqa: E402
++import gguf  # noqa: E402
++
++__all__ = []
++
++
++class _TokenlessHrm(get_model_class("HrmTextForCausalLM")):
++    model_arch = gguf.MODEL_ARCH.HRM_TEXT
++
++    def set_vocab(self):
++        self.gguf_writer.add_tokenizer_model("no_vocab")
++        self.gguf_writer.add_vocab_size(self.hparams["vocab_size"])
++
++
++def _main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--output", type=Path, required=True)
++    args = parser.parse_args()
++    out = args.output.resolve()
++    out.mkdir(parents=True, exist_ok=True)
++    torch.set_num_threads(4)
++    torch.manual_seed(73)
++    cfg = HrmTextConfig(vocab_size=128, hidden_size=64, intermediate_size=128,
++                       num_layers_per_stack=1, num_attention_heads=4, num_key_value_heads=4,
++                       head_dim=16, H_cycles=2, L_cycles=3, max_position_embeddings=128,
++                       prefix_lm=True, embedding_scale=12.5, initializer_range=0.08,
++                       attention_bias=False, mlp_bias=False, tie_word_embeddings=False)
++    cfg._attn_implementation = "eager"
++    model = HrmTextForCausalLM(cfg).float().eval()
++    model.save_pretrained(out / "hf")
++    _TokenlessHrm(out / "hf", gguf.LlamaFileType.ALL_F32, out / "model.gguf", eager=True).write()
++    prefix, answer = [2, 11, 23, 37, 41, 53], [61, 73, 89]
++    cases = []
++    for name, prompt, continuation, causal, chunks in [
++        ("prefix", prefix, [], False, []),
++        ("changed-prefix", prefix[:-1] + [57], [], False, []),
++        ("answer-chunk", prefix, answer, False, [3]),
++        ("answer-single", prefix, answer, False, [1, 1, 1]),
++        ("changed-answer", prefix, answer[:-1] + [97], False, [3]),
++        ("one-token-prefix", prefix[:1], answer, False, [3]),
++        ("causal-control", prefix, answer, True, [3]),
++    ]:
++        ids = torch.tensor([prompt + continuation])
++        types = torch.tensor([[0 if causal else 1] * len(prompt) + [0] * len(continuation)])
++        with torch.no_grad():
++            logits = model(input_ids=ids, token_type_ids=types, use_cache=False).logits[0].numpy()
++        steps, pos = [], 0
++        for i, count in enumerate([len(prompt)] + chunks):
++            path = out / f"{name}-{i}.f32"
++            logits[pos:pos + count].astype("<f4").tofile(path)
++            steps.append({"tokens": ids[0, pos:pos + count].tolist(), "prefix": i == 0 and not causal,
++                          "reference": str(path), "all_logits": True})
++            pos += count
++        cases.append({"name": name, "causal": causal, "steps": steps})
++    chunk_steps = next(case["steps"] for case in cases if case["name"] == "answer-chunk")
++    suffix = out / "answer-rollback.f32"
++    suffix.write_bytes(b"".join((out / f"answer-single-{i}.f32").read_bytes() for i in (2, 3)))
++    cases.append({"name": "answer-rollback", "steps": [*chunk_steps,
++                  {"tokens": answer[1:], "prefix": False, "rewind_to": len(prefix) + 1,
++                   "reference": str(suffix)},
++                  {**chunk_steps[1], "rewind_to": len(prefix)}]})
++    spec = {"model": str(out / "model.gguf"), "n_ctx": 128, "n_ubatch": 64,
++            "max_abs": 0.0001, "cases": cases, "report": str(out / "result.json"),
++            "provenance": {"seed": 73, "torch": torch.__version__, "transformers": transformers.__version__,
++                           "model_sha256": hashlib.sha256((out / "model.gguf").read_bytes()).hexdigest()}}
++    (out / "reference.json").write_text(json.dumps(spec, indent=2) + "\n")
++
++
++if __name__ == "__main__":
++    _main()

@@ -1,0 +1,205 @@
+# DFM Mimir MVP for Apple devices
+
+Shared SwiftUI app for Apple Silicon Mac, iPhone and iPad. It embeds the patched
+llama.cpp runtime with Metal and optionally bundles a Mimir GGUF for offline first
+launch. There is no inference server, login, analytics, model downloader or network
+entitlement. This is a development MVP, not a signed/notarized App Store release.
+
+## Branding
+
+The app uses **DFM Mimir**, matching the model card: the supplied Mimir head mark
+is the app icon and sidebar/welcome identity, and the Danish Foundation Models
+logo appears on the welcome and About screens. Both original logos are bundled
+offline. See [asset provenance](Resources/BRANDING.md). Saved-chat locations and
+the app's bundle identifier are unchanged.
+
+## Included
+
+- New chat appears in the sidebar immediately, including before its first reply.
+  Empty conversations persist and can be deleted; the first prompt supplies the title.
+- Streaming text replies, Stop, new conversations, local history, delete confirmation
+  and system sharing of a selected conversation.
+- Model import through the system file picker. Imports are copied into app storage
+  off the main thread, identified by SHA-256 and checked by the runtime for HRMText,
+  PrefixLM and a usable vocabulary/template. A different model cannot silently continue
+  a chat saved under another model hash.
+- Prefill through **Mimir's GGUF chat template** for every turn, using full history
+  or a saved summary plus recent turns when compaction is enabled.
+  A short system instruction identifies Mimir and asks it to use the user's language.
+  No raw untemplated chat path or ordinary causal prompt-cache reuse is introduced.
+- Atomic storage of completed turn pairs. A stopped/failed reply does not enter saved
+  history and returns the user's message to the composer. Corrupt archives are left
+  untouched; an unsaved-session notice is shown. Storage is excluded from OS backup.
+- Model/llama.cpp license notices and accessible, selectable message text.
+
+The app uses greedy sampling and configurable context/reply limits (see below).
+It can summarize older turns near capacity while preserving the full saved
+transcript. If the remaining prompt still cannot fit, increase context, reduce the
+reply budget, or start another chat. No image/audio input, tools, attachments, cloud sync or automatic model
+updates are included. Replies may still be inaccurate, including identity statements.
+
+## Context and reply settings
+
+Open **Model and settings → Context and replies**. Defaults start at 1,024 context /
+512 reply tokens and scale with available memory through 2,048, 4,096, 8,192,
+16,384 and 32,768 context tokens. The default reply budget is a quarter of context,
+bounded to 512–2,048 tokens. Both limits are editable and persist across launches.
+
+DFM Mimir v1 allows **1,024–32,768 context tokens**. Settings display the training
+context read from GGUF (4,096 for v1); longer contexts are allowed but may affect
+answer quality. Custom context choices override memory estimates. Large allocations
+can fail or cause the OS to close the app. Automatic defaults still use available
+memory, actual GGUF size and the model profile's runtime memory estimate.
+
+The context includes the template, conversation and reserved reply. Custom reply
+budgets must leave the profile's prompt reserve (256 tokens for v1); the actual
+prompt must also fit. Changing context reloads the model, while reply-only changes
+do not. **Use memory-based defaults** resets the custom limits.
+
+Model-specific context tiers, reply policy, memory estimates, CPU threads and system
+instruction are configurable via a versioned JSON profile. Profiles can be bundled
+or imported in settings. See [MODEL-PROFILES.md](MODEL-PROFILES.md) for the format,
+new-model workflow and tests. Real-model execution beyond training length has been
+checked at 8,192 allocation / 4,530 prompt tokens, not yet at 32,768.
+
+## Conversation compaction
+
+In **Model and settings → Conversation compaction**, independently enable automatic
+summarization and choose whether its summary is visible. Automatic compaction is
+on by default; summary display is off. Summaries and preferences survive restart.
+The full transcript remains saved and visible. Turning compaction off sends the
+original full history again. Summarization runs locally using Mimir's chat template;
+Stop cancels it without replacing the previous summary. See
+[COMPACTION-REPORT.md](COMPACTION-REPORT.md) for behavior, limitations and tests.
+
+## Message keyboard behavior
+
+On macOS, Return sends, Shift+Return inserts a newline, and Cmd+Return also sends.
+Return used to confirm active IME composition is left to the text system.
+On iOS/iPadOS, Return inserts a newline and the visible Send button submits;
+Done dismisses the keyboard. The Mac-only send shortcuts are not installed on iOS.
+
+## Build
+
+Requires full Xcode (SwiftUI, Mac/iOS SDKs), CMake >=3.25 and the initialized
+`llama.cpp` and `mimir` submodules. No external Swift package or Ninja is required.
+The CMake project creates an Xcode project and statically links the native runtime,
+including embedded Metal shader sources. Models and generated build output stay out
+of Git.
+
+From the repository root:
+
+```bash
+git submodule update --init llama.cpp mimir
+native/apple/build.sh macos "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+open logs/mimir-apple/macos/Release/MimirChat.app
+```
+
+When changing Xcode/SDK versions, use a fresh build directory to avoid reusing
+CMake's cached compiler checks. `DEVELOPER_DIR` can select a particular Xcode;
+`MIMIR_APPLE_BUILD_ROOT` selects the directory for this invocation, for example:
+
+```bash
+MIMIR_APPLE_BUILD_ROOT="$PWD/logs/mimir-apple/xcode27/macos" \
+  native/apple/build.sh macos "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+```
+
+Use a different directory per platform. The default paths remain unchanged.
+
+Pass a corrected GGUF from the existing Mimir conversion/qualification workflow.
+The local Q4_K_M is the default tested artifact; this command does not download weights.
+Omit the model argument for an import-only app. The model is copied into the bundle
+as `Mimir.gguf` with a generated `Model.json` containing its SHA-256 identity. Current
+Mimir model licensing is Apache-2.0; replacing the bundled model also requires checking
+its own license/provenance and updating the bundled notice if necessary.
+
+```bash
+native/apple/build.sh ios "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+native/apple/build.sh simulator   # import-only simulator build
+```
+
+The iOS command builds **unsigned** for arm64 with iOS 17 minimum. For physical-device
+installation, open `logs/mimir-apple/ios/MimirApple.xcodeproj`, select the MimirChat target,
+choose your development team under Signing & Capabilities, select your device and run.
+Mac minimum deployment target is macOS 14. Mac builds use ad-hoc signing and App Sandbox.
+Distribution certificates, provisioning, notarization and App Store metadata
+are not provided. Simulator builds use CPU; this is not evidence of phone performance.
+
+### Try it in Simulator
+
+No signing team or physical device is needed. Build specifically for the simulator;
+the unsigned `iphoneos` bundle cannot run there:
+
+```bash
+native/apple/build.sh simulator "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+xcrun simctl list devices available
+# Boot a listed iPhone/iPad UUID, or select one in the Simulator app.
+xcrun simctl boot <device-uuid>
+xcrun simctl bootstatus <device-uuid> -b
+xcrun simctl install <device-uuid> logs/mimir-apple/simulator/Release-iphonesimulator/MimirChat.app
+xcrun simctl launch <device-uuid> dk.sdu.mimir.chat
+open -a Simulator
+```
+
+Skip `boot` if the chosen device is already booted. Subsequent launches can use
+the Mimir icon on the simulator's home screen. The bundled model works offline;
+the simulator uses host CPU inference and does not validate real-device Metal,
+memory pressure or thermal behavior.
+
+Memory is materially larger than weight file size. Mimir's recurrent KV expansion
+alone uses about 768 MiB per 1,024 context tokens with F16 KV, plus weights, graph buffers
+and application memory. Real iPhone/iPad peak memory, thermal behavior and sustained
+throughput still need physical-device measurements. Do not promise compatibility from
+successful cross-compilation alone.
+
+## Tests
+
+```bash
+native/apple/Tools/test-swift.sh
+logs/mimir-apple/macos/Release/mimir-bridge-tests "$PWD/logs/mimir-review/mimir-q4_k_m.gguf"
+```
+
+Swift tests exercise local storage and app state with temporary archives and a test
+bridge. The native bridge test uses the real Q4 model on Metal, its template and system
+instruction: generation, main-thread callbacks, completed-history restore, cancellation,
+invalid history and recovery. The existing native text test also compares a restored
+transcript's next generated tokens to uninterrupted continuation.
+
+The [Apple workflow](../../.github/workflows/mimir-apple.yml) compiles import-only Mac
+and iOS apps and runs Swift storage/state tests without downloading large weights.
+Real-model/device evidence is separate; see [MVP-REPORT.md](MVP-REPORT.md).
+
+## Implementation boundaries
+
+- `Sources/`: SwiftUI presentation, serialized app state and local storage.
+- `Bridge/`: Objective-C++ adapter; serial background inference queue, main-thread
+  callbacks and the runtime's thread-safe cancellation operation.
+- `../mimir/`: reused native text/session implementation; the small `restore_history`
+  addition validates completed turn pairs before replacing state. Full transcript
+  replay on the next turn naturally uses PrefixLM, not a disk KV snapshot.
+- `../../llama.cpp`: unchanged, pinned to the Linux-qualified PrefixLM implementation.
+
+UI/backend calls are serialized; only cancellation crosses the worker boundary.
+Changing model releases the previous runtime before loading the next to bound peak
+memory. A failed import/load can be recovered by selecting the bundled model again.
+Completed transcripts survive app restart; a currently generating partial reply does not.
+
+## Development preview DMG
+
+After building the Mac app with bundled weights, run:
+
+```bash
+native/apple/Tools/package-dmg.sh
+```
+
+Optional arguments select an existing `.app` and an output directory. The default
+output is `logs/mimir-apple/distribution/DFM-Mimir-<version>-arm64-preview.dmg`,
+with a SHA-256 sidecar. Existing output is never overwritten. This packages the
+current build; it does not rebuild it or apply Developer ID signing/notarization.
+
+The compressed read-only image contains `DFM Mimir.app`, an Applications shortcut
+and a Read Me. It targets Apple Silicon and takes its minimum macOS version from
+the app. The bundled model and licenses stay inside the app; user conversations
+and settings remain in Application Support. The script checks the existing app
+signature, model identity, disk-image integrity and mounted contents before
+writing the checksum. Public distribution credentials remain a separate step.

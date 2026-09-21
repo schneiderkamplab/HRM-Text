@@ -1,0 +1,284 @@
+[
+  {
+    "variant": "baseline",
+    "backend": "cpu",
+    "command": [
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-oracle-baseline",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/reference/reference.json",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-baseline-cpu.json",
+      "0",
+      "0"
+    ],
+    "exit_code": 0,
+    "result": {
+      "pass": true,
+      "steps": [
+        {
+          "case": "causal-control",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.2578937082827538e-07,
+          "top1_matches": 6,
+          "pass": true
+        },
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 8.344650268554688e-07,
+          "rmse": 1.2674780042810473e-07,
+          "top1_matches": 3,
+          "pass": true
+        },
+        {
+          "case": "causal-full",
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 8.344650268554688e-07,
+          "rmse": 1.261096567014985e-07,
+          "top1_matches": 9,
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "variant": "baseline",
+    "backend": "cuda-off",
+    "command": [
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-oracle-baseline",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/reference/reference.json",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-baseline-cuda-off.json",
+      "999",
+      "0"
+    ],
+    "exit_code": 1,
+    "result": {
+      "pass": false,
+      "steps": [
+        {
+          "case": "causal-control",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 0.0022826194763183594,
+          "rmse": 0.000674979114316333,
+          "top1_matches": 6,
+          "pass": false
+        },
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.0001785755157470703,
+          "rmse": 6.0869816478554305e-05,
+          "top1_matches": 3,
+          "pass": false
+        },
+        {
+          "case": "causal-full",
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.0022826194763183594,
+          "rmse": 0.0006551466153607079,
+          "top1_matches": 9,
+          "pass": false
+        }
+      ]
+    }
+  },
+  {
+    "variant": "baseline",
+    "backend": "cuda-on",
+    "command": [
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-oracle-baseline",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/reference/reference.json",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-baseline-cuda-on.json",
+      "999",
+      "1"
+    ],
+    "exit_code": 1,
+    "result": {
+      "pass": false,
+      "steps": [
+        {
+          "case": "causal-control",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 0.002324700355529785,
+          "rmse": 0.000672069928764567,
+          "top1_matches": 6,
+          "pass": false
+        },
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.00020985567243769765,
+          "rmse": 6.488153787946051e-05,
+          "top1_matches": 3,
+          "pass": false
+        },
+        {
+          "case": "causal-full",
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.002324700355529785,
+          "rmse": 0.0006522314919164822,
+          "top1_matches": 9,
+          "pass": false
+        }
+      ]
+    }
+  },
+  {
+    "variant": "candidate",
+    "backend": "cpu",
+    "command": [
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-oracle-candidate",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/reference/reference.json",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-candidate-cpu.json",
+      "0",
+      "0"
+    ],
+    "exit_code": 0,
+    "result": {
+      "pass": true,
+      "steps": [
+        {
+          "case": "causal-control",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 4.76837158203125e-07,
+          "rmse": 1.2578937082827538e-07,
+          "top1_matches": 6,
+          "pass": true
+        },
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 8.344650268554688e-07,
+          "rmse": 1.2674780042810473e-07,
+          "top1_matches": 3,
+          "pass": true
+        },
+        {
+          "case": "causal-full",
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 8.344650268554688e-07,
+          "rmse": 1.261096567014985e-07,
+          "top1_matches": 9,
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "variant": "candidate",
+    "backend": "cuda-off",
+    "command": [
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-oracle-candidate",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/reference/reference.json",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-candidate-cuda-off.json",
+      "999",
+      "0"
+    ],
+    "exit_code": 1,
+    "result": {
+      "pass": false,
+      "steps": [
+        {
+          "case": "causal-control",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 0.0022826194763183594,
+          "rmse": 0.000674979114316333,
+          "top1_matches": 6,
+          "pass": false
+        },
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.0001785755157470703,
+          "rmse": 6.0869816478554305e-05,
+          "top1_matches": 3,
+          "pass": false
+        },
+        {
+          "case": "causal-full",
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.0022826194763183594,
+          "rmse": 0.0006551466153607079,
+          "top1_matches": 9,
+          "pass": false
+        }
+      ]
+    }
+  },
+  {
+    "variant": "candidate",
+    "backend": "cuda-on",
+    "command": [
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-oracle-candidate",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/reference/reference.json",
+      "/work/mimir/HRM-Text-llamacpp/logs/linux-prefixlm/postfix/causal-candidate-cuda-on.json",
+      "999",
+      "1"
+    ],
+    "exit_code": 1,
+    "result": {
+      "pass": false,
+      "steps": [
+        {
+          "case": "causal-control",
+          "position": 0,
+          "rows": 6,
+          "finite": true,
+          "max_abs": 0.002324700355529785,
+          "rmse": 0.000672069928764567,
+          "top1_matches": 6,
+          "pass": false
+        },
+        {
+          "case": "causal-control",
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.00020985567243769765,
+          "rmse": 6.488153787946051e-05,
+          "top1_matches": 3,
+          "pass": false
+        },
+        {
+          "case": "causal-full",
+          "position": 0,
+          "rows": 9,
+          "finite": true,
+          "max_abs": 0.002324700355529785,
+          "rmse": 0.0006522314919164822,
+          "top1_matches": 9,
+          "pass": false
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,225 @@
+{
+  "date": "2026-09-17",
+  "scope": "FP32 host text chat correctness; greedy text-only, no Apple device qualification or quantization",
+  "platform": "macOS-26.4.1-arm64-arm-64bit",
+  "model_revision": "2844f0178e695d7d9ce182cb660671fd34c76ce5",
+  "llama_revision": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "export_manifest": {
+    "command": [
+      "/Users/petersk/Nobackup/HRM-Text-mps/logs/prefixlm-comparison/venv/bin/python",
+      "/Users/petersk/Nobackup/HRM-Text-mps/llama.cpp/convert_hf_to_gguf.py",
+      "/Users/petersk/Nobackup/HRM-Text-mps/logs/prefixlm-comparison/mimir-hf",
+      "--outtype",
+      "f32",
+      "--outfile",
+      "/Users/petersk/Nobackup/HRM-Text-mps/logs/mimir-chat/mimir-text-f32.gguf"
+    ],
+    "format": "F32",
+    "gguf_sha256": "5013b7f29a32f84614db7ede0c5da329601cb9c58350b0663d0bd091a6dcf4ea",
+    "bit_exact_reference": "logs/prefixlm-comparison/real/mimir-f32.gguf",
+    "tensor_count": 259,
+    "bytes": 7161847968,
+    "llama_revision": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+    "source_sha256": {
+      "llama.cpp/convert_hf_to_gguf.py": "e9a1da876330bbce9687541ab31736542a01b4ac43c6686126514a50f122fb7f",
+      "llama.cpp/conversion/hrm_text.py": "01f6d22c1a626db41d256cac0e43afbab4c80884bf08e8fe2013ba954091da1a",
+      "llama.cpp/conversion/base.py": "13544cb79354f388046eb2480783111f67f7165416ecf5a9776a732fc66878bf",
+      "llama.cpp/convert_hf_to_gguf_update.py": "08fcd70d3c50a7b2a225a5e5e43368f21b08e1a63bdc8e868e2aca59ea095934"
+    },
+    "input_sha256": {
+      "LICENSE": "eeda8c6bf9bdfbdc04a6e3db30b30b37974dee79faed96ef60c4f2533c017a23",
+      "chat_template.jinja": "33204f1acb5bd0002713e16a593847f24ceeafe711ed88bda2a352dc996a3373",
+      "config.json": "fd491e0fcdf9c49e77ab4fdc6cf6b487d08fbc744617b568eb956dd2077e40d1",
+      "model.safetensors": "8a83c8a0e6ad25b73c089c9c6f8b01969f1c6bd7db76a71ff85de861a95311a0",
+      "tokenizer.json": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+      "tokenizer_config.json": "8d3761e269d1c80df50eb6667c11521cf42ba32b53cd5650e9b7c2c4975d68fe"
+    }
+  },
+  "suites": {
+    "text-parity": {
+      "pass": true,
+      "checks": 724,
+      "report": "logs/mimir-chat/text-parity.json",
+      "sha256": "fad400bfdb73c8947d109ed9b8bce2d31c9e3450e3fca92cfaa07a08d063f039"
+    },
+    "text-ci-parity": {
+      "pass": true,
+      "checks": 724,
+      "report": "logs/mimir-chat/text-ci-parity.json",
+      "sha256": "fad400bfdb73c8947d109ed9b8bce2d31c9e3450e3fca92cfaa07a08d063f039"
+    },
+    "ubsan-text-parity": {
+      "pass": true,
+      "checks": 724,
+      "report": "logs/mimir-chat/ubsan-text-parity.json",
+      "sha256": "fad400bfdb73c8947d109ed9b8bce2d31c9e3450e3fca92cfaa07a08d063f039"
+    },
+    "e2e-cpu": {
+      "pass": true,
+      "checks": 8,
+      "report": "logs/mimir-chat/e2e-cpu.json",
+      "sha256": "097886cea4fd70214da3c7513a78ae0f94f0d41d28d82edd99ac918fa4dd778f"
+    },
+    "e2e-metal": {
+      "pass": true,
+      "checks": 8,
+      "report": "logs/mimir-chat/e2e-metal.json",
+      "sha256": "9deb669e07da48ecae9f3ff01ea3a8ee787b7d885a8bc85b3db0664c4ac57caa"
+    },
+    "e2e-flash": {
+      "pass": true,
+      "checks": 8,
+      "report": "logs/mimir-chat/e2e-flash.json",
+      "sha256": "c37390d990fb0cf2bff134fe67762bf2609b9026096c278c4fcb744c16a84daf"
+    },
+    "ctest": {
+      "pass": true,
+      "tests": 5,
+      "report": "logs/mimir-chat/ctest.log",
+      "sha256": "da6ecfde4dfe1936bc529f5dac9796d1497e21129f05786553c716013bf2a8f1"
+    },
+    "ubsan-ctest": {
+      "pass": true,
+      "tests": 5,
+      "report": "logs/mimir-chat/ubsan-ctest.log",
+      "sha256": "6fa32b5f5209bbaacf48048590eb199840d41b71c45b9bb44fd9ead9aca35c95"
+    },
+    "metal-text-lifecycle": {
+      "pass": true,
+      "checks": 68,
+      "report": "logs/mimir-chat/text-lifecycle.log",
+      "sha256": "74041907961c33f672bc646836b09ae013d5394b01b548795c1160f58b2111f3"
+    }
+  },
+  "hf_conversation": [
+    {
+      "text": "Svar med ét ord: Hvad er 2 + 2?",
+      "prompt_tokens": [
+        2,
+        105,
+        2364,
+        107,
+        236773,
+        1967,
+        1470,
+        6355,
+        4772,
+        236787,
+        236743,
+        236814,
+        38023,
+        2087,
+        236743,
+        236778,
+        900,
+        236743,
+        236778,
+        236881,
+        106,
+        107,
+        105,
+        4368,
+        107
+      ],
+      "tokens": [
+        236812
+      ],
+      "answer": "4",
+      "finish": "eos",
+      "stop_token": 106
+    },
+    {
+      "text": "Og hvad er 3 + 3?",
+      "prompt_tokens": [
+        2,
+        105,
+        2364,
+        107,
+        236773,
+        1967,
+        1470,
+        6355,
+        4772,
+        236787,
+        236743,
+        236814,
+        38023,
+        2087,
+        236743,
+        236778,
+        900,
+        236743,
+        236778,
+        236881,
+        106,
+        107,
+        105,
+        4368,
+        107,
+        236812,
+        106,
+        107,
+        105,
+        2364,
+        107,
+        82906,
+        134371,
+        2087,
+        236743,
+        236800,
+        900,
+        236743,
+        236800,
+        236881,
+        106,
+        107,
+        105,
+        4368,
+        107
+      ],
+      "tokens": [
+        236825
+      ],
+      "answer": "6",
+      "finish": "eos",
+      "stop_token": 106
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/mimir-runtime.yml": "53d01622be9d0b6a3dc0206c2d30afa4ce69e8548857c803416201856d0eac23",
+    "native/mimir/CMakeLists.txt": "1d64848255929fc828d3f811e6bc38b2c1cfbb536b3e238a30904fa864a910c8",
+    "native/mimir/chat.cpp": "fb930eb3b09d676babdcbbaa6ff3c7617f7de36d68ad098643b0994f8e968be2",
+    "native/mimir/export.py": "81592bdd93d4ca99ef49f6831329c00dddbbe0cf1da987418248a1eb6bd874dc",
+    "native/mimir/include/mimir/chat.h": "22a62d41f07403fe8b14e89cd66312dc2267af8ce39456dd0eabab82f35dbb9e",
+    "native/mimir/include/mimir/session.h": "eb3a0a2ad29a1bcf91250f843e638a378ce740eb7d7e18edd43130ca4ac287c1",
+    "native/mimir/patches/ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519",
+    "native/mimir/patches/text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+    "native/mimir/session.cpp": "f774c9cc4bede2652cc2d8511d028e95f76010a7df7e7e04488e96641909782b",
+    "native/mimir/tests/chat_e2e.py": "1f75c96387c9501468a8c6e6a158e615e089b2bf04afde4ba3e3e457cfa3f961",
+    "native/mimir/tests/chat_reference.py": "cbcba3ebf2886ff259b09493b1251dc2d58a728845c309945658e51f9436b36b",
+    "native/mimir/tests/generate_letter_cases.py": "ec550245523258299236417294b3091e77810920b9cb61534a22e02beba6e4ca",
+    "native/mimir/tests/long_reference.py": "a9d05025ff4806acf1654d43afb2d19327b5929af122e35ee6f11b8cb708b053",
+    "native/mimir/tests/prepare_text_ci.py": "87bced9c9cc6973e28c5866fb14da96b7eee4ec889eb6f6e6181f82c687c73c1",
+    "native/mimir/tests/run_matrix.py": "881c19bd3715088657b9f9ee22ac4c23da505891855b3618773f3590852af433",
+    "native/mimir/tests/session.cpp": "4e94bdd7905afa67b7758caa95e7b702823a6550fe076542362d8f269a5265e3",
+    "native/mimir/tests/text.cpp": "a96f3ddd6e37b45d9f7d61cb22f229c301ce9b116da36e593a3df5c9801cc6ff",
+    "native/mimir/tests/text_parity.py": "7848927df373e5e1be8d6539df889d256f554b55c58891f052c5e8c42f1a98f1",
+    "native/mimir/tests/text_reference.py": "b241d528a1326cb3dbaf9f12351fe996a9dd9d74947aa57e178e292d05269bc1",
+    "native/mimir/text.cpp": "d85641b43f99d62cf1b744c885b7816e4de8c7cd727323be346925fb38839c43",
+    "native/mimir/tools/chat.cpp": "fb34c8f116072068f3f5d167a53dc4f8ac2e800dcbad26ccfc03f4ec3832ccc1",
+    "native/mimir/tools/model.h": "a728fa9ec9507dc8b5174def533f0d683b5a370222abf215f0d530de32b5aba1",
+    "native/mimir/utf8.h": "a728747b8b1b25337c9d5ceccf6cd0ea51a940d3b5eabc6dcb683ec163457653",
+    "scripts/prefixlm_comparison/requirements.lock": "39d98e9c6cb2f32ca56c636afeccf440bc611f86c4e1ed7deaca4f938df56657"
+  },
+  "binary_sha256": {
+    "logs/mimir-runtime/build/bin/mimir-chat": "f8a47aecc1562226c4e9c82237e4fadf39b14392074c20cf467298630b7c9465",
+    "logs/mimir-runtime/build/bin/mimir-text-tests": "14683af4485e9ec5bde474ed383d5f543842a21f81d8bd2f4cad890dfa133755",
+    "logs/mimir-runtime/ubsan/bin/mimir-chat": "50c702cac1a9f78458e56535d5811660268df8f72ad4119a86b239c8f4eed7ec"
+  },
+  "limitations": [
+    "Local ASan hangs before main, including empty program; not passed.",
+    "Remote Linux CI configured but not executed.",
+    "Correctness cases are not exhaustive Unicode or performance validation.",
+    "Earlier initial logs/mimir-chat/mimir-f32.gguf superseded by mimir-text-f32.gguf."
+  ]
+}

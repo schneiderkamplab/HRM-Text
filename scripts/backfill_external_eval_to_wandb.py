@@ -39,6 +39,18 @@ def collect_euroeval(root: Path) -> dict[str, float]:
     return row
 
 
+def resolve_euroeval_root(root: Path, step: int) -> Path:
+    """Recover only duplicated checkpoint suffixes, never a campaign-wide root."""
+    if not root.exists() and root.name == root.parent.name:
+        if root.name.startswith(("step_", "epoch_")):
+            root = root.parent
+    for path in root.glob("**/merged_metrics.json"):
+        recorded_step = load_metrics(path).get("euroeval/train_step")
+        if step and recorded_step is not None and recorded_step != step:
+            raise ValueError(f"EuroEval checkpoint mismatch: {path}: {recorded_step} != {step}")
+    return root
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", required=True)
@@ -84,6 +96,7 @@ def main() -> None:
         help="Optional explicit W&B history step. Omit when backfilling into an active run.",
     )
     args = parser.parse_args()
+    args.euroeval_root = resolve_euroeval_root(args.euroeval_root, args.step)
     atomic_v3_averages = args.atomic_v3_averages or (
         args.averages_only
         and args.average_scope == "all"

@@ -4,6 +4,8 @@
 
 ## Operations
 
+* [Benchmark Charts](benchmark-charts.md) - Tracked chart builders, score snapshot, and historical chart definitions.
+
 * [Current State](current-state.md) - Local repository state, active operations, and verified commands.
 * [Open Issues](open-issues.md) - Known blockers, risks, and future improvements.
 
@@ -68,6 +70,8 @@
 
 ## Model and Runtime
 
+* [XL DFM11 Epoch Ten Resume](dfm11-xl-epoch10-resume.md) - Transfer the 2,482,084-step XL endpoint and continue the same run with a 50K LR cooldown.
+
 * [Model Architecture](model-architecture.md) - HRM/CRM variants, checkpoint formats, serving, and resume behavior.
 * [FlashAttention on B200](flashattention-b200.md) - NVIDIA B200 attention and CUDA integration reference.
 * [CUDA 13.2 FA4/Triton Recovery](hrm-cu132-fa4-triton-recovery.md) - Reproducible evaluation-runtime recovery after CUDA/compiler loss.
@@ -82,3 +86,5 @@
 * [FlashAttention B200 Records](flashattention-b200/) - Focused platform and build findings.
 * [Model-Architecture Records](model-architecture/) - Focused architecture and runtime concepts.
 * [Original-L Reproduction Records](original-l-reproduction/) - Focused reproduction procedures and observations.
+
+* [Linux PrefixLM qualification](linux-prefixlm-qualification.md) - Linux test environment, evidence, and acceptance gates.
