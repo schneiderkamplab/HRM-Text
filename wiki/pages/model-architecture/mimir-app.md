@@ -581,3 +581,46 @@ from HF `danish-foundation-models/DFM-Mimir-GGUF` revision
 `4364aaa61279c187b7cd202375915ea962b79afb`. Includes model selection,
 official discovery and user-specified third-party repositories. Packaging and
 publication verification are pending below.
+
+
+0.1.2 validation completed locally and in
+[Linux/Windows CI 35585590918](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35585590918)
+for source `33875dcdee09736c6e987dd5dc9d5ddc51333ec2`: all 46 app tests and
+analysis passed; CI also passed native fallback/compaction tests. macOS ARM64,
+Android ARM64 and iOS simulator builds passed. The mounted DMG passed image,
+signature and corrected-model checks, plus real-model Metal/headless API tests
+(normal/streaming, seeds, concurrency, overflow, disconnect recovery, shutdown).
+Linux/Windows bundles have verified per-file/model hashes and source revisions;
+Linux executable permissions and Windows 0.1.2.4 executable version were checked.
+All four packages passed feedback audits; Android signature, ARM64 packaging and
+16 KiB ZIP alignment passed. No physical Android Vulkan or Linux/Windows
+clean-host real-model/GPU qualification is claimed. Packaging macOS requires an
+absolute `--dart` path because server compilation changes its working directory.
+
+Local artifacts: `logs/packages/release-0.1.2/`; evidence is in
+`logs/release-0.1.2-{tests,analyze,packaged-api,archives-verify,package-audits}.log`.
+
+
+### 0.1.2 publication completed, 2026-09-21
+
+The pending-publication status above is **superseded**. All four bundled-weight
+packages and SHA-256 sidecars are public in
+[DFM Mimir 0.1.2](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.2).
+Tag `dfm-mimir-v0.1.2` resolves to package source
+`33875dcdee09736c6e987dd5dc9d5ddc51333ec2`; the release is public, non-prerelease
+and marked latest. GitHub asset sizes and SHA-256 digests matched all eight local
+files. The earlier 0.1.0/0.1.1 downloads remain available in the previous release.
+
+A laptop network/DNS interruption terminated the first Linux/Windows upload;
+GitHub release uploads required restarting those whole files. The retry succeeded.
+macOS/Android were briefly published first with explicit pending notes; final
+notes now list all four completed downloads and validation evidence. Publication
+verification is recorded in `logs/release-0.1.2-publication.log` and
+`logs/release-0.1.2-checksums.txt`.
+
+```text
+cc7b659eb653eb85820d46e5c320cf2a5e430e3646b22ddfac84e7b5b668b9c1  dfm-mimir-0.1.2-macos-arm64.dmg
+8f7980cbc4cdd4d8e58fc0eb32ad3659bf2ca2746fd82cea4dd7684ec2222378  dfm-mimir-0.1.2-android-arm64.apk
+5c1b0cdb3bbc24d7c2c976d288fa3efcf29325e04859064578762d8702871098  dfm-mimir-0.1.2-linux-x64.tar.gz
+85cd9b17651a6a9018976a6b475120ed626ca82d8f580bc334954c50477af744  dfm-mimir-0.1.2-windows-x64.zip
+```

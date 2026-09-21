@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Published and verified [all four 0.1.2 packages](pages/model-architecture/mimir-app.md#012-publication-completed-2026-09-21), with corrected official Q4_K_M weights, 46 passing tests, CI/native/package evidence and matching remote hashes.
+
 - 2026-09-21: Prepared [0.1.2 packages](pages/model-architecture/mimir-app.md#012-package-preparation-2026-09-21) with corrected official Q4_K_M bundled weights.
 
 - 2026-09-21: Added [user-specified third-party HF repositories](pages/model-architecture/mimir-app.md#explicit-third-party-repository-selection-2026-09-21) as local opt-in exceptions to official model discovery and download admission.
