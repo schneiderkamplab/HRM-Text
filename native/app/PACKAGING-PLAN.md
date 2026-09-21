@@ -170,3 +170,15 @@ when acceleration is absent or a recoverable accelerator failure is injected.
 - [Flutter supported platforms](https://docs.flutter.dev/reference/supported-platforms).
 - [llama.cpp build/backends](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md).
 - [Play Asset Delivery](https://developer.android.com/guide/playcore/asset-delivery).
+
+
+## Release descriptions for every version
+
+Every patch, minor and major release must have self-contained user instructions,
+not just changes since the last release. Follow the
+[release-description policy](releases/README.md) and
+[coverage template](releases/TEMPLATE.md). Store the published text in
+`releases/VERSION.md`; verify it against the shipped source and artifacts, then
+read the GitHub description back after publishing. Include API/headless setup,
+model/context controls, network/feedback consent, installation and platform limits
+for that version. Historical notes must not claim subsequently added features.

@@ -660,3 +660,23 @@ and limitations; per-platform headless commands; feedback consent/publication
 choices; and preserved provenance, validation and checksums. Examples/UI labels
 were checked against the shipped source and API guide. Publishing this description
 does not change any package, checksum, tag or release status.
+
+
+### Release-description policy for all versions, 2026-09-21
+
+The self-contained description requirement applies to every future patch, minor
+and major release, including 0.1.3+, 0.2.x and later. The
+[release policy](../../../native/app/releases/README.md),
+[coverage template](../../../native/app/releases/TEMPLATE.md), and
+[packaging plan](../../../native/app/PACKAGING-PLAN.md#release-descriptions-for-every-version)
+make this a preparation/publishing requirement, not a promise to publish future
+versions automatically. Maintain each exact body in `native/app/releases/VERSION.md`
+and verify it against that release's source and artifacts, including unchanged
+features and restrictions.
+
+[0.1.1's complete description](../../../native/app/releases/0.1.1.md) now covers
+installation, local GGUF/profile import, context/compaction/MixedLM, API setup and
+examples, headless commands, feedback/privacy and original validation/checksums.
+It was checked against source `1fa33a1`; it does not claim the later HF catalog or
+corrected bundled tokenizer. Updating the GitHub description preserves release
+assets, checksums, tag target and visibility.
