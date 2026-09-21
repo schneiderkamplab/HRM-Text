@@ -13,6 +13,7 @@ parser.add_argument('profile')
 parser.add_argument('device', nargs='?', default='auto')
 parser.add_argument('--mixed-lm', action='store_true')
 parser.add_argument('--report')
+parser.add_argument('--compaction-stress', action='store_true')
 args = parser.parse_args()
 measurements = []
 lib = ctypes.CDLL(args.library)
@@ -48,7 +49,10 @@ def run(command, stop_on=None):
                 measurements.append({'prompt': command['prompt'], 'historyMessages': len(command.get('history', [])),
                                      'firstTokenSeconds': first_token, 'totalSeconds': time.monotonic() - started,
                                      'reusedPrefixTokens': result.get('reusedPrefixTokens', 0),
-                                     'text': result.get('text'), 'cancelled': result.get('cancelled', False)})
+                                     'text': result.get('text'), 'compactedPrompt': result.get('compactedPrompt'),
+                                     'preparedTokens': next((e['tokens'] for e in events if e['type'] == 'prepared'), None),
+                                     'summaryPasses': sum(e['type'] in ('summary', 'promptSummary') and e.get('text') == '' for e in events),
+                                     'cancelled': result.get('cancelled', False)})
             return events
         events.append(event)
         if event['type'] == stop_on:
@@ -100,6 +104,36 @@ try:
     full += [{'role': 'user', 'content': reply['prompt']}, {'role': 'assistant', 'content': result['text']}]
     after = next(e for e in run(dict(reply, history=full, memory=result['memory'])) if e['type'] == 'reply')
     assert bool(after['reusedPrefixTokens']) == args.mixed_lm, after
+    if args.compaction_stress:
+        oversized = ('Rejsen går til Odense. Freja ønsker vegetarisk frokost. Husk fredag klokken 14. æøå 😀\n' * 50 +
+                     'Hvilken by skal Freja besøge? Svar kort på dansk.')
+        events = run(dict(reply, prompt=oversized, budget=128))
+        assert not any(e['type'] == 'error' for e in events), events
+        compacted = next(e for e in events if e['type'] == 'reply')
+        assert compacted['compactedPrompt'] and not compacted['cancelled'], compacted
+        assert next(e for e in events if e['type'] == 'prepared')['tokens'] + 128 <= 1024
+        assert len([e for e in events if e['type'] == 'promptSummary' and e['text'] == '']) > 1
+        continuation = [{'role': 'user', 'content': oversized, 'compactedContent': compacted['compactedPrompt']},
+                        {'role': 'assistant', 'content': compacted['text']}]
+        counted = run({'op': 'count', 'history': continuation})
+        assert counted[0]['tokens'] < 1024, counted
+        assert run({'op': 'count', 'history': continuation, 'compact': False})[0]['tokens'] > 1024
+        continued = run(dict(reply, history=continuation))
+        assert not any(e['type'] in ('error', 'promptSummary') for e in continued), continued
+        disabled = run(dict(reply, prompt=oversized, compact=False))
+        assert any(e['type'] == 'error' for e in disabled)
+        assert not any(e['type'] == 'compacting' for e in disabled)
+        old = [{'role': 'user', 'content': oversized}, {'role': 'assistant', 'content': 'Odense.'}]
+        old_events = run(dict(reply, history=old))
+        assert not any(e['type'] == 'error' for e in old_events), old_events
+        old_reply = next(e for e in old_events if e['type'] == 'reply')
+        assert old_reply['memory']['covered'] == 2
+        assert next(e for e in old_events if e['type'] == 'prepared')['tokens'] + 8 <= 1024
+        stopped = run(dict(reply, prompt=oversized), 'promptSummary')
+        stopped_reply = next(e for e in stopped if e['type'] == 'reply')
+        assert stopped_reply['cancelled'] and stopped_reply['compactedPrompt'] is None
+        assert next(e for e in run(reply) if e['type'] == 'reply')['text']
+        print('PASS: oversized prompt, reusable prompt metadata, oversized old turn, disabled mode, cancellation/recovery')
     print('PASS: devices, load, template generation, streaming, cancellation/recovery, streamed compaction, cache lifecycle')
     assert lib.mimir_submit(engine, json.dumps(dict(reply, budget=512, prompt='Skriv en lang historie om en rejse gennem Danmark.')).encode()) == 1
     deadline = time.monotonic() + 60

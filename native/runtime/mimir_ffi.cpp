@@ -41,7 +41,10 @@ void ensure_backends(const Json & command) {
 }
 std::vector<mimir::Message> history(const Json & command) {
     std::vector<mimir::Message> out;
-    for (const auto & m : command.value("history", Json::array())) out.push_back({m.at("role"),m.at("content")});
+    for (const auto & m : command.value("history", Json::array())) {
+        const bool shortened = command.value("compact", true) && command.value("op", "") != "completion" && m.contains("compactedContent");
+        out.push_back({m.at("role"), shortened ? m.at("compactedContent") : m.at("content")});
+    }
     return out;
 }
 mimir::compaction::Memory memory(const Json & command) {
@@ -142,18 +145,20 @@ struct Engine {
         if(budget<1 || budget>=context) throw std::runtime_error("Invalid reply budget.");
         auto prepared=compact?mimir::compaction::compact(*chat,*codec,system,full,previous,prompt,context,budget,
             [&]{return cancelled.load();},[&]{emit({{"type","compacting"}});},
-            [&](const mimir::compaction::Memory & m){emit({{"type","summary"},{"text",m.summary},{"covered",m.covered}});})
-            :mimir::compaction::PreparedHistory{full,previous,false};
+            [&](const mimir::compaction::Memory & m){emit({{"type","summary"},{"text",m.summary},{"covered",m.covered}});},
+            [&](const std::string & text){emit({{"type","promptSummary"},{"text",text}});})
+            :mimir::compaction::PreparedHistory{full,previous,false,prompt};
         chat->restore_history(prepared.messages,mixed_lm);
-        auto input=prepared.messages;if(!system.empty()) input.insert(input.begin(),{"system",system});input.push_back({"user",prompt});
+        auto input=prepared.messages;if(!system.empty()) input.insert(input.begin(),{"system",system});input.push_back({"user",prepared.prompt});
         emit({{"type","prepared"},{"tokens",codec->prepare(input).tokens.size()}});
         if(cancelled || prepared.cancelled) chat->request_cancel();
-        auto result=chat->reply(prompt,budget,[&](const std::string & t){emit({{"type","token"},{"text",t}});});
+        auto result=chat->reply(prepared.prompt,budget,[&](const std::string & t){emit({{"type","token"},{"text",t}});});
         const bool stopped=cancelled || result.finish==mimir::Finish::cancelled;
         if(result.status!=mimir::Status::ok && !stopped) throw std::runtime_error(result.status==mimir::Status::capacity?
             "Conversation and reply exceed context. Increase context, reduce reply budget or enable compaction.":"Native generation failed.");
         emit({{"type","reply"},{"text",result.text},{"cancelled",stopped},{"limited",result.finish==mimir::Finish::length},
             {"reusedPrefixTokens",result.reused_tokens},
+            {"compactedPrompt",!stopped && prepared.prompt!=prompt?Json(prepared.prompt):Json(nullptr)},
             {"memory",!stopped && prepared.memory.covered?Json{{"summary",prepared.memory.summary},{"covered",prepared.memory.covered}}:Json(nullptr)}});
         if(!mixed_lm || stopped) chat->recover();
     }

@@ -34,8 +34,8 @@ jobs:
         shell: bash
         run: |
           cmake -S native/runtime -B logs/policy -DMIMIR_BUILD_TESTS=ON -DGGML_METAL=OFF -DGGML_OPENMP=OFF -DLLAMA_CURL=OFF
-          cmake --build logs/policy --config Release --target mimir-backend-policy-tests --parallel 2
-          ctest --test-dir logs/policy -C Release -R backend-policy --output-on-failure
+          cmake --build logs/policy --config Release --target mimir-backend-policy-tests mimir-compaction-tests --parallel 2
+          ctest --test-dir logs/policy -C Release -R "backend-policy|compaction-planner" --output-on-failure
       - name: Prepare import-only asset for Flutter tests
         run: python -c "from pathlib import Path; Path('native/app/assets/model.gguf').touch()"
       - name: Resolve Flutter dependencies

@@ -425,3 +425,43 @@ Local artifact: `logs/packages/android-startup/dfm-mimir-0.1.1-android-arm64.apk
 SHA-256: `7b0b40088c9905748c4f059b87381e61dc5f589b729405a8cf29d59f7d06771c`.
 Screenshots: `logs/android-startup/{startup,settings,reopened}.png`.
 The public 0.1.0 assets were not modified.
+
+### Chunked prompt/history compaction — 2026-09-21
+
+- Clean Flutter analysis and **27 tests passed**, including prompt metadata archive
+  round-trip, original transcript preservation, streamed previews, cancellation
+  rollback, malformed metadata rejection, and summary-visibility UI behavior.
+- Deterministic native planner tests pass with AddressSanitizer and
+  UndefinedBehaviorSanitizer. They cover exact source-byte coverage for long Danish
+  text/emoji, bounded inference requests, multi-turn packing, an oversized historical
+  turn, reply reservation, 75% headroom, cancellation before/during reduction,
+  empty/error summaries, excessive system overhead, and no-gain rollback.
+- Real Q4_K_M Mimir with Metal, context 1024: native smoke suite passed with both
+  exact PrefixLM and MixedLM, including oversized new prompts and old turns,
+  shortened-prompt reuse/counts, disabled compaction, streamed summaries, follow-up
+  replies, cancellation recovery and shutdown. Original text uses Mimir's GGUF
+  template for every model request. The 4,349-character Danish prompt produced
+  `Freja skal besøge Odense.` after retaining its original opening/ending.
+- An earlier fully summarized version incorrectly answered Asgård. The successful
+  fixture does not establish general summary fidelity; the UI explicitly describes
+  possible detail loss. Measurements are functional runs, not controlled benchmarks.
+- Existing Apple bridge compiled with the shared effective-prompt interface. Its
+  separate SwiftUI UI/persistence does not implement portable-app prompt metadata.
+
+Reproduce (repository root):
+
+```sh
+c++ -std=c++17 -fsanitize=address,undefined \
+  -I native/mimir/include -I llama.cpp/include -I llama.cpp/ggml/include \
+  native/mimir/tests/compaction.cpp -o /tmp/mimir-compaction-tests
+/tmp/mimir-compaction-tests
+python3 native/runtime/tests/smoke.py /path/to/MimirRuntime \
+  /path/to/mimir-q4_k_m.gguf native/app/assets/profile.json metal \
+  --compaction-stress --report /tmp/compaction.json
+# Add --mixed-lm to exercise cache reuse.
+```
+
+CMake target `mimir-compaction-tests` / CTest `compaction-planner` also run in
+Linux/Windows package CI. Local evidence: `logs/compaction-metal{,-mixed}.{log,json}`
+and `logs/compaction-apple-bridge-build.log`. Portable source version is 0.1.1+3;
+the published Android 0.1.1+2 asset has not been replaced as part of this change.

@@ -185,7 +185,9 @@ class _ChatViewState extends State<ChatView> {
           SelectableText(m['summary'] as String),
           const SizedBox(height: 8),
           Text(
-            'Summarizes ${(m['covered'] as int) ~/ 2} earlier turns. Full history is preserved; summaries may omit details.',
+            m['prompt'] == true
+                ? 'Shortening the current prompt. Original text is preserved; summaries may omit details.'
+                : 'Summarizes ${(m['covered'] as int) ~/ 2} earlier turns. Full history is preserved; summaries may omit details.',
             style: const TextStyle(fontSize: 11),
           ),
         ],
@@ -264,6 +266,22 @@ class _ChatViewState extends State<ChatView> {
     for (var i = 0; i < s.messages.length; i++) {
       final m = s.messages[i];
       children.add(ChatMessage(role: m['role'], content: m['content']));
+      if (s.showSummary && m['compactedContent'] != null) {
+        children.add(
+          ExpansionTile(
+            title: const Text('Shortened prompt used for generation'),
+            subtitle: const Text(
+              'Original text preserved above; details may be omitted.',
+            ),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: SelectableText(m['compactedContent'] as String),
+              ),
+            ],
+          ),
+        );
+      }
       if (s.summaryPosition == i + 1) children.add(summary());
     }
     if (s.messages.isNotEmpty && feedbackEndpoint.isNotEmpty) {

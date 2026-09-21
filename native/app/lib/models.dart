@@ -94,7 +94,13 @@ class Conversation {
     }
     for (var i = 0; i < c.messages.length; i++) {
       if (c.messages[i]['role'] != (i.isEven ? 'user' : 'assistant') ||
-          c.messages[i]['content'] is! String) {
+          c.messages[i]['content'] is! String ||
+          (c.messages[i].containsKey('compactedContent') &&
+              (i.isOdd ||
+                  c.messages[i]['compactedContent'] is! String ||
+                  (c.messages[i]['compactedContent'] as String)
+                      .trim()
+                      .isEmpty))) {
         throw const FormatException('Invalid conversation');
       }
     }

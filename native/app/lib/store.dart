@@ -540,6 +540,13 @@ class ChatStore extends ChangeNotifier {
                 'covered': e['covered'],
                 'position': c.messages.length,
               };
+            case 'promptSummary':
+              preview = {
+                'summary': e['text'],
+                'covered': 0,
+                'position': c.messages.length,
+                'prompt': true,
+              };
             case 'prepared':
               compacting = false;
               used = e['tokens'];
@@ -566,13 +573,23 @@ class ChatStore extends ChangeNotifier {
           c.memory = m;
         }
         c.messages.addAll([
-          {'role': 'user', 'content': prompt},
+          {
+            'role': 'user',
+            'content': prompt,
+            if (result['compactedPrompt'] != null)
+              'compactedContent': result['compactedPrompt'],
+          },
           {'role': 'assistant', 'content': result['text']},
         ]);
         c.updated = DateTime.now();
+        if (result['compactedPrompt'] != null) {
+          notice = 'Your prompt was shortened to fit the context. The original is preserved; summaries may omit details.';
+        }
         if (result['limited'] == true) {
-          notice =
-              'Reply reached the $reply-token limit. Increase the reply budget in settings.';
+          notice = [
+            ?notice,
+            'Reply reached the $reply-token limit. Increase the reply budget in settings.',
+          ].join(' ');
         }
       }
     } catch (e) {

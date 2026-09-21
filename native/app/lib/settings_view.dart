@@ -287,7 +287,10 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Automatically summarize older turns'),
+                title: const Text('Automatically compact context'),
+                subtitle: const Text(
+                  'Summarize older turns and shorten oversized prompts in chunks.',
+                ),
                 value: s.compact,
                 onChanged: s.busy ? null : (v) => s.setCompaction(enabled: v),
               ),

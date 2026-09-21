@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Added [bounded Mimir prompt/history compaction](pages/model-architecture/mimir-app.md#bounded-prompt-and-history-compaction--2026-09-21), retained original prompt metadata, and documented sanitizer, UI and real-model evidence plus summarization quality limits.
+
 - 2026-09-20: Implemented [optional Mimir feedback](pages/model-architecture/mimir-feedback.md), deployed private EU D1 intake, and recorded consent, single-build network permissions, team review and validation.
 
 - 2026-09-20: Renamed the portable app source directory to `native/app` and its knowledge page to [DFM Mimir App](pages/model-architecture/mimir-app.md); standardized product identities and fresh storage locations.

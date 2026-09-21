@@ -183,15 +183,15 @@ NSString * status_text(mimir::Status status) {
                         const int covered = int(preview.covered);
                         dispatch_async(dispatch_get_main_queue(), ^{ onSummary(text, covered); });
                     })
-                    : mimir::compaction::PreparedHistory{restored, previous, false};
+                    : mimir::compaction::PreparedHistory{restored, previous, false, cpp_text(prompt)};
                 chat->restore_history(prepared.messages);
                 auto input = prepared.messages;
                 if (!self->_system.empty()) { input.insert(input.begin(), {"system", self->_system}); }
-                input.push_back({"user", cpp_text(prompt)});
+                input.push_back({"user", prepared.prompt});
                 const int inputTokens = int(self->_codec->prepare(input).tokens.size());
                 dispatch_async(dispatch_get_main_queue(), ^{ onPrepared(inputTokens); });
                 if (self->_cancelled.load() || prepared.cancelled) { chat->request_cancel(); }
-                auto result = chat->reply(cpp_text(prompt), budget, [&](const std::string & text) {
+                auto result = chat->reply(prepared.prompt, budget, [&](const std::string & text) {
                     NSString * piece = [[NSString alloc] initWithBytes:text.data() length:text.size() encoding:NSUTF8StringEncoding];
                     dispatch_async(dispatch_get_main_queue(), ^{ onToken(piece ?: @""); });
                 });

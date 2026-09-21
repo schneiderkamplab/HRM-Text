@@ -337,3 +337,35 @@ GitHub reports both assets uploaded, with APK digest
 local artifact. Release notes recommend Android 0.1.1 and explain startup recovery,
 verification limits and source commit `4f2f475`. Desktop assets and the release's
 0.1.0 tag/public status remain unchanged; the older Android asset is retained.
+
+### Bounded prompt and history compaction — 2026-09-21
+
+The previous refusal to compact a single oversized turn or new prompt is
+**superseded** in portable app source version 0.1.1+3. Shared
+`native/mimir/include/mimir/compaction.h` uses a rolling reducer for both: pack whole
+user/assistant pairs, split oversized source at UTF-8/nearby whitespace boundaries,
+and include previous notes in each bounded request. Exact template/tokenizer counts
+include the system message and reserved summary/reply output. Chunk sizing also
+bounds temporary tokenizer input; every pass consumes source bytes. Periodic
+compaction starts above 90% occupancy and targets 75%, consuming further recent
+pairs when needed instead of stopping as soon as the request barely fits.
+
+The portable app preserves original message content and stores an optional
+`compactedContent` alongside a successfully answered user prompt. Only enabled chat
+compaction uses this metadata, including context counts; API completions and disabled
+compaction use originals. Visible prompt summaries stream and remain inspectable
+under the original message. Cancellation/errors commit neither shortened prompts nor
+partial history summaries. The Apple bridge consumes the shared effective prompt;
+its separate SwiftUI persistence/UI has not acquired this new metadata display.
+
+Early real-model testing found factual drift when replacing an entire request with
+notes (Odense became Asgård). Prompt compaction now retains the original opening and
+ending when space permits; the same Danish fixture answered Odense correctly with
+exact PrefixLM and MixedLM. This is limited evidence, not a fidelity guarantee.
+System instructions are never compressed. Insufficient fixed overhead produces an
+explicit error; arbitrarily large inputs require multiple passes and can be slow.
+
+See [app validation](../../../native/app/VALIDATION.md) for planner/sanitizer, model,
+and UI tests. The Linux/Windows package workflow now includes the deterministic
+compaction planner suite. Public release assets have not yet been refreshed for
+this compaction feature; the previously uploaded Android 0.1.1+2 is the startup fix.

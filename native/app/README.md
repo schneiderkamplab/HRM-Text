@@ -25,6 +25,28 @@ backend or limits. Changing backend after initialization also requires force-sto
 and reopen, because the native backend registry is process-global. Explicit saved
 limits are retained; automatic memory-based defaults are disabled on Android.
 
+## Oversized prompts and context compaction
+
+**Automatically compact context** handles both old history and a new prompt that
+cannot fit with the reply budget. It packs complete turns into bounded summary
+requests, splitting oversized turns or prompts at UTF-8 boundaries when needed.
+Every inference request uses the model's chat template and tokenizer for sizing.
+Regular compaction starts above 90% occupancy (including the reply reservation)
+and aims for 75%, retaining recent turns verbatim when that target permits.
+
+The original prompt stays in the transcript. Its shortened form is saved separately
+and reused for follow-up context; **Show compaction summary in chat** reveals it
+under the original message. Summaries stream while Mimir is compacting. Cancellation
+or failure keeps the original draft and previously committed history. Turning
+compaction off uses the original text again and can therefore exceed context.
+
+Compaction is lossy and can require several model passes. Prompt reduction retains
+the original opening and ending when they fit, but cannot guarantee preservation
+of every detail. System instructions are never summarized; if they and the reply
+reservation leave insufficient space, the app reports an error. The stateless
+OpenAI-compatible API continues to reject oversized requests; it does not silently
+rewrite callers' messages.
+
 ## Build on Apple Silicon
 
 Prerequisites used: Flutter **3.47.5** / Dart **3.13.4**, Xcode **27.0**, CMake,
