@@ -10,6 +10,11 @@ bool isOfficialMimirGgufRepository(Object? repository) {
       parts.last.contains('gguf');
 }
 
+bool isHfRepositoryId(String repository) =>
+    RegExp(r'^[a-zA-Z0-9][a-zA-Z0-9_.-]*/[a-zA-Z0-9][a-zA-Z0-9_.-]*$')
+        .hasMatch(repository) &&
+    !repository.contains('..');
+
 class DiscoveryPage {
   final Object? data;
   final Uri? next;
@@ -50,69 +55,81 @@ class HfModelDiscovery {
       }),
     )) {
       final repo = model['id'] as String;
-      final parts = repo.split('/');
       if (!isOfficialMimirGgufRepository(repo)) {
         continue;
       }
-      repositories.add(repo);
-      final info =
-          (await fetch(Uri.https('huggingface.co', '/api/models/$repo'))).data
-              as Map;
-      final revision = info['sha'] as String;
-      if (!RegExp(r'^[a-f0-9]{40}$').hasMatch(revision)) {
-        throw const FormatException('HF did not provide an immutable revision');
+      await discoverRepository(repo, fallbackProfile);
+    }
+  }
+
+  Future<void> discoverRepository(
+    String repo,
+    Json fallbackProfile, {
+    bool userSupplied = false,
+  }) async {
+    if (!isHfRepositoryId(repo)) {
+      throw const FormatException('Use a Hugging Face ID: owner/repository');
+    }
+    final parts = repo.split('/');
+    repositories.add(repo);
+    final info =
+        (await fetch(Uri.https('huggingface.co', '/api/models/$repo'))).data
+            as Map;
+    final revision = info['sha'] as String;
+    if (!RegExp(r'^[a-f0-9]{40}$').hasMatch(revision)) {
+      throw const FormatException('HF did not provide an immutable revision');
+    }
+    await for (final file in _pages(
+      Uri.https('huggingface.co', '/api/models/$repo/tree/$revision', {
+        'recursive': 'true',
+        'limit': '1000',
+      }),
+    )) {
+      final name = file['path'] as String;
+      if (file['type'] != 'file' || !name.toLowerCase().endsWith('.gguf')) {
+        continue;
       }
-      await for (final file in _pages(
-        Uri.https('huggingface.co', '/api/models/$repo/tree/$revision', {
-          'recursive': 'true',
-          'limit': '1000',
-        }),
-      )) {
-        final name = file['path'] as String;
-        if (file['type'] != 'file' || !name.toLowerCase().endsWith('.gguf')) {
-          continue;
-        }
-        final hash = (file['lfs'] as Map?)?['oid'];
-        final bytes = file['size'];
-        String? reason;
-        if (hash is! String ||
-            !RegExp(r'^[a-f0-9]{64}$').hasMatch(hash) ||
-            bytes is! int ||
-            bytes <= 0) {
-          reason = 'HF has not supplied a SHA-256 and size for verified downloading.';
-        } else if (RegExp(
-          r'-\d{5}-of-\d{5}\.gguf$',
-          caseSensitive: false,
-        ).hasMatch(name)) {
-          reason = 'Split GGUF: downloading and loading a shard set is not yet supported.';
-        }
-        if (reason != null) {
-          unavailable.add({
-            'repo': repo,
-            'file': name,
-            'bytes': bytes,
-            'reason': reason,
-          });
-          continue;
-        }
-        artifacts.add({
-          'id': hash,
-          'name': '${parts.last} · $name',
+      final hash = (file['lfs'] as Map?)?['oid'];
+      final bytes = file['size'];
+      String? reason;
+      if (hash is! String ||
+          !RegExp(r'^[a-f0-9]{64}$').hasMatch(hash) ||
+          bytes is! int ||
+          bytes <= 0) {
+        reason =
+            'HF has not supplied a SHA-256 and size for verified downloading.';
+      } else if (RegExp(
+        r'-\d{5}-of-\d{5}\.gguf$',
+        caseSensitive: false,
+      ).hasMatch(name)) {
+        reason = 'Split GGUF: downloading and loading a shard set is not yet supported.';
+      }
+      if (reason != null) {
+        unavailable.add({
           'repo': repo,
-          'revision': revision,
           'file': name,
           'bytes': bytes,
-          'source': 'hf-discovery',
-          'profile': {
-            ...fallbackProfile,
-            'name': 'Unverified Mimir discovery profile',
-          },
-          'qualification':
-              'Official DFM repository · automatically discovered. '
-              'Not yet app-qualified; uses conservative Mimir v1 memory/context defaults. '
-              'New architectures may need an app update. Import a model-specific profile if needed.',
+          'reason': reason,
         });
+        continue;
       }
+      artifacts.add({
+        'id': hash,
+        'name': '${parts.last} · $name',
+        'repo': repo,
+        'revision': revision,
+        'file': name,
+        'bytes': bytes,
+        'source': 'hf-discovery',
+        'profile': {
+          ...fallbackProfile,
+          'name': 'Unverified Mimir discovery profile',
+        },
+        'qualification':
+            '${userSupplied ? 'User-specified repository' : 'Official DFM repository · automatically discovered'}. '
+            'Not yet app-qualified; uses conservative Mimir v1 memory/context defaults. '
+            'New architectures may need an app update. Import a model-specific profile if needed.',
+      });
     }
   }
 }

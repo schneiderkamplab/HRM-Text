@@ -551,3 +551,22 @@ optional. No app packages were rebuilt for this source/catalog change.
 Validation: Flutter analysis clean; all 44 app tests pass, including repository
 filtering, offline cache restoration and blocked direct downloads. OKF validation
 still reports the two pre-existing benchmark-charts index/frontmatter errors.
+
+
+### Explicit third-party repository selection, 2026-09-21
+
+The official-only policy now has a user-controlled exception: Models accepts
+additional public HF `owner/repository` IDs, persists them, and discovers GGUFs
+from those exact repositories on explicit refresh. IDs need neither name keyword.
+Automatic official discovery and remote curated catalogs retain their existing
+restriction; a remote entry cannot grant itself permission. Cached entries and
+download admission accept the user's saved exceptions. Removing an exception
+removes its listings but preserves installed files. Adding an ID does not enable
+networking. Discovered third-party artifacts retain checksum/revision checks,
+split-file restrictions and conservative, unverified model profiles.
+See [model library usage](../../../native/app/MODELS.md#user-specified-hugging-face-repositories-2026-09-21).
+
+Validation: all 46 app tests pass and Flutter analysis is clean. Coverage includes
+UI add/remove, offline persistence of IDs and cached models, invalid IDs,
+case-insensitive deduplication, verified downloads, failed lookup fallback and
+revoked download access. The two existing benchmark-charts OKF errors remain.

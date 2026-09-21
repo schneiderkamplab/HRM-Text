@@ -162,7 +162,10 @@ void main() {
       return Response(Stream.value(body), body.length);
     }
 
-    final official = {...descriptor, 'repo': 'danish-foundation-models/MIMIR-GGUF'};
+    final official = {
+      ...descriptor,
+      'repo': 'danish-foundation-models/MIMIR-GGUF',
+    };
     List<Response> discovery() => [
       reply([
         {'id': official['repo']},
@@ -272,33 +275,58 @@ void main() {
       expect(await Directory('${dir.path}/models').list().toList(), isEmpty);
     },
   );
-  test('catalog filters old or remote entries with the same official policy', () {
-    final library = ModelLibrary();
-    library.readCatalog(jsonEncode({
-      'version': 1,
-      'models': [
-        {...descriptor, 'repo': 'danish-foundation-models/MiMiR-GgUf'},
-        {...descriptor, 'repo': 'noctrex/DFM-Mimir-GGUF'},
-        {...descriptor, 'repo': 'danish-foundation-models/DFM-Mimir'},
-        {...descriptor, 'repo': 'danish-foundation-models/DFM-GGUF'},
-      ],
-    }));
-    expect(library.catalog.single.data['repo'], 'danish-foundation-models/MiMiR-GgUf');
-  });
+  test(
+    'catalog filters old or remote entries with the same official policy',
+    () {
+      final library = ModelLibrary();
+      library.readCatalog(
+        jsonEncode({
+          'version': 1,
+          'models': [
+            {...descriptor, 'repo': 'danish-foundation-models/MiMiR-GgUf'},
+            {...descriptor, 'repo': 'noctrex/DFM-Mimir-GGUF'},
+            {...descriptor, 'repo': 'danish-foundation-models/DFM-Mimir'},
+            {...descriptor, 'repo': 'danish-foundation-models/DFM-GGUF'},
+          ],
+        }),
+      );
+      expect(
+        library.catalog.single.data['repo'],
+        'danish-foundation-models/MiMiR-GgUf',
+      );
+    },
+  );
   test('stale discovery listings are filtered offline on restart', () async {
-    final store = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
+    final store = ChatStore(
+      engine: FakeEngine(),
+      directory: dir,
+      manualStartup: true,
+    );
     await store.initialize();
     final allowed = descriptor['repo'] as String;
     const excluded = 'noctrex/DFM-Mimir';
-    store.library.readCatalog(jsonEncode({'version': 1, 'models': [descriptor]}));
-    store.library.discovered = [allowed, excluded, 'danish-foundation-models/Mimir'];
+    store.library.readCatalog(
+      jsonEncode({
+        'version': 1,
+        'models': [descriptor],
+      }),
+    );
+    store.library.discovered = [
+      allowed,
+      excluded,
+      'danish-foundation-models/Mimir',
+    ];
     store.library.unavailable = [
       {'repo': allowed, 'file': 'split.gguf'},
       {'repo': excluded, 'file': 'split.gguf'},
     ];
     await store.save();
     await store.shutdown();
-    final reopened = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
+    final reopened = ChatStore(
+      engine: FakeEngine(),
+      directory: dir,
+      manualStartup: true,
+    );
     await reopened.initialize();
     expect(reopened.library.online, false);
     expect(reopened.library.discovered, [allowed]);
@@ -309,10 +337,134 @@ void main() {
   test('disallowed artifact cannot be downloaded directly', () async {
     final client = Client(Response(const Stream.empty(), 0));
     final library = ModelLibrary(clientFactory: () => client)..online = true;
-    await library.download(ModelArtifact({...descriptor, 'repo': 'noctrex/DFM-Mimir'}));
+    await library.download(
+      ModelArtifact({...descriptor, 'repo': 'noctrex/DFM-Mimir'}),
+    );
     expect(client.requests, 0);
     expect(library.error, contains('Only official'));
   });
+  test('explicit IDs permit verified discovery and download, removal revokes access', () async {
+    Response reply(Object data) {
+      final body = utf8.encode(jsonEncode(data));
+      return Response(Stream.value(body), body.length);
+    }
+
+    const repo = 'noctrex/DFM-Mimir';
+    final client = Client(
+      Response(Stream.value(bytes), bytes.length),
+      responses: [
+        reply({'version': 1, 'models': []}),
+        reply([]),
+        reply({'sha': 'a' * 40}),
+        reply([
+          {
+            'type': 'file',
+            'path': 'test.gguf',
+            'size': bytes.length,
+            'lfs': {'oid': descriptor['id']},
+          },
+        ]),
+      ],
+    );
+    final library = ModelLibrary(clientFactory: () => client)..directory = dir;
+    for (final invalid in [
+      'https://huggingface.co/a/b',
+      '../b',
+      'a/b/c',
+      'a',
+      '',
+    ]) {
+      expect(
+        () => library.setUserRepositories([invalid]),
+        throwsFormatException,
+      );
+    }
+    library.setUserRepositories([' $repo ', repo.toUpperCase()]);
+    expect(library.userRepositories, [repo]);
+    expect(library.online, false);
+    library.setOnline(true);
+    await library.refresh();
+    expect(library.error, isNull);
+    expect(client.requests, 4);
+    final artifact = library.catalog.single;
+    expect(artifact.data['qualification'], contains('User-specified'));
+    expect(artifact.data['revision'], 'a' * 40);
+    // The fake's response queue is no longer needed for the binary download.
+    client.responses!.add(Response(Stream.value(bytes), bytes.length));
+    await library.download(artifact);
+    expect(library.error, isNull);
+    expect(library.installed.single['id'], artifact.id);
+    // A failed custom lookup retains its cached model even if official discovery succeeds.
+    client.responses!.addAll([
+      reply({'version': 1, 'models': []}),
+      reply([]),
+      reply({'sha': 'invalid'}),
+    ]);
+    await library.refresh();
+    expect(library.error, contains(repo));
+    expect(library.catalog.single.id, artifact.id);
+    library.setUserRepositories([]);
+    expect(library.catalog, isEmpty);
+    expect(library.discovered, isEmpty);
+    expect(library.installed, hasLength(1));
+    final requests = client.requests;
+    await library.download(artifact);
+    expect(client.requests, requests);
+    expect(library.error, contains('explicitly added'));
+  });
+
+  testWidgets('user can add and remove an HF ID without enabling networking', (
+    tester,
+  ) async {
+    final store = ChatStore(
+      engine: FakeEngine(),
+      directory: dir,
+      manualStartup: true,
+    );
+    await tester.runAsync(store.initialize);
+    await tester.pumpWidget(MaterialApp(home: ModelLibraryView(store: store)));
+    await tester.tap(find.byTooltip('Add HF repository'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'noctrex/DFM-Mimir');
+    await tester.runAsync(() => tester.tap(find.text('Add')));
+    await tester.pumpAndSettle();
+    expect(store.library.userRepositories, ['noctrex/DFM-Mimir']);
+    expect(store.library.online, false);
+    expect(store.onlineFeedback, false);
+    store.library.readCatalog(
+      jsonEncode({
+        'version': 1,
+        'models': [
+          {
+            ...descriptor,
+            'repo': 'noctrex/DFM-Mimir',
+            'source': 'hf-discovery',
+          },
+        ],
+      }),
+    );
+    await tester.runAsync(store.save);
+    await tester.runAsync(store.shutdown);
+    final reopened = ChatStore(
+      engine: FakeEngine(),
+      directory: dir,
+      manualStartup: true,
+    );
+    await tester.runAsync(reopened.initialize);
+    expect(reopened.library.userRepositories, ['noctrex/DFM-Mimir']);
+    expect(reopened.library.catalog.single.data['repo'], 'noctrex/DFM-Mimir');
+    expect(reopened.library.online, false);
+    await tester.pumpWidget(
+      MaterialApp(home: ModelLibraryView(store: reopened)),
+    );
+    await tester.runAsync(
+      () => tester.tap(find.byTooltip('Remove repository')),
+    );
+    await tester.pumpAndSettle();
+    expect(reopened.library.userRepositories, isEmpty);
+    await tester.runAsync(reopened.shutdown);
+  });
+
   test('catalog validation rejects unpinned revisions and unsafe paths', () {
     expect(
       () => ModelArtifact({...descriptor, 'revision': 'main'}),

@@ -58,6 +58,33 @@ class ModelLibrary extends ChangeNotifier {
   List<ModelArtifact> catalog = [];
   List<Json> installed = [];
   List<String> discovered = [];
+  List<String> userRepositories = [];
+
+  bool allowsRepository(Object? repo) =>
+      isOfficialMimirGgufRepository(repo) ||
+      (repo is String &&
+          userRepositories.any((id) => id.toLowerCase() == repo.toLowerCase()));
+
+  void setUserRepositories(Iterable<String> repositories) {
+    if (_work != null) {
+      throw StateError('Wait for the current model operation to finish');
+    }
+    final normalized = <String, String>{};
+    for (final value in repositories) {
+      final id = value.trim();
+      if (!isHfRepositoryId(id)) {
+        throw const FormatException('Use a Hugging Face ID: owner/repository');
+      }
+      normalized.putIfAbsent(id.toLowerCase(), () => id);
+    }
+    userRepositories = normalized.values.toList();
+    catalog.removeWhere((a) => !allowsRepository(a.data['repo']));
+    discovered.removeWhere((repo) => !allowsRepository(repo));
+    unavailable.removeWhere((entry) => !allowsRepository(entry['repo']));
+    onChanged?.call();
+    notifyListeners();
+  }
+
   List<Json> unavailable = [];
   String? downloading, error;
   int received = 0;
@@ -71,7 +98,7 @@ class ModelLibrary extends ChangeNotifier {
       throw const FormatException('Unknown catalog version');
     }
     final entries = (json['models'] as List)
-        .where((e) => isOfficialMimirGgufRepository(e['repo']))
+        .where((e) => allowsRepository(e['repo']))
         .map((e) => ModelArtifact(Json.from(e)))
         .toList();
     if (entries.map((e) => e.id).toSet().length != entries.length) {
@@ -171,6 +198,8 @@ class ModelLibrary extends ChangeNotifier {
       _check();
       failures.add('Catalog update failed; retained cached entries: $e');
     }
+    final cachedFound = List<ModelArtifact>.of(found);
+    final cachedUnavailable = List<Json>.of(unavailable);
     final discovery = HfModelDiscovery(_page);
     try {
       await discovery.discover(
@@ -184,6 +213,48 @@ class ModelLibrary extends ChangeNotifier {
     } catch (e) {
       _check();
       failures.add('HF discovery failed; retained cached discoveries: $e');
+    }
+    for (final repo in userRepositories) {
+      if (isOfficialMimirGgufRepository(repo)) continue;
+      final custom = HfModelDiscovery(_page);
+      try {
+        await custom.discoverRepository(
+          repo,
+          Json.from(
+            jsonDecode(await rootBundle.loadString('assets/profile.json')),
+          ),
+          userSupplied: true,
+        );
+        found.removeWhere(
+          (a) => a.data['repo'].toString().toLowerCase() == repo.toLowerCase(),
+        );
+        found.addAll(custom.artifacts.map(ModelArtifact.new));
+        unavailable.removeWhere(
+          (a) => a['repo'].toString().toLowerCase() == repo.toLowerCase(),
+        );
+        unavailable.addAll(custom.unavailable);
+        if (!discovered.contains(repo)) discovered.add(repo);
+      } catch (e) {
+        _check();
+        found.removeWhere(
+          (a) => a.data['repo'].toString().toLowerCase() == repo.toLowerCase(),
+        );
+        unavailable.removeWhere(
+          (a) => a['repo'].toString().toLowerCase() == repo.toLowerCase(),
+        );
+        found.addAll(
+          cachedFound.where(
+            (a) =>
+                a.data['repo'].toString().toLowerCase() == repo.toLowerCase(),
+          ),
+        );
+        unavailable.addAll(
+          cachedUnavailable.where(
+            (a) => a['repo'].toString().toLowerCase() == repo.toLowerCase(),
+          ),
+        );
+        failures.add('$repo discovery failed; retained cached entries: $e');
+      }
     }
     _check();
     // Curated qualification/profile wins for duplicate content or the same file.
@@ -205,9 +276,9 @@ class ModelLibrary extends ChangeNotifier {
   });
 
   Future<void> download(ModelArtifact artifact) => _run(() async {
-    if (!isOfficialMimirGgufRepository(artifact.data['repo'])) {
+    if (!allowsRepository(artifact.data['repo'])) {
       throw const FormatException(
-        'Only official Mimir GGUF repositories are supported for downloading',
+        'Only official or explicitly added repositories are supported for downloading',
       );
     }
     downloading = artifact.id;

@@ -54,6 +54,38 @@ class ModelLibraryView extends StatelessWidget {
                     : library.refresh,
               ),
             ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Additional Hugging Face repositories'),
+              subtitle: const Text(
+                'Add an owner/repository ID to discover its GGUF files. '
+                'Third-party models are unverified and may not be compatible. '
+                'Adding an ID does not enable networking.',
+              ),
+              trailing: IconButton(
+                tooltip: 'Add HF repository',
+                icon: const Icon(Icons.add),
+                onPressed: library.refreshing || library.downloading != null
+                    ? null
+                    : () => showDialog<void>(
+                        context: context,
+                        builder: (_) => _RepositoryDialog(library: library),
+                      ),
+              ),
+            ),
+            for (final repo in library.userRepositories)
+              ListTile(
+                title: Text(repo),
+                trailing: IconButton(
+                  tooltip: 'Remove repository',
+                  icon: const Icon(Icons.remove_circle_outline),
+                  onPressed: library.refreshing || library.downloading != null
+                      ? null
+                      : () => library.setUserRepositories(
+                          library.userRepositories.where((id) => id != repo),
+                        ),
+                ),
+              ),
             if (library.error != null) Text(library.error!),
             if (store.notice != null) Text(store.notice!),
             Card(
@@ -138,12 +170,13 @@ class ModelLibraryView extends StatelessWidget {
             if (library.discovered.isNotEmpty) ...[
               const SizedBox(height: 16),
               Text(
-                'Official Mimir repositories',
+                'Discovered repositories',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const Text(
                 'GGUF files from danish-foundation-models repositories whose names '
-                'contain both “mimir” and “gguf” (case-insensitive) are added automatically on refresh. Discovery '
+                'contain both “mimir” and “gguf” (case-insensitive), plus your additional '
+                'repositories, are checked on refresh. Discovery '
                 'does not guarantee engine compatibility.',
               ),
               for (final file in library.unavailable)
@@ -193,5 +226,61 @@ class ModelLibraryView extends StatelessWidget {
         ],
       );
     },
+  );
+}
+
+class _RepositoryDialog extends StatefulWidget {
+  final ModelLibrary library;
+  const _RepositoryDialog({required this.library});
+
+  @override
+  State<_RepositoryDialog> createState() => _RepositoryDialogState();
+}
+
+class _RepositoryDialogState extends State<_RepositoryDialog> {
+  final controller = TextEditingController();
+  String? error;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void add() {
+    try {
+      widget.library.setUserRepositories([
+        ...widget.library.userRepositories,
+        controller.text,
+      ]);
+      Navigator.of(context).pop();
+    } catch (e) {
+      setState(() => error = e.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('Add Hugging Face repository'),
+    content: TextField(
+      controller: controller,
+      autofocus: true,
+      autocorrect: false,
+      decoration: InputDecoration(
+        labelText: 'owner/repository',
+        hintText: 'noctrex/DFM-Mimir',
+        errorText: error,
+        helperText: 'Then use “Check for newer models” to find GGUF files.',
+        helperMaxLines: 2,
+      ),
+      onSubmitted: (_) => add(),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.of(context).pop(),
+        child: const Text('Cancel'),
+      ),
+      TextButton(onPressed: add, child: const Text('Add')),
+    ],
   );
 }

@@ -218,3 +218,26 @@ Official automatic discovery also finds the new repository; curated metadata win
 for duplicate files. Refresh the catalog with model networking enabled to see them.
 Existing preview packages have not been rebuilt, and their bundled weights remain
 unchanged. Manual GGUF import can use the new files in those packages.
+
+
+## User-specified Hugging Face repositories (2026-09-21)
+
+In **Models → Additional Hugging Face repositories → +**, enter an HF ID such
+as `noctrex/DFM-Mimir`. IDs are saved locally, trimmed and deduplicated without
+regard to case. Adding an ID does not enable networking or download weights.
+With model networking enabled, **Check for newer models** discovers GGUF files
+from those exact public repositories, alongside the official catalog/discovery.
+These explicit IDs do not need Mimir or GGUF in their names. URLs, paths and
+revision suffixes are not accepted; private/gated authentication is not provided.
+
+This is an explicit-user exception to the official-only policy above. Remote
+catalog entries cannot add exceptions. Discovered files use pinned commits,
+SHA-256/size verification, download progress and the conservative unverified
+Mimir fallback profile. The user must select/download a file; repository
+selection does not imply architecture compatibility. Split files remain
+unavailable. A failed custom lookup retains that repository's cached entries
+and reports an error without discarding successful discoveries from others.
+
+Remove an ID with its remove button to stop discovering/downloading its files;
+already installed models remain usable. Automatic discovery and the curated
+catalog remain restricted to official repositories with both name keywords.
