@@ -380,3 +380,42 @@ Windows CI exposed a pending-save cleanup race in the Android settings widget
 test introduced with startup recovery. The widget test now disables disk persistence (already covered in ordinary async
 tests) and shuts down the store before cleanup. Real I/O must not depend on the
 widget test fake clock or an arbitrary delay.
+
+### Complete 0.1.1 preview refresh — 2026-09-21
+
+The earlier unpublished-compaction status is **superseded**. At the user's request,
+refreshed the [existing bundled-weights release](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.0)
+as **DFM Mimir 0.1.1 — bundled weights**. All four recommended downloads now use
+0.1.1 (build 3): macOS ARM64 DMG, Android ARM64 APK, Linux x64 tar.gz and Windows
+x64 ZIP. The Android startup-only 0.1.1+2 asset was replaced. Older 0.1.0 assets,
+the existing URL/tag and public non-prerelease status are retained. Notes clearly
+identify package source `1fa33a1`, chunked prompt/history compaction, the 50%
+occupancy target, Android recovery and remaining hardware/signing limits.
+
+[Linux/Windows CI 35562513915](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35562513915)
+succeeded for that source. Bundled the checked GGUF into both CI archives with
+`bundle_model.py`, verified all manifest/file/model hashes and source provenance,
+Linux executable permissions and Windows file version 0.1.1.3. These remain
+CPU-only builds, not clean-host real-model/GPU qualification. macOS packaging
+verified DMG integrity, signatures and bundled weights; the mounted DMG passed
+real headless API generation, streaming, seeded sampling, concurrency, overflow,
+disconnect recovery and shutdown. All packages passed the feedback bundle audit.
+For Linux tar.gz, extract the non-model files before auditing: the audit CLI accepts
+directories, ZIP and APK, not tar archives. Weights are verified independently.
+
+GitHub reported all four packages and four checksum sidecars uploaded. Remote sizes
+and SHA-256 digests matched their local files, including the replaced Android APK.
+
+```text
+18d49fbfdebd0e0a087a48b9050a66c9c01528fd5b8a1af4ef0d1218d3b06e68  dfm-mimir-0.1.1-macos-arm64.dmg
+a9e8b972e722a92d9831ea639bbc5afe4ac380ff6a2b0260033c53f85db4e066  dfm-mimir-0.1.1-linux-x64.tar.gz
+b5b02a90749dda760feb345cc5492f7860dc87f4d06dd5ff0e659f286ed90639  dfm-mimir-0.1.1-windows-x64.zip
+271fc01df15953945a519c97e31831c2434e6287b97a71f9ebe9ccb1d2d328e3  dfm-mimir-0.1.1-android-arm64.apk
+
+```
+
+Local artifacts: `logs/packages/release-0.1.1/` (desktop) and
+`logs/packages/compaction/` (Android). Evidence includes
+`logs/package-0.1.1-macos.log`, `logs/release-0.1.1-packaged-api.log`,
+`logs/release-0.1.1-{linux,windows}-verify.log`, and
+`logs/release-0.1.1-checksums.txt`. No distributable iOS package was published.
