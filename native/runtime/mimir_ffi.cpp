@@ -14,6 +14,31 @@
 #include "backend_loader.h"
 using Json = nlohmann::json;
 namespace {
+// Backend registration is process-global. On Android, avoid touching Vulkan at
+// all for a CPU session; changing driver policy requires a fresh process.
+void ensure_backends(const Json & command) {
+    static std::once_flag once;
+#ifdef __ANDROID__
+    static std::mutex initialization_mutex;
+    static bool initialized = false;
+    static bool cpu_only = true;
+    std::lock_guard<std::mutex> lock(initialization_mutex);
+    const bool requested_cpu = command.value("device", std::string("cpu")) == "cpu";
+    if (initialized && command.value("op", std::string()) == "load" && requested_cpu != cpu_only) {
+        throw std::runtime_error("Changing Android backend requires force-stopping and reopening DFM Mimir.");
+    }
+    std::call_once(once, [&] {
+        if (requested_cpu) setenv("GGML_DISABLE_VULKAN", "1", 1);
+        else unsetenv("GGML_DISABLE_VULKAN");
+        mimir::runtime::initialize_backends();
+        cpu_only = requested_cpu;
+        initialized = true;
+    });
+#else
+    (void) command;
+    std::call_once(once, [] { mimir::runtime::initialize_backends(); });
+#endif
+}
 std::vector<mimir::Message> history(const Json & command) {
     std::vector<mimir::Message> out;
     for (const auto & m : command.value("history", Json::array())) out.push_back({m.at("role"),m.at("content")});
@@ -136,7 +161,7 @@ struct Engine {
         for(;;) {
             Json c;{std::unique_lock<std::mutex> lock(mutex);wake.wait(lock,[&]{return closing||!commands.empty();});
                 if(closing) break;c=std::move(commands.front());commands.pop_front();}
-            try{static std::once_flag once;std::call_once(once,[]{mimir::runtime::initialize_backends();});execute(c);}catch(const std::exception & e){if(chat) chat->recover();emit({{"type","error"},{"message",e.what()}});}
+            try{ensure_backends(c);execute(c);}catch(const std::exception & e){if(chat) chat->recover();emit({{"type","error"},{"message",e.what()}});}
             // Clear busy before publishing completion, so the consumer can submit its next operation.
             busy=false;emit({{"type","done"}});
         }

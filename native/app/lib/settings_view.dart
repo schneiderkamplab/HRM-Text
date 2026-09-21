@@ -66,7 +66,9 @@ class _SettingsViewState extends State<SettingsView> {
                     child: const Text('Import Mimir GGUF…'),
                   ),
                   TextButton(
-                    onPressed: s.busy ? null : s.useBundled,
+                    onPressed: s.busy
+                        ? null
+                        : () => s.useBundled(loadModel: !s.manualStartup),
                     child: const Text('Use bundled model'),
                   ),
                 ],
@@ -119,13 +121,16 @@ class _SettingsViewState extends State<SettingsView> {
                 child: const Text('Import model profile…'),
               ),
               DropdownButtonFormField<String>(
+                isExpanded: true,
+                key: ValueKey(device),
                 initialValue: device,
                 decoration: const InputDecoration(labelText: 'Compute device'),
                 items: [
-                  const DropdownMenuItem(
-                    value: 'auto',
-                    child: Text('Automatic'),
-                  ),
+                  if (!s.manualStartup)
+                    const DropdownMenuItem(
+                      value: 'auto',
+                      child: Text('Automatic'),
+                    ),
                   if (device != 'auto' &&
                       !s.devices.any((d) => d['id'] == device))
                     DropdownMenuItem(
@@ -190,23 +195,74 @@ class _SettingsViewState extends State<SettingsView> {
                           },
                     child: const Text('Apply limits'),
                   ),
-                  TextButton(
-                    onPressed: s.busy
-                        ? null
-                        : () async {
-                            await s.setLimits(
-                              s.context,
-                              s.reply,
-                              auto: true,
-                              backend: device,
-                            );
-                            c.text = '${s.context}';
-                            r.text = '${s.reply}';
-                          },
-                    child: const Text('Use memory-based defaults'),
-                  ),
+                  if (!s.manualStartup)
+                    TextButton(
+                      onPressed: s.busy
+                          ? null
+                          : () async {
+                              await s.setLimits(
+                                s.context,
+                                s.reply,
+                                auto: true,
+                                backend: device,
+                              );
+                              c.text = '${s.context}';
+                              r.text = '${s.reply}';
+                            },
+                      child: const Text('Use memory-based defaults'),
+                    ),
                 ],
               ),
+              if (s.manualStartup) ...[
+                TextButton(
+                  onPressed: s.busy
+                      ? null
+                      : () async {
+                          final minimum = s.profile.number('minimumContext');
+                          final budget = s.profile.defaultReply(minimum);
+                          await s.setLimits(minimum, budget, backend: 'cpu');
+                          if (mounted) {
+                            setState(() {
+                              device = 'cpu';
+                              c.text = '$minimum';
+                              r.text = '$budget';
+                            });
+                          }
+                        },
+                  child: const Text('Use conservative CPU settings'),
+                ),
+                FilledButton(
+                  onPressed: s.busy
+                      ? null
+                      : () async {
+                          final contextTokens = int.tryParse(c.text),
+                              replyTokens = int.tryParse(r.text);
+                          if (contextTokens == null ||
+                              replyTokens == null ||
+                              s.profile.limitsError(
+                                    contextTokens,
+                                    replyTokens,
+                                  ) !=
+                                  null) {
+                            s.setNotice(
+                              'Enter valid context and reply limits before loading.',
+                            );
+                            return;
+                          }
+                          await s.setLimits(
+                            contextTokens,
+                            replyTokens,
+                            backend: device,
+                            reload: false,
+                          );
+                          await s.startModel();
+                        },
+                  child: const Text('Load model'),
+                ),
+                const Text(
+                  'Android starts without loading a model. Vulkan is experimental. If the app or device freezes, force-stop Mimir and reopen it to choose CPU and a smaller context. Switching backends after loading requires force-stop and reopen.',
+                ),
+              ],
               const Text(
                 'Automatic defaults use a memory estimate. Custom limits override that estimate; excessive context may fail to load or exhaust memory.',
               ),

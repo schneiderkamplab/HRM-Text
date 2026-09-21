@@ -325,6 +325,15 @@ class _ChatViewState extends State<ChatView> {
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
       child: Column(
         children: [
+          if (s.manualStartup && s.initialized && !s.ready && !s.busy)
+            FilledButton.icon(
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => SettingsView(store: s),
+              ),
+              icon: const Icon(Icons.tune),
+              label: const Text('Choose settings and load model'),
+            ),
           if (mobile && MediaQuery.viewInsetsOf(context).bottom > 0)
             Align(
               alignment: Alignment.centerRight,

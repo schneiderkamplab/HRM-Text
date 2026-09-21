@@ -15,8 +15,11 @@ import 'package:mimir_api/api/server.dart';
 class ChatStore extends ChangeNotifier {
   final InferenceEngine engine;
   Directory? directory;
-  ChatStore({InferenceEngine? engine, this.directory})
-    : engine = engine ?? NativeEngine();
+  final bool manualStartup;
+  String? _sessionDevice;
+  ChatStore({InferenceEngine? engine, this.directory, bool? manualStartup})
+    : manualStartup = manualStartup ?? Platform.isAndroid,
+      engine = engine ?? NativeEngine();
   List<Conversation> chats = [];
   String? selected, notice;
   String draft = '',
@@ -171,6 +174,29 @@ class ChatStore extends ChangeNotifier {
       }
       conversationsReady = true;
       notifyListeners();
+      if (manualStartup) {
+        // Do not even enumerate devices: registry construction can enter the GPU driver.
+        devices = [
+          {'id': 'cpu', 'name': 'CPU', 'backend': 'CPU'},
+          {
+            'id': 'vulkan',
+            'name': 'Vulkan (experimental)',
+            'backend': 'Vulkan',
+          },
+        ];
+        if (device != 'cpu' && device != 'vulkan') device = 'cpu';
+        if (automatic) {
+          context = profile.number('minimumContext');
+          reply = profile.defaultReply(context);
+          automatic = false;
+        }
+        initialized = true;
+        loading = false;
+        engineLabel = 'Model not loaded';
+        if (persistence) notice = 'Choose your settings, then load the model. CPU with a small context is recommended on Android.';
+        notifyListeners();
+        return;
+      }
       final events = await engine.command({'op': 'devices'});
       devices =
           (events.firstWhere((e) => e['type'] == 'devices')['devices'] as List)
@@ -193,7 +219,7 @@ class ChatStore extends ChangeNotifier {
     }
   }
 
-  Future<void> useBundled() async {
+  Future<void> useBundled({bool loadModel = true}) async {
     if (busy) return;
     loading = true;
     notifyListeners();
@@ -215,7 +241,7 @@ class ChatStore extends ChangeNotifier {
             jsonDecode(await rootBundle.loadString('assets/profile.json')),
           ),
         );
-        automatic = true;
+        if (!manualStartup) automatic = true;
       }
       model = {
         'id': id,
@@ -225,7 +251,13 @@ class ChatStore extends ChangeNotifier {
         'profile': profile.data,
       };
       loading = false;
-      await load();
+      if (loadModel) {
+        await load();
+      } else {
+        ready = false;
+        await save();
+        notifyListeners();
+      }
     } catch (e) {
       loading = false;
       notice = 'Could not open bundled model: $e';
@@ -259,9 +291,17 @@ class ChatStore extends ChangeNotifier {
         'bundled': false,
         'profile': profile.data,
       };
-      automatic = true;
+      automatic = !manualStartup;
       loading = false;
-      await load();
+      if (manualStartup) {
+        context = profile.number('minimumContext');
+        reply = profile.defaultReply(context);
+        ready = false;
+        await save();
+        notifyListeners();
+      } else {
+        await load();
+      }
     } catch (e) {
       loading = false;
       notice = 'Model import failed: $e';
@@ -276,15 +316,40 @@ class ChatStore extends ChangeNotifier {
         Json.from(jsonDecode(await File(path).readAsString())),
       );
       model!['profile'] = profile.data;
-      automatic = true;
-      await load();
+      automatic = !manualStartup;
+      if (manualStartup) {
+        context = profile.number('minimumContext');
+        reply = profile.defaultReply(context);
+        ready = false;
+        await save();
+        notifyListeners();
+      } else {
+        await load();
+      }
     } catch (e) {
       notice = 'Profile import failed: $e';
       notifyListeners();
     }
   }
 
+  Future<void> startModel() async {
+    if (busy) return;
+    if (model == null || model!['bundled'] == true) {
+      await useBundled();
+    } else {
+      await load();
+    }
+  }
+
   Future<void> load() async {
+    if (manualStartup && _sessionDevice != null && _sessionDevice != device) {
+      ready = false;
+      notice = 'Backend saved. Force-stop DFM Mimir in Android app settings and reopen it before loading this backend.';
+      await save();
+      notifyListeners();
+      return;
+    }
+    if (model == null) return;
     backendFallbackReasons = [];
     actualBackend = '';
     engineLabel = 'Loading model…';
@@ -294,6 +359,11 @@ class ChatStore extends ChangeNotifier {
     _countRevision++;
     notifyListeners();
     try {
+      if (manualStartup) {
+        // Persist choices before entering a driver that might hang or terminate the process.
+        await save();
+        _sessionDevice = device;
+      }
       final events = await engine.command({
         'op': 'load',
         'path': model!['path'],
@@ -329,6 +399,7 @@ class ChatStore extends ChangeNotifier {
     int r, {
     bool auto = false,
     String? backend,
+    bool reload = true,
   }) async {
     if (busy) return;
     final error = profile.limitsError(c, r);
@@ -341,13 +412,24 @@ class ChatStore extends ChangeNotifier {
     reply = r;
     automatic = auto;
     if (backend != null) device = backend;
-    await load();
+    if (manualStartup && (!ready || !reload)) {
+      ready = false;
+      await save();
+      notifyListeners();
+    } else {
+      await load();
+    }
   }
 
   Future<void> setMixedLM(bool enabled) async {
     if (busy || model == null || mixedLM == enabled) return;
     mixedLM = enabled;
     lastReusedTokens = 0;
+    if (manualStartup && !ready) {
+      await save();
+      notifyListeners();
+      return;
+    }
     await load(); // A new context separates exact and approximate KV state.
   }
 

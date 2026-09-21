@@ -4,7 +4,7 @@ title: DFM Mimir app and portable backend selection
 description: Separate Flutter client, shared native engine, local backend evidence and remaining platform qualification.
 tags: [mimir, flutter, desktop, mobile, backends]
 status: draft
-last_updated: 2026-09-20
+last_updated: 2026-09-21
 confidence: high
 ---
 # DFM Mimir app and portable backends
@@ -300,3 +300,29 @@ portable app now has optional confirmed feedback and the Worker/D1 service is
 deployed. The user chose one build with app-level permission, default off; no
 separate offline edition. See [Optional Chat Feedback](mimir-feedback.md) for
 consent, network semantics, administrative separation and verified evidence.
+
+### Android startup recovery — 2026-09-21
+
+Android's previous automatic model loading and device discovery are **superseded**
+following a reported Vulkan/memory freeze that prevented access to settings.
+Android now restores chat/settings without issuing any native commands or preparing
+weights. Loading requires an explicit button press. Default device is CPU, and
+automatic context sizing becomes the profile minimum (currently 1,024 context /
+512 reply); previously explicit limits and Vulkan choices are retained but never
+loaded automatically. Imports and pre-load MixedLM changes also do not load.
+
+CPU sessions set the existing `GGML_DISABLE_VULKAN` guard before first native
+backend registration. No llama.cpp modification was needed. Because registration
+is process-global, changing Android backend after initialization requires a
+force-stop/reopen; both UI and native runtime enforce this. Reopening always
+provides access to settings even if the previous saved device was Vulkan.
+
+Validated 25 app tests, clean analysis, native CPU registration/restart guard in an
+ARM64 emulator, and release APK installation/startup/settings. See
+[validation evidence](../../../native/app/VALIDATION.md). This establishes recovery,
+not physical GPU stability or a universal low-memory guarantee. Android 0.1.1+2
+was built locally; the public 0.1.0 release has not been replaced by this work.
+
+Run Flutter tests/analysis sequentially with Android packaging: concurrent Flutter
+commands rewrote GeneratedPluginRegistrant during Gradle compilation and caused
+a build failure; a subsequent sequential release build succeeded.

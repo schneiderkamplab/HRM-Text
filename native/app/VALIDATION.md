@@ -395,3 +395,33 @@ Refreshed artifact SHA-256 values:
 | `dfm-mimir-0.1.0-linux-x64.tar.gz` | `a06fa1538e6ec1e5c7ee4344f3892b681509d0bd2788512483e83c0f3427e0ff` |
 | `dfm-mimir-0.1.0-windows-x64.zip` | `229f8e38449263474f5d3dd7adfa416d193c7bf7e131601495e218b745e351b8` |
 | `dfm-mimir-0.1.0-android-arm64.apk` | `3dfa756b77c7b36418a1d905427ac0fa4e52eb472fcc8082a017962ea0d87883` |
+
+### Android startup recovery — 2026-09-21
+
+- Flutter analysis clean; all **25 tests passed**, including startup without native
+  calls, retained explicit settings, unloaded imports/MixedLM changes, explicit
+  load, backend restart enforcement, and narrow-screen settings layout.
+- Built bundled ARM64 release APK with `--build-name 0.1.1 --build-number 2`.
+  Installed in API 36 ARM64 emulator; inspected unloaded startup and editable CPU
+  / 1024 context / 512 reply settings. Force-stop/relaunch returns unloaded.
+  Startup/settings PSS was 69,477 KiB (about 68 MiB), not a loaded-model estimate.
+- Native test against the actual APK runtime passed: CPU registration sets
+  `GGML_DISABLE_VULKAN`, exposes no Vulkan devices, and rejects a subsequent
+  Vulkan load with the restart requirement before allocating a model.
+- APK signature, 16 KiB ZIP alignment and feedback credential/bundle audit passed.
+- Physical-device Vulkan stability and memory use remain unqualified. This fix
+  avoids entering the driver until requested and makes recovery settings reachable;
+  it cannot interrupt a hung GPU driver in the same process.
+
+Reproduce the native check from the repository root (no model loading required):
+
+```sh
+python3 native/app/tool/test_android_startup.py /path/to/app-release.apk \
+  --ndk /path/to/android-sdk/ndk/28.2.13676358 \
+  --adb /path/to/android-sdk/platform-tools/adb --serial emulator-5554
+```
+
+Local artifact: `logs/packages/android-startup/dfm-mimir-0.1.1-android-arm64.apk`.
+SHA-256: `7b0b40088c9905748c4f059b87381e61dc5f589b729405a8cf29d59f7d06771c`.
+Screenshots: `logs/android-startup/{startup,settings,reopened}.png`.
+The public 0.1.0 assets were not modified.

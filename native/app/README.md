@@ -16,6 +16,15 @@ The bundled profile allows 1,024–32,768 context tokens and identifies the mode
 validated profile to change future models' limits and memory estimates. Model
 weights, frameworks, SDK, Pods and generated build products are not in Git.
 
+Android always opens with the model unloaded, so settings remain accessible before
+driver initialization or model allocation. Select CPU and start with 1,024 context
+tokens / 512 reply tokens, then press **Load model**. Vulkan is experimental and
+opt-in. CPU sessions skip the inference runtime's Vulkan registration entirely.
+After a freeze, force-stop the app in Android settings and reopen it to change the
+backend or limits. Changing backend after initialization also requires force-stop
+and reopen, because the native backend registry is process-global. Explicit saved
+limits are retained; automatic memory-based defaults are disabled on Android.
+
 ## Build on Apple Silicon
 
 Prerequisites used: Flutter **3.47.5** / Dart **3.13.4**, Xcode **27.0**, CMake,
