@@ -191,3 +191,7 @@ builds; no replacement release packages were published for this feature.
 Official discovery extension validation: static analysis clean; 41 app tests pass.
 Tests cover mixed-case names, publisher filtering, pagination, immutable revisions,
 curated precedence, cached-source recovery and visible unsupported shards.
+
+Corrected local BF16, Q8_0 and Q4_K_M artifacts have now been prepared and tested.
+See [preparation and results](../mimir/CORRECTED-GGUFS.md). Existing published
+packages still contain the old bundled artifact until explicitly rebuilt.

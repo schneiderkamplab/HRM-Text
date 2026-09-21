@@ -499,3 +499,18 @@ record provenance limits and next steps. The historical external tokenizer path
 and original production tokenized corpus are absent locally, so this is a pipeline
 reproduction against the exported JSON, not a complete corpus audit. No model,
 exporter behavior or release asset was replaced by this investigation.
+
+
+### Corrected 4/8/16-bit artifacts prepared, 2026-09-21
+
+[Corrected GGUF preparation](../../../native/mimir/CORRECTED-GGUFS.md) supersedes
+the prior statement that regeneration was pending. Fresh BF16, Q8_0 and Q4_K_M
+artifacts are in `logs/mimir-corrected`, with checksums, licenses and provenance.
+The llama.cpp HRM converter now loads the raw training graph (commit `4122b9a81`);
+other architectures retain their original tokenizer loader. Native HF reference
+generators likewise use the direct graph. Each artifact passes 724 tokenizer/
+decoding/template cases, 19 independent training-audit cases, and CPU/Metal
+Danish/English chat smoke tests. BF16's 259 tensors are bit-identical to the prior
+BF16 export. Full quality/backend/device requalification remains distinct from
+these bounded checks. Existing app assets, release packages and HF repositories
+have not been replaced; these files are prepared locally for subsequent publication.

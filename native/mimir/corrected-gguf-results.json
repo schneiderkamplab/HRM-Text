@@ -1,0 +1,247 @@
+{
+  "reference": "Tokenizer.from_file(tokenizer.json), add_special_tokens=False",
+  "tokenizer_sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+  "models": [
+    {
+      "file": "dfm-mimir-bf16.gguf",
+      "bytes": 3588300960,
+      "sha256": "f2f8940a2e7dc6d6ab53ab68cfa51a52b686d8999033c3fa5b3d7392a885fc48",
+      "tokenizer_cases_passed": 19,
+      "byte_fallback_tokens": 256,
+      "tensor_types": [
+        "BF16",
+        "F32"
+      ],
+      "generation": {
+        "cpu": [
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "Danmarks hovedstad hedder København.",
+            "tokens": [
+              23969,
+              16151,
+              121236,
+              45781,
+              28009,
+              1128,
+              224694,
+              236749,
+              236761
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          },
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "4",
+            "tokens": [
+              236812
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          }
+        ],
+        "metal": [
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "Danmarks hovedstad hedder København.",
+            "tokens": [
+              23969,
+              16151,
+              121236,
+              45781,
+              28009,
+              1128,
+              224694,
+              236749,
+              236761
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          },
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "4",
+            "tokens": [
+              236812
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          }
+        ]
+      },
+      "text_parity_cases_passed": 724
+    },
+    {
+      "file": "dfm-mimir-q8_0.gguf",
+      "bytes": 1913200800,
+      "sha256": "b4ac0d7493ffc3e56720c380ac8ed23bf3c16c60900e2bfa7f7551c654b09fce",
+      "tokenizer_cases_passed": 19,
+      "byte_fallback_tokens": 256,
+      "tensor_types": [
+        "F32",
+        "Q8_0"
+      ],
+      "generation": {
+        "cpu": [
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "Danmarks hovedstad hedder København.",
+            "tokens": [
+              23969,
+              16151,
+              121236,
+              45781,
+              28009,
+              1128,
+              224694,
+              236749,
+              236761
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          },
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "4",
+            "tokens": [
+              236812
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          }
+        ],
+        "metal": [
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "Danmarks hovedstad hedder København.",
+            "tokens": [
+              23969,
+              16151,
+              121236,
+              45781,
+              28009,
+              1128,
+              224694,
+              236749,
+              236761
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          },
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "4",
+            "tokens": [
+              236812
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          }
+        ]
+      },
+      "text_parity_cases_passed": 724
+    },
+    {
+      "file": "dfm-mimir-q4_k_m.gguf",
+      "bytes": 1167417504,
+      "sha256": "8c811ca72589112f00306e8b3a23f83944751d13d3fce6dfdb39df8b31726e49",
+      "tokenizer_cases_passed": 19,
+      "byte_fallback_tokens": 256,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q6_K"
+      ],
+      "generation": {
+        "cpu": [
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "Danmarks hovedstad hedder København.",
+            "tokens": [
+              23969,
+              16151,
+              121236,
+              45781,
+              28009,
+              1128,
+              224694,
+              236749,
+              236761
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          },
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "4",
+            "tokens": [
+              236812
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          }
+        ],
+        "metal": [
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "Danmarks hovedstad hedder København.",
+            "tokens": [
+              23969,
+              16151,
+              121236,
+              45781,
+              28009,
+              1128,
+              224694,
+              236749,
+              236761
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          },
+          {
+            "event": "done",
+            "finish": "eos",
+            "status": 0,
+            "text": "4",
+            "tokens": [
+              236812
+            ],
+            "stop_token": 106,
+            "history_size": 2
+          }
+        ]
+      },
+      "text_parity_cases_passed": 724
+    }
+  ],
+  "llama_revision": "4122b9a814d5bd4f48f454367419f75c05ee5215",
+  "source_hf": {
+    "repo": "danish-foundation-models/DFM-Mimir",
+    "revision": "2844f0178e695d7d9ce182cb660671fd34c76ce5"
+  },
+  "bf16_tensors_bit_identical_to_previous_export": 259
+}

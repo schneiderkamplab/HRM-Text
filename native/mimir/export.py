@@ -1,4 +1,4 @@
-"""Export a complete FP32 Mimir GGUF using the pinned native converter and record provenance."""
+"""Export a complete F32 or BF16 Mimir GGUF using the pinned native converter and record provenance."""
 import argparse
 import hashlib
 import json
@@ -19,6 +19,7 @@ def _main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--outtype", choices=["f32", "bf16"], default="f32")
     parser.add_argument("--verify-existing", action="store_true")
     parser.add_argument("--reference-gguf", type=Path, help="Optional independently validated export for bit-exact tensor comparison")
     args = parser.parse_args()
@@ -30,7 +31,7 @@ def _main():
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     converter = root / "llama.cpp/convert_hf_to_gguf.py"
-    command = [sys.executable, str(converter), str(model), "--outtype", "f32", "--outfile", str(output)]
+    command = [sys.executable, str(converter), str(model), "--outtype", args.outtype, "--outfile", str(output)]
     if args.verify_existing:
         if not output.is_file():
             raise ValueError("--verify-existing needs an existing export")
@@ -51,15 +52,16 @@ def _main():
                 "tokenizer.ggml.bos_token_id", "tokenizer.ggml.eos_token_id", "hrm_text.hrm.prefix_lm"]
     if any(key not in reader.fields for key in required):
         raise ValueError("Incomplete tokenizer/template/PrefixLM metadata")
-    if not reader.tensors or any(tensor.tensor_type != gguf.GGMLQuantizationType.F32 for tensor in reader.tensors):
-        raise ValueError("This milestone requires FP32 tensors, including the recurrent state vector")
+    allowed = {gguf.GGMLQuantizationType.F32}
+    if args.outtype == "bf16":
+        allowed.add(gguf.GGMLQuantizationType.BF16)
+    if not reader.tensors or any(tensor.tensor_type not in allowed for tensor in reader.tensors):
+        raise ValueError("Unexpected tensor precision for requested output")
     if not any(tensor.name == "hrm.z_l_init" for tensor in reader.tensors):
         raise ValueError("Missing recurrent state vector")
     expected = {"hrm_text.hrm.prefix_lm": True, "tokenizer.ggml.bos_token_id": config['bos_token_id'],
                 "tokenizer.ggml.eos_token_id": config['eos_token_id']}
-    tokenizer_config = json.loads((model / 'tokenizer_config.json').read_text())
-    if tokenizer_config.get('fix_mistral_regex'):
-        expected['tokenizer.ggml.pre'] = 'spm-bpe-mistral'
+    expected['tokenizer.ggml.pre'] = 'gemma4'
     for key, value in expected.items():
         if reader.fields[key].contents() != value:
             raise ValueError(f'Incorrect metadata: {key}')
@@ -78,7 +80,7 @@ def _main():
                 raise ValueError(f'Tensor differs from independent reference: {tensor.name}')
         if reference:
             raise ValueError('Export is missing reference tensors')
-    manifest = {"command": command, "format": "F32", "gguf_sha256": _sha256(artifact),
+    manifest = {"command": command, "format": args.outtype.upper(), "gguf_sha256": _sha256(artifact),
                 "bit_exact_reference": str(args.reference_gguf) if args.reference_gguf else None,
                 "tensor_count": len(reader.tensors), "bytes": artifact.stat().st_size,
                 "llama_revision": subprocess.check_output(["git", "-C", str(root / "llama.cpp"), "rev-parse", "HEAD"], text=True).strip(),
@@ -88,7 +90,7 @@ def _main():
         artifact.rename(output)
     output.with_suffix(".manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     shutil.copyfile(model / 'LICENSE', output.with_suffix('.LICENSE'))
-    print(f"Verified {len(reader.tensors)} FP32 tensors and complete tokenizer/template metadata")
+    print(f"Verified {len(reader.tensors)} tensors and complete tokenizer/template metadata")
 
 
 if __name__ == "__main__":

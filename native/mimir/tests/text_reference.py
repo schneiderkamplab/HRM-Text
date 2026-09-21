@@ -1,9 +1,9 @@
-"""Generate tokenizer and chat-template parity cases from the pinned HF tokenizer."""
+"""Generate tokenizer and chat-template parity cases from the pinned training tokenizer graph."""
 import argparse
 import json
 from pathlib import Path
 import random
-from transformers import AutoTokenizer
+from tokenizer_reference import load_training_tokenizer
 
 __all__ = []
 
@@ -13,7 +13,7 @@ def _main():
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    tokenizer = AutoTokenizer.from_pretrained(args.model, local_files_only=True)
+    tokenizer = load_training_tokenizer(args.model)
     texts = ["", "Hej verden!", "Rødgrød med fløde. ÆØÅ æøå", "Hello, world!", "\n\t  x  \r\n",
              "\u00a0Danmark\u2003", "café cafe\u0301", "🧑🏽‍💻 🇩🇰 ❤️", "中文 العربية Ελληνικά हिन्दी",
              "<bos><|turn>user\nHej<turn|>", "nul\x00byte", "1 22 333 4444 1234567890", "a\ufffdb",

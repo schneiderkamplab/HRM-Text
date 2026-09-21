@@ -9,6 +9,7 @@ import time
 import urllib.request
 
 import numpy as np
+from tokenizer_reference import load_training_tokenizer
 
 __all__ = []
 
@@ -19,9 +20,9 @@ def _save(path, value):
 
 def _prepare(model_path, out):
     import torch
-    from transformers import AutoTokenizer, HrmTextForCausalLM
+    from transformers import HrmTextForCausalLM
     torch.set_num_threads(4)
-    tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
+    tokenizer = load_training_tokenizer(model_path)
     conversations = [
         ('danish-unicode', [{'role': 'user', 'content': 'Ret denne sætning og behold æ, ø og å: "pigen fra århus køber æbler".'}],
          'Pigen fra Århus køber æbler.'),

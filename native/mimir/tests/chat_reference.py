@@ -3,7 +3,8 @@ import argparse
 import json
 from pathlib import Path
 import torch
-from transformers import AutoTokenizer, HrmTextForCausalLM
+from transformers import HrmTextForCausalLM
+from tokenizer_reference import load_training_tokenizer
 
 __all__ = []
 
@@ -15,7 +16,7 @@ def _main():
     args = parser.parse_args()
     torch.set_num_threads(4)
     model = HrmTextForCausalLM.from_pretrained(args.model, dtype=torch.float32, attn_implementation='eager').eval()
-    tokenizer = AutoTokenizer.from_pretrained(args.model, local_files_only=True)
+    tokenizer = load_training_tokenizer(args.model)
     messages, cases = [], []
     with torch.inference_mode():
         for text in ['Svar med ét ord: Hvad er 2 + 2?', 'Og hvad er 3 + 3?']:

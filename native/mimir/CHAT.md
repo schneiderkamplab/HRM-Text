@@ -60,6 +60,12 @@ verification compares every tensor bit for bit. The corrected text artifact
 is `mimir-text-f32.gguf`; the initial local `mimir-f32.gguf` in `logs/mimir-chat`
 is superseded because its tokenizer metadata was incorrect.
 
+**Superseded tokenizer interpretation (2026-09-21):** the paragraph below describes
+our original exported-HF reference, not training. Training reads the tokenizer JSON
+directly; corrected GGUFs use `gemma4`. See [corrected GGUF preparation](CORRECTED-GGUFS.md)
+for the converter fix, BF16/Q8_0/Q4_K_M artifacts and direct-training parity results.
+The separate regex mode remains available but is not the correct Mimir training default.
+
 The separate text patch, `patches/text-codec.patch`, adds the explicit
 `spm-bpe-mistral` tokenizer mode required by this checkpoint's
 `fix_mistral_regex=true`, correct byte-fallback token types, and Unicode Jinja
