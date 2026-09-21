@@ -165,6 +165,7 @@ class ChatStore extends ChangeNotifier {
           library.online = j['modelNetwork'] == true;
           library.installed = (j['installedModels'] as List? ?? [])
               .map((m) => Json.from(m)).toList();
+          library.unavailable = (j['unavailableModels'] as List? ?? []).map((m) => Json.from(m)).toList();
           library.discovered = (j['discoveredModels'] as List? ?? []).cast<String>();
           if (model?['profile'] != null) {
             profile = ModelProfile(Json.from(model!['profile']));
@@ -340,7 +341,7 @@ class ChatStore extends ChangeNotifier {
     if (busy) return;
     model = Json.from(entry);
     profile = ModelProfile(Json.from(entry['profile']));
-    automatic = !manualStartup;
+    automatic = !manualStartup && entry['source'] != 'hf-discovery';
     ready = false;
     context = profile.number('minimumContext');
     reply = profile.defaultReply(context);
@@ -691,6 +692,7 @@ class ChatStore extends ChangeNotifier {
       'modelCatalog': {'version': 1, 'models': library.catalog.map((a) => a.data).toList()},
       'installedModels': library.installed,
       'discoveredModels': library.discovered,
+      'unavailableModels': library.unavailable,
       'compact': compact,
       'mixedLM': mixedLM,
       'showSummary': showSummary,

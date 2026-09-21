@@ -449,3 +449,24 @@ selector UI, discovery separation, valid download, hash/size/magic rejection,
 mid-stream revocation, pinned metadata and persisted Android selection/removal.
 The macOS release and iOS simulator builds pass. Download retries restart from zero; background
 OS transfers are not implemented. See the linked document for full limitations.
+
+
+### Official GGUF discovery extension, 2026-09-21
+
+The earlier repository-only discovery policy above is **superseded** for
+`danish-foundation-models`: catalog refresh now merges curated entries with all
+GGUF files in official repositories whose names contain `mimir` case-insensitively.
+It follows repository/file pagination and pins revision/size/LFS SHA-256. Curated
+profiles take precedence for duplicates; auto-discovered models use an explicitly
+unqualified profile and select with 1024 context/512 reply, automatic sizing off.
+Unsupported shards and missing-integrity files remain visible with reasons.
+Network consent is unchanged; startup stays offline. Independent source failures
+preserve cached entries and report errors. The official namespace currently has
+one matching repository and no GGUF files (live API check).
+
+[Catalog update instructions](../../../native/app/MODELS.md#adding-models-without-rebuilding-the-app)
+explain direct JSON edits/pushes and the no-edit path of uploading official GGUFs.
+
+Validation: static analysis clean and all 41 app tests pass, including official
+case-insensitive matching, nested file/repository pagination, pinned metadata,
+curated precedence, partial-source failure recovery and unsupported-file listing.

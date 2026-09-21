@@ -4,10 +4,12 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'engine.dart';
 import 'models.dart';
+import 'hf_model_discovery.dart';
 
 /// A reviewed catalog pins artifacts and profiles. HF discovery never grants
 /// compatibility merely because a repository contains "Mimir" in its name.
@@ -20,7 +22,7 @@ class ModelArtifact {
         !RegExp(r'^[a-f0-9]{64}$').hasMatch(id) ||
         !RegExp(r'^[a-f0-9]{40}$').hasMatch(data['revision'] as String) ||
         !RegExp(r'^[\w.-]+/[\w.-]+$').hasMatch(data['repo'] as String) ||
-        !(data['file'] as String).endsWith('.gguf') ||
+        !(data['file'] as String).toLowerCase().endsWith('.gguf') ||
         (data['file'] as String)
             .split('/')
             .any((s) => s == '..' || s.isEmpty) ||
@@ -56,6 +58,7 @@ class ModelLibrary extends ChangeNotifier {
   List<ModelArtifact> catalog = [];
   List<Json> installed = [];
   List<String> discovered = [];
+  List<Json> unavailable = [];
   String? downloading, error;
   int received = 0;
   HttpClient? _client;
@@ -129,7 +132,7 @@ class ModelLibrary extends ChangeNotifier {
     throw const HttpException('Too many redirects');
   }
 
-  Future<String> _json(Uri uri) async {
+  Future<DiscoveryPage> _page(Uri uri) async {
     final response = await _get(uri);
     final bytes = <int>[];
     await for (final chunk in response.timeout(const Duration(seconds: 30))) {
@@ -139,24 +142,64 @@ class ModelLibrary extends ChangeNotifier {
       }
       bytes.addAll(chunk);
     }
-    return utf8.decode(bytes);
+    final link = response.headers.value('link');
+    final next = link == null
+        ? null
+        : RegExp(r'<([^>]+)>;\s*rel="?next"?').firstMatch(link)?.group(1);
+    return DiscoveryPage(
+      jsonDecode(utf8.decode(bytes)),
+      next == null ? null : uri.resolve(next),
+    );
   }
 
   Future<void> refresh() => _run(() async {
     refreshing = true;
     notifyListeners();
-    final updated = await _json(catalogUrl);
-    final results = jsonDecode(
-      await _json(
-        Uri.https('huggingface.co', '/api/models', {
-          'search': 'DFM-Mimir',
-          'limit': '100',
-        }),
-      ),
-    ) as List;
+    var curated = catalog
+        .where((a) => a.data['source'] != 'hf-discovery')
+        .toList();
+    var found = catalog
+        .where((a) => a.data['source'] == 'hf-discovery')
+        .toList();
+    final failures = <String>[];
+    try {
+      final parsed = ModelLibrary();
+      parsed.readCatalog(jsonEncode((await _page(catalogUrl)).data));
+      curated = parsed.catalog;
+    } catch (e) {
+      _check();
+      failures.add('Catalog update failed; retained cached entries: $e');
+    }
+    final discovery = HfModelDiscovery(_page);
+    try {
+      await discovery.discover(
+        Json.from(
+          jsonDecode(await rootBundle.loadString('assets/profile.json')),
+        ),
+      );
+      found = discovery.artifacts.map(ModelArtifact.new).toList();
+      discovered = discovery.repositories;
+      unavailable = discovery.unavailable;
+    } catch (e) {
+      _check();
+      failures.add('HF discovery failed; retained cached discoveries: $e');
+    }
     _check();
-    readCatalog(updated);
-    discovered = results.map((e) => e['id'] as String).toList();
+    // Curated qualification/profile wins for duplicate content or the same file.
+    final curatedFiles = curated
+        .map((a) => '${a.data['repo']}/${a.data['file']}')
+        .toSet();
+    final merged = <String, ModelArtifact>{};
+    for (final artifact in [
+      ...curated,
+      ...found.where(
+        (a) => !curatedFiles.contains('${a.data['repo']}/${a.data['file']}'),
+      ),
+    ]) {
+      merged.putIfAbsent(artifact.id, () => artifact);
+    }
+    catalog = merged.values.toList();
+    error = failures.isEmpty ? null : failures.join('\n');
     onChanged?.call();
   });
 

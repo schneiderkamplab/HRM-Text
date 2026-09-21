@@ -138,14 +138,21 @@ class ModelLibraryView extends StatelessWidget {
             if (library.discovered.isNotEmpty) ...[
               const SizedBox(height: 16),
               Text(
-                'Also found on Hugging Face',
+                'Official Mimir repositories',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const Text(
-                'Discovery does not establish compatibility. Other formats need '
-                'conversion; newer architectures need engine support and a model profile. '
-                'Approved downloadable versions appear above after catalog refresh.',
+                'GGUF files from danish-foundation-models repositories whose names '
+                'contain “mimir” are added automatically on refresh. Discovery '
+                'does not guarantee engine compatibility.',
               ),
+              for (final file in library.unavailable)
+                ListTile(
+                  title: Text('${file['repo']} / ${file['file']}'),
+                  subtitle: Text(
+                    '${file['bytes'] is int ? modelSize(file['bytes']) : 'Size unknown'} · ${file['reason']}',
+                  ),
+                ),
               for (final repo in library.discovered)
                 ListTile(title: SelectableText(repo)),
             ],

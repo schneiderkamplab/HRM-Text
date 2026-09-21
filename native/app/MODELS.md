@@ -86,17 +86,53 @@ file; retry overwrites it. No remote model code is downloaded or executed.
 
 `assets/models.json` is the version-1 embedded catalog and the published catalog
 source. The client refreshes it from this repository's `codex/mimir-apple-mvp`
-branch on `raw.githubusercontent.com`, then caches the result for offline use.
+branch on `raw.githubusercontent.com`, then caches the merged result for offline use.
 Each entry carries HF repository, immutable revision, file path, exact size,
 SHA-256 identity, qualification description, and a complete model-specific
 memory/context/system-prompt profile. Publish catalog changes to that branch;
 changing catalog hosting or schema requires a client change.
 
-HF search results are listed separately and **never auto-enabled solely by name**.
-A new generation becomes downloadable after its GGUF and profile enter the
-catalog. Same supported architecture/quantization can therefore be delivered
-without a new app release. A changed architecture, unsupported tensor type,
-new template implementation, or runtime requirement needs an engine update first.
+**Updated 2026-09-21:** the earlier policy of listing HF discoveries only as
+repository references is superseded for the official organization. Refresh now
+merges the curated catalog with **all GGUF files** in public repositories owned by
+`danish-foundation-models` whose repository name contains `mimir`, case-insensitively.
+Repository and recursive file pagination are followed; matching does not depend
+on HF search casing. Each discovered file is pinned to the current commit, byte
+size and LFS SHA-256. Curated entries win for duplicate hashes or the same
+repository/file, preserving their model profiles and qualification descriptions.
+
+No catalog edit is needed to expose a new single-file GGUF in a matching official
+repository: upload it to HF, then press **Check for newer models** in the app.
+Auto-discovered files are marked unqualified and use the existing Mimir v1 profile
+as an explicit fallback. Selection starts with automatic sizing off, 1024 context
+and 512 reply tokens; import a model-specific profile when necessary. Model names
+do not establish engine compatibility. A new architecture still requires an engine
+update. Split/sharded GGUFs and files lacking SHA-256/size metadata are listed with
+size and a reason, but cannot yet be downloaded through the verified single-file
+loader. No checkpoint or shard is silently treated as an independently usable model.
+
+The curated catalog can still include files from any publisher. To update it:
+
+```sh
+# Edit native/app/assets/models.json: add/remove entries or adjust profiles.
+git add native/app/assets/models.json
+git commit -m "Update Mimir model catalog"
+git push origin HEAD:codex/mimir-apple-mvp
+```
+
+Run those commands from the intended catalog branch; they publish that branch's
+commits. Users enable model networking and press **Check for newer models**;
+existing compatible clients need no rebuild. Each entry requires `id` (file
+SHA-256), `name`, `repo`, immutable `revision`, `file`, exact `bytes`, `profile`,
+and a clear `qualification` description. The embedded JSON is the offline starting
+point; refreshed entries are saved locally. Either catalog or HF failure preserves
+that source's cached entries and reports the failure while refreshing the other.
+
+As checked on 2026-09-21, the official organization currently has one matching
+repository (`DFM-Mimir`) and no GGUF files, so the merged downloadable list still
+contains the three curated noctrex entries. Future official GGUF uploads will be
+picked up automatically on refresh.
+
 All five portable targets — macOS, iOS, Android, Linux, Windows — share this flow.
 Acceleration remains whatever the installed package supports; weights do not add
 new backend libraries. The separate native SwiftUI UI and headless CLI do not gain
@@ -116,3 +152,7 @@ including 10 library/selector tests (network opt-in, discovery separation,
 streaming/verification, rejection, cancellation, persistence, deletion, Android
 startup and UI). macOS release and iOS simulator builds pass. These are source
 builds; no replacement release packages were published for this feature.
+
+Official discovery extension validation: static analysis clean; 41 app tests pass.
+Tests cover mixed-case names, publisher filtering, pagination, immutable revisions,
+curated precedence, cached-source recovery and visible unsupported shards.

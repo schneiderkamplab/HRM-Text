@@ -12,6 +12,13 @@ import 'package:dfm_mimir/store.dart';
 
 import 'widget_test.dart' show FakeEngine;
 
+class Headers implements HttpHeaders {
+  @override
+  String? value(String name) => null;
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
 class Response extends Stream<List<int>> implements HttpClientResponse {
   final Stream<List<int>> stream;
   @override
@@ -19,6 +26,8 @@ class Response extends Stream<List<int>> implements HttpClientResponse {
   Response(this.stream, this.contentLength);
   @override
   int get statusCode => 200;
+  @override
+  HttpHeaders get headers => Headers();
   @override
   StreamSubscription<List<int>> listen(
     void Function(List<int>)? onData, {
@@ -115,7 +124,7 @@ void main() {
     },
   );
   test(
-    'refresh discovers repositories without granting compatibility',
+    'refresh ignores matching repositories outside the official organization',
     () async {
       Response jsonResponse(Object value) {
         final body = utf8.encode(jsonEncode(value));
@@ -139,11 +148,62 @@ void main() {
       await library.refresh();
       expect(library.error, isNull);
       expect(client.requests, 2);
-      expect(library.discovered, ['someone/DFM-Mimir-v2']);
+      expect(library.discovered, isEmpty);
       expect(library.catalog.single.id, descriptor['id']);
       expect(library.installed, isEmpty);
     },
   );
+  test('official files merge with curated profile precedence and source failure recovery', () async {
+    Response reply(Object data) {
+      final body = utf8.encode(jsonEncode(data));
+      return Response(Stream.value(body), body.length);
+    }
+
+    final official = {...descriptor, 'repo': 'danish-foundation-models/MIMIR'};
+    List<Response> discovery() => [
+      reply([
+        {'id': official['repo']},
+      ]),
+      reply({'sha': 'a' * 40}),
+      reply([
+        {
+          'type': 'file',
+          'path': 'test.gguf',
+          'size': 8,
+          'lfs': {'oid': descriptor['id']},
+        },
+        {
+          'type': 'file',
+          'path': 'new.gguf',
+          'size': 9,
+          'lfs': {'oid': 'b' * 64},
+        },
+      ]),
+    ];
+    final client = Client(
+      reply([]),
+      responses: [
+        reply({
+          'version': 1,
+          'models': [official],
+        }),
+        ...discovery(),
+        reply({'version': 999}),
+        ...discovery(),
+      ],
+    );
+    final library = ModelLibrary(clientFactory: () => client)..setOnline(true);
+    await library.refresh();
+    expect(library.error, isNull);
+    expect(library.catalog.length, 2);
+    expect(library.catalog.first.data['profile'], descriptor['profile']);
+    expect(library.catalog.first.data['source'], isNull);
+    expect(library.catalog.last.data['source'], 'hf-discovery');
+    await library.refresh();
+    expect(library.error, contains('Catalog update failed'));
+    expect(library.catalog.length, 2);
+    expect(library.discovered, [official['repo']]);
+  });
   test('offline permission prevents all network construction', () async {
     final library = ModelLibrary(
       clientFactory: () => throw StateError('Network forbidden'),
