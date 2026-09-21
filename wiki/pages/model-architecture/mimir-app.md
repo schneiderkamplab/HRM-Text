@@ -624,3 +624,25 @@ cc7b659eb653eb85820d46e5c320cf2a5e430e3646b22ddfac84e7b5b668b9c1  dfm-mimir-0.1.
 5c1b0cdb3bbc24d7c2c976d288fa3efcf29325e04859064578762d8702871098  dfm-mimir-0.1.2-linux-x64.tar.gz
 85cd9b17651a6a9018976a6b475120ed626ca82d8f580bc334954c50477af744  dfm-mimir-0.1.2-windows-x64.zip
 ```
+
+
+### Separate release history, 2026-09-21
+
+The earlier combined 0.1.0/0.1.1 release layout is **superseded**. There are now
+three separate public, non-prerelease releases, each containing only its own four
+platform packages and four SHA-256 sidecars:
+
+- [0.1.0](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.0):
+  existing tag `7d56a56c5e5226d4db0ea961ef7fd2cd590395cf` retained; original
+  0.1.0 title/notes restored and all 0.1.0 asset sizes/digests unchanged.
+- [0.1.1](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.1):
+  new tag at recorded package source `1fa33a1c5656d1b288a13a04a1b1ee77f54833ff`.
+  All eight assets were copied and verified against their original GitHub
+  sizes/SHA-256 digests before removing them from the 0.1.0 release. No rebuild.
+- [0.1.2](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.2):
+  tag `33875dcdee09736c6e987dd5dc9d5ddc51333ec2` retained; remains latest.
+
+0.1.1 download URLs now use the 0.1.1 tag; its old asset URLs under the 0.1.0 tag
+no longer apply. Historical combined-release links elsewhere on this page describe
+the previous arrangement. Verification/backup records:
+`logs/release-separation/{before,verified}.json` and `finish.log`.
