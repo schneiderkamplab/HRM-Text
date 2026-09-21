@@ -326,3 +326,14 @@ was built locally; the public 0.1.0 release has not been replaced by this work.
 Run Flutter tests/analysis sequentially with Android packaging: concurrent Flutter
 commands rewrote GeneratedPluginRegistrant during Gradle compilation and caused
 a build failure; a subsequent sequential release build succeeded.
+
+### Android 0.1.1 publication — 2026-09-21
+
+The local-only Android 0.1.1 status above is **superseded**. At the user's request,
+added `dfm-mimir-0.1.1-android-arm64.apk` and its SHA-256 sidecar to the existing
+[bundled-weights release](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.0).
+GitHub reports both assets uploaded, with APK digest
+`7b0b40088c9905748c4f059b87381e61dc5f589b729405a8cf29d59f7d06771c`, matching the
+local artifact. Release notes recommend Android 0.1.1 and explain startup recovery,
+verification limits and source commit `4f2f475`. Desktop assets and the release's
+0.1.0 tag/public status remain unchanged; the older Android asset is retained.
