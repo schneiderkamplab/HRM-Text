@@ -16,6 +16,13 @@
 * [HRM-Text XL Training FLOPs](hrm-xl-training-flops.md) - Recurrence-aware upper-bound calculation for XL training compute.
 * [DFM8 XXL MFU Baseline](dfm8-xxl-mfu-baseline.md) - Recurrence-aware single-node B200 utilization estimate and realistic throughput target.
 * [XL Parameter and Export Size](xl-parameter-and-export-size.md) - Parameter-count and export-size reference for the XL model.
+* [Mimir Apple Chat Feasibility](mimir-apple-chat-feasibility.md) - Native runtime options, PrefixLM correctness, recurrent cache memory, and device validation gates.
+* [Safe PrefixLM Support in llama.cpp](llama-cpp-prefixlm-plan.md) - Pinned source audit, phase-aware prefill/decode design, cache and batching safeguards, and parity gates.
+* [PrefixLM Patch Revision Proposal](llama-cpp-prefixlm-patch-proposal.md) - Hunk-by-hunk reuse of the existing proposal, minimal replacement design, server invariants, and regression cases.
+* [PrefixLM Comparative Correctness Results](llama-cpp-prefixlm-comparison.md) - Reproducible CPU/Metal comparisons of the baseline, historical proposal, and phase-aware prototype with real Mimir smoke tests.
+* [Minimal Mimir Native Session Runtime](mimir-native-session.md) - Owned context lifecycle, full-turn prefill, cancellation/failure recovery, and CPU/Metal integration tests.
+* [Native Mimir Text Chat](mimir-native-text-chat.md) - GGUF tokenizer/template parity, native streaming chat, cancellation, and CPU/Metal end-to-end validation.
+* [Engine-Level PrefixLM in llama.cpp](llama-cpp-prefixlm-engine.md) - Native attention/API semantics, shared CLI/server scheduling, cache safety and engine regression tests.
 * [DFM Mimir Hugging Face Space Demo](dfm-mimir-space-demo.md) - ZeroGPU deployment, gated-model OAuth, and inference contract for the public Mimir demo.
 * [Distributed Long-Context Implementation Options](distributed-long-context-options.md) - Main-branch difficulty, risks, and recommended ordering for activation and model-parallel approaches.
 * [Multi-Node and 32K Training Plan](multinode-32k-training-plan.md) - Direct-SSH TorchRun, run-aware checkpoints, efficient GAS, HSDP, world-size resume, and staged B200 context extension.
@@ -30,3 +37,8 @@
 * [Actual AdamATan2 Update Calibration](parameter-update-calibration.md) - Default-off update measurements and isolated 10-step comparisons before nested RMS.
 * [H and L Learning Rates](module-learning-rates.md) - Optional scheduled module rates with unchanged optimizer checkpoint groups.
 * [XXL Restart from 520K](xxl-520k-restart.md) - Isolated half-rate continuation with a cutoff history clone and preserved original trajectory.
+* [Mimir Apple Chat MVP](mimir-apple-mvp.md) - Shared SwiftUI app, Metal bridge, local conversations and device validation gaps.
+
+* [DFM Mimir App and Portable Backends](mimir-app.md) - Shared C ABI, Apple-first Flutter client and backend qualification matrix.
+
+* [DFM Mimir Optional Chat Feedback](mimir-feedback.md) - Opt-in feedback, private EU D1 intake, authenticated review and test evidence.

@@ -199,3 +199,9 @@ cython_debug/
 # LaTeX build scratch files; rendered source and PDF remain tracked.
 legal/reports/*.aux
 legal/reports/*.out
+
+# Local desktop metadata, Cloudflare state, and downloaded checkpoint
+.DS_Store
+.wrangler/
+/dfm67_1150k/
+/dfm67_1150k.zip

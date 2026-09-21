@@ -54,6 +54,23 @@ def packed_inputs() -> tuple[torch.Tensor, ...]:
     )
 
 
+@pytest.mark.parametrize("padding", [0, 1, 8])
+def test_prepared_metadata_accepts_exact_and_padded_prefix_lengths(padding: int) -> None:
+    prefix_lens, causal_lens, cu_seqlens, *scalars = packed_inputs()
+    prefix_lens = torch.nn.functional.pad(prefix_lens[:2], (0, padding))
+
+    prepared = prefixlm_prepared_from_tensors(
+        prefix_lens, causal_lens[:2], cu_seqlens, *scalars
+    )
+    padded = prefixlm_prepared_from_tensors(*packed_inputs())
+
+    assert prepared.keys() == padded.keys()
+    for name in prepared:
+        assert torch.equal(prepared[name], padded[name]), name
+    assert prepared["cu_seqlens_shifted"].dtype == torch.int32
+    assert prepared["cu_seqlens_shifted"].tolist() == [3, 12, 12]
+
+
 @pytest.mark.parametrize(
     ("module_name", "kernel_name"),
     [

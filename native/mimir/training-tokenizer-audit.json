@@ -1,0 +1,2030 @@
+{
+  "tokenizers_version": "0.23.2",
+  "tokenizer_files": {
+    "logs/prefixlm-comparison/mimir-hf/tokenizer.json": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+    "dfm67_1150k/tokenizer.json": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6"
+  },
+  "models": {
+    "bundled": {
+      "matched": 15,
+      "total": 19,
+      "results": [
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Hvad hedder Danmarks hovedstad?"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHvad hedder Danmarks hovedstad?<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            28009,
+            1128,
+            6624,
+            16151,
+            121236,
+            45781,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            28009,
+            1128,
+            6624,
+            16151,
+            121236,
+            45781,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Hello!  Two spaces.\n\nA new paragraph."
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHello!  Two spaces.\n\nA new paragraph.<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            9259,
+            236888,
+            138,
+            11634,
+            9952,
+            236761,
+            108,
+            236776,
+            861,
+            15649,
+            236761,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            9259,
+            236888,
+            138,
+            11634,
+            9952,
+            236761,
+            108,
+            236776,
+            861,
+            15649,
+            236761,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Forklar æ, ø og å. 😊"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nForklar æ, ø og å. 😊<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            161103,
+            3365,
+            50147,
+            236764,
+            32465,
+            4370,
+            10437,
+            236761,
+            103453,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            161103,
+            3365,
+            50147,
+            236764,
+            236743,
+            237465,
+            4370,
+            10437,
+            236761,
+            103453,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": false
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Hej! Hvad kan jeg hjælpe med?"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHej! Hvad kan jeg hjælpe med?<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            177831,
+            236888,
+            640,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            177831,
+            236888,
+            236743,
+            236814,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": false
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": " ø"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nø<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237465,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237465,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": " Hvad"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHvad<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "a\tb\nc\r\nd"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\na\tb\nc\r\nd<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236746,
+            255968,
+            236763,
+            107,
+            236755,
+            251,
+            107,
+            236753,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236746,
+            255968,
+            236763,
+            107,
+            236755,
+            251,
+            107,
+            236753,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "   indrykning   "
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nindrykning<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            724,
+            200140,
+            1261,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            724,
+            200140,
+            1261,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "é é naïve Straße"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\né é naïve Straße<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236859,
+            545,
+            238288,
+            120362,
+            80176,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236859,
+            545,
+            238288,
+            120362,
+            80176,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "中文 日本語 한국어"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n中文 日本語 한국어<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            55041,
+            33375,
+            238582,
+            50413,
+            237430,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            55041,
+            33375,
+            238582,
+            50413,
+            237430,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "مرحبا بالعالم"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nمرحبا بالعالم<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236873,
+            150345,
+            107602,
+            17193,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236873,
+            150345,
+            107602,
+            17193,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "🧑🏽‍💻 🚀 🫠"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n🧑🏽‍💻 🚀 🫠<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            247027,
+            242713,
+            237243,
+            244862,
+            236743,
+            242015,
+            236743,
+            253547,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            247027,
+            242713,
+            237243,
+            244862,
+            236743,
+            242015,
+            236743,
+            253547,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "1234567890 1.23 -4e5"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n1234567890 1.23 -4e5<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236770,
+            236778,
+            236800,
+            236812,
+            236810,
+            236825,
+            236832,
+            236828,
+            236819,
+            236771,
+            236743,
+            236770,
+            236761,
+            236778,
+            236800,
+            753,
+            236812,
+            236744,
+            236810,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236770,
+            236778,
+            236800,
+            236812,
+            236810,
+            236825,
+            236832,
+            236828,
+            236819,
+            236771,
+            236743,
+            236770,
+            236761,
+            236778,
+            236800,
+            753,
+            236812,
+            236744,
+            236810,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "foo_bar::x->y HTTP://example.com"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nfoo_bar::x->y HTTP://example.com<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            26537,
+            236779,
+            2230,
+            1480,
+            236781,
+            1160,
+            236762,
+            24644,
+            1411,
+            8358,
+            236761,
+            854,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            26537,
+            236779,
+            2230,
+            1480,
+            236781,
+            1160,
+            236762,
+            24644,
+            1411,
+            8358,
+            236761,
+            854,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "<0xFF> text"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n<0xFF> text<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236820,
+            236771,
+            29414,
+            236813,
+            1816,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236820,
+            236771,
+            236781,
+            5495,
+            236813,
+            236743,
+            1005,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": false
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "􏿽"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n􏿽<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            482,
+            381,
+            429,
+            427,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            482,
+            381,
+            429,
+            427,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "͸"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n͸<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            443,
+            422,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            443,
+            422,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "​zero space"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n​zero space<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237141,
+            13321,
+            432,
+            398,
+            5780,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237141,
+            13321,
+            432,
+            398,
+            5780,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "system",
+                "content": "Svar på dansk."
+              },
+              {
+                "role": "user",
+                "content": "Hej"
+              },
+              {
+                "role": "assistant",
+                "content": "Hej! Hvad kan jeg hjælpe med?"
+              },
+              {
+                "role": "user",
+                "content": "Hvad er 2 + 2?"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>system\nSvar på dansk.<turn|>\n<|turn>user\nHej<turn|>\n<|turn>model\nHej! Hvad kan jeg hjælpe med?<turn|>\n<|turn>user\nHvad er 2 + 2?<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            9731,
+            107,
+            236773,
+            1967,
+            6504,
+            234683,
+            236761,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            177831,
+            106,
+            107,
+            105,
+            4368,
+            107,
+            177831,
+            236888,
+            640,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            2087,
+            236743,
+            236778,
+            900,
+            236743,
+            236778,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            9731,
+            107,
+            236773,
+            1967,
+            6504,
+            234683,
+            236761,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            177831,
+            106,
+            107,
+            105,
+            4368,
+            107,
+            177831,
+            236888,
+            236743,
+            236814,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            2087,
+            236743,
+            236778,
+            900,
+            236743,
+            236778,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": false
+        }
+      ],
+      "exit_code": 0
+    },
+    "noctrex": {
+      "matched": 19,
+      "total": 19,
+      "results": [
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Hvad hedder Danmarks hovedstad?"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHvad hedder Danmarks hovedstad?<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            28009,
+            1128,
+            6624,
+            16151,
+            121236,
+            45781,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            28009,
+            1128,
+            6624,
+            16151,
+            121236,
+            45781,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Hello!  Two spaces.\n\nA new paragraph."
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHello!  Two spaces.\n\nA new paragraph.<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            9259,
+            236888,
+            138,
+            11634,
+            9952,
+            236761,
+            108,
+            236776,
+            861,
+            15649,
+            236761,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            9259,
+            236888,
+            138,
+            11634,
+            9952,
+            236761,
+            108,
+            236776,
+            861,
+            15649,
+            236761,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Forklar æ, ø og å. 😊"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nForklar æ, ø og å. 😊<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            161103,
+            3365,
+            50147,
+            236764,
+            32465,
+            4370,
+            10437,
+            236761,
+            103453,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            161103,
+            3365,
+            50147,
+            236764,
+            32465,
+            4370,
+            10437,
+            236761,
+            103453,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Hej! Hvad kan jeg hjælpe med?"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHej! Hvad kan jeg hjælpe med?<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            177831,
+            236888,
+            640,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            177831,
+            236888,
+            640,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": " ø"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nø<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237465,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237465,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": " Hvad"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nHvad<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "a\tb\nc\r\nd"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\na\tb\nc\r\nd<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236746,
+            255968,
+            236763,
+            107,
+            236755,
+            251,
+            107,
+            236753,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236746,
+            255968,
+            236763,
+            107,
+            236755,
+            251,
+            107,
+            236753,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "   indrykning   "
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nindrykning<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            724,
+            200140,
+            1261,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            724,
+            200140,
+            1261,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "é é naïve Straße"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\né é naïve Straße<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236859,
+            545,
+            238288,
+            120362,
+            80176,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236859,
+            545,
+            238288,
+            120362,
+            80176,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "中文 日本語 한국어"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n中文 日本語 한국어<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            55041,
+            33375,
+            238582,
+            50413,
+            237430,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            55041,
+            33375,
+            238582,
+            50413,
+            237430,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "مرحبا بالعالم"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nمرحبا بالعالم<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236873,
+            150345,
+            107602,
+            17193,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236873,
+            150345,
+            107602,
+            17193,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "🧑🏽‍💻 🚀 🫠"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n🧑🏽‍💻 🚀 🫠<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            247027,
+            242713,
+            237243,
+            244862,
+            236743,
+            242015,
+            236743,
+            253547,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            247027,
+            242713,
+            237243,
+            244862,
+            236743,
+            242015,
+            236743,
+            253547,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "1234567890 1.23 -4e5"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n1234567890 1.23 -4e5<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236770,
+            236778,
+            236800,
+            236812,
+            236810,
+            236825,
+            236832,
+            236828,
+            236819,
+            236771,
+            236743,
+            236770,
+            236761,
+            236778,
+            236800,
+            753,
+            236812,
+            236744,
+            236810,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236770,
+            236778,
+            236800,
+            236812,
+            236810,
+            236825,
+            236832,
+            236828,
+            236819,
+            236771,
+            236743,
+            236770,
+            236761,
+            236778,
+            236800,
+            753,
+            236812,
+            236744,
+            236810,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "foo_bar::x->y HTTP://example.com"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\nfoo_bar::x->y HTTP://example.com<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            26537,
+            236779,
+            2230,
+            1480,
+            236781,
+            1160,
+            236762,
+            24644,
+            1411,
+            8358,
+            236761,
+            854,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            26537,
+            236779,
+            2230,
+            1480,
+            236781,
+            1160,
+            236762,
+            24644,
+            1411,
+            8358,
+            236761,
+            854,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "<0xFF> text"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n<0xFF> text<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236820,
+            236771,
+            29414,
+            236813,
+            1816,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            236820,
+            236771,
+            29414,
+            236813,
+            1816,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "􏿽"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n􏿽<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            482,
+            381,
+            429,
+            427,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            482,
+            381,
+            429,
+            427,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "͸"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n͸<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            443,
+            422,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            443,
+            422,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "user",
+                "content": "​zero space"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>user\n​zero space<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237141,
+            13321,
+            432,
+            398,
+            5780,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            2364,
+            107,
+            237141,
+            13321,
+            432,
+            398,
+            5780,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        },
+        {
+          "request": {
+            "op": "prepare",
+            "messages": [
+              {
+                "role": "system",
+                "content": "Svar på dansk."
+              },
+              {
+                "role": "user",
+                "content": "Hej"
+              },
+              {
+                "role": "assistant",
+                "content": "Hej! Hvad kan jeg hjælpe med?"
+              },
+              {
+                "role": "user",
+                "content": "Hvad er 2 + 2?"
+              }
+            ]
+          },
+          "rendered": "<bos><|turn>system\nSvar på dansk.<turn|>\n<|turn>user\nHej<turn|>\n<|turn>model\nHej! Hvad kan jeg hjælpe med?<turn|>\n<|turn>user\nHvad er 2 + 2?<turn|>\n<|turn>model\n",
+          "training_tokens": [
+            2,
+            105,
+            9731,
+            107,
+            236773,
+            1967,
+            6504,
+            234683,
+            236761,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            177831,
+            106,
+            107,
+            105,
+            4368,
+            107,
+            177831,
+            236888,
+            640,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            2087,
+            236743,
+            236778,
+            900,
+            236743,
+            236778,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "gguf_tokens": [
+            2,
+            105,
+            9731,
+            107,
+            236773,
+            1967,
+            6504,
+            234683,
+            236761,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            177831,
+            106,
+            107,
+            105,
+            4368,
+            107,
+            177831,
+            236888,
+            640,
+            38023,
+            7144,
+            26712,
+            180801,
+            635,
+            1470,
+            236881,
+            106,
+            107,
+            105,
+            2364,
+            107,
+            236814,
+            38023,
+            2087,
+            236743,
+            236778,
+            900,
+            236743,
+            236778,
+            236881,
+            106,
+            107,
+            105,
+            4368,
+            107
+          ],
+          "matches": true
+        }
+      ],
+      "exit_code": 0
+    }
+  }
+}

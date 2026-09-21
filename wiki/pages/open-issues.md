@@ -4,10 +4,16 @@ title: Open Issues
 description: Known blockers, technical risks, and future improvements.
 tags: [issues, risks, backlog]
 status: stable
-last_updated: 2026-06-01
+last_updated: 2026-09-17
 confidence: medium
 ---
 # Open Issues
+
+## Resumable Training Checkpoints
+
+Verified locally on 2026-06-01: `pretrain.py` saves FSDP2 model and optimizer state under `fsdp2_epoch_<N>` and rank-local carry files as `carry_epoch_<N>.<rank>.pt`, but it has no training resume path. A resumable epoch-boundary checkpoint needs to restore model, optimizer/EMA, carry, optimizer step, next epoch/dataset epoch, scheduler state derived from step, and optionally W&B run identity plus RNG states. Because checkpoints are currently written only after epochs, epoch-boundary resume is much simpler than exact mid-epoch resume; mid-epoch resume would additionally need sampler/data-loader cursor state and partial gradient-accumulation state. Confidence: high.
+
+Superseded on 2026-09-17: the current `pretrain.py` implements `resolve_resume_state` and `load_train_checkpoint`, with epoch, step, and ephemeral-step checkpoints, batch or row-cursor continuation, optimizer state and carry restoration, and optional EMA reset. The June 1 observation above is historical, not a current blocker. Verified by source inspection; no resumed training run was performed during this review. Confidence: high.
 
 ## Full Training Validation
 

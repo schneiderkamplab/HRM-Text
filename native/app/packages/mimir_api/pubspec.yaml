@@ -1,0 +1,11 @@
+name: mimir_api
+description: Shared local API and headless host for the Mimir native runtime.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+dependencies:
+  ffi: ^2.1.4
+  path: ^1.9.1
+dev_dependencies:
+  lints: ^6.0.0

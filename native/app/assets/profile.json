@@ -1,0 +1,24 @@
+{
+  "contextTiers" : [
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768
+  ],
+  "cpuAttentionBytesPerTokenSquared" : 96,
+  "fixedMemoryBytes" : 268435456,
+  "maximumContext" : 32768,
+  "maximumDefaultReply" : 2048,
+  "memoryBytesPerToken" : 2097152,
+  "memoryFraction" : 0.7,
+  "minimumContext" : 1024,
+  "minimumReply" : 512,
+  "name" : "DFM Mimir v1",
+  "promptReserve" : 256,
+  "replyContextDivisor" : 4,
+  "systemPrompt" : "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+  "threads" : 4,
+  "version" : 1
+}

@@ -1,0 +1,140 @@
+{
+  "date": "2026-09-18",
+  "llama_base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "environment": {
+    "os": "macOS",
+    "device": "Apple M2 Max",
+    "engine_state_KV": "F32",
+    "server_model": "logs/mimir-review/mimir-q8_0.gguf",
+    "chat_template": "Mimir checkpoint template; pinned HF prompt/answer references",
+    "server_adapter": "zero-weight fixture; nonzero adapter semantics tested in engine suite"
+  },
+  "release": {
+    "ctest_passed": 7,
+    "ctest_total": 7,
+    "engine_checks": {
+      "hrm_text": 1518,
+      "llama": 1518
+    },
+    "engine_total": 3036,
+    "log": "logs/mimir-state/native-ctest.log"
+  },
+  "cpu_ubsan": {
+    "ctest_passed": 7,
+    "ctest_total": 7,
+    "engine_checks": {
+      "hrm_text": 759,
+      "llama": 759
+    },
+    "engine_total": 1518,
+    "log": "logs/mimir-state/ubsan-ctest.log"
+  },
+  "servers": {
+    "single": {
+      "pass": true,
+      "checks": 24,
+      "report": "logs/mimir-state/server-single.json",
+      "sha256": "b3d82bfddb5f80272138b497a8e33c5d970ea36cedfc8d4e053d0a497889b8f8"
+    },
+    "separate": {
+      "pass": true,
+      "checks": 33,
+      "report": "logs/mimir-state/server-separate.json",
+      "sha256": "3bb9ffc1a059652f43dd6b1014bd6f1fe204cebb0677613b06417edb3065f025"
+    },
+    "unified": {
+      "pass": true,
+      "checks": 33,
+      "report": "logs/mimir-state/server-unified.json",
+      "sha256": "88d68395eb32e26666c61300e0fa3f4656008c136cba72562ce8496cd2d55090"
+    },
+    "fixed-lora": {
+      "pass": true,
+      "checks": 35,
+      "report": "logs/mimir-state/server-fixed-lora.json",
+      "sha256": "1cf2de47c0aea21fcf03e6c0a1ab99daddc181e1cd039ecfa1ff4d09a01ce8c6"
+    }
+  },
+  "server_checks": 125,
+  "independent_reference": {
+    "cpu": {
+      "pass": true,
+      "steps": 27,
+      "passing_steps": 27,
+      "failures": [],
+      "report": "logs/mimir-state/reference-cpu.json",
+      "sha256": "2a5d70f94e2fc88b7e168382cdf5a29d9e18ed5f9a35f7cd1e194056e05d332d"
+    },
+    "metal-unfused": {
+      "pass": true,
+      "steps": 27,
+      "passing_steps": 27,
+      "failures": [],
+      "report": "logs/mimir-state/reference-metal-unfused.json",
+      "sha256": "67ea4ca4df2bc22d7fd00f004e55d957d559118d7609bd202e4a55e6d190f465"
+    },
+    "metal": {
+      "pass": false,
+      "steps": 27,
+      "passing_steps": 26,
+      "failures": [
+        {
+          "case": "causal-control",
+          "sequence": 0,
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.00010558962821960449,
+          "rmse": 2.374077831360791e-05,
+          "top1_matches": 3,
+          "pass": false
+        }
+      ],
+      "report": "logs/mimir-state/reference-metal.json",
+      "sha256": "d5dca9583fabf58057f2d5a2d8bcf224602bdd701a515dc3e3104b1ec3f44531"
+    },
+    "ubsan": {
+      "pass": true,
+      "steps": 27,
+      "passing_steps": 27,
+      "failures": [],
+      "report": "logs/mimir-state/reference-ubsan.json",
+      "sha256": "e6c6f741a44cafbb8a924f99dc1a1bced308037686b7a9208d47adcfcb58a623"
+    }
+  },
+  "ordinary_arch_regressions": {
+    "hrm_text": {
+      "exit_code": 0,
+      "log": "logs/mimir-state/causal-hrm.log"
+    },
+    "llama": {
+      "exit_code": 0,
+      "log": "logs/mimir-state/causal-llama.log"
+    }
+  },
+  "source_sha256": {
+    "llama.cpp/src/llama-context.cpp": "3f34fd7b814707fb2934cd9af75f4056e20304e0dd677bf2f75cb9cf7ebb03d6",
+    "llama.cpp/src/llama-context.h": "58a092ab60110927ebe94dd79c4d44badd184a9fc1a08f3aa445bb7ab386908f",
+    "llama.cpp/src/llama-memory.h": "28cbee812257b3fb6350e5344f87bb72029ea1b639e72e9c4740c49981294a43",
+    "llama.cpp/src/llama-kv-cache.cpp": "827148175da47628791217695aed54ae690bb28d165e1517fcc53c33b1e70576",
+    "llama.cpp/include/llama.h": "74562c4aede710e2723378906aef78131c9c4a3fdc66a441aa5294e200c2cd38",
+    "llama.cpp/common/common.cpp": "238e05ec0d1039e7c8a7116acf8cc2da7add26fa4475c96b6ffaedb0e63c7a75",
+    "llama.cpp/tools/server/server-context.cpp": "ff8f691a4d086f207b85de3a50cb1169696947810f3fc19b162f19306682889d",
+    "llama.cpp/tests/test-llama-archs.cpp": "35656467219c0937825aeb887ed203dcb2084fd45914a332920f0d2abd3a44ee",
+    "llama.cpp/scripts/prefix-lm-reference.py": "036d2fd5b9c78d822e084667c9f19ef2b6832de2b4b51e27c0c2478b11612c14",
+    "native/mimir/tests/server_e2e.py": "2fe432270473befab311e94d68fc4e94c8c0cd86a85c1fd7b3d5970c29d791d7"
+  },
+  "packaged_patch_sha256": {
+    "native/mimir/patches/prefixlm-engine.patch": "7e6cf04177648c618f46a632c8c75a1383ce87e107bf49002cda633e8bb3f769",
+    "native/mimir/patches/text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+    "native/mimir/patches/ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519"
+  },
+  "limitations": [
+    "Linux release and ASan/UBSan pending",
+    "Controlled Linux performance comparison pending",
+    "Global backend copy-update failure branch not fault-injected",
+    "Fused Metal retains the existing causal-control 0.00010558962821960449 vs 0.0001 tolerance miss",
+    "No trained-adapter quality claim; host state tests use F32 KV",
+    "Wiki validator retains two unrelated benchmark-charts errors"
+  ]
+}

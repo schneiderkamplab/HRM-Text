@@ -1,0 +1,14 @@
+{
+  "llama_base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "draft": true,
+  "patch_sha256": {
+    "generation-persistence-standalone.patch": "237f55ecea5710bfda971ff0a23a5ad7eda85717716942da79746f183ae762e9",
+    "generation-persistence.patch": "8f1bc66de9be849518bd72f8b423dabb970f24bf9bf748b7cae5a1a517ddbf23",
+    "prefixlm-main.patch": "7b61a5f9bb8789d90f38a08e78e926cd4a86b09cc6c91c6839196b4b23185b60",
+    "text-codec.patch": "fa5069fab3814586eefead0dda2eb9bd86e8a96959bcc8db5e0835532b254a50"
+  },
+  "ggml_prerequisite_sha256": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519",
+  "combined_reconstructs_working_tree": true,
+  "standalone_reconstructs_tested_generic_tree": true,
+  "main_tested_code_unchanged": true
+}

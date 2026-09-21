@@ -1,5 +1,265 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Preserved the XL DFM11 campaign scripts and statistics, improved monitor task labels, and repaired post-epoch-9 EuroEval suite/headline averaging. See [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md). Merged upstream main while retaining both knowledge histories.
+
+- 2026-09-21: Main-promotion preflight for `codex/mimir-apple-mvp`: fetched `origin/main` (`57c3d69`), already an ancestor with no incoming commits or merge conflicts. Flutter analysis and all 46 tests, feedback TypeScript checking and five tests, rebuilt native backend-policy/compaction tests, Swift storage/store checks, and OKF validation passed. Submodule pins remain unchanged. Promotion uses a fast-forward; cross-platform release evidence remains documented in the [app runbook](pages/model-architecture/mimir-app.md).
+
+- 2026-09-21: Preserved the [benchmark score snapshot and chart sources](pages/benchmark-charts.md), moved current rendering to tracked reusable scripts, and distinguished historical builders from current reproduction. Recorded the corrected public Mimir access policy; excluded local checkpoint downloads and tool caches from Git.
+
+- 2026-09-21: Expanded [0.1.1 notes and the policy for all future versions](pages/model-architecture/mimir-app.md#release-description-policy-for-all-versions-2026-09-21); added a version-neutral template and packaging checklist for self-contained descriptions.
+
+- 2026-09-21: Made [0.1.2 release documentation self-contained](pages/model-architecture/mimir-app.md#self-contained-release-descriptions-2026-09-21), including desktop API/headless instructions, installation, model/context controls and feedback consent; versioned the notes for maintenance.
+
+- 2026-09-21: Separated [0.1.0, 0.1.1 and 0.1.2 release history](pages/model-architecture/mimir-app.md#separate-release-history-2026-09-21) into three tags/releases with version-specific assets; verified hashes before removing the old mixed-version copies.
+
+- 2026-09-21: Published and verified [all four 0.1.2 packages](pages/model-architecture/mimir-app.md#012-publication-completed-2026-09-21), with corrected official Q4_K_M weights, 46 passing tests, CI/native/package evidence and matching remote hashes.
+
+- 2026-09-21: Prepared [0.1.2 packages](pages/model-architecture/mimir-app.md#012-package-preparation-2026-09-21) with corrected official Q4_K_M bundled weights.
+
+- 2026-09-21: Added [user-specified third-party HF repositories](pages/model-architecture/mimir-app.md#explicit-third-party-repository-selection-2026-09-21) as local opt-in exceptions to official model discovery and download admission.
+
+- 2026-09-21: Restricted the [model catalog and discovery](pages/model-architecture/mimir-app.md#official-only-model-catalog-policy-2026-09-21) to official repositories whose names contain both Mimir and GGUF, including cached listings.
+
+- 2026-09-21: Published the [official corrected GGUF repository](pages/model-architecture/mimir-app.md#official-gguf-publication-completed-2026-09-21), verified public hashes/sizes, and pinned all three precisions in the app catalog.
+
+- 2026-09-21: Prepared [corrected BF16/Q8_0/Q4_K_M GGUFs](pages/model-architecture/mimir-app.md#corrected-4816-bit-artifacts-prepared-2026-09-21), fixed HRM conversion/reference loading, and recorded 724-case tokenizer plus CPU/Metal generation evidence for each precision.
+
+- 2026-09-21: Corrected the [Mimir tokenizer reference conclusion](pages/model-architecture/mimir-app.md#training-tokenizer-reference-correction-2026-09-21): direct training-loader replay matches noctrex pre-tokenization, not the exported-HF regex fix followed by our bundled GGUF. Saved 19-case evidence; model correction/requalification remains pending.
+
+- 2026-09-21: Extended the [model library](pages/model-architecture/mimir-app.md#official-gguf-discovery-extension-2026-09-21) to merge the curated catalog with official, case-insensitive Mimir GGUF discovery; documented catalog maintenance and unsupported shard handling.
+
+- 2026-09-21: Added the [optional model library](pages/model-architecture/mimir-app.md#2026-09-21-optional-model-library-and-public-checkpoint-inventory), pinned HF downloads and future-model catalog workflow. Recorded seven public repositories and a tokenizer mismatch in the public Q8_0 export.
+
+- 2026-09-21: Added [bounded Mimir prompt/history compaction](pages/model-architecture/mimir-app.md#bounded-prompt-and-history-compaction--2026-09-21), retained original prompt metadata, and documented sanitizer, UI and real-model evidence plus summarization quality limits.
+
+- 2026-09-20: Implemented [optional Mimir feedback](pages/model-architecture/mimir-feedback.md), deployed private EU D1 intake, and recorded consent, single-build network permissions, team review and validation.
+
+- 2026-09-20: Renamed the portable app source directory to `native/app` and its knowledge page to [DFM Mimir App](pages/model-architecture/mimir-app.md); standardized product identities and fresh storage locations.
+
+## 2026-09-20 - Start portable packages and automatic backend fallback
+
+- Added desktop native packaging, platform paths/memory probes, ranked initialization retries and fallback diagnostics.
+- Added Linux/Windows package CI and a physical iOS Metal framework slice.
+- Recorded local CPU/Metal regression checks and separated development artifacts from remaining hardware/release qualification.
+
+## 2026-09-20 - Add experimental MixedLM
+
+- Added opt-in frozen-prefix reuse in llama.cpp and the Flutter client, defaulting off.
+- Recorded CPU/Metal correctness evidence, illustrative latency and an observed quality regression.
+- Superseded the Xcode license blocker with verified Xcode 27.0 setup and native framework builds.
+
+## 2026-09-20 - Add the Flutter client and portable backend selection
+
+- Added a separate Apple-first Flutter client with shared native compaction and a worker-based C ABI.
+- Recorded CPU/Metal/Accelerate/Vulkan checks, existing CUDA evidence, live simulator checks and the Mac accessibility-lifecycle correction.
+- Documented reproducible framework packaging and unqualified future platforms.
+
+## 2026-09-19 - Implement the Apple chat MVP
+
+- Added the shared SwiftUI Mac/iOS app, serialized native bridge and completed-transcript restore.
+- Recorded Mac/Metal and unsigned iOS build evidence, bounded state/storage tests and physical-device gaps.
+- Kept the llama.cpp candidate package and historical Linux evidence unchanged.
+
+## 2026-09-18 - Add the human reviewer hand-off
+
+- Added a patch-by-patch scope map, correctness/API review priorities, evidence guide,
+  known limitations, sanitizer pitfalls and final cleanup checklist.
+- Linked the hand-off from the candidate package, final qualification and Linux record;
+  runtime code, package hashes and measured results remain unchanged.
+
+## 2026-09-18 - Prepare final sanitizer policy and candidate patches
+
+- Recorded accepted numerical limitations without altering measured strict failures.
+- Added a fail-closed CUDA graph-fallback classifier/runner and bounded tests;
+  updated CI and the Linux hand-off, with real-CUDA runner validation still pending.
+- Prepared four reconstructible candidate patches with the Linux fix folded into
+  PrefixLM; retained a standalone generic persistence alternative and source hashes.
+
+## 2026-09-18 Linux PrefixLM qualification
+
+Added the Linux qualification record, existing Conda environment setup, and user-authorized GPU headroom policy. Fixed the ordinary causal-mask regression, recorded fixed-revision validation and portable evidence in the committed Linux report, and preserved outstanding numerical/sanitizer findings.
+
+## 2026-09-18 - Commit the Linux testing hand-off
+
+- Recorded separate llama.cpp commits for ggml, text codec, PrefixLM and persistence.
+- Pinned the combined implementation in the parent repository and committed the
+  harness, source/evidence manifests, workflow, review drafts and Linux instructions.
+- Verified committed source against the tested manifest; Linux qualification remains pending.
+
+## 2026-09-18 - Activate decoder resumption and separate orthogonal patches
+
+- Enabled/tested ordinary causal retained generations across restart and slot remapping,
+  preserving pending tokens, sampler state, OpenAI parsing and legacy prompt/KV files.
+- Split PrefixLM from generic sampler/server persistence and verified isolated builds
+  plus byte-exact patch reconstruction; retained exact-prefix caching and parity in main.
+- Recorded DECODER-RESUMPTION.md, current source/evidence hashes and updated Linux/CI
+  instructions. Linux qualification still precedes final packaging/review.
+
+## 2026-09-18 - Extend sampler/parser persistence and exact-prefix caching
+
+- Implemented grammar, reasoning-budget and graph-safe backend sampler snapshots,
+  OpenAI Chat/Responses continuation, and exact full-prefix cache reuse.
+- Recorded ordinary encoder/decoder parity for custom objects and parent/child groups.
+- Added bounded tests and PERSISTENCE.md; refreshed Linux/CI source verification and
+  CPU/CUDA backend persistence commands. Linux execution and final packaging remain pending.
+
+## 2026-09-18 - Refresh Linux hand-off for ownership/copy qualification
+
+- Expanded `linux-testing.md` with the current source/evidence baseline, shared-owner
+  and bounded-copy acceptance matrix, oracle revision checks and performance coverage.
+- Distinguished proposed persistence/parser/cache extensions from implemented tests;
+  Linux/CUDA execution remains pending.
+
+
+## 2026-09-18 - Implement PrefixLM shared owners and bounded copies
+
+- Added dependency-checked shared input ownership in unified KV, all-owner phase/logits
+  and physical capacity accounting; bounded prefix/answer-head copies work on both layouts.
+- Added shared-owner HF reference cases and bounded regression checks; documented exact
+  limitations and ranked remaining integrations in `native/mimir/SHARING.md`.
+- Updated the Linux hand-off to use the new implementation manifest and oracle cases.
+
+
+## 2026-09-18 - Document Linux CPU/CUDA qualification and CI hand-off
+
+- Added `linux-testing.md` covering source transfer, CPU release/ASan/UBSan, actual
+  CUDA execution and Compute Sanitizer, server restart/quantization, and ABBA timings.
+- Recorded that existing CI applies stale packaged patches and cannot validate the
+  current worktree. Clarified that tests can run now; final packaging waits for evidence.
+
+
+## 2026-09-18 - Extend PrefixLM controls, resumption and mixed scheduling
+
+- Implemented fixed control vectors, boundary-logit and host sampler snapshots,
+  native server generation save/resume, mixed-phase batches and shared physical capacity.
+- Recorded 7/7 release and UBSan suites, 154 server checks, and independent oracle
+  evidence in `native/mimir/RESUMPTION.md`; new larger-batch Metal tolerance failures
+  also occur in the ordinary causal control and remain explicit qualification work.
+- Superseded previous implementation limits in the engine knowledge page. Linux
+  release/sanitizer/performance testing still precedes packaging and human review.
+
+
+## 2026-09-18 - Implement PrefixLM state, forks and fixed LoRA
+
+- Added library context/sequence persistence, full-sequence forks, and fixed LoRA
+  using existing APIs; enabled server shared-prefix children and startup LoRA.
+- Added bounded restore/corruption/branch/adapter tests and corrected the existing
+  KV serializer's sparse-sequence-ID bound; evidence is in `native/mimir/STATE.md`.
+- Distinguished correctness restrictions from server-cache/device-snapshot gaps.
+  Linux qualification still precedes packaging/review.
+
+## 2026-09-18 - Audit PrefixLM parity with existing APIs
+
+- Distinguished decoder persistence/forking from no-cache encoder execution.
+- Recommended fixed adapters, full-sequence forks and persistence as the default
+  generic PrefixLM scope; blanket deferral is not an architectural requirement.
+
+## 2026-09-17 - Enable concurrent PrefixLM sequences
+
+- Replaced context-wide phase state with sequence-local metadata and cleanup.
+- Adapted server scheduling for separate prefix batches and batched answers.
+- Added focused interleaving, abort, capacity, wildcard and actual server-overlap
+  checks, plus independent HF evidence; documented in `native/mimir/SEQUENCES.md`.
+- Kept Linux qualification ahead of patch regeneration and human review.
+
+## 2026-09-17 - Record bounded PrefixLM qualification
+
+- Added four templated HF comparisons across F32/BF16/Q8/Q4 and Metal modes,
+  with conditional likelihood and retained strict-threshold failures.
+- Recorded repeated server timing, peak RSS and noisy causal/bidirectional
+  controls in `native/mimir/QUALIFICATION.md`; no performance clearance claimed.
+- Deferred packaging/review until Linux release, ASan/UBSan and the bounded
+  performance control; remind the user at that workflow boundary.
+
+## 2026-09-17 - Prioritize production PrefixLM PR qualification
+
+- Distinguished supported-contract readiness from optional feature completeness.
+- Prioritized API/sequence design, caller safety, standalone sanitizer CI,
+  templated evaluation, stable benchmarks and minimal upstream packaging.
+- Recorded the user assessment of the small unchanged Metal tolerance miss
+  as calibration work, without waiving broader precision qualification.
+
+## 2026-09-17 - Permit safe PrefixLM answer rollback
+
+- Narrowed memory-operation restrictions and added independent rollback checks.
+- Added mandatory template-token parity to Mimir chat experiments.
+- Corrected the earlier overstatement of Metal reference-suite success; the
+  unchanged strict causal-control failure remains recorded.
+
+## 2026-09-17 - Require Mimir native template for chat experiments
+
+- Recorded the user requirement and training-format context.
+- Marked the earlier raw-text simple-example run as invalid Mimir chat
+  evidence; preserved the historical execution result.
+
+## 2026-09-17 - Audit PrefixLM PR scope and precision
+
+- Added caller adaptations, a patch-local independent Transformers oracle,
+  causal regression controls and BF16/8-bit/4-bit conversion measurements.
+- Recorded sequence-locality design, ranked restrictions and separated format
+  conversion, numerical drift and broader production qualification.
+
+## 2026-09-17 - Implement engine-level PrefixLM
+
+- Added a first-class attention mode and complete-prefix API, moved attention
+  ownership into llama.cpp, and integrated shared server/CLI scheduling.
+- Recorded direct CPU/Metal engine tests, stock-tool/HF parity, cache rejection,
+  abort recovery, clean patch application and remaining support limits.
+
+## 2026-09-17 - Make PrefixLM an engine-level integration requirement
+
+- Recorded the user requirement that generic attention, admission, cache, and
+  lifecycle behavior belong in llama.cpp alongside causal/bidirectional modes.
+- Superseded the app-side phase wrapper as a final architecture; retained it
+  as the validated prototype and regression harness for the engine work.
+
+## 2026-09-17 - Add native Mimir text chat
+
+- Verified complete GGUF text metadata and bit-identical FP32 weights; fixed
+  Mistral splitting, byte fallback, and Unicode Jinja trimming in a saved patch.
+- Added greedy UTF-8 streaming chat with EOS, transactional history, and Ctrl-C
+  recovery. Recorded 724-case text parity, CPU/Metal end-to-end tests, UBSan,
+  and the remaining quantization/platform release gates.
+
+## 2026-09-17 - Implement the minimal native Mimir session
+
+- Added an owned single-conversation runtime with phase-aware prefill/decode,
+  full new-turn recomputation, input/budget limits, and failure/cancellation cleanup.
+- Recorded CPU/Metal reference and lifecycle tests, real-model 4096-context
+  stress, reproducible CI, and remaining tokenizer/device release gates.
+- Applied the retained PrefixLM patch to the registered llama.cpp checkout;
+  preserved the historical comparison worktrees. Recorded an independent ggml
+  graph-size UB fix and the local AddressSanitizer startup blocker.
+
+## 2026-09-17 - Run PrefixLM implementation comparisons
+
+- Preserved the exact historical proposal and a transplant onto the same
+  llama.cpp base as the causal baseline and phase-aware library prototype.
+- Added reproducible pinned fixtures, a native comparison runner, and CPU/Metal
+  correctness results, including real Mimir Danish/English/multi-turn cases.
+- Confirmed the existing patch's same-sequence answer-chunk leakage and the
+  prototype's parity; recorded remaining server and performance-test scope.
+
+## 2026-09-17 - Refine reuse of the existing PrefixLM patch
+
+- Recorded which external patch hunks to retain, strengthen, or replace.
+- Narrowed the replacement to the existing attention switch and batch-phase
+  metadata; clarified sequence isolation and specified targeted regressions.
+
+## 2026-09-17 - llama.cpp PrefixLM source audit
+
+- Added the requested Mimir and llama.cpp fork submodules and recorded their
+  pinned revisions; Mimir currently contains only its license.
+- Documented the HF mask contract, reusable llama.cpp attention switch,
+  limitations of the existing external patch, and staged correctness gates.
+
+## 2026-09-17 - Mimir Apple chat feasibility
+
+- Recorded new llama.cpp HRM support, its remaining PrefixLM gap, and recurrent
+  KV-cache memory accounting for native Apple chat planning.
+- Marked the historical gated-model policy superseded by the current public
+  Hub metadata, while preserving the older demo deployment context.
+
 ## 2026-09-15 - XL DFM11 continuation handoff
 
 - Added [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md): verified

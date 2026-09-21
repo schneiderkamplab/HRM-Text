@@ -1,0 +1,490 @@
+{
+  "date": "2026-09-17",
+  "platform": "macOS-26.4.1-arm64-arm-64bit",
+  "base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "scope": "API/tool audit, independent reference, causal regression and precision characterization; not a completed PR qualification",
+  "patch_check": {
+    "pass": true,
+    "matched_files": [
+      "common/arg.cpp",
+      "common/common.cpp",
+      "common/jinja/string.cpp",
+      "conversion/base.py",
+      "convert_hf_to_gguf_update.py",
+      "examples/simple-chat/simple-chat.cpp",
+      "examples/simple/simple.cpp",
+      "ggml/src/ggml.c",
+      "include/llama.h",
+      "src/llama-context.cpp",
+      "src/llama-context.h",
+      "src/llama-memory.h",
+      "src/llama-model.cpp",
+      "src/llama-vocab.cpp",
+      "src/llama-vocab.h",
+      "src/models/hrm-text.cpp",
+      "src/unicode.cpp",
+      "tests/CMakeLists.txt",
+      "tests/test-llama-archs.cpp",
+      "tools/cli/README.md",
+      "tools/imatrix/imatrix.cpp",
+      "tools/llama-bench/llama-bench.cpp",
+      "tools/perplexity/perplexity.cpp",
+      "tools/server/README.md",
+      "tools/server/server-context.cpp",
+      "tools/server/server-schema.cpp",
+      "docs/development/prefix-lm.md",
+      "scripts/prefix-lm-reference.py",
+      "src/unicode-letter-case.h"
+    ],
+    "patch_sha256": {
+      "prefixlm-engine.patch": "69b57ffd3405b26227f054c621f49b9576854d57a2d3d0fd17d2b4eed9dbf090",
+      "text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+      "ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519"
+    }
+  },
+  "source_sha256": {
+    "common/arg.cpp": "af18335788c6f4fb61c068b313bd17fe1a34b5c7fbc2b5f7fb6ccf846b3267f2",
+    "common/common.cpp": "996e936813001bafbcf8b6fa362cb5fc2bce6d330e636d73df83a5d7e8af7069",
+    "common/jinja/string.cpp": "0be6be31a2377e18a8df442b7db9267e97943c8b186f6f1260f0be682b1126b5",
+    "conversion/base.py": "13544cb79354f388046eb2480783111f67f7165416ecf5a9776a732fc66878bf",
+    "convert_hf_to_gguf_update.py": "08fcd70d3c50a7b2a225a5e5e43368f21b08e1a63bdc8e868e2aca59ea095934",
+    "examples/simple-chat/simple-chat.cpp": "69e270bb2c7989426a7bf14b4eee68199b773ccb0ff6fbe382527d722445b159",
+    "examples/simple/simple.cpp": "78fdd89dd5e521dcd0ed830b493cb796a9ab42550c8500aa7d1ba74f6793e835",
+    "ggml/src/ggml.c": "60f533a1ca287dd37900cbd4fcb187e5eab9b051243b83e0219b2a12bda0e9c7",
+    "include/llama.h": "6452dbc8f03b71de1d7172d9591f7e784af1b7fe08fdd48758965607f8369e14",
+    "src/llama-context.cpp": "af32ed1df18e96daf81ccc49acd86cc7e9d97000061a85b51eb0f6bad1641bd1",
+    "src/llama-context.h": "0f2f0ce117e33e8eee15ff1833167027b2bb61c45502eb08c4e17b3f35a4227c",
+    "src/llama-memory.h": "8fc6561089f01fe3f83411bbdd38286a0a1a9548af427cb5d43804b50b2ceebc",
+    "src/llama-model.cpp": "c995e973f026dfb70f19932704e7fd809fd8b4f88fe4507dbf1bd1b514ba6ce5",
+    "src/llama-vocab.cpp": "a00fa07714a6f6f93aac0551e8f011b0bb3d32a3f0e5a7f3d226272a7ab23c09",
+    "src/llama-vocab.h": "cc36feded87fd23d3d66befa5373b436089c63e41773feee6e374480a2e93c2c",
+    "src/models/hrm-text.cpp": "fd083798c5a13d3231d0936dc4ce8d138994c2eac9e716e05b8ba9b3e109c8fc",
+    "src/unicode.cpp": "c04568ba24fdb9c3c9a0a555abb537d00f2bd4fb71fc4236f1ddeb4e47da895a",
+    "tests/CMakeLists.txt": "1c938cb07079a8e18155c0f46f8c56331067bc866a14ed6e966c9132346e1919",
+    "tests/test-llama-archs.cpp": "6119385ee3ddc2c281016cd57c792785a5a12de74b2b5fa19187252343c27e2c",
+    "tools/cli/README.md": "b8742849b44e63030a7fac5bf2d06add9e792ebee5c357141bfa454276a23c57",
+    "tools/imatrix/imatrix.cpp": "05e9e6fb13fb86bdeb552eb29dece61e9a4fb37a282d02fa6a958260d5c611dd",
+    "tools/llama-bench/llama-bench.cpp": "7bd1ac2f5fecabdf7fd03a3e62646ab3a5d81b55e298e3ef331d66b86e6c048f",
+    "tools/perplexity/perplexity.cpp": "025da5b2e6ad159d05c8e96f595f42ff553f9c660cd70974a4052913c8e1af6e",
+    "tools/server/README.md": "ef3e409cd46407b6ab3b846a1e9ea4a98842eea7c1fe2a2596902d8dc33713e9",
+    "tools/server/server-context.cpp": "e36e93464386bd51fdf79860642808702a47f78d630dafdb5c5717a540008207",
+    "tools/server/server-schema.cpp": "e81540b3efeb1ad39cdd3297aa6d539334e266da38cb450c38b3f9ca8c046a72",
+    "docs/development/prefix-lm.md": "33451dea40beec27df7d42b820ef78465c93b6d246baf738567347060501b669",
+    "scripts/prefix-lm-reference.py": "8977bd1627bfac43b0a5f1cfaa3a5e5de85dd4aa12be0c27fd226df3a5edb7ab",
+    "src/unicode-letter-case.h": "66750212f3d27989f5f5d9af45d8f7ba1086128de3d08a49b12833834f0783db"
+  },
+  "precision": [
+    {
+      "format": "bf16",
+      "strict_fp32_tolerance_pass": false,
+      "max_abs": 0.034708499908447266,
+      "max_step_rmse": 0.0038606333520459584,
+      "top1_matches": 30,
+      "rows": 30,
+      "all_finite": true,
+      "chunk_single_comparison": [
+        {
+          "case": "danish",
+          "max_abs": 5.245208740234375e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "english",
+          "max_abs": 3.814697265625e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "multiturn",
+          "max_abs": 6.67572021484375e-06,
+          "within_0.03": true
+        }
+      ],
+      "model_sha256": "4d4e70d0491f5b24c602fc186e2e0453847d9ace0fbae51919f5546d526517fd",
+      "report": "logs/mimir-review/precision-bf16.json",
+      "report_sha256": "3eaa9d25819dddc2534b216b15792e41f1801ed4181e13a6063f00049a2ab2eb"
+    },
+    {
+      "format": "q8_0",
+      "strict_fp32_tolerance_pass": false,
+      "max_abs": 0.08169303834438324,
+      "max_step_rmse": 0.018901374371107886,
+      "top1_matches": 30,
+      "rows": 30,
+      "all_finite": true,
+      "chunk_single_comparison": [
+        {
+          "case": "danish",
+          "max_abs": 5.7220458984375e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "english",
+          "max_abs": 5.7220458984375e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "multiturn",
+          "max_abs": 6.67572021484375e-06,
+          "within_0.03": true
+        }
+      ],
+      "model_sha256": "f6fb717b2ab49e273c1dd487cc5f7d0db753a0674265d19d7d07b3fe05279b9f",
+      "report": "logs/mimir-review/precision-q8_0.json",
+      "report_sha256": "cf6cb2226d621a528179c2b7d50c4f85d0c1b205e52cdf088da65e95ac466342"
+    },
+    {
+      "format": "q4_k_m",
+      "strict_fp32_tolerance_pass": false,
+      "max_abs": 0.8180418014526367,
+      "max_step_rmse": 0.1849503272439496,
+      "top1_matches": 30,
+      "rows": 30,
+      "all_finite": true,
+      "chunk_single_comparison": [
+        {
+          "case": "danish",
+          "max_abs": 0.021409034729003906,
+          "within_0.03": true
+        },
+        {
+          "case": "english",
+          "max_abs": 0.015520095825195312,
+          "within_0.03": true
+        },
+        {
+          "case": "multiturn",
+          "max_abs": 0.016300439834594727,
+          "within_0.03": true
+        }
+      ],
+      "model_sha256": "3cf8906f4dd1349c965e7dd873e3995419d34bf846a657840a393c32c89849a5",
+      "report": "logs/mimir-review/precision-q4_k_m.json",
+      "report_sha256": "bb1fb3bb83a67173f0721395590c87a9d56e735ef2e07b3d4b608af97f4f49d8"
+    },
+    {
+      "format": "fp8-q8",
+      "strict_fp32_tolerance_pass": false,
+      "max_abs": 0.3510112762451172,
+      "max_step_rmse": 0.08391657239761993,
+      "top1_matches": 30,
+      "rows": 30,
+      "all_finite": true,
+      "chunk_single_comparison": [
+        {
+          "case": "danish",
+          "max_abs": 3.814697265625e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "english",
+          "max_abs": 3.814697265625e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "multiturn",
+          "max_abs": 6.67572021484375e-06,
+          "within_0.03": true
+        }
+      ],
+      "model_sha256": "2ae6ba5dc10caa6a174154f89d7ac0ca068437e1d21c932deb5c9b3ec6cd09a9",
+      "report": "logs/mimir-review/precision-fp8-q8.json",
+      "report_sha256": "d67fa96dcde2fe282b60f54ebcc080006ca66e7cd0e20b82bc8c72c00ae2d0ef"
+    },
+    {
+      "format": "lab-fp8-q8",
+      "strict_fp32_tolerance_pass": false,
+      "max_abs": 0.3510112762451172,
+      "max_step_rmse": 0.08391657239761993,
+      "top1_matches": 30,
+      "rows": 30,
+      "all_finite": true,
+      "chunk_single_comparison": [
+        {
+          "case": "danish",
+          "max_abs": 3.814697265625e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "english",
+          "max_abs": 3.814697265625e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "multiturn",
+          "max_abs": 6.67572021484375e-06,
+          "within_0.03": true
+        }
+      ],
+      "model_sha256": "8d931ae8be7a19bbb1fbc10cefecd7eec570d5b14ea27a429c506fad058172d5",
+      "report": "logs/mimir-review/precision-lab-fp8-q8.json",
+      "report_sha256": "9053ad2d2bfb558a87249f18698fc5768cb92073e451c3378631209469dba398"
+    },
+    {
+      "format": "awq4-f16",
+      "strict_fp32_tolerance_pass": false,
+      "max_abs": 1.3197312355041504,
+      "max_step_rmse": 0.5597458506689524,
+      "top1_matches": 28,
+      "rows": 30,
+      "all_finite": true,
+      "chunk_single_comparison": [
+        {
+          "case": "danish",
+          "max_abs": 4.76837158203125e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "english",
+          "max_abs": 4.76837158203125e-06,
+          "within_0.03": true
+        },
+        {
+          "case": "multiturn",
+          "max_abs": 6.67572021484375e-06,
+          "within_0.03": true
+        }
+      ],
+      "model_sha256": "1fc7919361f140db0a536ad941e40aff3a265ab791d877a8e5593860d9aef741",
+      "report": "logs/mimir-review/precision-awq4-f16.json",
+      "report_sha256": "f23875a44f76977c62f3a1ff9cdd0bf4a1a370ede230b03d24f46f8fac1746cb"
+    }
+  ],
+  "additional_reports": {
+    "reference-cpu.json": {
+      "path": "logs/mimir-review/reference-cpu.json",
+      "sha256": "be3599a5af960bc632c748af42605cffee4fe7777b1918aea5844b15b738066d",
+      "pass": true
+    },
+    "reference-metal.json": {
+      "path": "logs/mimir-review/reference-metal.json",
+      "sha256": "4daa0eb967107a865f50df57def3228b0a4557ff475659cfbd5c764db2e65be3",
+      "pass": false
+    },
+    "precision-bf16-cpu.json": {
+      "path": "logs/mimir-review/precision-bf16-cpu.json",
+      "sha256": "6572d57aa9d43f77a6f6d5f9b4f0261fbbad623cc3c909e4a5c8402618db309f",
+      "pass": true
+    },
+    "precision-bf16-flash.json": {
+      "path": "logs/mimir-review/precision-bf16-flash.json",
+      "sha256": "95b74c430581df3bf8e4cb9500524a4b237625a4fbde52d818ab750e770cc443",
+      "pass": true
+    },
+    "precision-q4_k_m-flash.json": {
+      "path": "logs/mimir-review/precision-q4_k_m-flash.json",
+      "sha256": "5c479f8c6e42c4a3e9dbdd0201eec81eefab98d4068357d602437aa52c62f48f",
+      "pass": false
+    }
+  },
+  "regression": {
+    "release_ctest": "7/7",
+    "ubsan_ctest": "7/7",
+    "standalone_prefix_ctest": "2/2",
+    "independent_oracle": "14 steps each: CPU release, Metal fused, CPU UBSan",
+    "causal_architectures": [
+      "llama dense/MoE",
+      "hrm_text dense"
+    ],
+    "causal_ppl": {
+      "baseline": 1.0764,
+      "patched": 1.0764,
+      "reported_standard_error": 0.03067,
+      "chunks": 2,
+      "context": 64,
+      "limitation": "Short repeated-text regression control, not a language-quality evaluation"
+    },
+    "imatrix": "One causal calibration chunk succeeded",
+    "simple": "Historical raw-text decode smoke test completed; invalid as Mimir chat evidence (user correction 2026-09-17)",
+    "simple_chat": "Mimir template rejected before decoding; existing error-return cleanup then hit Metal assertion",
+    "performance": {
+      "bench-isolated-0-patched": [
+        {
+          "n_prompt": 32,
+          "n_gen": 0,
+          "avg_ts": 174.181136,
+          "stddev_ts": 20.366573,
+          "samples_ts": [
+            197.57,
+            194.377,
+            166.166,
+            154.467,
+            158.326
+          ]
+        },
+        {
+          "n_prompt": 0,
+          "n_gen": 8,
+          "avg_ts": 9.768541,
+          "stddev_ts": 0.742312,
+          "samples_ts": [
+            10.8459,
+            9.74276,
+            10.0061,
+            9.40274,
+            8.84521
+          ]
+        }
+      ],
+      "bench-isolated-1-baseline": [
+        {
+          "n_prompt": 32,
+          "n_gen": 0,
+          "avg_ts": 58.196536,
+          "stddev_ts": 10.356735,
+          "samples_ts": [
+            59.0827,
+            57.478,
+            74.7537,
+            47.2123,
+            52.4559
+          ]
+        },
+        {
+          "n_prompt": 0,
+          "n_gen": 8,
+          "avg_ts": 5.624514,
+          "stddev_ts": 4.156318,
+          "samples_ts": [
+            3.80921,
+            3.65321,
+            4.26836,
+            3.35568,
+            13.0361
+          ]
+        }
+      ],
+      "bench-isolated-2-baseline": [
+        {
+          "n_prompt": 32,
+          "n_gen": 0,
+          "avg_ts": 66.630867,
+          "stddev_ts": 13.710684,
+          "samples_ts": [
+            65.1337,
+            61.6664,
+            90.4248,
+            55.8806,
+            60.0488
+          ]
+        },
+        {
+          "n_prompt": 0,
+          "n_gen": 8,
+          "avg_ts": 4.230073,
+          "stddev_ts": 0.532677,
+          "samples_ts": [
+            4.11991,
+            5.0929,
+            4.16911,
+            4.14443,
+            3.62401
+          ]
+        }
+      ],
+      "bench-isolated-3-patched": [
+        {
+          "n_prompt": 32,
+          "n_gen": 0,
+          "avg_ts": 54.130341,
+          "stddev_ts": 10.076408,
+          "samples_ts": [
+            54.9192,
+            70.1341,
+            48.8965,
+            43.0975,
+            53.6043
+          ]
+        },
+        {
+          "n_prompt": 0,
+          "n_gen": 8,
+          "avg_ts": 3.785298,
+          "stddev_ts": 0.736768,
+          "samples_ts": [
+            3.85014,
+            3.04911,
+            4.14013,
+            3.09234,
+            4.79477
+          ]
+        }
+      ],
+      "interpretation": "Inconclusive for a performance gate: the same patched binary varied from 54 to 174 tokens/s across isolated prefill runs. Initial overlapping runs are excluded."
+    }
+  },
+  "limitations": [
+    "Local ASan startup hangs; remote Linux CI not run",
+    "Sequence-global state and single sequence ID 0 remain",
+    "Precision comparisons use 30 teacher-forced rows, not a representative quality benchmark",
+    "Direct MLX affine-4 import rejected; AWQ-4 expanded to F16 and loses original memory footprint",
+    "Several legacy examples/tools still need client adaptation or clearer early rejections",
+    "Existing two unrelated OKF validation errors remain"
+  ],
+  "evidence_sha256": {
+    "logs/mimir-review/precision-q8_0.log": "4798d97ebe6c46b2a65a4b11021e04d2c5b9b76e4f43c0af871f2764b2c25e51",
+    "logs/mimir-review/build-tools.log": "1a48afa0dc8680352963d7ca8f8b9b631e740151bf7c4a2af88df941765198cd",
+    "logs/mimir-review/bench-cpu-patched.log": "9917931db74a8fd051a756ea3faeb21b2c4cfad5a45885306d8aadf17456a74f",
+    "logs/mimir-review/simple-chat.log": "f3197ffe76ab0b8c864005f9e0bbe53b88b9e0247d443ca833127da0f8356e2c",
+    "logs/mimir-review/configure-examples.log": "918c42b46b9c345fd64d9bb4892a26e107ce600bff9fe93ad8bbe0b4542b25ad",
+    "logs/mimir-review/bench-isolated-2-baseline.log": "4f72dc0b8947637fb5fb2868f3278b6faa9aaba5ccee5bcf4f0fa84a35b79efb",
+    "logs/mimir-review/bench-depth-reject.log": "06934e46a6ec516c8d668cce597798124e229312fff5d0cc5be557e346cef897",
+    "logs/mimir-review/reference-generate.log": "bf8bb0e1ab55db43af4660af0914c12a70787cf2e16e0200f02d7b05d3c3659f",
+    "logs/mimir-review/ppl-baseline.log": "1b02ec027935d8d59a6a905274feff9fe2ebd7299c6ef02056a68254498c7343",
+    "logs/mimir-review/build-reference-final.log": "85c74daf25beaa898551f3e8eed454bbe42101edc532338b99a0e629b18ca80f",
+    "logs/mimir-review/bench-cpu.log": "e0ebe4437d89eb1f494569b02ca6c5a15a97ea272bccfb89c35cbb944604ff30",
+    "logs/mimir-review/bench-isolated-3-patched.log": "c283d95bd45e40fdc41481334cfcbe8846a0e8f933f55cfe14e689160928789f",
+    "logs/mimir-review/parent-build-final.log": "22542c091d4c41f6c6e22bacddbc4ac43bffef22ffe56a92ca7fd609998ce314",
+    "logs/mimir-review/parent-ctest.log": "535b17e9098db695e8e1d16332c1e360b1e64f1d70a56a8cc07caebf562312b8",
+    "logs/mimir-review/precision-bf16-cpu.log": "490f096bb2c409e2de4a83e57dad496a748ae183dc055ac3ce94bf87149cee28",
+    "logs/mimir-review/bench-isolated-0-patched.log": "e6e3fbd1481784b9b3b9cb109bcedce9a53d2f032747fc647c89ba6283c7f6ab",
+    "logs/mimir-review/wiki-validation.log": "2e6cfba24c54f2ea06e1d1c2859e00a3f5a96cc08d343259b8d2b1beece9e300",
+    "logs/mimir-review/ubsan-reference.log": "5cd14e309c7379b92383205e3ff2c444d9c91445b14988974a04092bfa1beb32",
+    "logs/mimir-review/build-bench-final.log": "5c4268658ad5e2b33983d0851c38aaa558b2acd31d802c30a5e54417abbcf7c2",
+    "logs/mimir-review/simple.log": "ee479839e30440b35c44faf188af10a4a0dbfed782901ee85186166a1c7a0e32",
+    "logs/mimir-review/bench-patched.log": "d4578df9221089ab6619f4f5a02567aa77da48396c5ee8ed51a9f74a8b87063b",
+    "logs/mimir-review/precision-bf16.log": "2d568e4605b791cb4549bc00e5ff9f23b31b8f7b9602ad5a82fb24dc8358c3e7",
+    "logs/mimir-review/ubsan-build.log": "75ef81b3efc62340dfdabb6dcdd8b6efbfb8d5859bc3424d0f16c64fda9ff48f",
+    "logs/mimir-review/build-examples.log": "f3e899794d2c3d7c91fb6a93b302553b8c7482f3fde8b78a899411d301c0fb23",
+    "logs/mimir-review/ubsan-ctest.log": "c180afd912d3aed0a0fb12a2d69e3bdf076f74d477d676cff55722abc7078906",
+    "logs/mimir-review/precision-q4_k_m-flash.log": "03d198aeabd3ee9a076532b1ee3bba0abe840347dd7cf39195c779aa1c8fb288",
+    "logs/mimir-review/causal-llama.log": "147e38c0215534f008a96cc5ea4282ec0ef80ddc2ffe91a0048bd0146a9ef9b2",
+    "logs/mimir-review/quantize-q4.log": "f04b38c3e065f1a15dece22a0b3f47ff3207b5fc621cd71c8e56f76c0650470c",
+    "logs/mimir-review/bench-cpu-baseline.log": "e4129cd45fdd53857bc3501cc70ef8dc70144fb51b0650a6ec38690239e211ca",
+    "logs/mimir-review/precision-bf16-flash.log": "9e45e91e722c6cc82d55d665d45fe0f0e66c039d972840c1bfa26c23a999985a",
+    "logs/mimir-review/bench-baseline.log": "37e80e44a778a231d734f2ee0fd798898c13f684ff84aa609d17aab15111ca8a",
+    "logs/mimir-review/ubsan-build-final.log": "6470c46b7f7dc5383176ad9728bef18cdd3718234c05604489cb4834509debce",
+    "logs/mimir-review/reference-metal.log": "e28f212c82770a0cd7c598917b579685473cb59c4f3b1ce8cca001005d3bb33d",
+    "logs/mimir-review/build-reference.log": "81889b90f43642af80e1bd6563b5efe6362c0e655a6a7745ecca48dd996ccd87",
+    "logs/mimir-review/baseline-build.log": "a060f918d6f8b52d5eb1f2d6fc0bc7712b795c4a870b1d1522a34fbe5b8594c7",
+    "logs/mimir-review/bench-prefix-final.log": "e7d4b44436e6bb2912a6f06eae2ecd7d5c080bbd5e9e5527dba119f09bafd806",
+    "logs/mimir-review/bench-isolated.log": "66d26ae7c04184663bae8bbf96a49a8ec59febf300b10966c31a8e39fa43989d",
+    "logs/mimir-review/precision-run.log": "54821bfd2e4180ff28aa3e1e9336c4b1ea53a2038d63a422cc9f6488d82accce",
+    "logs/mimir-review/ppl-patched.log": "8681452c8469d7cb01593b357d98919399ed6286a7667fa3b13de7380b83ba4c",
+    "logs/mimir-review/causal-hrm.log": "7986e9b3ef31023cee7503fe48f171ca4f04a876bb9b9b82aa41076ad48103e5",
+    "logs/mimir-review/quantize-q8.log": "5f88827d12c3158259637aa848dab58d7f6ef11bdc12e9b55669d5b60663653f",
+    "logs/mimir-review/precision-awq4-f16.log": "2267a86ffdad7f74150a1aa44c87caf984d923007b4b2ac32b91cd867e7e9ecf",
+    "logs/mimir-review/precision-fp8-q8.log": "48cd99a3a259740201893944b02564b12f7032d5775fc810f85a1605d39cbbd1",
+    "logs/mimir-review/reference-cpu.log": "6c6feebfbd5e8624de45297f965fe0668028fb481cb9b24e2ff538ee0d7a112a",
+    "logs/mimir-review/build-adapted.log": "83cacfd92fbbdff045e54f7f7adf0fbe1cbb3cb0e052e8f32b0f9565305fa496",
+    "logs/mimir-review/imatrix.log": "f9bef455d8b7fca1214a2a79dfb97ec9c2ba1ebfa70994e9e173400cbefb4526",
+    "logs/mimir-review/imatrix-reject.log": "4322258c6f3d3f62b65c676c84e236c8a5a4916e0ed3177b4d57c8acc65b2ec6",
+    "logs/mimir-review/precision-q4_k_m.log": "f2fa066cef0bd44d19de62a49f861b2628b92a7293e44820e28fb9cd0f4915c6",
+    "logs/mimir-review/ppl-reject.log": "262b034871938fa8141342052e157b47798f7c6802a7d0b86e60a7c31219c073",
+    "logs/mimir-review/bench-isolated-1-baseline.log": "baa519bf617b30c3494dc3c8e2b678ec7ba077c8e44ba8a2f42490dc3d22ea84",
+    "logs/mimir-review/ctest-prefix.log": "64c7a8f413341e88a2ebc3b178ae707eb4b55df01e8d4ff39b30e3e5d5e2c09c",
+    "logs/mimir-review/bench-split-reject.log": "9efde060803a61f832e9cca72fc48af30143899863ec914a4aa05fdb49326432",
+    "logs/mimir-review/final-runs.log": "5b25cc6ef4f7a8ed0891d3a2f573c912cdc56ab714003b4c006cb832db995c98",
+    "logs/mimir-review/hf-reference.log": "dd0355197e22f8183862661af67e532239f985b7bbd3ce357d27348fc16c18c3",
+    "logs/mimir-review/bench-q8.log": "cccfd6aa85b0f01c3fb72a21395401d7abd927863f59fcbcaf1177d417a55459",
+    "logs/mimir-review/precision-lab-fp8-q8.log": "13fd3f016d16ccc83c622f6dbf9409c5a28bedd4f094544e71a43504b38bd803"
+  },
+  "chat_protocol_correction": {
+    "date": "2026-09-17",
+    "source": "User instruction: model was pretrained with its chat template, never without",
+    "requirement": "All Mimir chat experiments use the checkpoint own chat template and matching tokenizer; no raw text or substitute template fallback",
+    "superseded_evidence": [
+      "regression.simple as Mimir chat validation"
+    ],
+    "scope": "Templated HF/chat parity remains applicable; untemplated controls are not chat-quality evidence"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "release-candidate; final Linux sanitizer runner validation pending",
+  "base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "qualified_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "combined_tree": "d73038a33ed550f33de99c8469d0260c93bbeba4",
+  "main_tree": "6e749bff0d8dde9375a99d8c80e159d1bea75a0c",
+  "standalone_tree": "a69c2a01b826525faf2fc34032d72380dab00e2c",
+  "patch_sha256": {
+    "01-ggml.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519",
+    "02-text-codec.patch": "a934fe333c471644f7086f5fcf6cc409ac2065780e6add77d95a488551df8c0b",
+    "03-prefixlm.patch": "76fc0494f78c59b7fe88325fc5a4f614f77c98942eb1c1dd5faf0fc5b7b5d88a",
+    "04-generation-persistence.patch": "196bf6ef05e5768758dce0b587a2564ea28522a6eaa40b4f7f7cf5584078c47b",
+    "generation-persistence-standalone.patch": "237f55ecea5710bfda971ff0a23a5ad7eda85717716942da79746f183ae762e9"
+  },
+  "trees_after_application": {
+    "01-ggml.patch": "679d54d73f9377310692b5f7ffe4d7e4fda6627e",
+    "02-text-codec.patch": "9f8c8826802cab4415f91c582462034cc1169c07",
+    "03-prefixlm.patch": "6e749bff0d8dde9375a99d8c80e159d1bea75a0c",
+    "04-generation-persistence.patch": "d73038a33ed550f33de99c8469d0260c93bbeba4",
+    "generation-persistence-standalone.patch": "a69c2a01b826525faf2fc34032d72380dab00e2c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "branch": "codex/prefixlm-linux-testing",
+  "llama_base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "llama_head": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+  "llama_tree": "d73038a33ed550f33de99c8469d0260c93bbeba4",
+  "commits": [
+    {
+      "commit": "c3e60e59dd065fae4679e1d670adffbc3efa96ec",
+      "subject": "ggml: avoid signed overflow in graph size calculation"
+    },
+    {
+      "commit": "0b29d4555816e0f60b25c48be4be58257d79b379",
+      "subject": "tokenizer: support Mimir text codec and Unicode template operations"
+    },
+    {
+      "commit": "b417698f58084c38912072b03493d1196b390e6a",
+      "subject": "llama: add PrefixLM attention and sequence lifecycle support"
+    },
+    {
+      "commit": "6f60f7472fead8da5289e06c9d79b47dd4763043",
+      "subject": "server: persist samplers and resume retained text generations"
+    },
+    {
+      "commit": "8f4f4ef8f3139d7d262763936f1f34e48ad46d9c",
+      "subject": "llama: restore ordinary causal mask performance"
+    }
+  ],
+  "source_manifest": "linux-source-manifest.json",
+  "qualification": "Linux qualification executed; causal-prefill regression fixed. Strict numerical and default CUDA memcheck findings remain open; see LINUX-TESTING-REPORT.md.",
+  "received_llama_head": "6f60f7472fead8da5289e06c9d79b47dd4763043"
+}

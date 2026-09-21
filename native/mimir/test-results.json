@@ -1,0 +1,549 @@
+{
+  "date": "2026-09-17",
+  "scope": "Single-conversation embedded token-in/logits-out runtime; not an app or server release",
+  "suites": {
+    "release": {
+      "platform": "macOS-26.4.1-arm64-arm-64bit",
+      "machine": "arm64",
+      "runner_sha256": "b8d2113dea36962882edc3fc482ee0e3683bc18728e9e5d1f343d7c8c0a12d9f",
+      "library_sha256": {
+        "libggml-base.0.24.0.dylib": "8c9d8da3312b9583fe177b97e67ea0bbed798088f54811e49359a01407b2c083",
+        "libggml-base.0.dylib": "8c9d8da3312b9583fe177b97e67ea0bbed798088f54811e49359a01407b2c083",
+        "libggml-base.dylib": "8c9d8da3312b9583fe177b97e67ea0bbed798088f54811e49359a01407b2c083",
+        "libggml-blas.0.24.0.dylib": "8b93a4e09c51fdb97a69b889909cf2d715ed97cc395fd9d7df18dc58f0f92814",
+        "libggml-blas.0.dylib": "8b93a4e09c51fdb97a69b889909cf2d715ed97cc395fd9d7df18dc58f0f92814",
+        "libggml-blas.dylib": "8b93a4e09c51fdb97a69b889909cf2d715ed97cc395fd9d7df18dc58f0f92814",
+        "libggml-cpu.0.24.0.dylib": "82c89037bfdba9d04515382363ca188f22b2b35767200e728060a37a7e1371fa",
+        "libggml-cpu.0.dylib": "82c89037bfdba9d04515382363ca188f22b2b35767200e728060a37a7e1371fa",
+        "libggml-cpu.dylib": "82c89037bfdba9d04515382363ca188f22b2b35767200e728060a37a7e1371fa",
+        "libggml-metal.0.24.0.dylib": "582a806ff7edd7369703e9501735124df240e1b1f2fa65e5e01b2daed28f3b37",
+        "libggml-metal.0.dylib": "582a806ff7edd7369703e9501735124df240e1b1f2fa65e5e01b2daed28f3b37",
+        "libggml-metal.dylib": "582a806ff7edd7369703e9501735124df240e1b1f2fa65e5e01b2daed28f3b37",
+        "libggml.0.24.0.dylib": "aa314c93143b721214e4976b8155c209ae7f94309e1f452be10912de1810b704",
+        "libggml.0.dylib": "aa314c93143b721214e4976b8155c209ae7f94309e1f452be10912de1810b704",
+        "libggml.dylib": "aa314c93143b721214e4976b8155c209ae7f94309e1f452be10912de1810b704",
+        "libllama.0.4.1.dylib": "db2008d83976e6626672f37b368d7976a3bb818be4e0e646c2095d06eac7c5d9",
+        "libllama.0.dylib": "db2008d83976e6626672f37b368d7976a3bb818be4e0e646c2095d06eac7c5d9",
+        "libllama.dylib": "db2008d83976e6626672f37b368d7976a3bb818be4e0e646c2095d06eac7c5d9"
+      },
+      "llama_revision": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+      "llama_diff_sha256": "08f2e177d6a79bd1e7120340c8a8cb36748eb908c9be84f7aa7e0e6eb8610bf6",
+      "source_sha256": {
+        "native/mimir/CMakeLists.txt": "595da1ba414d075c038920b331072f7107b848b216deaef4224a0954b1651275",
+        "native/mimir/include/mimir/session.h": "eb3a0a2ad29a1bcf91250f843e638a378ce740eb7d7e18edd43130ca4ac287c1",
+        "native/mimir/session.cpp": "f774c9cc4bede2652cc2d8511d028e95f76010a7df7e7e04488e96641909782b",
+        "native/mimir/tests/long_reference.py": "a9d05025ff4806acf1654d43afb2d19327b5929af122e35ee6f11b8cb708b053",
+        "native/mimir/tests/run_matrix.py": "881c19bd3715088657b9f9ee22ac4c23da505891855b3618773f3590852af433",
+        "native/mimir/tests/session.cpp": "4e94bdd7905afa67b7758caa95e7b702823a6550fe076542362d8f269a5265e3"
+      },
+      "raw_report": "logs/mimir-runtime/matrix/summary.json",
+      "raw_report_sha256": "a399d7d8e3ff9e46131c60b511ee2454f6ef632a116166e299c8d0e775559e33",
+      "runs": [
+        {
+          "name": "tiny-true-cpu-off",
+          "pass": true,
+          "checks": 141,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-false-cpu-off",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-absent-cpu-off",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "long-cpu-off",
+          "pass": true,
+          "checks": 221,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-true-cpu-off-f16",
+          "pass": true,
+          "checks": 141,
+          "hf_max_abs": 8.845329284667969e-05,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-false-cpu-off-f16",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 9.362399578094482e-05,
+          "tolerance": 0.003,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-absent-cpu-off-f16",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 9.362399578094482e-05,
+          "tolerance": 0.003,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "long-cpu-off-f16",
+          "pass": true,
+          "checks": 221,
+          "hf_max_abs": 7.763504981994629e-05,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-true-metal-off",
+          "pass": true,
+          "checks": 140,
+          "hf_max_abs": 0.0006518810987472534,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-false-metal-off",
+          "pass": true,
+          "checks": 100,
+          "hf_max_abs": 4.76837158203125e-07,
+          "tolerance": 0.003,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-absent-metal-off",
+          "pass": true,
+          "checks": 100,
+          "hf_max_abs": 4.76837158203125e-07,
+          "tolerance": 0.003,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "long-metal-off",
+          "pass": true,
+          "checks": 220,
+          "hf_max_abs": 0.0009104609489440918,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-true-metal-off-f16",
+          "pass": true,
+          "checks": 140,
+          "hf_max_abs": 0.0007383674383163452,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-false-metal-off-f16",
+          "pass": true,
+          "checks": 100,
+          "hf_max_abs": 4.8100948333740234e-05,
+          "tolerance": 0.003,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-absent-metal-off-f16",
+          "pass": true,
+          "checks": 100,
+          "hf_max_abs": 4.8100948333740234e-05,
+          "tolerance": 0.003,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "long-metal-off-f16",
+          "pass": true,
+          "checks": 220,
+          "hf_max_abs": 0.0009020864963531494,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-true-metal-on",
+          "pass": true,
+          "checks": 140,
+          "hf_max_abs": 0.000669524073600769,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-false-metal-on",
+          "pass": true,
+          "checks": 100,
+          "hf_max_abs": 6.67572021484375e-05,
+          "tolerance": 0.003,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "tiny-absent-metal-on",
+          "pass": true,
+          "checks": 100,
+          "hf_max_abs": 6.67572021484375e-05,
+          "tolerance": 0.003,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": []
+        },
+        {
+          "name": "long-metal-on",
+          "pass": true,
+          "checks": 220,
+          "hf_max_abs": 0.0009561777114868164,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": []
+        },
+        {
+          "name": "real-metal-off",
+          "pass": true,
+          "checks": 145,
+          "hf_max_abs": 0.006497383117675781,
+          "tolerance": 0.03,
+          "model_sha256": "b2661e406e9c0cc4a24d38ef015eca87d9214ec2d374e5725fe35afde63a80e7",
+          "cases_sha256": "6a998ff58f74818c355490d7ac46874efda82e24f2bddecef3620dbbfa24bd33",
+          "full_context_checks": [
+            {
+              "name": "real 4095-token prefix",
+              "pass": true,
+              "prefill_seconds": 17.41074275
+            },
+            {
+              "name": "real 4096-token context boundary",
+              "pass": true
+            },
+            {
+              "name": "real context overflow rejected",
+              "pass": true
+            },
+            {
+              "name": "real context reservation rejected without mutation",
+              "pass": true
+            },
+            {
+              "name": "real full-context session starts shorter new turn",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "real-metal-off-f16",
+          "pass": true,
+          "checks": 145,
+          "hf_max_abs": 0.006497383117675781,
+          "tolerance": 0.03,
+          "model_sha256": "b2661e406e9c0cc4a24d38ef015eca87d9214ec2d374e5725fe35afde63a80e7",
+          "cases_sha256": "6a998ff58f74818c355490d7ac46874efda82e24f2bddecef3620dbbfa24bd33",
+          "full_context_checks": [
+            {
+              "name": "real 4095-token prefix",
+              "pass": true,
+              "prefill_seconds": 15.182471333
+            },
+            {
+              "name": "real 4096-token context boundary",
+              "pass": true
+            },
+            {
+              "name": "real context overflow rejected",
+              "pass": true
+            },
+            {
+              "name": "real context reservation rejected without mutation",
+              "pass": true
+            },
+            {
+              "name": "real full-context session starts shorter new turn",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "real-metal-on",
+          "pass": true,
+          "checks": 145,
+          "hf_max_abs": 0.005324363708496094,
+          "tolerance": 0.03,
+          "model_sha256": "b2661e406e9c0cc4a24d38ef015eca87d9214ec2d374e5725fe35afde63a80e7",
+          "cases_sha256": "6a998ff58f74818c355490d7ac46874efda82e24f2bddecef3620dbbfa24bd33",
+          "full_context_checks": [
+            {
+              "name": "real 4095-token prefix",
+              "pass": true,
+              "prefill_seconds": 15.882579792
+            },
+            {
+              "name": "real 4096-token context boundary",
+              "pass": true
+            },
+            {
+              "name": "real context overflow rejected",
+              "pass": true
+            },
+            {
+              "name": "real context reservation rejected without mutation",
+              "pass": true
+            },
+            {
+              "name": "real full-context session starts shorter new turn",
+              "pass": true
+            }
+          ]
+        }
+      ],
+      "total_checks": 3243
+    },
+    "ubsan": {
+      "platform": "macOS-26.4.1-arm64-arm-64bit",
+      "machine": "arm64",
+      "runner_sha256": "bfdda409e20c4dfe79fb5642d7ea45ab1d8725812b566d27d47c237c477364d2",
+      "library_sha256": {
+        "libggml-base.0.24.0.dylib": "834c8d25107ee60abafda4abdfe8042caf0d82dfb37a7a5216ffdc39e50e0435",
+        "libggml-base.0.dylib": "834c8d25107ee60abafda4abdfe8042caf0d82dfb37a7a5216ffdc39e50e0435",
+        "libggml-base.dylib": "834c8d25107ee60abafda4abdfe8042caf0d82dfb37a7a5216ffdc39e50e0435",
+        "libggml-blas.0.24.0.dylib": "767023863f7558df50a76d5114389d22096d13596765d6dc29ec99147dfd0353",
+        "libggml-blas.0.dylib": "767023863f7558df50a76d5114389d22096d13596765d6dc29ec99147dfd0353",
+        "libggml-blas.dylib": "767023863f7558df50a76d5114389d22096d13596765d6dc29ec99147dfd0353",
+        "libggml-cpu.0.24.0.dylib": "b1b20a67d38fbc47be9a373eb205310a1ad8661d8c3cdab992067a3dc520786f",
+        "libggml-cpu.0.dylib": "b1b20a67d38fbc47be9a373eb205310a1ad8661d8c3cdab992067a3dc520786f",
+        "libggml-cpu.dylib": "b1b20a67d38fbc47be9a373eb205310a1ad8661d8c3cdab992067a3dc520786f",
+        "libggml.0.24.0.dylib": "ad3914d49fb4d2f4178d8d53941d90d7c6613a7416743091e22481071c36eb46",
+        "libggml.0.dylib": "ad3914d49fb4d2f4178d8d53941d90d7c6613a7416743091e22481071c36eb46",
+        "libggml.dylib": "ad3914d49fb4d2f4178d8d53941d90d7c6613a7416743091e22481071c36eb46",
+        "libllama.0.4.1.dylib": "703ddfd94d5b9a3772f018d262df9171f9be8b5a7f86c789774725d52d20c728",
+        "libllama.0.dylib": "703ddfd94d5b9a3772f018d262df9171f9be8b5a7f86c789774725d52d20c728",
+        "libllama.dylib": "703ddfd94d5b9a3772f018d262df9171f9be8b5a7f86c789774725d52d20c728"
+      },
+      "llama_revision": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+      "llama_diff_sha256": "08f2e177d6a79bd1e7120340c8a8cb36748eb908c9be84f7aa7e0e6eb8610bf6",
+      "source_sha256": {
+        "native/mimir/CMakeLists.txt": "595da1ba414d075c038920b331072f7107b848b216deaef4224a0954b1651275",
+        "native/mimir/include/mimir/session.h": "eb3a0a2ad29a1bcf91250f843e638a378ce740eb7d7e18edd43130ca4ac287c1",
+        "native/mimir/session.cpp": "f774c9cc4bede2652cc2d8511d028e95f76010a7df7e7e04488e96641909782b",
+        "native/mimir/tests/long_reference.py": "a9d05025ff4806acf1654d43afb2d19327b5929af122e35ee6f11b8cb708b053",
+        "native/mimir/tests/run_matrix.py": "881c19bd3715088657b9f9ee22ac4c23da505891855b3618773f3590852af433",
+        "native/mimir/tests/session.cpp": "4e94bdd7905afa67b7758caa95e7b702823a6550fe076542362d8f269a5265e3"
+      },
+      "raw_report": "logs/mimir-runtime/ubsan-matrix/summary.json",
+      "raw_report_sha256": "f9f1ba044cd2a50568bc90a910516c612c04d3d9053f6d627be92c2a32b96642",
+      "runs": [
+        {
+          "name": "tiny-true-cpu-off",
+          "pass": true,
+          "checks": 141,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-false-cpu-off",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-absent-cpu-off",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 7.152557373046875e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "long-cpu-off",
+          "pass": true,
+          "checks": 221,
+          "hf_max_abs": 9.5367431640625e-07,
+          "tolerance": 0.0001,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-true-cpu-off-f16",
+          "pass": true,
+          "checks": 141,
+          "hf_max_abs": 8.845329284667969e-05,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-false-cpu-off-f16",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 9.362399578094482e-05,
+          "tolerance": 0.003,
+          "model_sha256": "9ccd30b6d54b7d1bb8954a3c2c5c3fbc0758bb6ba0d31adc3e338161e91c6c43",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "tiny-absent-cpu-off-f16",
+          "pass": true,
+          "checks": 101,
+          "hf_max_abs": 9.362399578094482e-05,
+          "tolerance": 0.003,
+          "model_sha256": "62188ca71a09d5a004354286142fc5babf3565339f32f6adfc419ebdb8f2bd57",
+          "cases_sha256": "640341a0b50f30648644389040e1e7246d8c936796ec398029e57cc43fcb1700",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "name": "long-cpu-off-f16",
+          "pass": true,
+          "checks": 221,
+          "hf_max_abs": 7.763504981994629e-05,
+          "tolerance": 0.003,
+          "model_sha256": "63287797b3ae2c2930bb1c5eef5211350e9d587dd401f2555d88ed75684e5226",
+          "cases_sha256": "bd3ce496785d10129dd10e84fe23fb361659387e653ad53ca45f79b342c59790",
+          "full_context_checks": [
+            {
+              "name": "real CPU abort callback",
+              "pass": true
+            }
+          ]
+        }
+      ],
+      "total_checks": 1128
+    }
+  },
+  "asan": {
+    "status": "not_verified",
+    "reason": "Apple Clang 17 on macOS 26.4.1 hangs initializing ASan shadow memory before main; reproduced with an empty-main binary. DYLD_SHARED_REGION=avoid did not help. Combined ASan/UBSan Linux CI is configured but not yet executed."
+  },
+  "other_checks": {
+    "clang_static_analysis": "passed",
+    "python_compile": "passed",
+    "git_diff_check": "passed",
+    "wiki_validation": "Only two pre-existing benchmark-charts errors remain."
+  }
+}

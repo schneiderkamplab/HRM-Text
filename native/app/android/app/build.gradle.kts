@@ -1,0 +1,80 @@
+plugins {
+    id("com.android.application")
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id("dev.flutter.flutter-gradle-plugin")
+}
+
+android {
+    namespace = "dk.sdu.mimir"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    externalNativeBuild {
+        cmake {
+            path = file("../../../runtime/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
+    androidResources { noCompress += "gguf" }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "dk.sdu.mimir"
+        ndk {
+            // Flutter prepopulates all supported ABIs; this port is ARM64 only.
+            abiFilters.clear()
+            abiFilters += "arm64-v8a"
+        }
+        externalNativeBuild {
+            cmake {
+                targets += "MimirRuntime"
+                arguments += listOf(
+                    "-DGGML_METAL=OFF", "-DGGML_BLAS=OFF", "-DGGML_OPENMP=OFF",
+                    "-DGGML_VULKAN=ON", "-DGGML_CPU_ARM_ARCH=armv8-a",
+                    "-DLLAMA_CURL=OFF", "-DCMAKE_BUILD_TYPE=Release",
+                )
+                // Host shader compiler and header-only SDK dependencies for cross-compilation.
+                mapOf(
+                    "MIMIR_VULKAN_HEADERS" to "Vulkan_INCLUDE_DIR",
+                    "MIMIR_SPIRV_HEADERS_DIR" to "SPIRV-Headers_DIR",
+                    "MIMIR_GLSLC" to "Vulkan_GLSLC_EXECUTABLE",
+                ).forEach { (environment, option) ->
+                    System.getenv(environment)?.let { arguments += "-D$option=$it" }
+                }
+            }
+        }
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION
+        // is added automatically by Flutter. (https://developer.android.com/studio/build/configure-apk-splits#configure-APK-versions)
+        // You can force using the value of versionCode by specifying the `-P force-version-code-ignoring-abi=true`
+        // flag during build.
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
+flutter {
+    source = "../.."
+}

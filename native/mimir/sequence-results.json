@@ -1,0 +1,174 @@
+{
+  "date": "2026-09-17",
+  "base": "c9a5eeeb34ab8f794ea7510ca52d25da13728a5b",
+  "scope": "Multiple live PrefixLM sequences; separate prefix and causal-answer phases; local server cleanup",
+  "source_sha256": {
+    "common/arg.cpp": "af18335788c6f4fb61c068b313bd17fe1a34b5c7fbc2b5f7fb6ccf846b3267f2",
+    "common/common.cpp": "996e936813001bafbcf8b6fa362cb5fc2bce6d330e636d73df83a5d7e8af7069",
+    "common/jinja/string.cpp": "0be6be31a2377e18a8df442b7db9267e97943c8b186f6f1260f0be682b1126b5",
+    "conversion/base.py": "13544cb79354f388046eb2480783111f67f7165416ecf5a9776a732fc66878bf",
+    "convert_hf_to_gguf_update.py": "08fcd70d3c50a7b2a225a5e5e43368f21b08e1a63bdc8e868e2aca59ea095934",
+    "docs/development/prefix-lm.md": "0cb97ebadcd9cf09438b0542eaa4d532bcdb641fe9fca9823a4557c2cafd6990",
+    "examples/simple-chat/simple-chat.cpp": "69e270bb2c7989426a7bf14b4eee68199b773ccb0ff6fbe382527d722445b159",
+    "examples/simple/simple.cpp": "78fdd89dd5e521dcd0ed830b493cb796a9ab42550c8500aa7d1ba74f6793e835",
+    "ggml/src/ggml.c": "60f533a1ca287dd37900cbd4fcb187e5eab9b051243b83e0219b2a12bda0e9c7",
+    "include/llama.h": "a97ce61176b731132d8d99327d4a1aab750249e5abd0f9a167ff0a6d36f92fe7",
+    "scripts/prefix-lm-reference.py": "036d2fd5b9c78d822e084667c9f19ef2b6832de2b4b51e27c0c2478b11612c14",
+    "src/llama-context.cpp": "e43460914bffa12fc533aa729eed8a7bba310c6cbd2b1fd397ef98f3d5947290",
+    "src/llama-context.h": "0f2f0ce117e33e8eee15ff1833167027b2bb61c45502eb08c4e17b3f35a4227c",
+    "src/llama-memory.h": "290a3a405989beefc5033b3828a10e0f5e9301787cc4960194d2f5c03368aebb",
+    "src/llama-model.cpp": "c995e973f026dfb70f19932704e7fd809fd8b4f88fe4507dbf1bd1b514ba6ce5",
+    "src/llama-vocab.cpp": "a00fa07714a6f6f93aac0551e8f011b0bb3d32a3f0e5a7f3d226272a7ab23c09",
+    "src/llama-vocab.h": "cc36feded87fd23d3d66befa5373b436089c63e41773feee6e374480a2e93c2c",
+    "src/models/hrm-text.cpp": "fd083798c5a13d3231d0936dc4ce8d138994c2eac9e716e05b8ba9b3e109c8fc",
+    "src/unicode-letter-case.h": "66750212f3d27989f5f5d9af45d8f7ba1086128de3d08a49b12833834f0783db",
+    "src/unicode.cpp": "c04568ba24fdb9c3c9a0a555abb537d00f2bd4fb71fc4236f1ddeb4e47da895a",
+    "tests/CMakeLists.txt": "1c938cb07079a8e18155c0f46f8c56331067bc866a14ed6e966c9132346e1919",
+    "tests/test-llama-archs.cpp": "292ccfd4ddebbd4b9a74cd1ab39cc266b976fef7fddb6278e497906272412263",
+    "tools/cli/README.md": "736d8d1365bc8d2d0978f993c846f0cccee4c1a965e59c7e49f8fbcd7e513a55",
+    "tools/imatrix/imatrix.cpp": "05e9e6fb13fb86bdeb552eb29dece61e9a4fb37a282d02fa6a958260d5c611dd",
+    "tools/llama-bench/llama-bench.cpp": "7bd1ac2f5fecabdf7fd03a3e62646ab3a5d81b55e298e3ef331d66b86e6c048f",
+    "tools/perplexity/perplexity.cpp": "025da5b2e6ad159d05c8e96f595f42ff553f9c660cd70974a4052913c8e1af6e",
+    "tools/server/README.md": "838ee1c8866ec9f04ae552343eaef3d9295697e3c614908a3f3d29fd18ce353a",
+    "tools/server/server-context.cpp": "2c913209a5ba5c8178686f82d3fc831583fbb0cc0908b9ca05705b59d11019be",
+    "tools/server/server-schema.cpp": "e81540b3efeb1ad39cdd3297aa6d539334e266da38cb450c38b3f9ca8c046a72"
+  },
+  "server_harness_sha256": "c735bfafc7c8d93e3e086acf50a5a9369459866517f8dc63732ed4d51d06837f",
+  "regression": {
+    "release_ctest": {
+      "passed": 7,
+      "total": 7
+    },
+    "ubsan_ctest": {
+      "passed": 7,
+      "total": 7
+    },
+    "standalone_prefix_ctest": {
+      "passed": 2,
+      "total": 2
+    },
+    "direct_cpu_metal_checks": 1652,
+    "direct_cpu_ubsan_checks": 826,
+    "causal_architectures": [
+      "llama dense/MoE",
+      "hrm_text dense"
+    ]
+  },
+  "independent_reference": {
+    "cpu": {
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "sha256": "96959ceab617c307c5649ca9c65864bcba3cc4c31ba57b8291d040a6933756fa"
+    },
+    "metal": {
+      "passed": 26,
+      "total": 27,
+      "failures": [
+        {
+          "case": "causal-control",
+          "sequence": 0,
+          "position": 6,
+          "rows": 3,
+          "finite": true,
+          "max_abs": 0.00010558962821960449,
+          "rmse": 2.374077831360791e-05,
+          "top1_matches": 3,
+          "pass": false
+        }
+      ],
+      "sha256": "6f5906daae721688934c19b74d6a1be0cb6ce5092d2c076a10a5a5f4a8b77261"
+    },
+    "metal-unfused": {
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "sha256": "04665b3b51512b34022d2ddb6df1718c0c398ccf75cb5281273c1375d484c967"
+    },
+    "ubsan": {
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "sha256": "e99fa3626ef259230cde1f08788a9fec419401c87129031dd15ebf8786bf188c"
+    }
+  },
+  "stock_server": {
+    "single": {
+      "pass": true,
+      "checks": 24,
+      "report_sha256": "ea5408424881b6b6f66dd034912508e6f20929d37216386e7dfd13f652cd1793"
+    },
+    "separate": {
+      "pass": true,
+      "checks": 33,
+      "report_sha256": "748b2dd8de9937cd67d3c38098fce2c3ca064ff9c1cb159b6b7c0a56e40c9f07"
+    },
+    "unified": {
+      "pass": true,
+      "checks": 33,
+      "report_sha256": "57926010c3db1ce6d29cea663317dcc48bab23ccdc0fb9bbf095689617a79339"
+    }
+  },
+  "packaging": "Deferred until Linux release/ASan/UBSan and bounded performance control; patch files retain earlier snapshot",
+  "patch_sha256": {
+    "prefixlm-engine.patch": "7e6cf04177648c618f46a632c8c75a1383ce87e107bf49002cda633e8bb3f769",
+    "text-codec.patch": "dda706290f2fd30730a3eba15ad72ca9c8a37c8c44f212973282b635b96af071",
+    "ggml-graph-size.patch": "9fa68e7205b111ac0c1ae0452ad9b4914f062e37aa66a67d52264f7ec6777519"
+  },
+  "remaining": [
+    "Linux release/ASan/UBSan",
+    "Controlled no-regression performance evidence",
+    "API and deferred-feature scope agreement",
+    "Upstream CI/evidence integration and tolerance policy",
+    "Packaging and human review after Linux"
+  ],
+  "evidence_sha256": {
+    "native-final-build.log": "c5787183b8676df332501e7302490cfcad58b5538916a67e4c275d5a8df8d647",
+    "server-separate.json": "748b2dd8de9937cd67d3c38098fce2c3ca064ff9c1cb159b6b7c0a56e40c9f07",
+    "reference-ubsan.log": "6e70d11699fe982e17f4a570ff5327ed9d4b82656ffda0ec766ced4e152be7e0",
+    "server-single-driver.log": "602ed7c63f236f6c86ea5a0c6336068a4b8261d58da1243c49f07e4a68618467",
+    "reference-generate.log": "1b85a23e3c8176340d99297258b6bf8e727801159ada0bc905350be4983cf4df",
+    "llama.log": "4ed19fa50db1ed8c9c5b0b415a914818a2fc8450dd0245a49e2ae961546dd36d",
+    "server-separate.log": "bee36393749f8551c9aeafed6e1e075c0674918db9cd243516682748cf651892",
+    "server-unified.log": "c346c7cc7cb41e3717bbde46d4a4acbfd08f4eb0e251bf9a3150e64af12bbe41",
+    "reference-metal.json": "6f5906daae721688934c19b74d6a1be0cb6ce5092d2c076a10a5a5f4a8b77261",
+    "reference-ubsan-spec.json": "abe5dac67b94de53ad6ae051d5a6a5acaf0ebb8e9e1517bf91278b64871ac2d5",
+    "native-tests-detail.log": "3c8adf51d45873f2b00a76dc39bf8dfb18bda73ca7c292b657e841dca9d44996",
+    "wiki-validation.log": "2e6cfba24c54f2ea06e1d1c2859e00a3f5a96cc08d343259b8d2b1beece9e300",
+    "ubsan-build.log": "a5c87be329216fbf9d1b89cbc84e151768e4d5f76e8b400ad17befacebd8cf46",
+    "run-references.py": "fd8a99d3f7037dc44ce7b021eecdaa33d03e40427803cca9a11cb0a1310a42a4",
+    "ubsan-ctest.log": "9e826c285988c35d480e0f1f46dabc0d060aa99184516ae95f1492a70483ca22",
+    "reference-metal-spec.json": "642f44ade5c291621cfc00c76fb7c1357f1536465486402310c92a4ae5cabdd6",
+    "causal-llama.log": "147e38c0215534f008a96cc5ea4282ec0ef80ddc2ffe91a0048bd0146a9ef9b2",
+    "hrm.log": "676e08e821a41b37c27b3ca8b1830901d4e7267cfe0e048f0ec367e9e90191b2",
+    "server-single.log": "534c6da6688439356166b8b29fdffb34b0c722d942edf107044014d2b4bdd900",
+    "reference-metal.log": "f7ca3d2a9ca243ef2e95383e68458041842a43e60e550659ec805e6d8101884e",
+    "server-unified-driver.log": "498cb8fb2546af1016ca50fcfcc7a425110e5a1b3262024c2b55645972c1e69b",
+    "reference-metal-unfused-spec.json": "ca576902eedac370ac0080690ffb60fbd94095f568d2b634f739d19323ee3a7b",
+    "engine-ctest.log": "16efbf3092d2d90bc906747975d1dc40cbb0265425517de9b6db26c8ab1a042d",
+    "ubsan-tests-detail.log": "7a4d65171486495e2d7590ce71e8c33ccf933f927cb73e4c4a6757e744411b51",
+    "ubsan-llama.log": "5ade6d670e244714065093872e3191801bd7e2b42117bc3e381808b304890398",
+    "ubsan-final-build.log": "5c30601ba3c30c79707770e1562925a091c31b07b20e210f6216c0d3964c69a6",
+    "server-build.log": "44bc9f6bc2f50b391aeb87284471c87250e0821ce50f27418acf7fa6d6f0a554",
+    "causal-hrm.log": "7986e9b3ef31023cee7503fe48f171ca4f04a876bb9b9b82aa41076ad48103e5",
+    "reference-metal-unfused.json": "04665b3b51512b34022d2ddb6df1718c0c398ccf75cb5281273c1375d484c967",
+    "reference-driver.log": "b3f687125d894deb268506845d7074e1d142a64495c58f23a5edf565acf34a30",
+    "server-separate-driver.log": "498cb8fb2546af1016ca50fcfcc7a425110e5a1b3262024c2b55645972c1e69b",
+    "server-final-build.log": "bf31806087b60d030d91677bc7273e029cde9ea7fdaedb631c7849be4ad196bb",
+    "reference-cpu.log": "c9c9c47395e480e4e0966fc84f857f63b434c4427b349272c4e40c2baa418689",
+    "ubsan-hrm.log": "5900b5a23881c45def7cb516bddf68b1ba3a08eedcc869ae270c179e4fde14e4",
+    "run-server.py": "5a4623b6c9eb149b16c048136f3891693676dd13f5dd1af822878643c382cd90",
+    "server-single.json": "ea5408424881b6b6f66dd034912508e6f20929d37216386e7dfd13f652cd1793",
+    "server-final-driver.log": "e048efe3aa5fffa85cce5f9c48b534cf78fb38c1253c484fa60be248f849fdd2",
+    "native-ctest.log": "7e7282be01848ad233d9943a54185ac707abe05e2a29218a5331292de2bd0a43",
+    "server-driver.log": "7700fe2b1921d0faf03695a1bbfedc2a821b03345f62b8f3af723b72fad4c585",
+    "reference-metal-unfused.log": "9fa8d4b5c00a4a6b5eea0df44edfea7f1a4f45acc57a537c8ddff152580da715",
+    "reference-cpu-spec.json": "be2542ecf52edbbeb51166089f62726629f6657368a14b683dde733b8d8fed55",
+    "server-separate-stall.log": "ae1216613e994e374d4646583b0a305182a2594baf8816192afc66d7feb168db",
+    "server-unified.json": "57926010c3db1ce6d29cea663317dcc48bab23ccdc0fb9bbf095689617a79339",
+    "reference-cpu.json": "96959ceab617c307c5649ca9c65864bcba3cc4c31ba57b8291d040a6933756fa",
+    "native-build.log": "81bd6b8d47c7de47c43e9e5c2caa6cb6d2fe609acbc1cbe49cc02c189f07e3aa",
+    "reference-ubsan.json": "e99fa3626ef259230cde1f08788a9fec419401c87129031dd15ebf8786bf188c",
+    "build.log": "af6175ae91329621e7f74c8c6ff6e2a2ecbc07ca9c16a639728768ee3bd05e04"
+  }
+}

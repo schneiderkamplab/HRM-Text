@@ -1,0 +1,19 @@
+{
+  "repo": "danish-foundation-models/DFM-Mimir-GGUF",
+  "revision": "4364aaa61279c187b7cd202375915ea962b79afb",
+  "url": "https://huggingface.co/danish-foundation-models/DFM-Mimir-GGUF/commit/4364aaa61279c187b7cd202375915ea962b79afb",
+  "verified_public_files": {
+    "dfm-mimir-bf16.gguf": {
+      "bytes": 3588300960,
+      "sha256": "f2f8940a2e7dc6d6ab53ab68cfa51a52b686d8999033c3fa5b3d7392a885fc48"
+    },
+    "dfm-mimir-q8_0.gguf": {
+      "bytes": 1913200800,
+      "sha256": "b4ac0d7493ffc3e56720c380ac8ed23bf3c16c60900e2bfa7f7551c654b09fce"
+    },
+    "dfm-mimir-q4_k_m.gguf": {
+      "bytes": 1167417504,
+      "sha256": "8c811ca72589112f00306e8b3a23f83944751d13d3fce6dfdb39df8b31726e49"
+    }
+  }
+}

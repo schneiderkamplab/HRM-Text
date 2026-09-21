@@ -1,0 +1,14 @@
+diff --git a/ggml/src/ggml.c b/ggml/src/ggml.c
+index 175281409..54c892936 100644
+--- a/ggml/src/ggml.c
++++ b/ggml/src/ggml.c
+@@ -7444,7 +7444,8 @@ void ggml_build_backward_expand(
+ static void * incr_ptr_aligned(void ** p, size_t size, size_t align) {
+     void * ptr = *p;
+     ptr = (void *) GGML_PAD((uintptr_t) ptr, align);
+-    *p = (void *) ((char *) ptr + size);
++    // The graph size calculation also calls this with a null base.
++    *p = (void *) ((uintptr_t) ptr + size);
+     return ptr;
+ }
+ 
