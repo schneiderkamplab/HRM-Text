@@ -1,5 +1,11 @@
 # Knowledge Bundle Update Log
 
+## 2026-09-15 - XL DFM11 continuation handoff
+
+- Added [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md): verified
+  checkpoint transfer, same-run W&B continuity, and a 50K-step half-LR cosine
+  cooldown using lr_auto. No training was launched.
+
 ## 2026-09-11 - Retain diagnostics without regularization
 
 - Removed the uncommitted MLP auxiliary objective and CE/auxiliary comparison.

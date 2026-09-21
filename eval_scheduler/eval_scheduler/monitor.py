@@ -642,6 +642,20 @@ def blocked_pending_jobs(jobs: list[Job]) -> list[tuple[Job, list[str]]]:
     return blocked
 
 
+def compact_job_id(value: str, width: int = 24) -> str:
+    """Keep the distinguishing ID suffix instead of repeated campaign prefixes."""
+    return value if len(value) <= width else "..." + value[-(width - 3):]
+
+
+def task_first_label(job: Job) -> str:
+    shard = f" shard {job.shard}/{job.shards}" if job.shard is not None else ""
+    model = job_model_label(job)
+    if "@" in model:
+        model, checkpoint = model.rsplit("@", 1)
+        model = f"{checkpoint} {model}"
+    return f"{job.family}:{job.name}{shard} | {model}"
+
+
 def job_model_label(job: Job) -> str:
     metadata = job.metadata
     model = (
@@ -860,8 +874,8 @@ def rich_status_renderable(plan_dir: Path, *, gpus: list[int] | None = None) -> 
         shards = "-" if job.shards is None else str(job.shards)
         task_width = max(24, columns // 2)
         label = clipped(
-            f"{job.job_id} {job_model_label(job)} {job.family}:{job.name} "
-            f"shard {shard}/{shards} batch {event.batch} attempt {event.attempt} elapsed {fmt_seconds(elapsed)}",
+            f"{task_first_label(job)} | batch {event.batch} attempt {event.attempt} "
+            f"elapsed {fmt_seconds(elapsed)} {compact_job_id(job.job_id)}",
             task_width,
         )
         if progress.fraction is None:
@@ -876,7 +890,7 @@ def rich_status_renderable(plan_dir: Path, *, gpus: list[int] | None = None) -> 
             "CPU",
             "-",
             "-",
-            clipped(f"{job.job_id} {job.family}:{job.name}", max(24, columns // 2)),
+            clipped(task_first_label(job), max(24, columns // 2)),
             f"{job.action.value} attempt {event.attempt}",
             fmt_seconds(elapsed),
         )
@@ -920,18 +934,18 @@ def rich_status_renderable(plan_dir: Path, *, gpus: list[int] | None = None) -> 
         )
 
     ready_table = Table(title="Next ready", expand=True, show_lines=False, padding=(0, 1))
-    ready_table.add_column("Job", no_wrap=True)
-    ready_table.add_column("Action", no_wrap=True)
-    ready_table.add_column("Task", no_wrap=True, overflow="ellipsis")
+    ready_table.add_column("Job", max_width=24, no_wrap=True)
+    ready_table.add_column("Action", max_width=22, no_wrap=True)
+    ready_table.add_column("Task", ratio=1, no_wrap=True, overflow="ellipsis")
     ready_table.add_column("Shard", no_wrap=True)
     ready_table.add_column("Batch", no_wrap=True)
     for job in snapshot.ready[:ready_limit]:
         shard = "-" if job.shard is None else str(job.shard)
         shards = "-" if job.shards is None else str(job.shards)
         ready_table.add_row(
-            job.job_id,
+            compact_job_id(job.job_id),
             job.action.value,
-            f"{job_model_label(job)} {job.family}:{job.name}",
+            task_first_label(job),
             f"{shard}/{shards}",
             str(job.retry_batch()),
         )
@@ -941,14 +955,15 @@ def rich_status_renderable(plan_dir: Path, *, gpus: list[int] | None = None) -> 
         ready_table.add_row("none", "", "", "", "")
 
     blocked_table = Table(title="Blocked pending", expand=True, show_lines=False, padding=(0, 1))
-    blocked_table.add_column("Job", no_wrap=True)
-    blocked_table.add_column("Task", no_wrap=True, overflow="ellipsis")
-    blocked_table.add_column("Blocked by", no_wrap=True, overflow="ellipsis")
+    blocked_table.add_column("Job", max_width=24, no_wrap=True)
+    blocked_table.add_column("Task", ratio=2, no_wrap=True, overflow="ellipsis")
+    blocked_table.add_column("Blocked by", ratio=3, no_wrap=True, overflow="ellipsis")
     for job, unmet in snapshot.blocked[:blocked_limit]:
         blocked_table.add_row(
-            job.job_id,
+            compact_job_id(job.job_id),
             f"{job.family}:{job.name}",
-            ", ".join(unmet[:6]) + (f", ... {len(unmet) - 6} more" if len(unmet) > 6 else ""),
+            ", ".join(compact_job_id(dep, 32) for dep in unmet[:6])
+            + (f", ... {len(unmet) - 6} more" if len(unmet) > 6 else ""),
         )
     if len(snapshot.blocked) > blocked_limit:
         blocked_table.add_row(f"... {len(snapshot.blocked) - blocked_limit} more", "", "")

@@ -68,6 +68,8 @@
 
 ## Model and Runtime
 
+* [XL DFM11 Epoch Ten Resume](dfm11-xl-epoch10-resume.md) - Transfer the 2,482,084-step XL endpoint and continue the same run with a 50K LR cooldown.
+
 * [Model Architecture](model-architecture.md) - HRM/CRM variants, checkpoint formats, serving, and resume behavior.
 * [FlashAttention on B200](flashattention-b200.md) - NVIDIA B200 attention and CUDA integration reference.
 * [CUDA 13.2 FA4/Triton Recovery](hrm-cu132-fa4-triton-recovery.md) - Reproducible evaluation-runtime recovery after CUDA/compiler loss.
