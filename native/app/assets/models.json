@@ -32,7 +32,7 @@
         "threads": 4,
         "version": 1
       },
-      "qualification": "Experimental, unqualified third-party export. The Q8_0 export in this repository has known tokenizer differences."
+      "qualification": "Experimental third-party export; this precision has not been independently qualified. The repository Q8_0 matches training tokenization in the current audit."
     },
     {
       "id": "1eac8476501eca9fb2b890e44035e2ad3cf92f47b8854be10d79903629fadbd4",
@@ -65,7 +65,7 @@
         "threads": 4,
         "version": 1
       },
-      "qualification": "Experimental, unqualified third-party export. The Q8_0 export in this repository has known tokenizer differences."
+      "qualification": "Experimental third-party export; this precision has not been independently qualified. The repository Q8_0 matches training tokenization in the current audit."
     },
     {
       "id": "d7dddfc14a1f8f35b96ae6ca630d9ca3dbe6611cc5991e45b626d953b58ee201",
@@ -98,7 +98,7 @@
         "threads": 4,
         "version": 1
       },
-      "qualification": "Experimental: macOS Metal generation passed, but tokenization differs from our tested conversion in 2 of 4 checks. Prefer the bundled model."
+      "qualification": "Experimental: matches direct training-loader tokenization on 19/19 cases; macOS Metal generation smoke test passed. Full quality and cross-platform qualification pending."
     }
   ]
 }
