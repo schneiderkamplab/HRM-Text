@@ -3,8 +3,12 @@
 Prepared from `danish-foundation-models/DFM-Mimir`, revision
 `2844f0178e695d7d9ce182cb660671fd34c76ce5`, using converter commit
 `4122b9a81` in the llama.cpp submodule. Files are in `logs/mimir-corrected/`.
-These are new local artifacts, not replacements for existing release packages
-or the app's bundled asset. They have not yet been uploaded to Hugging Face.
+Published at [danish-foundation-models/DFM-Mimir-GGUF](https://huggingface.co/danish-foundation-models/DFM-Mimir-GGUF),
+revision `4364aaa61279c187b7cd202375915ea962b79afb`. Anonymous HF API verification
+confirmed all three public file sizes and SHA-256 digests match this report.
+[Publication record](hf-gguf/publication.json) retains the pinned revision and hashes.
+This supersedes the earlier local-only publication status. Existing release packages
+and the app's bundled asset have not been replaced.
 
 | File | Bytes | Decimal size | SHA-256 |
 |---|---:|---:|---|

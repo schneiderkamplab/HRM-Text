@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Published the [official corrected GGUF repository](pages/model-architecture/mimir-app.md#official-gguf-publication-completed-2026-09-21), verified public hashes/sizes, and pinned all three precisions in the app catalog.
+
 - 2026-09-21: Prepared [corrected BF16/Q8_0/Q4_K_M GGUFs](pages/model-architecture/mimir-app.md#corrected-4816-bit-artifacts-prepared-2026-09-21), fixed HRM conversion/reference loading, and recorded 724-case tokenizer plus CPU/Metal generation evidence for each precision.
 
 - 2026-09-21: Corrected the [Mimir tokenizer reference conclusion](pages/model-architecture/mimir-app.md#training-tokenizer-reference-correction-2026-09-21): direct training-loader replay matches noctrex pre-tokenization, not the exported-HF regex fix followed by our bundled GGUF. Saved 19-case evidence; model correction/requalification remains pending.

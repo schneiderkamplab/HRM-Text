@@ -112,13 +112,16 @@ void main() {
       );
       expect(find.textContaining('Selected:'), findsOneWidget);
       expect(find.text('DFM Mimir v1 Q4_K_M'), findsOneWidget);
-      expect(store.library.catalog.length, 3);
+      expect(
+        store.library.catalog.map((a) => a.data['repo']),
+        contains('danish-foundation-models/DFM-Mimir-GGUF'),
+      );
       await tester.tap(find.byType(SwitchListTile));
       await tester.pump();
       expect(store.library.online, true);
       expect(store.onlineFeedback, false);
       await tester.scrollUntilVisible(find.textContaining('1.91 GB'), 250);
-      expect(find.textContaining('1.91 GB'), findsOneWidget);
+      expect(find.textContaining('1.91 GB'), findsWidgets);
       expect(tester.takeException(), isNull);
       await store.shutdown();
     },

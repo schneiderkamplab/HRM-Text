@@ -2,6 +2,105 @@
   "version": 1,
   "models": [
     {
+      "id": "8c811ca72589112f00306e8b3a23f83944751d13d3fce6dfdb39df8b31726e49",
+      "name": "DFM Mimir v1 Q4_K_M (training-faithful)",
+      "repo": "danish-foundation-models/DFM-Mimir-GGUF",
+      "revision": "4364aaa61279c187b7cd202375915ea962b79afb",
+      "file": "dfm-mimir-q4_k_m.gguf",
+      "bytes": 1167417504,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Official training-faithful export. 724 tokenizer/template checks, 19 training-audit cases and CPU/Metal chat smoke tests passed. Other devices still need qualification."
+    },
+    {
+      "id": "b4ac0d7493ffc3e56720c380ac8ed23bf3c16c60900e2bfa7f7551c654b09fce",
+      "name": "DFM Mimir v1 Q8_0 (training-faithful)",
+      "repo": "danish-foundation-models/DFM-Mimir-GGUF",
+      "revision": "4364aaa61279c187b7cd202375915ea962b79afb",
+      "file": "dfm-mimir-q8_0.gguf",
+      "bytes": 1913200800,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Official training-faithful export. 724 tokenizer/template checks, 19 training-audit cases and CPU/Metal chat smoke tests passed. Other devices still need qualification."
+    },
+    {
+      "id": "f2f8940a2e7dc6d6ab53ab68cfa51a52b686d8999033c3fa5b3d7392a885fc48",
+      "name": "DFM Mimir v1 BF16 (training-faithful)",
+      "repo": "danish-foundation-models/DFM-Mimir-GGUF",
+      "revision": "4364aaa61279c187b7cd202375915ea962b79afb",
+      "file": "dfm-mimir-bf16.gguf",
+      "bytes": 3588300960,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Official training-faithful export. 724 tokenizer/template checks, 19 training-audit cases and CPU/Metal chat smoke tests passed. Other devices still need qualification."
+    },
+    {
       "id": "156083036084217814592c86d07b596c40a229a9660c08d7b57b983582ee7670",
       "name": "DFM Mimir v1 BF16",
       "repo": "noctrex/DFM-Mimir",

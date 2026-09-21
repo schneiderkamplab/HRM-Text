@@ -514,3 +514,24 @@ Danish/English chat smoke tests. BF16's 259 tensors are bit-identical to the pri
 BF16 export. Full quality/backend/device requalification remains distinct from
 these bounded checks. Existing app assets, release packages and HF repositories
 have not been replaced; these files are prepared locally for subsequent publication.
+
+
+### Official GGUF publication completed, 2026-09-21
+
+The local-only status above is **superseded**: corrected BF16, Q8_0 and Q4_K_M
+files are public at [DFM-Mimir-GGUF](https://huggingface.co/danish-foundation-models/DFM-Mimir-GGUF),
+revision `4364aaa61279c187b7cd202375915ea962b79afb`. Anonymous HF model-info queries
+verified all three sizes and LFS SHA-256 values. The single publication commit
+includes the model card (HF metadata validation passed), license, checksums,
+provenance and bounded validation results. The uploader used existing org-admin
+credentials; no credentials were copied into the upload folder or app assets.
+
+The app catalog now pins these three official files ahead of the retained third-party
+entries, with model-specific profiles. Automatic discovery also finds this new
+Mimir repository. [Publication record](../../../native/mimir/hf-gguf/publication.json)
+retains revision and file hashes; [model card source](../../../native/mimir/hf-gguf/README.md)
+is versioned in this repo. No preview application packages or bundled app asset
+were rebuilt/replaced in this publication step.
+
+Publication/catalog validation: static analysis clean and all 41 app tests pass
+with the expanded six-entry curated catalog.

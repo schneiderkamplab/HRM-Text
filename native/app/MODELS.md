@@ -195,3 +195,21 @@ curated precedence, cached-source recovery and visible unsupported shards.
 Corrected local BF16, Q8_0 and Q4_K_M artifacts have now been prepared and tested.
 See [preparation and results](../mimir/CORRECTED-GGUFS.md). Existing published
 packages still contain the old bundled artifact until explicitly rebuilt.
+
+
+## Official GGUF publication, 2026-09-21
+
+The earlier statements that the official organization has no GGUFs and that our
+corrected artifacts are local-only are **superseded**. The public repository is
+[danish-foundation-models/DFM-Mimir-GGUF](https://huggingface.co/danish-foundation-models/DFM-Mimir-GGUF),
+revision `4364aaa61279c187b7cd202375915ea962b79afb`, containing our corrected BF16,
+Q8_0 and Q4_K_M exports. All three remote sizes/LFS SHA-256 hashes were verified
+without authentication. The repository includes a model card, original Apache
+license, checksums, provenance and validation results.
+
+The curated catalog now lists these official artifacts first, with the validated
+Mimir v1 profile and pinned revision. The three third-party entries remain available.
+Official automatic discovery also finds the new repository; curated metadata wins
+for duplicate files. Refresh the catalog with model networking enabled to see them.
+Existing preview packages have not been rebuilt, and their bundled weights remain
+unchanged. Manual GGUF import can use the new files in those packages.
