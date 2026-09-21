@@ -9,6 +9,115 @@ confidence: high
 ---
 # H and L Learning Rates
 
+## DFM11 XXL-Wide Cosine at 400K (2026-09-18)
+
+Post-cooldown check, 2026-09-20: base LR stayed 1.875e-5 throughout
+425--450K. The same analysis script/settings produced
+`docs/xxl-wide-dfm11-post-cooldown-425k-450k.{md,json}`. Means for
+425--430K versus 445--450K were loss 0.79367 -> 0.79224, token accuracy
+80.89966% -> 80.89347%, exact accuracy 34.99401% -> 35.08531%.
+No adjacent comparison survived report-wide Holm correction; all final
+440--450K trend intervals include zero. The cooldown gains persisted,
+but subsequent local progress was weak/flat rather than clearly sustained.
+
+Verified 2026-09-20 from local history: decay reached base 1.875e-5 at
+425K, with BP8 throughout. Reused the existing uncertainty script for 5K
+windows from 390K through 425K and trailing 10K trends (500-step dependence
+blocks, 100000 bootstrap draws). Results:
+`docs/xxl-wide-dfm11-cooldown-400k-425k.{md,json}`. Compared with 395--400K,
+420--425K mean loss fell from 0.81296 to 0.79779, token accuracy rose from
+80.48459% to 80.78947%, and exact accuracy from 33.99493% to 34.79793%.
+The improvement is descriptive, not proof that decay caused it. One adjacent
+exact-accuracy comparison survives joint correction over this report's
+39 comparisons/trends; the final 415--425K slopes do not survive correction.
+
+User-approved change supersedes the constant-LR DFM11 continuation below.
+All nine pending training rows targeting 450K and later now use
+`lr=3.75e-5 lr_auto=true lr_min_ratio=0.5 lr_decay_start_step=400000
+lr_decay_end_step=425000`. The running segment ending at 400K is unchanged.
+The 400K evaluation runs before the next training segment as scheduled.
+Cosine decay ends at 425K and its floor holds for the remainder of the epoch.
+At BP8/H2/L3, final base/embedding/head LR is 1.875e-5, H 9.375e-6,
+and L 3.125e-6. No rewarm, optimizer reset, EMA reset or BP change.
+PlanLock-protected backup: `plan.before-dfm11-cosine-400k-425k.tsv` in
+`logs/scheduler/dfm10_XL_epoch9_20260831`. This records scheduling, not
+confirmation that the 400K transition has executed.
+
+## Updated 5K Means and 10K Trends (2026-09-17)
+
+Reused `scripts/analyze_training_log_uncertainty.py` on the local
+`wandb/run-*-dfm10-xxl-wide/run-*.wandb` histories with `--window-steps 5000
+--trend-window-steps 10000 --block-steps 500 --draws 100000`.
+Outputs: `docs/xxl-wide-training-5k-trends.{md,json}`. Latest logged step
+356330; 71 complete windows through 355K, with the incomplete tail excluded.
+All three metrics (loss, token accuracy, exact accuracy) are included.
+The 320--330K trends survive whole-report Holm correction for all three;
+the latest 345--355K trends do not, and all their marginal 95% HAC intervals
+include zero. Latest 350--355K means: 0.8075 loss, 80.8013% token accuracy,
+34.0513% exact accuracy. Late progress is locally flat/noisy, not evidence
+of significant regression. Existing-log analysis only, no evaluation or
+W&B logging; full tables preserve earlier instability and schedule changes.
+
+## XXL-Wide DFM11 Epoch Two Scheduled (2026-09-15)
+
+### Handoff correction, 2026-09-17
+
+Verified completion: DFM10 `epoch_1` was published at step 356640, and
+DFM11 continuation subsequently advanced through 367670 with zero failed
+scheduler rows. BP8/base LR 3.75e-5/auto H and L rates are confirmed in
+the resumed history. The first two DFM11 5K blocks averaged loss
+0.825846 and 0.824072; different dataset composition precludes interpreting
+the level change from DFM10 as a training regression.
+
+Supersedes the assumption below that 353465 was the completed epoch:
+the explicit step stop saved `step_353465` but not `epoch_1`. Its cursor
+was 222101317 of 224091694 rows, leaving 1990377 rows (~0.89%).
+The missing epoch checkpoint caused all ten DFM11 training rows to fail:
+terminal eval barriers released despite blocked upstream training. No
+DFM11 optimizer updates occurred. The completed 353465 eval is retained.
+
+Stopped the idle scheduler and repaired only the DFM11 continuation group
+under PlanLock (backup `plan.before-dfm11-handoff-repair-20260917.tsv`).
+Added `xxlw-dfm11-finish-dfm10-epoch1`, resuming `step_353465` on DFM10
+until iterator exhaustion publishes `epoch_1` (400K is a safety ceiling).
+Per user instruction, no extra evaluation follows these remaining rows;
+DFM11 starts directly, with the next eval at 400K. Later training rows now
+also depend on the preceding training row succeeding, preventing cascading
+missing-checkpoint attempts through terminal barriers. Existing 5233 rows
+and their completed evaluation results were preserved. The nominal end
+step was an underestimate, not evidence of a numerical training failure.
+
+Appended 3200 rows to the active
+`logs/scheduler/dfm10_XL_epoch9_20260831/plan.tsv` under PlanLock, preserving
+all 5233 existing rows. Backup: `plan.before-dfm11-xxl-wide.tsv`.
+`scripts/schedule_dfm11_xxl_wide.py` resumes DFM10 XXL-wide `epoch_1`
+after `xxlw-teardown-353465`, using DFM11 `epoch_1` indices (`epochs=2`).
+New checkpoint directory: `checkpoints/dfm11/XXL-wide-from-dfm10-epoch1`.
+The W&B run remains `DFM5/dfm10-xxl-wide`; optimizer and EMA are retained.
+
+Current effective base LR is held at 3.75e-5 with `lr_auto=true`, no rewarm
+or decay. Fixed BP8/H2/L3 gives H 1.875e-5 and L 6.25e-6. GAS4, global
+batch 262144, FP32 FSDP2, BF16 compute, no activation checkpointing,
+no-sync accumulation and reshard-after-forward=false remain unchanged.
+
+Eval templates clone the existing 353465 suite including standard, DFM,
+EuroEval, merges, averaging, sync and terminal GPU release. Start at 400K,
+then every 50K plus `epoch_2`. Ten boundary slots through 850K provide
+headroom; segment finalization skips unreachable slots once epoch_2 is
+complete, so these are not a request to train beyond that epoch. The progress
+total 747198 is only an estimate; actual dataset exhaustion determines the end.
+Training resumes after terminal eval teardown even if a metric merge fails.
+Persistent-vLLM settings are inherited: utilization 0.9 normally, 0.65 for
+judged tasks with `unsloth/gemma-4-E4B-it`. No servers were started now.
+
+The segment wrapper sets each upcoming eval's fractional epoch from the
+checkpoint row cursor before releasing the eval guard. Final epoch reports
+2.0. CPU tests verify fractional assignment and early-end skipping/release;
+Hydra composition verified all training overrides. Existing running training
+was not interrupted. If a scheduler recovery bypasses an already-completed
+training command before its wrapper finalized the plan, run the script's
+`finalize(plan, target)` recovery helper before releasing its eval guard.
+
 ## Main Merge Schedule Compatibility (2026-09-15)
 
 Merged origin/main through `fc35d95` with the local cosine/rewarm changes.

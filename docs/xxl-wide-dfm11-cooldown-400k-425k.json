@@ -1,0 +1,1747 @@
+{
+  "inputs": [
+    "wandb/run-20260906_015851-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235812-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235815-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235846-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235855-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235920-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235933-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260906_235950-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000010-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000012-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000038-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000103-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000133-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000147-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000241-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000255-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000332-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000422-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_000450-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_001115-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_002527-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_002537-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_002657-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_002850-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_002914-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003044-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003227-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003328-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003331-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003403-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003432-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003652-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003756-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003924-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_003934-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004033-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004055-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004249-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004309-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004322-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004326-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004333-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004340-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004344-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004358-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004423-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004438-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004654-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_004723-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005312-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005333-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005405-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005407-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005412-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005418-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005429-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005502-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_005503-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_013006-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_013013-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_013045-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260907_171518-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063351-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063352-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063422-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063427-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063457-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063511-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063532-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063545-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063602-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063621-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063640-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063714-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063723-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063756-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063943-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_063944-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_064004-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_064125-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_064713-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070047-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070048-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070207-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070403-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070414-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070600-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070753-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070837-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070851-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070910-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_070911-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071121-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071213-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071328-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071352-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071433-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071454-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071641-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071658-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071711-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071714-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071717-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071733-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071734-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071755-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_071757-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072024-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072053-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072255-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072619-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072623-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072654-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072701-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072702-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072835-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072841-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260908_072908-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_093835-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192503-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192507-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192537-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192542-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192612-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192624-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192633-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192642-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192701-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192736-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192746-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192750-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192820-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192834-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192902-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_192928-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_193044-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_193053-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_193105-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_193801-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195125-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195127-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195255-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195447-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195456-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195629-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195815-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195903-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195927-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195929-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_195959-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200156-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200226-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200402-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200446-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200752-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200759-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200841-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200912-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200949-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_200959-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201003-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201009-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201011-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201015-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201017-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201019-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201101-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201248-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201259-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201640-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201811-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201845-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201850-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201852-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201856-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201930-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_201937-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260909_202005-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121321-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121325-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121356-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121400-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121430-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121443-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121447-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121505-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121519-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121554-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121555-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121603-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121638-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121643-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121650-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121756-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121832-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121857-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_121943-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_122559-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_123907-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_123913-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124029-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124222-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124244-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124423-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124609-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124652-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124705-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124719-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_124739-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125000-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125230-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125232-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125522-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125608-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125630-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125821-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125828-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125830-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125839-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125840-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125847-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125854-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125856-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125931-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_125943-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130129-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130149-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130537-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130714-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130716-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130729-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130739-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130741-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130743-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130812-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_130817-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260911_131028-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061217-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061248-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061252-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061322-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061340-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061347-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061352-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061411-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061451-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061455-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061456-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061531-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061538-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061545-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061714-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061730-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061814-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_061849-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_062505-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_063828-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_063956-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064153-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064207-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064341-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064527-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064537-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064646-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064647-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064702-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_064917-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_065154-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_065347-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_065431-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_065959-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070014-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070028-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070109-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070140-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070158-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070202-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070208-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070218-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070219-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070220-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070237-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070301-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070444-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070503-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_070851-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071023-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071032-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071045-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071052-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071057-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071101-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071114-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071130-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071135-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260913_071212-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_031253-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234043-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234049-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234120-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234124-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234154-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234206-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234208-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234224-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234243-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234317-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234323-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234327-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234401-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234402-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234411-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234505-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234536-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234640-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_234650-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260914_235349-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_000738-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_000810-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_000900-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001052-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001109-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001322-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001436-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001458-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001535-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001555-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001605-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_001821-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_002148-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_002347-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_002431-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_002845-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_002907-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003037-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003116-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003117-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003128-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003140-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003146-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003205-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003217-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003259-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003449-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003452-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003525-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003538-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_003921-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004048-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004122-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004123-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004127-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004130-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004134-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004136-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004206-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004212-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_004249-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260915_164442-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170602-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170606-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170636-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170642-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170711-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170725-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170732-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170741-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170803-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170836-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170841-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170912-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170915-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170926-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_170937-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_171103-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_171207-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_171211-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_171857-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173227-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173229-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173355-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173548-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173606-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173748-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_173934-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174033-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174045-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174106-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174150-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174412-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174716-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_174820-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175018-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175553-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175742-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175743-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175826-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175927-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_175955-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180038-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180104-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180139-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180141-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180201-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180210-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180528-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_180603-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181246-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181448-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181529-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181544-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181602-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181609-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181613-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181616-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_181654-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_182703-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_182711-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_182747-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_211946-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_211952-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212022-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212026-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212057-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212112-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212116-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212122-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212146-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212222-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212231-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212256-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212306-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212321-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212436-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212553-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_212602-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_213242-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_214604-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_214609-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_214728-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_214927-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_214943-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215124-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215316-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215332-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215351-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215417-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215430-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_215642-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_220003-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_220152-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_220408-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221008-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221207-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221235-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221317-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221323-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221353-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221415-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221438-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221528-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221604-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221608-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221618-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_221944-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_222033-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_222715-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_222916-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223004-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223012-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223040-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223041-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223051-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223053-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223121-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223700-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260916_223708-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260917_061000-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260917_084625-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192808-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192814-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192845-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192851-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192858-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192914-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192938-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_192952-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193010-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193016-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193033-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193039-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193104-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193107-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193108-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193129-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193150-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193301-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193407-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_193418-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_194106-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_195439-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_195455-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_195608-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_195807-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_195824-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200010-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200156-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200300-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200313-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200320-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200412-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200628-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_200927-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_201059-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_201315-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_201913-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_201921-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202125-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202131-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202207-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202351-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202538-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202557-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202638-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202723-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202733-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_202812-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203039-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203056-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203118-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203459-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203627-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203649-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203652-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203655-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203658-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203700-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203702-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203732-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203739-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260918_203818-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134059-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134103-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134133-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134139-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134147-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134208-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134229-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134243-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134257-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134303-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134333-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134334-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134351-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134353-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134359-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134423-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134437-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134541-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134713-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_134715-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb",
+    "wandb/run-20260920_135315-dfm10-xxl-wide/run-dfm10-xxl-wide.wandb"
+  ],
+  "latest_step": 450000,
+  "duplicates_replaced": 0,
+  "settings": {
+    "logs": [
+      "wandb/run-*-dfm10-xxl-wide/run-*.wandb"
+    ],
+    "ranges": [
+      "390000:395000",
+      "395000:400000",
+      "400000:405000",
+      "405000:410000",
+      "410000:415000",
+      "415000:420000",
+      "420000:425000"
+    ],
+    "window_steps": 5000,
+    "block_steps": 500,
+    "trend_window_steps": 10000,
+    "draws": 100000,
+    "seed": 0,
+    "title": "XXL-Wide DFM11: 400K-425K Cooldown",
+    "output": "docs/xxl-wide-dfm11-cooldown-400k-425k"
+  },
+  "warnings": [],
+  "windows": [
+    {
+      "start": 390000,
+      "end": 395000,
+      "observations": 1000,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 1.0,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.8127852002978325,
+          "ci95": [
+            0.8088165005892515,
+            0.8164266745477915
+          ],
+          "minimum": 0.5952286124229431,
+          "maximum": 1.0295531749725342
+        },
+        "train/accuracy": {
+          "mean": 0.8047718440890312,
+          "ci95": [
+            0.8040999042958021,
+            0.8055190930217505
+          ],
+          "minimum": 0.7637876272201538,
+          "maximum": 0.8527445197105408
+        },
+        "train/exact_accuracy": {
+          "mean": 0.34037754726409913,
+          "ci95": [
+            0.33958465947955846,
+            0.34110594593286514
+          ],
+          "minimum": 0.28849270939826965,
+          "maximum": 0.3983193337917328
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 3.75e-05,
+          "last": 3.75e-05,
+          "minimum": 3.75e-05,
+          "maximum": 3.75e-05
+        },
+        "train/lr_h": {
+          "first": 1.875e-05,
+          "last": 1.875e-05,
+          "minimum": 1.875e-05,
+          "maximum": 1.875e-05
+        },
+        "train/lr_l": {
+          "first": 6.2499999999999995e-06,
+          "last": 6.2499999999999995e-06,
+          "minimum": 6.2499999999999995e-06,
+          "maximum": 6.2499999999999995e-06
+        }
+      }
+    },
+    {
+      "start": 395000,
+      "end": 400000,
+      "observations": 1000,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 1.0,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.8129572578668595,
+          "ci95": [
+            0.807952551215887,
+            0.8175312343791127
+          ],
+          "minimum": 0.6271665692329407,
+          "maximum": 1.0616258382797241
+        },
+        "train/accuracy": {
+          "mean": 0.8048459480404854,
+          "ci95": [
+            0.8039937379822135,
+            0.8057682738125325
+          ],
+          "minimum": 0.7548344731330872,
+          "maximum": 0.8432731628417969
+        },
+        "train/exact_accuracy": {
+          "mean": 0.3399492953121662,
+          "ci95": [
+            0.33876739505007863,
+            0.34113846034258605
+          ],
+          "minimum": 0.27807486057281494,
+          "maximum": 0.40163934230804443
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 3.75e-05,
+          "last": 3.75e-05,
+          "minimum": 3.75e-05,
+          "maximum": 3.75e-05
+        },
+        "train/lr_h": {
+          "first": 1.875e-05,
+          "last": 1.875e-05,
+          "minimum": 1.875e-05,
+          "maximum": 1.875e-05
+        },
+        "train/lr_l": {
+          "first": 6.2499999999999995e-06,
+          "last": 6.2499999999999995e-06,
+          "minimum": 6.2499999999999995e-06,
+          "maximum": 6.2499999999999995e-06
+        }
+      }
+    },
+    {
+      "start": 400000,
+      "end": 405000,
+      "observations": 989,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 0.989,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.8087898648906164,
+          "ci95": [
+            0.8058685994862425,
+            0.8114932359530542
+          ],
+          "minimum": 0.5849222540855408,
+          "maximum": 1.0176900625228882
+        },
+        "train/accuracy": {
+          "mean": 0.8054715711378593,
+          "ci95": [
+            0.8049354125232377,
+            0.8060324705963912
+          ],
+          "minimum": 0.7629556655883789,
+          "maximum": 0.85063636302948
+        },
+        "train/exact_accuracy": {
+          "mean": 0.3410983611165694,
+          "ci95": [
+            0.3398833674731824,
+            0.3422808293000813
+          ],
+          "minimum": 0.2802419364452362,
+          "maximum": 0.39776358008384705
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 3.7499733521943586e-05,
+          "last": 3.570953432226513e-05,
+          "minimum": 3.570953432226513e-05,
+          "maximum": 3.7499733521943586e-05
+        },
+        "train/lr_h": {
+          "first": 1.8749866760971793e-05,
+          "last": 1.7854767161132565e-05,
+          "minimum": 1.7854767161132565e-05,
+          "maximum": 1.8749866760971793e-05
+        },
+        "train/lr_l": {
+          "first": 6.249955586990597e-06,
+          "last": 5.9515890537108545e-06,
+          "minimum": 5.9515890537108545e-06,
+          "maximum": 6.249955586990597e-06
+        }
+      }
+    },
+    {
+      "start": 405000,
+      "end": 410000,
+      "observations": 1000,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 1.0,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.813665000140667,
+          "ci95": [
+            0.8101495383039117,
+            0.8170627870500088
+          ],
+          "minimum": 0.6438391208648682,
+          "maximum": 1.03911554813385
+        },
+        "train/accuracy": {
+          "mean": 0.8046068808436394,
+          "ci95": [
+            0.8038084053620697,
+            0.8053958256527781
+          ],
+          "minimum": 0.7648224234580994,
+          "maximum": 0.84451824426651
+        },
+        "train/exact_accuracy": {
+          "mean": 0.3424795974493027,
+          "ci95": [
+            0.3409578822948039,
+            0.3439391767956317
+          ],
+          "minimum": 0.2857142984867096,
+          "maximum": 0.4069400727748871
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 3.570607048443376e-05,
+          "last": 3.102203432226513e-05,
+          "minimum": 3.102203432226513e-05,
+          "maximum": 3.570607048443376e-05
+        },
+        "train/lr_h": {
+          "first": 1.785303524221688e-05,
+          "last": 1.5511017161132566e-05,
+          "minimum": 1.5511017161132566e-05,
+          "maximum": 1.785303524221688e-05
+        },
+        "train/lr_l": {
+          "first": 5.951011747405626e-06,
+          "last": 5.170339053710855e-06,
+          "minimum": 5.170339053710855e-06,
+          "maximum": 5.951011747405626e-06
+        }
+      }
+    },
+    {
+      "start": 410000,
+      "end": 415000,
+      "observations": 1000,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 1.0,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.8099468552470207,
+          "ci95": [
+            0.8061556309282779,
+            0.8139785806834697
+          ],
+          "minimum": 0.6171428561210632,
+          "maximum": 1.0470328330993652
+        },
+        "train/accuracy": {
+          "mean": 0.8054494216442109,
+          "ci95": [
+            0.8047225281059741,
+            0.8061180837109685
+          ],
+          "minimum": 0.7638550400733948,
+          "maximum": 0.844365656375885
+        },
+        "train/exact_accuracy": {
+          "mean": 0.3433935889899731,
+          "ci95": [
+            0.34225007639303806,
+            0.3445721161328256
+          ],
+          "minimum": 0.27466151118278503,
+          "maximum": 0.4123076796531677
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 3.1016431565473214e-05,
+          "last": 2.5227965677734867e-05,
+          "minimum": 2.5227965677734867e-05,
+          "maximum": 3.1016431565473214e-05
+        },
+        "train/lr_h": {
+          "first": 1.5508215782736607e-05,
+          "last": 1.2613982838867433e-05,
+          "minimum": 1.2613982838867433e-05,
+          "maximum": 1.5508215782736607e-05
+        },
+        "train/lr_l": {
+          "first": 5.169405260912202e-06,
+          "last": 4.204660946289144e-06,
+          "minimum": 4.204660946289144e-06,
+          "maximum": 5.169405260912202e-06
+        }
+      }
+    },
+    {
+      "start": 415000,
+      "end": 420000,
+      "observations": 1000,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 1.0,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.8031682379841805,
+          "ci95": [
+            0.7991735614106059,
+            0.8068760319292546
+          ],
+          "minimum": 0.6044906973838806,
+          "maximum": 1.073632836341858
+        },
+        "train/accuracy": {
+          "mean": 0.8071394362449646,
+          "ci95": [
+            0.8063145818188786,
+            0.8080478429988027
+          ],
+          "minimum": 0.7641346454620361,
+          "maximum": 0.8461112380027771
+        },
+        "train/exact_accuracy": {
+          "mean": 0.3458872462511063,
+          "ci95": [
+            0.3448708327382803,
+            0.3468832970045507
+          ],
+          "minimum": 0.2854442298412323,
+          "maximum": 0.4177852272987366
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 2.5222364064646218e-05,
+          "last": 2.0540465677734865e-05,
+          "minimum": 2.0540465677734865e-05,
+          "maximum": 2.5222364064646218e-05
+        },
+        "train/lr_h": {
+          "first": 1.2611182032323109e-05,
+          "last": 1.0270232838867432e-05,
+          "minimum": 1.0270232838867432e-05,
+          "maximum": 1.2611182032323109e-05
+        },
+        "train/lr_l": {
+          "first": 4.203727344107703e-06,
+          "last": 3.423410946289144e-06,
+          "minimum": 3.423410946289144e-06,
+          "maximum": 4.203727344107703e-06
+        }
+      }
+    },
+    {
+      "start": 420000,
+      "end": 425000,
+      "observations": 1000,
+      "median_spacing": 5.0,
+      "max_gap": 5,
+      "block_observations": 100,
+      "coverage": 1.0,
+      "metrics": {
+        "train/loss": {
+          "mean": 0.797789933681488,
+          "ci95": [
+            0.7942613225311042,
+            0.8012592901200056
+          ],
+          "minimum": 0.5973226428031921,
+          "maximum": 1.0757994651794434
+        },
+        "train/accuracy": {
+          "mean": 0.8078946778178215,
+          "ci95": [
+            0.8072964464202523,
+            0.8085285035848617
+          ],
+          "minimum": 0.7550773620605469,
+          "maximum": 0.8497487306594849
+        },
+        "train/exact_accuracy": {
+          "mean": 0.3479793208241463,
+          "ci95": [
+            0.34690115255340936,
+            0.3491456017009914
+          ],
+          "minimum": 0.2872154116630554,
+          "maximum": 0.412872850894928
+        }
+      },
+      "loss_gt2": 0,
+      "context": {
+        "bp_steps": {
+          "first": 8,
+          "last": 8,
+          "minimum": 8,
+          "maximum": 8
+        },
+        "train/lr": {
+          "first": 2.0537004834157526e-05,
+          "last": 1.875e-05,
+          "minimum": 1.875e-05,
+          "maximum": 2.0537004834157526e-05
+        },
+        "train/lr_h": {
+          "first": 1.0268502417078763e-05,
+          "last": 9.375e-06,
+          "minimum": 9.375e-06,
+          "maximum": 1.0268502417078763e-05
+        },
+        "train/lr_l": {
+          "first": 3.422834139026254e-06,
+          "last": 3.1249999999999997e-06,
+          "minimum": 3.1249999999999997e-06,
+          "maximum": 3.422834139026254e-06
+        }
+      }
+    }
+  ],
+  "adjacent_comparisons": [
+    {
+      "before": [
+        390000,
+        395000
+      ],
+      "after": [
+        395000,
+        400000
+      ],
+      "metric": "train/loss",
+      "delta": 0.00017205756902693992,
+      "ci95": [
+        -0.006011741586029554,
+        0.006194738659262648
+      ],
+      "p_bootstrap": 0.9566204337956621,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        390000,
+        395000
+      ],
+      "after": [
+        395000,
+        400000
+      ],
+      "metric": "train/accuracy",
+      "delta": 7.410395145412974e-05,
+      "ci95": [
+        -0.0010552302211522756,
+        0.0012183082059026597
+      ],
+      "p_bootstrap": 0.8955510444895551,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        390000,
+        395000
+      ],
+      "after": [
+        395000,
+        400000
+      ],
+      "metric": "train/exact_accuracy",
+      "delta": -0.000428251951932912,
+      "ci95": [
+        -0.0018287918478250855,
+        0.0009843357503414127
+      ],
+      "p_bootstrap": 0.5553444465555345,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        395000,
+        400000
+      ],
+      "after": [
+        400000,
+        405000
+      ],
+      "metric": "train/loss",
+      "delta": -0.004167392976243023,
+      "ci95": [
+        -0.009574371653725941,
+        0.001465755253049364
+      ],
+      "p_bootstrap": 0.13788862111378886,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        395000,
+        400000
+      ],
+      "after": [
+        400000,
+        405000
+      ],
+      "metric": "train/accuracy",
+      "delta": 0.0006256230973739063,
+      "ci95": [
+        -0.00043883225880749215,
+        0.0016514144659811208
+      ],
+      "p_bootstrap": 0.23918760812391876,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        395000,
+        400000
+      ],
+      "after": [
+        400000,
+        405000
+      ],
+      "metric": "train/exact_accuracy",
+      "delta": 0.0011490658044031599,
+      "ci95": [
+        -0.0005593626256960874,
+        0.0028296140675914292
+      ],
+      "p_bootstrap": 0.18208817911820882,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        400000,
+        405000
+      ],
+      "after": [
+        405000,
+        410000
+      ],
+      "metric": "train/loss",
+      "delta": 0.004875135250050566,
+      "ci95": [
+        0.00040847104654784255,
+        0.009336841444637995
+      ],
+      "p_bootstrap": 0.03221967780322197,
+      "nominal_detected": true,
+      "p_holm": 0.9021509784902152,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        400000,
+        405000
+      ],
+      "after": [
+        405000,
+        410000
+      ],
+      "metric": "train/accuracy",
+      "delta": -0.000864690294219872,
+      "ci95": [
+        -0.0018334472394025165,
+        9.310907565718434e-05
+      ],
+      "p_bootstrap": 0.07805921940780593,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        400000,
+        405000
+      ],
+      "after": [
+        405000,
+        410000
+      ],
+      "metric": "train/exact_accuracy",
+      "delta": 0.0013812363327332933,
+      "ci95": [
+        -0.0005342604282584262,
+        0.003293930333143113
+      ],
+      "p_bootstrap": 0.15996840031599685,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        405000,
+        410000
+      ],
+      "after": [
+        410000,
+        415000
+      ],
+      "metric": "train/loss",
+      "delta": -0.0037181448936463024,
+      "ci95": [
+        -0.008874935981631265,
+        0.0015950126126409066
+      ],
+      "p_bootstrap": 0.16257837421625784,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        405000,
+        410000
+      ],
+      "after": [
+        410000,
+        415000
+      ],
+      "metric": "train/accuracy",
+      "delta": 0.0008425408005714452,
+      "ci95": [
+        -0.00022444481998676045,
+        0.0018783620297908722
+      ],
+      "p_bootstrap": 0.11766882331176688,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        405000,
+        410000
+      ],
+      "after": [
+        410000,
+        415000
+      ],
+      "metric": "train/exact_accuracy",
+      "delta": 0.0009139915406704002,
+      "ci95": [
+        -0.0009552430994808652,
+        0.0028395693995058864
+      ],
+      "p_bootstrap": 0.34448655513444865,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        410000,
+        415000
+      ],
+      "after": [
+        415000,
+        420000
+      ],
+      "metric": "train/loss",
+      "delta": -0.006778617262840236,
+      "ci95": [
+        -0.012401035425066955,
+        -0.0013676137372851066
+      ],
+      "p_bootstrap": 0.015909840901590984,
+      "nominal_detected": true,
+      "p_holm": 0.47729522704772953,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        410000,
+        415000
+      ],
+      "after": [
+        415000,
+        420000
+      ],
+      "metric": "train/accuracy",
+      "delta": 0.0016900146007537975,
+      "ci95": [
+        0.0006175623133778313,
+        0.0028417411446572337
+      ],
+      "p_bootstrap": 0.0025699743002569973,
+      "nominal_detected": true,
+      "p_holm": 0.0925190748092519,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        410000,
+        415000
+      ],
+      "after": [
+        415000,
+        420000
+      ],
+      "metric": "train/exact_accuracy",
+      "delta": 0.0024936572611332086,
+      "ci95": [
+        0.0009476112745702176,
+        0.004013252133876094
+      ],
+      "p_bootstrap": 0.0012999870001299987,
+      "nominal_detected": true,
+      "p_holm": 0.049399506004939954,
+      "holm_detected": true
+    },
+    {
+      "before": [
+        415000,
+        420000
+      ],
+      "after": [
+        420000,
+        425000
+      ],
+      "metric": "train/loss",
+      "delta": -0.005378304302692483,
+      "ci95": [
+        -0.01052075217813262,
+        -0.00010566961616284954
+      ],
+      "p_bootstrap": 0.04269957300426996,
+      "nominal_detected": true,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        415000,
+        420000
+      ],
+      "after": [
+        420000,
+        425000
+      ],
+      "metric": "train/accuracy",
+      "delta": 0.0007552415728568906,
+      "ci95": [
+        -0.00032988586872817195,
+        0.0017992841646075853
+      ],
+      "p_bootstrap": 0.16508834911650883,
+      "nominal_detected": false,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "before": [
+        415000,
+        420000
+      ],
+      "after": [
+        420000,
+        425000
+      ],
+      "metric": "train/exact_accuracy",
+      "delta": 0.0020920745730400037,
+      "ci95": [
+        0.0006153430052101603,
+        0.0036275842316448727
+      ],
+      "p_bootstrap": 0.006069939300606994,
+      "nominal_detected": true,
+      "p_holm": 0.2063779362206378,
+      "holm_detected": false
+    }
+  ],
+  "trends": [
+    {
+      "start": 385000,
+      "end": 395000,
+      "metric": "train/loss",
+      "slope_per_10k": -0.004654182335082028,
+      "se": 0.003947847103104024,
+      "ci95": [
+        -0.012391820534670202,
+        0.003083455864506147
+      ],
+      "p_hac": 0.238431402015381,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 385000,
+      "end": 395000,
+      "metric": "train/accuracy",
+      "slope_per_10k": 0.001157707678036567,
+      "se": 0.0007340308382523184,
+      "ci95": [
+        -0.0002809663398277999,
+        0.002596381695900934
+      ],
+      "p_hac": 0.11475131805031921,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 385000,
+      "end": 395000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": -0.0007186156610007611,
+      "se": 0.001291321798450937,
+      "ci95": [
+        -0.0032495598983798535,
+        0.0018123285763783311
+      ],
+      "p_hac": 0.5778716982425516,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 390000,
+      "end": 400000,
+      "metric": "train/loss",
+      "slope_per_10k": -0.0004335633336899541,
+      "se": 0.0064421452566583905,
+      "ci95": [
+        -0.013059936119511159,
+        0.012192809452131251
+      ],
+      "p_hac": 0.9463420170750447,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 390000,
+      "end": 400000,
+      "metric": "train/accuracy",
+      "slope_per_10k": 0.00012680958890187556,
+      "se": 0.0012145850892576018,
+      "ci95": [
+        -0.0022537334609798107,
+        0.0025073526387835617
+      ],
+      "p_hac": 0.9168474109272589,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 390000,
+      "end": 400000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": -0.001152618941675677,
+      "se": 0.0010937892900601306,
+      "ci95": [
+        -0.003296406573779091,
+        0.0009911686904277366
+      ],
+      "p_hac": 0.2919812810294409,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 395000,
+      "end": 405000,
+      "metric": "train/loss",
+      "slope_per_10k": -0.010816248761290913,
+      "se": 0.004337576557475105,
+      "ci95": [
+        -0.01931774266118605,
+        -0.0023147548613957746
+      ],
+      "p_hac": 0.012644938604045863,
+      "lag_observations": 100,
+      "observations": 1989,
+      "p_holm": 0.39199309672542176,
+      "holm_detected": false
+    },
+    {
+      "start": 395000,
+      "end": 405000,
+      "metric": "train/accuracy",
+      "slope_per_10k": 0.0017481736048949959,
+      "se": 0.0008015138608273543,
+      "ci95": [
+        0.00017723529217237113,
+        0.0033191119176176204
+      ],
+      "p_hac": 0.029176784498657987,
+      "lag_observations": 100,
+      "observations": 1989,
+      "p_holm": 0.8461267504610817,
+      "holm_detected": false
+    },
+    {
+      "start": 395000,
+      "end": 405000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": 0.0015265870562890954,
+      "se": 0.0016897088921922672,
+      "ci95": [
+        -0.0017851815428876294,
+        0.00483835565546582
+      ],
+      "p_hac": 0.36628097305171614,
+      "lag_observations": 100,
+      "observations": 1989,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 400000,
+      "end": 410000,
+      "metric": "train/loss",
+      "slope_per_10k": 0.0062505525965832025,
+      "se": 0.0034763371353057314,
+      "ci95": [
+        -0.0005629430404791597,
+        0.013064048233645565
+      ],
+      "p_hac": 0.07217252105937828,
+      "lag_observations": 100,
+      "observations": 1989,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 400000,
+      "end": 410000,
+      "metric": "train/accuracy",
+      "slope_per_10k": -0.0010015938962318982,
+      "se": 0.0007741126523436093,
+      "ci95": [
+        -0.0025188268267698883,
+        0.0005156390343060918
+      ],
+      "p_hac": 0.19571356016977862,
+      "lag_observations": 100,
+      "observations": 1989,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 400000,
+      "end": 410000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": 0.0026009592258892074,
+      "se": 0.0017099293592616107,
+      "ci95": [
+        -0.0007504407608066163,
+        0.005952359212585031
+      ],
+      "p_hac": 0.12823684613245082,
+      "lag_observations": 100,
+      "observations": 1989,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 405000,
+      "end": 415000,
+      "metric": "train/loss",
+      "slope_per_10k": -0.006583033613338721,
+      "se": 0.00474982685431066,
+      "ci95": [
+        -0.01589252325402086,
+        0.002726456027343417
+      ],
+      "p_hac": 0.16576145898548844,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 405000,
+      "end": 415000,
+      "metric": "train/accuracy",
+      "slope_per_10k": 0.0015168321966263863,
+      "se": 0.0009854262305653745,
+      "ci95": [
+        -0.0004145677399374475,
+        0.00344823213319022
+      ],
+      "p_hac": 0.12373959257398233,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 405000,
+      "end": 415000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": 0.002204418984845481,
+      "se": 0.001423081730188562,
+      "ci95": [
+        -0.0005847699753818141,
+        0.004993607945072776
+      ],
+      "p_hac": 0.12137067552249275,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 410000,
+      "end": 420000,
+      "metric": "train/loss",
+      "slope_per_10k": -0.014338885986724307,
+      "se": 0.004488084419921334,
+      "ci95": [
+        -0.023135369878731004,
+        -0.005542402094717611
+      ],
+      "p_hac": 0.001398895497254091,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 0.051759133398401366,
+      "holm_detected": false
+    },
+    {
+      "start": 410000,
+      "end": 420000,
+      "metric": "train/accuracy",
+      "slope_per_10k": 0.003472781653279184,
+      "se": 0.0008959417741141082,
+      "ci95": [
+        0.0017167680299194,
+        0.005228795276638968
+      ],
+      "p_hac": 0.00010613349472864468,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 0.004139206294417143,
+      "holm_detected": true
+    },
+    {
+      "start": 410000,
+      "end": 420000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": 0.0034853612120100534,
+      "se": 0.0013775117208273766,
+      "ci95": [
+        0.0007854878296103449,
+        0.006185234594409762
+      ],
+      "p_hac": 0.011400199385916172,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 0.3648063803493175,
+      "holm_detected": false
+    },
+    {
+      "start": 415000,
+      "end": 425000,
+      "metric": "train/loss",
+      "slope_per_10k": -0.011123787053468498,
+      "se": 0.004312805650980975,
+      "ci95": [
+        -0.019576730868387772,
+        -0.002670843238549223
+      ],
+      "p_hac": 0.009901622424381027,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 0.3267535400045739,
+      "holm_detected": false
+    },
+    {
+      "start": 415000,
+      "end": 425000,
+      "metric": "train/accuracy",
+      "slope_per_10k": 0.0016218553390535324,
+      "se": 0.0010151681961593987,
+      "ci95": [
+        -0.0003678377793638276,
+        0.0036115484574708923
+      ],
+      "p_hac": 0.11012706250731497,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 1.0,
+      "holm_detected": false
+    },
+    {
+      "start": 415000,
+      "end": 425000,
+      "metric": "train/exact_accuracy",
+      "slope_per_10k": 0.004027584867144543,
+      "se": 0.0013896847863133928,
+      "ci95": [
+        0.0013038527146226001,
+        0.006751317019666485
+      ],
+      "p_hac": 0.003753108121176107,
+      "lag_observations": 100,
+      "observations": 2000,
+      "p_holm": 0.13135878424116376,
+      "holm_detected": false
+    }
+  ]
+}
