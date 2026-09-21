@@ -13,6 +13,8 @@ runtime operations, and architectural adaptations.
 * [OKF Maintenance Playbook](schema.md) - Authoring, confidence, lifecycle, linking, and validation rules.
 * [Bundle Update Log](log.md) - Structural and substantial knowledge-bundle changes.
 
+* [Benchmark Charts](pages/benchmark-charts.md) - Chart definitions and reproducible benchmark outputs.
+
 ## Knowledge Groups
 
 * [Pages](pages/) - Policies, plans, runbooks, technical references, and operational journals.

@@ -4,6 +4,8 @@
 
 ## Operations
 
+* [Benchmark Charts](benchmark-charts.md) - Tracked chart builders, score snapshot, and historical chart definitions.
+
 * [Current State](current-state.md) - Local repository state, active operations, and verified commands.
 * [Open Issues](open-issues.md) - Known blockers, risks, and future improvements.
 

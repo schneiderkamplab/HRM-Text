@@ -4,7 +4,7 @@ title: DFM Mimir Hugging Face Space Demo
 description: Deployment and maintenance notes for the public ZeroGPU demonstration of DFM Mimir.
 tags: [mimir, hugging-face, spaces, gradio, zerogpu, oauth, inference]
 status: stable
-last_updated: 2026-08-18
+last_updated: 2026-09-17
 confidence: high
 sources:
   - id: mimir-model
@@ -33,6 +33,14 @@ organization does not currently have the Team or Enterprise entitlement
 required for ZeroGPU organization Spaces.
 
 ## Access And Credential Handling
+
+**Superseded access-policy claim (2026-09-17):** The gated research-license
+description below records the 2026-08-18 deployment. The public model Hub API
+now reports `gated: false` and Apache-2.0 metadata at revision
+`2844f0178e695d7d9ce182cb660671fd34c76ce5`. The local demo source still contains
+the older OAuth flow; its live deployment was not rechecked. See
+[Apple chat feasibility](mimir-apple-chat-feasibility.md) for the current
+model/runtime inspection.
 
 DFM Mimir is gated. The Space enables Hugging Face OAuth with the
 `gated-repos` scope and requires each visitor to sign in and accept the model's

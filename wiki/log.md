@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Preserved the [benchmark score snapshot and chart sources](pages/benchmark-charts.md), moved current rendering to tracked reusable scripts, and distinguished historical builders from current reproduction. Recorded the corrected public Mimir access policy; excluded local checkpoint downloads and tool caches from Git.
+
 - 2026-09-21: Expanded [0.1.1 notes and the policy for all future versions](pages/model-architecture/mimir-app.md#release-description-policy-for-all-versions-2026-09-21); added a version-neutral template and packaging checklist for self-contained descriptions.
 
 - 2026-09-21: Made [0.1.2 release documentation self-contained](pages/model-architecture/mimir-app.md#self-contained-release-descriptions-2026-09-21), including desktop API/headless instructions, installation, model/context controls and feedback consent; versioned the notes for maintenance.
