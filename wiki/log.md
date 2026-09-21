@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-21: Main-promotion preflight for `codex/mimir-apple-mvp`: fetched `origin/main` (`57c3d69`), already an ancestor with no incoming commits or merge conflicts. Flutter analysis and all 46 tests, feedback TypeScript checking and five tests, rebuilt native backend-policy/compaction tests, Swift storage/store checks, and OKF validation passed. Submodule pins remain unchanged. Promotion uses a fast-forward; cross-platform release evidence remains documented in the [app runbook](pages/model-architecture/mimir-app.md).
+
 - 2026-09-21: Preserved the [benchmark score snapshot and chart sources](pages/benchmark-charts.md), moved current rendering to tracked reusable scripts, and distinguished historical builders from current reproduction. Recorded the corrected public Mimir access policy; excluded local checkpoint downloads and tool caches from Git.
 
 - 2026-09-21: Expanded [0.1.1 notes and the policy for all future versions](pages/model-architecture/mimir-app.md#release-description-policy-for-all-versions-2026-09-21); added a version-neutral template and packaging checklist for self-contained descriptions.
