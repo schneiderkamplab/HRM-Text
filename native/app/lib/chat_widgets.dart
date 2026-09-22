@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'markdown_text.dart';
+
 class MimirMark extends StatelessWidget {
   final double size;
   const MimirMark({super.key, this.size = 24});
@@ -48,10 +50,13 @@ class ChatMessage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 9),
-          SelectableText(
-            content,
-            style: const TextStyle(fontSize: 15, height: 1.5),
-          ),
+          if (role == 'user')
+            SelectableText(
+              content,
+              style: const TextStyle(fontSize: 15, height: 1.5),
+            )
+          else
+            MarkdownText(content),
         ],
       ),
     ),

@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-22: Added [offline basic Markdown rendering](pages/model-architecture/mimir-app.md#basic-markdown-rendering-2026-09-22) for Flutter replies and summaries, including streamed text, selectable content, image placeholders and inspect/copy links; all 51 tests pass.
+
 - 2026-09-22: Made MixedLM the default for new Flutter settings and added persisted temperature/repetition-penalty controls with native sampling support; see [app sampling policy](pages/model-architecture/mimir-app.md#mixedlm-default-and-reply-sampling-2026-09-22).
 
 - 2026-09-21: Preserved the XL DFM11 campaign scripts and statistics, improved monitor task labels, and repaired post-epoch-9 EuroEval suite/headline averaging. See [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md). Merged upstream main while retaining both knowledge histories.

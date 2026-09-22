@@ -272,3 +272,14 @@ and does not penalize the prompt. Settings persist and apply to the next reply
 without reloading the model; they cannot change during generation.
 Compaction retains its deterministic defaults. These UI settings do not override
 sampling parameters supplied by OpenAI-compatible API clients.
+
+## Markdown replies
+
+Assistant replies (including streaming text) and visible compaction summaries
+render basic Markdown: headings, emphasis, lists, blockquotes, inline code and
+fenced code blocks. Text remains selectable. User prompts remain literal, and
+stored/shared transcripts retain their original Markdown source.
+
+Rendering is offline. Images become text placeholders rather than fetching
+remote resources or reading local files. Tapping a link shows its address and a
+Copy link action; it does not open a browser or make a network request.

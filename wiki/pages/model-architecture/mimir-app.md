@@ -703,3 +703,18 @@ confirmed non-default sampling, subsequent MixedLM prefix reuse, and invalid
 penalty rejection. Logs are `logs/sampling-native-tests.log` and
 `logs/sampling-ffi-tests.log`. Packaged applications have not been rebuilt for
 this change.
+
+## Basic Markdown rendering — 2026-09-22
+
+Flutter assistant replies, streamed replies, visible compaction summaries and
+shortened-prompt previews use a shared selectable Markdown renderer. User text
+stays literal, and transcript persistence/sharing remains unchanged. The pinned
+`flutter_markdown_plus` 1.0.12 dependency supplies rendering; see its
+[widget documentation](https://pub.dev/packages/flutter_markdown_plus).
+Image builders always return text placeholders (no remote fetch or local-file
+read). Links show an inspect/copy dialog without launching anything.
+
+Validation: Flutter analysis and all 51 tests pass. New widget coverage checks
+basic blocks at 320-pixel width, literal user messages, incomplete streaming
+markup, image placeholders and link inspection. Release packages are not yet
+rebuilt.
