@@ -203,7 +203,8 @@ not implemented yet; they remain in the plan.
 ## Experimental MixedLM
 
 **Model and settings → MixedLM mode** enables approximate reuse of older prompt
-representations. It is off by default; switching reloads the model context.
+representations. It is on by default for new settings; an existing saved choice
+is preserved. Switching reloads the model context.
 See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
 
 ### Include weights in a previously tested desktop package
@@ -260,3 +261,14 @@ See [API.md](API.md) for Settings, commands, supported fields, limits and tests.
 
 See [Models and downloads](MODELS.md) for the bundled HF source, available
 precisions, optional downloads, selector behavior, and adding future versions.
+
+## Reply sampling
+
+Model and settings includes temperature (0–2, default 0) and repetition penalty
+(1–2, default 1). Temperature 0 uses greedy decoding; higher values sample with
+more variation. A repetition penalty above 1 discourages tokens appearing in the
+last 64 generated tokens of the current reply. Penalty history resets each reply
+and does not penalize the prompt. Settings persist and apply to the next reply
+without reloading the model; they cannot change during generation.
+Compaction retains its deterministic defaults. These UI settings do not override
+sampling parameters supplied by OpenAI-compatible API clients.

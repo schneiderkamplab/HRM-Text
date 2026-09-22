@@ -23,7 +23,7 @@ private:
     std::unique_ptr<Impl> impl_;
 };
 
-struct Sampling { float temperature = 0; float top_p = 1; uint32_t seed = 0; };
+struct Sampling { float temperature = 0; float top_p = 1; uint32_t seed = 0; float repeat_penalty = 1; };
 
 enum class Finish { eos, length, cancelled, error };
 struct Reply {
@@ -53,6 +53,7 @@ public:
     static void validate_history(const std::vector<Message> & messages);
     const std::vector<Message> & history() const noexcept { return history_; }
 private:
+    int32_t n_vocab_;
     TextCodec codec_;
     Session session_;
     std::string system_;

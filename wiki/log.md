@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-22: Made MixedLM the default for new Flutter settings and added persisted temperature/repetition-penalty controls with native sampling support; see [app sampling policy](pages/model-architecture/mimir-app.md#mixedlm-default-and-reply-sampling-2026-09-22).
+
 - 2026-09-21: Preserved the XL DFM11 campaign scripts and statistics, improved monitor task labels, and repaired post-epoch-9 EuroEval suite/headline averaging. See [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md). Merged upstream main while retaining both knowledge histories.
 
 - 2026-09-21: Main-promotion preflight for `codex/mimir-apple-mvp`: fetched `origin/main` (`57c3d69`), already an ancestor with no incoming commits or merge conflicts. Flutter analysis and all 46 tests, feedback TypeScript checking and five tests, rebuilt native backend-policy/compaction tests, Swift storage/store checks, and OKF validation passed. Submodule pins remain unchanged. Promotion uses a fast-forward; cross-platform release evidence remains documented in the [app runbook](pages/model-architecture/mimir-app.md).

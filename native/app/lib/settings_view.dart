@@ -282,6 +282,24 @@ class _SettingsViewState extends State<SettingsView> {
                 child: const Text('Licenses and acknowledgements'),
               ),
               const Divider(),
+              Text('Temperature: ${s.temperature.toStringAsFixed(2)}'),
+              Slider(
+                key: const Key('temperature-setting'),
+                value: s.temperature, min: 0, max: 2, divisions: 40,
+                label: s.temperature.toStringAsFixed(2),
+                onChanged: s.busy ? null : (v) => s.setSampling(
+                  temperature: v, repetitionPenalty: s.repetitionPenalty),
+              ),
+              const Text('0 chooses the most likely token. Higher values add variety.'),
+              Text('Repetition penalty: ${s.repetitionPenalty.toStringAsFixed(2)}'),
+              Slider(
+                key: const Key('repetition-penalty-setting'),
+                value: s.repetitionPenalty, min: 1, max: 2, divisions: 100,
+                label: s.repetitionPenalty.toStringAsFixed(2),
+                onChanged: s.busy ? null : (v) => s.setSampling(
+                  temperature: s.temperature, repetitionPenalty: v),
+              ),
+              const Text('1 disables the penalty. Higher values discourage repeating the last 64 generated tokens in this reply.'),
               SwitchListTile(
                 key: const Key('mixed-lm-setting'),
                 contentPadding: EdgeInsets.zero,

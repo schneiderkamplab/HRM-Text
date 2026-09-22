@@ -4,7 +4,7 @@ title: DFM Mimir app and portable backend selection
 description: Separate Flutter client, shared native engine, local backend evidence and remaining platform qualification.
 tags: [mimir, flutter, desktop, mobile, backends]
 status: draft
-last_updated: 2026-09-21
+last_updated: 2026-09-22
 confidence: high
 ---
 # DFM Mimir app and portable backends
@@ -680,3 +680,26 @@ examples, headless commands, feedback/privacy and original validation/checksums.
 It was checked against source `1fa33a1`; it does not claim the later HF catalog or
 corrected bundled tokenizer. Updating the GitHub description preserves release
 assets, checksums, tag target and visibility.
+
+## MixedLM default and reply sampling — 2026-09-22
+
+**Supersedes the September 20 off-by-default Flutter setting:** MixedLM is now
+on for new settings and archives without a saved mode; explicit saved choices
+remain unchanged. Native library/API defaults remain exact PrefixLM.
+
+Flutter settings expose temperature 0–2 (default 0) and repetition penalty 1–2
+(default 1, disabled). They persist, validate on restore, and are forwarded per
+reply without model reload. The native sampler applies the repetition penalty
+before temperature/selection, using the last 64 generated tokens of the current
+reply and resetting each reply. Prompts and prior turns are not seeded into the
+penalty history. Compaction continues using deterministic defaults; API request
+sampling remains independent of UI preferences.
+
+Validation: Flutter analysis and all 48 tests pass. A fresh CPU build of
+`MimirRuntime` and `mimir-text-tests` passed 78 text checks with the bundled
+corrected Q4_K_M model, including seeded temperature/penalty replay and invalid
+penalty rejection without history mutation. An asynchronous C-ABI smoke check
+confirmed non-default sampling, subsequent MixedLM prefix reuse, and invalid
+penalty rejection. Logs are `logs/sampling-native-tests.log` and
+`logs/sampling-ffi-tests.log`. Packaged applications have not been rebuilt for
+this change.

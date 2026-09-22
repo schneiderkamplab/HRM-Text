@@ -48,10 +48,30 @@ class ChatStore extends ChangeNotifier {
   }
 
   bool compact = true,
-      mixedLM = false,
+      mixedLM = true,
       showSummary = false,
       automatic = true,
       persistence = true;
+  double temperature = 0, repetitionPenalty = 1;
+  static double _samplingValue(dynamic value, double fallback, double min, double max) {
+    return value is num && value.isFinite && value >= min && value <= max
+        ? value.toDouble() : fallback;
+  }
+
+  Future<void> setSampling({required double temperature, required double repetitionPenalty}) async {
+    if (busy) return;
+    if (!temperature.isFinite || temperature < 0 || temperature > 2 ||
+        !repetitionPenalty.isFinite || repetitionPenalty < 1 || repetitionPenalty > 2) {
+      notice = 'Temperature must be 0–2 and repetition penalty 1–2.';
+      notifyListeners();
+      return;
+    }
+    this.temperature = temperature;
+    this.repetitionPenalty = repetitionPenalty;
+    notifyListeners();
+    await save();
+  }
+
   int context = 1024, reply = 512;
   int? training, used;
   int lastReusedTokens = 0;
@@ -154,7 +174,9 @@ class ChatStore extends ChangeNotifier {
           selected = j['selected'];
           onlineFeedback = j['onlineFeedback'] == true;
           compact = j['compact'] ?? true;
-          mixedLM = j['mixedLM'] ?? false;
+          mixedLM = j['mixedLM'] ?? true;
+          temperature = _samplingValue(j['temperature'], 0, 0, 2);
+          repetitionPenalty = _samplingValue(j['repetitionPenalty'], 1, 1, 2);
           showSummary = j['showSummary'] ?? false;
           automatic = j['automatic'] ?? true;
           context = j['context'] ?? 1024;
@@ -603,6 +625,8 @@ class ChatStore extends ChangeNotifier {
           'compact': compact,
           'prompt': prompt,
           'budget': reply,
+          'temperature': temperature,
+          'repeat_penalty': repetitionPenalty,
         },
         onEvent: (e) {
           switch (e['type']) {
@@ -703,6 +727,8 @@ class ChatStore extends ChangeNotifier {
       'unavailableModels': library.unavailable,
       'compact': compact,
       'mixedLM': mixedLM,
+      'temperature': temperature,
+      'repetitionPenalty': repetitionPenalty,
       'showSummary': showSummary,
       'automatic': automatic,
       'context': context,

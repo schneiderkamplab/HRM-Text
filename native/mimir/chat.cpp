@@ -6,7 +6,7 @@
 
 namespace mimir {
 Chat::Chat(std::shared_ptr<llama_model> model, Config config, std::string system)
-    : codec_(model), session_(std::move(model), config), system_(std::move(system)) {
+    : n_vocab_(llama_vocab_n_tokens(llama_model_get_vocab(model.get()))), codec_(model), session_(std::move(model), config), system_(std::move(system)) {
     detail::require_utf8(system_);
     if (!system_.empty()) { history_.push_back({"system", system_}); }
 }
@@ -59,11 +59,16 @@ void Chat::restore_history(const std::vector<Message> & messages, bool preserve_
 Reply Chat::reply(const std::string & user, uint32_t max_tokens,
                   const std::function<void(const std::string &)> & stream, Sampling sampling) {
     if (!std::isfinite(sampling.temperature) || sampling.temperature < 0 || sampling.temperature > 2 ||
-        !std::isfinite(sampling.top_p) || sampling.top_p <= 0 || sampling.top_p > 1) {
+        !std::isfinite(sampling.top_p) || sampling.top_p <= 0 || sampling.top_p > 1 ||
+        !std::isfinite(sampling.repeat_penalty) || sampling.repeat_penalty < 1 || sampling.repeat_penalty > 2) {
         throw std::invalid_argument("Invalid sampling parameters");
     }
     auto sampler = std::unique_ptr<llama_sampler, decltype(&llama_sampler_free)>(
         llama_sampler_chain_init(llama_sampler_chain_default_params()), llama_sampler_free);
+    if (sampling.repeat_penalty != 1) {
+        // Track only tokens generated in this reply; the chain resets each turn.
+        llama_sampler_chain_add(sampler.get(), llama_sampler_init_penalties(n_vocab_, 64, sampling.repeat_penalty, 0, 0));
+    }
     if (sampling.temperature > 0) {
         llama_sampler_chain_add(sampler.get(), llama_sampler_init_top_p(sampling.top_p, 1));
         llama_sampler_chain_add(sampler.get(), llama_sampler_init_temp(sampling.temperature));

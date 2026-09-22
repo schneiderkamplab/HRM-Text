@@ -5,6 +5,7 @@
 #include "jinja/runtime.h"
 #include "json.h"
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 
 static int checks = 0;
@@ -92,6 +93,21 @@ int main(int argc, char ** argv) {
                     "capacity preserves completed conversation");
             require(chat.reply(prompt, 0).status == mimir::Status::invalid_input && chat.history().size() == saved_size,
                     "invalid budget preserves history");
+            chat.reset();
+            mimir::Sampling sampled{0.7f, 1.0f, 42, 1.2f};
+            const auto sampled_reply = chat.reply(prompt, 8, {}, sampled);
+            require(sampled_reply.status == mimir::Status::ok, "temperature and repetition penalty generation");
+            chat.reset();
+            require(chat.reply(prompt, 8, {}, sampled).tokens == sampled_reply.tokens,
+                    "seeded sampling and penalty history reset between replies");
+            for (float penalty : {0.9f, 2.1f, std::numeric_limits<float>::quiet_NaN()}) {
+                const auto before = chat.history().size();
+                bool rejected = false;
+                sampled.repeat_penalty = penalty;
+                try { chat.reply(prompt, 4, {}, sampled); }
+                catch (const std::invalid_argument &) { rejected = true; }
+                require(rejected && chat.history().size() == before, "invalid penalty preserves history");
+            }
             mimir::Chat with_system(model, config, "Svar på dansk.");
             with_system.reset();
             require(with_system.history().size() == 1 && with_system.history()[0].role == "system", "reset keeps system");

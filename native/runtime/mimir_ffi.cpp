@@ -14,6 +14,10 @@
 #include "backend_loader.h"
 using Json = nlohmann::json;
 namespace {
+mimir::Sampling sampling_parameters(const Json & command) {
+    return {command.value("temperature", 0.0f), command.value("top_p", 1.0f),
+            command.value("seed", uint32_t(0)), command.value("repeat_penalty", 1.0f)};
+}
 // Backend registration is process-global. On Android, avoid touching Vulkan at
 // all for a CPU session; changing driver policy requires a fresh process.
 void ensure_backends(const Json & command) {
@@ -116,7 +120,7 @@ struct Engine {
             input.push_back({"user", prompt});
             emit({{"type", "prepared"}, {"tokens", codec->prepare(input).tokens.size()}});
             if (cancelled) chat->request_cancel();
-            mimir::Sampling sampling{c.value("temperature", 0.0f), c.value("top_p", 1.0f), c.value("seed", uint32_t(0))};
+            const auto sampling = sampling_parameters(c);
             auto result = chat->reply(prompt, budget, [&](const std::string & text) {
                 emit({{"type", "token"}, {"text", text}});
             }, sampling);
@@ -152,7 +156,8 @@ struct Engine {
         auto input=prepared.messages;if(!system.empty()) input.insert(input.begin(),{"system",system});input.push_back({"user",prepared.prompt});
         emit({{"type","prepared"},{"tokens",codec->prepare(input).tokens.size()}});
         if(cancelled || prepared.cancelled) chat->request_cancel();
-        auto result=chat->reply(prepared.prompt,budget,[&](const std::string & t){emit({{"type","token"},{"text",t}});});
+        const auto sampling = sampling_parameters(c);
+        auto result=chat->reply(prepared.prompt,budget,[&](const std::string & t){emit({{"type","token"},{"text",t}});}, sampling);
         const bool stopped=cancelled || result.finish==mimir::Finish::cancelled;
         if(result.status!=mimir::Status::ok && !stopped) throw std::runtime_error(result.status==mimir::Status::capacity?
             "Conversation and reply exceed context. Increase context, reduce reply budget or enable compaction.":"Native generation failed.");
