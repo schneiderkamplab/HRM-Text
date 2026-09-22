@@ -52,7 +52,8 @@ class ChatStore extends ChangeNotifier {
       showSummary = false,
       automatic = true,
       persistence = true;
-  double temperature = 0, repetitionPenalty = 1;
+  static const defaultRepetitionPenalty = 1.1;
+  double temperature = 0, repetitionPenalty = defaultRepetitionPenalty;
   static double _samplingValue(dynamic value, double fallback, double min, double max) {
     return value is num && value.isFinite && value >= min && value <= max
         ? value.toDouble() : fallback;
@@ -176,7 +177,12 @@ class ChatStore extends ChangeNotifier {
           compact = j['compact'] ?? true;
           mixedLM = j['mixedLM'] ?? true;
           temperature = _samplingValue(j['temperature'], 0, 0, 2);
-          repetitionPenalty = _samplingValue(j['repetitionPenalty'], 1, 1, 2);
+          repetitionPenalty = _samplingValue(
+            j['repetitionPenalty'], defaultRepetitionPenalty, 1, 2);
+          // Adopt the stronger default once; later explicit 1.0 choices persist.
+          if (j['samplingDefaultsVersion'] == null && repetitionPenalty == 1) {
+            repetitionPenalty = defaultRepetitionPenalty;
+          }
           showSummary = j['showSummary'] ?? false;
           automatic = j['automatic'] ?? true;
           context = j['context'] ?? 1024;
@@ -729,6 +735,7 @@ class ChatStore extends ChangeNotifier {
       'mixedLM': mixedLM,
       'temperature': temperature,
       'repetitionPenalty': repetitionPenalty,
+      'samplingDefaultsVersion': 1,
       'showSummary': showSummary,
       'automatic': automatic,
       'context': context,

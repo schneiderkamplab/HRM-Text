@@ -265,7 +265,7 @@ precisions, optional downloads, selector behavior, and adding future versions.
 ## Reply sampling
 
 Model and settings includes temperature (0–2, default 0) and repetition penalty
-(1–2, default 1). Temperature 0 uses greedy decoding; higher values sample with
+(1–2, default 1.1). Temperature 0 uses greedy decoding; higher values sample with
 more variation. A repetition penalty above 1 discourages tokens appearing in the
 last 64 generated tokens of the current reply. Penalty history resets each reply
 and does not penalize the prompt. Settings persist and apply to the next reply
@@ -283,3 +283,6 @@ stored/shared transcripts retain their original Markdown source.
 Rendering is offline. Images become text placeholders rather than fetching
 remote resources or reading local files. Tapping a link shows its address and a
 Copy link action; it does not open a browser or make a network request.
+
+The former saved 1.0 default upgrades to 1.1 once. Other saved values are
+preserved; explicitly selecting 1.0 afterwards still disables the penalty.

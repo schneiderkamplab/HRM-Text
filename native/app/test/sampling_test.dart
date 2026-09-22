@@ -13,7 +13,7 @@ void main() {
     await store.initialize();
     expect(store.mixedLM, true);
     expect(store.temperature, 0);
-    expect(store.repetitionPenalty, 1);
+    expect(store.repetitionPenalty, 1.1);
     store.mixedLM = false;
     await store.setSampling(temperature: .7, repetitionPenalty: 1.15);
     final reopened = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
@@ -35,7 +35,24 @@ void main() {
     await old.initialize();
     expect(old.mixedLM, true);
     expect(old.temperature, 0);
-    expect(old.repetitionPenalty, 1);
+    expect(old.repetitionPenalty, 1.1);
+  });
+  test('old default upgrades once; custom and newly disabled penalties persist', () async {
+    final dir = await Directory.systemTemp.createTemp('mimir-penalty-default');
+    addTearDown(() => dir.delete(recursive: true));
+    final archive = File('${dir.path}/conversations.json');
+    for (final oldPenalty in [1.0, 1.25]) {
+      await archive.writeAsString(jsonEncode({
+        'version': 1, 'chats': [], 'repetitionPenalty': oldPenalty,
+      }));
+      final store = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
+      await store.initialize();
+      expect(store.repetitionPenalty, oldPenalty == 1 ? 1.1 : oldPenalty);
+      await store.setSampling(temperature: 0, repetitionPenalty: 1);
+      final reopened = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true);
+      await reopened.initialize();
+      expect(reopened.repetitionPenalty, 1);
+    }
   });
   test('chat forwards sampling values and disallows changes during generation', () async {
     final dir = await Directory.systemTemp.createTemp('mimir-sampling-command');

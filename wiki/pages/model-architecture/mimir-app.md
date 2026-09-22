@@ -718,3 +718,12 @@ Validation: Flutter analysis and all 51 tests pass. New widget coverage checks
 basic blocks at 320-pixel width, literal user messages, incomplete streaming
 markup, image placeholders and link inspection. Release packages are not yet
 rebuilt.
+
+## Stronger default repetition penalty — 2026-09-22
+
+**Supersedes the 1.0 UI default above:** the Flutter default is now 1.1. Archives
+without the sampling-defaults marker upgrade a stored 1.0 once; other custom
+values remain unchanged. Saving records the marker so a subsequent explicit
+choice of 1.0 remains disabled after reopening. Native/API defaults and the
+64-generated-token window are unchanged. This is a tuning choice prompted by
+observed repetitions, not evidence of eliminating repetition in every reply.
