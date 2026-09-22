@@ -751,3 +751,13 @@ real-model inference remain unqualified.
 Artifacts: `logs/packages/release-0.1.3/`; evidence:
 `logs/release-0.1.3-{ci,packaged-api,android-validation,linux-verify,windows-verify}.log`.
 The GitHub release is still a draft while uploads complete.
+
+### 0.1.3 publication completed
+
+The draft status above is **superseded**: [DFM Mimir 0.1.3](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.3)
+was published on 2026-09-22 at 09:15:26 UTC as a public, non-prerelease, Latest
+release. Tag `dfm-mimir-v0.1.3` resolves to package source `2137f43`. All four
+packages and four checksum sidecars have matching GitHub SHA-256 digests and
+sizes; the published notes match `native/app/releases/0.1.3.md` exactly.
+Verification is recorded in `logs/release-0.1.3-publication.log`. Previous releases
+and tags remain intact.
