@@ -727,3 +727,27 @@ values remain unchanged. Saving records the marker so a subsequent explicit
 choice of 1.0 remains disabled after reopening. Native/API defaults and the
 64-generated-token window are unchanged. This is a tuning choice prompted by
 observed repetitions, not evidence of eliminating repetition in every reply.
+
+## 0.1.3 packaging — 2026-09-22
+
+Release source `2137f438786b79aeca16b70576d7c753d3ab0389` is version 0.1.3+5.
+All four packages include the same official corrected Q4_K_M as 0.1.2. Features:
+MixedLM default for new settings, persisted temperature and repetition penalty
+(default 1.1 with one-time old-default upgrade), and offline Markdown rendering.
+[Self-contained release notes](../../../native/app/releases/0.1.3.md) include API,
+headless use, model selection, privacy, platform limits and package checksums.
+
+[CI 35707335507](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35707335507)
+passed on Linux and Windows: 52 tests, analysis, native fallback/compaction and
+packaged CPU backend probes. macOS and Android ARM64 builds passed locally.
+The mounted DMG passed real-model Metal/headless API tests (ordinary/streaming,
+seeded sampling, concurrent requests, overflow rejection, disconnect recovery,
+shutdown). All model/file hashes and package source revisions were verified;
+Windows executable version is 0.1.3.5; Linux executable bits were checked.
+Android version 0.1.3/build 5, signature, ABI and ZIP alignment passed. All four
+feedback audits passed. Physical Android Vulkan and clean-host Linux/Windows
+real-model inference remain unqualified.
+
+Artifacts: `logs/packages/release-0.1.3/`; evidence:
+`logs/release-0.1.3-{ci,packaged-api,android-validation,linux-verify,windows-verify}.log`.
+The GitHub release is still a draft while uploads complete.
