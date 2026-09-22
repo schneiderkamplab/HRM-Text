@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-22: Preparing DFM Mimir 0.1.3 (build 5), with bundled official Q4_K_M, MixedLM default, sampling controls and offline Markdown. Four-platform packaging and publication validation are pending; [release notes](../native/app/releases/0.1.3.md).
+
 - 2026-09-22: Raised the Flutter repetition-penalty default to 1.1, with a one-time upgrade of the former saved default and preservation of custom values; see [sampling default policy](pages/model-architecture/mimir-app.md#stronger-default-repetition-penalty-2026-09-22).
 
 - 2026-09-22: Added [offline basic Markdown rendering](pages/model-architecture/mimir-app.md#basic-markdown-rendering-2026-09-22) for Flutter replies and summaries, including streamed text, selectable content, image placeholders and inspect/copy links; all 51 tests pass.
