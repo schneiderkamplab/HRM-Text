@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-22: Prepared unreleased 0.1.4+6 with [UCloud training credit](pages/model-architecture/mimir-app.md#014-preparation-ucloud-training-credit-2026-09-22) beside/below DFM branding. The supplied SVG and offline raster are preserved; no release or tag created.
+
 - 2026-09-22: Published [DFM Mimir 0.1.3](pages/model-architecture/mimir-app.md#013-publication-completed) as Latest, with macOS/Android/Linux/Windows packages, bundled official Q4_K_M, verified remote hashes and self-contained notes.
 
 - 2026-09-22: Preparing DFM Mimir 0.1.3 (build 5), with bundled official Q4_K_M, MixedLM default, sampling controls and offline Markdown. Four-platform packaging and publication validation are pending; [release notes](../native/app/releases/0.1.3.md).

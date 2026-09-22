@@ -761,3 +761,17 @@ packages and four checksum sidecars have matching GitHub SHA-256 digests and
 sizes; the published notes match `native/app/releases/0.1.3.md` exactly.
 Verification is recorded in `logs/release-0.1.3-publication.log`. Previous releases
 and tags remain intact.
+
+## 0.1.4 preparation: UCloud training credit — 2026-09-22
+
+Unreleased source is now 0.1.4+6. The Flutter welcome screen pairs the DFM logo
+with the user-supplied UCloud logo and the exact caption “Trained on SDU UCloud”.
+The logo pair wraps into a vertical layout on narrow screens and uses a white
+panel for contrast in either theme. The original SVG is tracked under
+`native/app/branding/`; a 1200-pixel PNG with IBM Plex Sans rendered into it is
+bundled offline. See [branding provenance](../../../native/app/branding/README.md).
+No 0.1.4 release, tag or distribution upload is authorized yet; 0.1.3 remains
+Latest.
+
+Validation: the raster export was visually checked; Flutter analysis and all
+52 existing tests pass, and OKF validation has no errors or warnings.
