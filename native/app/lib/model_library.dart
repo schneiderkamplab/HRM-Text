@@ -115,7 +115,8 @@ class ModelLibrary extends ChangeNotifier {
   }
 
   void remember(Json model) {
-    installed.removeWhere((m) => m['id'] == model['id']);
+    installed.removeWhere((m) => m['id'] == model['id'] ||
+        (model['bundled'] == true && m['bundled'] == true));
     installed.add(Json.from(model));
     onChanged?.call();
     notifyListeners();

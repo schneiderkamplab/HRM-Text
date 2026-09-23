@@ -237,7 +237,10 @@ class ChatStore extends ChangeNotifier {
       }
       library.addListener(notifyListeners);
       library.onChanged = save;
-      if (model != null) library.remember(model!);
+      // The app's bundled file may have changed during an upgrade. Register it
+      // only after useBundled has checked the actual file's identity.
+      library.installed.removeWhere((m) => m['bundled'] == true);
+      if (model != null && model!['bundled'] != true) library.remember(model!);
       conversationsReady = true;
       notifyListeners();
       if (manualStartup) {

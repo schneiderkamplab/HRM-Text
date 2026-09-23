@@ -98,16 +98,26 @@ void main() {
   });
   tearDown(() async => dir.delete(recursive: true));
 
+  test('bundled model upgrade replaces stale inventory but keeps downloads', () {
+    final library = ModelLibrary();
+    library.remember({...descriptor, 'id': 'old-bundle', 'bundled': true});
+    library.remember({...descriptor, 'id': 'download', 'bundled': false});
+    library.remember({...descriptor, 'id': 'new-bundle', 'bundled': true});
+    expect(library.installed.map((m) => m['id']), ['download', 'new-bundle']);
+  });
+
   test('saved catalog retains discovered entries and gains shipped models', () async {
     await File('${dir.path}/conversations.json').writeAsString(jsonEncode({
       'version': 1,
       'chats': [],
       'modelCatalog': {'version': 1, 'models': [descriptor]},
+      'installedModels': [{...descriptor, 'bundled': true, 'path': 'obsolete'}],
     }));
     final store = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true)
       ..persistence = false;
     await store.initialize();
     expect(store.library.catalog.any((a) => a.id == descriptor['id']), true);
+    expect(store.library.installed.any((m) => m['bundled'] == true), false);
     expect(store.library.catalog.where((a) => a.data['repo'] ==
       'danish-foundation-models/DFM-Mimir-v1.5-GGUF').length, greaterThanOrEqualTo(3));
     expect(store.library.catalog.any((a) => a.data['repo'] ==

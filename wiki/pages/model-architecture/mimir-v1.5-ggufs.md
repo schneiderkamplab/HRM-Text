@@ -94,3 +94,8 @@ The user requested bundling v1.5 Q4_K_M, then explicitly chose **0.1.5** rather
 than replacing 0.1.4. Prepare 0.1.5 build 7, preserving every 0.1.4 release asset,
 body and tag. Curated catalog includes the three new files and retains originals;
 the remote curated-catalog URL follows the maintained `main` branch.
+
+0.1.5 upgrade regression checks retain cached downloads/discovery while adding
+new shipped catalog entries, and discard stale bundled-file inventory after an
+app update. The bundled file is registered only after hashing its current bytes.
+All 67 Flutter tests and analysis pass after these changes.
