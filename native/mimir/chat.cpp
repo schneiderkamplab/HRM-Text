@@ -27,6 +27,13 @@ void Chat::set_system(const std::string & system) {
     reset();
 }
 
+void Chat::set_tools(const std::string & tools) {
+    if (tools_ == tools) return;
+    codec_.set_tools(tools);
+    tools_ = tools;
+    session_.reset();
+}
+
 void Chat::reset() {
     recover();
     history_.clear();
@@ -50,14 +57,15 @@ void Chat::restore_history(const std::vector<Message> & messages, bool preserve_
     candidate.insert(candidate.end(), messages.begin(), messages.end());
     if (preserve_cache && candidate.size() == history_.size() &&
         std::equal(candidate.begin(), candidate.end(), history_.begin(), [](const Message & a, const Message & b) {
-            return a.role == b.role && a.content == b.content;
+            return a.role == b.role && a.content == b.content && a.tool_context == b.tool_context;
         })) { return; }
     reset();
     history_ = std::move(candidate);
 }
 
 Reply Chat::reply(const std::string & user, uint32_t max_tokens,
-                  const std::function<void(const std::string &)> & stream, Sampling sampling) {
+                  const std::function<void(const std::string &)> & stream, Sampling sampling,
+                  const std::string & tool_context) {
     if (!std::isfinite(sampling.temperature) || sampling.temperature < 0 || sampling.temperature > 2 ||
         !std::isfinite(sampling.top_p) || sampling.top_p <= 0 || sampling.top_p > 1 ||
         !std::isfinite(sampling.repeat_penalty) || sampling.repeat_penalty < 1 || sampling.repeat_penalty > 2) {
@@ -84,6 +92,8 @@ Reply Chat::reply(const std::string & user, uint32_t max_tokens,
     }
     auto candidate = history_;
     candidate.push_back({"user", user});
+    if (!tool_context.empty()) candidate.push_back({"assistant", "", tool_context});
+    const bool tool_mode = !tools_.empty() || !tool_context.empty();
     const auto prompt = codec_.prepare(candidate);
     Reply reply;
     detail::Utf8Stream utf8;
@@ -120,7 +130,12 @@ Reply Chat::reply(const std::string & user, uint32_t max_tokens,
                 return reply;
             }
             reply.tokens.push_back(token);
-            emit(utf8.push(codec_.piece(token)));
+            const auto piece = codec_.piece(token, tool_mode);
+            emit(utf8.push(piece));
+            if (tool_mode && piece == "<tool_call|>") {
+                reply.finish = Finish::tool_call;
+                break;
+            }
         }
         if (!cancelled_.load(std::memory_order_relaxed)) {
             emit(utf8.push("", true));
@@ -132,7 +147,8 @@ Reply Chat::reply(const std::string & user, uint32_t max_tokens,
             reply.finish = Finish::cancelled;
             return reply;
         }
-        candidate.push_back({"assistant", reply.text});
+        if (!tool_context.empty()) candidate.pop_back();
+        candidate.push_back({"assistant", reply.text, tool_context});
         history_ = std::move(candidate);
         return reply;
     } catch (...) {

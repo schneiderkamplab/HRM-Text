@@ -1,10 +1,16 @@
 # Optional Mimir web search
 
 Unreleased app 0.1.4 adds **Allow online search** and a masked search-key setting.
-The chat toolbar opens an explicit query dialog. Only the submitted query goes to
-Cloudflare and Jina AI; chat history is never automatically uploaded. Results can
-be added to the draft as external reference material, then sent to the local
-model. This is manual search assistance, not autonomous model tool calling.
+With permission enabled and a key configured, the app supplies an OpenAI-format
+`web_search` function definition with a required string `query` parameter to
+Mimir's own GGUF template. The model can request searches during a normal reply;
+the app invokes this Worker, returns the result as a tool response, and resumes
+local generation. At most two searches are allowed per answer. Only generated
+search queries go to Cloudflare/Jina, but these can contain details from the chat.
+
+The toolbar also retains manual search and **Add results to draft**. Superseded
+2026-09-23: the initial implementation was manual-only. Search is now also a model
+tool; saving a key alone still makes no outgoing request.
 
 Keys have the form `mimir_<lowercase hex>` (6–128 hex characters). No credential
 is bundled. Remembered keys use platform secure storage, outside conversation
@@ -82,3 +88,48 @@ after Wrangler finishes; output and errors intentionally omit SQL and secrets.
 API references: [Jina Reader/Search](https://github.com/jina-ai/reader),
 [D1 prepared statements](https://developers.cloudflare.com/d1/worker-api/prepared-statements/),
 [secure-storage platform setup](https://pub.dev/packages/flutter_secure_storage).
+
+## Model-tool integration validation — 2026-09-23
+
+The tool definition and strict native-call parser live in
+[`search_tool.dart`](../../native/app/lib/search_tool.dart). The native engine
+renders OpenAI-style tool data using Mimir's embedded template, preserving its
+Gemma tool delimiters. Generation stops at `<tool_call|>`; ordinary prose does
+not trigger a search. Unknown/malformed/incomplete tool requests are rejected.
+Search status and cancellation cover HTTP as well as local generation. Tool
+exchanges are stored with the completed assistant turn so transcript restoration
+and context compaction retain the references. Failed/cancelled turns do not
+commit partial transcripts. External tool-result control-token delimiters are
+neutralized before template rendering.
+
+Tool definitions and results consume context. If the fixed tool exchange cannot
+fit, the app reports the capacity problem and retains the user's draft. Increase
+context for larger searches. Search-enabled generation currently resets native
+KV state around compaction/tool configuration; plain offline MixedLM keeps its
+existing cache behavior. External OpenAI-compatible API tool dispatch is not
+added by this UI integration.
+
+Evidence: 65 Flutter tests and analysis pass (including tool routing, offline
+permission, provider failure, cancellation, loop limits and persistence); 82
+native CPU text checks pass; compaction tests include tool-reference retention.
+The real Q4 model on Mac Metal requested a current-information search, received
+five live results through the Worker, and produced a final answer with source
+URLs. The real Flutter Mac app with the selected BF16 model also executed one
+search, received five results, answered in Danish, and persisted the tool
+exchange. That BF16 answer named a source but omitted URLs despite the request;
+tool execution works, but citation adherence is not guaranteed. No credential
+was placed in model messages. The native asynchronous smoke
+suite also passes with an offline synthetic tool response, including ordinary
+MixedLM reuse, cancellation, compaction and shutdown:
+
+```sh
+python3 native/runtime/tests/smoke.py \
+  logs/mimir-app-native/macos/Release/MimirRuntime.framework/MimirRuntime \
+  native/app/assets/model.gguf native/app/assets/profile.json auto \
+  --mixed-lm --search-tool --report logs/mimir-tools-runtime-report.json
+```
+
+Run this from the repository root after rebuilding the native framework. The
+`--search-tool` test makes no network request and needs no key. Rebuild native
+libraries for each platform before shipping this feature; only Mac runtime
+integration was exercised in this turn. 0.1.4 remains unreleased.

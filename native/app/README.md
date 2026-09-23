@@ -292,8 +292,10 @@ preserved; explicitly selecting 1.0 afterwards still disables the penalty.
 ## Optional web search (unreleased 0.1.4)
 
 Enable **Allow online search** and enter a Mimir search key in settings. The
-search icon opens a query dialog; only that query goes to the Mimir service and
-Jina AI. Add returned sources to your draft to discuss them with the local model.
+model can call `web_search(query)` during a reply, then use the results to answer
+with sources. The search icon also offers manual search. Only queries go to the
+Mimir service and Jina AI; model-generated queries may include chat details.
+At most two searches run per answer, and Stop cancels searching too.
 Search stays off by default. Keys can be remembered in secure storage or used
 only for the current session; no keys are bundled or included in feedback.
 See the [search runbook](../../services/feedback/SEARCH.md) for service setup.

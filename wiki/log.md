@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-23: Extended [Mimir search](pages/model-architecture/mimir-search.md) into a model tool, using the embedded chat template, bounded Worker execution, persisted tool transcripts and cancellation; 0.1.4 unreleased.
+
 - 2026-09-23: Added [optional Mimir search](pages/model-architecture/mimir-search.md), private D1-to-Jina credential mapping, focus restoration and stock system-prompt refresh; 0.1.4 remains unreleased.
 
 - 2026-09-23: Updated the [concise default system prompt](pages/model-architecture/mimir-app.md#concise-default-model-identity-2026-09-23) with Mimir identity, a short DFM description and SDU UCloud training credit; unreleased 0.1.4.

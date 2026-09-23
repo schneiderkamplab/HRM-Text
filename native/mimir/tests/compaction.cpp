@@ -116,6 +116,11 @@ int main() {
         model.system.clear(); model.fail = false; model.output = "Notes";
         // Reply reservation is checked even when input alone would fit.
         require(run({}, std::string(600,'p'), 512).prompt.size() < 496, "reply reservation ignored");
+        model.calls.clear();
+        run({{"user", std::string(500, 'u')}, {"assistant", std::string(500, 'a'), "SourceReference123"}}, "Next");
+        bool retained = false;
+        for (const auto & input : model.calls) retained = retained || input.find("SourceReference123") != std::string::npos;
+        require(retained, "tool references omitted from compaction source");
         std::cout << "PASS: bounded prompt/history chunks, exact source coverage, UTF-8, turn packing, headroom, cancellation, errors and reply reserve\n";
     } catch (const std::exception & e) { std::cerr << e.what() << '\n'; return 1; }
 }

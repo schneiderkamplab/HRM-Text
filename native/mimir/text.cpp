@@ -11,6 +11,7 @@ struct TextCodec::Impl {
     std::shared_ptr<llama_model> model;
     const llama_vocab * vocab;
     std::string source;
+    common_json tools = common_json::array();
     jinja::program program;
 
     explicit Impl(std::shared_ptr<llama_model> owner) : model(std::move(owner)) {
@@ -54,28 +55,47 @@ Prompt TextCodec::prepare(const std::vector<Message> & messages, bool generation
             throw std::invalid_argument("supported roles: initial system, user, assistant");
         }
         detail::require_utf8(message.content);
+        if (!message.tool_context.empty()) {
+            if (message.role != "assistant") throw std::invalid_argument("Tool context belongs to assistant turns");
+            auto turns = common_json::parse(message.tool_context);
+            if (!turns.is_array() || turns.size() > 8 || turns.size() % 2) throw std::invalid_argument("Invalid tool transcript");
+            for (size_t j = 0; j < turns.size(); j += 2) {
+                if (turns[j].at("role") != "assistant" || !turns[j].at("tool_calls").is_array() ||
+                    turns[j + 1].at("role") != "tool" || !turns[j + 1].at("content").is_string()) {
+                    throw std::invalid_argument("Invalid tool transcript roles");
+                }
+                values.push_back(turns[j]); values.push_back(turns[j + 1]);
+            }
+            if (message.content.empty()) continue; // Continue directly after the tool response.
+        }
         values.push_back({{"role", message.role}, {"content", message.content}});
     }
     jinja::context context(impl_->source);
     const common_json vars = {{"messages", values}, {"add_generation_prompt", generation_prompt},
         {"bos_token", llama_vocab_get_text(impl_->vocab, llama_vocab_bos(impl_->vocab))},
         {"eos_token", llama_vocab_get_text(impl_->vocab, llama_vocab_eos(impl_->vocab))},
-        {"enable_thinking", false}};
+        {"enable_thinking", false}, {"tools", impl_->tools}};
     jinja::global_from_json(context, vars, true);
     jinja::runtime runtime(context);
     auto text = runtime.gather_string_parts(runtime.execute(impl_->program))->as_string().str();
     return {text, tokenize(text, false)}; // The template already supplies BOS.
 }
 
-std::string TextCodec::piece(llama_token token) const {
+void TextCodec::set_tools(const std::string & tools) {
+    auto value = tools.empty() ? common_json::array() : common_json::parse(tools);
+    if (!value.is_array()) throw std::invalid_argument("Tools must be an array");
+    impl_->tools = std::move(value);
+}
+
+std::string TextCodec::piece(llama_token token, bool special) const {
     if (token < 0 || token >= llama_vocab_n_tokens(impl_->vocab)) {
         throw std::invalid_argument("token outside vocabulary");
     }
     std::string text(128, '\0');
-    int count = llama_token_to_piece(impl_->vocab, token, text.data(), text.size(), 0, false);
+    int count = llama_token_to_piece(impl_->vocab, token, text.data(), text.size(), 0, special);
     if (count < 0) {
         text.resize(-count);
-        count = llama_token_to_piece(impl_->vocab, token, text.data(), text.size(), 0, false);
+        count = llama_token_to_piece(impl_->vocab, token, text.data(), text.size(), 0, special);
     }
     if (count < 0) { throw std::runtime_error("detokenization failed"); }
     text.resize(count);

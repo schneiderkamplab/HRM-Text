@@ -55,6 +55,15 @@ int main(int argc, char ** argv) {
             llama_backend_init();
             auto model = mimir::tools::load_model(argv[1], argv[2]);
             mimir::TextCodec codec(model);
+            codec.set_tools(R"([{"type":"function","function":{"name":"web_search","description":"Search the web","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query"}},"required":["query"]}}}])");
+            const auto declaration = codec.prepare({{"user", "Search"}}).text;
+            require(declaration.find("<|tool>declaration:web_search") != std::string::npos, "OpenAI tool schema uses model template");
+            const std::string transcript = R"([{"role":"assistant","content":"","tool_calls":[{"id":"s0","type":"function","function":{"name":"web_search","arguments":{"query":"test"}}}]},{"role":"tool","name":"web_search","tool_call_id":"s0","content":"A source result"}])";
+            const auto continuation = codec.prepare({{"user", "Search"}, {"assistant", "", transcript}}).text;
+            require(continuation.find("<|tool_call>call:web_search{query:") != std::string::npos, "native tool call rendered");
+            require(continuation.find("<|tool_response>response:web_search") != std::string::npos, "OpenAI role tool rendered");
+            require(continuation.size() >= 16 && continuation.substr(continuation.size()-16) == "<tool_response|>", "continue within assistant turn after tool result");
+            codec.set_tools("");
             require(codec.is_end(106) && !codec.is_end(1), "only the configured checkpoint EOS terminates generation");
             mimir::Config config{256, 224, 4, true, GGML_TYPE_F16};
             mimir::Chat chat(model, config);

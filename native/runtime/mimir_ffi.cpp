@@ -47,7 +47,8 @@ std::vector<mimir::Message> history(const Json & command) {
     std::vector<mimir::Message> out;
     for (const auto & m : command.value("history", Json::array())) {
         const bool shortened = command.value("compact", true) && command.value("op", "") != "completion" && m.contains("compactedContent");
-        out.push_back({m.at("role"), shortened ? m.at("compactedContent") : m.at("content")});
+        out.push_back({m.at("role"), shortened ? m.at("compactedContent") : m.at("content"),
+            m.contains("toolContext") ? m.at("toolContext").dump() : ""});
     }
     return out;
 }
@@ -101,6 +102,9 @@ struct Engine {
                 {"fallbackReasons",loaded.failures},{"flashAttention",loaded.flash}});return;
         }
         if(!chat || !codec) throw std::runtime_error("Load a model first.");
+        const auto tools = c.contains("tools") && !c.at("tools").empty() ? c.at("tools").dump() : std::string{};
+        codec->set_tools(tools);
+        chat->set_tools(""); // Summary generations never get executable tools.
         if (op == "completion") {
             const auto full = history(c);
             mimir::Chat::validate_history(full);
@@ -147,22 +151,32 @@ struct Engine {
         conversation=current;
         const std::string prompt=c.at("prompt");const int budget=c.at("budget");
         if(budget<1 || budget>=context) throw std::runtime_error("Invalid reply budget.");
-        auto prepared=compact?mimir::compaction::compact(*chat,*codec,system,full,previous,prompt,context,budget,
+        const auto tool_context = c.contains("toolContext") && !c.at("toolContext").empty() ? c.at("toolContext").dump() : std::string{};
+        std::vector<mimir::Message> tool_probe{{"user", prompt}};
+        const auto base_tokens = codec->prepare(tool_probe).tokens.size();
+        if (!tool_context.empty()) tool_probe.push_back({"assistant", "", tool_context});
+        const auto tool_tokens = codec->prepare(tool_probe).tokens.size();
+        const auto extra_tokens = tool_tokens > base_tokens ? tool_tokens - base_tokens : 0;
+        if (extra_tokens + budget >= size_t(context)) throw std::runtime_error("Search results exceed context. Increase context length.");
+        auto prepared=compact?mimir::compaction::compact(*chat,*codec,system,full,previous,prompt,context-int(extra_tokens),budget,
             [&]{return cancelled.load();},[&]{emit({{"type","compacting"}});},
             [&](const mimir::compaction::Memory & m){emit({{"type","summary"},{"text",m.summary},{"covered",m.covered}});},
             [&](const std::string & text){emit({{"type","promptSummary"},{"text",text}});})
             :mimir::compaction::PreparedHistory{full,previous,false,prompt};
+        chat->set_tools(tools);
         chat->restore_history(prepared.messages,mixed_lm);
         auto input=prepared.messages;if(!system.empty()) input.insert(input.begin(),{"system",system});input.push_back({"user",prepared.prompt});
+        if (!tool_context.empty()) input.push_back({"assistant", "", tool_context});
         emit({{"type","prepared"},{"tokens",codec->prepare(input).tokens.size()}});
         if(cancelled || prepared.cancelled) chat->request_cancel();
         const auto sampling = sampling_parameters(c);
-        auto result=chat->reply(prepared.prompt,budget,[&](const std::string & t){emit({{"type","token"},{"text",t}});}, sampling);
+        auto result=chat->reply(prepared.prompt,budget,[&](const std::string & t){emit({{"type","token"},{"text",t}});}, sampling, tool_context);
         const bool stopped=cancelled || result.finish==mimir::Finish::cancelled;
         if(result.status!=mimir::Status::ok && !stopped) throw std::runtime_error(result.status==mimir::Status::capacity?
             "Conversation and reply exceed context. Increase context, reduce reply budget or enable compaction.":"Native generation failed.");
         emit({{"type","reply"},{"text",result.text},{"cancelled",stopped},{"limited",result.finish==mimir::Finish::length},
             {"reusedPrefixTokens",result.reused_tokens},
+            {"toolCall",result.finish==mimir::Finish::tool_call},
             {"compactedPrompt",!stopped && prepared.prompt!=prompt?Json(prepared.prompt):Json(nullptr)},
             {"memory",!stopped && prepared.memory.covered?Json{{"summary",prepared.memory.summary},{"covered",prepared.memory.covered}}:Json(nullptr)}});
         if(!mixed_lm || stopped) chat->recover();

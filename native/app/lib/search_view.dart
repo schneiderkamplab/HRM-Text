@@ -67,7 +67,7 @@ class _SearchSettingsState extends State<SearchSettings> {
           contentPadding: EdgeInsets.zero,
           title: const Text('Allow online search'),
           subtitle: const Text(
-            'Off by default. Searches send only the query you enter to the Mimir service and Jina AI. Chat history is not sent.',
+            'Off by default. Allows Mimir to search through the Mimir service and Jina AI. Only search queries are sent, but they may include details from your chat.',
           ),
           value: widget.search.enabled,
           onChanged: (v) {

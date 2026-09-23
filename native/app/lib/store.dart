@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
 import 'search.dart';
+import 'search_tool.dart';
 import 'models.dart';
 import 'model_library.dart';
 
@@ -19,9 +20,10 @@ class ChatStore extends ChangeNotifier {
   Directory? directory;
   final bool manualStartup;
   String? _sessionDevice;
-  ChatStore({InferenceEngine? engine, this.directory, bool? manualStartup})
+  ChatStore({InferenceEngine? engine, WebSearchController? search, this.directory, bool? manualStartup})
     : manualStartup = manualStartup ?? Platform.isAndroid,
-      engine = engine ?? NativeEngine();
+      engine = engine ?? NativeEngine(),
+      search = search ?? WebSearchController();
   final ModelLibrary library = ModelLibrary();
   List<Conversation> chats = [];
   String? selected, notice;
@@ -41,7 +43,8 @@ class ChatStore extends ChangeNotifier {
       generating = false,
       compacting = false,
       closing = false;
-  final search = WebSearchController();
+  final WebSearchController search;
+  bool searching = false, _stopRequested = false;
   bool onlineFeedback = false;
   void setOnlineFeedback(bool enabled) {
     onlineFeedback = enabled;
@@ -136,6 +139,7 @@ class ChatStore extends ChangeNotifier {
                 .clamp(0, messages.length)
             as int;
   String get activity =>
+      searching ? 'DFM Mimir is searching…' :
       compacting ? 'DFM Mimir is compacting…' : 'DFM Mimir is thinking…';
   void setNotice(String? value) {
     notice = value;
@@ -589,6 +593,7 @@ class ChatStore extends ChangeNotifier {
     try {
       final events = await engine.command({
         'op': 'count',
+        if (search.enabled && search.configured) 'tools': webSearchTools,
         'history': messages,
         'memory': active?.memory,
         'compact': compact,
@@ -619,51 +624,120 @@ class ChatStore extends ChangeNotifier {
     streaming = '';
     preview = null;
     generating = true;
+    _stopRequested = false;
     compacting = false;
     notice = null;
     _countRevision++;
     notifyListeners();
     await save();
     try {
-      final events = await engine.command(
-        {
-          'op': 'reply',
-          'conversation': c.id,
-          'history': c.messages,
-          'memory': c.memory,
-          'compact': compact,
-          'prompt': prompt,
-          'budget': reply,
-          'temperature': temperature,
-          'repeat_penalty': repetitionPenalty,
-        },
-        onEvent: (e) {
-          switch (e['type']) {
-            case 'compacting':
-              compacting = true;
-            case 'summary':
-              preview = {
-                'summary': e['text'],
-                'covered': e['covered'],
-                'position': c.messages.length,
-              };
-            case 'promptSummary':
-              preview = {
-                'summary': e['text'],
-                'covered': 0,
-                'position': c.messages.length,
-                'prompt': true,
-              };
-            case 'prepared':
-              compacting = false;
-              used = e['tokens'];
-            case 'token':
-              streaming += e['text'] as String;
+      if (search.enabled) await search.load();
+      final toolContext = <Json>[];
+      Json result;
+      var generationMemory = c.memory;
+      for (var round = 0; ; round++) {
+        if (_stopRequested) {
+          result = {'cancelled': true};
+          break;
+        }
+        final toolsEnabled = search.enabled && search.configured && round < 2;
+        streaming = '';
+        String rawStream = '';
+        final events = await engine.command(
+          {
+            'op': 'reply',
+            if (toolsEnabled) 'tools': webSearchTools,
+            if (toolContext.isNotEmpty) 'toolContext': toolContext,
+            'conversation': c.id,
+            'history': c.messages,
+            'memory': generationMemory,
+            'compact': compact,
+            'prompt': prompt,
+            'budget': reply,
+            'temperature': temperature,
+            'repeat_penalty': repetitionPenalty,
+          },
+          onEvent: (e) {
+            switch (e['type']) {
+              case 'compacting':
+                compacting = true;
+              case 'summary':
+                preview = {
+                  'summary': e['text'],
+                  'covered': e['covered'],
+                  'position': c.messages.length,
+                };
+              case 'promptSummary':
+                preview = {
+                  'summary': e['text'],
+                  'covered': 0,
+                  'position': c.messages.length,
+                  'prompt': true,
+                };
+              case 'prepared':
+                compacting = false;
+                used = e['tokens'];
+              case 'token':
+                rawStream += e['text'] as String;
+                streaming = rawStream.split('<|tool_call>').first;
+            }
+            notifyListeners();
+          },
+        );
+        result = events.firstWhere((e) => e['type'] == 'reply');
+        if (_stopRequested) result = {'cancelled': true};
+        if (result['cancelled'] == true) break;
+        if (result['toolCall'] != true) {
+          if ((result['text'] as String? ?? '').contains('<|tool_call>')) {
+            throw StateError(
+              'Mimir produced an incomplete search request. Increase the reply budget or retry.',
+            );
           }
-          notifyListeners();
-        },
-      );
-      final result = events.firstWhere((e) => e['type'] == 'reply');
+          break;
+        }
+        if (!toolsEnabled) {
+          throw StateError(
+            'Mimir exceeded the two-search limit. Please try a more specific question.',
+          );
+        }
+        final query = parseSearchQuery(result['text'] as String);
+        searching = true;
+        streaming = '';
+        notifyListeners();
+        Object searchResult;
+        try {
+          final results = await search.search(query);
+          searchResult = {
+            'results': results
+                .map(
+                  (r) => {
+                    'title': r['title'],
+                    'url': r['url'],
+                    'description': (r['description'] ?? '').substring(
+                      0,
+                      (r['description'] ?? '').length.clamp(0, 500),
+                    ),
+                  },
+                )
+                .toList(),
+          };
+        } catch (_) {
+          searchResult = {
+            'error': 'Web search unavailable. Tell the user you could not verify current information.',
+          };
+        } finally {
+          searching = false;
+        }
+        if (_stopRequested) {
+          result = {'cancelled': true};
+          break;
+        }
+        toolContext.addAll(searchToolExchange(round, query, searchResult));
+        generationMemory = result['memory'] == null
+            ? generationMemory
+            : Json.from(result['memory']);
+        notifyListeners();
+      }
       lastReusedTokens = result['reusedPrefixTokens'] ?? 0;
       if (result['cancelled'] == true) {
         draft = prompt;
@@ -686,7 +760,11 @@ class ChatStore extends ChangeNotifier {
             if (result['compactedPrompt'] != null)
               'compactedContent': result['compactedPrompt'],
           },
-          {'role': 'assistant', 'content': result['text']},
+          {
+            'role': 'assistant',
+            'content': result['text'],
+            if (toolContext.isNotEmpty) 'toolContext': toolContext,
+          },
         ]);
         c.updated = DateTime.now();
         if (result['compactedPrompt'] != null) {
@@ -704,6 +782,7 @@ class ChatStore extends ChangeNotifier {
       notice = '$e';
     } finally {
       generating = false;
+      searching = false;
       compacting = false;
       pending = null;
       streaming = '';
@@ -715,7 +794,11 @@ class ChatStore extends ChangeNotifier {
   }
 
   void stop() {
-    if (generating) engine.cancel();
+    if (generating) {
+      _stopRequested = true;
+      search.cancel();
+      engine.cancel();
+    }
   }
 
   Future<void> save() {

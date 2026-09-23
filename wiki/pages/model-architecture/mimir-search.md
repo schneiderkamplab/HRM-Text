@@ -59,3 +59,31 @@ eye button reveals/hides saved and edited values. Saving keeps the field filled
 and hides it again; reopening settings also starts hidden. Forgetting clears it.
 The Jina key remains server-side. A widget test covers load, edit, save, reveal,
 reopen and forget.
+
+## Model-requested searches — 2026-09-23
+
+Superseded: the initial manual-only behavior described above. The app now supplies
+an OpenAI-format `web_search(query)` function definition through the model's own
+chat template when search is enabled and configured. Native generation stops at
+the tool-call delimiter; the app invokes the existing Worker and resumes with an
+OpenAI-style tool response. Two searches per answer, cancellation during HTTP,
+malformed-call rejection and an explicit searching status bound the loop.
+Queries may contain information from the conversation; settings now say so.
+The Jina credential remains exclusively server-side.
+
+Completed assistant turns carry a `toolContext` transcript, retaining complete
+user/assistant pairs for the existing archive and compaction bookkeeping. Native
+rendering expands it into assistant tool calls and tool responses; compaction
+includes tool references as untrusted source data. Tool definitions/results
+count toward context capacity. Search-enabled turns currently reset KV around
+tool configuration/compaction; normal offline MixedLM caching is unchanged.
+
+Validation: all 65 app tests, 82 native CPU text checks, compaction tests and the
+Metal asynchronous runtime smoke suite with `--mixed-lm --search-tool` pass.
+A separate real Q4/Metal → Worker → Jina → model test produced a tool call, live
+results, and a final answer with source URLs. The full Mac UI also passed with
+the selected BF16 model: one search, five results, a Danish answer and persisted
+tool messages. That answer omitted source URLs despite the request, so model
+citation adherence remains imperfect. See the
+[runbook](../../../services/feedback/SEARCH.md) for reproducible offline tests
+and remaining platform qualification. No app release was created.
