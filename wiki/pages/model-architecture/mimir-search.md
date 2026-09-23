@@ -95,3 +95,10 @@ initial implementation above. The toolbar search button and manual dialog have
 been removed at the user's request. Search is now available only through the
 model tool during chat, gated by **Allow online search** and a configured key.
 Search settings and the masked key field remain available.
+
+## Release authorization — 2026-09-23
+
+The user authorized publishing 0.1.4 and preparing iOS TestFlight. This supersedes
+prior unreleased-only instructions. See the [TestFlight handoff](../../../native/app/TESTFLIGHT.md):
+no valid signing identities or iOS development team are configured on this Mac;
+Apple signing/upload and real-device qualification remain outstanding.
