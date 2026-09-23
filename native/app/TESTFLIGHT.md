@@ -81,3 +81,13 @@ Official instructions:
 - https://developer.apple.com/help/app-store-connect/test-a-beta-version/testflight-overview/
 - https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases
 - https://developer.apple.com/help/app-store-connect/test-a-beta-version/invite-external-testers/
+
+The local unsigned `build/ios/archive/Runner.xcarchive` was built and validated
+as 0.1.4 (6), with the correct bundled model hash and five bundled privacy
+manifests. The iOS dependency lock now includes secure storage, and the default
+launch placeholder has been replaced with the existing Mimir artwork. Rebuild
+with signing after selecting your team; do not try to upload this unsigned archive.
+
+The iOS Runner now references its keychain entitlement for all build modes, as
+required by the installed secure-storage plugin. No cross-app access group is
+configured. Verify saving/reloading a key on a signed physical device.

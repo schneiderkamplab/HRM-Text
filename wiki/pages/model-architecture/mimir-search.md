@@ -102,3 +102,8 @@ The user authorized publishing 0.1.4 and preparing iOS TestFlight. This supersed
 prior unreleased-only instructions. See the [TestFlight handoff](../../../native/app/TESTFLIGHT.md):
 no valid signing identities or iOS development team are configured on this Mac;
 Apple signing/upload and real-device qualification remain outstanding.
+
+TestFlight preparation also updated the iOS CocoaPods lock, replaced the launch
+placeholder with Mimir artwork, and attached the secure-storage plugin's required
+keychain entitlement in all Runner build modes. Signed physical-device key
+persistence still needs qualification.
