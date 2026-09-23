@@ -289,7 +289,7 @@ Copy link action; it does not open a browser or make a network request.
 The former saved 1.0 default upgrades to 1.1 once. Other saved values are
 preserved; explicitly selecting 1.0 afterwards still disables the penalty.
 
-## Optional web search (unreleased 0.1.4)
+## Optional web search
 
 Enable **Allow online search** and enter a Mimir search key in settings. The
 model can call `web_search(query)` during a reply, then use the results to answer

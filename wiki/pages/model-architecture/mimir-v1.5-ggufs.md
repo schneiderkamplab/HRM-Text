@@ -99,3 +99,22 @@ the remote curated-catalog URL follows the maintained `main` branch.
 new shipped catalog entries, and discard stale bundled-file inventory after an
 app update. The bundled file is registered only after hashing its current bytes.
 All 67 Flutter tests and analysis pass after these changes.
+
+Build-tool caution: run Flutter tests and platform builds sequentially within
+the same checkout. A concurrent test run regenerated Android's plugin registrant
+with `integration_test` during a release build and caused a Java compile error.
+Repeating the final platform builds sequentially passed.
+
+The final 0.1.5 macOS and Android release builds and unsigned iOS archive pass;
+iOS/Android report build 7. Native Metal tests with the new Q4_K_M passed tool
+continuation, cache lifecycle, streaming, compaction, cancellation and shutdown.
+Mounted DMG API smoke passes. Bundled model hashes and private-key scans pass.
+The 0.1.4 GitHub release body, target and asset IDs/sizes/digests were compared
+against a saved snapshot and remain unchanged.
+
+All four 0.1.5 packages are verified. [CI 35864441924](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35864441924)
+passed 67 tests, analysis, native policy/compaction tests and CPU backend probes
+on Linux/Windows. Package source is `3e36860ef4d918591c64e0d789f104df5047eba4`.
+Artifacts: `logs/packages/release-0.1.5/`; test/audit evidence:
+`logs/release-0.1.5-*`. Self-contained notes and checksums are in
+[0.1.5.md](../../../native/app/releases/0.1.5.md). Publication awaits uploads.

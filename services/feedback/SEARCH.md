@@ -1,6 +1,6 @@
 # Optional Mimir web search
 
-Unreleased app 0.1.4 adds **Allow online search** and a masked search-key setting.
+App versions 0.1.4 and later provide **Allow online search** and a masked search-key setting.
 With permission enabled and a key configured, the app supplies an OpenAI-format
 `web_search` function definition with a required string `query` parameter to
 Mimir's own GGUF template. The model can request searches during a normal reply;
