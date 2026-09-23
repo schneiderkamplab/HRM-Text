@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-23: Updated the [concise default system prompt](pages/model-architecture/mimir-app.md#concise-default-model-identity-2026-09-23) with Mimir identity, a short DFM description and SDU UCloud training credit; unreleased 0.1.4.
+
 - 2026-09-22: Prepared unreleased 0.1.4+6 with [UCloud training credit](pages/model-architecture/mimir-app.md#014-preparation-ucloud-training-credit-2026-09-22) beside/below DFM branding. The supplied SVG and offline raster are preserved; no release or tag created.
 
 - 2026-09-22: Published [DFM Mimir 0.1.3](pages/model-architecture/mimir-app.md#013-publication-completed) as Latest, with macOS/Android/Linux/Windows packages, bundled official Q4_K_M, verified remote hashes and self-contained notes.

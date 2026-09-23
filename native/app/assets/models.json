@@ -28,7 +28,7 @@
         "name": "DFM Mimir v1",
         "promptReserve": 256,
         "replyContextDivisor": 4,
-        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "systemPrompt": "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
         "threads": 4,
         "version": 1
       },
@@ -61,7 +61,7 @@
         "name": "DFM Mimir v1",
         "promptReserve": 256,
         "replyContextDivisor": 4,
-        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "systemPrompt": "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
         "threads": 4,
         "version": 1
       },
@@ -94,7 +94,7 @@
         "name": "DFM Mimir v1",
         "promptReserve": 256,
         "replyContextDivisor": 4,
-        "systemPrompt": "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language.",
+        "systemPrompt": "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
         "threads": 4,
         "version": 1
       },

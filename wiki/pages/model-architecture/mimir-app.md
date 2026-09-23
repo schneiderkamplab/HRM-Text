@@ -4,7 +4,7 @@ title: DFM Mimir app and portable backend selection
 description: Separate Flutter client, shared native engine, local backend evidence and remaining platform qualification.
 tags: [mimir, flutter, desktop, mobile, backends]
 status: draft
-last_updated: 2026-09-22
+last_updated: 2026-09-23
 confidence: high
 ---
 # DFM Mimir app and portable backends
@@ -775,3 +775,15 @@ Latest.
 
 Validation: the raster export was visually checked; Flutter analysis and all
 52 existing tests pass, and OKF validation has no errors or warnings.
+
+## Concise default model identity — 2026-09-23
+
+The bundled Flutter profile, all three official catalog profiles, and Apple
+profile/default now use:
+
+> You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.
+
+The short DFM description follows its [official overview](https://www.foundationmodels.dk/).
+This is part of unreleased 0.1.4. Existing saved/imported profiles retain their
+own system prompts; this change updates the shipped defaults, not user data.
+JSON parsing and agreement across all default profiles were checked.
