@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
+import 'search_view.dart';
 import 'store.dart';
 import 'model_library_view.dart';
 
@@ -90,6 +91,7 @@ class _SettingsViewState extends State<SettingsView> {
                 value: s.onlineFeedback,
                 onChanged: s.setOnlineFeedback,
               ),
+              SearchSettings(search: s.search, onChanged: s.save),
               Text('Profile: ${s.profile.name}'),
               Text(s.engineLabel),
               if (s.desktop) ...[

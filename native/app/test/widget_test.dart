@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
@@ -297,6 +298,41 @@ void main() {
     });
     await tester.binding.setSurfaceSize(null);
   });
+  for (final outcome in ['cancelled', 'error', 'dialog']) {
+    testWidgets('composer focus after $outcome', (tester) async {
+      final directory = Directory.systemTemp.createTempSync('mimir-focus');
+      final e = FakeEngine();
+      final s = fixture(e, directory, persist: false);
+      final reply = Completer<List<Json>>();
+      e.handler = (c, event) async => c['op'] == 'count'
+          ? [{'type': 'count', 'tokens': 42}] : reply.future;
+      await tester.pumpWidget(MaterialApp(
+        theme: ThemeData(platform: TargetPlatform.iOS), home: ChatView(store: s)));
+      await tester.enterText(find.byKey(const Key('composer')), 'Hello');
+      await tester.pump();
+      await tester.tap(find.byTooltip('Send message'));
+      await tester.pump();
+      expect(s.generating, true);
+      expect(tester.widget<TextField>(find.byKey(const Key('composer'))).focusNode!.hasFocus, false);
+      if (outcome == 'dialog') {
+        showDialog<void>(context: tester.element(find.byType(ChatView)),
+          builder: (_) => const AlertDialog(content: TextField(autofocus: true)));
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+      if (outcome == 'error') {
+        reply.completeError(StateError('synthetic generation failure'));
+      } else {
+        reply.complete([{'type': 'reply', 'cancelled': true}]);
+      }
+      await tester.pumpAndSettle();
+      expect(tester.widget<TextField>(find.byKey(const Key('composer'))).focusNode!.hasFocus,
+        outcome != 'dialog');
+      expect(s.draft, 'Hello');
+      await tester.pumpWidget(const SizedBox());
+      await s.shutdown();
+      directory.deleteSync(recursive: true);
+    });
+  }
   testWidgets('sidebar identity, branding and composer send', (tester) async {
     final directory = Directory.systemTemp.createTempSync(
       'dfm-mimir-widget',
@@ -338,6 +374,8 @@ void main() {
     await tester.pump();
     expect(s.messages.length, 2);
     expect(find.text('Hello back'), findsOneWidget);
+    await tester.pump();
+    expect(tester.widget<TextField>(find.byKey(const Key('composer'))).focusNode!.hasFocus, isTrue);
     s.newChat();
     await tester.pump();
     expect(s.chats.length, 2);

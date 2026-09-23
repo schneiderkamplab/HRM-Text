@@ -2,6 +2,9 @@ PODS:
   - file_picker_darwin (1.0.0):
     - Flutter
     - FlutterMacOS
+  - flutter_secure_storage_darwin (10.0.0):
+    - Flutter
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - mimir_native (0.1.0)
   - package_info_plus (0.0.1):
@@ -11,6 +14,7 @@ PODS:
 
 DEPENDENCIES:
   - file_picker_darwin (from `Flutter/ephemeral/.symlinks/plugins/file_picker_darwin/darwin`)
+  - flutter_secure_storage_darwin (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_darwin/darwin`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - mimir_native (from `Flutter/ephemeral/.symlinks/plugins/mimir_native/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
@@ -19,6 +23,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   file_picker_darwin:
     :path: Flutter/ephemeral/.symlinks/plugins/file_picker_darwin/darwin
+  flutter_secure_storage_darwin:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_darwin/darwin
   FlutterMacOS:
     :path: Flutter/ephemeral
   mimir_native:
@@ -30,6 +36,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   file_picker_darwin: 4c2b9a50ea44cb3b071381ea0cf48591bdd80251
+  flutter_secure_storage_darwin: 46e401699982ee74142909676535e0f6a7321e58
   FlutterMacOS: c232990155153907050900a2e175c7773903ba4e
   mimir_native: e86d8e7341c18be92d2b10adf50b01686d7fe3fa
   package_info_plus: f0052d280d17aa382b932f399edf32507174e870

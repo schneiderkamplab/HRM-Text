@@ -47,6 +47,7 @@ dependencies:
   uuid: ^4.6.0
   package_info_plus: ^10.2.1
   flutter_markdown_plus: ^1.0.12
+  flutter_secure_storage: ^11.2.0
 
 dev_dependencies:
   integration_test:

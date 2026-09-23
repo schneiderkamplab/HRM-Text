@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
+import 'search.dart';
 import 'models.dart';
 import 'model_library.dart';
 
@@ -40,6 +41,7 @@ class ChatStore extends ChangeNotifier {
       generating = false,
       compacting = false,
       closing = false;
+  final search = WebSearchController();
   bool onlineFeedback = false;
   void setOnlineFeedback(bool enabled) {
     onlineFeedback = enabled;
@@ -174,6 +176,7 @@ class ChatStore extends ChangeNotifier {
           }
           selected = j['selected'];
           onlineFeedback = j['onlineFeedback'] == true;
+          search.enabled = j['onlineSearch'] == true;
           compact = j['compact'] ?? true;
           mixedLM = j['mixedLM'] ?? true;
           temperature = _samplingValue(j['temperature'], 0, 0, 2);
@@ -717,6 +720,7 @@ class ChatStore extends ChangeNotifier {
 
   Future<void> save() {
     if (!persistence || directory == null) return Future.value();
+    if (model != null) model!['profile'] = profile.data;
     final installedIndex = library.installed.indexWhere((m) => m['id'] == model?['id']);
     if (installedIndex >= 0) library.installed[installedIndex] = Json.from(model!);
     final data = jsonEncode({
@@ -725,6 +729,7 @@ class ChatStore extends ChangeNotifier {
       'selected': selected,
       'model': model,
       'onlineFeedback': onlineFeedback,
+      'onlineSearch': search.enabled,
       'modelNetwork': library.online,
       'userModelRepositories': library.userRepositories,
       'modelCatalog': {'version': 1, 'models': library.catalog.map((a) => a.data).toList()},
@@ -759,6 +764,7 @@ class ChatStore extends ChangeNotifier {
   Future<void> shutdown() async {
     if (closing) return;
     stop();
+    search.cancel();
     closing = true;
     notifyListeners();
     await setApiEnabled(false);

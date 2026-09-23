@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-23: Added [optional Mimir search](pages/model-architecture/mimir-search.md), private D1-to-Jina credential mapping, focus restoration and stock system-prompt refresh; 0.1.4 remains unreleased.
+
 - 2026-09-23: Updated the [concise default system prompt](pages/model-architecture/mimir-app.md#concise-default-model-identity-2026-09-23) with Mimir identity, a short DFM description and SDU UCloud training credit; unreleased 0.1.4.
 
 - 2026-09-22: Prepared unreleased 0.1.4+6 with [UCloud training credit](pages/model-architecture/mimir-app.md#014-preparation-ucloud-training-credit-2026-09-22) beside/below DFM branding. The supplied SVG and offline raster are preserved; no release or tag created.

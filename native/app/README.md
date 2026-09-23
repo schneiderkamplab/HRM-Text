@@ -162,7 +162,9 @@ app entry point.
 
 Build on the matching host with Flutter 3.47.5, Python 3.12+, CMake and the
 [Flutter desktop prerequisites](https://docs.flutter.dev/platform-integration).
-Linux also needs GTK3 development libraries, clang, Ninja and pkg-config;
+Linux also needs GTK3 development libraries, clang, Ninja, pkg-config and
+`libsecret-1-dev`; installed apps need `libsecret-1-0` and a Secret Service to
+remember search credentials (session-only keys work without a Secret Service);
 Windows needs Visual Studio's Desktop development with C++ workload.
 
 ```sh
@@ -286,3 +288,12 @@ Copy link action; it does not open a browser or make a network request.
 
 The former saved 1.0 default upgrades to 1.1 once. Other saved values are
 preserved; explicitly selecting 1.0 afterwards still disables the penalty.
+
+## Optional web search (unreleased 0.1.4)
+
+Enable **Allow online search** and enter a Mimir search key in settings. The
+search icon opens a query dialog; only that query goes to the Mimir service and
+Jina AI. Add returned sources to your draft to discuss them with the local model.
+Search stays off by default. Keys can be remembered in secure storage or used
+only for the current session; no keys are bundled or included in feedback.
+See the [search runbook](../../services/feedback/SEARCH.md) for service setup.

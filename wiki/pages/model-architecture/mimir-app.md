@@ -787,3 +787,10 @@ The short DFM description follows its [official overview](https://www.foundation
 This is part of unreleased 0.1.4. Existing saved/imported profiles retain their
 own system prompts; this change updates the shipped defaults, not user data.
 JSON parsing and agreement across all default profiles were checked.
+
+## Search and saved prompt correction — 2026-09-23
+
+See [optional Mimir search](mimir-search.md) for the unreleased 0.1.4 search
+setting and service. Superseded: the earlier behavior retaining all old saved
+stock prompts. Exact former defaults now adopt the research-collaboration prompt;
+customized prompts remain unchanged. Reply completion restores composer focus.
