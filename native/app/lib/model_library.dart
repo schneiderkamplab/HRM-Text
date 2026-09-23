@@ -47,7 +47,7 @@ String modelSize(int bytes) => bytes >= 1000000000
 
 class ModelLibrary extends ChangeNotifier {
   static final catalogUrl = Uri.parse(
-    'https://raw.githubusercontent.com/schneiderkamplab/HRM-Text/codex/mimir-apple-mvp/native/app/assets/models.json',
+    'https://raw.githubusercontent.com/schneiderkamplab/HRM-Text/main/native/app/assets/models.json',
   );
   Directory? directory;
   final HttpClient Function() clientFactory;

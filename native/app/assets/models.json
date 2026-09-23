@@ -2,6 +2,105 @@
   "version": 1,
   "models": [
     {
+      "id": "38ecdf6303394b256037287f2caf9b334e6a20814fd07d11bdc24555dc5d01e6",
+      "name": "DFM Mimir v1.5 Q4_K_M",
+      "repo": "danish-foundation-models/DFM-Mimir-v1.5-GGUF",
+      "revision": "78f92c5f126ae7ad05e98fc210d5c9c0eec3da16",
+      "file": "dfm-mimir-v1.5-q4_k_m.gguf",
+      "bytes": 1167418016,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1.5",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Official export. 724 tokenizer/template checks, 19 training-audit cases and CPU/Metal chat smoke tests passed. Other devices still need qualification."
+    },
+    {
+      "id": "87d04c9e132e0e227ed778b3c04db5f9e733a1e5975b5ae0b54cc1835f003fe1",
+      "name": "DFM Mimir v1.5 Q8_0",
+      "repo": "danish-foundation-models/DFM-Mimir-v1.5-GGUF",
+      "revision": "78f92c5f126ae7ad05e98fc210d5c9c0eec3da16",
+      "file": "dfm-mimir-v1.5-q8_0.gguf",
+      "bytes": 1913201312,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1.5",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Official export. 724 tokenizer/template checks, 19 training-audit cases and CPU/Metal chat smoke tests passed. Other devices still need qualification."
+    },
+    {
+      "id": "8b23e88b137a84b1202e307bc81608577d6aff2e22aee87047effdb5c2209e7d",
+      "name": "DFM Mimir v1.5 BF16",
+      "repo": "danish-foundation-models/DFM-Mimir-v1.5-GGUF",
+      "revision": "78f92c5f126ae7ad05e98fc210d5c9c0eec3da16",
+      "file": "dfm-mimir-v1.5-bf16.gguf",
+      "bytes": 3588301472,
+      "profile": {
+        "contextTiers": [
+          1024,
+          2048,
+          4096,
+          8192,
+          16384,
+          32768
+        ],
+        "cpuAttentionBytesPerTokenSquared": 96,
+        "fixedMemoryBytes": 268435456,
+        "maximumContext": 32768,
+        "maximumDefaultReply": 2048,
+        "memoryBytesPerToken": 2097152,
+        "memoryFraction": 0.7,
+        "minimumContext": 1024,
+        "minimumReply": 512,
+        "name": "DFM Mimir v1.5",
+        "promptReserve": 256,
+        "replyContextDivisor": 4,
+        "systemPrompt": "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
+        "threads": 4,
+        "version": 1
+      },
+      "qualification": "Official export. 724 tokenizer/template checks, 19 training-audit cases and CPU/Metal chat smoke tests passed. Other devices still need qualification."
+    },
+    {
       "id": "8c811ca72589112f00306e8b3a23f83944751d13d3fce6dfdb39df8b31726e49",
       "name": "DFM Mimir v1 Q4_K_M (training-faithful)",
       "repo": "danish-foundation-models/DFM-Mimir-GGUF",

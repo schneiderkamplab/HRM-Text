@@ -89,7 +89,7 @@ void main() {
     descriptor = {
       'id': sha256.convert(bytes).toString(),
       'name': 'Test Mimir',
-      'repo': 'danish-foundation-models/DFM-Mimir-GGUF',
+      'repo': 'danish-foundation-models/DFM-Mimir-v1.5-GGUF',
       'revision': 'a' * 40,
       'file': 'test.gguf',
       'bytes': bytes.length,
@@ -97,6 +97,23 @@ void main() {
     };
   });
   tearDown(() async => dir.delete(recursive: true));
+
+  test('saved catalog retains discovered entries and gains shipped models', () async {
+    await File('${dir.path}/conversations.json').writeAsString(jsonEncode({
+      'version': 1,
+      'chats': [],
+      'modelCatalog': {'version': 1, 'models': [descriptor]},
+    }));
+    final store = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true)
+      ..persistence = false;
+    await store.initialize();
+    expect(store.library.catalog.any((a) => a.id == descriptor['id']), true);
+    expect(store.library.catalog.where((a) => a.data['repo'] ==
+      'danish-foundation-models/DFM-Mimir-v1.5-GGUF').length, greaterThanOrEqualTo(3));
+    expect(store.library.catalog.any((a) => a.data['repo'] ==
+      'danish-foundation-models/DFM-Mimir-GGUF'), true);
+    await store.shutdown();
+  });
 
   testWidgets(
     'model selector displays sizes and never enables feedback permission',
@@ -111,10 +128,10 @@ void main() {
         MaterialApp(home: ModelLibraryView(store: store)),
       );
       expect(find.textContaining('Selected:'), findsOneWidget);
-      expect(find.text('DFM Mimir v1 Q4_K_M'), findsOneWidget);
+      expect(find.text('DFM Mimir v1.5 Q4_K_M'), findsWidgets);
       expect(
         store.library.catalog.map((a) => a.data['repo']),
-        contains('danish-foundation-models/DFM-Mimir-GGUF'),
+        contains('danish-foundation-models/DFM-Mimir-v1.5-GGUF'),
       );
       await tester.tap(find.byType(SwitchListTile));
       await tester.pump();
@@ -331,7 +348,7 @@ void main() {
     expect(reopened.library.online, false);
     expect(reopened.library.discovered, [allowed]);
     expect(reopened.library.unavailable.single['repo'], allowed);
-    expect(reopened.library.catalog.single.data['repo'], allowed);
+    expect(reopened.library.catalog.singleWhere((a) => a.id == descriptor['id']).data['repo'], allowed);
     await reopened.shutdown();
   });
   test('disallowed artifact cannot be downloaded directly', () async {
@@ -452,7 +469,7 @@ void main() {
     );
     await tester.runAsync(reopened.initialize);
     expect(reopened.library.userRepositories, ['noctrex/DFM-Mimir']);
-    expect(reopened.library.catalog.single.data['repo'], 'noctrex/DFM-Mimir');
+    expect(reopened.library.catalog.singleWhere((a) => a.id == descriptor['id']).data['repo'], 'noctrex/DFM-Mimir');
     expect(reopened.library.online, false);
     await tester.pumpWidget(
       MaterialApp(home: ModelLibraryView(store: reopened)),

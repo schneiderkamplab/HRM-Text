@@ -226,8 +226,14 @@ class ChatStore extends ChangeNotifier {
       library.directory = directory;
       library.readCatalog(await rootBundle.loadString('assets/models.json'));
       if (cachedCatalog != null) {
+        final shippedCatalog = List<ModelArtifact>.of(library.catalog);
         try { library.readCatalog(cachedCatalog); }
         catch (_) { notice = 'Saved model catalog could not be read; using the bundled catalog.'; }
+        final shippedIds = shippedCatalog.map((a) => a.id).toSet();
+        library.catalog = [
+          ...shippedCatalog,
+          ...library.catalog.where((a) => !shippedIds.contains(a.id)),
+        ];
       }
       library.addListener(notifyListeners);
       library.onChanged = save;
@@ -305,10 +311,10 @@ class ChatStore extends ChangeNotifier {
       }
       model = {
         'id': id,
-        'name': 'DFM Mimir v1 Q4_K_M',
+        'name': 'DFM Mimir v1.5 Q4_K_M',
         'path': path,
         'bytes': await file.length(),
-        'repo': 'danish-foundation-models/DFM-Mimir-GGUF',
+        'repo': 'danish-foundation-models/DFM-Mimir-v1.5-GGUF',
         'bundled': true,
         'profile': profile.data,
       };

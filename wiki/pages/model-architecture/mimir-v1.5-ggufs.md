@@ -76,3 +76,21 @@ The HF upload contains only the three final GGUFs, model card, source license,
 `SHA256SUMS`, `provenance.json` and `validation.json`. The provenance records source
 file hashes, converter hashes and quantizer identity. Public size/SHA verification
 is required after upload, before claiming publication complete.
+
+Upload note: the default Xet transfer was slow on this host. Restarting with
+`HF_XET_HIGH_PERFORMANCE=1` increased observed outgoing traffic from roughly
+0.5–1 MB/s to several MB/s. This is Hugging Face's documented high-throughput
+setting; observed bytes include protocol overhead and are not a percent-complete
+measure because Xet deduplicates content.
+
+## Public upload and 0.1.5 packaging
+
+Publication completed at revision `78f92c5f126ae7ad05e98fc210d5c9c0eec3da16`.
+Anonymous size/SHA checks and HTTP 206 GGUF-header downloads passed for all three
+files; official Mimir+GGUF discovery finds the repository. See the
+[publication record](../../../native/mimir/hf-gguf-v1.5/publication.json).
+
+The user requested bundling v1.5 Q4_K_M, then explicitly chose **0.1.5** rather
+than replacing 0.1.4. Prepare 0.1.5 build 7, preserving every 0.1.4 release asset,
+body and tag. Curated catalog includes the three new files and retains originals;
+the remote curated-catalog URL follows the maintained `main` branch.

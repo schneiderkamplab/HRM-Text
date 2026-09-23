@@ -66,6 +66,8 @@ def _main():
     expected = {"hrm_text.hrm.prefix_lm": True, "tokenizer.ggml.bos_token_id": config['bos_token_id'],
                 "tokenizer.ggml.eos_token_id": config['eos_token_id']}
     expected['tokenizer.ggml.pre'] = 'gemma4'
+    if args.model_name:
+        expected['general.name'] = args.model_name
     for key, value in expected.items():
         if reader.fields[key].contents() != value:
             raise ValueError(f'Incorrect metadata: {key}')

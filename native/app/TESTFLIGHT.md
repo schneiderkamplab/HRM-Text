@@ -1,8 +1,8 @@
-# DFM Mimir 0.1.4: iOS TestFlight handoff
+# DFM Mimir 0.1.5: iOS TestFlight handoff
 
 The GitHub release and TestFlight are separate distributions. A DMG or unsigned
 iOS build cannot be uploaded as a TestFlight build. This Flutter app uses bundle
-ID `dk.sdu.mimir`, version `0.1.4`, build `6`, iOS 17+, and includes the official
+ID `dk.sdu.mimir`, version `0.1.5`, build `7`, iOS 17+, and includes the official
 Q4_K_M weights (about 1.17 GB). Physical iOS uses Metal; the simulator uses CPU.
 
 ## Account setup (owner action)
@@ -25,14 +25,14 @@ Q4_K_M weights (about 1.17 GB). Physical iOS uses Metal; the simulator uses CPU.
 From the repository root, with Flutter on PATH:
 
 ```sh
-python3 native/app/tool/build_native.py --model logs/mimir-corrected/dfm-mimir-q4_k_m.gguf
+python3 native/app/tool/build_native.py --model logs/mimir-v1.5/exports/dfm-mimir-v1.5-q4_k_m.gguf
 cd native/app
 flutter pub get
-flutter build ipa --release --build-name 0.1.4 --build-number 6
+flutter build ipa --release --build-name 0.1.5 --build-number 7
 open build/ios/archive/Runner.xcarchive
 ```
 
-Use a higher unused build number if 6 has already been uploaded. The native build
+Use a higher unused build number if 7 has already been uploaded. The native build
 must precede the Flutter archive: it creates the device Metal framework as well
 as the simulator framework. The model path above is a local downloaded artifact;
 see MODELS.md if it is absent. Do not archive a simulator target.
