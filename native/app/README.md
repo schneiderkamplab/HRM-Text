@@ -299,3 +299,9 @@ At most two searches run per answer, and Stop cancels searching too.
 Search stays off by default. Keys can be remembered in secure storage or used
 only for the current session; no keys are bundled or included in feedback.
 See the [search runbook](../../services/feedback/SEARCH.md) for service setup.
+
+## iOS TestFlight
+
+See [the 0.1.4 TestFlight handoff](TESTFLIGHT.md) for Apple Developer account
+setup, signing, archive/upload commands and tester invitations. GitHub packages
+and an unsigned iOS archive are separate from TestFlight distribution.

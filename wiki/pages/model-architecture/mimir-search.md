@@ -107,3 +107,12 @@ TestFlight preparation also updated the iOS CocoaPods lock, replaced the launch
 placeholder with Mimir artwork, and attached the secure-storage plugin's required
 keychain entitlement in all Runner build modes. Signed physical-device key
 persistence still needs qualification.
+
+Release packaging evidence: 0.1.4 (build 6) packages for macOS/Android/Linux/Windows
+include the corrected Q4_K_M. [CI 35839460412](https://github.com/schneiderkamplab/HRM-Text/actions/runs/35839460412)
+passed 65 app tests, analysis, native policy/compaction and packaged backend probes
+on Linux/Windows. Mounted macOS API smoke, Android signature/alignment, all model
+hashes and desktop manifests passed. Private test credentials were absent from
+all package scans. Local iOS archive passes unsigned build/asset validation;
+physical-device/signing and Android Vulkan qualification remain open. Packages:
+`logs/packages/release-0.1.4/`; evidence: `logs/release-0.1.4-*`.
