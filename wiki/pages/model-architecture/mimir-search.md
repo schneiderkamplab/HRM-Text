@@ -116,3 +116,13 @@ hashes and desktop manifests passed. Private test credentials were absent from
 all package scans. Local iOS archive passes unsigned build/asset validation;
 physical-device/signing and Android Vulkan qualification remain open. Packages:
 `logs/packages/release-0.1.4/`; evidence: `logs/release-0.1.4-*`.
+
+### 0.1.4 published
+
+[DFM Mimir 0.1.4](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.4)
+was published as Latest, non-prerelease, on 2026-09-23 at 09:09:51 UTC. Tag
+`dfm-mimir-v0.1.4` points to `f5edf5184d96731168aea31c07d42d144da85f1d`.
+All four packages and four checksum files match GitHub's recorded SHA-256/size;
+the release body matches `native/app/releases/0.1.4.md`. This supersedes draft
+status above. No Apple/TestFlight upload occurred; the handoff's signing and
+physical-device checks remain outstanding.
