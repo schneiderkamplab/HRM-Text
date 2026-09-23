@@ -177,3 +177,11 @@ the pending/rejected-upload status above. The corrected upload has no missing
 framework-version errors or missing-symbol warning. Processing and assignment to
 the internal group remain separate steps; an uploaded build is not necessarily
 installable yet. Evidence: `logs/testflight-0.1.5-build9-upload.log`.
+
+App Store Connect subsequently confirmed **0.1.5 (9): Processing** in Build
+Uploads. The internal group contains the account holder; no build is assigned
+while processing is pending. Beta description, feedback email and test notes
+were saved. External testing remains possible (normal App Store Connect upload,
+not Internal Only), but no external review/public link has been requested or
+submitted. Next: inspect processing result, resolve any compliance questions,
+then add build 9 to the internal group. Repository changes are pushed on main.
