@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-09-23: Published [DFM Mimir 0.1.5 with v1.5 Q4_K_M](pages/model-architecture/mimir-v1.5-ggufs.md#015-publication-complete); verified four packages and checksums, preserved the 0.1.4 release, and prepared unsigned iOS build 7.
+
 - 2026-09-23: Added the DFM Mimir v1.5 GGUF export/validation runbook and artifact provenance.
 
 - 2026-09-23: Extended [Mimir search](pages/model-architecture/mimir-search.md) into a model tool, using the embedded chat template, bounded Worker execution, persisted tool transcripts and cancellation; 0.1.4 unreleased.

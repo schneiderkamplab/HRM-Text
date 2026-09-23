@@ -118,3 +118,16 @@ on Linux/Windows. Package source is `3e36860ef4d918591c64e0d789f104df5047eba4`.
 Artifacts: `logs/packages/release-0.1.5/`; test/audit evidence:
 `logs/release-0.1.5-*`. Self-contained notes and checksums are in
 [0.1.5.md](../../../native/app/releases/0.1.5.md). Publication awaits uploads.
+
+## 0.1.5 publication complete
+
+Superseding the pending-upload status above, [DFM Mimir 0.1.5](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.5)
+was published as Latest/non-prerelease on 2026-09-23 at 13:23:17 UTC. Tag
+`dfm-mimir-v0.1.5` resolves to `b5fbe0d13c0c6a3046702430392bb557cd357c74`.
+All four packages and four checksum sidecars match GitHub's sizes/SHA-256 hashes;
+the published body matches the tracked release notes. The 0.1.4 tag still points
+to `f5edf5184d96731168aea31c07d42d144da85f1d`, and its body and all asset
+IDs/sizes/digests/timestamps are unchanged from the pre-work snapshot.
+Publication evidence: `logs/release-0.1.5-publication.json` and
+`logs/release-0.1.5-remote-verified.json`. iOS remains an unsigned local archive;
+no TestFlight upload was made.
