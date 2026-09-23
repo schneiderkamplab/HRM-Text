@@ -185,3 +185,25 @@ were saved. External testing remains possible (normal App Store Connect upload,
 not Internal Only), but no external review/public link has been requested or
 submitted. Next: inspect processing result, resolve any compliance questions,
 then add build 9 to the internal group. Repository changes are pushed on main.
+
+Processing has now completed for 0.1.5 (9). TestFlight reports **Missing
+Compliance**: the App Encryption Documentation questionnaire must be completed
+before testing. The questionnaire was opened, but no encryption classification
+was selected or submitted. The build is not yet assigned/installable.
+
+Encryption questionnaire investigation: the app uses `dart:io HttpClient` for
+search, feedback and model downloads. The archived Flutter binary contains
+BoringSSL source-path strings, confirming bundled crypto beyond Apple's OS.
+For the algorithm-type question, the supported answer is **standard algorithms
+instead of/in addition to Apple OS encryption**, not OS-only/none. This technical
+classification does not by itself determine documentation exemptions; follow
+[Apple's requirements](https://developer.apple.com/help/app-store-connect/reference/app-information/export-compliance-documentation-for-encryption)
+for subsequent questions. No compliance answer has been submitted by the agent.
+
+### Internal TestFlight available
+
+The owner completed the encryption questionnaire. Apple then showed build 9 as
+Ready to Submit (no Missing Compliance). Assigned **0.1.5 (9)** to **Mimir internal
+testing**; verified **1 Tester / 1 Build** and account-holder status **Invited**
+at 22:08 Copenhagen on 2026-09-23. The owner can accept the invitation in
+TestFlight on iPhone/iPad. External beta review has not been submitted.

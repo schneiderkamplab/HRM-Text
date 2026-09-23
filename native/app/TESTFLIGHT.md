@@ -170,3 +170,11 @@ the pending/rejected-upload status above. The corrected upload has no missing
 framework-version errors or missing-symbol warning. Processing and assignment to
 the internal group remain separate steps; an uploaded build is not necessarily
 installable yet. Evidence: `logs/testflight-0.1.5-build9-upload.log`.
+
+### Internal TestFlight available
+
+The owner completed the encryption questionnaire. Apple then showed build 9 as
+Ready to Submit (no Missing Compliance). Assigned **0.1.5 (9)** to **Mimir internal
+testing**; verified **1 Tester / 1 Build** and account-holder status **Invited**
+at 22:08 Copenhagen on 2026-09-23. The owner can accept the invitation in
+TestFlight on iPhone/iPad. External beta review has not been submitted.
