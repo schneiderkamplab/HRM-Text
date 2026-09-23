@@ -1,0 +1,284 @@
+{
+  "source_hf": {
+    "repo": "danish-foundation-models/DFM-Mimir-v1.5",
+    "revision": "cc57cebadf375947ced5ccd3317d9da6bf8f9677"
+  },
+  "llama_revision": "4122b9a814d5bd4f48f454367419f75c05ee5215",
+  "models": [
+    {
+      "file": "dfm-mimir-v1.5-bf16.gguf",
+      "bytes": 3588301472,
+      "sha256": "8b23e88b137a84b1202e307bc81608577d6aff2e22aee87047effdb5c2209e7d",
+      "quantization": "BF16",
+      "tensor_count": 259,
+      "tensor_types": [
+        "BF16",
+        "F32"
+      ],
+      "tokenizer_template_cases_passed": 724
+    },
+    {
+      "file": "dfm-mimir-v1.5-q8_0.gguf",
+      "bytes": 1913201312,
+      "sha256": "87d04c9e132e0e227ed778b3c04db5f9e733a1e5975b5ae0b54cc1835f003fe1",
+      "quantization": "Q8_0",
+      "tensor_count": 259,
+      "tensor_types": [
+        "F32",
+        "Q8_0"
+      ],
+      "tokenizer_template_cases_passed": 724
+    },
+    {
+      "file": "dfm-mimir-v1.5-q4_k_m.gguf",
+      "bytes": 1167418016,
+      "sha256": "38ecdf6303394b256037287f2caf9b334e6a20814fd07d11bdc24555dc5d01e6",
+      "quantization": "Q4_K_M",
+      "tensor_count": 259,
+      "tensor_types": [
+        "F32",
+        "Q4_K",
+        "Q6_K"
+      ],
+      "tokenizer_template_cases_passed": 724
+    }
+  ],
+  "qualification": {
+    "reference": "Tokenizer.from_file(tokenizer.json), add_special_tokens=False",
+    "tokenizer_sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+    "models": [
+      {
+        "file": "dfm-mimir-v1.5-bf16.gguf",
+        "bytes": 3588301472,
+        "sha256": "8b23e88b137a84b1202e307bc81608577d6aff2e22aee87047effdb5c2209e7d",
+        "tokenizer_cases_passed": 19,
+        "byte_fallback_tokens": 256,
+        "tensor_types": [
+          "BF16",
+          "F32"
+        ],
+        "generation": {
+          "cpu": [
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "Danmarks hovedstad hedder København.",
+              "tokens": [
+                23969,
+                16151,
+                121236,
+                45781,
+                28009,
+                1128,
+                224694,
+                236749,
+                236761
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            },
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "4",
+              "tokens": [
+                236812
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            }
+          ],
+          "metal": [
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "Danmarks hovedstad hedder København.",
+              "tokens": [
+                23969,
+                16151,
+                121236,
+                45781,
+                28009,
+                1128,
+                224694,
+                236749,
+                236761
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            },
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "4",
+              "tokens": [
+                236812
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            }
+          ]
+        }
+      },
+      {
+        "file": "dfm-mimir-v1.5-q8_0.gguf",
+        "bytes": 1913201312,
+        "sha256": "87d04c9e132e0e227ed778b3c04db5f9e733a1e5975b5ae0b54cc1835f003fe1",
+        "tokenizer_cases_passed": 19,
+        "byte_fallback_tokens": 256,
+        "tensor_types": [
+          "F32",
+          "Q8_0"
+        ],
+        "generation": {
+          "cpu": [
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "Danmarks hovedstad hedder København.",
+              "tokens": [
+                23969,
+                16151,
+                121236,
+                45781,
+                28009,
+                1128,
+                224694,
+                236749,
+                236761
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            },
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "4",
+              "tokens": [
+                236812
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            }
+          ],
+          "metal": [
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "Danmarks hovedstad hedder København.",
+              "tokens": [
+                23969,
+                16151,
+                121236,
+                45781,
+                28009,
+                1128,
+                224694,
+                236749,
+                236761
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            },
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "4",
+              "tokens": [
+                236812
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            }
+          ]
+        }
+      },
+      {
+        "file": "dfm-mimir-v1.5-q4_k_m.gguf",
+        "bytes": 1167418016,
+        "sha256": "38ecdf6303394b256037287f2caf9b334e6a20814fd07d11bdc24555dc5d01e6",
+        "tokenizer_cases_passed": 19,
+        "byte_fallback_tokens": 256,
+        "tensor_types": [
+          "F32",
+          "Q4_K",
+          "Q6_K"
+        ],
+        "generation": {
+          "cpu": [
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "Danmarks hovedstad hedder København.",
+              "tokens": [
+                23969,
+                16151,
+                121236,
+                45781,
+                28009,
+                1128,
+                224694,
+                236749,
+                236761
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            },
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "4",
+              "tokens": [
+                236812
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            }
+          ],
+          "metal": [
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "Danmarks hovedstad hedder København.",
+              "tokens": [
+                23969,
+                16151,
+                121236,
+                45781,
+                28009,
+                1128,
+                224694,
+                236749,
+                236761
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            },
+            {
+              "event": "done",
+              "finish": "eos",
+              "status": 0,
+              "text": "4",
+              "tokens": [
+                236812
+              ],
+              "stop_token": 106,
+              "history_size": 2
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -44,3 +44,5 @@
 * [DFM Mimir Optional Chat Feedback](mimir-feedback.md) - Opt-in feedback, private EU D1 intake, authenticated review and test evidence.
 
 * [Optional Mimir web search](mimir-search.md) - Search consent, private key mapping, app focus and stock-prompt updates for unreleased 0.1.4.
+
+* [DFM Mimir v1.5 GGUFs](mimir-v1.5-ggufs.md) - Conversion, tokenizer/template checks and official GGUF publication.

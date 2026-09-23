@@ -20,6 +20,7 @@ def _main():
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--outtype", choices=["f32", "bf16"], default="f32")
+    parser.add_argument("--model-name", help="Display name embedded in GGUF metadata")
     parser.add_argument("--verify-existing", action="store_true")
     parser.add_argument("--reference-gguf", type=Path, help="Optional independently validated export for bit-exact tensor comparison")
     args = parser.parse_args()
@@ -31,7 +32,10 @@ def _main():
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     converter = root / "llama.cpp/convert_hf_to_gguf.py"
-    command = [sys.executable, str(converter), str(model), "--outtype", args.outtype, "--outfile", str(output)]
+    command = [sys.executable, str(converter), str(model), "--outtype", args.outtype]
+    if args.model_name:
+        command += ["--model-name", args.model_name]
+    command += ["--outfile", str(output)]
     if args.verify_existing:
         if not output.is_file():
             raise ValueError("--verify-existing needs an existing export")
