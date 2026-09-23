@@ -16,12 +16,21 @@ class SearchSettings extends StatefulWidget {
 
 class _SearchSettingsState extends State<SearchSettings> {
   final keyInput = TextEditingController();
-  bool remember = true, saving = false;
+  bool remember = true, saving = false, loading = true, visible = false;
   String? error;
   @override
   void initState() {
     super.initState();
-    widget.search.load();
+    loadKey();
+  }
+
+  Future<void> loadKey() async {
+    await widget.search.load();
+    if (!mounted) return;
+    setState(() {
+      keyInput.text = widget.search.configuredKey;
+      loading = false;
+    });
   }
 
   @override
@@ -37,7 +46,9 @@ class _SearchSettingsState extends State<SearchSettings> {
     });
     try {
       await widget.search.setKey(value, remember: remember);
-      keyInput.clear();
+      if (!mounted) return;
+      keyInput.text = widget.search.configuredKey;
+      visible = false;
     } on FormatException catch (e) {
       error = e.message;
     } finally {
@@ -71,13 +82,21 @@ class _SearchSettingsState extends State<SearchSettings> {
         ),
         TextField(
           controller: keyInput,
-          obscureText: true,
+          obscureText: !visible,
+          obscuringCharacter: '*',
           autocorrect: false,
           enableSuggestions: false,
-          enabled: !saving,
-          decoration: const InputDecoration(
+          enabled: !saving && !loading,
+          decoration: InputDecoration(
             labelText: 'Search key',
             hintText: 'mimir_<hex>',
+            suffixIcon: IconButton(
+              tooltip: visible ? 'Hide search key' : 'Show search key',
+              icon: Icon(visible ? Icons.visibility_off : Icons.visibility),
+              onPressed: saving || loading
+                  ? null
+                  : () => setState(() => visible = !visible),
+            ),
           ),
         ),
         CheckboxListTile(
@@ -89,11 +108,11 @@ class _SearchSettingsState extends State<SearchSettings> {
         Wrap(
           children: [
             TextButton(
-              onPressed: saving ? null : () => save(keyInput.text),
+              onPressed: saving || loading ? null : () => save(keyInput.text),
               child: const Text('Save search key'),
             ),
             TextButton(
-              onPressed: saving ? null : () => save(''),
+              onPressed: saving || loading ? null : () => save(''),
               child: const Text('Forget search key'),
             ),
           ],

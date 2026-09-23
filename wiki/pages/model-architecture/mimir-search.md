@@ -51,3 +51,11 @@ encrypted credentials without their device keystore keys. The macOS release buil
 tests pass. The test key was saved through the local Mac settings UI, with search
 left off; credential scans found no test key in changed source or app code/assets.
 Other-platform package validation remains necessary before publishing 0.1.4.
+
+## Key visibility — 2026-09-23
+
+The search-key field loads the configured Mimir key and masks it with stars. An
+eye button reveals/hides saved and edited values. Saving keeps the field filled
+and hides it again; reopening settings also starts hidden. Forgetting clears it.
+The Jina key remains server-side. A widget test covers load, edit, save, reveal,
+reopen and forget.

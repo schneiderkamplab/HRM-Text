@@ -22,6 +22,8 @@ class WebSearchController extends ChangeNotifier {
   bool enabled = false, busy = false;
   String _key = '';
   bool get configured => _key.isNotEmpty;
+  // The app's Mimir credential only; Jina credentials stay in the Worker.
+  String get configuredKey => _key;
   String? message;
   Future<void>? _loading;
   HttpClient? _client;
