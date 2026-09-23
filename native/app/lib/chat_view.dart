@@ -9,7 +9,6 @@ import 'feedback_dialog.dart';
 import 'store.dart';
 import 'chat_widgets.dart';
 import 'markdown_text.dart';
-import 'search_view.dart';
 import 'settings_view.dart';
 
 class ChatView extends StatefulWidget {
@@ -494,17 +493,6 @@ class _ChatViewState extends State<ChatView> {
             overflow: TextOverflow.ellipsis,
           ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.travel_explore), tooltip: 'Search the web',
-              onPressed: s.busy ? null : () async {
-                final result = await showDialog<String>(context: context,
-                  builder: (_) => SearchDialog(search: s.search));
-                if (result != null && mounted) {
-                  s.updateDraft('${s.draft}${s.draft.isEmpty ? '' : '\n\n'}$result');
-                  focus.requestFocus();
-                }
-              },
-            ),
             IconButton(
               onPressed: s.canCreateChat ? s.newChat : null,
               tooltip: 'New chat',

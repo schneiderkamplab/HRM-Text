@@ -293,7 +293,7 @@ preserved; explicitly selecting 1.0 afterwards still disables the penalty.
 
 Enable **Allow online search** and enter a Mimir search key in settings. The
 model can call `web_search(query)` during a reply, then use the results to answer
-with sources. The search icon also offers manual search. Only queries go to the
+with sources. Search is available through the model during chat. Only queries go to the
 Mimir service and Jina AI; model-generated queries may include chat details.
 At most two searches run per answer, and Stop cancels searching too.
 Search stays off by default. Keys can be remembered in secure storage or used

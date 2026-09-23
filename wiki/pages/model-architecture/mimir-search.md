@@ -87,3 +87,11 @@ tool messages. That answer omitted source URLs despite the request, so model
 citation adherence remains imperfect. See the
 [runbook](../../../services/feedback/SEARCH.md) for reproducible offline tests
 and remaining platform qualification. No app release was created.
+
+## Manual search removed — 2026-09-23
+
+Superseded: the separate search dialog and draft insertion described in the
+initial implementation above. The toolbar search button and manual dialog have
+been removed at the user's request. Search is now available only through the
+model tool during chat, gated by **Allow online search** and a configured key.
+Search settings and the masked key field remain available.

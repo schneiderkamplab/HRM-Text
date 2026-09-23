@@ -8,9 +8,8 @@ the app invokes this Worker, returns the result as a tool response, and resumes
 local generation. At most two searches are allowed per answer. Only generated
 search queries go to Cloudflare/Jina, but these can contain details from the chat.
 
-The toolbar also retains manual search and **Add results to draft**. Superseded
-2026-09-23: the initial implementation was manual-only. Search is now also a model
-tool; saving a key alone still makes no outgoing request.
+Search is available only as a model tool during chat; there is no separate search
+dialog or toolbar button. Saving a key alone makes no outgoing request.
 
 Keys have the form `mimir_<lowercase hex>` (6–128 hex characters). No credential
 is bundled. Remembered keys use platform secure storage, outside conversation
