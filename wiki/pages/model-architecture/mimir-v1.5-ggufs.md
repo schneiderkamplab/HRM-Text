@@ -131,3 +131,49 @@ IDs/sizes/digests/timestamps are unchanged from the pre-work snapshot.
 Publication evidence: `logs/release-0.1.5-publication.json` and
 `logs/release-0.1.5-remote-verified.json`. iOS remains an unsigned local archive;
 no TestFlight upload was made.
+
+## TestFlight distribution preparation — 2026-09-23
+
+Supersedes the earlier absence of Apple signing credentials: the user selected
+his paid team in Xcode, and Apple Development/Distribution certificates now
+exist locally. A fresh unsigned 0.1.5 (8) archive passes build validation and
+contains the expected Q4_K_M hash and updated Danish/English default prompt.
+Distribution export can sign this archive using `app-store-connect` with
+`-allowProvisioningUpdates`, without registering a physical device; the owner
+must handle any macOS keychain authorization prompt. At this checkpoint export
+is awaiting that authorization, and App Store Connect browser sign-in is also
+pending. No upload is confirmed. See the updated
+[TestFlight handoff](../../../native/app/TESTFLIGHT.md) for commands and evidence.
+
+The distribution export subsequently succeeded. Its embedded App Store profile
+has no device list and `get-task-allow=false`. App Store Connect now contains
+**DFM Mimir**, app ID **6815375537**, bundle `dk.sdu.mimir`, SKU `dfm-mimir-ios`,
+primary language English (U.K.). Created the `Mimir internal testing` group with
+manual build distribution. Upload of 0.1.5 (8) has started; acceptance/processing
+must still be checked. The four focused prompt/search tests pass.
+
+### Initial upload validation failure and framework correction
+
+Apple rejected the first build-8 upload because `MimirRuntime.framework` lacked
+`CFBundleShortVersionString` and `CFBundleVersion`, and warned that its dSYM was
+missing. These are native framework packaging issues, not device provisioning.
+The framework now declares its independent runtime version (0.1.0, build 1), and
+Apple native builds generate and package matching debug symbols in the
+XCFramework. Preserve the release optimization flags when enabling symbols.
+A corrected archive/upload must be validated before claiming TestFlight readiness.
+
+Corrected build 9 contains both framework version fields. The native build
+packages dSYMs in the XCFramework, but current CocoaPods does not stage that dSYM
+in the archive: explicitly copy the matching device dSYM before export, as shown
+in the handoff. Verified archive binary/dSYM UUID
+`4510C22F-875A-3FEB-8437-94DAE43BE548`. The corrected upload is in progress in
+`logs/testflight-0.1.5-build9-upload.log`.
+
+### Build 9 upload succeeded
+
+At **2026-09-23 19:38:29 UTC (21:38 Copenhagen)**, Xcode confirmed upload success
+for **0.1.5 (9)** and reported the package processing at Apple. This supersedes
+the pending/rejected-upload status above. The corrected upload has no missing
+framework-version errors or missing-symbol warning. Processing and assignment to
+the internal group remain separate steps; an uploaded build is not necessarily
+installable yet. Evidence: `logs/testflight-0.1.5-build9-upload.log`.

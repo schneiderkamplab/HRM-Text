@@ -16,7 +16,7 @@ struct ModelProfile: Codable, Equatable {
     var memoryBytesPerToken: UInt64 = 2 * 1024 * 1024
     var cpuAttentionBytesPerTokenSquared: UInt64 = 96
     var threads = 4
-    var systemPrompt = "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language."
+    var systemPrompt = "You are Mimir, trained for Danish and English on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language."
 
     var validationError: String? {
         guard version == 1, !name.isEmpty,

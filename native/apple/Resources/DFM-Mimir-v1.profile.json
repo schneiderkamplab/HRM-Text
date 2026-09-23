@@ -18,7 +18,7 @@
   "name" : "DFM Mimir v1",
   "promptReserve" : 256,
   "replyContextDivisor" : 4,
-  "systemPrompt" : "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
+  "systemPrompt" : "You are Mimir, trained for Danish and English on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.",
   "threads" : 4,
   "version" : 1
 }

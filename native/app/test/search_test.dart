@@ -61,6 +61,11 @@ void main() {
     ) as Map<String, dynamic>;
     expect(data['systemPrompt'], ModelProfile.defaultSystemPrompt);
     data['systemPrompt'] = ModelProfile.defaultSystemPrompt.replaceFirst(
+      ' for Danish and English',
+      '',
+    );
+    expect(ModelProfile(data).data['systemPrompt'], ModelProfile.defaultSystemPrompt);
+    data['systemPrompt'] = ModelProfile.defaultSystemPrompt.replaceFirst(' for Danish and English', '').replaceFirst(
       'research collaboration',
       'collaboration',
     );

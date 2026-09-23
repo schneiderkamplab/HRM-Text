@@ -794,3 +794,13 @@ See [optional Mimir search](mimir-search.md) for the unreleased 0.1.4 search
 setting and service. Superseded: the earlier behavior retaining all old saved
 stock prompts. Exact former defaults now adopt the research-collaboration prompt;
 customized prompts remain unchanged. Reply completion restores composer focus.
+
+## Default training languages — 2026-09-23
+
+Supersedes the default wording in “Concise default model identity” above:
+
+> You are Mimir, trained for Danish and English on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.
+
+Updated the Flutter bundled/catalog profiles and Apple profile/default. Flutter
+upgrades exact former stock prompts while preserving custom prompts. This source
+change does not alter published packages.

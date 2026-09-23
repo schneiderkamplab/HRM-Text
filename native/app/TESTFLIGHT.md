@@ -91,3 +91,82 @@ with signing after selecting your team; do not try to upload this unsigned archi
 The iOS Runner now references its keychain entitlement for all build modes, as
 required by the installed secure-storage plugin. No cross-app access group is
 configured. Verify saving/reloading a key on a signed physical device.
+
+## Distribution without a registered device (2026-09-23)
+
+A physical device is required for a development provisioning profile, **not**
+for an App Store Connect distribution profile. Do not require an iPhone update,
+device registration, or Developer Mode just to prepare a TestFlight upload.
+If automatic archive signing requests a development device, build unsigned and
+let Xcode apply distribution signing during export:
+
+```sh
+cd native/app
+../../logs/toolchains/flutter/bin/flutter build ipa --release --no-codesign \
+  --build-name 0.1.5 --build-number 8
+```
+
+Then use `xcodebuild -exportArchive -allowProvisioningUpdates` with an export
+options plist containing `method=app-store-connect`, `destination=export`,
+`signingStyle=automatic`, your `teamID`, and
+`manageAppVersionAndBuildNumber=false`. Xcode must be signed into that paid team.
+Choose an unused build number for subsequent submissions. A new signing key can
+trigger a macOS keychain password prompt, which the owner must handle locally.
+Never put the password, private key, or provisioning profile in the repository.
+
+Superseding the earlier zero-identities status: the paid team is now selected,
+and Apple Development and Apple Distribution certificates exist locally. An
+unsigned 0.1.5 (8) archive builds with Xcode 27.0 and contains the correct v1.5
+Q4_K_M SHA-256 and updated Danish/English system prompt. Distribution export
+has started; at this checkpoint it awaits keychain authorization. No TestFlight
+upload is yet confirmed. Logs: `logs/testflight-0.1.5-build8.log` and
+`logs/testflight-0.1.5-export.log`.
+
+### Signed export verified
+
+The owner authorized keychain access and the distribution export succeeded.
+`logs/testflight-0.1.5-export/DFM Mimir.ipa` contains an **iOS Team Store
+Provisioning Profile** for `dk.sdu.mimir`: no `ProvisionedDevices` list and
+`get-task-allow=false`. This verifies the device-free distribution path.
+App Store Connect upload was started with the same export options except
+`destination=upload`; evidence is `logs/testflight-0.1.5-upload.log`.
+Do not treat successful local export as confirmation of an accepted upload.
+
+### Initial upload validation failure and framework correction
+
+Apple rejected the first build-8 upload because `MimirRuntime.framework` lacked
+`CFBundleShortVersionString` and `CFBundleVersion`, and warned that its dSYM was
+missing. These are native framework packaging issues, not device provisioning.
+The framework now declares its independent runtime version (0.1.0, build 1), and
+Apple native builds generate and package matching debug symbols in the
+XCFramework. Preserve the release optimization flags when enabling symbols.
+A corrected archive/upload must be validated before claiming TestFlight readiness.
+
+### Corrected build 9 and symbol staging
+
+Rebuilt 0.1.5 (9) after the framework fix. CocoaPods currently copies the
+XCFramework binary but does not put its bundled dSYM in the app archive, even
+after `pod install`. Before export/upload, stage the matching device symbols:
+
+```sh
+# From the repository root, after flutter build ipa --no-codesign:
+ditto logs/mimir-app-native/ios/Release-iphoneos/MimirRuntime.framework.dSYM \
+  native/app/build/ios/archive/Runner.xcarchive/dSYMs/MimirRuntime.framework.dSYM
+xcrun dwarfdump --uuid native/app/build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app/Frameworks/MimirRuntime.framework/MimirRuntime
+xcrun dwarfdump --uuid native/app/build/ios/archive/Runner.xcarchive/dSYMs/MimirRuntime.framework.dSYM
+```
+
+Both UUIDs must match; do not copy symbols from a different engine build.
+Build 9's checked UUID is `4510C22F-875A-3FEB-8437-94DAE43BE548`.
+Corrected-upload evidence: `logs/testflight-0.1.5-build9-upload.log`.
+App Store Connect app ID is `6815375537`; the `Mimir internal testing` group
+contains the account holder and uses manual build selection.
+
+### Build 9 upload succeeded
+
+At **2026-09-23 19:38:29 UTC (21:38 Copenhagen)**, Xcode confirmed upload success
+for **0.1.5 (9)** and reported the package processing at Apple. This supersedes
+the pending/rejected-upload status above. The corrected upload has no missing
+framework-version errors or missing-symbol warning. Processing and assignment to
+the internal group remain separate steps; an uploaded build is not necessarily
+installable yet. Evidence: `logs/testflight-0.1.5-build9-upload.log`.

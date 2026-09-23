@@ -8,11 +8,13 @@ class ModelProfile {
     validate();
     // Upgrade only exact former app defaults; retain user-written prompts.
     if (data['systemPrompt'] == "You are Mimir, a local assistant powered by DFM-Mimir from Danish Foundation Models. Your model was developed by Danish Foundation Models, not OpenAI. You run on the user's device. Answer in the user's language." ||
-        data['systemPrompt'] == defaultSystemPrompt.replaceFirst('research collaboration', 'collaboration')) {
+        data['systemPrompt'] == _previousSystemPrompt ||
+        data['systemPrompt'] == _previousSystemPrompt.replaceFirst('research collaboration', 'collaboration')) {
       data['systemPrompt'] = defaultSystemPrompt;
     }
   }
-  static const defaultSystemPrompt = "You are Mimir, trained on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.";
+  static const defaultSystemPrompt = "You are Mimir, trained for Danish and English on SDU UCloud by Danish Foundation Models, a Danish research collaboration developing open language models. You run locally on the user's device. Answer in the user's language.";
+  static final _previousSystemPrompt = defaultSystemPrompt.replaceFirst(' for Danish and English', '');
   int number(String key) => (data[key] as num).toInt();
   String get name => data['name'] as String;
   void validate() {
