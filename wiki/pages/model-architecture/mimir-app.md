@@ -4,7 +4,7 @@ title: DFM Mimir app and portable backend selection
 description: Separate Flutter client, shared native engine, local backend evidence and remaining platform qualification.
 tags: [mimir, flutter, desktop, mobile, backends]
 status: draft
-last_updated: 2026-09-23
+last_updated: 2026-09-24
 confidence: high
 ---
 # DFM Mimir app and portable backends
@@ -804,3 +804,13 @@ Supersedes the default wording in “Concise default model identity” above:
 Updated the Flutter bundled/catalog profiles and Apple profile/default. Flutter
 upgrades exact former stock prompts while preserving custom prompts. This source
 change does not alter published packages.
+
+## App text scaling (2026-09-24)
+
+Flutter Settings offers 75–200% text sizing (5% steps, default/reset 100%).
+`ChatStore.textScale` persists in the local archive independently of model
+settings; invalid/missing values default to 100%. The root MediaQuery wraps the
+Navigator, including open dialogs, and composes with nonlinear system scaling.
+No native inference or network work is triggered. Native OS dialogs use system
+sizing. Tests cover persistence, invalid values, nonlinear scaling and live
+composer/dialog updates at phone and desktop widths with system enlargement.

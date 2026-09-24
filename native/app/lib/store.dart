@@ -45,6 +45,20 @@ class ChatStore extends ChangeNotifier {
       closing = false;
   final WebSearchController search;
   bool searching = false, _stopRequested = false;
+  static const minimumTextScale = 0.75, maximumTextScale = 2.0;
+  double _textScale = 1.0;
+  double get textScale => _textScale;
+
+  Future<void> setTextScale(double value) async {
+    if (!value.isFinite || value < minimumTextScale ||
+        value > maximumTextScale || value == _textScale) {
+      return;
+    }
+    _textScale = value;
+    notifyListeners();
+    await save();
+  }
+
   bool onlineFeedback = false;
   void setOnlineFeedback(bool enabled) {
     onlineFeedback = enabled;
@@ -179,6 +193,7 @@ class ChatStore extends ChangeNotifier {
             throw const FormatException('Duplicate chats');
           }
           selected = j['selected'];
+          _textScale = _samplingValue(j['textScale'], 1, minimumTextScale, maximumTextScale);
           onlineFeedback = j['onlineFeedback'] == true;
           search.enabled = j['onlineSearch'] == true;
           compact = j['compact'] ?? true;
@@ -820,6 +835,7 @@ class ChatStore extends ChangeNotifier {
       'chats': chats.map((c) => c.toJson()).toList(),
       'selected': selected,
       'model': model,
+      'textScale': textScale,
       'onlineFeedback': onlineFeedback,
       'onlineSearch': search.enabled,
       'modelNetwork': library.online,

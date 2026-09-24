@@ -305,3 +305,12 @@ See the [search runbook](../../services/feedback/SEARCH.md) for service setup.
 See [the 0.1.5 TestFlight handoff](TESTFLIGHT.md) for Apple Developer account
 setup, signing, archive/upload commands and tester invitations. GitHub packages
 and an unsigned iOS archive are separate from TestFlight distribution.
+
+### Text size
+
+**Model and settings → Text size** scales app text from 75% to 200% in 5%
+steps on macOS, iOS, Android, Linux and Windows. Changes apply immediately to
+chat, Markdown, the composer and dialogs, and persist locally across restarts.
+100% preserves the system text size; app scaling is applied on top of system
+accessibility scaling. **Reset text size** restores 100%. No model reload or
+network access is needed. Native operating-system dialogs retain system sizing.

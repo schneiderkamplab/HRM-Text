@@ -53,6 +53,23 @@ class _SettingsViewState extends State<SettingsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text('Text size · ${(s.textScale * 100).round()}%'),
+              Slider(
+                key: const Key('text-size'),
+                value: s.textScale,
+                min: ChatStore.minimumTextScale,
+                max: ChatStore.maximumTextScale,
+                divisions: 25,
+                label: '${(s.textScale * 100).round()}%',
+                semanticFormatterCallback: (value) => '${(value * 100).round()} percent',
+                onChanged: s.setTextScale,
+              ),
+              const Text('Scales all app text in addition to your device’s text size.'),
+              TextButton(
+                onPressed: s.textScale == 1 ? null : () => s.setTextScale(1),
+                child: const Text('Reset text size'),
+              ),
+              const Divider(),
               Text(
                 s.model?['name'] ?? 'No model loaded',
                 style: Theme.of(context).textTheme.titleMedium,
