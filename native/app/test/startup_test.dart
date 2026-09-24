@@ -10,6 +10,20 @@ import 'widget_test.dart' show FakeEngine;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  test('model status describes actual backend and load state', () {
+    final store = ChatStore(engine: FakeEngine());
+    expect(store.modelStatus, 'Not loaded');
+    store.loading = true;
+    expect(store.modelStatus, 'Loading model…');
+    store.loading = false;
+    store.ready = true;
+    store.actualBackend = 'Metal';
+    expect(store.modelStatus, 'Loaded with acceleration (Apple Metal)');
+    store.actualBackend = 'CPU';
+    expect(store.modelStatus, 'Loaded on CPU');
+    store.ready = false;
+    expect(store.modelStatus, 'Not loaded');
+  });
   test('Android startup does no native work and replaces unsafe automatic defaults', () async {
     final directory = await Directory.systemTemp.createTemp('mimir-startup');
     addTearDown(() => directory.delete(recursive: true));
@@ -141,15 +155,22 @@ void main() {
       final contextDraft = find.widgetWithText(TextField, 'Context tokens');
       await tester.ensureVisible(contextDraft);
       await tester.enterText(contextDraft, '3072');
-      await tester.ensureVisible(find.text('Advanced'));
-      await tester.tap(find.text('Advanced'));
+      await tester.ensureVisible(find.text('Online'));
+      await tester.tap(find.text('Online'));
       await tester.pumpAndSettle();
       expect(find.text('Allow online feedback'), findsOneWidget);
       expect(find.text('Load model'), findsNothing);
       await tester.tap(find.text('Appearance'));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('text-size')), findsOneWidget);
+      expect(find.text('Show compaction summary in chat'), findsNothing);
+      await tester.ensureVisible(find.text('Advanced'));
+      await tester.tap(find.text('Advanced'));
+      await tester.pumpAndSettle();
+      expect(find.text('Automatically compact context'), findsOneWidget);
       expect(find.text('Show compaction summary in chat'), findsOneWidget);
+      expect(find.text('Selected profile'), findsOneWidget);
+      expect(find.text('Allow online feedback'), findsNothing);
       await tester.ensureVisible(find.text('Model'));
       await tester.tap(find.text('Model'));
       await tester.pumpAndSettle();

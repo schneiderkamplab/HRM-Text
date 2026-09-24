@@ -318,10 +318,14 @@ network access is needed. Native operating-system dialogs retain system sizing.
 ### Settings tabs
 
 - **Model:** model selection/import, temperature, repetition penalty, context and
-  reply limits, compute backend, and automatic compaction.
-- **Appearance:** text size and compaction-summary visibility.
-- **Advanced:** optional search and feedback, desktop local API, model profile
-  import, experimental MixedLM, and licenses.
+  reply limits, and acceleration backend.
+- **Appearance:** text size.
+- **Online:** optional search and conversation feedback.
+- **Advanced:** compaction and summary visibility, selected profile and profile
+  import, desktop local API, experimental MixedLM, and licenses.
+
+The selected model shows a plain-language loading/acceleration status; detailed
+device information and fallback reasons appear beside the backend selector.
 
 Tabs retain unfinished edits and scroll positions while the dialog is open.
 The tab strip scrolls horizontally when enlarged text needs more room.

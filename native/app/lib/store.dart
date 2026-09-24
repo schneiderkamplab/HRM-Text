@@ -34,6 +34,25 @@ class ChatStore extends ChangeNotifier {
   String? pending;
   List<String> backendFallbackReasons = [];
   String actualBackend = '';
+  String get modelStatus {
+    if (closing) return 'Closing model…';
+    if (loading) return 'Loading model…';
+    if (!ready) return 'Not loaded';
+    final backend = actualBackend.toLowerCase();
+    if (backend == 'cpu' || backend == 'blas' || backend == 'accelerate') {
+      return 'Loaded on CPU';
+    }
+    final name = switch (backend) {
+      'metal' => 'Apple Metal',
+      'cuda' => 'NVIDIA CUDA',
+      'vulkan' => 'Vulkan',
+      'sycl' => 'SYCL',
+      'hip' || 'rocm' => 'AMD ROCm',
+      _ => actualBackend,
+    };
+    return name.isEmpty ? 'Loaded' : 'Loaded with acceleration ($name)';
+  }
+
   Json? preview, model;
   late ModelProfile profile;
   bool conversationsReady = false;

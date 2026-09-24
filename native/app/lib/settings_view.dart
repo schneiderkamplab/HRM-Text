@@ -48,7 +48,7 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: s,
     builder: (_, _) => DefaultTabController(
-      length: 3,
+      length: 4,
       child: AlertDialog(
         title: const Text('Settings'),
         content: SizedBox(
@@ -64,6 +64,7 @@ class _SettingsViewState extends State<SettingsView> {
                 tabs: const [
                   Tab(text: 'Model'),
                   Tab(text: 'Appearance'),
+                  Tab(text: 'Online'),
                   Tab(text: 'Advanced'),
                 ],
               ),
@@ -74,6 +75,7 @@ class _SettingsViewState extends State<SettingsView> {
                   children: [
                     settingsPage('model', modelSettings(context)),
                     settingsPage('appearance', appearanceSettings(context)),
+                    settingsPage('online', onlineSettings(context)),
                     settingsPage('advanced', advancedSettings(context)),
                   ],
                 ),
@@ -139,12 +141,7 @@ class _SettingsViewState extends State<SettingsView> {
           ],
         ),
         const SizedBox(height: 12),
-        SettingsValue('Status', s.engineLabel),
-        SettingsValue('Profile', s.profile.name),
-        if (s.backendFallbackReasons.isNotEmpty)
-          SettingsHelp(
-            'Automatic fallback: ${s.backendFallbackReasons.join('; ')}',
-          ),
+        SettingsValue('Status', s.modelStatus),
       ],
     ),
     SettingsSection(
@@ -196,11 +193,19 @@ class _SettingsViewState extends State<SettingsView> {
     SettingsSection(
       title: 'Memory and compute',
       children: [
+        SettingsValue(
+          'Current device',
+          s.ready ? s.engineLabel : 'No model loaded',
+        ),
+        if (s.backendFallbackReasons.isNotEmpty)
+          SettingsHelp(
+            'Automatic fallback: ${s.backendFallbackReasons.join('; ')}',
+          ),
         DropdownButtonFormField<String>(
           isExpanded: true,
           key: ValueKey(device),
           initialValue: device,
-          decoration: settingsInput('Compute device'),
+          decoration: settingsInput('Acceleration backend'),
           items: [
             if (!s.manualStartup)
               const DropdownMenuItem(value: 'auto', child: Text('Automatic')),
@@ -341,23 +346,6 @@ class _SettingsViewState extends State<SettingsView> {
         ),
       ],
     ),
-    SettingsSection(
-      title: 'Context compaction',
-      children: [
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Automatically compact context'),
-          subtitle: const Text(
-            'Summarize older turns and shorten oversized prompts in chunks.',
-          ),
-          value: s.compact,
-          onChanged: s.busy ? null : (v) => s.setCompaction(enabled: v),
-        ),
-        const SettingsHelp(
-          'The full transcript is preserved. Summaries may omit details. Turning compaction off uses the full history again.',
-        ),
-      ],
-    ),
   ];
 
   List<Widget> appearanceSettings(BuildContext context) => [
@@ -385,23 +373,9 @@ class _SettingsViewState extends State<SettingsView> {
         ),
       ],
     ),
-    SettingsSection(
-      title: 'Chat display',
-      children: [
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Show compaction summary in chat'),
-          subtitle: const Text(
-            'Display summaries in the transcript as they are generated.',
-          ),
-          value: s.showSummary,
-          onChanged: s.busy ? null : (v) => s.setCompaction(visible: v),
-        ),
-      ],
-    ),
   ];
 
-  List<Widget> advancedSettings(BuildContext context) => [
+  List<Widget> onlineSettings(BuildContext context) => [
     SettingsSection(
       title: 'Conversation feedback',
       children: [
@@ -419,6 +393,35 @@ class _SettingsViewState extends State<SettingsView> {
     SettingsSection(
       title: 'Web search',
       children: [SearchSettings(search: s.search, onChanged: s.save)],
+    ),
+  ];
+
+  List<Widget> advancedSettings(BuildContext context) => [
+    SettingsSection(
+      title: 'Context compaction',
+      children: [
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('Automatically compact context'),
+          subtitle: const Text(
+            'Summarize older turns and shorten oversized prompts in chunks.',
+          ),
+          value: s.compact,
+          onChanged: s.busy ? null : (v) => s.setCompaction(enabled: v),
+        ),
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('Show compaction summary in chat'),
+          subtitle: const Text(
+            'Display summaries in the transcript as they are generated.',
+          ),
+          value: s.showSummary,
+          onChanged: s.busy ? null : (v) => s.setCompaction(visible: v),
+        ),
+        const SettingsHelp(
+          'The full transcript is preserved. Summaries may omit details. Turning compaction off uses the full history again.',
+        ),
+      ],
     ),
     if (s.desktop) ...[
       SettingsSection(
@@ -459,8 +462,9 @@ class _SettingsViewState extends State<SettingsView> {
       ),
     ],
     SettingsSection(
-      title: 'Model configuration',
+      title: 'Model profiles',
       children: [
+        SettingsValue('Selected profile', s.profile.name),
         const SettingsHelp('Import a model-specific configuration file.'),
         TextButton(
           onPressed: s.busy || s.model == null ? null : () => pick(true),
