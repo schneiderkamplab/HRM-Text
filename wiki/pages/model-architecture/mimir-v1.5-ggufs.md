@@ -241,3 +241,10 @@ previously unsaved `Apache 2.0` license-field entry into the fresh form; Apple
 reported **Saved**, and the entry remained visible after reload. Use a fresh
 page after session renewal rather than retrying the old failed form. This did
 not require cancelling or resubmitting Beta App Review.
+
+Follow-up verified actual localized-field persistence: edited the beta description
+in the fresh tab, received Saved, and read the revised wording in an independent
+new page. Restored the original wording and saved successfully. The original
+tab still displayed errors and old text; closed it and the verification tab,
+leaving only the working Test Information tab. Earlier guidance to merely use a
+fresh tab was insufficient because the user continued to see the original tab.
