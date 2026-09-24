@@ -815,7 +815,7 @@ No native inference or network work is triggered. Native OS dialogs use system
 sizing. Tests cover persistence, invalid values, nonlinear scaling and live
 composer/dialog updates at phone and desktop widths with system enlargement.
 
-Settings now groups controls into Model, Appearance and Advanced tabs. Each tab
-retains its edits and scroll offset via an IndexedStack; the tab strip scrolls
-when text enlargement needs more room. Backend/memory controls remain in Model
-for safe Android startup. Search, feedback and local API live in Advanced.
+Settings groups Model, Appearance and Advanced into independently scrolling tabs
+that retain edits. Shared bordered sections distinguish read-only values,
+outlined inputs, secondary help and explicit apply/save actions. Backend/memory
+controls remain in Model for Android startup; online services live in Advanced.

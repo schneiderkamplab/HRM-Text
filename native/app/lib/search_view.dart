@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'search.dart';
+import 'settings_widgets.dart';
 
 class SearchSettings extends StatefulWidget {
   final WebSearchController search;
@@ -62,7 +63,6 @@ class _SearchSettingsState extends State<SearchSettings> {
     builder: (_, _) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('Allow online search'),
@@ -75,7 +75,8 @@ class _SearchSettingsState extends State<SearchSettings> {
             widget.onChanged();
           },
         ),
-        Text(
+        SettingsValue(
+          'Key status',
           widget.search.configured
               ? 'Search key configured'
               : 'No search key configured',
@@ -87,8 +88,7 @@ class _SearchSettingsState extends State<SearchSettings> {
           autocorrect: false,
           enableSuggestions: false,
           enabled: !saving && !loading,
-          decoration: InputDecoration(
-            labelText: 'Search key',
+          decoration: settingsInput('Search key').copyWith(
             hintText: 'mimir_<hex>',
             suffixIcon: IconButton(
               tooltip: visible ? 'Hide search key' : 'Show search key',
@@ -107,7 +107,7 @@ class _SearchSettingsState extends State<SearchSettings> {
         ),
         Wrap(
           children: [
-            TextButton(
+            FilledButton.tonal(
               onPressed: saving || loading ? null : () => save(keyInput.text),
               child: const Text('Save search key'),
             ),
@@ -117,9 +117,12 @@ class _SearchSettingsState extends State<SearchSettings> {
             ),
           ],
         ),
-        if (error != null) Text(error!),
-        if (widget.search.message != null) Text(widget.search.message!),
-        const Divider(),
+        if (error != null)
+          Text(
+            error!,
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
+        if (widget.search.message != null) SettingsHelp(widget.search.message!),
       ],
     ),
   );

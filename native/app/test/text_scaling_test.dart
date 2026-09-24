@@ -88,7 +88,7 @@ void main() {
       final slider = find.byKey(const Key('text-size'));
       tester.widget<Slider>(slider).onChanged!(2);
       await tester.pumpAndSettle();
-      expect(find.text('Text size · 200%'), findsOneWidget);
+      expect(find.text('200%'), findsOneWidget);
       expect(MediaQuery.textScalerOf(tester.element(slider)).scale(10), 24);
       expect(MediaQuery.textScalerOf(tester.element(composer)).scale(10), 24);
       expect(tester.takeException(), isNull);

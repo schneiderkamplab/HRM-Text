@@ -325,3 +325,10 @@ network access is needed. Native operating-system dialogs retain system sizing.
 
 Tabs retain unfinished edits and scroll positions while the dialog is open.
 The tab strip scrolls horizontally when enlarged text needs more room.
+
+Settings sections use bordered groups and a shared visual hierarchy: read-only
+values have separate labels, editable fields have persistent labels and outlined
+borders, and help text uses secondary typography. Generation/appearance changes
+apply immediately (generation affects the next reply); memory/backend fields
+require **Apply limits**, and search keys require **Save search key**. The local
+API displays its listening address separately from the editable port.
