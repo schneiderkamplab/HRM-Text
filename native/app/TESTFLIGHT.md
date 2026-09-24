@@ -178,3 +178,15 @@ Ready to Submit (no Missing Compliance). Assigned **0.1.5 (9)** to **Mimir inter
 testing**; verified **1 Tester / 1 Build** and account-holder status **Invited**
 at 22:08 Copenhagen on 2026-09-23. The owner can accept the invitation in
 TestFlight on iPhone/iPad. External beta review has not been submitted.
+
+### External Beta App Review submitted — 2026-09-24
+
+Supersedes the pending/failed submission notes: after signing in again, saved
+review contact details on the standalone Test Information page and reopened the
+external-group wizard in a fresh browser tab. Submitted **0.1.5 (9)** to **Mimir
+beta testing**, group `69a730de-ca03-41b4-9e7b-858c51f65cb0`. Verified **Waiting for
+Review**, with 1 build and 0 external testers. No sign-in is required for offline
+chat. Automatically notify testers remains unchecked; no public link is enabled.
+Earlier English (U.K.) metadata save errors occurred in the old tab, but the
+fresh submission was accepted. Do not equate UI wizard advancement with success;
+the verified Waiting for Review status is the authoritative result.

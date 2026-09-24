@@ -4,7 +4,7 @@ title: DFM Mimir v1.5 GGUF exports
 description: Source revision, conversion, validation and publication of the official v1.5 GGUFs.
 tags: [mimir, gguf, quantization, tokenizer, publication]
 status: draft
-last_updated: 2026-09-23
+last_updated: 2026-09-24
 confidence: high
 ---
 # DFM Mimir v1.5 GGUFs
@@ -207,3 +207,30 @@ Ready to Submit (no Missing Compliance). Assigned **0.1.5 (9)** to **Mimir inter
 testing**; verified **1 Tester / 1 Build** and account-holder status **Invited**
 at 22:08 Copenhagen on 2026-09-23. The owner can accept the invitation in
 TestFlight on iPhone/iPad. External beta review has not been submitted.
+
+### External beta review preparation
+
+The owner requested Beta App Review. Created the external group **Mimir beta
+testing** and selected build 9 in its submission wizard. Apple requires review
+contact details; name/email are filled and sign-in-required is unchecked because
+offline chat needs no account. Submission is pending the owner's contact phone
+number (requested with country code). No review submission is confirmed yet.
+
+On 2026-09-24 the external review wizard showed a generic save failure despite
+populated contact fields. Retrying advanced to What to Test, but Submit for
+Review returned to the error. Navigating to Test Information redirected to
+Apple sign-in, indicating the session had expired; review submission is **not
+confirmed**. The user must sign in again before checking saved contact details
+and retrying. Do not interpret advancing the wizard as successful persistence.
+
+### External Beta App Review submitted — 2026-09-24
+
+Supersedes the pending/failed submission notes: after signing in again, saved
+review contact details on the standalone Test Information page and reopened the
+external-group wizard in a fresh browser tab. Submitted **0.1.5 (9)** to **Mimir
+beta testing**, group `69a730de-ca03-41b4-9e7b-858c51f65cb0`. Verified **Waiting for
+Review**, with 1 build and 0 external testers. No sign-in is required for offline
+chat. Automatically notify testers remains unchecked; no public link is enabled.
+Earlier English (U.K.) metadata save errors occurred in the old tab, but the
+fresh submission was accepted. Do not equate UI wizard advancement with success;
+the verified Waiting for Review status is the authoritative result.
