@@ -336,3 +336,10 @@ borders, and help text uses secondary typography. Generation/appearance changes
 apply immediately (generation affects the next reply); memory/backend fields
 require **Apply limits**, and search keys require **Save search key**. The local
 API displays its listening address separately from the editable port.
+
+Dependent options are hidden when unavailable: search key controls while search
+is off, summary visibility while compaction is off, and profile import/MixedLM
+before selecting a model. Saved choices and unfinished search-key edits are
+preserved; hiding search masks its key again. A running API shows its address;
+stop it to edit the port. Temporary generation/loading locks remain disabled
+in place to avoid layout jumps.

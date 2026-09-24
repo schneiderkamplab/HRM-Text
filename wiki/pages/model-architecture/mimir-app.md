@@ -815,8 +815,7 @@ No native inference or network work is triggered. Native OS dialogs use system
 sizing. Tests cover persistence, invalid values, nonlinear scaling and live
 composer/dialog updates at phone and desktop widths with system enlargement.
 
-Settings tabs: Model, Appearance, Online and Advanced; edits persist.
-Sections distinguish values, inputs, help and actions.
-Model shows friendly acceleration status and backend details near its selector.
-Advanced holds compaction, summary visibility and selected/importable profiles;
-Online holds search and feedback. Appearance holds text sizing.
+Settings tabs: Model, Appearance, Online and Advanced. Advanced holds compaction
+and profiles; Online holds search/feedback. Dependent controls hide when their
+feature is off, preserving values; temporary busy locks stay disabled in place.
+The model status describes acceleration; backend details sit by its selector.

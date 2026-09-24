@@ -170,6 +170,16 @@ void main() {
       expect(find.text('Automatically compact context'), findsOneWidget);
       expect(find.text('Show compaction summary in chat'), findsOneWidget);
       expect(find.text('Selected profile'), findsOneWidget);
+      expect(find.text('Import model profile…'), findsNothing);
+      expect(find.byKey(const Key('mixed-lm-setting')), findsNothing);
+      store.setCompaction(visible: true);
+      store.setCompaction(enabled: false);
+      await tester.pumpAndSettle();
+      expect(find.text('Show compaction summary in chat'), findsNothing);
+      expect(store.showSummary, true);
+      store.setCompaction(enabled: true);
+      await tester.pumpAndSettle();
+      expect(find.text('Show compaction summary in chat'), findsOneWidget);
       expect(find.text('Allow online feedback'), findsNothing);
       await tester.ensureVisible(find.text('Model'));
       await tester.tap(find.text('Model'));

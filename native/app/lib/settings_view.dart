@@ -409,15 +409,16 @@ class _SettingsViewState extends State<SettingsView> {
           value: s.compact,
           onChanged: s.busy ? null : (v) => s.setCompaction(enabled: v),
         ),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Show compaction summary in chat'),
-          subtitle: const Text(
-            'Display summaries in the transcript as they are generated.',
+        if (s.compact)
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Show compaction summary in chat'),
+            subtitle: const Text(
+              'Display summaries in the transcript as they are generated.',
+            ),
+            value: s.showSummary,
+            onChanged: s.busy ? null : (v) => s.setCompaction(visible: v),
           ),
-          value: s.showSummary,
-          onChanged: s.busy ? null : (v) => s.setCompaction(visible: v),
-        ),
         const SettingsHelp(
           'The full transcript is preserved. Summaries may omit details. Turning compaction off uses the full history again.',
         ),
@@ -430,12 +431,12 @@ class _SettingsViewState extends State<SettingsView> {
           const SettingsHelp(
             'Choose a port before switching the API on. Turn it off to change the port.',
           ),
-          TextField(
-            controller: apiPort,
-            enabled: s.apiServer == null,
-            keyboardType: TextInputType.number,
-            decoration: settingsInput('Local API port'),
-          ),
+          if (s.apiServer == null)
+            TextField(
+              controller: apiPort,
+              keyboardType: TextInputType.number,
+              decoration: settingsInput('Local API port'),
+            ),
           const SizedBox(height: 12),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -466,28 +467,30 @@ class _SettingsViewState extends State<SettingsView> {
       children: [
         SettingsValue('Selected profile', s.profile.name),
         const SettingsHelp('Import a model-specific configuration file.'),
-        TextButton(
-          onPressed: s.busy || s.model == null ? null : () => pick(true),
-          child: const Text('Import model profile…'),
-        ),
-      ],
-    ),
-    SettingsSection(
-      title: 'Experimental inference',
-      children: [
-        SwitchListTile(
-          key: const Key('mixed-lm-setting'),
-          contentPadding: EdgeInsets.zero,
-          title: const Text('MixedLM mode'),
-          subtitle: const Text(
-            'Experimental. Reuses older context to reduce the wait before replies. '
-            'May change answer quality. Off uses exact PrefixLM.',
+        if (s.model != null)
+          TextButton(
+            onPressed: s.busy ? null : () => pick(true),
+            child: const Text('Import model profile…'),
           ),
-          value: s.mixedLM,
-          onChanged: s.busy || s.model == null ? null : s.setMixedLM,
-        ),
       ],
     ),
+    if (s.model != null)
+      SettingsSection(
+        title: 'Experimental inference',
+        children: [
+          SwitchListTile(
+            key: const Key('mixed-lm-setting'),
+            contentPadding: EdgeInsets.zero,
+            title: const Text('MixedLM mode'),
+            subtitle: const Text(
+              'Experimental. Reuses older context to reduce the wait before replies. '
+              'May change answer quality. Off uses exact PrefixLM.',
+            ),
+            value: s.mixedLM,
+            onChanged: s.busy || s.model == null ? null : s.setMixedLM,
+          ),
+        ],
+      ),
     SettingsSection(
       title: 'About',
       children: [

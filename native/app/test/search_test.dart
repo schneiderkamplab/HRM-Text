@@ -25,6 +25,10 @@ void main() {
     );
     await tester.pumpWidget(settings());
     await tester.pumpAndSettle();
+    expect(find.byType(TextField), findsNothing);
+    expect(find.text('Save search key'), findsNothing);
+    await tester.tap(find.text('Allow online search'));
+    await tester.pumpAndSettle();
     TextField field() => tester.widget<TextField>(find.byType(TextField));
     expect(field().controller!.text, testKey);
     expect(field().obscureText, true);
@@ -38,6 +42,15 @@ void main() {
     await tester.pump();
     expect(field().obscureText, true);
     expect(field().controller!.text, replacement);
+    await tester.tap(find.text('Allow online search'));
+    await tester.pump();
+    expect(find.byType(TextField), findsNothing);
+    expect(find.text('Remember key in secure storage'), findsNothing);
+    expect(search.configuredKey, testKey);
+    await tester.tap(find.text('Allow online search'));
+    await tester.pump();
+    expect(field().controller!.text, replacement);
+    expect(field().obscureText, true);
     await tester.tap(find.text('Save search key'));
     await tester.pumpAndSettle();
     expect(field().controller!.text, replacement);
@@ -64,11 +77,13 @@ void main() {
       ' for Danish and English',
       '',
     );
-    expect(ModelProfile(data).data['systemPrompt'], ModelProfile.defaultSystemPrompt);
-    data['systemPrompt'] = ModelProfile.defaultSystemPrompt.replaceFirst(' for Danish and English', '').replaceFirst(
-      'research collaboration',
-      'collaboration',
+    expect(
+      ModelProfile(data).data['systemPrompt'],
+      ModelProfile.defaultSystemPrompt,
     );
+    data['systemPrompt'] = ModelProfile.defaultSystemPrompt
+        .replaceFirst(' for Danish and English', '')
+        .replaceFirst('research collaboration', 'collaboration');
     expect(
       ModelProfile(data).data['systemPrompt'],
       contains('research collaboration'),

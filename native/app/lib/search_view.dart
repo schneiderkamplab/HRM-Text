@@ -71,58 +71,62 @@ class _SearchSettingsState extends State<SearchSettings> {
           ),
           value: widget.search.enabled,
           onChanged: (v) {
+            if (!v) setState(() => visible = false);
             widget.search.setEnabled(v);
             widget.onChanged();
           },
         ),
-        SettingsValue(
-          'Key status',
-          widget.search.configured
-              ? 'Search key configured'
-              : 'No search key configured',
-        ),
-        TextField(
-          controller: keyInput,
-          obscureText: !visible,
-          obscuringCharacter: '*',
-          autocorrect: false,
-          enableSuggestions: false,
-          enabled: !saving && !loading,
-          decoration: settingsInput('Search key').copyWith(
-            hintText: 'mimir_<hex>',
-            suffixIcon: IconButton(
-              tooltip: visible ? 'Hide search key' : 'Show search key',
-              icon: Icon(visible ? Icons.visibility_off : Icons.visibility),
-              onPressed: saving || loading
-                  ? null
-                  : () => setState(() => visible = !visible),
+        if (widget.search.enabled) ...[
+          SettingsValue(
+            'Key status',
+            widget.search.configured
+                ? 'Search key configured'
+                : 'No search key configured',
+          ),
+          TextField(
+            controller: keyInput,
+            obscureText: !visible,
+            obscuringCharacter: '*',
+            autocorrect: false,
+            enableSuggestions: false,
+            enabled: !saving && !loading,
+            decoration: settingsInput('Search key').copyWith(
+              hintText: 'mimir_<hex>',
+              suffixIcon: IconButton(
+                tooltip: visible ? 'Hide search key' : 'Show search key',
+                icon: Icon(visible ? Icons.visibility_off : Icons.visibility),
+                onPressed: saving || loading
+                    ? null
+                    : () => setState(() => visible = !visible),
+              ),
             ),
           ),
-        ),
-        CheckboxListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Remember key in secure storage'),
-          value: remember,
-          onChanged: saving ? null : (v) => setState(() => remember = v!),
-        ),
-        Wrap(
-          children: [
-            FilledButton.tonal(
-              onPressed: saving || loading ? null : () => save(keyInput.text),
-              child: const Text('Save search key'),
-            ),
-            TextButton(
-              onPressed: saving || loading ? null : () => save(''),
-              child: const Text('Forget search key'),
-            ),
-          ],
-        ),
-        if (error != null)
-          Text(
-            error!,
-            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          CheckboxListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Remember key in secure storage'),
+            value: remember,
+            onChanged: saving ? null : (v) => setState(() => remember = v!),
           ),
-        if (widget.search.message != null) SettingsHelp(widget.search.message!),
+          Wrap(
+            children: [
+              FilledButton.tonal(
+                onPressed: saving || loading ? null : () => save(keyInput.text),
+                child: const Text('Save search key'),
+              ),
+              TextButton(
+                onPressed: saving || loading ? null : () => save(''),
+                child: const Text('Forget search key'),
+              ),
+            ],
+          ),
+          if (error != null)
+            Text(
+              error!,
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
+          if (widget.search.message != null)
+            SettingsHelp(widget.search.message!),
+        ],
       ],
     ),
   );
