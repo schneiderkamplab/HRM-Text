@@ -204,7 +204,7 @@ not implemented yet; they remain in the plan.
 
 ## Experimental MixedLM
 
-**Model and settings → MixedLM mode** enables approximate reuse of older prompt
+**Settings → Advanced → MixedLM mode** enables approximate reuse of older prompt
 representations. It is on by default for new settings; an existing saved choice
 is preserved. Switching reloads the model context.
 See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
@@ -308,9 +308,20 @@ and an unsigned iOS archive are separate from TestFlight distribution.
 
 ### Text size
 
-**Model and settings → Text size** scales app text from 75% to 200% in 5%
+**Settings → Appearance → Text size** scales app text from 75% to 200% in 5%
 steps on macOS, iOS, Android, Linux and Windows. Changes apply immediately to
 chat, Markdown, the composer and dialogs, and persist locally across restarts.
 100% preserves the system text size; app scaling is applied on top of system
 accessibility scaling. **Reset text size** restores 100%. No model reload or
 network access is needed. Native operating-system dialogs retain system sizing.
+
+### Settings tabs
+
+- **Model:** model selection/import, temperature, repetition penalty, context and
+  reply limits, compute backend, and automatic compaction.
+- **Appearance:** text size and compaction-summary visibility.
+- **Advanced:** optional search and feedback, desktop local API, model profile
+  import, experimental MixedLM, and licenses.
+
+Tabs retain unfinished edits and scroll positions while the dialog is open.
+The tab strip scrolls horizontally when enlarged text needs more room.

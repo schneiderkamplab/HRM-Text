@@ -137,6 +137,23 @@ void main() {
         ),
       );
       expect(find.text('Load model'), findsOneWidget);
+      expect(find.byKey(const Key('text-size')), findsNothing);
+      final contextDraft = find.widgetWithText(TextField, 'Context tokens');
+      await tester.ensureVisible(contextDraft);
+      await tester.enterText(contextDraft, '3072');
+      await tester.ensureVisible(find.text('Advanced'));
+      await tester.tap(find.text('Advanced'));
+      await tester.pumpAndSettle();
+      expect(find.text('Allow online feedback'), findsOneWidget);
+      expect(find.text('Load model'), findsNothing);
+      await tester.tap(find.text('Appearance'));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('text-size')), findsOneWidget);
+      expect(find.text('Show compaction summary in chat'), findsOneWidget);
+      await tester.ensureVisible(find.text('Model'));
+      await tester.tap(find.text('Model'));
+      await tester.pumpAndSettle();
+      expect(tester.widget<TextField>(contextDraft).controller!.text, '3072');
       expect(find.text('Use memory-based defaults'), findsNothing);
       final contextField = find.widgetWithText(TextField, 'Context tokens');
       await tester.ensureVisible(contextField);

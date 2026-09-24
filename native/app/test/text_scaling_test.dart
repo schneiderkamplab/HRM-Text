@@ -83,6 +83,8 @@ void main() {
         builder: (_) => SettingsView(store: store),
       );
       await tester.pumpAndSettle();
+      await tester.tap(find.text('Appearance'));
+      await tester.pumpAndSettle();
       final slider = find.byKey(const Key('text-size'));
       tester.widget<Slider>(slider).onChanged!(2);
       await tester.pumpAndSettle();
