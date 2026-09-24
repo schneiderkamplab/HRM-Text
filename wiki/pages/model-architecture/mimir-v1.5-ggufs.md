@@ -234,3 +234,10 @@ chat. Automatically notify testers remains unchecked; no public link is enabled.
 Earlier English (U.K.) metadata save errors occurred in the old tab, but the
 fresh submission was accepted. Do not equate UI wizard advancement with success;
 the verified Waiting for Review status is the authoritative result.
+
+Test Information save errors in the original tab were stale: a fresh tab loaded
+the saved beta description and feedback email without errors. Copied the user's
+previously unsaved `Apache 2.0` license-field entry into the fresh form; Apple
+reported **Saved**, and the entry remained visible after reload. Use a fresh
+page after session renewal rather than retrying the old failed form. This did
+not require cancelling or resubmitting Beta App Review.
