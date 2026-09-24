@@ -248,3 +248,26 @@ new page. Restored the original wording and saved successfully. The original
 tab still displayed errors and old text; closed it and the verification tab,
 leaving only the working Test Information tab. Earlier guidance to merely use a
 fresh tab was insufficient because the user continued to see the original tab.
+
+## DFM Mimir app 0.1.6 release (2026-09-24)
+
+Published `dfm-mimir-v0.1.6` as the public Latest release at 20:17 UTC, with
+macOS ARM64 DMG, Android ARM64 APK, Linux x64 tar.gz and Windows x64 ZIP plus
+checksum sidecars. App version/build is 0.1.6+10; package source is
+`942019f4bb67d05912d76f64c853014cdfd5bac2`. Model remains the official v1.5
+Q4_K_M with the hash above. Earlier releases and TestFlight 0.1.5 (9) are unchanged.
+
+Release notes are self-contained in `native/app/releases/0.1.6.md`. Local checks
+and Linux/Windows CI run `36052181995` passed 72 Flutter tests and static analysis.
+CI also passed native policy/compaction tests and CPU package checks. Model
+hashes, desktop per-file manifests/source provenance, secret scans, APK
+signature/version/ARM64/16 KiB alignment and DMG integrity/signature checks passed.
+Mounted-DMG headless API smoke checks passed, including streaming, sampling,
+concurrency, overflow and disconnect recovery. All four GitHub asset digests
+match local package hashes. Platform signing/GPU qualification limits remain as
+described in the release notes. Evidence: `logs/release-0.1.6-*`.
+
+Packaging note: `package_macos.py --dart` needs an absolute compiler path because
+server compilation changes working directory. Draft releases can return 404
+from GitHub's release-by-tag API; resolve the draft ID through the releases list
+and verify asset digests using release-by-ID before publishing.

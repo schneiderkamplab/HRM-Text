@@ -1,8 +1,8 @@
 # Models and downloads
 
-## 0.1.5 bundled model
+## 0.1.6 bundled model
 
-0.1.5 (build 7) bundles DFM Mimir v1.5 Q4_K_M from
+0.1.6 (build 10) bundles DFM Mimir v1.5 Q4_K_M from
 [`danish-foundation-models/DFM-Mimir-v1.5-GGUF`](https://huggingface.co/danish-foundation-models/DFM-Mimir-v1.5-GGUF),
 revision `78f92c5f126ae7ad05e98fc210d5c9c0eec3da16`,
 file `dfm-mimir-v1.5-q4_k_m.gguf` (1,167,418,016 bytes), SHA-256
