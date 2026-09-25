@@ -290,3 +290,15 @@ group had 0 testers when activated. This supersedes the earlier no-public-link
 and Approved-but-not-activated status. Compared with this TestFlight build,
 0.1.6 adds text scaling and settings organization/conditional controls; both
 already include the Danish/English identity prompt and the same v1.5 Q4 model.
+
+## TestFlight 0.1.5 (10): GitHub 0.1.6 UI update (2026-09-25)
+
+Built source `7aa98e724d1d7df25e61cfbd05b93ea6ea934fbe` using
+`flutter build ipa --release --no-codesign --build-name 0.1.5 --build-number 10`.
+This intentionally maps GitHub 0.1.6 UI changes to the existing TestFlight 0.1.5
+version; tracked pubspec remains 0.1.6+10. Model and inference behavior are unchanged.
+Staged matching MimirRuntime dSYM; archive version, identifier, framework metadata,
+model hash and credential audits passed. Xcode export/upload succeeded and App
+Store Connect shows Processing. Build 9 remains Testing. Evidence:
+`logs/testflight-0.1.5-build10{,-audit,-upload}.log`.
+Group assignment and external availability are still pending Apple processing.
