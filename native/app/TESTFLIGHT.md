@@ -215,9 +215,18 @@ already include the Danish/English identity prompt and the same v1.5 Q4 model.
 Built source `7aa98e724d1d7df25e61cfbd05b93ea6ea934fbe` using
 `flutter build ipa --release --no-codesign --build-name 0.1.5 --build-number 10`.
 This intentionally maps GitHub 0.1.6 UI changes to the existing TestFlight 0.1.5
-version; tracked pubspec remains 0.1.6+10. Model and inference behavior are unchanged.
+version; at upload time the tracked pubspec was 0.1.6+10 (superseded below). Model and inference behavior are unchanged.
 Staged matching MimirRuntime dSYM; archive version, identifier, framework metadata,
 model hash and credential audits passed. Xcode export/upload succeeded and App
 Store Connect shows Processing. Build 9 remains Testing. Evidence:
 `logs/testflight-0.1.5-build10{,-audit,-upload}.log`.
 Group assignment and external availability are still pending Apple processing.
+
+## GitHub version consolidation (2026-09-25)
+
+At the owner’s request, the tracked app version is now **0.1.5+10** and GitHub
+packages were rebuilt from `9e346f4e9f705b4fd5d376f3ade40a16e9efa9b5`.
+This supersedes the separate GitHub 0.1.6/TestFlight 0.1.5 version mapping above.
+The already uploaded iOS 0.1.5 (10) contains the same UI changes; it does not need
+another upload merely for this GitHub consolidation. Apple processing, group
+assignment and external availability must still be verified separately.

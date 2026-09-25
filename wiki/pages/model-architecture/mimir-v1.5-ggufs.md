@@ -251,6 +251,8 @@ fresh tab was insufficient because the user continued to see the original tab.
 
 ## DFM Mimir app 0.1.6 release (2026-09-24)
 
+**Superseded 2026-09-25:** withdrawn and consolidated into 0.1.5 build 10 below.
+
 Published `dfm-mimir-v0.1.6` as the public Latest release at 20:17 UTC, with
 macOS ARM64 DMG, Android ARM64 APK, Linux x64 tar.gz and Windows x64 ZIP plus
 checksum sidecars. App version/build is 0.1.6+10; package source is
@@ -302,3 +304,23 @@ model hash and credential audits passed. Xcode export/upload succeeded and App
 Store Connect shows Processing. Build 9 remains Testing. Evidence:
 `logs/testflight-0.1.5-build10{,-audit,-upload}.log`.
 Group assignment and external availability are still pending Apple processing.
+
+## GitHub release consolidation: 0.1.5 build 10 (2026-09-25)
+
+At the owner's explicit request, replaced all four GitHub 0.1.5 packages with
+**0.1.5+10** from source `9e346f4e9f705b4fd5d376f3ade40a16e9efa9b5`.
+The 0.1.5 tag was moved from `b5fbe0d13c0c6a3046702430392bb557cd357c74`
+to that source commit. Deleted the separate 0.1.6 release and remote tag after
+verifying all eight replacement assets (four packages and checksum sidecars).
+0.1.5 is Latest. This supersedes the separate-version mapping above; the already
+uploaded TestFlight 0.1.5 (10) has the same UI changes and is unaffected.
+
+Linux/Windows CI `36094936056` passed, including 72 Flutter tests, analysis,
+native fallback/compaction checks and portable CPU builds. Local macOS/Android
+builds passed version, model hash, credential, signature and platform package
+checks; desktop manifests/source provenance passed. All four GitHub package
+digests matched local SHA-256 values. Bundled v1.5 Q4_K_M weights are unchanged.
+Current notes/checksums: `native/app/releases/0.1.5.md`. Evidence is under
+`logs/release-0.1.5-build10-*`; packages are in
+`logs/packages/release-0.1.5-build10/`. Signing and GPU qualification limits
+remain documented in the release notes. No other release was changed.
