@@ -190,3 +190,12 @@ chat. Automatically notify testers remains unchecked; no public link is enabled.
 Earlier English (U.K.) metadata save errors occurred in the old tab, but the
 fresh submission was accepted. Do not equate UI wizard advancement with success;
 the verified Waiting for Review status is the authoritative result.
+
+## Beta App Review approved (2026-09-25)
+
+App Store Connect now shows **Approved** for **0.1.5 (9)**, superseding the
+Waiting for Review status above. The build is assigned to Mimir internal testing
+and Mimir beta testing. A **Notify Testers** button is available; this status
+check did not send notifications or add testers. The page reports 1 invitation,
+1 installation, 4 sessions in the last 7 days, no reported crashes/feedback,
+and expiry in 89 days. GitHub 0.1.6 is separate and has not replaced this build.

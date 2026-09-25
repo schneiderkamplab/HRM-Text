@@ -4,7 +4,7 @@ title: DFM Mimir v1.5 GGUF exports
 description: Source revision, conversion, validation and publication of the official v1.5 GGUFs.
 tags: [mimir, gguf, quantization, tokenizer, publication]
 status: draft
-last_updated: 2026-09-24
+last_updated: 2026-09-25
 confidence: high
 ---
 # DFM Mimir v1.5 GGUFs
@@ -271,3 +271,12 @@ Packaging note: `package_macos.py --dart` needs an absolute compiler path becaus
 server compilation changes working directory. Draft releases can return 404
 from GitHub's release-by-tag API; resolve the draft ID through the releases list
 and verify asset digests using release-by-ID before publishing.
+
+## Beta App Review approved (2026-09-25)
+
+App Store Connect now shows **Approved** for **0.1.5 (9)**, superseding the
+Waiting for Review status above. The build is assigned to Mimir internal testing
+and Mimir beta testing. A **Notify Testers** button is available; this status
+check did not send notifications or add testers. The page reports 1 invitation,
+1 installation, 4 sessions in the last 7 days, no reported crashes/feedback,
+and expiry in 89 days. GitHub 0.1.6 is separate and has not replaced this build.
