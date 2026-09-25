@@ -212,9 +212,9 @@ See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
 ### Include weights in a previously tested desktop package
 
 The recommended ready-to-use downloads include the tested Mimir Q4_K_M weights.
-Version 0.1.6 bundles the official Mimir v1.5 Q4_K_M from
+Version 0.1.5 bundles the official Mimir v1.5 Q4_K_M from
 [`danish-foundation-models/DFM-Mimir-v1.5-GGUF`](https://huggingface.co/danish-foundation-models/DFM-Mimir-v1.5-GGUF).
-Public downloads: [DFM Mimir 0.1.6](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.6).
+Public downloads: [DFM Mimir 0.1.5](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.5).
 CI's smaller import-only bundles can be assembled on any host without recompiling
 their native binaries:
 
