@@ -199,3 +199,13 @@ and Mimir beta testing. A **Notify Testers** button is available; this status
 check did not send notifications or add testers. The page reports 1 invitation,
 1 installation, 4 sessions in the last 7 days, no reported crashes/feedback,
 and expiry in 89 days. GitHub 0.1.6 is separate and has not replaced this build.
+
+## Public TestFlight invitation (2026-09-25)
+
+Created https://testflight.apple.com/join/9sP7a8Ny for Mimir beta testing, open
+to anyone with no custom tester limit or device criteria. Activated the approved
+0.1.5 (9) build through Notify Testers; verified status **Testing**. The external
+group had 0 testers when activated. This supersedes the earlier no-public-link
+and Approved-but-not-activated status. Compared with this TestFlight build,
+0.1.6 adds text scaling and settings organization/conditional controls; both
+already include the Danish/English identity prompt and the same v1.5 Q4 model.
