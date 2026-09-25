@@ -230,3 +230,13 @@ This supersedes the separate GitHub 0.1.6/TestFlight 0.1.5 version mapping above
 The already uploaded iOS 0.1.5 (10) contains the same UI changes; it does not need
 another upload merely for this GitHub consolidation. Apple processing, group
 assignment and external availability must still be verified separately.
+
+### Build 10 available to both testing groups (2026-09-25)
+
+Supersedes Missing Compliance/Processing: after the owner completed compliance,
+assigned 0.1.5 (10) to Mimir internal testing and Mimir beta testing. Entered
+build-specific UI/accessibility test notes and submitted the external-testing
+wizard with automatic tester notification enabled. A fresh page load confirms
+**Testing** and both groups for build 10; no review wait is currently shown.
+The existing public invitation remains https://testflight.apple.com/join/9sP7a8Ny.
+Build 9 remains Testing as well.

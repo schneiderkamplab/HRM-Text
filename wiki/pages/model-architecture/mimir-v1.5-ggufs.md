@@ -324,3 +324,21 @@ Current notes/checksums: `native/app/releases/0.1.5.md`. Evidence is under
 `logs/release-0.1.5-build10-*`; packages are in
 `logs/packages/release-0.1.5-build10/`. Signing and GPU qualification limits
 remain documented in the release notes. No other release was changed.
+
+### Build 10 processing complete (2026-09-25)
+
+A refreshed App Store Connect page confirms 0.1.5 (10) upload status Complete
+and build status **Missing Compliance**, superseding Processing above. Build UUID
+is `76c8d87c-60ba-4e03-ba48-f647acff6be9`. No testing groups are assigned yet.
+The export-compliance questionnaire must be completed before distribution;
+build 9 remains Testing in both internal and external groups.
+
+### Build 10 available to both testing groups (2026-09-25)
+
+Supersedes Missing Compliance/Processing: after the owner completed compliance,
+assigned 0.1.5 (10) to Mimir internal testing and Mimir beta testing. Entered
+build-specific UI/accessibility test notes and submitted the external-testing
+wizard with automatic tester notification enabled. A fresh page load confirms
+**Testing** and both groups for build 10; no review wait is currently shown.
+The existing public invitation remains https://testflight.apple.com/join/9sP7a8Ny.
+Build 9 remains Testing as well.
