@@ -17,6 +17,7 @@
 * [Active Post-Audit Operational Plan](active-post-audit-operational-plan.md) - Part of DFM8 Plan: Active Post-Audit Operational Plan.
 * [DFM8 Targeted Synthetic Upload](dfm8-targeted-synthetic-upload.md) - Part of DFM8 Plan: DFM8 Targeted Synthetic Upload.
 * [Danish OpenHermes Synthetic Run](danish-openhermes-synthetic-run.md) - Part of DFM8 Plan: Danish OpenHermes Synthetic Run.
+* [OpenHermes English Repair Evidence](openhermes-english-repair-evidence.md) - Reconstructed audit/repair links and proposed publication evidence.
 * [DFM8 Post-Training / RL Subset](dfm8-post-training-rl-subset.md) - Part of DFM8 Plan: DFM8 Post-Training / RL Subset.
 * [DFM8 Synthetic/OpenHermes Pipeline Status](dfm8-synthetic-openhermes-pipeline-status.md) - Part of DFM8 Plan: DFM8 Synthetic/OpenHermes Pipeline Status.
 * [Hugging Face Availability](hugging-face-availability.md) - Part of DFM8 Plan: Hugging Face Availability.

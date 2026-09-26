@@ -4,6 +4,8 @@
 
 ## Operations
 
+* [Mimir v1.5 Model Card](mimir-v1-5-model-card.md) - Published comparison and training-data provenance with checkpoint identities.
+
 * [Benchmark Charts](benchmark-charts.md) - Tracked chart builders, score snapshot, and historical chart definitions.
 
 * [Current State](current-state.md) - Local repository state, active operations, and verified commands.

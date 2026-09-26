@@ -4,10 +4,123 @@ title: H and L Learning Rates
 description: Optional per-module AdamATan2 rates with unchanged checkpoint parameter groups.
 tags: [training, optimizer, stability, learning-rate]
 status: stable
-last_updated: 2026-09-11
+last_updated: 2026-09-26
 confidence: high
 ---
 # H and L Learning Rates
+
+## DFM11 XXL-Wide Rewarm at 505K (2026-09-22)
+
+Review caveat (2026-09-26): the historical
+`scripts/handoff_xxl_wide_rewarm_505k.py` unconditionally clears the scheduler
+stop request after its handoff. It does not distinguish its own stop request
+from a later manual pause. Do not reuse it as a general handoff runner without
+adding cancellation/stop ownership checks. The completed 505K operation is
+historical; this review did not change any live scheduler or training process.
+
+2026-09-25 correction to the 580500 resume: checkpoint restoration succeeded,
+but startup failed at 12:23:54--56 with CUDA OOM. Logs report concurrent
+processes holding approximately 124--126 GiB/GPU, in addition to the training
+ranks. No active pretrain process remained when the user requested the next
+stop. Scheduler dispatch was soft-stopped again; no new checkpoint or restart
+was attempted. Last complete ephemeral remains 580500. The free-memory
+observation at launch did not guarantee exclusive GPU ownership thereafter.
+
+Subsequent user instruction on 2026-09-25 supersedes that paused state:
+cleared the stop request and restarted the existing scheduler (PID 126985).
+The pending 600K segment resumes from `ephemeral_step_580500`, gated on
+178000 MiB free on each of all eight GPUs. Unrelated GPU processes are untouched.
+
+Resume requested later on 2026-09-25: verified complete 580500 checkpoint and
+completed stop. All eight GPUs were free (182620 MiB each), so restarted the
+existing persistent scheduler (PID 60512) after resetting the 600K row to
+pending/attempt zero with `resume_from_tag=ephemeral_step_580500`.
+All-GPU 178000 MiB gate retained. Log confirms restored step 580500, epoch 2;
+BP8, base 3e-4, optimizer/EMA and W&B identity unchanged. Next eval 600K.
+Backup `plan.before-resume-580500.tsv`. Supersedes the stopped state below.
+
+Stop requested on 2026-09-25 at approximately step 580355: scheduler dispatch
+paused; checkpoint-safe watcher waits for `ephemeral_step_580500`, preserves
+it under `checkpoints/dfm11/XXL-wide-stop-580500`, then interrupts only captured
+training group 1660491. No automatic restart. Log:
+`logs/scheduler/dfm10_XL_epoch9_20260831/stop_580500.log`.
+The active 600K row's future resume source is prepared as that tag under
+PlanLock; backup `plan.before-stop-580500.tsv`. Completion remains to be
+verified; this supersedes the earlier running-state note below.
+
+Resume verified later on 2026-09-24: 554K stop completed and original checkpoint
+passed payload validation. Reset the 600K row's attempts, retained
+`resume_from_tag=ephemeral_step_554000`, cleared stop and restarted the persistent
+scheduler (PID 1660397). All eight ranks restored epoch 2 and the existing
+W&B run; training advanced through 554015 after compilation. BP8 and base
+3e-4 (H 1.5e-4, L 5e-5) remain unchanged; next eval boundary is 600K.
+Backup: `plan.before-resume-554k.tsv`. This supersedes the stopped state below.
+
+Stop request on 2026-09-24: at approximately step 553860, soft-stopped
+scheduler dispatch and launched the checkpoint-safe stop watcher for
+`ephemeral_step_554000`, targeting captured training group 1530708.
+Preservation directory: `checkpoints/dfm11/XXL-wide-stop-554000`;
+watcher log: `logs/scheduler/dfm10_XL_epoch9_20260831/stop_554k.log`.
+The active 600K row's resume source was updated under PlanLock to that tag
+for a later explicit restart; backup `plan.before-stop-554k.tsv`.
+This records a scheduled stop, not yet its completion. No automatic resume.
+
+Subsequent resume request: reset the interrupted 550K row to pending,
+attempt zero, with `resume_from_tag=step_510000`, and restarted the existing
+persistent scheduler. All eight GPUs must each have 178000 MiB available
+before training launches; unrelated GPU jobs are not terminated. The same
+four-stage rewarm anchor is retained, so the next stage is 510K--515K,
+base 3.75e-5 to 7.5e-5. Backup: `plan.before-resume-510k.tsv`.
+This supersedes the stopped/pending-resume state below.
+
+Subsequent stop request, 2026-09-22: user requested stopping at 510K.
+Scheduler dispatch was soft-stopped at approximately 509.76K. A detached
+`stop_training_at_complete_checkpoint.py` watcher waits for complete regular
+`step_510000`, preserves it under `checkpoints/dfm11/XXL-wide-stop-510000`,
+then interrupts only the captured training process group. No automatic resume.
+Watcher log: `logs/scheduler/dfm10_XL_epoch9_20260831/stop_510k.log`.
+Verified completed on 2026-09-22: original and preserved `step_510000`
+both pass DCP payload completeness checks, with sidecar step 510000.
+Training group, watcher and scheduler have exited; stop request remains set.
+Before later restarting
+the scheduler, reset the interrupted 550K training row to resume from
+`step_510000`; the remaining configured rewarm would continue from there.
+
+Updated decision later on 2026-09-22: supersedes the single doubling below.
+Four linear 5K stages now double the base at each boundary:
+505K 1.875e-5, 510K 3.75e-5, 515K 7.5e-5, 520K 1.5e-4,
+525K 3e-4, then hold. H and L remain base/2 and base/6 at BP8.
+The waiting watcher was stopped and replaced before the 505K handoff;
+training itself was not interrupted. All seven future training commands use
+`lr=3e-4 lr_rewarm_steps=20000 lr_rewarm_stages=4
+lr_rewarm_start_ratio=0.0625 lr_rewarm_start_step=505000 lr_min_ratio=1`.
+Stage count defaults to one, preserving existing linear rewarm behavior;
+multi-stage schedules persist their stage count in checkpoint metadata and
+reject incompatible implicit-anchor resumes. Each stage interpolates linearly
+between geometric endpoints, not one linear ramp across all 20K steps.
+This remains a scheduled change, not evidence of stability at the higher LR.
+
+Scheduled, not yet completed: supersedes the indefinite post-425K hold below.
+User requested linear rewarm from base 1.875e-5 at 505K to 3.75e-5 at
+510K, then hold. BP8 and auto module rates remain unchanged: at 510K,
+head/embedding LR is 3.75e-5, H 1.875e-5, L 6.25e-6.
+Optimizer, EMA, dataset cursor and W&B run are preserved.
+
+`scripts/handoff_xxl_wide_rewarm_505k.py` requests scheduler stop without
+interrupting the active training, waits for the fully written
+`ephemeral_step_505000` (DCP metadata and payload extents checked), then
+terminates only the captured training process group. After the old runner
+exits, it resets `xxlw-dfm11-train-550000` to resume from that checkpoint
+and restarts the persistent scheduler. Existing 50K evaluations are unchanged.
+All seven remaining training rows retain the explicit 505K anchor, so later
+segments do not rewarm again. Old cosine bounds are cleared and
+`lr_min_ratio=1`. Backup: `plan.before-rewarm-505k-510k.tsv` in the active
+`logs/scheduler/dfm10_XL_epoch9_20260831` directory; watcher log:
+`rewarm_505k_handoff.log` in that directory.
+
+Validation: 52 LR/rewarm tests passed; a temporary-plan dry run confirmed
+only seven training rows change, the resume reset, and LR values at
+505K/507.5K/510K/550K of 1.875e-5/2.8125e-5/3.75e-5/3.75e-5.
 
 ## DFM11 XXL-Wide Cosine at 400K (2026-09-18)
 
