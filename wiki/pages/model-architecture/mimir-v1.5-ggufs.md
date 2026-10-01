@@ -4,7 +4,7 @@ title: DFM Mimir v1.5 GGUF exports
 description: Source revision, conversion, validation and publication of the official v1.5 GGUFs.
 tags: [mimir, gguf, quantization, tokenizer, publication]
 status: draft
-last_updated: 2026-09-25
+last_updated: 2026-10-01
 confidence: high
 ---
 # DFM Mimir v1.5 GGUFs
@@ -342,3 +342,17 @@ wizard with automatic tester notification enabled. A fresh page load confirms
 **Testing** and both groups for build 10; no review wait is currently shown.
 The existing public invitation remains https://testflight.apple.com/join/9sP7a8Ny.
 Build 9 remains Testing as well.
+
+## SDU store distribution blocked by account agreement (2026-10-01)
+
+SDU membership for petersk@sdu.dk is now verified, superseding earlier missing
+team observations. The owner authorized new iOS and macOS app distribution under
+SDU rather than transferring the personal TestFlight-only app. Apple requires an
+App Store release for transfer eligibility. SDU provider ID is
+`69a6de74-0d84-47e3-e053-5b8c7c11a4d1` (not the signing Team ID).
+
+Attempting New App under SDU is blocked by an Agreement Update dialog requiring
+the SDU Account Holder to accept the updated Developer Program License Agreement.
+No app record was created, no build uploaded, and personal TestFlight is unchanged.
+Resume checklist and macOS packaging caveats: `native/app/SDU-STORE.md`.
+Evidence: `logs/sdu-store/agreement-blocker.png`.
