@@ -356,3 +356,28 @@ the SDU Account Holder to accept the updated Developer Program License Agreement
 No app record was created, no build uploaded, and personal TestFlight is unchanged.
 Resume checklist and macOS packaging caveats: `native/app/SDU-STORE.md`.
 Evidence: `logs/sdu-store/agreement-blocker.png`.
+
+## SDU preflight build preparation (2026-10-01)
+
+Both unsigned 0.1.5 (11) archives built successfully for proposed new identifier
+`dk.sdu.dfm.mimir`: iOS 17+ (iPhone/iPad) and macOS 14+ (arm64). New
+`native/app/tool/archive_apple.py` accepts signing-team/bundle overrides, checks
+model SHA, framework metadata, matching native dSYMs, bundle contents, architecture
+and (when signed) team/sandbox entitlements. No uploads occur automatically.
+Existing default identities and public release artifacts remain unchanged.
+
+Flutter analyze and all 72 tests passed. Exact local secret scans found neither
+Jina nor test Mimir keys in either app. Five dependency privacy manifests exist
+in each archive; this is not a completed required-reason API/privacy declaration
+audit. Local artifacts and command evidence are under `logs/sdu-store/`.
+
+Store listing, reviewer notes, support draft and technical privacy inventory are
+in `native/app/store/`, linked from `native/app/SDU-STORE.md`. Remaining gates:
+Account Holder agreement, actual SDU signing Team ID/registered identifier, final
+privacy/support URLs and in-app policy link, institutional controller/retention
+approval, privacy/age/export/trader declarations, screenshots and signed device
+qualification. Feedback currently has manual deletion with no automatic expiry.
+
+Mac ad-hoc QA launch succeeded at process level, but Computer Use inspection timed
+out; no chat UI pass or screenshot success is claimed. Simulator UI capture also
+remains incomplete. Preserve personal TestFlight while preparing the new app.

@@ -55,3 +55,96 @@ Evidence: `logs/sdu-store/agreement-blocker.png`.
 The new bundle ID creates a separate app/container. Existing personal TestFlight
 installations, invitations and local chats will not automatically migrate.
 Keep the current personal TestFlight app available during preparation.
+
+## Preparation completed — 2026-10-01
+
+`tool/archive_apple.py` now configures, archives and audits either Apple target.
+The app projects accept `MIMIR_BUNDLE_ID` and `MIMIR_TEAM_ID` build overrides;
+normal builds keep the existing identifier. The store workflow defaults to the
+proposed SDU ID and 0.1.5 (11), without editing the shared pubspec version or
+changing already released GitHub packages. macOS declares Productivity category.
+
+Run sequentially from the repository root (Python 3.11+), using a **new** output
+directory on each run. Do not run Flutter builds/tests concurrently with these
+commands because Flutter regenerates shared project files.
+
+```sh
+/opt/homebrew/bin/python3.12 native/app/tool/archive_apple.py ios \
+  --flutter logs/toolchains/flutter/bin/flutter \
+  --output logs/sdu-store/ios-preflight
+/opt/homebrew/bin/python3.12 native/app/tool/archive_apple.py macos \
+  --flutter logs/toolchains/flutter/bin/flutter \
+  --output logs/sdu-store/macos-preflight
+```
+
+Both commands succeeded. Local artifacts:
+
+- `logs/sdu-store/ios-preflight/DFM Mimir.xcarchive`
+- `logs/sdu-store/macos-preflight/DFM Mimir.xcarchive`
+- Each directory contains `audit.json`; adjacent `*-preflight.log` files contain
+  full build output. These files/archives are intentionally ignored by Git.
+
+Evidence: iOS 17+ / iPhone+iPad and macOS 14+ / arm64, bundle ID
+`dk.sdu.dfm.mimir`, version 0.1.5 (11); bundled v1.5 Q4_K_M model SHA-256
+`38ecdf6303394b256037287f2caf9b334e6a20814fd07d11bdc24555dc5d01e6`;
+matching MimirRuntime dSYM UUIDs for both; framework version fields present;
+five dependency privacy manifests each; feedback administration-marker audit
+passed (83 iOS / 61 Mac files; weights excluded). Separate exact-byte checks
+found neither the local Jina key nor the test Mimir key in either app bundle.
+Flutter analyze passed and all 72 tests passed. Build warnings were a dependency's
+deprecated iOS keyWindow usage and absent optional AppIntents metadata.
+
+These are **unsigned preflight archives**, not uploaded builds. The script
+subsequently gained explicit arm64/category checks and signed-team/sandbox checks;
+arm64/category were also verified manually for these archives. Signed checks
+remain unexecuted pending SDU access. Source was 175780c plus the preparation
+changes; both audit records correctly mark the working tree dirty.
+
+A separate ad-hoc-signed Mac copy at `logs/sdu-store/local-qa/DFM Mimir.app`
+launched, but Computer Use inspection repeatedly timed out. A main-thread sample
+showed the event loop idle; that is not proof of working chat or a full UI pass.
+`mac-launch-sample.txt` records the observation. No review screenshots were captured.
+Simulator runtimes are listed by simctl, but the Simulator UI application was not
+found in the installed Xcode paths or Spotlight. Resolve capture tooling and finish
+[the screenshot set](store/SCREENSHOTS.md); do not substitute old personal builds
+or fabricated chat output.
+
+## Signed rebuild after acceptance
+
+Repeat each archive command with a fresh output directory and
+`--team-id VERIFIED_SDU_TEAM_ID` (replace with the actual 10-character value).
+Confirm the chosen bundle ID is registered to SDU first. Rebuild after any privacy
+link, entitlement or other final source change. Native framework dSYMs must still
+match. The signed path emits ExportOptions.plist for **local export**, not upload:
+
+```sh
+xcodebuild -exportArchive \
+  -archivePath 'logs/sdu-store/ios-signed/DFM Mimir.xcarchive' \
+  -exportPath logs/sdu-store/ios-signed/export \
+  -exportOptionsPlist logs/sdu-store/ios-signed/ExportOptions.plist \
+  -allowProvisioningUpdates
+```
+
+Use the corresponding macOS paths for its export. Validate/distribute through
+Xcode Organizer or Apple's supported upload workflow to the **SDU** provider,
+then verify processing and TestFlight installation. A successful export is not
+upload acceptance. Do not reuse the personal provider or its certificates.
+
+## Prepared submission material / remaining gates
+
+- [Listing and reviewer instructions](store/LISTING.md): shared English copy plus
+  platform-specific additions; no unsupported standalone-server claim for MAS.
+- [Privacy inventory and approval draft](store/PRIVACY-REVIEW.md): optional network
+  flows, persistent pseudonym/usage records and the current absence of automatic
+  feedback expiry. Institutional controller/retention details still pending.
+- [Support page draft](store/SUPPORT.md): publish with approved public contact.
+- Publish approved privacy/support URLs and add the privacy link in Settings.
+  This is a source-change gate before the final store archive, not just metadata.
+- Complete required-reason API/privacy report review, age rating, export compliance,
+  branding/content rights, EU trader details and review contact; do not guess
+  institutional declarations.
+- Qualify SDU-signed iPhone/iPad/Mac installs: offline inference, low-memory settings,
+  stop/restart/persistence, import and secure storage. Model import already copies
+  the chosen file into app storage, so persistent external bookmarks are not used.
+  Verify it under distribution sandboxing. Exercise GUI API on Mac; no helper is
+  needed by the present store archive.
