@@ -148,3 +148,38 @@ upload acceptance. Do not reuse the personal provider or its certificates.
   the chosen file into app storage, so persistent external bookmarks are not used.
   Verify it under distribution sandboxing. Exercise GUI API on Mac; no helper is
   needed by the present store archive.
+
+## Direct-download SDU DMG signing
+
+For GitHub/direct downloads, use **Developer ID Application** issued to SDU,
+Hardened Runtime and secure timestamps for the app and all embedded code (including
+`dfm-mimir-server`), then Apple notarization and ticket stapling. Signing the disk
+image alone is insufficient. Re-sign nested code inside out, preserve the correct
+per-component entitlements, sign the DMG, notarize the finished distribution and
+verify Gatekeeper assessment on a quarantined download. Staple the app ticket
+before creating the final DMG when supporting offline app extraction; notarize
+and staple the final DMG too. Do not mutate signed contents afterwards.
+
+The current `tool/package_macos.py` **only produces ad-hoc-signed development DMGs**
+and explicitly warns about Open Anyway. It must gain a separate Developer ID /
+notarization path before it can deliver trusted SDU downloads. Test the Dart AOT
+CLI and Flutter/native frameworks under Hardened Runtime; avoid adding broad
+security exceptions without demonstrated need.
+
+Local keychain inspection on 2026-10-01 found only Apple Development and personal
+Apple Distribution identities, **no Developer ID Application identity**. App Store
+signing certificates cannot replace Developer ID. Ask SDU's Account Holder to
+arrange Developer ID signing: create the certificate from a CSR whose private key
+stays with the approved signing machine, or use SDU's existing signing workflow.
+Apple also supports cloud-managed Developer ID access for authorized admins.
+Do not create/revoke institutional certificates without coordinating with SDU.
+
+This route does not require an App Store release or TestFlight/App Review.
+Notarization is a separate automated Apple service. Users may still see the normal
+first-launch internet-download confirmation, but a valid trusted notarized build
+should not require the Privacy & Security **Open Anyway** override under standard
+Gatekeeper settings.
+
+References: [Developer ID certificates](https://developer.apple.com/help/account/certificates/create-developer-id-certificates),
+[notarization issues](https://developer.apple.com/documentation/security/resolving-common-notarization-issues),
+[macOS distribution](https://developer.apple.com/macos/distribution/).

@@ -381,3 +381,13 @@ qualification. Feedback currently has manual deletion with no automatic expiry.
 Mac ad-hoc QA launch succeeded at process level, but Computer Use inspection timed
 out; no chat UI pass or screenshot success is claimed. Simulator UI capture also
 remains incomplete. Preserve personal TestFlight while preparing the new app.
+
+### Direct-download SDU DMG (2026-10-01)
+
+User also wants SDU-signed direct downloads that avoid Gatekeeper's Open Anyway
+exception. Existing package_macos.py is ad-hoc only. Keychain inspection found no
+Developer ID Application identity; personal Apple Distribution is unsuitable for
+notarization. SDU must arrange Developer ID signing access. Required packaging
+extension: inside-out signing of app/frameworks/CLI with Hardened Runtime and
+timestamps, notarization, stapling and quarantined-download validation. This is
+independent of App Store review. Details are in native/app/SDU-STORE.md.
