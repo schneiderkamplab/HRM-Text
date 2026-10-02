@@ -402,3 +402,13 @@ No matching Mimir bundle ID exists. Registration under SDU explicitly returns
 “You are not allowed to perform this operation”; an SDU admin must register
 `dk.sdu.dfm.mimir` or enable registration access. No app record was created and no
 build uploaded. Evidence: logs/sdu-store/identifier-permission-blocker.png.
+
+### Identifier registered; app name conflict (2026-10-02, later retry)
+
+Supersedes identifier-registration denial above. Registered explicit SDU App ID
+`dk.sdu.dfm.mimir` (DFM Mimir), team 46HSA3LZ7H, with default capabilities.
+App Store creation with both iOS/macOS now reaches validation but rejects
+“DFM Mimir” as already in use. The personal TestFlight record has that name and
+is the likely collision; Apple's error does not identify the conflicting owner.
+No SDU store record created or build uploaded. Naming decision pending; do not
+delete personal TestFlight. See SDU-STORE.md and logs/sdu-store/ screenshots.

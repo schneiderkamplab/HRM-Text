@@ -1,6 +1,23 @@
 # SDU iOS and macOS distribution
 
-## Current state — 2026-10-02
+## Current state — 2026-10-02 (later retry)
+
+The registration permission blocker below is **superseded**: successfully
+registered explicit App ID `dk.sdu.dfm.mimir` (DFM Mimir) under SDU Team
+`46HSA3LZ7H`, with default capabilities only. Registration is confirmed in the
+identifier list.
+
+New App creation for iOS+macOS now reaches server validation but rejects the name
+**DFM Mimir** as already in use. The existing personal TestFlight record uses this
+name and is the likely conflict, not confirmed by Apple error detail. No SDU App
+Store record exists yet. Resolve the name (rename personal listing or choose an
+SDU listing variant) before retrying. Do not delete the existing personal app.
+Prepared SKU: dfm-mimir-sdu; language English (U.K.); Limited Access selected
+(current user plus mandatory institutional Admin/Finance/Reports access).
+Evidence: `logs/sdu-store/identifier-registered.png` and
+`logs/sdu-store/app-name-unavailable.png`.
+
+## Historical state — 2026-10-02 (earlier retry)
 
 The earlier agreement blocker is **superseded**: SDU Developer membership shows
 the Program License Agreement accepted October 1, 2026. App Store Connect now
