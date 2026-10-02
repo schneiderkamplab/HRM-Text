@@ -13,6 +13,23 @@ not claims that all declarations have been submitted or approved.
 - Public support page: publish SUPPORT.md; privacy page: finalize PRIVACY.md.
   Neither URL has been selected or entered yet.
 
+## Saved App Privacy draft — 2 October 2026
+
+Selected collection = Yes and saved four categories in App Store Connect:
+Other User Content, User ID, Other Usage Data, Other Data Types. All are marked
+linked to identity and not used for tracking. Content, identifiers and metadata
+use App Functionality plus Other Purposes; usage counters use App Functionality.
+
+These are saved answers, not a completed/published privacy declaration. Search
+History remains unresolved: the Worker does not store queries in D1, but that
+does not establish Jina's retention. Jina's current legal page (4 May 2026) points
+to Elastic's DPA and warns its older terms may not reflect current practices.
+Verify API-specific retention under the actual service arrangement before
+publishing. Website-cookie statements are not evidence about this API.
+
+The setup controls worked with a screenshot-grounded click after ordinary
+locator activation failed; this was not proof of an Admin permission block.
+
 ## Privacy labels
 
 Proposed: data is collected through optional feedback/search; no advertising

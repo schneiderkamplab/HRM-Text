@@ -509,3 +509,15 @@ App Privacy declarations or need for an in-app policy link.
 Deployment run 37050059275 passed; public policy/support pages returned HTTP 200
 and were inspected in the browser. Saved support links for both platforms and
 the shared Privacy Policy URL in App Privacy. The questionnaire remains unfilled.
+
+## App Privacy questionnaire draft — 2026-10-02
+
+Saved collection Yes and four categories (Other User Content, User ID, Other
+Usage Data, Other Data Types). Each is linked and not used for tracking. Purposes
+are App Functionality plus Other Purposes except usage counters (Functionality
+only). Set Up controls rendered as paragraphs but screenshot-grounded CUA clicks
+worked; the earlier unresponsive-click suspicion of a role restriction was not
+confirmed. Search History remains unresolved pending actual Jina API retention.
+[Jina legal](https://jina.ai/legal/) now refers to Elastic's DPA and labels its
+older policy potentially outdated. No privacy publication or App Review submission
+has been performed. See native/app/store/SUBMISSION-DRAFT.md for saved choices.
