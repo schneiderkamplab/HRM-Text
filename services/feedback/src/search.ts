@@ -41,7 +41,7 @@ export async function search(request: Request, env: Env): Promise<Response> {
     const upstream = await fetch('https://s.jina.ai/', {
       method: 'POST', redirect: 'manual', signal: AbortSignal.timeout(30000),
       headers: {'Authorization': `Bearer ${row.jina_key}`, 'Content-Type': 'application/json',
-        'Accept': 'application/json', 'X-Respond-With': 'no-content'},
+        'Accept': 'application/json', 'X-Respond-With': 'no-content', 'DNT': '1'},
       body: JSON.stringify({q: query}),
     });
     if (!upstream.ok) {

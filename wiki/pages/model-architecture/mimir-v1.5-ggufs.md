@@ -537,3 +537,28 @@ Jina/Elastic policy links, access-key records/counters, and the fact that disabl
 search does not delete provider records. This does not claim infrastructure-wide
 zero retention or delegate away Apple's third-party disclosure requirements.
 Search History classification and privacy-label publication remain pending.
+
+## Jina search retention evidence — 2026-10-02
+
+Inspected Jina's official Reader repository at revision
+`1574bfd380d249c86c82db4dace0d9c8fe17e2b1`.
+[Searcher source](https://github.com/jina-ai/reader/blob/1574bfd380d249c86c82db4dace0d9c8fe17e2b1/src/api/searcher.ts)
+sets cache validity to one hour and cache record expiry to seven days. Records
+include the query and response; the request logger includes the search query.
+These are code defaults, not a verified hosted-service deletion deadline: the
+README explicitly excludes the MongoDB SaaS storage implementation.
+
+[Reader documentation](https://jina.ai/reader/) advertises DNT as preventing
+caching/logging, while the DTO documents `DNT: 1` as preventing result caching.
+The inspected search path does not guard its query logging or SERP cache writes
+with `doNotTrack`. `X-No-Cache` bypasses cache reads but does not prevent those
+writes. Therefore neither header establishes zero retention for hosted Search
+without provider clarification. Our Worker currently sends neither header.
+No runtime changes or App Privacy publication made during this investigation.
+
+Follow-up implementation: user approved sending `DNT: 1`. The Worker now adds
+it to all Jina search requests; the Miniflare outbound mock checks the header.
+Typecheck, all nine Worker tests and Wrangler dry-run passed. Deployed version
+`0b18f62c-18ad-4e57-859d-b2784633872a` to `dfm-mimir-feedback` with
+`npm run deploy -- --keep-vars --strict`. No `X-No-Cache` header added and no
+zero-retention claim made; this supersedes the previous no-header runtime state.

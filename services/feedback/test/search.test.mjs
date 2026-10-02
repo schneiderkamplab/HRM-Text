@@ -21,6 +21,7 @@ before(async () => {
       calls++;
       assert.equal(request.url,'https://s.jina.ai/');
       assert.equal(request.method,'POST');
+      assert.equal(request.headers.get('dnt'),'1');
       assert.equal(request.headers.get('authorization'),'Bearer jina_synthetic_test_secret');
       assert.deepEqual(Object.keys(await request.json()),['q']);
       if(mode==='fail') return new Response('sensitive upstream error',{status:401});
