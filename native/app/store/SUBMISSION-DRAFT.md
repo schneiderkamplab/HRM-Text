@@ -68,8 +68,16 @@ child-safe. Generated content can include mature, violent or medical topics when
 prompted. Do not mark all content-frequency answers “None” based on the clean
 welcome screen or our four sample chats. Proposed approach: request the highest
 available age override for this initial release, while still answering each
-underlying content question truthfully. The exact questionnaire remains to be
-completed; an override does not replace the content assessment.
+underlying content question truthfully.
+
+Completed 2 October: calculated rating 13+, overridden to 18+ at the user’s
+request (19+ Korea; older OS global 17+). Feature controls/capabilities are No;
+external search results do not constitute an embedded arbitrary-webpage browser.
+Ordinary mature themes, non-graphic sexual content, medical information, fantasy/
+realistic violence and weapon references are Infrequent; wellness topics Yes.
+Graphic sexual content and prolonged graphic/sadistic violence are None based on
+the user’s explicit confirmation that v1.5 reliably refuses both. Gambling,
+simulated gambling, contests and loot boxes are absent.
 
 ## Content rights
 
@@ -82,10 +90,10 @@ Copyright holder Peter Schneider-Kamp does not alone establish those permissions
 ## Encryption / export compliance
 
 No custom encryption algorithm is implemented in the app's own code. However,
-Dart HTTPS may include TLS from the runtime rather than exclusively using Apple's
-OS encryption. Inspect the shipped runtime before selecting the Apple-OS-only
-answer. Proposed classification if bundled TLS is confirmed: standard encryption
-in addition to the OS, with the appropriate exemption/documentation assessment.
+Both build 12 Flutter engine binaries contain BoringSSL source references,
+confirming bundled standard cryptography beyond Apple OS libraries. The Apple
+questionnaire's standard-encryption answer leads to a France availability question;
+this remains pending the user’s territory decision. No compliance answer saved yet.
 Both uploaded builds currently show Missing Compliance. Do not equate that with
 upload failure, and do not set an Info.plist exemption flag merely to suppress it.
 
@@ -127,3 +135,10 @@ excludes processor-held data. Actual s.jina.ai query/log/cache retention is stil
 not established by these public documents. A zero-retention agreement is not a
 prerequisite to using the service or listing an app: the requirement is an accurate
 declaration of actual collection and use, including retained search data if present.
+
+## Build 12 upload — 2 October 2026
+
+Both signed archives passed audit and upload after the user refreshed Xcode Accounts.
+iOS upload succeeded at 21:56:13 CEST and macOS at 21:56:18 CEST. Logs are
+logs/sdu-store/ios-upload-12-retry.log and macos-upload-12.log. Apple processing,
+build selection and final App Review submission remain outstanding.

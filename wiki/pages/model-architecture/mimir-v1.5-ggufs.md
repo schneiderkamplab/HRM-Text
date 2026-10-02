@@ -580,3 +580,11 @@ Accounts / App Store Connect access for 46HSA3LZ7H required. Requested user refr
 of petersk@sdu.dk in Xcode Accounts. Neither build 12 was uploaded. Build 11 remains
 selected; no App Review submission. Age rating, content rights, encryption,
 pricing/territories and signed-install qualification remain outstanding.
+
+Follow-up: after the user refreshed Xcode Accounts, both build 12 uploads succeeded
+on 2 October at 21:56:13 CEST (iOS) and 21:56:18 CEST (macOS), superseding the
+upload blocker above. Apple processing and build selection remain to be verified.
+Saved age rating with user-approved 18+ override, calculated 13+; the user confirmed
+reliable refusals for graphic sexual content and prolonged graphic violence. Both
+archived Flutter binaries contain BoringSSL references; standard non-OS encryption
+questionnaire reaches France availability. User territory decision pending.
