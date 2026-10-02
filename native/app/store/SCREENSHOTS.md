@@ -1,6 +1,12 @@
 # Store screenshot capture checklist
 
-Status 2026-10-01: **not captured**. Mac Computer Use inspection timed out on the
+Status 2026-10-02: two **draft Mac captures** (welcome and real Danish response)
+at 2560×1600 are in `logs/sdu-store/screenshots/` with `manifest.json`. They still
+contain capture cursor/screen-sharing overlays and are not final public assets.
+No screenshots uploaded: App Store Connect's file chooser timed out. iPhone/iPad,
+English response and settings captures remain; Device Hub inspection timed out.
+
+Historical status 2026-10-01 (superseded for Mac drafts): Mac inspection timed out on the
 new ad-hoc-signed SDU-ID copy; Simulator UI app was not found, although simctl lists
 installed runtimes. Resolve UI tooling, then capture real app output. Do not treat
 build success as screenshot/UI qualification.

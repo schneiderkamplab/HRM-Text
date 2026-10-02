@@ -422,3 +422,20 @@ records or expiring builds. SDU DFM Mimir creation then succeeded: Apple ID
 Limited Access. Both platform records show 1.0 Prepare for Submission; adjust
 version to match the upload plan. No SDU builds uploaded/submitted yet. Evidence
 screenshots and remaining steps are recorded in native/app/SDU-STORE.md.
+
+### SDU signed archives and upload blocker (2026-10-02)
+
+Supersedes the initial listing version and unsigned-only preparation above.
+iOS/macOS drafts now save version 0.1.5, descriptions/keywords, reviewer notes,
+no required sign-in and manual release. Signed 0.1.5 (11) archives pass team,
+architecture/model/native-symbol/bundle checks; exact local secret scans pass.
+Mac archiving needs explicit Apple Development identity to avoid ad-hoc signing.
+Its verified signature TeamIdentifier is authoritative when the optional Mac team
+entitlement is absent; conflicting entitlements remain errors.
+
+iOS export/upload fails at account access: Xcode saved credentials invalid,
+missing Xcode-Username, SDU App Store Connect access required. User asked to refresh
+Xcode Accounts. No builds uploaded, no review submitted. Two genuine Mac screenshot
+drafts exist, but capture overlays need cleanup; chooser timeout prevented upload.
+Device Hub UI timeout blocks current simulator capture. See `native/app/SDU-STORE.md`
+for exact archive paths, audit scope and remaining privacy/qualification gates.

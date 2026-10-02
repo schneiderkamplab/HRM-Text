@@ -52,7 +52,10 @@ def main():
                f'MIMIR_BUNDLE_ID={args.bundle_id}', 'CODE_SIGN_STYLE=Automatic',
                'DEBUG_INFORMATION_FORMAT=dwarf-with-dsym']
     if args.team_id:
-        command += [f'MIMIR_TEAM_ID={args.team_id}', '-allowProvisioningUpdates']
+        # macOS otherwise defaults to "Sign to Run Locally" even with a team.
+        # Export re-signs the development archive for App Store distribution.
+        command += [f'MIMIR_TEAM_ID={args.team_id}',
+                    'CODE_SIGN_IDENTITY=Apple Development', '-allowProvisioningUpdates']
     else:
         command += ['CODE_SIGNING_ALLOWED=NO', 'CODE_SIGNING_REQUIRED=NO', 'MIMIR_TEAM_ID=']
     run(*command, 'archive', cwd=APP)
@@ -106,8 +109,16 @@ def main():
         run('codesign', '--verify', '--deep', '--strict', product)
         entitlements = plistlib.loads(subprocess.check_output(
             ['codesign', '-d', '--entitlements', ':-', str(product)], stderr=subprocess.DEVNULL))
-        if entitlements.get('com.apple.developer.team-identifier') != args.team_id:
+        signature = subprocess.run(['codesign', '-dvv', str(product)],
+                                   check=True, capture_output=True, text=True).stderr
+        signed_team = re.search(r'^TeamIdentifier=(.+)$', signature, re.MULTILINE)
+        # A sandboxed Mac development archive can omit the team entitlement.
+        # Its verified signing certificate still must belong to the requested team.
+        if signed_team is None or signed_team.group(1) != args.team_id:
             raise ValueError('Signed application team does not match requested team')
+        entitlement_team = entitlements.get('com.apple.developer.team-identifier')
+        if (args.platform == 'ios' or entitlement_team is not None) and entitlement_team != args.team_id:
+            raise ValueError('Application team entitlement does not match requested team')
         if args.platform == 'macos' and not entitlements.get('com.apple.security.app-sandbox'):
             raise ValueError('Mac App Store build must be sandboxed')
         options = {'method': 'app-store-connect', 'destination': 'export',

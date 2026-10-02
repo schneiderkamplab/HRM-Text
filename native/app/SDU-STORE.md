@@ -1,6 +1,44 @@
 # SDU iOS and macOS distribution
 
-## Current state — 2026-10-02 (app created)
+## Current state — 2026-10-02 (signed archives, upload blocked)
+
+Both platform listings now have version **0.1.5**, saved descriptions/keywords,
+reviewer notes, no required sign-in, and manual release. No App Review submission
+or public release was requested. Privacy/support URLs and institutional declarations
+remain pending below.
+
+Audited SDU development-signed archives for **0.1.5 (11)** are ready:
+
+- `logs/sdu-store/ios-signed-11/DFM Mimir.xcarchive`
+- `logs/sdu-store/macos-signed-11-r3/DFM Mimir.xcarchive`
+
+Both pass arm64, bundled model hash, matching native dSYM, framework metadata,
+privacy-manifest presence, strict code-signature and SDU team checks. Mac is
+sandboxed. Generic bundle scans and exact local Jina/Mimir test-key scans passed.
+These are archive checks, not distribution install or TestFlight qualification.
+
+The iOS upload attempt failed before transfer: **Failed to Use Accounts**,
+App Store Connect access for `46HSA3LZ7H` required; Xcode also reported invalid
+keychain account credentials (`missing Xcode-Username`). User has been asked to
+refresh `petersk@sdu.dk` in Xcode Settings → Accounts. Nothing uploaded yet.
+`UploadOptions.plist` beside each archive selects `destination=upload`; retry
+`xcodebuild -exportArchive` with that file after credentials are refreshed, then
+verify processing under SDU app **6818524811**. Do not upload to the personal app.
+
+Mac signing fix: explicitly set `CODE_SIGN_IDENTITY=Apple Development` when a
+team is requested; otherwise Xcode can archive with “Sign to Run Locally”. Verify
+the signature's TeamIdentifier; macOS development archives can legitimately omit
+the team entitlement. Reject a present conflicting entitlement. Distribution export
+still needs the proper App Store signing identity/profile and account access.
+
+Real Mac welcome/Danish-chat drafts are in `logs/sdu-store/screenshots/` at
+2560×1600 (JPEG, with manifest). Chat generation works locally. Capture overlays
+need removal before public use; English/settings and iPhone/iPad captures remain.
+The browser file chooser repeatedly timed out, so **no screenshots uploaded**.
+Device Hub UI also timed out. Prior blanket “no captures/chat unverified” claims
+below are superseded by this limited Mac evidence, not a full UI qualification.
+
+## Historical state — 2026-10-02 (app created)
 
 The name conflict below is **superseded**. With explicit user authorization,
 saved the personal app’s English (U.K.) name as **DFM Mimir Preview** (app
