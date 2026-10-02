@@ -14,8 +14,11 @@ listed below; each used its `UploadOptions.plist` and `upload-retry` export path
 Target is SDU app **6818524811**, bundle `dk.sdu.dfm.mimir`, team `46HSA3LZ7H`.
 Upload acceptance is not completed processing, TestFlight tester availability,
 or App Review approval. Wait for processing before assigning testing groups.
-No App Review submission or public release. Screenshots and final store policy
-requirements below remain outstanding.
+No App Review submission or public release. The screenshot requirement is now
+prepared: 3 Mac, 4 iPhone and 4 iPad images uploaded and checked in Media Manager.
+See [capture provenance and reproduction](store/SCREENSHOTS.md). Final store policy
+requirements, public URLs, review contact and signed installation checks below
+remain outstanding.
 
 ## Historical state — 2026-10-02 (signed archives, upload blocked)
 

@@ -448,3 +448,17 @@ iOS at 15:46:41 CEST and macOS at 15:47:12 CEST. Both xcodebuild commands exit 0
 with `EXPORT SUCCEEDED` and Apple reports package processing. Not yet proof of
 completed processing or tester availability; no App Review/public release.
 Logs and remaining screenshot/privacy gates: `native/app/SDU-STORE.md`.
+
+## SDU store screenshot upload — 2026-10-02
+
+Supersedes earlier screenshot-tooling blockers: SDU app 6818524811 now has three
+Mac, four iPhone 6.9-inch and four iPad 13-inch screenshots saved for 0.1.5.
+The real-engine Flutter integration capture uses an isolated temporary store and
+no online features, production UI, Metal on Mac and CPU on iOS simulators. Native
+iOS capture after keyboard/layout settling avoids renderer-only capture artifacts;
+Mac uses a render boundary. Explicitly refocus the composer before each prompt.
+App Store Connect Choose File works with keyboard Enter when mouse activation
+times out. Reviewed PNGs and hashes are tracked under native/app/store/screenshots;
+see [the runbook](../../../native/app/store/SCREENSHOTS.md). All three capture runs
+passed; these are not distribution installation tests. No App Review submission.
+Public support/privacy URLs and review-contact details remain pending.
