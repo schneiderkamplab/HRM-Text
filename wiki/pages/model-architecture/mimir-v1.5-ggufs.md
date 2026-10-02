@@ -521,3 +521,19 @@ confirmed. Search History remains unresolved pending actual Jina API retention.
 [Jina legal](https://jina.ai/legal/) now refers to Elastic's DPA and labels its
 older policy potentially outdated. No privacy publication or App Review submission
 has been performed. See native/app/store/SUBMISSION-DRAFT.md for saved choices.
+
+Elastic terms follow-up (2026-10-02): Jina-linked DPA sections 2.3 and 5.1 cover
+instruction-bound processing and termination/retention-policy deletion, not per-query
+zero retention. Product privacy covers separate usage/security data and excludes
+processor-held content. The general policy's no-generative-training statement
+cannot be treated as an API-content guarantee across that scope boundary. Recorded
+sources in native/app/store/SUBMISSION-DRAFT.md. No questionnaire changes made.
+
+## Search retention wording approved — 2026-10-02
+
+User approved publishing the distinction between no query/result storage in our
+application database and possible provider retention. Updated PRIVACY.md with
+Jina/Elastic policy links, access-key records/counters, and the fact that disabling
+search does not delete provider records. This does not claim infrastructure-wide
+zero retention or delegate away Apple's third-party disclosure requirements.
+Search History classification and privacy-label publication remain pending.

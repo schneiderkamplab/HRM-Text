@@ -105,3 +105,19 @@ Review institutional trader details through the authorized SDU account owner.
 Sources checked 2 October 2026:
 - [Apple privacy definitions and optional disclosure](https://developer.apple.com/app-store/app-privacy-details/)
 - [Apple age-rating definitions](https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions/)
+
+## Elastic terms checked — 2 October 2026
+
+The [DPA linked by Jina](https://www.elastic.co/pdf/v100623-0-elastic-customer-dpa.pdf)
+limits processor use to the agreement/customer instructions (2.3) and provides
+deletion at termination or under the applicable retention policy, subject to legal
+retention (5.1). It gives no Jina Search request-level zero-retention guarantee.
+[Elastic's product privacy statement](https://www.elastic.co/legal/product-privacy-statement)
+separately covers provider-controlled usage/security data, including query shapes
+and potentially threatening inputs/outputs; it excludes processor-held customer
+content. The general privacy statement's generative-AI training restriction must
+not be presented as a verified Jina API-content guarantee because that statement
+excludes processor-held data. Actual s.jina.ai query/log/cache retention is still
+not established by these public documents. A zero-retention agreement is not a
+prerequisite to using the service or listing an app: the requirement is an accurate
+declaration of actual collection and use, including retained search data if present.
