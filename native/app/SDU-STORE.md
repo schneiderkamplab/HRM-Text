@@ -1,6 +1,19 @@
 # SDU iOS and macOS distribution
 
-## Current state — 2026-10-02 (both builds uploaded)
+## Submission attempt — 2026-10-02
+
+User authorized App Review submission. Apple blocked both platform drafts on
+missing privacy-policy URL, content-rights information, age-rating answers,
+category and reviewer contact information. Selected and saved processed **build
+11** on both platforms; set shared primary category to **Productivity**.
+Both builds still show **Missing Compliance**. The export questionnaire must
+account for bundled Flutter/Dart TLS, not assume Apple-OS-only encryption.
+No compliance or rights attestations were guessed. Support URL, copyright and
+privacy-label review also remain to finish. Asked user for public policy/support
+URLs, review phone and copyright holder. No submission or release occurred;
+manual release remains selected. Screenshots are accepted on both platforms.
+
+## Earlier state — 2026-10-02 (both builds uploaded)
 
 The Xcode credential blocker below is **superseded** after the user refreshed
 the account. Both SDU **0.1.5 (11)** uploads succeeded and Apple reported

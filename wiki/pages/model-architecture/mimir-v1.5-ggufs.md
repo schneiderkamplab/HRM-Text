@@ -462,3 +462,13 @@ times out. Reviewed PNGs and hashes are tracked under native/app/store/screensho
 see [the runbook](../../../native/app/store/SCREENSHOTS.md). All three capture runs
 passed; these are not distribution installation tests. No App Review submission.
 Public support/privacy URLs and review-contact details remain pending.
+
+## App Review validation — 2026-10-02
+
+User subsequently authorized submission. Apple rejected Add for Review on both
+platforms due to missing shared privacy URL, content rights, age rating, category
+and review contact. Processed build 11 is now selected/saved for both platforms;
+Productivity is selected as primary category. Missing Compliance remains; assess
+bundled Dart/Flutter TLS before answering the encryption questionnaire. Policy
+URLs, phone and copyright holder have been requested. No App Review submission
+or release occurred. This supersedes only the earlier unassigned-build state.
