@@ -1,4 +1,4 @@
-# DFM Mimir support — draft for publication
+# DFM Mimir support
 
 DFM Mimir runs a Danish/English language model on your device. The included model
 works without an account or internet connection after installing the app.
@@ -28,6 +28,6 @@ under CC BY 4.0. Keep your receipt ID if you later want to request deletion.
 Technical contact: Peter Schneider-Kamp, petersk@imada.sdu.dk. Include app version, OS/device and steps to
 reproduce the issue. Do not email secret search keys or private conversations.
 
-Link the institution-approved privacy policy here once published. Feedback deletion
+Read our [privacy policy](../privacy/). Feedback deletion
 requests require the receipt ID and verification through the team contact; knowing
 a receipt ID does not let anyone retrieve the chat through the public service.
