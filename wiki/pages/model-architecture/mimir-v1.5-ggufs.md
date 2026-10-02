@@ -412,3 +412,13 @@ App Store creation with both iOS/macOS now reaches validation but rejects
 is the likely collision; Apple's error does not identify the conflicting owner.
 No SDU store record created or build uploaded. Naming decision pending; do not
 delete personal TestFlight. See SDU-STORE.md and logs/sdu-store/ screenshots.
+
+### SDU app record created (2026-10-02)
+
+Supersedes the app-name conflict. User authorized personal listing rename to
+DFM Mimir Preview; English (U.K.) name saved for app 6815375537 without deleting
+records or expiring builds. SDU DFM Mimir creation then succeeded: Apple ID
+6818524811, dk.sdu.dfm.mimir, SKU dfm-mimir-sdu, iOS+macOS, English (U.K.),
+Limited Access. Both platform records show 1.0 Prepare for Submission; adjust
+version to match the upload plan. No SDU builds uploaded/submitted yet. Evidence
+screenshots and remaining steps are recorded in native/app/SDU-STORE.md.

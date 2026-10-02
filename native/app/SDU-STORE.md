@@ -1,6 +1,23 @@
 # SDU iOS and macOS distribution
 
-## Current state — 2026-10-02 (later retry)
+## Current state — 2026-10-02 (app created)
+
+The name conflict below is **superseded**. With explicit user authorization,
+saved the personal app’s English (U.K.) name as **DFM Mimir Preview** (app
+6815375537, dk.sdu.mimir). No builds expired or records deleted. Then successfully
+created **DFM Mimir** under SDU: Apple ID **6818524811**, bundle
+`dk.sdu.dfm.mimir`, SKU `dfm-mimir-sdu`, English (U.K.), iOS and macOS. Both
+platforms initially show **1.0 Prepare for Submission**; align the listing version
+with the intended uploaded build before submission. Limited Access was selected.
+
+App: https://appstoreconnect.apple.com/apps/6818524811/distribution
+
+Evidence: `logs/sdu-store/personal-preview-renamed.png` (Saved confirmation) and
+`logs/sdu-store/sdu-app-created.png` (both platform records). No SDU builds uploaded
+or submitted yet. Signing, policy/link, screenshots and qualification gates below
+remain. Personal listing rename is metadata; installed binary names are unchanged.
+
+## Historical state — 2026-10-02 (later retry)
 
 The registration permission blocker below is **superseded**: successfully
 registered explicit App ID `dk.sdu.dfm.mimir` (DFM Mimir) under SDU Team
