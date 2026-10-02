@@ -588,3 +588,9 @@ Saved age rating with user-approved 18+ override, calculated 13+; the user confi
 reliable refusals for graphic sexual content and prolonged graphic violence. Both
 archived Flutter binaries contain BoringSSL references; standard non-OS encryption
 questionnaire reaches France availability. User territory decision pending.
+
+User decision update (2 October): the 18+ override is superseded. Removed it and
+verified calculated 13+ in App Store Connect (regional exceptions remain). User
+confirmed France inclusion; choosing Yes in the standard-encryption flow requires
+export compliance documentation and Apple approval. Compliance remains incomplete;
+no declaration file or approval code has been provided.

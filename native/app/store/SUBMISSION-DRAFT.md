@@ -142,3 +142,14 @@ Both signed archives passed audit and upload after the user refreshed Xcode Acco
 iOS upload succeeded at 21:56:13 CEST and macOS at 21:56:18 CEST. Logs are
 logs/sdu-store/ios-upload-12-retry.log and macos-upload-12.log. Apple processing,
 build selection and final App Review submission remain outstanding.
+
+## Updated age and France decisions — 2 October 2026
+
+User superseded the 18+ override with the calculated rating. Removed the override
+and verified 13+ for 172 territories, 16+ Vietnam/Brazil, 12+ Korea; older OS global
+rating 12+ with regional exceptions. Content answers unchanged.
+
+User wants France included. Selecting Yes in the standard-encryption questionnaire
+displays a requirement to upload export compliance documentation and obtain Apple
+approval; no Save option is offered. This is an outstanding documentation step,
+not completed compliance or configured storefront availability.
