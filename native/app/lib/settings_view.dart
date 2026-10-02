@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'search_view.dart';
 import 'settings_widgets.dart';
@@ -376,6 +377,46 @@ class _SettingsViewState extends State<SettingsView> {
   ];
 
   List<Widget> onlineSettings(BuildContext context) => [
+    SettingsSection(
+      title: 'Privacy',
+      children: [
+        const SettingsHelp(
+          'Ordinary chat stays on your device. Optional model downloads, web search and confirmed feedback use online services. Search providers may retain queries.',
+        ),
+        TextButton.icon(
+          icon: const Icon(Icons.open_in_new),
+          label: const Text('Privacy policy (opens browser)'),
+          onPressed: () async {
+            final url = Uri.parse(
+              'https://schneiderkamplab.github.io/HRM-Text/privacy/',
+            );
+            try {
+              if (await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                return;
+              }
+            } catch (_) {
+              // Opening the policy must not interrupt offline chat.
+            }
+            if (!context.mounted) return;
+            await showDialog<void>(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Could not open browser'),
+                content: SelectableText(
+                  'You can open the privacy policy at:\n$url',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    ),
     SettingsSection(
       title: 'Conversation feedback',
       children: [

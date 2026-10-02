@@ -10,8 +10,9 @@ not claims that all declarations have been submitted or approved.
 - Review contact: Peter Schneider-Kamp, petersk@imada.sdu.dk. The user-supplied
   phone number is saved in both Apple forms; do not duplicate it in public docs.
 - No sign-in required. Keep manual release after review.
-- Public support page: publish SUPPORT.md; privacy page: finalize PRIVACY.md.
-  Neither URL has been selected or entered yet.
+- Public support and privacy pages are published at
+  https://schneiderkamplab.github.io/HRM-Text/support/ and /privacy/;
+  their URLs are saved in App Store Connect.
 
 ## Saved App Privacy draft — 2 October 2026
 
@@ -20,12 +21,16 @@ Other User Content, User ID, Other Usage Data, Other Data Types. All are marked
 linked to identity and not used for tracking. Content, identifiers and metadata
 use App Functionality plus Other Purposes; usage counters use App Functionality.
 
-These are saved answers, not a completed/published privacy declaration. Search
-History remains unresolved: the Worker does not store queries in D1, but that
-does not establish Jina's retention. Jina's current legal page (4 May 2026) points
+Historical draft: Search History initially remained unresolved because the Worker
+does not store queries in D1, but that does not establish Jina's retention.
+Jina's current legal page (4 May 2026) points
 to Elastic's DPA and warns its older terms may not reflect current practices.
-Verify API-specific retention under the actual service arrangement before
-publishing. Website-cookie statements are not evidence about this API.
+Follow-up research found query logging and seven-day cache-expiry defaults in
+Jina's public Search code. Treat Search History as collected for App Functionality,
+linked and not used for tracking. All five categories are now saved and published
+in App Store Connect (2 October 2026); the UI confirmed publication by Peter
+Schneider-Kamp. `DNT: 1` is deployed on Worker requests but is not proof of zero retention.
+Website-cookie statements are not evidence about this API.
 
 The setup controls worked with a screenshot-grounded click after ordinary
 locator activation failed; this was not proof of an Admin permission block.
@@ -97,8 +102,9 @@ runs inside the app; the store app has no standalone command-line server.
 
 ## Remaining release work
 
-Publish approved support/privacy pages and add a privacy-policy link inside the
-app (currently absent), then rebuild both platforms if source changes. Verify
+Support/privacy pages are published. A privacy-policy link and offline explanation
+are now implemented in Settings → Online, with explicit external-browser opening
+and a copyable URL if opening fails. Rebuild/upload both platforms as build 12. Verify
 signed installs, finalize privacy/age/rights/export answers and pricing/territories.
 Review institutional trader details through the authorized SDU account owner.
 

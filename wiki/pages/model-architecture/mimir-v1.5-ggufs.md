@@ -562,3 +562,21 @@ Typecheck, all nine Worker tests and Wrangler dry-run passed. Deployed version
 `0b18f62c-18ad-4e57-859d-b2784633872a` to `dfm-mimir-feedback` with
 `npm run deploy -- --keep-vars --strict`. No `X-No-Cache` header added and no
 zero-retention claim made; this supersedes the previous no-header runtime state.
+
+## Privacy published and build 12 prepared — 2026-10-02
+
+Added Search History (App Functionality, linked, no tracking) and published all
+five App Privacy categories; UI confirmed publication. This supersedes the pending
+privacy-label state above. Mouse input initially timed out; keyboard Enter/Space
+worked for native buttons/inputs, then CUA click worked for the paragraph-based
+search setup control.
+
+Added Settings → Online privacy explanation and an explicit external-browser link
+using url_launcher, with selectable URL fallback. No automatic networking added.
+Flutter analyze and 72 tests passed. Both SDU-signed 0.1.5 (12) archives passed
+archive audits under logs/sdu-store/{ios,macos}-signed-12, including signatures,
+model checksum and native dSYM matching. iOS upload failed with Failed to Use
+Accounts / App Store Connect access for 46HSA3LZ7H required. Requested user refresh
+of petersk@sdu.dk in Xcode Accounts. Neither build 12 was uploaded. Build 11 remains
+selected; no App Review submission. Age rating, content rights, encryption,
+pricing/territories and signed-install qualification remain outstanding.

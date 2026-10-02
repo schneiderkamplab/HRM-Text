@@ -13,6 +13,8 @@ PODS:
     - Flutter
   - share_plus (0.0.1):
     - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - file_picker_darwin (from `.symlinks/plugins/file_picker_darwin/darwin`)
@@ -22,6 +24,7 @@ DEPENDENCIES:
   - mimir_native (from `.symlinks/plugins/mimir_native/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 EXTERNAL SOURCES:
   file_picker_darwin:
@@ -38,6 +41,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   file_picker_darwin: 4c2b9a50ea44cb3b071381ea0cf48591bdd80251
@@ -47,6 +52,7 @@ SPEC CHECKSUMS:
   mimir_native: e86d8e7341c18be92d2b10adf50b01686d7fe3fa
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
+  url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
 
 PODFILE CHECKSUM: ff27725071ee85e03f9bfa3e5a70da322b99d5a6
 
