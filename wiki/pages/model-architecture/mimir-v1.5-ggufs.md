@@ -484,3 +484,12 @@ also disclose opt-in model catalog/download requests, optional search and feedba
 and user-enabled Mac API access. Copyright ownership does not determine the legal
 data controller. No policy URLs or unfinished institutional declarations have been
 submitted, and no new build or App Review submission occurred in this drafting step.
+
+## Listing copy saved — 2026-10-02
+
+Saved the user-edited iOS description after correcting two typos and an accidental
+line break, then adapted the same copy for Apple Silicon Mac with the GUI local API
+and absence of a standalone server stated explicitly. Exact saved text is tracked
+in native/app/store/DESCRIPTIONS.md. Both Save controls returned disabled after
+saving and field text matched. Remaining submission items will be resolved with
+the user one at a time, starting with the privacy policy.
