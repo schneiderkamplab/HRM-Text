@@ -439,3 +439,12 @@ Xcode Accounts. No builds uploaded, no review submitted. Two genuine Mac screens
 drafts exist, but capture overlays need cleanup; chooser timeout prevented upload.
 Device Hub UI timeout blocks current simulator capture. See `native/app/SDU-STORE.md`
 for exact archive paths, audit scope and remaining privacy/qualification gates.
+
+### SDU uploads accepted (2026-10-02, account refreshed)
+
+Supersedes the Xcode credential/upload blocker above. After user refreshed Xcode
+login, both 0.1.5 (11) distribution uploads succeeded to SDU app 6818524811:
+iOS at 15:46:41 CEST and macOS at 15:47:12 CEST. Both xcodebuild commands exit 0
+with `EXPORT SUCCEEDED` and Apple reports package processing. Not yet proof of
+completed processing or tester availability; no App Review/public release.
+Logs and remaining screenshot/privacy gates: `native/app/SDU-STORE.md`.

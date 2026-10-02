@@ -1,6 +1,23 @@
 # SDU iOS and macOS distribution
 
-## Current state — 2026-10-02 (signed archives, upload blocked)
+## Current state — 2026-10-02 (both builds uploaded)
+
+The Xcode credential blocker below is **superseded** after the user refreshed
+the account. Both SDU **0.1.5 (11)** uploads succeeded and Apple reported
+“Uploaded package is processing”:
+
+- iOS: **15:46:41 CEST**, `logs/sdu-store/ios-upload-11-retry.log`.
+- macOS: **15:47:12 CEST**, `logs/sdu-store/macos-upload-11-retry.log`.
+
+Both commands exited 0 with `EXPORT SUCCEEDED`. The uploaded archive paths are
+listed below; each used its `UploadOptions.plist` and `upload-retry` export path.
+Target is SDU app **6818524811**, bundle `dk.sdu.dfm.mimir`, team `46HSA3LZ7H`.
+Upload acceptance is not completed processing, TestFlight tester availability,
+or App Review approval. Wait for processing before assigning testing groups.
+No App Review submission or public release. Screenshots and final store policy
+requirements below remain outstanding.
+
+## Historical state — 2026-10-02 (signed archives, upload blocked)
 
 Both platform listings now have version **0.1.5**, saved descriptions/keywords,
 reviewer notes, no required sign-in, and manual release. No App Review submission
