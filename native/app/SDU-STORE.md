@@ -1,6 +1,24 @@
 # SDU iOS and macOS distribution
 
-## Confirmed state — 2026-10-01
+## Current state — 2026-10-02
+
+The earlier agreement blocker is **superseded**: SDU Developer membership shows
+the Program License Agreement accepted October 1, 2026. App Store Connect now
+opens New App, and the Paid Apps warning is absent. SDU signing Team ID is
+**46HSA3LZ7H**; the current user role is **Developer**.
+
+New blocker: registering `dk.sdu.dfm.mimir` under SDU explicitly returns
+“You are not allowed to perform this operation. Please check with one of your
+Team Admins …”. Identifiers are visible but registration is denied. An SDU admin
+must register the explicit identifier (DFM Mimir, iOS/macOS) or enable the required
+identifier-registration access. Do not reuse unrelated institutional identifiers.
+
+The New App form is filled for iOS + macOS, DFM Mimir, English (U.K.), SKU
+`dfm-mimir-sdu`; no matching bundle ID exists, so Create remains disabled. No app
+record or upload has occurred. Evidence:
+`logs/sdu-store/identifier-permission-blocker.png`.
+
+## Historical state — 2026-10-01
 
 The owner authorized a new app under University of Southern Denmark, with iOS
 and macOS TestFlight testing and App Store submission. This replaces the proposed

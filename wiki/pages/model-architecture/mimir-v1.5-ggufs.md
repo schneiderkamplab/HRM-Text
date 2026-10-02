@@ -4,7 +4,7 @@ title: DFM Mimir v1.5 GGUF exports
 description: Source revision, conversion, validation and publication of the official v1.5 GGUFs.
 tags: [mimir, gguf, quantization, tokenizer, publication]
 status: draft
-last_updated: 2026-10-01
+last_updated: 2026-10-02
 confidence: high
 ---
 # DFM Mimir v1.5 GGUFs
@@ -391,3 +391,14 @@ notarization. SDU must arrange Developer ID signing access. Required packaging
 extension: inside-out signing of app/frameworks/CLI with Hardened Runtime and
 timestamps, notarization, stapling and quarantined-download validation. This is
 independent of App Store review. Details are in native/app/SDU-STORE.md.
+
+### Agreement cleared; identifier registration denied (2026-10-02)
+
+Supersedes the agreement blocker above: SDU membership displays Program License
+Agreement accepted October 1, and App Store Connect now opens New App without
+agreement warnings. Verified SDU signing Team ID **46HSA3LZ7H**, user role Developer.
+New App preparation uses iOS+macOS, DFM Mimir, English (U.K.), SKU dfm-mimir-sdu.
+No matching Mimir bundle ID exists. Registration under SDU explicitly returns
+“You are not allowed to perform this operation”; an SDU admin must register
+`dk.sdu.dfm.mimir` or enable registration access. No app record was created and no
+build uploaded. Evidence: logs/sdu-store/identifier-permission-blocker.png.
