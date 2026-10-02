@@ -493,3 +493,15 @@ and absence of a standalone server stated explicitly. Exact saved text is tracke
 in native/app/store/DESCRIPTIONS.md. Both Save controls returned disabled after
 saving and field text matched. Remaining submission items will be resolved with
 the user one at a time, starting with the privacy policy.
+
+## Public support and privacy hosting — 2026-10-02
+
+User confirmed SDU as data controller and chose GitHub public pages. Enabled
+GitHub Pages with workflow publishing on the already-public HRM-Text repository.
+`mimir-pages.yml` stages only the public site template, privacy/support documents
+and logo, builds with Jekyll and deploys via the github-pages environment. Canonical
+URLs are https://schneiderkamplab.github.io/HRM-Text/privacy/ and /support/.
+The user's policy edits were preserved, with the draft heading removed and SDU
+added as controller. There are no analytics scripts, third-party fonts or forms.
+This supersedes the previous no-hosting/no-controller state, not the outstanding
+App Privacy declarations or need for an in-app policy link.

@@ -1,5 +1,20 @@
 # SDU iOS and macOS distribution
 
+## Public pages — 2026-10-02
+
+The user confirmed University of Southern Denmark as data controller and authorized
+GitHub Pages publication. The public site is deployed by `mimir-pages.yml` from
+only the allowlisted site template, PRIVACY.md, SUPPORT.md and Mimir logo. Store
+review notes, screenshots and internal policy inventory are not part of the site.
+
+- Privacy: https://schneiderkamplab.github.io/HRM-Text/privacy/
+- Support: https://schneiderkamplab.github.io/HRM-Text/support/
+
+User edits to PRIVACY.md were preserved. The workflow rebuilds on policy/support
+or site changes on main, or manual dispatch. The in-app privacy link, final privacy
+labels and other declarations remain separate work; publishing does not complete
+App Review or establish that provider-retention questions have been resolved.
+
 ## Submission attempt — 2026-10-02
 
 User authorized App Review submission. Apple blocked both platform drafts on
