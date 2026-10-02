@@ -472,3 +472,15 @@ Productivity is selected as primary category. Missing Compliance remains; assess
 bundled Dart/Flutter TLS before answering the encryption questionnaire. Policy
 URLs, phone and copyright holder have been requested. No App Review submission
 or release occurred. This supersedes only the earlier unassigned-build state.
+
+## Submission policy drafts — 2026-10-02
+
+The user supplied the review telephone and confirmed Peter Schneider-Kamp as
+copyright holder; both Apple platform forms now contain these details. The phone
+is deliberately not duplicated in public repository documentation. Brief privacy
+copy and the remaining submission-answer draft are under native/app/store
+(PRIVACY.md and SUBMISSION-DRAFT.md). Ordinary chat is local, but the policy must
+also disclose opt-in model catalog/download requests, optional search and feedback,
+and user-enabled Mac API access. Copyright ownership does not determine the legal
+data controller. No policy URLs or unfinished institutional declarations have been
+submitted, and no new build or App Review submission occurred in this drafting step.

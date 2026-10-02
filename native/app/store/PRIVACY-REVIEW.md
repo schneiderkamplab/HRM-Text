@@ -3,6 +3,9 @@
 Prepared from the client and Worker code on 2026-10-01. This is an implementation
 inventory for SDU approval, not legal advice or a completed App Store declaration.
 
+Concise public-facing draft: [PRIVACY.md](PRIVACY.md). Proposed submission
+answers: [SUBMISSION-DRAFT.md](SUBMISSION-DRAFT.md). Both remain drafts.
+
 ## Data flows
 
 | Feature | Data leaving the device | Destination / purpose | Persistence |

@@ -25,8 +25,7 @@ under CC BY 4.0. Keep your receipt ID if you later want to request deletion.
 
 ## Contact
 
-Proposed technical contact: petersk@imada.sdu.dk — confirm this as the public SDU
-support address before publication. Include app version, OS/device and steps to
+Technical contact: Peter Schneider-Kamp, petersk@imada.sdu.dk. Include app version, OS/device and steps to
 reproduce the issue. Do not email secret search keys or private conversations.
 
 Link the institution-approved privacy policy here once published. Feedback deletion
