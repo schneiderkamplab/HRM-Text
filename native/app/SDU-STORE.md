@@ -10,6 +10,11 @@ review notes, screenshots and internal policy inventory are not part of the site
 - Privacy: https://schneiderkamplab.github.io/HRM-Text/privacy/
 - Support: https://schneiderkamplab.github.io/HRM-Text/support/
 
+Deployment run 37050059275 succeeded; both HTTPS pages returned 200 and were
+checked in the browser. Support URLs are saved in both platform listings and
+the shared Privacy Policy URL is saved in App Privacy. The data-collection
+questionnaire is still at Get Started.
+
 User edits to PRIVACY.md were preserved. The workflow rebuilds on policy/support
 or site changes on main, or manual dispatch. The in-app privacy link, final privacy
 labels and other declarations remain separate work; publishing does not complete

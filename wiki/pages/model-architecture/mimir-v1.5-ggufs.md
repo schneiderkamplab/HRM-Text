@@ -505,3 +505,7 @@ The user's policy edits were preserved, with the draft heading removed and SDU
 added as controller. There are no analytics scripts, third-party fonts or forms.
 This supersedes the previous no-hosting/no-controller state, not the outstanding
 App Privacy declarations or need for an in-app policy link.
+
+Deployment run 37050059275 passed; public policy/support pages returned HTTP 200
+and were inspected in the browser. Saved support links for both platforms and
+the shared Privacy Policy URL in App Privacy. The questionnaire remains unfilled.
