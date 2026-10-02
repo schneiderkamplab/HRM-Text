@@ -1,0 +1,14 @@
+# Backbone config; HRM half_layers splits this into 20 L and 20 H layers.
+n_layers: 40
+
+hidden_size: 3072
+num_heads: 24  # head size 128
+expansion: 4
+
+norm_type: pre
+norm_eps: 1e-6
+
+rope_theta: 10000.0
+pos_emb_type: rope
+
+init_type: lecun_normal

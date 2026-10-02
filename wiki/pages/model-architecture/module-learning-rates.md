@@ -4,10 +4,48 @@ title: H and L Learning Rates
 description: Optional per-module AdamATan2 rates with unchanged checkpoint parameter groups.
 tags: [training, optimizer, stability, learning-rate]
 status: stable
-last_updated: 2026-09-11
+last_updated: 2026-09-23
 confidence: high
 ---
 # H and L Learning Rates
+
+## DFM11 XXL Piecewise Rewarm (2026-09-23)
+
+User approved the full ramp despite earlier XXL instability; this supersedes
+the constant 3.75e-5 base rate for this run after 635K. It is piecewise linear,
+not a single linear interpolation from 635K to 650K:
+
+| Global step | Base/embedding/head | H (BP8) | L (BP8) |
+|---|---:|---:|---:|
+| 635000 | 3.75e-5 | 1.875e-5 | 6.25e-6 |
+| 640000 | 7.5e-5 | 3.75e-5 | 1.25e-5 |
+| 645000 | 1.5e-4 | 7.5e-5 | 2.5e-5 |
+| 650000 | 3e-4 | 1.5e-4 | 5e-5 |
+
+`lr_piecewise_points` defaults to null. Its implementation lives in
+`models/lr_piecewise.py`; enabled runs interpolate by absolute optimizer step
+and hold the endpoint outside the specified range. Other explicit LR schedules
+are rejected in combination; module auto-scales and optimizer groups remain
+unchanged. Anchors are saved in checkpoint sidecars and the full configuration;
+resumes must retain the same option to continue the ramp. Tests cover boundaries,
+midpoints, invalid configurations, checkpoint serialization and module scaling.
+
+Scheduled using `scripts/handoff_xxl_dfm11_rewarm_635k.py`: a detached watcher
+waits for the complete 635K DCP checkpoint, preserves hardlinked immutable
+payloads under `checkpoints/preserved/dfm11_XXL_rewarm_635000`, requests scheduler
+stop, terminates only the identity-checked training process group, and resets
+the 650K training row to resume from 635K. It restarts the same persistent
+scheduler after exit. Manual stop requests abort the automatic handoff.
+This is scheduled, not yet executed as of approximately 632K.
+
+All pending `dfm11-e3-train-*` rows retain the absolute ramp and hold 3e-4 after
+650K. GAS8, BP8, clipping 1.0, dataset, eval dependencies and W&B run
+`DFM5/xxl-restart520k-20260910` are unchanged. The prior plan is saved as
+`plan.before-xxl-rewarm-635k.tsv` in the existing scheduler directory; watcher
+log is `handoff-xxl-rewarm-635k.log` there. Do not launch a second watcher.
+
+Separately, XL completed epoch 10 at step 2,877,261 with a final base LR of
+1e-5 (7.5e-5 times 1/7.5), H=5e-6, L approximately 1.667e-6.
 
 ## DFM11 XXL-Wide Cosine at 400K (2026-09-18)
 

@@ -50,6 +50,7 @@ from models.transformer import Transformer, TransformerBlock
 from models.adam_atan2 import AdamATan2
 from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics, update_auto_module_rates, windowed_cosine_lr
 from models.lr_rewarm import resolve_rewarm, rewarm_lr, rewarm_metadata
+from models.lr_piecewise import piecewise_lr, validate_lr_points
 from utils.functions import load_model_class, get_model_source_path
 from dataset_new import V1Dataset, V1DatasetConfig, V1DatasetMeta
 
@@ -85,6 +86,7 @@ class PretrainConfig(pydantic.BaseModel):
 
     lr: float
     lr_auto: bool = True
+    lr_piecewise_points: Optional[list[tuple[int, float]]] = None
     lr_rewarm_steps: int = pydantic.Field(default=0, ge=0)
     lr_rewarm_start_ratio: float = pydantic.Field(default=0.5, ge=0, le=1, allow_inf_nan=False)
     lr_rewarm_start_step: Optional[int] = pydantic.Field(default=None, ge=0)
@@ -157,6 +159,12 @@ class PretrainConfig(pydantic.BaseModel):
 
     @pydantic.model_validator(mode='after')
     def check_intervals(self):
+        if self.lr_piecewise_points is not None:
+            validate_lr_points(self.lr_piecewise_points)
+            if (self.lr_rewarm_steps or self.lr_rewarm_start_step is not None
+                or self.lr_decay_start_step is not None or self.lr_decay_end_step is not None
+                or self.lr_cooldown_checkpoint is not None or self.lr_min_ratio != 1):
+                raise ValueError('Piecewise LR cannot be combined with another LR schedule')
         if self.lr_cooldown_checkpoint is not None and (
             self.lr_rewarm_steps or self.lr_decay_start_step is not None
             or self.lr_decay_end_step is not None
@@ -499,7 +507,9 @@ def init_train(config: PretrainConfig, rank: int, world_size: int, device: Optio
 
 def update_lr(config: PretrainConfig, train_state: TrainState, cooldown_ratio: Optional[float] = None) -> float:
     # Linear warmup cosine schedule
-    if cooldown_ratio is not None:
+    if getattr(config, 'lr_piecewise_points', None) is not None:
+        lr = piecewise_lr(config.lr_piecewise_points, train_state.step)
+    elif cooldown_ratio is not None:
         lr = config.lr * cooldown_ratio
     elif config.lr_rewarm_steps:
         lr = rewarm_lr(config, train_state.step)
@@ -1161,6 +1171,8 @@ def save_checkpoint_metadata(
     }
     if config.lr_rewarm_steps:
         metadata['lr_rewarm'] = rewarm_metadata(config)
+    if config.lr_piecewise_points is not None:
+        metadata['lr_piecewise_points'] = config.lr_piecewise_points
     if resume_info is not None:
         metadata.update({
             "global_row_start_in_epoch": int(resume_info["global_row_start"]),
