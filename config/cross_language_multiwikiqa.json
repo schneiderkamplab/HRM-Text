@@ -1,0 +1,142 @@
+[
+  {
+    "dataset": "multi-wiki-qa-da",
+    "language": "da",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-da-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-en",
+    "language": "en",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-en-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-nb",
+    "language": "nb",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-no-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-nn",
+    "language": "nn",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-nn-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-sv",
+    "language": "sv",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-sv-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-is",
+    "language": "is",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-is-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-fo",
+    "language": "fo",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-fo-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-nl",
+    "language": "nl",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-nl-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-pl",
+    "language": "pl",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-pl-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-de",
+    "language": "de",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-de-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-fr",
+    "language": "fr",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-fr-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-es",
+    "language": "es",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-es-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-it",
+    "language": "it",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-it-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-pt",
+    "language": "pt_pt",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-pt-pt-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-fi",
+    "language": "fi",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-fi-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-et",
+    "language": "et",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-et-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-ca",
+    "language": "ca",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-ca-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-el",
+    "language": "el",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-el-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-ro",
+    "language": "ro",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-ro-mini"
+  },
+  {
+    "dataset": "multi-wiki-qa-uk",
+    "language": "uk",
+    "category": "reading-comprehension",
+    "metric": "f1",
+    "source": "EuroEval/multi-wiki-qa-uk-mini"
+  }
+]

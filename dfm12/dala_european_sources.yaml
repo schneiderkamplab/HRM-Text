@@ -1,0 +1,15 @@
+version: 1
+producer_root: /work/mimir/DaLA
+sources:
+  fi:
+    run: european_scale_v1
+    output: la_output/european_pilots/european_scale_v1/fi
+  ca:
+    run: european_scale_v2
+    output: la_output/european_pilots/european_scale_v2/ca
+  cs:
+    run: european_scale_v2
+    output: la_output/european_pilots/european_scale_v2/cs
+  es:
+    run: european_scale_v2
+    output: la_output/european_pilots/european_scale_v2/es

@@ -1,0 +1,370 @@
+{
+  "schema": "dfm13-fresh-nonheld-blind8-manual-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "previous_holds_unchanged": true,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "selection": "All eight supplied fresh nonheld packet candidates, seven unseen IDs and one new DHT version. No exact-hash receipt reused; assessments based on current delivered observations.",
+  "counts": {
+    "fresh_candidates_reviewed": 8,
+    "useful_supported_core": 1,
+    "useful_partial_needing_local_cleanup_or_clarification": 2,
+    "substantive_record_holds": 5
+  },
+  "interpretation": "The sample contains usable identification, attributed context and calibrated evidence-gap statements, but not eight admission-ready answers. Five have substantive source/date problems; two more need scoped cleanup. These purposively selected eight do not estimate a population-wide error rate.",
+  "verification": {
+    "packet_and_candidate_bytes_checked": true,
+    "embedded_candidates_equal_source_files": true,
+    "all_eight_cpu_rerendered": true,
+    "saved_render_counts_match": true,
+    "all_fit_4096": true,
+    "learner_prefix_matches_actual_request_after_argument_json_normalization": true,
+    "generation_only_constraints": "Generic instructions only; no case-specific answer facts hidden in cautions.",
+    "evidence_boundary": "Only supplied observations were used to assess grounding. No unseen page contents used to rescue claims."
+  },
+  "limits": [
+    "Agent review, not human or native-language gold.",
+    "No independent current legal/medical guidance supplied; defects concern the candidates' evidence and historical scope.",
+    "Rendering validity does not establish semantic validity.",
+    "Receipt does not enforce admission holds; downstream owner must consume the hash-bound findings."
+  ],
+  "rows": [
+    {
+      "id": "deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "62aecbabe27419cf57352a544b1132af4bc3a408908f0bad1f859087beae8f74",
+      "original_timestamp": "2025-04-15 10:09:28.679000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3/packet.json",
+          "sha256": "2a06924439191ca96d4522848e638e5199b669fc2cfc7becfbf8c2b5981db394"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3/candidate.json",
+          "sha256": "62aecbabe27419cf57352a544b1132af4bc3a408908f0bad1f859087beae8f74"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3/generation/actual-request.json",
+          "sha256": "599549b745afbd5704c2543aa21db7b825e9d70c3ccd597f31324aec87fd628b"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3/student-render.json",
+          "sha256": "37eaa3c1081b5401b79a7faa6bdc371f07c5d3de2229566f54b9e7c036538889"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1257,
+          "target_tokens": 696,
+          "total_tokens": 1953,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1257,
+          "shifted_masked_tokens": 1256,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "Google Play country restrictions",
+      "assessment": "hold_unsupported_workflow_and_policy",
+      "evidence_diagnosis": "The official Google support observation contains only a Play Pass availability sentence. It does not support the cited once-per-year rule, balance portability or eligibility requirements. A YouTube comment about changing payment profiles is not evidence that an Indian payment method is mandatory. The recommended new-account-plus-VPN workflow and APK alternative are absent from supplied observations; a forum anecdote does not establish reliable 2025 behavior.",
+      "correction_or_utility": "The answer is practically oriented but not grounded enough to endorse as a reliable workflow. Retain the attributed VPN anecdote only as an anecdote; obtain actual dated official country-change requirements and distinguish an installation workaround from service eligibility.",
+      "admission_authorized": false
+    },
+    {
+      "id": "3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "9b37ba85bad2113b6265c87645806d86a66a614f4a4c55d22f3b59c8c3d2afe0",
+      "original_timestamp": "2025-03-20 19:48:40.514000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a/packet.json",
+          "sha256": "4f374cd414e1065c93c0ce62ee655c49911180be2f9350448185c1cab7b3322e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a/candidate.json",
+          "sha256": "9b37ba85bad2113b6265c87645806d86a66a614f4a4c55d22f3b59c8c3d2afe0"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a/generation/actual-request.json",
+          "sha256": "6da9b03acf6e421d692bf5749d50ac3d5b493b5d6693104b82261fda256155f1"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a/student-render.json",
+          "sha256": "5b8f1cf653eeb51a57086875a3f32a1804d8802ab43931ca388e8ecff34604f9"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 2123,
+          "target_tokens": 547,
+          "total_tokens": 2670,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 2123,
+          "shifted_masked_tokens": 2122,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "EOIR-40 eligibility",
+      "assessment": "hard_hold_jurisdiction_as_eligibility_and_wrong_citation",
+      "evidence_diagnosis": "The supplied 1998 passage conditions initial jurisdiction for an already-described class of Salvadoran applicants; the answer promotes its filing deadline into the principal eligibility criterion without retaining the referenced class definition or full substantive requirements. Its motion-to-reopen claim cites the CRS excerpt about expedited removal, whereas the matching statement is in the separate Federal Register observation.",
+      "correction_or_utility": "Preserve the useful NACARA/IIRIRA relationship and distinction between proceedings, but do not present the snippets as a sufficient eligibility test. Obtain the actual qualifying-class and substantive-requirement text and cite the observed Federal Register passage correctly. This is a source-scope assessment, not legal advice or a newly supplied eligibility rule.",
+      "admission_authorized": false
+    },
+    {
+      "id": "454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "71ad50e5011bc1d269551fdb055e76b5c1ce4e5aeb577294e740688323411497",
+      "original_timestamp": "2025-03-25 04:58:41.154000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9/packet.json",
+          "sha256": "aefc1fac6092475b183126f3ed919e0c03b6eece1d767ca148b5ba6d905837b7"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9/candidate.json",
+          "sha256": "71ad50e5011bc1d269551fdb055e76b5c1ce4e5aeb577294e740688323411497"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9/generation/actual-request.json",
+          "sha256": "9e806718a98b0b15efdb26be8e7a5d757c50cfbc95c3a36e4f9165a3ab5660b4"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9/student-render.json",
+          "sha256": "65e87fcc7d5e0a0d2ce5dd0e49a6b5ceb68d78ab07e7296ae5b2ed8a64d60904"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1373,
+          "target_tokens": 745,
+          "total_tokens": 2118,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1373,
+          "shifted_masked_tokens": 1372,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "LLM parameter/context ranking",
+      "assessment": "hard_hold_wrong_historical_scope",
+      "evidence_diagnosis": "March 25, 2025 request is explicitly answered from 2025-2026 data, using 2026 listicles and later-named model variants. Total/active parameters and native/extended context are usefully distinguished, but the presented leaderboard is not established as available at the request date. Selected promotional models also do not establish a comprehensive top ranking.",
+      "correction_or_utility": "Use dated model specifications at the question date, or say these excerpts cannot provide that historical ranking. Preserve total/active and native/extended distinctions; do not relabel the task to 2026.",
+      "admission_authorized": false
+    },
+    {
+      "id": "a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "e9aedea446448b3970afc4bf744f74d5dbcfd853642c992b18bb7d527e603943",
+      "original_timestamp": "2025-04-20 05:40:38.884000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2/packet.json",
+          "sha256": "e8723975f1c5a08c725fbfc8d14fc58f6cbea2e83966dbddbcc8d01d38c0691e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2/candidate.json",
+          "sha256": "e9aedea446448b3970afc4bf744f74d5dbcfd853642c992b18bb7d527e603943"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2/generation/actual-request.json",
+          "sha256": "695fa7b1dd2b279611639f5c1f0bc82e3f644578af752e203078a666d0eb6970"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2/student-render.json",
+          "sha256": "b6ffab8e6229a289371d3f71d74ee4730869ecb6d5af5c6f48122d82e6e37f9e"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1566,
+          "target_tokens": 372,
+          "total_tokens": 1938,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1566,
+          "shifted_masked_tokens": 1565,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "Ann Altman statement identification",
+      "assessment": "useful_partial_with_sensitive_attribution_cleanup",
+      "evidence_diagnosis": "The answer correctly distinguishes the observed November 2021 statement, 2023 profile and early-2025 lawsuit instead of fabricating a 2023 tweet. However, 'there is no specific 2023 tweet' overstates a limited search, and the ending treats the user's vague 'Sam did something' as exact wording. Source titles explicitly report denial, omitted from the lawsuit summary.",
+      "correction_or_utility": "Say the supplied evidence does not identify the requested 2023 tweet, ask for wording/context if needed, and retain allegations as allegations with the reported denial. The useful partial identification is not proof the sought tweet never existed.",
+      "admission_authorized": false
+    },
+    {
+      "id": "d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "12481c2392c61bcb3f7336b7f3a78e5dca33f269cca27b1268ea6f62aaa1d18e",
+      "original_timestamp": "2025-03-18 17:04:11.053000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef/packet.json",
+          "sha256": "97d42aa24a89cebb2a7cd01447981dac07ebe2a57a074210b0a5dd6cb5c5f7e2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef/candidate.json",
+          "sha256": "12481c2392c61bcb3f7336b7f3a78e5dca33f269cca27b1268ea6f62aaa1d18e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef/generation/actual-request.json",
+          "sha256": "78993a2497c5eb1d7eff23827cfe992dd99b8441fced416717a06db551c91f98"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef/student-render.json",
+          "sha256": "46525e097443372d8f2d1ae3bc01a4054ca2d56439e71efb5e25249eb6ff2c7d"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1586,
+          "target_tokens": 361,
+          "total_tokens": 1947,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1586,
+          "shifted_masked_tokens": 1585,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "Government scientist layoffs",
+      "assessment": "hard_hold_post_request_evidence_and_scope",
+      "evidence_diagnosis": "March 18, 2025 request is answered using a Guardian URL dated March 19, 2025 and a later board-firing report; the paired NPR observation dates that board event to April 2026. The answer's no-single-total caveat is useful, but cannot cure future events being included in the historical answer. Tens of thousands of broader employees must not be mistaken for a scientist count.",
+      "correction_or_utility": "Limit to reports available at the original timestamp or disclose the gap. Separate plans from completed actions and scientists from the broader workforce; do not sum these categories.",
+      "admission_authorized": false
+    },
+    {
+      "id": "70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "4e88373f1543660c6e9f7e71a75136c0056130fc50a4767c55f838c277ab492e",
+      "original_timestamp": "2025-05-08 09:38:00.492000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801/packet.json",
+          "sha256": "c2a622fc439936ba2bd7dfb44f11b9cabc5db7c9c7917a2a09aacebf9621aa51"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801/candidate.json",
+          "sha256": "4e88373f1543660c6e9f7e71a75136c0056130fc50a4767c55f838c277ab492e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801/generation/actual-request.json",
+          "sha256": "bfd296d4afee8db7f1270c8d0b669f9ffdf9ea0657700658aeeaba256b37b000"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801/student-render.json",
+          "sha256": "347fe1a7340f0fd7bfa406cab4571e34bd11ed3398ce61ac03db2558ae71219c"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1343,
+          "target_tokens": 275,
+          "total_tokens": 1618,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1343,
+          "shifted_masked_tokens": 1342,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "Maruti diesel comparison",
+      "assessment": "partial_useful_gap_statement_with_unsupported_background",
+      "evidence_diagnosis": "The answer honestly says no model-specific weight data are supplied and attributes the lightweight claim to Quora. It then adds that Maruti significantly reduced its diesel lineup, a fleet-history claim absent from observations. The selected 2026 general car article also does not establish historical comparable diesel specifications. 'Weight ... among ... cars' may mean portfolio share rather than curb mass; the answer silently chooses mass.",
+      "correction_or_utility": "Clarify physical weight versus proportion of diesel sales/models, then request comparable model/year/variant evidence. Remove unsupported diesel-lineup history. The evidence-gap statement is useful but does not complete the comparison.",
+      "admission_authorized": false
+    },
+    {
+      "id": "5b8040e44cd200f5fbd41cdec7c836b7f38cbc76d5abdd6a12595dc979ad7b93",
+      "never_manually_seen_id": true,
+      "candidate_sha256": "c87064d4ea4fd9882022f2a3933d02751c9f820be2a226f6c6166970d7d7e698",
+      "original_timestamp": "2025-05-01 01:22:26.362000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/5b8040e44cd200f5fbd41cdec7c836b7f38cbc76d5abdd6a12595dc979ad7b93/packet.json",
+          "sha256": "53c0deb15852ccb9e45b0d63d9d37302fa0d647774d8a3668fd57d9c68c0391a"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/5b8040e44cd200f5fbd41cdec7c836b7f38cbc76d5abdd6a12595dc979ad7b93/candidate.json",
+          "sha256": "c87064d4ea4fd9882022f2a3933d02751c9f820be2a226f6c6166970d7d7e698"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/5b8040e44cd200f5fbd41cdec7c836b7f38cbc76d5abdd6a12595dc979ad7b93/generation/actual-request.json",
+          "sha256": "feae242defd5f6692fb458dd182cba1624898aafac55a675594fe7185fed39c4"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/5b8040e44cd200f5fbd41cdec7c836b7f38cbc76d5abdd6a12595dc979ad7b93/student-render.json",
+          "sha256": "878c1a6a68165c2b6dae55a6d062ba77ad9d68c0aed3a4d685c3bef02a303db2"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 2164,
+          "target_tokens": 170,
+          "total_tokens": 2334,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 2164,
+          "shifted_masked_tokens": 2163,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "Blind Guardian lyric identification",
+      "assessment": "useful_supported_identification",
+      "evidence_diagnosis": "Multiple supplied source titles identify the song and band, and the excerpts match the user's lines. The brief explanation follows the observed imagery rather than importing the joke-wiki power-scaling claims. No time-sensitive discrepancy or substantive identification failure is apparent.",
+      "correction_or_utility": "German power-metal classification is ancillary background not established by the excerpts; omit or support it for strict source-contained targets. The user supplied a lyric fragment without an explicit question, so identification is a reasonable helpful interpretation.",
+      "admission_authorized": false
+    },
+    {
+      "id": "ceffc54d13be026e40fb5e72f2c413d9b7b307cb8ba77d7357ce358dd2d65ea9",
+      "never_manually_seen_id": false,
+      "candidate_sha256": "fe449e29d36b4d944d03d939933b4f7cec336ee3b550bba52acb025b7492481d",
+      "original_timestamp": "2025-04-01 19:13:53.445000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/packets/ceffc54d13be026e40fb5e72f2c413d9b7b307cb8ba77d7357ce358dd2d65ea9/packet.json",
+          "sha256": "361a3b708d2ebff3b08cb967bb53dfe80b335a40dd0d54ef4e0079609bef21c1"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/ceffc54d13be026e40fb5e72f2c413d9b7b307cb8ba77d7357ce358dd2d65ea9/candidate.json",
+          "sha256": "fe449e29d36b4d944d03d939933b4f7cec336ee3b550bba52acb025b7492481d"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/ceffc54d13be026e40fb5e72f2c413d9b7b307cb8ba77d7357ce358dd2d65ea9/generation/actual-request.json",
+          "sha256": "7481ca67d0a3a23c455eda00bbfd2c3cb98536d703138538b35e1cbfff95b127"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/ceffc54d13be026e40fb5e72f2c413d9b7b307cb8ba77d7357ce358dd2d65ea9/student-render.json",
+          "sha256": "9ee687222048be5ba30eae5bf944542fc5989902522f1b382c971aa9591c1440"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1108,
+          "target_tokens": 370,
+          "total_tokens": 1478,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1108,
+          "shifted_masked_tokens": 1107,
+          "target_kind": "final_answer"
+        }
+      ],
+      "topic": "DHT research pipeline",
+      "assessment": "hard_hold_wrong_date_and_research_scope",
+      "evidence_diagnosis": "April 1, 2025 question is explicitly answered 'as of early 2026' using commercial 2026 summaries. The answer acknowledges no named pipeline drugs but still infers targeted-delivery side-effect benefits and refers to Phase 3 treatments without demonstrating they are DHT blockers relevant to the request date.",
+      "correction_or_utility": "Keep the named evidence gaps; do not present marketing overviews as a dated clinical pipeline. Obtain applicable study/trial evidence and distinguish DHT inhibition from other hair-loss mechanisms. This new version is assessed on its own bytes; no old hold was automatically transferred.",
+      "admission_authorized": false
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-fresh-nonheld-blind8-20261001/queue.json",
+      "sha256": "c83e7fceb51e5816308baab79953798db17efd66a62156a121472d1baa21d76f"
+    }
+  ]
+}

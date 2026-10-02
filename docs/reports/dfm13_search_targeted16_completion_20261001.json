@@ -1,0 +1,36 @@
+{
+  "schema": "dfm13-targeted16-completion-v1",
+  "date": "2026-10-01",
+  "root": "data/dfm13/search-targeted16-20261001",
+  "previous_pid": 2925504,
+  "process_exited": true,
+  "planned_queries": 16,
+  "starting_reservations": 98,
+  "final_reservations": 114,
+  "campaign_ceiling": 200,
+  "new_completed_cached_responses": 12,
+  "retrieval_failures": 4,
+  "screening_exclusions": 1,
+  "generation_review_terminal": 11,
+  "automated_outcomes": {"keep": 5, "needs_verification": 5, "reject": 1},
+  "needs_verification_reason": "All five lacked an answer citation to a supporting observed page. This does not certify their remaining claims.",
+  "rejection": "LLM ranking cited the DeepSeek page for Llama.",
+  "retrieval_exclusions": [
+    {"id_prefix": "3812a931", "reason": "document byte budget exceeded"},
+    {"id_prefix": "b6dacbac", "reason": "document byte budget exceeded"},
+    {"id_prefix": "d4fc6d00", "reason": "document byte budget exceeded"},
+    {"id_prefix": "f911a4e7", "reason": "HTTP 422"},
+    {"id_prefix": "d64649f4", "reason": "no complete relevant cached paragraphs"}
+  ],
+  "admission_authorized": false,
+  "review_scope": "Completion verification plus one source-contained spot check, not independent verification of all automated keeps.",
+  "rows": [
+    {
+      "id": "deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3",
+      "candidate_sha256": "ba26549f6aaefcb2263ee98870168c9c4f8154ab8d262efe6ebd6d876cb05aac",
+      "assessment": "hold_unsupported_workflow_despite_automated_keep",
+      "evidence_diagnosis": "Delivered Google observations cover balance and country requirements; they do not support creating a regional account through a VPN. The answer recommends that workflow and then explicitly acknowledges the supporting steps are absent. The reviewer calls it a logical workaround instead of enforcing source support. A support.google.com community thread is also not automatically an official policy statement.",
+      "admission_authorized": false
+    }
+  ]
+}

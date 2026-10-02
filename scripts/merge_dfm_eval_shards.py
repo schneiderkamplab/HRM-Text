@@ -6,10 +6,30 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import zipfile
 from collections import Counter
 from pathlib import Path
 from typing import Any
+
+try:
+    from scripts.dala_semantic import semantic_pairs
+except ModuleNotFoundError:
+    from dala_semantic import semantic_pairs
+
+
+def semantic_dala_metrics(samples, language):
+    pairs = semantic_pairs(samples, language)
+    n = len(pairs)
+    if not n:
+        raise ValueError('Empty acceptability results')
+    return {
+        'semantic_v1/macro_f1': macro_f1(pairs, ['correct', 'incorrect']),
+        'semantic_v1/mcc': mcc(pairs, ['correct', 'incorrect']),
+        'semantic_v1/accuracy': sum(t == p for t, p in pairs) / n,
+        'semantic_v1/invalid_rate': sum(p is None for _, p in pairs) / n,
+        'semantic_v1/n': float(n),
+    }
 
 
 def epoch_label(epoch: float) -> str:
@@ -167,6 +187,18 @@ def mcc(pairs: list[tuple[str, str | None]], labels: list[str]) -> float:
 
 
 def task_metrics(task: str, samples: list[dict[str, Any]]) -> dict[str, float]:
+    # Multilingual tasks retain their language-specific output namespace while
+    # using the same sample-level aggregation as the Danish benchmark.
+    if re.fullmatch(r"dala_[a-z]{2}(?:_[a-z]{2})?", task):
+        pairs = pairs_from_metadata(samples, "linguistic-acceptability", invalid_as_none=True)
+        return {
+            "linguistic-acceptability/dfm_evals_macro_f1": macro_f1(pairs, ["correct", "incorrect"]),
+            "linguistic-acceptability/dfm_evals_mcc": mcc(pairs, ["correct", "incorrect"]),
+            "linguistic-acceptability/n": float(len(pairs)),
+            **semantic_dala_metrics(samples, task.removeprefix('dala_')),
+        }
+    if re.fullmatch(r"gec_dala_[a-z]{2}(?:_[a-z]{2})?", task):
+        return task_metrics("gec_dala", samples)
     if task == "ruler_8k":
         metrics = numeric_metrics(samples, "ruler_scorer", flatten_dict=False)
         variants = sorted(
@@ -227,6 +259,7 @@ def task_metrics(task: str, samples: list[dict[str, Any]]) -> dict[str, float]:
                 "linguistic-acceptability/dfm_evals_macro_f1": macro_f1(pairs, ["correct", "incorrect"]),
                 "linguistic-acceptability/dfm_evals_mcc": mcc(pairs, ["correct", "incorrect"]),
                 "linguistic-acceptability/n": float(len(pairs)),
+                **semantic_dala_metrics(samples, 'da'),
             }
         case "generative_talemaader":
             return accuracy_from_values(samples, "model_graded_fact", partial_credit=True)

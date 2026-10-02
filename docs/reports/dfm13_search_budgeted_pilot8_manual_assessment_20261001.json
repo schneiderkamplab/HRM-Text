@@ -1,0 +1,248 @@
+{
+  "schema": "dfm13-independent-budgeted-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "scope": "Seven completed pilot answers and two v4 CPU attribution repairs; exact candidate observations and original dates, not full unseen source pages or prior reviewer labels, determine evidence support.",
+  "counts": {
+    "pilot_complete_reviewed": 7,
+    "broadly_supported": 4,
+    "source_supported_with_technical_verification_caveat": 1,
+    "needs_correction_or_evidence": 2,
+    "incomplete_not_semantically_scored": 1,
+    "v4_attribution_fixes_resolved": 2
+  },
+  "request_inspection": "All seven saved actual generation requests contain four messages. User and tool observations exactly match the candidate. Differences are a generation-only system suffix (220-word budget, citations, date/evidence constraints) and tool argument JSON serialization. No old answer or additional source body appears in these requests. This does not establish the model's internal information provenance.",
+  "limits": [
+    "Agent review, not human/native gold or blanket admission.",
+    "Saved student render totals range from 1057 to 2787; renderer was not rerun independently.",
+    "Battery scientific accuracy is not independently established merely by source agreement.",
+    "No unseen full-page contents were used to rescue missing supplied evidence."
+  ],
+  "prior_holds": "No historical hold automatically inherited or cleared. V4 resolutions apply only to the pinned new candidate bytes.",
+  "pilot": [
+    {
+      "id": "020d55a268a6b539285d5767ebd17c05ca6e29ee828c517445704a005d17ae6e",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/020d55a268a6b539285d5767ebd17c05ca6e29ee828c517445704a005d17ae6e/candidate.json",
+        "sha256": "46863fce755b8abe23a64df96db6f3811177ac71859bae90beb73379e6a31146"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/020d55a268a6b539285d5767ebd17c05ca6e29ee828c517445704a005d17ae6e/generation/actual-request.json",
+        "sha256": "1de0b9666fbee089912fe367f3e0f7523675b35ce2b2888324ca0111e1094c00"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/020d55a268a6b539285d5767ebd17c05ca6e29ee828c517445704a005d17ae6e.json",
+        "sha256": "d93e5a8f67f5e88b359bb1118422b092a11310c5e25ffb53450349028bfd3e96"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/020d55a268a6b539285d5767ebd17c05ca6e29ee828c517445704a005d17ae6e/student-render.json",
+        "sha256": "2165b16f466452beb3d592813bc7dbb55dd2362cb5424ca701b5187dc99bd33c"
+      },
+      "recorded_total_tokens": 2750,
+      "original_timestamp": "2025-04-23 12:46:16.798000",
+      "automatic_verdict": "keep",
+      "topic": "Paisius quotation source",
+      "assessment": "broadly_supported",
+      "reason": "Exact provided Pravmir passage contains Slovo 38, its heading and all six listed virtues; the second excerpt attributes the sayings to Paisius. The answer locates the requested text rather than refusing. Stable historical text poses no demonstrated 2025/2026 date conflict.",
+      "caveat": "This verifies a matching online text, not independent manuscript authorship. 'Alkanie' rendered as fasting is interpretive; hunger is the more literal gloss."
+    },
+    {
+      "id": "0bdd931b4d9ce4412a6a124d9d40dc267daa58ae6228e697ceb606ff6007707e",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/0bdd931b4d9ce4412a6a124d9d40dc267daa58ae6228e697ceb606ff6007707e/candidate.json",
+        "sha256": "f125c659455691378b07e37bc698ea65019740f86fc4b8e1aa3dfe4f74892256"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/0bdd931b4d9ce4412a6a124d9d40dc267daa58ae6228e697ceb606ff6007707e/generation/actual-request.json",
+        "sha256": "bf7455ee9938c2afd8189c6df0dfe2f2327c5ed90feb8ece6f0104becd8de42b"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/0bdd931b4d9ce4412a6a124d9d40dc267daa58ae6228e697ceb606ff6007707e.json",
+        "sha256": "acb349513272d7d23ff151d0d967df1f0fe16ad3b8ad0b20d573e71d88d34faf"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/0bdd931b4d9ce4412a6a124d9d40dc267daa58ae6228e697ceb606ff6007707e/student-render.json",
+        "sha256": "60d8124b5b40b941ed8e18c568bf35a127a951e1b3e3292ff029515ce554389c"
+      },
+      "recorded_total_tokens": 2016,
+      "original_timestamp": "2025-04-05 20:38:05.012000",
+      "automatic_verdict": "keep",
+      "topic": "Mobile battery evolution",
+      "assessment": "supported_by_extracts_with_source_quality_caveat",
+      "reason": "The NiCd/NiMH/Li-ion sequence and emerging solid-state/graphene discussion occur in the supplied ONCE text. No named post-request product or specific later event is imported.",
+      "caveat": "The answer repeats the source's absolute claim that NiMH eliminates memory effect, and its optimistic technology promises. Source fidelity is not independent technical validation. Qualify or technically verify those claims; do not certify this answer as factual gold. Excerpts do not date those research statements to 2025."
+    },
+    {
+      "id": "42e1942959b5137085cc5b78560ea1ed9a29b662fb0a4b101b0510759183e8d5",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/42e1942959b5137085cc5b78560ea1ed9a29b662fb0a4b101b0510759183e8d5/candidate.json",
+        "sha256": "b622e8422f1599945020cf0bde69bc9166b7cae6d8d7884178149d66239fe00a"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/42e1942959b5137085cc5b78560ea1ed9a29b662fb0a4b101b0510759183e8d5/generation/actual-request.json",
+        "sha256": "9dbfe5dbb70ffad20a87161def145e408d291c89c42037d453818d62abc88f8d"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/42e1942959b5137085cc5b78560ea1ed9a29b662fb0a4b101b0510759183e8d5.json",
+        "sha256": "93654a098fcf9f54a9421bd33930b8d1b17a844090654d0d1a7768367fb7f589"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/42e1942959b5137085cc5b78560ea1ed9a29b662fb0a4b101b0510759183e8d5/student-render.json",
+        "sha256": "33323467e2586e6b4abaf91a4a3436980acf7e1b44444434b0fae7c45a61e15c"
+      },
+      "recorded_total_tokens": 1478,
+      "original_timestamp": "2025-04-23 21:18:59.541000",
+      "automatic_verdict": "keep",
+      "topic": "Italian president in 2023",
+      "assessment": "broadly_supported",
+      "reason": "Supplied biography explicitly records Mattarella taking office on 3 February 2015 and reelection in 2022; the other source is explicitly a 2023 presidency article. Direct Italian answer and dates are grounded.",
+      "caveat": "No material issue identified; awkward nested citation markup is not a semantic defect."
+    },
+    {
+      "id": "64b59e0dd7f32585a72e6a48ca3597be4bb23a7e1dcbdf674cd19fc6eb9cb5a8",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/64b59e0dd7f32585a72e6a48ca3597be4bb23a7e1dcbdf674cd19fc6eb9cb5a8/candidate.json",
+        "sha256": "cfc5cf39b473a5fb173da1eb8f1380dec1dbe1be4b9922d2170033753cc07842"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/64b59e0dd7f32585a72e6a48ca3597be4bb23a7e1dcbdf674cd19fc6eb9cb5a8/generation/actual-request.json",
+        "sha256": "6bac996a18d657a67a8c5d2450deaeb497de5ba0eabb07007a0f437d5885de75"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/64b59e0dd7f32585a72e6a48ca3597be4bb23a7e1dcbdf674cd19fc6eb9cb5a8.json",
+        "sha256": "2e23b917e5c405441c0df867da1ea44a5785667fc15869f4f3669be268a44fa6"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/64b59e0dd7f32585a72e6a48ca3597be4bb23a7e1dcbdf674cd19fc6eb9cb5a8/student-render.json",
+        "sha256": "210e2d1ca12e34965588256cbc9acf2f0f1d57dbd4dd68c4179bdd75564c0070"
+      },
+      "recorded_total_tokens": 2787,
+      "original_timestamp": "2025-04-08 12:29:58.206000",
+      "automatic_verdict": "keep",
+      "topic": "DeepSeek-V3 GSM8K",
+      "assessment": "needs_correction",
+      "reason": "89.3 and the comparison values are correctly copied from the supplied Base-model table, with 8-shot identified. However, the answer presents this as the latest score without establishing latestness at 2025-04-08, and its final paragraph assigns GPT-4o/Claude comparability to DeepSeek-V3-Base although the excerpt's corresponding comparison concerns the post-trained V3 evaluation.",
+      "correction": "State the verified report result as V3-Base, GSM8K exact match, 8-shot, 89.3. Explicitly bound it to the retrieved report, not confirmed latest as of the request date. Remove the cross-model promotional comparison or correctly separate post-trained and Base results.",
+      "automatic_keep_disagreement": true
+    },
+    {
+      "id": "74f0b1aaf4f4e102dd37b0466ee2bd8b7460ddeed2779289ca219e5adae83bd1",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/74f0b1aaf4f4e102dd37b0466ee2bd8b7460ddeed2779289ca219e5adae83bd1/candidate.json",
+        "sha256": "ffc97d6bf55cc333600c2b63b304e21226511688191ee0ad81eb6e36ab3daf06"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/74f0b1aaf4f4e102dd37b0466ee2bd8b7460ddeed2779289ca219e5adae83bd1/generation/actual-request.json",
+        "sha256": "5b03bb251bedb3ca04b07f3d992c1f74d0d910bd6f2e7f056c6074454405049e"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/74f0b1aaf4f4e102dd37b0466ee2bd8b7460ddeed2779289ca219e5adae83bd1.json",
+        "sha256": "ff63333832c6b0cfdff440fd03071671c538d6222288cda7ac4d356e16879d36"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/74f0b1aaf4f4e102dd37b0466ee2bd8b7460ddeed2779289ca219e5adae83bd1/student-render.json",
+        "sha256": "c913199dfe7e83e4b2b606c684e532b5425910c670d4662b01b81c8b91572f7d"
+      },
+      "recorded_total_tokens": 1931,
+      "original_timestamp": "2025-04-14 11:27:01.997000",
+      "automatic_verdict": "keep",
+      "topic": "Takayama old town",
+      "assessment": "broadly_supported",
+      "reason": "Provided tourism excerpts identify the central historical district, Sanmachi streets, Sannomachi breweries and heritage houses. The answer gives a usable place name with matching citations and imports no later specific event.",
+      "caveat": "The hotel paragraph is unnecessary to the location question. The supplied Wanosato shuttle is station-to-hotel, not explicitly a direct old-town shuttle; omit this tangent rather than encouraging that inference. The three streets are the popular core, not the entire old town."
+    },
+    {
+      "id": "bfd8c3828443347b7aed7cc6c45fbee8bb910976b660edaa6a82e17bb6a8617e",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/bfd8c3828443347b7aed7cc6c45fbee8bb910976b660edaa6a82e17bb6a8617e/candidate.json",
+        "sha256": "bc446c28deb731e382ee3e0de5b7f2a6bdaba22b8b434893c5da03fd53923452"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/bfd8c3828443347b7aed7cc6c45fbee8bb910976b660edaa6a82e17bb6a8617e/generation/actual-request.json",
+        "sha256": "5d6750bea1e08d885ec2f853cbedec7477f688bc703364d9014438cb9abedaff"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/bfd8c3828443347b7aed7cc6c45fbee8bb910976b660edaa6a82e17bb6a8617e.json",
+        "sha256": "f7732afb9e2be0e435947c730c0d6d90ed1f0c0f7a0acf5081a98c8e8f65c5f7"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/bfd8c3828443347b7aed7cc6c45fbee8bb910976b660edaa6a82e17bb6a8617e/student-render.json",
+        "sha256": "688a6668411218e1b4ead38c441f0189faa4053e6f6620e61f07c625f53875c4"
+      },
+      "recorded_total_tokens": 1057,
+      "original_timestamp": "2025-03-24 05:14:28.588000",
+      "automatic_verdict": "needs_verification",
+      "topic": "2020 US election",
+      "assessment": "insufficient_supplied_evidence",
+      "reason": "The supplied FEC extraction contains a 270-vote threshold and disconnected candidate/address fragments, not the winner's totals. The UCSB excerpt contains navigation and a Biden-Harris image, not a results table. These observations do not support the answer's attributed certification and congressional-date details; it also supplies no citation.",
+      "correction": "Select the actual result row and any necessary certification evidence before regenerating. Do not merely append a URL to the existing answer. This is an evidence-selection failure, not a claim that the named winner is wrong. The precise congressional completion date cannot be certified from these excerpts.",
+      "automatic_hold_substantive": true
+    },
+    {
+      "id": "efa6c961529d3bb9cbe8a26dd838b44d5b7dcc6722e9d896537a8bf9238fc284",
+      "candidate": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/efa6c961529d3bb9cbe8a26dd838b44d5b7dcc6722e9d896537a8bf9238fc284/candidate.json",
+        "sha256": "343109a1883e80b98048e75a8e6182880e3491746a7d53a529e7b4a061cc0626"
+      },
+      "actual_request": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/efa6c961529d3bb9cbe8a26dd838b44d5b7dcc6722e9d896537a8bf9238fc284/generation/actual-request.json",
+        "sha256": "06db172dfbf87c4e39d6a5afbbffa565622f58ea5c3a679352bed47bfa6720a4"
+      },
+      "evidence": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/metadata/evidence/efa6c961529d3bb9cbe8a26dd838b44d5b7dcc6722e9d896537a8bf9238fc284.json",
+        "sha256": "a9170043fdecdcdba7a259ff297f9577326b000e191ea5e493176bef75935021"
+      },
+      "student_render": {
+        "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/records/efa6c961529d3bb9cbe8a26dd838b44d5b7dcc6722e9d896537a8bf9238fc284/student-render.json",
+        "sha256": "84e303f28bd01efeb0f9d0903e9074b1694247e28907513eaea5fa100ee359f0"
+      },
+      "recorded_total_tokens": 2513,
+      "original_timestamp": "2025-04-12 23:38:38.959000",
+      "automatic_verdict": "keep",
+      "topic": "MLB baseball stitches",
+      "assessment": "broadly_supported",
+      "reason": "The exact Wikipedia excerpt states 108 double/216 individual stitches. The museum excerpt states red waxed thread, the 1934 standard and prior league colors. Answer cites both and avoids using the irrelevant 2026 price passage for its April 2025 question.",
+      "caveat": "No material answer-level issue identified. Retrieved 2026 material is present but not used to make a time-sensitive claim."
+    }
+  ],
+  "v4": [
+    {
+      "id": "918bee08b956fc5482ff0a0ab060192d933deb86714a0027dc3ae05f36b21a76",
+      "candidate": {
+        "path": "data/dfm13/search-heldout-cpu-corrections-20261001-v4/918bee08b956fc5482ff0a0ab060192d933deb86714a0027dc3ae05f36b21a76/candidate.json",
+        "sha256": "c6ed034a43e9da0d93d999781ef41644260a1cbec1c332a4e9e683dab4253763"
+      },
+      "assessment": "prior_localized_attribution_issue_resolved",
+      "reason": "The unsupported named forum proposals are removed and replaced by a neutral language-specific-evidence statement. Remaining claims match the supplied discussion excerpts; this remains a qualified premise correction rather than a full causal explanation.",
+      "admission_authorized": false
+    },
+    {
+      "id": "814848737e6de1979da750bd11b469fb3e47293b8bbf3d953398d41394020000",
+      "candidate": {
+        "path": "data/dfm13/search-heldout-cpu-corrections-20261001-v4/814848737e6de1979da750bd11b469fb3e47293b8bbf3d953398d41394020000/candidate.json",
+        "sha256": "bb37302d1cd9a2dfe09deb2fb299bb8dee5809b7385223881cfc5a9e1f6b0735"
+      },
+      "assessment": "prior_localized_attribution_issue_resolved",
+      "reason": "The closing source attribution now names only integration and suspension, both present in the supplied excerpts. The ten creative clues remain appropriate to the explicitly imaginative request and need not each be retrieved.",
+      "admission_authorized": false
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/manifest.json",
+      "sha256": "3d1924eebf28f28d3f47f8151801a3fa00fb2c4f8976a60f01f52bb49ffecef5"
+    },
+    {
+      "path": "data/dfm13/search-budgeted-trajectory-pilot8-20261001/finished.json",
+      "sha256": "d8db211a67a18270f263b1d4f650b623769d39e39c6ef9572187e16789deb3df"
+    },
+    {
+      "path": "data/dfm13/search-heldout-cpu-corrections-20261001-v4/queue.json",
+      "sha256": "0ad733985627c29febda803dfe6e218e451c7fd6bad0eaea1047c2c227ccd35d"
+    }
+  ]
+}

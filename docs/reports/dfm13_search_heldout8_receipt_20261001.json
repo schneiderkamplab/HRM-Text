@@ -1,0 +1,20 @@
+{
+  "schema": "independent-manual-assessment-v1",
+  "queue": "data/dfm13/search-manual-heldout-20261001-v2/queue.json",
+  "queue_sha256": "74c62316be880b132579e52d0ae5d273a4fe37d28a10a89ad1b7ff76671534a8",
+  "method": "Manual inspection of all eight packet answers, original timestamps, pages and actual tool observations; no model verdicts used, no model/GPU/paid calls.",
+  "sample_size": 8,
+  "ready_without_correction_or_verification": 0,
+  "admission_authorized": false,
+  "cases": [
+    {"id_prefix": "118fd78c8659", "finding": "March2025 question gets gratuitous2026 trend framing from later material.", "correction": "Give five concrete date-neutral content ideas or obtain contemporaneous trend evidence; no blanket refusal needed."},
+    {"id_prefix": "814848737e6d", "finding": "Useful ten-item crossword response cites nifunifol.com absent from actual tool results; difficult-word requirement only partly met.", "correction": "Use retrieved FOL material and improve term specificity. User explicitly allows imagined plausible textbook concepts; do not require access to their exact textbook."},
+    {"id_prefix": "889a92132779", "finding": "All three retrieved results are security challenges, not substantive evidence for txtdari cultural claims.", "correction": "Do not treat blocked pages as support. Narrow to qualified interpretation or obtain relevant evidence."},
+    {"id_prefix": "918bee08b956", "finding": "Speculative forum explanations become causal assertions; retrieved StackExchange text explicitly questions morphology/syntax complexity compensation.", "correction": "Preserve disagreement and distinguish proposed mechanisms from established explanations; retain useful non-universal-trend qualification."},
+    {"id_prefix": "bcb1803346d2", "finding": "Several documented troubleshooting options are useful; terminal debugging claim lacks supplied support and raising timeout can worsen perceived blocking.", "correction": "Separate slow-download recovery from bounded-wait diagnosis; verify debug invocation/output destination before instructing user."},
+    {"id_prefix": "d4fc6d003586", "finding": "Retrieval queried Cross Creek with unsupported Hurston authorship; final nonanswer repeats that attribution.", "correction": "Resolve book/author identity before chronology research. Lack of relevant evidence justifies uncertainty, not invented authorship."},
+    {"id_prefix": "e59135682cb5", "finding": "Current Cisco catalogue with2026 content used for April2025 request; historical availability of listed models/promotions unverified.", "correction": "Date-bind product availability and licenses; this is not proof every listed model is incorrect."},
+    {"id_prefix": "ea1b1cddb1eb", "finding": "Answer cites rmsandu.net and AWS pages absent from actual tool observations; supplied pool instead includes an irrelevant2026 LLM paper.", "correction": "Re-ground SDXL overfitting/prior-preservation claims in relevant cached evidence; do not equate plausible technical prose with supported trajectory."}
+  ],
+  "scope_limit": "All eight have specific repair or verification needs, not eight proven wholly false answers. No corpus-wide rate inferred."
+}

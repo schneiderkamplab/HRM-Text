@@ -150,6 +150,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--entity", default=ENTITY)
     parser.add_argument("--project", default=PROJECT)
     parser.add_argument("--name", default=WORKSPACE_NAME)
+    parser.add_argument("--population-manifest", type=Path)
+    parser.add_argument("--euroeval-registry", type=Path)
     parser.add_argument(
         "--manifest",
         type=Path,
@@ -264,6 +266,13 @@ def main() -> None:
     danish.extend(DANISH_EUROEVAL_METRICS)
     english = [*ENGLISH_METRICS, *ENGLISH_EUROEVAL_METRICS]
     math_code = [*MATH_CODE_METRICS, *MATH_CODE_EUROEVAL_METRICS]
+    multilingual = []
+    if args.population_manifest:
+        if not args.euroeval_registry:
+            raise ValueError('--population-manifest requires --euroeval-registry')
+        from multilingual_workspace_panels import panels
+        english_extra, multilingual = panels(args.population_manifest, args.euroeval_registry)
+        english = [*english_extra, *english]
     workspace = ws.Workspace(
         entity=args.entity,
         project=args.project,
@@ -274,6 +283,7 @@ def main() -> None:
             eval_section("Danish Headline Metrics", danish, headline_average_metrics),
             eval_section("English Headline Metrics", english, headline_average_metrics),
             eval_section("Math & Code Headline Metrics", math_code, headline_average_metrics),
+            *([eval_section("Multilingual Headline Metrics", multilingual, {})] if multilingual else []),
             training_section(),
         ],
         settings=ws.WorkspaceSettings(
@@ -318,6 +328,7 @@ def main() -> None:
             "Danish Headline Metrics": danish,
             "English Headline Metrics": english,
             "Math & Code Headline Metrics": math_code,
+            **({"Multilingual Headline Metrics": multilingual} if multilingual else {}),
             "Training Metrics & Params": TRAINING_METRICS,
         },
         "headline_average_metrics": headline_average_metrics,

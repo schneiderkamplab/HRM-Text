@@ -1,0 +1,79 @@
+{
+  "version": "dfm13-user-authorized-automated-release-v1",
+  "time": 1790851423.378909,
+  "user_release_authorized": true,
+  "authorization": "User explicitly authorized select/export/upload replacing existing unaudited repositories and integrate DFM13; accepted minus known holds and unresolved rows, no manual per-row requirement.",
+  "quality_certified": false,
+  "manual_per_row_verified": false,
+  "diagnostic100_merged": false,
+  "exclude_all_current_holds": true,
+  "total": 199707,
+  "selections": [
+    {
+      "readiness": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/original-readiness.json",
+      "selected": 155883,
+      "ledger": "/work/mimir/HRM-Text/logs/arena_audit/20261001-bulk205242-reasonfirst-thinking-v3/ledger.sqlite",
+      "selection": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/original-selection.json"
+    },
+    {
+      "readiness": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/recovered-readiness.json",
+      "selected": 1773,
+      "ledger": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "selection": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/recovered-selection.json"
+    },
+    {
+      "readiness": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/repaired-readiness.json",
+      "selected": 16571,
+      "ledger": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "selection": "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/repaired-selection.json"
+    },
+    {
+      "readiness": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/original-readiness.json",
+      "selected": 21629,
+      "ledger": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-v1/ledger.sqlite",
+      "selection": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/original-selection.json"
+    },
+    {
+      "readiness": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/recovered-readiness.json",
+      "selected": 483,
+      "ledger": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/ledger.sqlite",
+      "selection": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/recovered-selection.json"
+    },
+    {
+      "readiness": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/repaired-unheld-readiness.json",
+      "selected": 3368,
+      "ledger": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/ledger.sqlite",
+      "selection": "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/repaired-unheld-selection.json"
+    }
+  ],
+  "pins": {
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/original-readiness.json": "ef6e32fa43c1491dbbd0f15f686f7ab5dfe6a518c9827c2b8cd45a16f0c2ac3f",
+    "/work/mimir/HRM-Text/docs/reports/dfm13_bulk_repair_independent_holds_20261001.json": "fb20769231f8b61cc43ab2aba85ab85398a2f321e4f6fbf3fc9ca0514b04836b",
+    "/work/mimir/HRM-Text/docs/reports/dfm13_bulk_repair_sample_assessment_20261001.md": "a9cb67d50dfe1b101486921517d6b4d6d760a69170842d76d4da4660b50fea1e",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/original-selection.json": "9074489c8efec0fe0a50964f0883fad4063591cc909ce31b74057d23060d2c8f",
+    "/work/mimir/HRM-Text/scripts/dfm13_arena_export_readiness.py": "8399d706d39f837dd96d2756a4b04e9b06e1b8322a9af2a1bae8097115dff9b4",
+    "/work/mimir/HRM-Text/tests/test_dfm13_arena_export_readiness.py": "2ee3b4a740c4aee7a86822b974aeca1492542cabea24e127a34ce4729ac7d99c",
+    "/work/mimir/HRM-Text/docs/reports/dfm13_original_keep_manual10_20261001.md": "31da3fa4455927722beb6c0e43fa25986994fbd2a5eda79b7f612dda8d561c45",
+    "/work/mimir/HRM-Text/docs/reports/dfm13_next_repair_spotcheck_20261001.md": "bc568facfc47d92dd0d3ce91aed1c032b55231df5d628f8cdeff7932e9b76f12",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/recovered-readiness.json": "7edb4419fdb8a85c1c81eec1e1da560309f801fbc996e3e3d7f3ee634570b589",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/recovered-selection.json": "1475ea542ffb4e5741828377fe87c6a25eff116321e0433e770078602432009d",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/repaired-readiness.json": "e4e4fb1591158c6edcfba44960210ebf3cafff82aab54a48f041fc11d6c7202b",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/terminal-filtered-readiness-v1/repaired-selection.json": "e3c7fcbcb24a8e17a15169d2895ce73b5a825f1ef602ff236db65e12d2549328",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/original-readiness.json": "b2c94195098749e5f0a0bbbb958d8f61b9c16a225c37dbd268c2a80f1ced5f19",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/original-selection.json": "4dc407e71b3b8e2509c1bf16ab1b44e99d6cad7ea8dcfa90cd9008cd63235c64",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/recovered-readiness.json": "4898c5054717792eba1ee39f4b0613dd0f49050ba813bb288a327c1cace4f123",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/recovered-selection.json": "e5f80e1e7ded40d04f956cbf64d257669b44c82104d7de7745218a874bc40de0",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/repaired-unheld-readiness.json": "3f9e53862b481bf6706de6cb059ccf552fd0e56a6889def7556cb943c1fc8e97",
+    "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/terminal-readiness-snapshot-v1/repaired-unheld-selection.json": "e146d10982edb5deb4149b9c27cc39e158d07f39008be01dc60129ae6406558c",
+    "/work/mimir/HRM-Text/scripts/dfm13_arena_authorized_release.py": "35aa75bfabf13147c22623fb99fb85a39d376dc9c6726d80731d3f0536f91f52",
+    "/work/mimir/HRM-Text/tests/test_dfm13_arena_authorized_release.py": "e78dc404baf7aab4a3eb49dd0d2f13be322a1610805d2125424653ffb33c5c06"
+  },
+  "labels": [
+    "automated_audit_keep",
+    "recovered_unchanged_keep",
+    "repaired_independent_reaudit_keep"
+  ],
+  "export_executed": false,
+  "upload_executed": false,
+  "integration_executed": false
+}

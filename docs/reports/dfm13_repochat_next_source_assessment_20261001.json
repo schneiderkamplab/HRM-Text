@@ -1,0 +1,1919 @@
+{
+  "version": 1,
+  "scope": "Manual CPU-only prompt/source eligibility, not answer correctness, license clearance, admission or permission to release all remaining tasks.",
+  "root": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1",
+  "ready_sha256": "32d7ea1c14ad5fcdb70d636f2f0b715001ed2c3ab06ad1b6d002c64eb606d460",
+  "selection_sha256": "bbc071cd789bf9188dc8198ba6665d3efd5a7812eb582c44e6f9e07672ebec39",
+  "manual_decisions_sha256": "31928fb89a57d281b54116da0df2dd68319d67839fcddd63aab380466a41bcc7",
+  "counts": {
+    "eligible": 74,
+    "held_scope": 3,
+    "held_evidence": 3,
+    "held_clarification": 1
+  },
+  "release_remaining": false,
+  "admission": false,
+  "generated_answers_reviewed": false,
+  "records": [
+    {
+      "selection_index": 8,
+      "id": "b18c77c842a470712be4123124b71eeb5419f75a3347df3e84c1c3403ed21940",
+      "query": "Explain how does mllm backbone of this model work",
+      "repository": "Tencent/HunyuanVideo",
+      "source_index": 1912,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Descriptive MLLM text-encoder explanation; distinguish it from the diffusion backbone and attribute comparative claims to the authors.",
+      "commit": "e748c73ac064728bf6bd15b1cdb8161e55a4f331",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Tencent--HunyuanVideo/snapshot.json",
+      "snapshot_sha256": "f68e4f0b9713e7d4c2e494c065fe36f604d84b18a540578eab1fdd3c84e8e671",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Tencent--HunyuanVideo/files/README.md",
+          "sha256": "fcc29022b5d80583e2f4b3b4f09145c4d65c4e7bf63bd4006ba367ea4d470427"
+        }
+      ]
+    },
+    {
+      "selection_index": 9,
+      "id": "9ee8ac3930641f2f02f485fe7ba6ebe948e4209d80f232c9148cfffff69e91a6",
+      "query": "What's the architecture of this repo?",
+      "repository": "agnaistic/agnai",
+      "source_index": 3054,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Architecture overview supported by project documentation and package manifest; avoid pretending a full architecture audit.",
+      "commit": "fccee00f5f7628d150760c787c4be87e6b1a652c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/agnaistic--agnai/snapshot.json",
+      "snapshot_sha256": "7ec96ef10b6aa418be116d940957c5b3c7e1b1860cdbc3a3f43640a29bb7fa56",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/agnaistic--agnai/files/README.md",
+          "sha256": "a7a4a0765fe476f0c06a4a587c88a0dd44aa696dce95d99f97f7a8e7c12f0324"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/agnaistic--agnai/files/package.json",
+          "sha256": "9e89b558d0e3c5de19121c49c811928b3c07536cb171d92c97c9cf3834f25e30"
+        }
+      ]
+    },
+    {
+      "selection_index": 10,
+      "id": "22a16cd68850d6d48f9d905e7dbfcf77405c4281724eecea65ff637ed1169e31",
+      "query": "explain what files are responsible for socket generation",
+      "repository": "rockharshitmaurya/OneCode",
+      "source_index": 358,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Socket setup is directly present on server and client.",
+      "commit": "23619ab35e583a5e08ae2a2b161e86472535dc8f",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/rockharshitmaurya--OneCode/snapshot.json",
+      "snapshot_sha256": "ca1d37bb5d0b91388e0750e78911d9c3f82fc8095a38d69eb3b58b42a3fe66f8",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/rockharshitmaurya--OneCode/files/server.js",
+          "sha256": "911d44984bb09362a56a5b70e3783c56f8f16314ad832c851daa9f7958009f0f"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/rockharshitmaurya--OneCode/files/src/socket.js",
+          "sha256": "e0f449e7b202d9565bac6fc4e7ba011f79a60ffb24185353a625dbcd5202c33c"
+        }
+      ]
+    },
+    {
+      "selection_index": 11,
+      "id": "316a2f2e2e5a2fff634d45fcccce2dad42a405a80cf75141e97175addde6bd66",
+      "query": "How does Angr simulate inspected program?",
+      "repository": "angr/angr",
+      "source_index": 3776,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Source-reading explanation of symbolic execution and simulation manager; no binary execution required.",
+      "commit": "cd93553325c7e8a45ab1ac5b8b697b8572917437",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/angr--angr/snapshot.json",
+      "snapshot_sha256": "7294f22e4cac38414599565a84bb841ebfe64fcb0203070892431aecd66bda21",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/angr--angr/files/README.md",
+          "sha256": "fb2cc79a308bd478c3420db0bb54d38df5c9f4c1c1db1405515849a50b1ba4a4"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/angr--angr/files/angr/sim_manager.py",
+          "sha256": "c1da754b62cce2ee48a2510adce0a7cc7dae4eda87418fbf1c8388f858dd275a"
+        }
+      ]
+    },
+    {
+      "selection_index": 12,
+      "id": "72226c21b45b132907fcbc127cb90d5305d9864de7c17887b91cc2b4f5fa657a",
+      "query": "give me an overview of this repo",
+      "repository": "drummyfish/OpenglSE",
+      "source_index": 1166,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Overview of the single-header OpenGL engine and implemented versus TODO features is locally supported.",
+      "commit": "7f5b887a9dc19dfcff679a45b981bcecab0931e1",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/drummyfish--OpenglSE/snapshot.json",
+      "snapshot_sha256": "a9d1ad410082efc5b442ffd3422bb8ffb7eec76f262baa835efffe4d64f49302",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/drummyfish--OpenglSE/files/readme.md",
+          "sha256": "0b71f3a7f521fc229b1e2dc1dc5a7c1ff7c03417307192485c4edeadb01478ea"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/drummyfish--OpenglSE/files/openglse.hpp",
+          "sha256": "bda03fbf9090598b142ca7f01361ed1732512d4c08dbe201f1d5edacaf218d56"
+        }
+      ]
+    },
+    {
+      "selection_index": 13,
+      "id": "64d42472023c5d318a6161fb04e9f3f9954d547687114cf0a86a45f08b8e8954",
+      "query": "which lib used to process  MPC files",
+      "repository": "xhongc/music-tag-web",
+      "source_index": 3808,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Musepack wrapper and mutagen.musepack import directly answer the dependency question.",
+      "commit": "68461af83217cbd0c9ab1fcb4c0cd7ca3a791023",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xhongc--music-tag-web/snapshot.json",
+      "snapshot_sha256": "39d9c4bd9151e647b81ff525fb10441ebf6de7a7e8d73404fffa5a66baa968d9",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xhongc--music-tag-web/files/component/music_tag/apev2.py",
+          "sha256": "658cee867f4c4f0bef6ae2aef873f019ca74a78be7249586069195c9d36b9eb8"
+        }
+      ]
+    },
+    {
+      "selection_index": 14,
+      "id": "74b8337e490677baa61e3acc0f8a3005bde51abe3d48412046273e67cf070463",
+      "query": "How does rendering work?",
+      "repository": "DioxusLabs/dioxus",
+      "source_index": 2761,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Renderer architecture documentation supports a bounded conceptual explanation, not exhaustive platform guarantees.",
+      "commit": "b2ed8c328bff51ea5d4e42225a3d1ef7675bad2c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/DioxusLabs--dioxus/snapshot.json",
+      "snapshot_sha256": "565275d802758ba9f75bfdc25c998150bc3cc56aeb818c87acc3e95e0c760e72",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/DioxusLabs--dioxus/files/notes/architecture/06-RENDERERS.md",
+          "sha256": "6ed631562f5bc0d24c538afb8c551998eb07502b81ab1f64a28e376d5cc75555"
+        }
+      ]
+    },
+    {
+      "selection_index": 15,
+      "id": "76ce0fda8823886154bb6ce69d1093cb13f82256b4ef48f105521f6fcd925792",
+      "query": "What can I do with this repo?",
+      "repository": "microsoft/TinyTroupe",
+      "source_index": 1537,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Documented experimental persona simulation capabilities; no claim of measured real-world validity.",
+      "commit": "a6244b358a1fe1c71bf751f7ba0f8dfa368ec5a4",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/microsoft--TinyTroupe/snapshot.json",
+      "snapshot_sha256": "3cd6d26a55623d3140792fe1720e9e049196cbbb513192804290845a22cb93d7",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/microsoft--TinyTroupe/files/README.md",
+          "sha256": "415914aa46871b10e3665820920882d1988c529380703d6f49e8983f30d42c77"
+        }
+      ]
+    },
+    {
+      "selection_index": 16,
+      "id": "fa5d2159e2439f900ccd8e4d1dea0b6f3ec0bf5e60f117bf8af02823c0e25f97",
+      "query": "what GOF patterns are used there?",
+      "repository": "Mihail-mm/Cash-Machine",
+      "source_index": 475,
+      "winner": "model_b",
+      "status": "held_scope",
+      "reason": "GOF-pattern inventory requires interpretive architectural classification. Provider factories exist, but a DI singleton registration alone is not proof of the GOF Singleton pattern; defer from this simple descriptive wave.",
+      "commit": "ea1240b50d8507a88bc0ad42f2db8d2f77342094",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Mihail-mm--Cash-Machine/snapshot.json",
+      "snapshot_sha256": "1d9990281e32fa0fc25db9a006cda7151120a2eba0959327038697180062c5e1",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Mihail-mm--Cash-Machine/files/README.md",
+          "sha256": "4d53cc5ac243928ce5dc1e11f00a2d6ed5831fa76ac40bd95f9e37b27b368e61"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Mihail-mm--Cash-Machine/files/ConsolePresentation/IScenarioProvider.cs",
+          "sha256": "d4664c3511d73fc025c5030ad47fc036f36235d867ae6463aefa015c48611d6b"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Mihail-mm--Cash-Machine/files/ConsolePresentation/Scenarios/LoginUser/LoginUserScenarioProvider.cs",
+          "sha256": "1be90a448e2b614373f8c3260c96155ddae99271e8a3b2234fdc6eae1ced380b"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Mihail-mm--Cash-Machine/files/DataAccess/Extensions/ServiceCollectionExtensions.cs",
+          "sha256": "8f31463346ec56c016171b172c4c3e0fc9a8451377473b3c90c7da8552e2257d"
+        }
+      ]
+    },
+    {
+      "selection_index": 17,
+      "id": "35b42286af7e6a972e5cb8f9b4191ccf6a7dd29e8c0dbc7f0fd8b3b1dd859764",
+      "query": "how is transactional outbox implemented in this project?",
+      "repository": "dotnet/eShop",
+      "source_index": 761,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Integration event log and catalog transaction interfaces support an outbox explanation; reviewer must inspect actual publish/commit ordering, not promise exactly-once delivery.",
+      "commit": "b4a40872005d4bb29e5b1fa1ff7e244143d39215",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/dotnet--eShop/snapshot.json",
+      "snapshot_sha256": "bf7d965f2493eb69d281e6a437f43c0c6b4d4be4d1ed60ec3dd890bd8167c0cc",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/dotnet--eShop/files/src/Catalog.API/IntegrationEvents/ICatalogIntegrationEventService.cs",
+          "sha256": "6edde13290fd1971136fba97fbc0208dc2b59b55182f37cb1ae2d5f0aef05a57"
+        }
+      ]
+    },
+    {
+      "selection_index": 18,
+      "id": "e8ed5642d5ccbfa59817ac0365fe5f13618313c28f391244fe1b4380a838068e",
+      "query": "how does the /symbols slash command work?",
+      "repository": "zed-industries/zed",
+      "source_index": 1779,
+      "winner": "model_a",
+      "status": "held_evidence",
+      "reason": "Requested /symbols slash-command implementation was not found in the current pinned Zed tree. A symbols XML context tag is not that implementation; historical behavior must not be invented.",
+      "commit": "74c134a3c12418cc095122fff938ef1c2504ae06",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/zed-industries--zed/snapshot.json",
+      "snapshot_sha256": "5fddc979b448b583992f1a29954b3a73f5f14a34ce05e96a944747bea6e3745d",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/zed-industries--zed/files/crates/agent/src/thread.rs",
+          "sha256": "09408817bfd9da720bd68ca4184c1a7da7c53bf849ce3378ef7fe508aa3cf2a9"
+        }
+      ]
+    },
+    {
+      "selection_index": 19,
+      "id": "ae49307ff9d6853e9b3e0f72257d13358e18ffd9d239b76c927c44311611e069",
+      "query": "What neural network models does this repository use?",
+      "repository": "eloialonso/diamond",
+      "source_index": 1481,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Actual actor-critic, reward/end and diffusion denoiser modules identify model families.",
+      "commit": "5bcd1599755b4f2fae8e5e079e02f0728e174965",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/eloialonso--diamond/snapshot.json",
+      "snapshot_sha256": "7708ed82403804e75f6025b143f263cc2975bdb18873bde08a996f87560da808",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/eloialonso--diamond/files/src/models/actor_critic.py",
+          "sha256": "16f5a659e44a4754e7ebfda346a4b8b63c782d95ff604028341e5e8fe84726f2"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/eloialonso--diamond/files/src/models/rew_end_model.py",
+          "sha256": "122698677f939c4cafb0bb760323a3ada0f94702972250f6245a9c0edc874a9c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/eloialonso--diamond/files/src/models/diffusion/denoiser.py",
+          "sha256": "6dc645ec0789575a9cdf57a8f0156418974f2831b9ed1eb35a4249536b26b0dd"
+        }
+      ]
+    },
+    {
+      "selection_index": 20,
+      "id": "9845f37fea350fff37189e2bcfcf072aafada4189ba8f820f5c14880f74ee57f",
+      "query": "what does this package do",
+      "repository": "yux1991/PyRHEED",
+      "source_index": 1602,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README directly describes RHEED analysis and simulation.",
+      "commit": "b8b71d535f7d3af5aa837dfde39655bdc4cdd1a0",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yux1991--PyRHEED/snapshot.json",
+      "snapshot_sha256": "8fc89244fb8d33ae3316545009b5f13f7a6eb21197496df40c4d13aa12a71c7a",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yux1991--PyRHEED/files/README.md",
+          "sha256": "078bfc9c5bc50ff37076ac96bef4bdb93edaa2f217e200ad67990a33d14bb83b"
+        }
+      ]
+    },
+    {
+      "selection_index": 21,
+      "id": "e9301f7d8b5d2c7b51b6b0271d417b2f1b8ea39a7e8fde86f828362dc55ac0f1",
+      "query": "What information about the current wi-fi connection is this program able to pull and how does it do it?",
+      "repository": "VREMSoftwareDevelopment/WiFiAnalyzer",
+      "source_index": 2627,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Android WiFiInfo access and connection view expose the inspected information; retain platform/permission caveats.",
+      "commit": "3a79bee3242a09047ade0236f16d3ceb1ab7b0a7",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/VREMSoftwareDevelopment--WiFiAnalyzer/snapshot.json",
+      "snapshot_sha256": "de5449c72f102c73f320f929afdb9f4a3957d84347af0e19cb77bbf1d9f8fdb4",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/VREMSoftwareDevelopment--WiFiAnalyzer/files/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/manager/WiFiManagerWrapper.kt",
+          "sha256": "248ec9b3c17e4e25eb517a5a14385c477aab17d60a1d0015c8188e2cc197b586"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/VREMSoftwareDevelopment--WiFiAnalyzer/files/app/src/main/kotlin/com/vrem/wifianalyzer/wifi/accesspoint/ConnectionView.kt",
+          "sha256": "a45a542d28af85c74ef5fc5e0a634232e45ce5c1362a73ee322ab4331a3b9370"
+        }
+      ]
+    },
+    {
+      "selection_index": 22,
+      "id": "3efbe5275e94bce3efaba3735cf63afc8307566b326cd5f69639f739457da7dc",
+      "query": "What it is based on? Bind9 dnsmasq or something else?",
+      "repository": "TechnitiumSoftware/DnsServer",
+      "source_index": 2370,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "C#/.NET and TechnitiumLibrary sources support explaining the implementation rather than assuming a Bind/dnsmasq wrapper.",
+      "commit": "4323993c2dd6cbe828d2fd3b239c401a526f58fc",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/TechnitiumSoftware--DnsServer/snapshot.json",
+      "snapshot_sha256": "5f6b2149a0923e6277c8e6abf756330010d821e238df09db359333f2734864f6",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/TechnitiumSoftware--DnsServer/files/README.md",
+          "sha256": "bc042cb4c9bfcf2fcd031291876fb148136e0c3839b17b3ff53ebdef6c6f403d"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/TechnitiumSoftware--DnsServer/files/DnsServerCore.HttpApi/DnsServerCore.HttpApi.csproj",
+          "sha256": "3c378c252180c4bb8ce5ae3d810b8c9c67c89306932e448e43e4ac7d2069e5ea"
+        }
+      ]
+    },
+    {
+      "selection_index": 23,
+      "id": "a435d9ef56ddd2cf894d19fbd5dff1cb0b807bd3296e801f29dad88a7ae11575",
+      "query": "What does this API allow in terms of inputs and outputs for the AI?",
+      "repository": "vedalai/neuro-game-sdk",
+      "source_index": 971,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Pinned API documentation distinguishes context, action registration/requests and results. Do not invent direct sensory streams or capabilities beyond the protocol.",
+      "commit": "0cad33ac692f6cc90d36747fea9bbc53ca34b97a",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/vedalai--neuro-game-sdk/snapshot.json",
+      "snapshot_sha256": "baaf14d8fdf13d1f65e5378863f1a7dd093b53642a6f63c37b0f20171d034129",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/vedalai--neuro-game-sdk/files/API/README.md",
+          "sha256": "3d5a61062bfbb93752a52ec42fd95a5372b85803dbc0f7d51baec87a1cc8f74f"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/vedalai--neuro-game-sdk/files/CHANGELOG.md",
+          "sha256": "86d33bbf77d09eaa26ee36f81a933f2a08e6854b0764e4d0d2630fd8138bf018"
+        }
+      ]
+    },
+    {
+      "selection_index": 24,
+      "id": "22446aa523afebfba947bf573e6f1d53da604564c1f53aa972631d745bf4daa7",
+      "query": "what language model does this project use?",
+      "repository": "littlecow-moo/cowai",
+      "source_index": 1303,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Gemini platform configuration supplies actual model identifiers; state supported/configured choices rather than one eternal model.",
+      "commit": "2e7a79004eb613ab9b7b6efb28097213d14033f1",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/littlecow-moo--cowai/snapshot.json",
+      "snapshot_sha256": "a717ca8bfb761dc6c193cfdcd1e1ac12d883ed4ec4bd21cd00b488b831031885",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/littlecow-moo--cowai/files/src/platforms/gemini.ts",
+          "sha256": "bfe89dc6fb3527b07990acc9f7c9d0750380e1fab79dc2e014b2f6cb1ab12eab"
+        }
+      ]
+    },
+    {
+      "selection_index": 25,
+      "id": "afcf74f81603909542d191ea2ffb1a6021163713ea563f88cf916b4ee19cf84b",
+      "query": "which LLM does this use specifically",
+      "repository": "jina-ai/node-DeepResearch",
+      "source_index": 3409,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Model settings are configuration-dependent, with multiple roles/defaults; no unsupported single-model assertion.",
+      "commit": "fd323b521a51264d497bec333bfb997da1bf3210",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/jina-ai--node-DeepResearch/snapshot.json",
+      "snapshot_sha256": "2aeae02c0ec72aeba6ef7c3a0f57c299a3ca7722a967bed88f8dab48fca129f9",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/jina-ai--node-DeepResearch/files/config.json",
+          "sha256": "b2e1130cc2959eded9a59b6ed25d6d9531e8a4521d60ccd03a1513e1bc83453c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/jina-ai--node-DeepResearch/files/jina-ai/config.json",
+          "sha256": "f13671f0e54ea5b95b91483c1b8be57d8fe798399c561afa99e49a3ebd30d7b5"
+        }
+      ]
+    },
+    {
+      "selection_index": 26,
+      "id": "5baa35cebd7980002aca4641be238075114402bd0d911f38fa7e7b11aeca619a",
+      "query": "explain this",
+      "repository": "ollama/ollama",
+      "source_index": 2787,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Repository overview is supportable from Ollama README; do not execute install commands.",
+      "commit": "1abe35e6e6e777e858bbfbba283667ee8d516801",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/ollama--ollama/snapshot.json",
+      "snapshot_sha256": "946a4f7584650299cb06e7d1cbae6e8146d3b1deb70e59499d7881f451e6b526",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/ollama--ollama/files/README.md",
+          "sha256": "09c456b8f3e2fca486f6961e07494f424ec6f998cfd0b23ebde099bc028a47de"
+        }
+      ]
+    },
+    {
+      "selection_index": 27,
+      "id": "51fd4b75c203e2723c511becbf77d8427a42806f89b7761f4f148ebba46a86ab",
+      "query": "what does RatingAdvRiskyStyleThresHold and RatingAdvAdaptiveStyle mean?",
+      "repository": "mhonert/velvet-chess",
+      "source_index": 3695,
+      "winner": "model_a",
+      "status": "held_evidence",
+      "reason": "Both named rating-style option handlers are commented out at uci.rs 261-272. Current active meaning is not established by comments; needs historical revision evidence.",
+      "commit": "5e08b96ace2c6325ae8e172b59d5028b73ae8c84",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/mhonert--velvet-chess/snapshot.json",
+      "snapshot_sha256": "aef829b48fb461ab02adef4da3575e2530f6e5d3131914e34c2d944ec14bbf53",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/mhonert--velvet-chess/files/engine/src/uci.rs",
+          "sha256": "6d092c1e8dd6c7c15a19fddf0e2841b23d9b7a3a699f91ee43a319d8278ea859"
+        }
+      ]
+    },
+    {
+      "selection_index": 28,
+      "id": "6237c77722f369f4c7b8a5e664fce8b3071b0b08909bd0053a8d49c2150bef98",
+      "query": "What is the function of the property \"persist\"?",
+      "repository": "PlasmaFlare/baba-mega-modpack",
+      "source_index": 148,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README and mod_persist implementation are present; explain persisted objects with inspected boundaries, not universal persistence guarantees.",
+      "commit": "4fb4ab75ac0a89897db3e8ab009715a9945e7dc2",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/PlasmaFlare--baba-mega-modpack/snapshot.json",
+      "snapshot_sha256": "2e8fbddaefda290e30d84cded8f84d70652ca89c4e2293334052aa0885151008",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/PlasmaFlare--baba-mega-modpack/files/README.md",
+          "sha256": "c3ce002e561238190f02361d70a017b9f05a8f9ef79a06498b745e66147dd85b"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/PlasmaFlare--baba-mega-modpack/files/Lua/load_mods.lua",
+          "sha256": "483c32f47d9c437b0c8cfa892e836fb2f2cd46fa25b9fd88c531e33ead223615"
+        }
+      ]
+    },
+    {
+      "selection_index": 29,
+      "id": "45ca1a503579d431f8b42b4615295bb9973397ba96c82a3da0b297de214ec94a",
+      "query": "What does this do? And how does it specifically work?",
+      "repository": "robertpakalns/VoxtulateClient",
+      "source_index": 3364,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Electron client purpose and entry code are present. README security claims are not proof of XSS immunity.",
+      "commit": "beebde3b4460e77f45d21dea387ee3ba5aec94bb",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/robertpakalns--VoxtulateClient/snapshot.json",
+      "snapshot_sha256": "0c0a6515151bef4ff22d9c52e5afdce142952be2536f28622ef384aaafdabc40",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/robertpakalns--VoxtulateClient/files/README.md",
+          "sha256": "d581ddfb7cf2d382207863bbf47c3d4cb01488240daed5dda76a6e1c640f0f0c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/robertpakalns--VoxtulateClient/files/index.ts",
+          "sha256": "754e07fdd751e241d7aca5eac6ecd391f596d586c3c1c238a99242ecce636d1b"
+        }
+      ]
+    },
+    {
+      "selection_index": 30,
+      "id": "2d07e21cf1610c2dd717d00026c43b99f6455c6c59993c2d22750d4b1aa3d7b2",
+      "query": "How does this tool count kmers? Does it encode the string into integers first?",
+      "repository": "anuradhawick/kmertools",
+      "source_index": 996,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "K-mer generator usage and integer conversion tests give source evidence for numeric encoding/counting.",
+      "commit": "11472408d316a2e5793ea0cc38e48a430dfb0d42",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/anuradhawick--kmertools/snapshot.json",
+      "snapshot_sha256": "c4bffc4e1bc241fc8dbf1a3f329e1bbf38f70ccb9eedf34962e09141c175111d",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/anuradhawick--kmertools/files/composition/src/oligo.rs",
+          "sha256": "f0be7a4739a0cbfb2b261d12920380abe4d017df94d8a985e37e5891293867f7"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/anuradhawick--kmertools/files/tests/test_kmers.py",
+          "sha256": "e8bc65d6ece4b4a7e05a2ded0bbd13a6b92663c803c4b89f7898449d11213c7e"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/anuradhawick--kmertools/files/tests/test_utils.py",
+          "sha256": "ecdfbf5b6782f83ef4474cb95b1a0da3fa62652fd7f76cd3be1ab36d4eca55a6"
+        }
+      ]
+    },
+    {
+      "selection_index": 31,
+      "id": "a3c4003fbb0271d05a4c1cb1b4bcaf58da507b97250b4c29aaad78571427e5a1",
+      "query": "Describe how this model handles padding",
+      "repository": "yaohungt/Multimodal-Transformer",
+      "source_index": 1561,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Padding is answerable but high-risk: docstrings mention key_padding_mask while forward has no such parameter. Must report actual behavior, not import stock transformer guarantees.",
+      "commit": "a670936824ee722c8494fd98d204977a1d663c7a",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yaohungt--Multimodal-Transformer/snapshot.json",
+      "snapshot_sha256": "c0d179ae3838fd8c6d0f9200efb86c9287a377810fcd6930be870612e9f81dd3",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yaohungt--Multimodal-Transformer/files/modules/transformer.py",
+          "sha256": "e5cfc05d5fe8eed67d59a93296db9e179031cdda682bb0660c378a10e3ad61ca"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yaohungt--Multimodal-Transformer/files/modules/multihead_attention.py",
+          "sha256": "17f6d199f49a772fa613849c2cd48319a8e0fd50514a8a7860952153594a6b53"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yaohungt--Multimodal-Transformer/files/modules/position_embedding.py",
+          "sha256": "d59e0c826a02502e1233da138ed51c2610f585896335482956655d48946a1fed"
+        }
+      ]
+    },
+    {
+      "selection_index": 32,
+      "id": "4966d1a4819e35448b999b3606e155ace7dfdaf33cb68d9f30f21a10f93c786f",
+      "query": "What this repo doing?",
+      "repository": "simulatrex/simulatrex-engine",
+      "source_index": 2514,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README, package description and simulation entities support an LLM simulation framework overview.",
+      "commit": "4e4fa06d7f527480b66ceb224a5d37bcfa2f9150",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/simulatrex--simulatrex-engine/snapshot.json",
+      "snapshot_sha256": "57ec35b30b758274a01384af7a2e367624793a7697f2929fd63d9eb60048fc93",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/simulatrex--simulatrex-engine/files/README.md",
+          "sha256": "4c82fe3e314b8bdf096f3cf47255172fca898f93909c43b349a123a04d72c763"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/simulatrex--simulatrex-engine/files/setup.py",
+          "sha256": "3739a5dc188d4fd9f4976735d2dcb1bc0497087b3ba54129647c8c30512ac180"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/simulatrex--simulatrex-engine/files/src/simulatrex/simulation_entities.py",
+          "sha256": "c61fb1d8e1216dd41f5b390fbced305afbe30e992f9279ea909fb3d21d399c29"
+        }
+      ]
+    },
+    {
+      "selection_index": 33,
+      "id": "d241adc92b392cdfb5a58b347b2d9b5b129b1ee4636e9579523a171e4dc1823f",
+      "query": "What does this do?",
+      "repository": "Pyramorphix/Resonance",
+      "source_index": 1118,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README explains Telegram JSON chat analysis and report generation; do not invent support for other messengers.",
+      "commit": "2408c862ef49836feb7f11f262679f4b998524f1",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Pyramorphix--Resonance/snapshot.json",
+      "snapshot_sha256": "c0c4b8778173207ddea563ba3dfbc84eac1d4e071d03c9c3624e0bfa81aa9e90",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Pyramorphix--Resonance/files/README.md",
+          "sha256": "8cbdd83c9c45070cf5e30f1a6b0f89a5846a1b73c966965ec32f7e9838d5de86"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Pyramorphix--Resonance/files/main.py",
+          "sha256": "3a7fca0c04c4a43ba4ad268cc83fbff74e5596c3945700929fa50852cbc5f5d8"
+        }
+      ]
+    },
+    {
+      "selection_index": 34,
+      "id": "fa8f58bb2ae2fd8d405a6c53d8dc15f18c1da6e17b667069dbab59e6a3ca3a3a",
+      "query": "what does this rep do?",
+      "repository": "transitive-bullshit/agentic",
+      "source_index": 1810,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Readme describes the Agentic tooling/marketplace and archival status; frame claims at the pinned revision.",
+      "commit": "beffa8ecfaffcf2e2435b077d5b7cd2dc33298bb",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/transitive-bullshit--agentic/snapshot.json",
+      "snapshot_sha256": "fb44442644c27e009e203841de8c597310057e27ad1d90bd98529873f370a3bd",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/transitive-bullshit--agentic/files/readme.md",
+          "sha256": "170c7e4f6063606182a211b668d524b0ea78a4e9a2fc98753afaa9165841c1b2"
+        }
+      ]
+    },
+    {
+      "selection_index": 35,
+      "id": "b8f868490be5f8484c6e0e0ceb236163fc768318a68f2e50f80a06c6e48e0862",
+      "query": "Explain the above repository in detail using JSON format.",
+      "repository": "yomorun/yomo",
+      "source_index": 1419,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Detailed JSON-formatted repository overview is source-backed. Current Cargo manifest describes a Rust QUIC runtime; do not substitute historical Go architecture.",
+      "commit": "036aee1e3e3ea1b25c5f9fdb5d67752129fe2377",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yomorun--yomo/snapshot.json",
+      "snapshot_sha256": "e932cf111363772d4635b4813f602f62c4d09d1d3575a75f6f839e298d6e2541",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yomorun--yomo/files/README.md",
+          "sha256": "f179c64c955bd906a3c5e4cf295d7b8bcb4de3ba9cff9acbeddbc6a4f60164e3"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/yomorun--yomo/files/Cargo.toml",
+          "sha256": "0d4f758f65499fbbfa97cf33657b90b05769b71e834fab703a1dab2164bb720b"
+        }
+      ]
+    },
+    {
+      "selection_index": 36,
+      "id": "fe2596bd1c2ab5aa883d2a20ef5ea937df59b53e3fe49c26d1fc66401122a1a4",
+      "query": "Tell me about this",
+      "repository": "gigachadtrey/fluxel",
+      "source_index": 3691,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README, custom-language examples and Python interpreter source support an overview; distinguish implementation language from interpreted syntax.",
+      "commit": "fca3f44dee5c63deb0d0792bac9f8661cacf941b",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/gigachadtrey--fluxel/snapshot.json",
+      "snapshot_sha256": "03abc8c8062d613ddc5cc774a31bbd29efbcf83f30899d9486f560e8468e02a2",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/gigachadtrey--fluxel/files/README.md",
+          "sha256": "9a42c132efa9c9c4bf893ee835a22fcdd1f84cf7053112d161f14002b52033b5"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/gigachadtrey--fluxel/files/WindowsInstall/interpreter.py",
+          "sha256": "a0401989bc82d7037202e39f45b7db458ba1e0a0c3a26b3dd4db12ec56e55f29"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/gigachadtrey--fluxel/files/examples/example.flux",
+          "sha256": "026cf1ac2c02f24495962e4ac293deb7fa65495c673a5778ac537a39e3c6020b"
+        }
+      ]
+    },
+    {
+      "selection_index": 37,
+      "id": "f7346b768f6f11bcc542e99ea3a91f495dac61a5bae06a0b865ab2ee72a0a3f1",
+      "query": "what files are source of  Gene-GoTerm Associations",
+      "repository": "biocypher/open-targets",
+      "source_index": 1864,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Target-to-GO edge module explicitly identifies Targets parquet and GO-term linkage; use current schema names rather than historical filenames.",
+      "commit": "52bfa0509f584ed948eaffab93f8e20266411854",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/biocypher--open-targets/snapshot.json",
+      "snapshot_sha256": "d530521053de28184c2aa6f6989cd3b6d1393c7b7f79d17d203d6307a0bdd8cf",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/biocypher--open-targets/files/open_targets/definition/reference_kg/edge/edge_target_related_to_go_term.py",
+          "sha256": "410c9c1e2488b22e077a7518d6ff1b95d854333b46d8c21644369e226a504581"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/biocypher--open-targets/files/open_targets/definition/reference_kg/node/node_go_term.py",
+          "sha256": "9b97270ba098187e1c3c9b369304e03dceeb73b685912d7a1fdc0494f2ad4ddb"
+        }
+      ]
+    },
+    {
+      "selection_index": 38,
+      "id": "af2a26085a541d231e66dd5a460317676fbdb4fd62faf9892af536ce76dca75c",
+      "query": "explain what is in this repo",
+      "repository": "xiyan128/cse208_project",
+      "source_index": 638,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README identifies CKKS homomorphic KNN/matrix-vector components; descriptive reading only.",
+      "commit": "6a38673a0ff15798bdfc8bd6027ef703ac1b167c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xiyan128--cse208_project/snapshot.json",
+      "snapshot_sha256": "33f4cea161ccc8a6625fd78f6a493526b58253e72d32fea3f7ba054c84a82e51",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xiyan128--cse208_project/files/README.md",
+          "sha256": "998e5eb258b0714686e824f86e63065e6b28a6e62f2dab6698eeed73c6e8fc2a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xiyan128--cse208_project/files/knn.cpp",
+          "sha256": "e5248690be5a3e571ecfe750269b882916b89786d8bd6a6b1428a2140e3127dd"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xiyan128--cse208_project/files/linear_algebra_utils.h",
+          "sha256": "231562d9a93b2d52885a4428f14ed9533e5345f3bcf515a384d3bdc20d6be7b9"
+        }
+      ]
+    },
+    {
+      "selection_index": 39,
+      "id": "56906ef12368669066f8b164b02f94772c534875745ad2a81667a47110dafbac",
+      "query": "What's this repo for?",
+      "repository": "google/python-fire",
+      "source_index": 745,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Python Fire purpose and examples are directly documented.",
+      "commit": "716bbc23d7eca949fdb682172283c8d18f742cb6",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/google--python-fire/snapshot.json",
+      "snapshot_sha256": "8ef6bf81c3dcc47fab12d719aa2f51e1b4fbe73541536c3795c547cd60484ea5",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/google--python-fire/files/README.md",
+          "sha256": "0769b1985c85abd81c80c658ccdb394f4fcbcc1302d0d01e22afd51af2546339"
+        }
+      ]
+    },
+    {
+      "selection_index": 40,
+      "id": "5b4c7699a9e81908df84931df54b1588db8d1068d66c1fb309979bd76490b200",
+      "query": "What's the tech stack for this project?",
+      "repository": "mrizkimaulidan/inven-bs",
+      "source_index": 1843,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Laravel/PHP/MySQL stack is documented; dependency manifests are available for version verification.",
+      "commit": "fd812d4bb2ab60b73c31f7a2d33716d19e8d2625",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/mrizkimaulidan--inven-bs/snapshot.json",
+      "snapshot_sha256": "cc88a8ffb2812850225c2217993cd9a5793b54811e4b9b8c45d6f786dfaffbaa",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/mrizkimaulidan--inven-bs/files/README.md",
+          "sha256": "9204ff57ee6175b910ccd42579a883c3a14dfc442d448650497250d3fe88a36b"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/mrizkimaulidan--inven-bs/files/composer.json",
+          "sha256": "4b3d253e4e817313ec58dbd23d0ec444dc3b6bcceedb6cd595345160170b7d8c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/mrizkimaulidan--inven-bs/files/package.json",
+          "sha256": "958ea0a9854ac7d7bec0ab7db45ef04fb1ef1fd61b0f7dcab73eb2635cb16168"
+        }
+      ]
+    },
+    {
+      "selection_index": 41,
+      "id": "5e23c573860ac0089f2e6abc72e63a90e219dd9c6d8fe69923e02dfe1fb3ab77",
+      "query": "What is the structure of the codebase?",
+      "repository": "Kioubit/FlapAlerted",
+      "source_index": 1833,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "BGP update/flap monitoring repository structure can be described from docs and file layout without an exhaustive networking audit.",
+      "commit": "c2de0b0fdab1ebc9bc4aa65a56dbe3b7a62e957c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Kioubit--FlapAlerted/snapshot.json",
+      "snapshot_sha256": "df6114e07033108e5774061795b23c56a7dd00d4d57e61401483a3810dc1f268",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Kioubit--FlapAlerted/files/README.md",
+          "sha256": "7613c27b3fb45675940f5ea4c039347136ab2f5a1cb2fd5a26b52c200534e03e"
+        }
+      ]
+    },
+    {
+      "selection_index": 42,
+      "id": "3831dc7030bc00463d0b000a6ef565aebffb56c2c2ebcb2356e056c188957d3f",
+      "query": "How are connection / network changes handled?",
+      "repository": "celzero/rethink-app",
+      "source_index": 641,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "NetworkLifecycleObserver and connection tests expose network callback handling; restrict conclusions to inspected Android paths.",
+      "commit": "3d92d38268d6e1a76b4a6e9c4f6b4c6428b2721f",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/celzero--rethink-app/snapshot.json",
+      "snapshot_sha256": "5f5efe084713de7377e3c842f7b1563c5139fa43e4cbbc79484de3e9a51ba960",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/celzero--rethink-app/files/app/src/main/java/com/celzero/bravedns/service/NetworkLifecycleObserver.kt",
+          "sha256": "cebce05160b311bfb94aa9dc4e9e5b3e5a777dafb0ffec42a4586016e0315939"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/celzero--rethink-app/files/app/src/test/java/com/celzero/bravedns/service/ConnectionMonitorTest.kt",
+          "sha256": "998c12551d2c1d80ffe7d7057f4c981cee3c4c7d8ead16805c49c20234ac74fd"
+        }
+      ]
+    },
+    {
+      "selection_index": 43,
+      "id": "bcd854c5307ccc805a9fe1933189a0e7e58c3098ec753bb48bc5137a328a9174",
+      "query": "what is register?",
+      "repository": "facebookresearch/dinov2",
+      "source_index": 591,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Vision transformer register tokens are explicit in constructor/config; describe auxiliary tokens, not CPU registers.",
+      "commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/facebookresearch--dinov2/snapshot.json",
+      "snapshot_sha256": "1d1d7ff4a45d57dc5cd0ef28fa59e0e0daf8e2bb88f323cdfe97620b262d888b",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/facebookresearch--dinov2/files/dinov2/models/vision_transformer.py",
+          "sha256": "7799a260f2d7d0fe197331d08502fb8c542f9b7424723650f6a39b64fa2639ea"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/facebookresearch--dinov2/files/dinov2/configs/eval/vits14_reg4_pretrain.yaml",
+          "sha256": "91e1df34dc74d7ead96be9b0d0087fea0e9b5d687782964e192e8fa44919254c"
+        }
+      ]
+    },
+    {
+      "selection_index": 44,
+      "id": "2e50df9dd528cdec7cdb123b6f70a2137ca785d47c2518ce12807fc3a2c7551c",
+      "query": "how are llm solutions graded?",
+      "repository": "bigcode-project/bigcodebench",
+      "source_index": 572,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Question concerns scorer implementation, not solving benchmark items. Restrict evidence to evaluation code and pass@k docs; no benchmark task/solution extraction or admission implied.",
+      "commit": "09dd993f46c3fbf3a799465bb96d524edcb0b199",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bigcode-project--bigcodebench/snapshot.json",
+      "snapshot_sha256": "4d7bff71d4881528dde7a96a5c20aca80f7aa8892ad6257b2c32bf1894939e71",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bigcode-project--bigcodebench/files/bigcodebench/evaluate.py",
+          "sha256": "6f737ddbec85c8e24d995898bab528b8c28fc5090a488652c8af557ad85f0667"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bigcode-project--bigcodebench/files/bigcodebench/eval/__init__.py",
+          "sha256": "d5fd553559ac1b76659ebc32ae30e3e779449ecd31c5201f2301319ceeee01fe"
+        }
+      ]
+    },
+    {
+      "selection_index": 45,
+      "id": "0217ac7d7d6cf4d3bfe726269a465c2720a68fc3933e52037384d716db2e47c5",
+      "query": "How does he pack a packet, to send to the server",
+      "repository": "vysheng/tg",
+      "source_index": 3593,
+      "winner": "model_a",
+      "status": "held_evidence",
+      "reason": "Packet serialization depends on the tgl submodule, referenced in .gitmodules but absent from snapshot files. Parent client interfaces cannot establish the actual packing protocol.",
+      "commit": "6547c0b21b977b327b3c5e8142963f4bc246187a",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/vysheng--tg/snapshot.json",
+      "snapshot_sha256": "4a386f129bc3dd89d076e5179350260cbd1ea24845386586392a3ae909962e77",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/vysheng--tg/files/.gitmodules",
+          "sha256": "3af636657a676e3dedfe4525e1a0ee314b0642eb51b9a3326875577d114fbabb"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/vysheng--tg/files/Makefile.tgl",
+          "sha256": "6dfedaed24f8fce5dea8e0984b8c7c18e6df5c1b9d09a544c0bebb58b569d428"
+        }
+      ]
+    },
+    {
+      "selection_index": 46,
+      "id": "e8271cd0175fec19459b503fdc6ec2f6bcc1dc0a17fb11f50793de863c9a963e",
+      "query": "What is this?",
+      "repository": "jstrieb/urlpages",
+      "source_index": 532,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README gives a concrete URL-encoded page mechanism and limits; no timeless availability guarantee.",
+      "commit": "4b922bf61853e66c345d2cce60ba959403773361",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/jstrieb--urlpages/snapshot.json",
+      "snapshot_sha256": "5d5bed55068bfedb23769e5b0a58b5d8de7e0d66f3b77890d212d6f4ab4004d2",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/jstrieb--urlpages/files/README.md",
+          "sha256": "c8412b26a3e75dfaea068b84ab9ae9e285a49ba058ddfcdf4ec0e78c8b647a5c"
+        }
+      ]
+    },
+    {
+      "selection_index": 47,
+      "id": "0225a2958433f983f2c79002c6a5b4015e66a963475e46c95b5aafd063a3dbf9",
+      "query": "What this repo does",
+      "repository": "lucferreira-27/my-anime-back",
+      "source_index": 87,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README describes the historical MyAnimeList scraping/Wayback API backend.",
+      "commit": "b2d6c00164eb8aa421139a624f91d783ca31591c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/lucferreira-27--my-anime-back/snapshot.json",
+      "snapshot_sha256": "60399d2cbea559ee80f13398d6f7a83480e0c82a6b3eddbcdbee3117b28ad00d",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/lucferreira-27--my-anime-back/files/README.md",
+          "sha256": "e9a6d4d9199ccccb8c27c4ffe723832bf989ab0b5209d115acc8b8fd598070d3"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/lucferreira-27--my-anime-back/files/pom.xml",
+          "sha256": "33adade4172faec979db1390ed802f9a764f1b4713aa2f7d60875871f11d8923"
+        }
+      ]
+    },
+    {
+      "selection_index": 48,
+      "id": "c7607eaf7e9477da8d3a313558cc88a96beafdf3bd9a606f3596753efc145050",
+      "query": "describe how this repo works",
+      "repository": "SakanaAI/self-adaptive-llms",
+      "source_index": 2774,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README and optimization module support conceptual singular-component adaptation description; no claims of reproducing paper results.",
+      "commit": "03a41aed1cfc57276e72ad5a42845a04b356db1e",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SakanaAI--self-adaptive-llms/snapshot.json",
+      "snapshot_sha256": "4c5ecb043524cda0bf3f9b533ad9623b17f6ed6ee975ae0fc6c03041c9769973",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SakanaAI--self-adaptive-llms/files/README.md",
+          "sha256": "09f527b7b3d161e72587a39e0041bff4f878dc95cd3710813dc1af1244561086"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SakanaAI--self-adaptive-llms/files/optim_modules.py",
+          "sha256": "4e4866440b26dacd063b4c6ffd8ed64f9859169f0db5f89210521192c3a2a658"
+        }
+      ]
+    },
+    {
+      "selection_index": 49,
+      "id": "1ea149248d635345813531e1e814f5cb2c38077a39e650e1138eafcf3f92b421",
+      "query": "whats this repo structs",
+      "repository": "LlemoningL/Mammalbehavior",
+      "source_index": 3833,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Framework overview and top-level structure are available in README/main; no inference runs needed.",
+      "commit": "a1358b423ea1c7ba8edc6a8926b123b486663870",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/LlemoningL--Mammalbehavior/snapshot.json",
+      "snapshot_sha256": "f624424842bd1bba6252d1a15fee7e56b6713562782594e21d0fdf6adfdea080",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/LlemoningL--Mammalbehavior/files/README.md",
+          "sha256": "798931291ca9207525ff97eb6260a3efb651dc3b5fe55fe806223ea6436e922d"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/LlemoningL--Mammalbehavior/files/main.py",
+          "sha256": "508255c8ada9c2221cc5a3e03910aa3e360d1b6422ac3059b0f1995024879900"
+        }
+      ]
+    },
+    {
+      "selection_index": 50,
+      "id": "6b31694ed2ff746d0ad78194d969f387376a06b29bca1bc778175479024528e5",
+      "query": "how does the cmu-graphics (the code langauge part) make the shapes go on the screen",
+      "repository": "cmu-cs-academy/desktop-cmu-graphics",
+      "source_index": 942,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Graphics package implementation and pygame dependency support tracing shape rendering; no execution or screenshots are claimed.",
+      "commit": "f06292944b0f4c8e2a6801cb39e21eb4a0862324",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/cmu-cs-academy--desktop-cmu-graphics/snapshot.json",
+      "snapshot_sha256": "a727780b4e82310ccbcdf6b8cd88ddfa73e3ff179bb7afb9378c1a845bf1cef7",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/cmu-cs-academy--desktop-cmu-graphics/files/README.md",
+          "sha256": "ed705840ebb4a5cfa7ec67ed49425adf4ce020650e9a0edd18239577d0e38480"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/cmu-cs-academy--desktop-cmu-graphics/files/cmu_graphics/deps.py",
+          "sha256": "3f13c2db5d7e880ff2a0b013894e4336eea48bbd4cb401b2d73418450556de12"
+        }
+      ]
+    },
+    {
+      "selection_index": 51,
+      "id": "2261e730a3236b6dac5c666f59b707dc6b34d1b7b747226ae967ce56e0d06e43",
+      "query": "What can you tell me about how the \"Todo\"s are persisted by the \"TasksController\"?",
+      "repository": "bharnish/Todo-2022-05-26",
+      "source_index": 2392,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Controller delegates Load/Save through IRepo and DynamoDB implementations; NormalRepo is DEBUG-only, so inspect CryptoRepo before describing production persistence.",
+      "commit": "bf37115ff0aaef628e13414284436dd7beadd35f",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bharnish--Todo-2022-05-26/snapshot.json",
+      "snapshot_sha256": "a64f46198145b535e5b1a8848b55b4826de6009d715b7e1a0af9672b5be21707",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bharnish--Todo-2022-05-26/files/Todo.WebAPI/Controllers/TasksController.cs",
+          "sha256": "6e933a98e7fa104a6aed33ed12d0fb3d01aa06ad00aebdf7e325d8b44a5cf47c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bharnish--Todo-2022-05-26/files/Todo.Data/NormalRepo.cs",
+          "sha256": "8b7e8a26cfcfc8005b0db54772e7f3168e818d0fdacd8346873ae5bcecce8661"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bharnish--Todo-2022-05-26/files/Todo.Data/CryptoRepo.cs",
+          "sha256": "73c92132dd48611aba74d5b4d21ea5b78d8d4f1cc7bb7da13e4bc76fdfa54ad9"
+        }
+      ]
+    },
+    {
+      "selection_index": 52,
+      "id": "e6ceaa083a7fd2d13439ccc7985475ae8e63ab26df5971257f3931ccd47796f5",
+      "query": "What does this website do/look like",
+      "repository": "BUG123rules/Counter",
+      "source_index": 1196,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "HTML/CSS directly supports a source-based description of the personal counter site; do not claim browser rendering was observed.",
+      "commit": "18feacb072e5892d14b6036043159055296e13fb",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/BUG123rules--Counter/snapshot.json",
+      "snapshot_sha256": "ada37ba12bc21281972a0650e6c997d39423d979043886e1d68b01f551546cfd",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/BUG123rules--Counter/files/index.html",
+          "sha256": "d86f3af77a6fe53bb33f2c193c41302f74cc25a6fa65b1b6d889bf09678622ea"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/BUG123rules--Counter/files/counter.html",
+          "sha256": "de0cabf739e583ec2c71d93cd8fe7e0965c2aa063d00d0a7cd8c8cb541de0c83"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/BUG123rules--Counter/files/style.css",
+          "sha256": "288074f431ffd7b90c830e58aa9013a8bf73e86692d23ce22cee92b9165e646d"
+        }
+      ]
+    },
+    {
+      "selection_index": 53,
+      "id": "33b3ff455d2aa7ddf85386d6698248b6883d7a4eaf09d86208b9fecdd13174e6",
+      "query": "what's this?",
+      "repository": "rust-lang/rust",
+      "source_index": 397,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Compiler/standard-library repository purpose is explicitly documented; no build required.",
+      "commit": "012c0bd4d516934012c9a1ecb26e9eb283d2ed75",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/rust-lang--rust/snapshot.json",
+      "snapshot_sha256": "f24fe2ed7a02c4ab88e0e064ac7cf015ce461d22601c9e1ca18e89c65945192c",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/rust-lang--rust/files/README.md",
+          "sha256": "b3f6ef2fef88b98cb9ec013a5c86213095e53e40eb228679574e4d06517f33c8"
+        }
+      ]
+    },
+    {
+      "selection_index": 54,
+      "id": "7867d01ba009a335c3051502eab08adaa8bfc47e8190f8ec09282febb747aeb0",
+      "query": "How does this OS work?",
+      "repository": "IlanVinograd/OS_32Bit",
+      "source_index": 1777,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Educational OS overview is documented; keep to components and inspected implementation, not a correctness proof of the entire OS.",
+      "commit": "d772b7f82fbb0748e245d30b5ee785420f7d0d00",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/IlanVinograd--OS_32Bit/snapshot.json",
+      "snapshot_sha256": "871323be7e851d78e93a6a18628057e4e9a5b2d0b5b54b932a7eb791cc63eafe",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/IlanVinograd--OS_32Bit/files/README.md",
+          "sha256": "9823e84ed447c4fcfc3380786c8b7b873fa2c82517e48e99c7455139df4d3f01"
+        }
+      ]
+    },
+    {
+      "selection_index": 55,
+      "id": "8b6f4b22644b206f051fd15292c1c491b8ff6d471b87650f0a1cef2a9e046bdd",
+      "query": "Explain the \"virtual pipeline\" concept introduced in this repo.",
+      "repository": "NVIDIA/Megatron-LM",
+      "source_index": 1876,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Virtual pipeline configuration and model-building entry points exist; conceptual scheduling explanation, not measured performance claims.",
+      "commit": "1b638343ed4b3a3a630103a666e4266ac064cf0b",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/NVIDIA--Megatron-LM/snapshot.json",
+      "snapshot_sha256": "9818956784af221192f77fc512759df904fa4b88dbc9309a9dcf617ac53d0a1d",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/NVIDIA--Megatron-LM/files/pretrain_gpt.py",
+          "sha256": "d3d9bc499e489b493ab3c60111bc5dda58bd5477caa04962120c438980f18947"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/NVIDIA--Megatron-LM/files/megatron/post_training/model_builder.py",
+          "sha256": "f591ffbf5eb45b879ce2535e58521a7072d8c806e40800fa875223b3182acf60"
+        }
+      ]
+    },
+    {
+      "selection_index": 56,
+      "id": "59b8257cffd8d8ed1039d68187446f976caae34021b155b6638b2fbcf111779a",
+      "query": "Explain what type of interpolation does this program use to fill in and plot missing values?",
+      "repository": "hnykda/wifi-heatmapper",
+      "source_index": 2641,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Current pinned docs and shader explicitly implement inverse-distance weighting. Do not repeat an older scipy/cubic interpolation explanation.",
+      "commit": "4c0cc67282d5d2ee49ed5df1ddb96167e6a71425",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/hnykda--wifi-heatmapper/snapshot.json",
+      "snapshot_sha256": "47455c8cce4b540c958cdd8d0164fc16d702d2ec2a27c9afff202128386f5e87",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/hnykda--wifi-heatmapper/files/docs/Theory_of_Operation.md",
+          "sha256": "d8860b7487105c99cea98585ec5ba0587b9a57f6e720dfeaa025b229db307b5c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/hnykda--wifi-heatmapper/files/src/app/webGL/shaders/heatmapFragmentShader.ts",
+          "sha256": "3e675e4db3557b1527a4990c01ed4ce948d8f000a8a1e2334edc80f518cc8ec3"
+        }
+      ]
+    },
+    {
+      "selection_index": 57,
+      "id": "2b63bc14d4480287c5ff45b0bc1f40c26e65c189c83dc04043e4be77ad31d5a9",
+      "query": "What is the license of this component?",
+      "repository": "thisconnect/tools",
+      "source_index": 1142,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Repository license file is available for exact identification; no broader legal compatibility advice or dependency license inference.",
+      "commit": "c52f67d6bfa08f85faab52d1a6166d06f0065e5f",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/thisconnect--tools/snapshot.json",
+      "snapshot_sha256": "6883a5ca3a103865d925414a508f1d0235209e2cfd2ace7a8911cc9e1f466b22",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/thisconnect--tools/files/license",
+          "sha256": "2b8910b420d4012fc31d820e75408a378465210877200199964b6bbf67582882"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/thisconnect--tools/files/package.json",
+          "sha256": "093222e0853b4caabf2d2d4bc74211ca3f47d75e6d52f5b0cffd6c52a5a9d6f2"
+        }
+      ]
+    },
+    {
+      "selection_index": 58,
+      "id": "f439729e1803b3964011fbbc343e1fe301438151e8223e6055bf7ea1c35ac7b4",
+      "query": "What's this repo about?",
+      "repository": "Tech-X-CNDV/codIntoTheDeep",
+      "source_index": 3200,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "FTC Android robotics SDK purpose is documented; distinguish upstream SDK from team-specific additions.",
+      "commit": "86604096bb822325dbd1aec0ad996a86ecf32c41",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Tech-X-CNDV--codIntoTheDeep/snapshot.json",
+      "snapshot_sha256": "94f154af36c059df63af9cf1b500e1ebe2a13c94c625a564fae6bc5658747234",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Tech-X-CNDV--codIntoTheDeep/files/README.md",
+          "sha256": "186ae6310b715e917fa0fc5d5956d271b48429ce397e19b2085f5c3e42135543"
+        }
+      ]
+    },
+    {
+      "selection_index": 59,
+      "id": "2abd1343a1c393f09b74e2ce0b1809d0bfcf51dc168fe9ecd81495300c129527",
+      "query": "what is the purpose of this repo? what is its unique power",
+      "repository": "stanford-oval/storm",
+      "source_index": 2474,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "STORM research purpose is documented; unique strengths must be framed as design features, not an unsupported superiority ranking.",
+      "commit": "fb951af7744dab086e34962e9bc6fe878e145f83",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/stanford-oval--storm/snapshot.json",
+      "snapshot_sha256": "b74783bf3a912b32f373bf5a012020d739f754c975fffd7dec17b1761a4b3930",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/stanford-oval--storm/files/README.md",
+          "sha256": "711016d02ae72a43ae96198ede47ee0b36ab10029b323a76eb2d3cd87413e2a2"
+        }
+      ]
+    },
+    {
+      "selection_index": 60,
+      "id": "ebca28ef21029d9e54337599cdcdf58f92095eeb48c24ef1807357a83e092ffc",
+      "query": "What is the function for getting the profile picture of the current user?",
+      "repository": "ultimatemember/ultimatemember",
+      "source_index": 896,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Avatar helper implementation is present; distinguish current logged-in user from viewed profile and HTML/avatar URL APIs.",
+      "commit": "0ffe1ef917fb45810aa756b9064e9ffdcf436e3c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/ultimatemember--ultimatemember/snapshot.json",
+      "snapshot_sha256": "e907813277cc80bcb69935937d6a30dd415a8763aa9986034cd9d58b16fe2eea",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/ultimatemember--ultimatemember/files/includes/core/um-filters-avatars.php",
+          "sha256": "3138a76fe00273964adb48cadf9cd1d614c3e30181e05a8f8957a636677514e7"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/ultimatemember--ultimatemember/files/includes/um-short-functions.php",
+          "sha256": "bca883afa00fa2ad0790ee755617c43c0c952c3525955a14ee254eaa20e31a72"
+        }
+      ]
+    },
+    {
+      "selection_index": 61,
+      "id": "e05034f9edcb1c03d0f23691eea35bed0c31ffa65d83abf6a4cf809131f78784",
+      "query": "What is this?",
+      "repository": "georgringer/news",
+      "source_index": 1038,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "TYPO3 news extension purpose is explicitly documented.",
+      "commit": "d69827ca5eef0d74467c8b9fb87ce46c344bcad5",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/georgringer--news/snapshot.json",
+      "snapshot_sha256": "102779c4a730965cb5a0d69588c3784764a35d30df101b3080b3a97ba2d36cb1",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/georgringer--news/files/README.md",
+          "sha256": "3b3e9d236690444d88682f7e1bc3cfeea6e078ad00e48401e954487674405467"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/georgringer--news/files/composer.json",
+          "sha256": "181295d9d505eb1304266da2166eeee0046a0486cf8d14863a0ba0b53398de7e"
+        }
+      ]
+    },
+    {
+      "selection_index": 62,
+      "id": "53f076a6e1230735ae631b25acff593574d576029a5bc748b19ff3775d53c28e",
+      "query": "What's this project's purpose?",
+      "repository": "seansunn/similarity_search",
+      "source_index": 3743,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README is minimal but notebook source contains embedding/retrieval experiments. Describe code purpose only, without private dataset or performance claims.",
+      "commit": "63c04fa6813998f5674d022d809e82274bbaee13",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/seansunn--similarity_search/snapshot.json",
+      "snapshot_sha256": "e11d1185e9c4b386f3ec975c8ab7a086b6a2a4767d4323d26857fddb9193009a",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/seansunn--similarity_search/files/2_embedding.ipynb",
+          "sha256": "60bba626d7d7bcc03b5442384afeedbc4c3a4251b2ea0749dbcc3fcc80ec4601"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/seansunn--similarity_search/files/3_eval_retrieval.ipynb",
+          "sha256": "219597af500b5d5976dccf1b2aa9bce7c0464fd629a98acbc46a7a54bd19e73a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/seansunn--similarity_search/files/data_finetuning.py",
+          "sha256": "4bbf2397a05fb81bcd5a0da3aeb6874708dab592451744ab1f311af0d17e6f95"
+        }
+      ]
+    },
+    {
+      "selection_index": 63,
+      "id": "dbd94ec4de213e60a00fbcc4612480181c768366e474e027d25a4dbfd9023ff0",
+      "query": "how is the session used?",
+      "repository": "oauth2-proxy/oauth2-proxy",
+      "source_index": 3042,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Session saving and middleware scope fields are present; distinguish configured storage paths rather than assume cookies alone.",
+      "commit": "e05f04ef08d075c764d03623bfcbf774566883a9",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/oauth2-proxy--oauth2-proxy/snapshot.json",
+      "snapshot_sha256": "e3e818765481990a4a59c0a28542932eabce969b7bc133d88bd3249fdfd6bd6a",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/oauth2-proxy--oauth2-proxy/files/oauthproxy.go",
+          "sha256": "ffaac319c26fb5da2573bac43ae92b56b0e830ed1a6965f1a6d4c05002197186"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/oauth2-proxy--oauth2-proxy/files/pkg/apis/middleware/scope.go",
+          "sha256": "28ca38fc4d01eaf0f80221fc20af9f58704a9648228b13d5b49024b5245f821b"
+        }
+      ]
+    },
+    {
+      "selection_index": 64,
+      "id": "3dbd3e5092608f9924a196a35bf4fb73ceea2d5bf01037ddba647dc813777983",
+      "query": "How does the queue system work for buying tickets? LIke what if two users are trying to buy the same ticket listed at the same time? Explain that system design",
+      "repository": "AndrewCathcart/ticketyboo",
+      "source_index": 2863,
+      "winner": "model_a",
+      "status": "held_scope",
+      "reason": "Prompt asks concurrent same-ticket purchase behavior. Route checks isReserved then separately saves an order; no atomic exclusion proof established. Requires deeper race analysis, not blanket queue/no-double-booking assurances.",
+      "commit": "f70f1df4ab1116b0f9f7c92d2114265fdc3fc2a9",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/AndrewCathcart--ticketyboo/snapshot.json",
+      "snapshot_sha256": "9ca4b19131600c704fb1639263f8aa74c9aaea2f0cbd7bf2cd0b5983c246a345",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/AndrewCathcart--ticketyboo/files/orders/src/routes/new.ts",
+          "sha256": "91df0196cb9a1a6bedbc6f494bc6fb14453cacbd4c40c25a33634bf55eb5b8a4"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/AndrewCathcart--ticketyboo/files/README.md",
+          "sha256": "773bb308cda0b8233c5232a1e920005cf4cc3a2c7f409ffcb0c95120bf831791"
+        }
+      ]
+    },
+    {
+      "selection_index": 65,
+      "id": "f342ebe9a0c41eec3e329c0a12f8396a104e343746191708ca2ccce6c3a38c4f",
+      "query": "Which image stacking method does this repo use?",
+      "repository": "Rolf-Hempel/PlanetarySystemStacker",
+      "source_index": 3107,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Lucky-imaging stacking workflow is explicitly documented; no claim of actual image-quality superiority based solely on README.",
+      "commit": "26e94be05612fce012d1bc0b25930d57232aab17",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Rolf-Hempel--PlanetarySystemStacker/snapshot.json",
+      "snapshot_sha256": "4847e0950c3246db7cb45ae0ae583a4b1955272360661fdf4f4aa56ae127a095",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Rolf-Hempel--PlanetarySystemStacker/files/README.md",
+          "sha256": "7ba90b567c0a9fe532ea95debec8f123d8c1170f0810f1246a38a1a66188141b"
+        }
+      ]
+    },
+    {
+      "selection_index": 66,
+      "id": "cf42920f3a2e03f5ed6507ee227532f4338064540fd80a5a1a833b216c60ad3a",
+      "query": "How does Certificate[store]=\"mozilla\" work?",
+      "repository": "SagerNet/sing-box",
+      "source_index": 3543,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Mozilla certificate store enum, embedded roots and update utility exist; explain pinned loading behavior, not live trust-list freshness.",
+      "commit": "927770c29f3e3698c711fc150e1066a4a78793a2",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SagerNet--sing-box/snapshot.json",
+      "snapshot_sha256": "1f91c1a9fbb9ce29c545f86daab09bc5e34fbf396b022c0ed8de5f1a8e82ce6f",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SagerNet--sing-box/files/option/certificate.go",
+          "sha256": "46502d310538f6b557b8703fd396aa565ac4367c48437acd18f7b39868fd5c5a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SagerNet--sing-box/files/common/certificate/mozilla.go",
+          "sha256": "df47018c20814ac4fad7672bb02555c43ebc0ef32f9f00968f87970d8bb5c8fe"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/SagerNet--sing-box/files/cmd/internal/update_certificates/main.go",
+          "sha256": "8405ce909092e7df120327698aa1abb368e9108e1b7752414227593e5a9ecaed"
+        }
+      ]
+    },
+    {
+      "selection_index": 67,
+      "id": "be8880b2529e0e7a25917ae0b5dc9d92d4253b79e4d76d4225ba12801fa1258f",
+      "query": "How are the colours obtained for each IFCobject?",
+      "repository": "xBimTeam/XbimWindowsUI",
+      "source_index": 2257,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "SurfaceLayerStyler implements style labels, surface textures and colour-map fallback; not every IFC object has an explicit surface style.",
+      "commit": "faa8e9450866f929c7514e2b4b18d285648ccf75",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xBimTeam--XbimWindowsUI/snapshot.json",
+      "snapshot_sha256": "fa581c81f1788f4d1459e36c0916796176baa8b7a45ceaca5aa093abffbdfb27",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/xBimTeam--XbimWindowsUI/files/Xbim.Presentation/LayerStyling/SurfaceLayerStyler.cs",
+          "sha256": "b89a5729fbbb48a1695df735c290af37c54fd54c1cf64deed7a51678806cf84a"
+        }
+      ]
+    },
+    {
+      "selection_index": 68,
+      "id": "a983aa4fd0b1861370531f0c80cae14e48cbe1c149f0edb564b7f3a8054aeb94",
+      "query": "What is the file with the help message string?",
+      "repository": "cli/cli",
+      "source_index": 3525,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "CLI help is distributed among command definitions, not necessarily one file. Answer must state root-command interpretation or distinguish per-command help.",
+      "commit": "fc4b137cdef0a6bd28fd461b7cf9c84a5812a8cd",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/cli--cli/snapshot.json",
+      "snapshot_sha256": "07cb2a34e9fdc03d9a0324f024bb24d6af0b9eac2f99eabe6975a2d8f139001e",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/cli--cli/files/pkg/cmd/repo/repo.go",
+          "sha256": "9c0d2984113a805ea254fad72a62bb5e00d2ed8601e9bd58ce8a3ffd727b5494"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/cli--cli/files/README.md",
+          "sha256": "5816da6f27253e6e5544e9c8d7b0f652e03200a0345fae1693e50d72fabb8cc4"
+        }
+      ]
+    },
+    {
+      "selection_index": 69,
+      "id": "ce38fd6410ae0967b59f8f73d8c6ef491878d8d14d0da638a46072937e410579",
+      "query": "How does this work?",
+      "repository": "BengbuGuards/StarLocator",
+      "source_index": 2525,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README explains celestial positioning inputs and intended mechanism; no unmeasured accuracy guarantee.",
+      "commit": "4b74382bbef9e229d617c2ffa7317311f238227e",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/BengbuGuards--StarLocator/snapshot.json",
+      "snapshot_sha256": "238b1e856738e1a926dbdd2f68bc331c3786d75f9065c91f87d456a536dc7d1c",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/BengbuGuards--StarLocator/files/README.md",
+          "sha256": "e2d8cad564d1a0f1c391986b3b5adeedb796ccad0234177b28ce6cc06dfe8171"
+        }
+      ]
+    },
+    {
+      "selection_index": 70,
+      "id": "35204577fe281f09280684afe41ebe84bfa944af472abb6816152869bb196c63",
+      "query": "what is this package for?",
+      "repository": "JonatanSiegmund/CoinCalc",
+      "source_index": 1098,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README states event-coincidence analysis R-package purpose.",
+      "commit": "1bbd748b18f611fff99ef86e31cc13fe0e657476",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/JonatanSiegmund--CoinCalc/snapshot.json",
+      "snapshot_sha256": "9bff5daed79b4e00f9ad954010e0824e0651addf1d51d1113542292407bf132d",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/JonatanSiegmund--CoinCalc/files/README.md",
+          "sha256": "0427537842425b607d333ee6a12ea7324a66c04c53e68f0eec18244f4d19143f"
+        }
+      ]
+    },
+    {
+      "selection_index": 71,
+      "id": "3915e99b3b4eeff88e1abbe238e6cfb02df27f3a30f4808338eb48a5a23f164a",
+      "query": "What are the checks/circumstances that trigger the specific error \"One or more input or output is invalid\"?",
+      "repository": "OutCast3k/coinbin",
+      "source_index": 2200,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Exact error text is present at the transaction construction branch; enumerate actual branch conditions, not generic Bitcoin validation advice.",
+      "commit": "cda4559cfd5948dbb18dc078c48a3e62121218e5",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/OutCast3k--coinbin/snapshot.json",
+      "snapshot_sha256": "a34ccf89caccf8fef11c1d28b83375aac5681b3d5724f6be1a4b012e6e68b90f",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/OutCast3k--coinbin/files/js/coinbin.js",
+          "sha256": "3abd51afbf99892cff30a02a3e15bac62dffa6621bbba96bcd4f5aca1bd69396"
+        }
+      ]
+    },
+    {
+      "selection_index": 72,
+      "id": "a90ae6adfcb7fec5fcc247964da81dc72cd20db1f997a922e0452ab9d5b8e5dc",
+      "query": "How does esmf calculate area exactly ？   c_ESMC_regrid_getarea",
+      "repository": "esmf-org/esmf",
+      "source_index": 1992,
+      "winner": "model_b",
+      "status": "held_scope",
+      "reason": "Exact area-calculation question spans Fortran bridge, MeshCap dispatch and geometry implementations, with MOAB unsupported branch. Defer precise scientific algorithm explanation from bounded simple QA; not a missing-repository claim.",
+      "commit": "b6b90e9e0cb70a53bc40413187993119c6fc0b95",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/esmf-org--esmf/snapshot.json",
+      "snapshot_sha256": "bca4deefa5bc085405be2ed84e1a600249176e394eb9d722a3eb2ef480707d2f",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/esmf-org--esmf/files/src/Infrastructure/Regrid/interface/ESMCI_Regrid_F.C",
+          "sha256": "24179410a5370c761364ccc7fe4cbaf34547928cf5371879154019177f97930c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/esmf-org--esmf/files/src/Infrastructure/Mesh/src/ESMCI_MeshCap.C",
+          "sha256": "23c3cd0135976e7cfcb498f560374570d44412d6961b904d4d92efce34d65463"
+        }
+      ]
+    },
+    {
+      "selection_index": 73,
+      "id": "d1d7debd28cc075319e0ffb389ed414f770a9f7e2874dde58314f4b8a4fccedb",
+      "query": "how does this work?",
+      "repository": "Liviu23/Boxbot",
+      "source_index": 1823,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README gives Discord.Net/DI wrapper structure and concrete configuration flow.",
+      "commit": "eaa310bb9661752f70690214c6269cd4015a1a16",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Liviu23--Boxbot/snapshot.json",
+      "snapshot_sha256": "e728ad72a9785e5def949d91951065331ec97a7e7b409035c8ba641ab868cd36",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Liviu23--Boxbot/files/README.md",
+          "sha256": "d0a974c720dd11b7899a0dade59e19f625c00f3322a08539a48889a104f02fcd"
+        }
+      ]
+    },
+    {
+      "selection_index": 74,
+      "id": "44dbdfa3061ea30f1edfa68b35a32ffadc2c1d7c7dd6445c20894b67e5d240e9",
+      "query": "What neural network models does this project use?",
+      "repository": "stevenlsw/physgen",
+      "source_index": 1124,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Model references/imports and inference defaults are available; distinguish external pretrained dependencies from locally implemented networks, and do not imply submodules/weights were inspected.",
+      "commit": "67fe0f2909bc332f0d8f1da1cd94c5fe245a9bfe",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/stevenlsw--physgen/snapshot.json",
+      "snapshot_sha256": "3c3427fb46de0e040bac9795def5300ff3358f2cacbeae3c06a84ea5df1c6988",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/stevenlsw--physgen/files/README.md",
+          "sha256": "a93f71f2741d721d849e5600d64971f42fbe2383d360825e1a7a5286ffdc7d4b"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/stevenlsw--physgen/files/perception/gpt_physic.py",
+          "sha256": "76adfaae639eb1365064e02edbc409bb0084c22cf295992447d5df0d44874990"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/stevenlsw--physgen/files/diffusion/video_diffusion.py",
+          "sha256": "706fdace44f7a133521d71320f3db80068c4fc0cf0ec616951f114657627622b"
+        }
+      ]
+    },
+    {
+      "selection_index": 75,
+      "id": "42621785facd58c897167a3992900ecd54a88da61a23b036feb28678ae65179a",
+      "query": "Explain how this intershop PWA works and communicates",
+      "repository": "intershop/intershop-pwa",
+      "source_index": 3171,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Angular storefront purpose and communication architecture are documentable; actual deployed commerce backend is outside evidence scope.",
+      "commit": "7e688a8306b94375cefebb44a68cc32de018f008",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/intershop--intershop-pwa/snapshot.json",
+      "snapshot_sha256": "8cbea613adecda3484e6be74da7936771de4c947dbb8e9c81abec65094541342",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/intershop--intershop-pwa/files/README.md",
+          "sha256": "1cc790d83feec7bd440cb3e0153d5fbf6039f5e4e85a48eb5ce3e88c4e65da0d"
+        }
+      ]
+    },
+    {
+      "selection_index": 76,
+      "id": "03391d0ac385250409c20a261f654e3a406186b5f840325dc329f24f7d6ed202",
+      "query": "What's this for?",
+      "repository": "PeterDaveHello/url-shorteners",
+      "source_index": 3713,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README and domain list explain intended URL-shortener collection uses; do not assert list freshness or verified domain safety.",
+      "commit": "49c02a749f492ba51f38e65c1b8ae24fa6860e0d",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/PeterDaveHello--url-shorteners/snapshot.json",
+      "snapshot_sha256": "55fb884f39831d37ca42aa4e3a8f6b93e3344745b89e049f22e812ccde0c44a2",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/PeterDaveHello--url-shorteners/files/README.md",
+          "sha256": "c94f414efe2c706b5ea6e85064de485efacaaa5e6d212628f65235b7df6670ee"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/PeterDaveHello--url-shorteners/files/list",
+          "sha256": "60db5c2034b8fff20b0ca49054beae17488bac6348ce51922621f2d97cd12215"
+        }
+      ]
+    },
+    {
+      "selection_index": 77,
+      "id": "29538909af1aa5563427f1840134c02cfb61f8510051e5c71abde9e74f3953a2",
+      "query": "Tell me about this repo, and the MergePath module",
+      "repository": "edereynaldesaintmichel/mode_connectivity",
+      "source_index": 937,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Three MergePath definitions exist. Answer must distinguish full/layerwise/SVD versions or explicitly identify the inspected variant, not fabricate a unique module.",
+      "commit": "6b6cfbfd3ed153c314e86e428621cde3fdcf021f",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/edereynaldesaintmichel--mode_connectivity/snapshot.json",
+      "snapshot_sha256": "7bb4902eb51a0b34a7bd06cc599cc7316cf320269d059fe2b1c981094e6b8631",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/edereynaldesaintmichel--mode_connectivity/files/README.md",
+          "sha256": "45b8f9958948428cfd12bdc0f2a68319949765ee07d6c807edf55334f90a3fe4"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/edereynaldesaintmichel--mode_connectivity/files/full_merge.py",
+          "sha256": "17a7f811c33b50ef395be8f244f6909130a736e9dc12145a7c9f69cf1831eb92"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/edereynaldesaintmichel--mode_connectivity/files/layerwise_merge.py",
+          "sha256": "8548f7adf0b8b3dc74cdcdfa4ae5a90a3f7aebc7e6567da2cf893b45d5f5fc49"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/edereynaldesaintmichel--mode_connectivity/files/svd_merge.py",
+          "sha256": "5182d9a6618106604688f9834a58510531748799b5024f4fa39f538e57f546a1"
+        }
+      ]
+    },
+    {
+      "selection_index": 78,
+      "id": "9542ac707f97958eea5f371c766dea31314f4e513a5e8a6b6966a44246493c4e",
+      "query": "Give me an overview of the technologies used in the repo",
+      "repository": "twitter/the-algorithm",
+      "source_index": 32,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Architecture table and source tree support a technology overview at pinned revision, not proprietary current production details.",
+      "commit": "c54bec0d4e029fe34926ef3258a86ccacc0d0182",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/twitter--the-algorithm/snapshot.json",
+      "snapshot_sha256": "c03ca29f6ff23a33f3ca3567dc2a9b33a9e9d5926af2af3ec8dfd209f170f47a",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/twitter--the-algorithm/files/README.md",
+          "sha256": "858ddbd306e0ac5b496591e01e8a76ec000321f0df8d25c66dd2c96a7f650cd0"
+        }
+      ]
+    },
+    {
+      "selection_index": 79,
+      "id": "07ab04b3b8303b0702730cfea3d7d870e74ea69a1b4b8dcc0cca2653f4a5d62a",
+      "query": "what is this",
+      "repository": "livekit/agents-playground",
+      "source_index": 718,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "README explicitly separates the client playground from external server-side LiveKit agent implementations.",
+      "commit": "2a2d1dbe3317100366bc86f53f253b59394dca3c",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/livekit--agents-playground/snapshot.json",
+      "snapshot_sha256": "77ae49cb4ae0ca7e7291e4e49d95b4e8b1cb52a3f5c4774dcdb06bafdba06696",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/livekit--agents-playground/files/README.md",
+          "sha256": "dab517af71773fa4ded9ec8768dee6b8344ba8e68b4ce1caff1e978802c4867a"
+        }
+      ]
+    },
+    {
+      "selection_index": 80,
+      "id": "763a768ec14006ad7b819f8e6827575e1b26e0782db9a8d8b17df3cc8a0cf73b",
+      "query": "what python libs will be downloaded here when i enable easyocr in the app settings?",
+      "repository": "Danily07/Translumo",
+      "source_index": 2626,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "StagesFactory explicitly installs torch/torchvision, pinned easyocr and Pillow after checks/confirmation; distinguish direct requested packages from unpinned transitive dependency resolution.",
+      "commit": "dc7fe322d68ec5d7d2664a0fa044770bdfe0141d",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Danily07--Translumo/snapshot.json",
+      "snapshot_sha256": "f7144f56d6cfce60e89c13c2072070f57157bed2f2431d34d5cedb51e3f166c1",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Danily07--Translumo/files/src/Translumo/Dialog/Stages/StagesFactory.cs",
+          "sha256": "d8029b4fbe7591befc20cfe966344a3f07e98cb2c12efd6bf5d567ad2ff872ff"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Danily07--Translumo/files/src/Translumo.Infrastructure/Python/PythonProvider.cs",
+          "sha256": "e732d69819a01481bb2167dfc7d17f241d2d855660c4702d76b91b6a20070d9a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/Danily07--Translumo/files/src/Translumo.OCR/EasyOCR/EasyOCREngine.cs",
+          "sha256": "dadb6c1dffa18b9c6df496edb6ceeae60f026b0ce1f4eb8d7a10f22713096823"
+        }
+      ]
+    },
+    {
+      "selection_index": 81,
+      "id": "ad34e86b79d4a07cfb78fc2ee67810c52aa0406c0724c85fc103f2acbb4df43e",
+      "query": "What is in this repo? What purpose does this program serve and what does it do?",
+      "repository": "NikiFe/IDSHV-router",
+      "source_index": 3313,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "server.js directly implements a station graph and route-search API; avoid inferring a real transport operator or private deployment from names.",
+      "commit": "c72de3a55bfae811b3cd4c97067eb9f7c44ac66a",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/NikiFe--IDSHV-router/snapshot.json",
+      "snapshot_sha256": "dee8d81ee130013e9a0f909a5032057e6a928a82dd59cbcced025f26295b929e",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/NikiFe--IDSHV-router/files/server.js",
+          "sha256": "a059a117e8c4ad7731ea413da7711cd64ad51c9072b3d870884915e9ef274f74"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/NikiFe--IDSHV-router/files/package.json",
+          "sha256": "425db72a6bdb00f5d0c9e52744e5595429537f6cc69b55058f97462069f4e3af"
+        }
+      ]
+    },
+    {
+      "selection_index": 82,
+      "id": "19b5753d078897e4b0a2c975565cf6e11adccd5b941806163c4e831584e7d70b",
+      "query": "what this do",
+      "repository": "zplayer50/TelegramForwarder",
+      "source_index": 3245,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README and forwarding script support describing Telegram automation; no sending, credentials or private chats needed.",
+      "commit": "3b4db8950b2b2a8690645e0efdc20e3b576aedc5",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/zplayer50--TelegramForwarder/snapshot.json",
+      "snapshot_sha256": "a16a5bc618d94d2f022af3ae23a7bc0e452d7c349154e0974824f08452152f17",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/zplayer50--TelegramForwarder/files/README.md",
+          "sha256": "34cc93264a5feef5b2ba7bdba432cdfc9ccd9885c945bc64de1ac07604e82070"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/zplayer50--TelegramForwarder/files/telegram_forwarder.py",
+          "sha256": "1a68ae3e98f24b3fa281a38da1ceae21aa584ec7279541d0b8fe08fe23fbd0ec"
+        }
+      ]
+    },
+    {
+      "selection_index": 83,
+      "id": "db40870647293a40f388577771ef981290e5b9aa20203d7247549a10f8d88c8f",
+      "query": "Summarize the structure of the repo",
+      "repository": "python/cpython",
+      "source_index": 451,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Pinned CPython tree and README support directory-structure summary; no build or interpreter execution needed.",
+      "commit": "763b6edb0ec959bdfb78f098b76829365de36ca5",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/python--cpython/snapshot.json",
+      "snapshot_sha256": "7529ec5fe46cca1a380ed46ae456d9eebf38afdc24c616c02e2a76d04ff0c49f",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/python--cpython/files/README.rst",
+          "sha256": "10e00b4e0bbd30b7eef0c65f492347e8d976ef8cbdfc85635492a840ff4ccf8f"
+        }
+      ]
+    },
+    {
+      "selection_index": 84,
+      "id": "6f538a9d2fb75ff4e10648526bbfbf1d63e92793cccbfea8d5d766f05fee1ab9",
+      "query": "What's the purpose of this repo?",
+      "repository": "RVCA212/lmsys-docs",
+      "source_index": 3748,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "docs/intro.md identifies LMSystems SDK/marketplace graphs. Do not confuse repository name with the LMSYS benchmark organization.",
+      "commit": "108f6664a15092d5073e32435bdafe5fb6c7e5df",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/RVCA212--lmsys-docs/snapshot.json",
+      "snapshot_sha256": "42d1bd97994a007fb6edd19d69b2eb75c8dbedd8d475da23fa1b33a76be93041",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/RVCA212--lmsys-docs/files/docs/intro.md",
+          "sha256": "92e6c92c6802a2307bb9f702a7e76d97372cfc1c3bbad1d717d931fc170cb06e"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/RVCA212--lmsys-docs/files/docusaurus.config.js",
+          "sha256": "eb63da7c6b272701117cc19f9bce5785734dd7f670c647364ce76cd70baba176"
+        }
+      ]
+    },
+    {
+      "selection_index": 85,
+      "id": "0c950c57a1841ea285ac1f67b3d40ed133f58769d3d2c78e2035f133af7102a8",
+      "query": "How are the queries ranked?",
+      "repository": "bytedance/pasa",
+      "source_index": 3197,
+      "winner": "model_b",
+      "status": "held_clarification",
+      "reason": "Prompt asks how queries are ranked, but inspected selector scores paper title/abstract against a query. Needs clarification or explicitly scoped premise correction, not invented query-ranking logic.",
+      "commit": "2aaa6a9b1e48d24a2b7e21e8551f863dad9eeb84",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bytedance--pasa/snapshot.json",
+      "snapshot_sha256": "adcc0ab1ef58f738aa63733761ca3020cf7d61447cfa6d5314f240231ecc1a17",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bytedance--pasa/files/README.md",
+          "sha256": "c3196e7d276373ce17ada609add8ba150fa05e2a75b738c51cad61be7805aa65"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bytedance--pasa/files/paper_agent.py",
+          "sha256": "14f71a9c5c75fc057e5198c941109fbc73f1ac0e46f8f72e391715e328ad15b9"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/bytedance--pasa/files/models.py",
+          "sha256": "5f4f8b881882bb5db27edc7d04b8dc724dc2896418d17cd239667e586dd0377b"
+        }
+      ]
+    },
+    {
+      "selection_index": 86,
+      "id": "93d9d23fad5306bdf3857a44d27ef23884a1d0f543695ef048ca236b8c97ed1e",
+      "query": "whats the code in this repository does?",
+      "repository": "DeepMakerAi/VCAMSX",
+      "source_index": 319,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "README describes an Xposed virtual-camera module and its limits; descriptive overview only, no bypass implementation or guarantees.",
+      "commit": "6fd800a41dba064d6f7e643798e46407c76c83e2",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/DeepMakerAi--VCAMSX/snapshot.json",
+      "snapshot_sha256": "c6d74b0b66a3b30cb697c5695c3e7470dd61b8856dd3f5cc63f3d6292b12f183",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/DeepMakerAi--VCAMSX/files/README.md",
+          "sha256": "3a16cbd590757ca378b344a32f15b0256418092d16f1c5369c4b133383ee6c4a"
+        }
+      ]
+    },
+    {
+      "selection_index": 87,
+      "id": "18e87cf9b2063fd985c13db998720c7d70bcb8ca634bf05ebc0a3e31174b5f9f",
+      "query": "what do you think this is?",
+      "repository": "RohanDeBoss/Rohan_Chess_Bot",
+      "source_index": 619,
+      "winner": "model_b",
+      "status": "eligible",
+      "reason": "Versioned C# IChessBot implementations are present even without README; describe their role, not an invented trained neural model or strength rating.",
+      "commit": "f03d0d148848814ff7191402c5f2baa645d604b9",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/RohanDeBoss--Rohan_Chess_Bot/snapshot.json",
+      "snapshot_sha256": "2919efd0c59365f7208a403885680785a18f07aeed4a05c3e3230d7ecec7b9be",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/RohanDeBoss--Rohan_Chess_Bot/files/Chess bot versions/MyBot v1/MyBot_0.1.cs",
+          "sha256": "afd73042585a8d6da2e2afd892498698dcb3193d0d5f85bd3e0d6a95f3aa1547"
+        }
+      ]
+    },
+    {
+      "selection_index": 88,
+      "id": "eaf5ee181fcfb64f2679405aacd4da3d7198b25f68209c10834046d61fccacc7",
+      "query": "What does happen when a user enters a direction that is not currently valid? Like trying to go left when there's a wall there?",
+      "repository": "lloorree/maze-extension",
+      "source_index": 1675,
+      "winner": "model_a",
+      "status": "eligible",
+      "reason": "Actual canMove and beforePrompt code answers blocked direction behavior despite stale template README. Wall condition prevents movement; no automatic error message should be invented.",
+      "commit": "da34055f22809ec3bbe62231d3a7ecde9464958e",
+      "snapshot_path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/lloorree--maze-extension/snapshot.json",
+      "snapshot_sha256": "a811b6ef9c617efdac7fee786c38c57d7453c2d1ab3337b971ab9fc0c8ebbfdb",
+      "evidence": [
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/lloorree--maze-extension/files/src/ChubExtension.tsx",
+          "sha256": "5a10da127c58580c12fe98d9dfe6b7c29c9a316bd57a99ef4d51f1e6bd9a8793"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/repochat-qa-next-20261001-v1/repositories/lloorree--maze-extension/files/src/maze.ts",
+          "sha256": "e339195091aea674473e14b408618bf1eeffec0a1407f718616e81b81048982b"
+        }
+      ]
+    }
+  ],
+  "eligible_ids": [
+    "b18c77c842a470712be4123124b71eeb5419f75a3347df3e84c1c3403ed21940",
+    "9ee8ac3930641f2f02f485fe7ba6ebe948e4209d80f232c9148cfffff69e91a6",
+    "22a16cd68850d6d48f9d905e7dbfcf77405c4281724eecea65ff637ed1169e31",
+    "316a2f2e2e5a2fff634d45fcccce2dad42a405a80cf75141e97175addde6bd66",
+    "72226c21b45b132907fcbc127cb90d5305d9864de7c17887b91cc2b4f5fa657a",
+    "64d42472023c5d318a6161fb04e9f3f9954d547687114cf0a86a45f08b8e8954",
+    "74b8337e490677baa61e3acc0f8a3005bde51abe3d48412046273e67cf070463",
+    "76ce0fda8823886154bb6ce69d1093cb13f82256b4ef48f105521f6fcd925792",
+    "35b42286af7e6a972e5cb8f9b4191ccf6a7dd29e8c0dbc7f0fd8b3b1dd859764",
+    "ae49307ff9d6853e9b3e0f72257d13358e18ffd9d239b76c927c44311611e069",
+    "9845f37fea350fff37189e2bcfcf072aafada4189ba8f820f5c14880f74ee57f",
+    "e9301f7d8b5d2c7b51b6b0271d417b2f1b8ea39a7e8fde86f828362dc55ac0f1",
+    "3efbe5275e94bce3efaba3735cf63afc8307566b326cd5f69639f739457da7dc",
+    "a435d9ef56ddd2cf894d19fbd5dff1cb0b807bd3296e801f29dad88a7ae11575",
+    "22446aa523afebfba947bf573e6f1d53da604564c1f53aa972631d745bf4daa7",
+    "afcf74f81603909542d191ea2ffb1a6021163713ea563f88cf916b4ee19cf84b",
+    "5baa35cebd7980002aca4641be238075114402bd0d911f38fa7e7b11aeca619a",
+    "6237c77722f369f4c7b8a5e664fce8b3071b0b08909bd0053a8d49c2150bef98",
+    "45ca1a503579d431f8b42b4615295bb9973397ba96c82a3da0b297de214ec94a",
+    "2d07e21cf1610c2dd717d00026c43b99f6455c6c59993c2d22750d4b1aa3d7b2",
+    "a3c4003fbb0271d05a4c1cb1b4bcaf58da507b97250b4c29aaad78571427e5a1",
+    "4966d1a4819e35448b999b3606e155ace7dfdaf33cb68d9f30f21a10f93c786f",
+    "d241adc92b392cdfb5a58b347b2d9b5b129b1ee4636e9579523a171e4dc1823f",
+    "fa8f58bb2ae2fd8d405a6c53d8dc15f18c1da6e17b667069dbab59e6a3ca3a3a",
+    "b8f868490be5f8484c6e0e0ceb236163fc768318a68f2e50f80a06c6e48e0862",
+    "fe2596bd1c2ab5aa883d2a20ef5ea937df59b53e3fe49c26d1fc66401122a1a4",
+    "f7346b768f6f11bcc542e99ea3a91f495dac61a5bae06a0b865ab2ee72a0a3f1",
+    "af2a26085a541d231e66dd5a460317676fbdb4fd62faf9892af536ce76dca75c",
+    "56906ef12368669066f8b164b02f94772c534875745ad2a81667a47110dafbac",
+    "5b4c7699a9e81908df84931df54b1588db8d1068d66c1fb309979bd76490b200",
+    "5e23c573860ac0089f2e6abc72e63a90e219dd9c6d8fe69923e02dfe1fb3ab77",
+    "3831dc7030bc00463d0b000a6ef565aebffb56c2c2ebcb2356e056c188957d3f",
+    "bcd854c5307ccc805a9fe1933189a0e7e58c3098ec753bb48bc5137a328a9174",
+    "2e50df9dd528cdec7cdb123b6f70a2137ca785d47c2518ce12807fc3a2c7551c",
+    "e8271cd0175fec19459b503fdc6ec2f6bcc1dc0a17fb11f50793de863c9a963e",
+    "0225a2958433f983f2c79002c6a5b4015e66a963475e46c95b5aafd063a3dbf9",
+    "c7607eaf7e9477da8d3a313558cc88a96beafdf3bd9a606f3596753efc145050",
+    "1ea149248d635345813531e1e814f5cb2c38077a39e650e1138eafcf3f92b421",
+    "6b31694ed2ff746d0ad78194d969f387376a06b29bca1bc778175479024528e5",
+    "2261e730a3236b6dac5c666f59b707dc6b34d1b7b747226ae967ce56e0d06e43",
+    "e6ceaa083a7fd2d13439ccc7985475ae8e63ab26df5971257f3931ccd47796f5",
+    "33b3ff455d2aa7ddf85386d6698248b6883d7a4eaf09d86208b9fecdd13174e6",
+    "7867d01ba009a335c3051502eab08adaa8bfc47e8190f8ec09282febb747aeb0",
+    "8b6f4b22644b206f051fd15292c1c491b8ff6d471b87650f0a1cef2a9e046bdd",
+    "59b8257cffd8d8ed1039d68187446f976caae34021b155b6638b2fbcf111779a",
+    "2b63bc14d4480287c5ff45b0bc1f40c26e65c189c83dc04043e4be77ad31d5a9",
+    "f439729e1803b3964011fbbc343e1fe301438151e8223e6055bf7ea1c35ac7b4",
+    "2abd1343a1c393f09b74e2ce0b1809d0bfcf51dc168fe9ecd81495300c129527",
+    "ebca28ef21029d9e54337599cdcdf58f92095eeb48c24ef1807357a83e092ffc",
+    "e05034f9edcb1c03d0f23691eea35bed0c31ffa65d83abf6a4cf809131f78784",
+    "53f076a6e1230735ae631b25acff593574d576029a5bc748b19ff3775d53c28e",
+    "dbd94ec4de213e60a00fbcc4612480181c768366e474e027d25a4dbfd9023ff0",
+    "f342ebe9a0c41eec3e329c0a12f8396a104e343746191708ca2ccce6c3a38c4f",
+    "cf42920f3a2e03f5ed6507ee227532f4338064540fd80a5a1a833b216c60ad3a",
+    "be8880b2529e0e7a25917ae0b5dc9d92d4253b79e4d76d4225ba12801fa1258f",
+    "a983aa4fd0b1861370531f0c80cae14e48cbe1c149f0edb564b7f3a8054aeb94",
+    "ce38fd6410ae0967b59f8f73d8c6ef491878d8d14d0da638a46072937e410579",
+    "35204577fe281f09280684afe41ebe84bfa944af472abb6816152869bb196c63",
+    "3915e99b3b4eeff88e1abbe238e6cfb02df27f3a30f4808338eb48a5a23f164a",
+    "d1d7debd28cc075319e0ffb389ed414f770a9f7e2874dde58314f4b8a4fccedb",
+    "44dbdfa3061ea30f1edfa68b35a32ffadc2c1d7c7dd6445c20894b67e5d240e9",
+    "42621785facd58c897167a3992900ecd54a88da61a23b036feb28678ae65179a",
+    "03391d0ac385250409c20a261f654e3a406186b5f840325dc329f24f7d6ed202",
+    "29538909af1aa5563427f1840134c02cfb61f8510051e5c71abde9e74f3953a2",
+    "9542ac707f97958eea5f371c766dea31314f4e513a5e8a6b6966a44246493c4e",
+    "07ab04b3b8303b0702730cfea3d7d870e74ea69a1b4b8dcc0cca2653f4a5d62a",
+    "763a768ec14006ad7b819f8e6827575e1b26e0782db9a8d8b17df3cc8a0cf73b",
+    "ad34e86b79d4a07cfb78fc2ee67810c52aa0406c0724c85fc103f2acbb4df43e",
+    "19b5753d078897e4b0a2c975565cf6e11adccd5b941806163c4e831584e7d70b",
+    "db40870647293a40f388577771ef981290e5b9aa20203d7247549a10f8d88c8f",
+    "6f538a9d2fb75ff4e10648526bbfbf1d63e92793cccbfea8d5d766f05fee1ab9",
+    "93d9d23fad5306bdf3857a44d27ef23884a1d0f543695ef048ca236b8c97ed1e",
+    "18e87cf9b2063fd985c13db998720c7d70bcb8ca634bf05ebc0a3e31174b5f9f",
+    "eaf5ee181fcfb64f2679405aacd4da3d7198b25f68209c10834046d61fccacc7"
+  ],
+  "held_ids": [
+    "fa5d2159e2439f900ccd8e4d1dea0b6f3ec0bf5e60f117bf8af02823c0e25f97",
+    "e8ed5642d5ccbfa59817ac0365fe5f13618313c28f391244fe1b4380a838068e",
+    "51fd4b75c203e2723c511becbf77d8427a42806f89b7761f4f148ebba46a86ab",
+    "0217ac7d7d6cf4d3bfe726269a465c2720a68fc3933e52037384d716db2e47c5",
+    "3dbd3e5092608f9924a196a35bf4fb73ceea2d5bf01037ddba647dc813777983",
+    "a90ae6adfcb7fec5fcc247964da81dc72cd20db1f997a922e0452ab9d5b8e5dc",
+    "0c950c57a1841ea285ac1f67b3d40ed133f58769d3d2c78e2035f133af7102a8"
+  ]
+}

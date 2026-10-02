@@ -1,0 +1,25 @@
+{
+  "sources": [
+    {"name": "jjzha_skillspan", "repo_id": "jjzha/skillspan", "revision": "33062e6bd0e03a5e01ae299ce0518f4613ef4298", "language": "en", "license": "cc-by-4.0", "kind": "bio", "files": ["train.json", "dev.json", "test.json"], "train_file": "train.json"},
+    {"name": "jjzha_kompetencer", "repo_id": "jjzha/kompetencer", "revision": "63121e046efa9d089bce38b31c5b7911b1573672", "language": "da", "license": "cc-by-4.0", "kind": "bio", "files": ["train.json", "dev.json", "test.json"], "train_file": "train.json"},
+    {"name": "jjzha_green", "repo_id": "jjzha/green", "revision": "a3500da00e98b04ba7af65a230586f6432755bb7", "language": "en", "license": "cc-by-4.0", "kind": "bio", "files": ["train.json", "dev.json", "test.json"], "train_file": "train.json"},
+    {"name": "jjzha_imdb_dutch", "repo_id": "jjzha/imdb-dutch-instruct", "revision": "2697254a63e40995017891bbc484fd96a4305917", "language": "nl", "license": "apache-2.0", "kind": "instruct", "files": ["train.jsonl.gz", "test.jsonl.gz"], "train_file": "train.jsonl.gz"},
+    {"name": "jjzha_dutch_exam", "repo_id": "jjzha/dutch-central-exam-mcq", "revision": "f0311e858bfd98ed83cda5f7b03389cdc9276576", "language": "nl", "license": "cc-by-4.0 (source card; underlying exams retain attribution)", "kind": "mcq", "files": ["data/train-00000-of-00001.parquet", "data/dev-00000-of-00001.parquet", "data/test-00000-of-00001.parquet"], "train_file": "data/train-00000-of-00001.parquet"},
+    {"name": "jjzha_croco", "repo_id": "jjzha/croco-translated-data", "revision": "b50944e43ad94cce7c78970891c044fc10e45ccf", "license": "gemma", "kind": "chat_audit", "files": ["danish.jsonl", "dutch.jsonl", "english.jsonl", "french.jsonl", "galician.jsonl", "german.jsonl", "irish.jsonl", "italian.jsonl", "maltese.jsonl", "spanish.jsonl", "welsh.jsonl"]}
+  ],
+  "deferred": {
+    "jjzha/skillskape": "Relevant skill matching, but no license declared in source card; resolve before admission.",
+    "jjzha/sayfullina": "Unknown license; narrow soft-skill task already covered by selected sources.",
+    "jjzha/gnehm": "CC-BY-NC-SA; not a default public-training addition.",
+    "jjzha/fijo": "CC-BY-NC-SA; not a default public-training addition.",
+    "jjzha/jobstack": "De-identification labels on original personal entities; needs dedicated privacy review/converter; GPL card.",
+    "jjzha/sefl": "Intentionally incorrect student outputs; requires teacher-feedback-only conversion and quality audit, not prompt/completion SFT.",
+    "jjzha/fs1-2708": "Observed WebQTest ID, synthetic reasoning and embedded Qwen identity/template; no source card/license or safe train partition.",
+    "jjzha/rt-2708": "No source card/license; embedded Qwen identity/template, provenance and benchmark partition unresolved.",
+    "jjzha/fs1-benchmark-2708": "Explicit benchmark test data; excluded from training.",
+    "jjzha/danish-citizen-global-exams": "Repackages Danish citizenship exams used by our EuroEval knowledge benchmark; no safe training partition established.",
+    "jjzha/belgian-entrance-exam-physician": "Train split separates INCLUDE benchmark, but license explicitly unknown; defer pending permission.",
+    "jjzha/dutch-central-exam-mcq-multimodal-subset": "Images required and overlaps exam benchmark; do not strip images to create text-only supervision.",
+    "jjzha/flemish_multimodal_exams_physician": "Images required and overlaps exam benchmark; no text-only conversion."
+  }
+}

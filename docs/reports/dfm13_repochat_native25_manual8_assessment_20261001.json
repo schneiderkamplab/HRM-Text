@@ -1,0 +1,243 @@
+{
+  "schema": "dfm13-repochat-native25-manual8-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_source_review",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "new_gpu_calls": 0,
+  "new_model_calls": 0,
+  "scope": "All eight deterministic hash-selected automated passes in supplied manual packet; semantic review independent of automated rationale, but not label-blind because packet includes model judgments. Not an unbiased estimate of all 25 tasks or all RepoChat.",
+  "counts": {
+    "cases": 8,
+    "useful_supported_core": 4,
+    "useful_partial_scope_repairs": 2,
+    "confirmed_false_passes": 2
+  },
+  "cpu_verification": {
+    "observations_replayed_against_pinned_snapshots": 33,
+    "all_observations_exact_match": true,
+    "student_targets_rerendered": 41,
+    "all_saved_counts_and_token_hashes_match": true,
+    "min_target_view_tokens": 435,
+    "max_target_view_tokens": 2670,
+    "all_fit4096": true,
+    "prompt_masks_checked_by_existing_student_renderer": true,
+    "claim_scope": "41 targets in this sample verified; not an independent assertion about the reported full cohort's 61 targets."
+  },
+  "generalizable_findings": [
+    "Do not infer absence from a first README page or capped path listing.",
+    "Tool prefix is a literal string: '.' is not root. Empty results from that prefix are not evidence a feature does not exist.",
+    "Read actual mappings for named tokens and implementation/call sites for repository-wide behavior.",
+    "Bounded contexts can hold useful answers, but sound masking and real tools do not ensure sufficient evidence gathering."
+  ],
+  "decision": "The sample demonstrates useful native compact trajectories, but automated passes are not safe for blanket admission. Route PyGyat and DFDC to hard holds and correct the two partial-scope answers. No process launch or admission authorized by this receipt.",
+  "limits": [
+    "Additional pinned-source reads diagnose omissions; they were not retroactively added to learner context.",
+    "Agent review, not human/native gold.",
+    "No foreign repository code executed; only local read-only tool replay and tokenizer rendering."
+  ],
+  "rows": [
+    {
+      "id": "81c5762da4114718c432b3dd7478bd67422e8bcc159b1d1a030f44192007729b",
+      "repository": "vsyakoedlyavw/VWFR",
+      "question": "Как именно реализовано создание темы на форуме?",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/81c5762da4114718c432b3dd7478bd67422e8bcc159b1d1a030f44192007729b/candidate.json",
+          "sha256": "877895c1d4b6abd4c43f35e2b3e741df117aa0ee982be7a53196c22bd929530c"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/vsyakoedlyavw--VWFR/snapshot.json",
+          "sha256": "b315529faa3219369f831534eb50a20cba0dbef9b0e83addd29f164233093f28"
+        }
+      ],
+      "target_count": 7,
+      "max_target_view_tokens": 2612,
+      "assessment": "useful_supported",
+      "evidence": "Retained MainForm.php:420-449 directly supports payload fields, HTML composition, POST, Location-prefix success check and link/toast construction. No claimed test execution or invented URL resolution.",
+      "correction_or_limit": "Minor: mention followRedirects=false at 434 and scope this to the observed report-posting path; no material false claim found.",
+      "admission_authorized": false
+    },
+    {
+      "id": "c1e8f6d47c845ff32391f965b4b863b2fdf3206ba0d9b72ee02210aae914ee3b",
+      "repository": "shamith09/pygyat",
+      "question": "What's the purpose of this repo, and what is the importance of rizz?",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/c1e8f6d47c845ff32391f965b4b863b2fdf3206ba0d9b72ee02210aae914ee3b/candidate.json",
+          "sha256": "0cb1c8b2623949be063503294ae464e45cc24b2d9e34e417ba9ce6f7f8f99863"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/shamith09--pygyat/snapshot.json",
+          "sha256": "28d013bdc039948f90757117bf61176915274dcefd3003cc3b6ad7590d6e57e3"
+        }
+      ],
+      "target_count": 3,
+      "max_target_view_tokens": 1277,
+      "assessment": "hard_hold_false_absence_of_rizz_function",
+      "evidence": "The answer concludes rizz has no technical significance after reading only README:1-30. Independent pinned-source inspection finds README:92 mapping '+' to 'rizz' and pygyat/__init__.py:9 mapping 'rizz' to '+'. The actual user specifically asked why rizz matters.",
+      "correction_or_limit": "Read the keyword mapping or parser mapping and explain addition syntax. First-page absence must not become a repository-wide negative.",
+      "admission_authorized": false
+    },
+    {
+      "id": "c593e52dabbca3a06116908943b6031fe5a2ae310d29f4a4f04ce689020e4301",
+      "repository": "KhoomeiK/LlamaGym",
+      "question": "How is the reward function defined for this reinforcement learning framework?",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/c593e52dabbca3a06116908943b6031fe5a2ae310d29f4a4f04ce689020e4301/candidate.json",
+          "sha256": "08187bf818ca375c69999b1f3363f88ee2a04f7fa623cb1d5ac5b281477dcb84"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/KhoomeiK--LlamaGym/snapshot.json",
+          "sha256": "fd889105c25140ca5a0b111bfe3d0124a5b16a03055f6d14cd501031a6627812"
+        }
+      ],
+      "target_count": 6,
+      "max_target_view_tokens": 2236,
+      "assessment": "useful_partial_reward_pipeline",
+      "evidence": "Observed agent.py:90-118 supports reward collection, the exact sparse-reward formula and tensor conversion. However, a partial agent-file read does not establish that the framework as a whole lacks reward calculation; examples/blackjack.py:100-101 obtains reward from env.step and passes it to assign_reward.",
+      "correction_or_limit": "Say the inspected Agent consumes externally supplied rewards; read an environment call site to answer origin. Describe the exact denominator len(messages)/2, not an assumed normalized number of actions.",
+      "admission_authorized": false
+    },
+    {
+      "id": "0785b3d5e9ff081205d3da5b159266f135686b2f6aa65f9c57291e346f0e1160",
+      "repository": "Doomsy1/LIDAR-Car",
+      "question": "what does this library do?",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/0785b3d5e9ff081205d3da5b159266f135686b2f6aa65f9c57291e346f0e1160/candidate.json",
+          "sha256": "a99c0a1912a68d9381350f5a99513effc06951e48bf9244bfa34d01638606d3b"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/Doomsy1--LIDAR-Car/snapshot.json",
+          "sha256": "70323ef54dce3b9f484d21aaab69b63032951d4d4857cc9ed2e28ed4fc98389c"
+        }
+      ],
+      "target_count": 6,
+      "max_target_view_tokens": 2670,
+      "assessment": "useful_partial_hardware_interfaces",
+      "evidence": "Motor, Stepper32 and Socket8266 method descriptions match retrieved declarations. But ESP32/ESP8266 architecture and lidar purpose are inferred chiefly from filenames, expressly discouraged by the system, and the overall LIDAR-Car purpose is not established from the generic include/README.",
+      "correction_or_limit": "Read platformio.ini and the main/lidar implementation or project README. Keep the useful interface summary but distinguish declared methods from verified implementation and repository purpose.",
+      "admission_authorized": false
+    },
+    {
+      "id": "fd6b3cec93beaab4fb85469e31e45d88b97b9cd39238d9ae59e5ced4540a63c3",
+      "repository": "joshualyon/custom-tile-demos",
+      "question": "What is the code in this repo for? What does it do?",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/fd6b3cec93beaab4fb85469e31e45d88b97b9cd39238d9ae59e5ced4540a63c3/candidate.json",
+          "sha256": "e2370a6c0ed9d29b814c4a8685efd2ca477c96cfb4617d6557f9be6e8068db21"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/joshualyon--custom-tile-demos/snapshot.json",
+          "sha256": "f135596b0d9173d4843e183df6804153e2ac107919c69c892440e24df34f9d04"
+        }
+      ],
+      "target_count": 3,
+      "max_target_view_tokens": 1442,
+      "assessment": "useful_supported",
+      "evidence": "README:1-30 explicitly explains SharpTools reference tiles, user imports and developer use. File-list examples are clearly cited as filenames rather than asserted full implementations.",
+      "correction_or_limit": "For stricter line-only citation style, inspect each example header; no material unsupported behavior claim identified.",
+      "admission_authorized": false
+    },
+    {
+      "id": "02533e8f710c41baea77a7825a06d81bd2f2adf6d403c8371e9ad7013b60adc0",
+      "repository": "zelenin/go-tdlib",
+      "question": "Получить по айди данные о пользователе или о чате. Показать что делает функция getUser",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/02533e8f710c41baea77a7825a06d81bd2f2adf6d403c8371e9ad7013b60adc0/candidate.json",
+          "sha256": "461381b074bdd676bc9fa8f3fb5231bd2c39fc630e5bff795b948d0dda33642c"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/zelenin--go-tdlib/snapshot.json",
+          "sha256": "a4f950960bf9c395ea08f8c4ba8de5ffc6a114361c21058e00266ceffcc19a2c"
+        }
+      ],
+      "target_count": 6,
+      "max_target_view_tokens": 2401,
+      "assessment": "useful_supported_getuser_scope",
+      "evidence": "Retrieved generated declarations and body support UserId int64, Send, transport and TDLib errors, UnmarshalUser, return type, documented non-bot offline behavior and GetUserFullInfo existence.",
+      "correction_or_limit": "The user also mentions chat data; GetChat was not inspected or explained. Add that branch or explicitly state this answer covers GetUser only. Do not invent it from a neighboring API.",
+      "admission_authorized": false
+    },
+    {
+      "id": "58dd8022a0b00d3a9546360f96418b4ae7e2872b6a2464a99d5d11c07d7f0f74",
+      "repository": "selimsef/dfdc_deepfake_challenge",
+      "question": "Какие аугментации применяются к изображение",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/58dd8022a0b00d3a9546360f96418b4ae7e2872b6a2464a99d5d11c07d7f0f74/candidate.json",
+          "sha256": "e892decb21aea3ab2a344fb8cb93338a2ca6a8dd25b28c5d3e2d966dd89532e7"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/selimsef--dfdc_deepfake_challenge/snapshot.json",
+          "sha256": "20a5a34d1fac36db1674220debddf1ca5e4e642b87d7db2fd6ed63fbd5113ca9"
+        }
+      ],
+      "target_count": 7,
+      "max_target_view_tokens": 1348,
+      "assessment": "hard_hold_false_augmentation_absence",
+      "evidence": "The answer says augmentation-library use is absent after incomplete path listing and searches restricted to preprocessing/ or prefix '.'. Pinned README:67-90 describes heavy Albumentations use; training/pipelines/train_classifier.py:26-28 and 45-60 imports and constructs the actual augmentation pipeline.",
+      "correction_or_limit": "Read training/pipelines/train_classifier.py:45-60: compression, noise, blur, horizontal flip, resize, pad, color transforms, grayscale, shift/scale/rotation. These were not in learner observations and must be retrieved before a corrected target is generated. Prefix '.' is literal and is not repository root; use empty prefix or paginate paths.",
+      "admission_authorized": false
+    },
+    {
+      "id": "877835c7ba31d57ff9b5445e0e4d0648493b9e2f52319a3a29781f1804861c44",
+      "repository": "Jonseed/ComfyUI-Detail-Daemon",
+      "question": "Что делает данный плагин",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/877835c7ba31d57ff9b5445e0e4d0648493b9e2f52319a3a29781f1804861c44/candidate.json",
+          "sha256": "23f581564caa7ee103ee2cc04b59ea2cfe4fcf8eed52bb59c1ee7fbedb4db0a3"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/Jonseed--ComfyUI-Detail-Daemon/snapshot.json",
+          "sha256": "8c5d89ea0b5cd78aa45b81fbde665567bb0ecbeea33b3efdcb27837eb68ba740"
+        }
+      ],
+      "target_count": 3,
+      "max_target_view_tokens": 2028,
+      "assessment": "useful_supported_documented_purpose",
+      "evidence": "README:11-29 supports the plugin purpose, five nodes, sigma/noise schedule explanation, named model compatibility and oversharpening caveat. A README is appropriate for this purpose question; no execution claim is made.",
+      "correction_or_limit": "Preserve 'possibly removes blur' rather than implying guaranteed removal, and frame compatibility/mechanism as documented rather than independently executed.",
+      "admission_authorized": false
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/manual-packet.json",
+      "sha256": "2401d806abee6d90e7f798f10c5a20a7235b46d9045ed401b8f58b1e5d903ffc"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/parent-manual-handoff.json",
+      "sha256": "a3eb3eaf5a1e7c9ccd64156170fc114871030f676e5570fbae48dd2e84cbbcfe"
+    },
+    {
+      "path": "scripts/dfm13_repochat_student25.py",
+      "sha256": "3d42347a9f86591022348d514da11e16987fe517857858e69a882dc81544af79"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/shamith09--pygyat/files/README.md",
+      "sha256": "865e5b306a242c71927b3aa515cd58eb8ddb766294df3f5f24077579f3578172"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/shamith09--pygyat/files/pygyat/__init__.py",
+      "sha256": "49da92911bc9243b363f087a984259ba2f186de2c1221443c28b0684ae7a0d46"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/selimsef--dfdc_deepfake_challenge/files/training/pipelines/train_classifier.py",
+      "sha256": "0a55698c94c2d353e019984c2e5389f6785151fb25f4dfaf70106502df8ed728"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/selimsef--dfdc_deepfake_challenge/files/README.md",
+      "sha256": "5f723e7632ca99cf7a1a6dbe74736887980937f365a015475fd4ea17554bbfe7"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/KhoomeiK--LlamaGym/files/examples/blackjack.py",
+      "sha256": "9146c1a0d5d60b502860c4ab3844de4f158150e2b963f34c2a06b1726b5a9fbd"
+    }
+  ]
+}

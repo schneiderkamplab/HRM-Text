@@ -1,0 +1,29 @@
+{
+  "notes": [
+    "Main candidates are discovered from data/dfm12/candidates, excluding *-pilot; all are unaudited.",
+    "Explicit auxiliary snapshot selection; v1/v2 predecessors are not additive to v3.",
+    "Paragraph and sentence-block inventories may overlap legacy documents and each other; no grand total or final allocation is asserted.",
+    "Identity requests are not generated conversations; no identity tokens are available yet.",
+    "All DynaWord/DynaInstruct licenses are user-authorized; this accounting does not reimpose license holds or override quality/format/contamination decisions."
+  ],
+  "components": [
+    {"name": "additional-dala-registration", "inventory_class": "pending_producer", "receipt": "data/dfm12/dala-registration/manifest.json", "receipt_only": true, "note": "Six-language producer finalization/import pending; raw pre-isolation builds are not available DFM12 candidates."},
+    {"name": "dyna-instruct-fo-v3", "inventory_class": "additional_unaudited", "receipt": "data/dfm12/island-instruct-unaudited-v3/dyna-instruct-fo/receipt.json", "files": ["data/dfm12/island-instruct-unaudited-v3/dyna-instruct-fo/candidates.jsonl"], "tokenized": "data/dfm12/island-instruct-unaudited-v3/dyna-instruct-fo/tokenized_unaudited"},
+    {"name": "dyna-instruct-is-v3", "inventory_class": "additional_unaudited", "receipt": "data/dfm12/island-instruct-unaudited-v3/dyna-instruct-is/receipt.json", "files": ["data/dfm12/island-instruct-unaudited-v3/dyna-instruct-is/candidates.jsonl"], "tokenized": "data/dfm12/island-instruct-unaudited-v3/dyna-instruct-is/tokenized_unaudited"},
+    {"name": "norwegian-magpie", "inventory_class": "additional_unaudited", "receipt": "data/dfm12/norwegian-20260924/preparation-receipt.json", "files": ["data/dfm12/norwegian-20260924/staging_unaudited/magpie-qwen3-bokmaal/part-*.jsonl"], "tokenized": "data/dfm12/norwegian-20260924/tokenized_unaudited/magpie-qwen3-bokmaal"},
+    {"name": "norwegian-samtale", "inventory_class": "additional_unaudited", "receipt": "data/dfm12/norwegian-20260924/preparation-receipt.json", "files": ["data/dfm12/norwegian-20260924/staging_unaudited/nb-samtale-pairs/part-*.jsonl"], "tokenized": "data/dfm12/norwegian-20260924/tokenized_unaudited/nb-samtale-pairs"},
+    {"name": "pllum-align", "inventory_class": "additional_unaudited", "receipt": "data/dfm12/polish_unaudited/staging-20260924-v1/receipt.json", "files": ["data/dfm12/polish_unaudited/staging-20260924-v1/candidates.jsonl"], "tokenized": "data/dfm12/polish_unaudited/staging-20260924-v1/tokenized_unaudited/pllum-align"},
+    {"name": "pllumic", "inventory_class": "additional_unaudited", "receipt": "data/dfm12/polish_unaudited/pllumic-access-20260924/staging-main-v1/receipt.json", "files": ["data/dfm12/polish_unaudited/pllumic-access-20260924/staging-main-v1/candidates.jsonl"], "tokenized": "data/dfm12/polish_unaudited/pllumic-access-20260924/staging-main-v1/tokenized_unaudited/pllumic"},
+    {"name": "paragraph-repair-nl-v1", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-paragraph-repair-20260924-v1/candidates/dynaword-nl-paragraph-repair-v1/receipt.json", "files": ["data/dfm12-paragraph-repair-20260924-v1/candidates/dynaword-nl-paragraph-repair-v1/candidates.jsonl"]},
+    {"name": "paragraph-structure-nb-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-structure-preserving-20260924-v3/candidates/nb/receipt.json", "files": ["data/dfm12-structure-preserving-20260924-v3/candidates/nb/candidates.jsonl"]},
+    {"name": "paragraph-structure-nn-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-structure-preserving-20260924-v3/candidates/nn/receipt.json", "files": ["data/dfm12-structure-preserving-20260924-v3/candidates/nn/candidates.jsonl"]},
+    {"name": "paragraph-structure-sv-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-structure-preserving-20260924-v3/candidates/sv/receipt.json", "files": ["data/dfm12-structure-preserving-20260924-v3/candidates/sv/candidates.jsonl"]},
+    {"name": "paragraph-sparv-sv-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-sparv-paragraphs-20260924-v3/receipt.json", "files": ["data/dfm12-sparv-paragraphs-20260924-v3/candidates.jsonl"]},
+    {"name": "sentence-blocks-nl-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-sentence-blocks-20260924-v3/candidates/nl/receipt.json", "files": ["data/dfm12-sentence-blocks-20260924-v3/candidates/nl/candidates.jsonl"]},
+    {"name": "sentence-blocks-nb-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-sentence-blocks-20260924-v3/candidates/nb/receipt.json", "files": ["data/dfm12-sentence-blocks-20260924-v3/candidates/nb/candidates.jsonl"]},
+    {"name": "sentence-blocks-nn-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-sentence-blocks-20260924-v3/candidates/nn/receipt.json", "files": ["data/dfm12-sentence-blocks-20260924-v3/candidates/nn/candidates.jsonl"]},
+    {"name": "sentence-blocks-sv-v3", "inventory_class": "alternative_unaudited", "receipt": "data/dfm12-sentence-blocks-20260924-v3/candidates/sv/receipt.json", "files": ["data/dfm12-sentence-blocks-20260924-v3/candidates/sv/candidates.jsonl"]},
+    {"name": "scandi-review", "inventory_class": "review_only", "receipt": "data/dfm12/scandi-review-20260924/receipt.json", "receipt_only": true, "note": "No prepared eligible candidates in this snapshot; no raw-corpus token extrapolation."},
+    {"name": "danish-increments", "inventory_class": "review_only", "receipt": "data/dfm12/danish-increments/receipt.json", "receipt_only": true, "note": "Receipt reports no new increments versus inherited reservoir."}
+  ]
+}

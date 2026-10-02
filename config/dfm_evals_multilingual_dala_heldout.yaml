@@ -1,0 +1,680 @@
+sets:
+  dala_nb:
+    description: "Pinned test-only dala nb; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=nb
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_nb:
+    description: "Pinned test-only gec_dala nb; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=nb
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_nn:
+    description: "Pinned test-only dala nn; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=nn
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_nn:
+    description: "Pinned test-only gec_dala nn; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=nn
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_sv:
+    description: "Pinned test-only dala sv; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=sv
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_sv:
+    description: "Pinned test-only gec_dala sv; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=sv
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_is:
+    description: "Pinned test-only dala is; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=is
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_is:
+    description: "Pinned test-only gec_dala is; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=is
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_fo:
+    description: "Pinned test-only dala fo; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=fo
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_fo:
+    description: "Pinned test-only gec_dala fo; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=fo
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_nl:
+    description: "Pinned test-only dala nl; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=nl
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_nl:
+    description: "Pinned test-only gec_dala nl; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=nl
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_pl:
+    description: "Pinned test-only dala pl; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=pl
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_pl:
+    description: "Pinned test-only gec_dala pl; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=pl
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_de:
+    description: "Pinned test-only dala de; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=de
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_de:
+    description: "Pinned test-only gec_dala de; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=de
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_fr:
+    description: "Pinned test-only dala fr; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=fr
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_fr:
+    description: "Pinned test-only gec_dala fr; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=fr
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_es:
+    description: "Pinned test-only dala es; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=es
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_es:
+    description: "Pinned test-only gec_dala es; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=es
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_it:
+    description: "Pinned test-only dala it; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=it
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_it:
+    description: "Pinned test-only gec_dala it; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=it
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_cs:
+    description: "Pinned test-only dala cs; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=cs
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_cs:
+    description: "Pinned test-only gec_dala cs; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=cs
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_pt_pt:
+    description: "Pinned test-only dala pt_pt; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=pt_pt
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_pt_pt:
+    description: "Pinned test-only gec_dala pt_pt; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=pt_pt
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_fi:
+    description: "Pinned test-only dala fi; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=fi
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_fi:
+    description: "Pinned test-only gec_dala fi; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=fi
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_et:
+    description: "Pinned test-only dala et; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=et
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_et:
+    description: "Pinned test-only gec_dala et; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=et
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_ca:
+    description: "Pinned test-only dala ca; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=ca
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_ca:
+    description: "Pinned test-only gec_dala ca; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=ca
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_el:
+    description: "Pinned test-only dala el; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=el
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_el:
+    description: "Pinned test-only gec_dala el; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=el
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_ro:
+    description: "Pinned test-only dala ro; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=ro
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_ro:
+    description: "Pinned test-only gec_dala ro; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=ro
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_uk:
+    description: "Pinned test-only dala uk; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=uk
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_uk:
+    description: "Pinned test-only gec_dala uk; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=uk
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  dala_en:
+    description: "Pinned test-only dala en; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@dala_heldout
+        args:
+          - -T
+          - language=en
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=32
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"
+
+  gec_dala_en:
+    description: "Pinned test-only gec_dala en; seed4242 paired controls; no training fallback."
+    tasks:
+      - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py@gec_dala_heldout
+        args:
+          - -T
+          - language=en
+          - -T
+          - manifest=/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json
+          - -T
+          - max_gen_toks=512
+    args:
+      - --model
+      - "{{target_model}}"
+      - --temperature
+      - "0"

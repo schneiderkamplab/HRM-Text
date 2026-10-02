@@ -1,0 +1,183 @@
+{
+  "schema": "dfm13-repochat-pending7-manual-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_source_review",
+  "admission_authorized": false,
+  "previous_holds_unchanged": true,
+  "active_ledgers_modified": false,
+  "new_paid_calls": 0,
+  "new_model_calls": 0,
+  "new_gpu_calls": 0,
+  "counts": {
+    "reviewed": 7,
+    "useful_supported_cores": 5,
+    "partial_needs_implementation_evidence": 1,
+    "hard_hold": 1
+  },
+  "verification": "Candidate bytes and embedded rows checked; each target CPU re-rendered with existing Student renderer and compared to packet token hashes/counts. Extra diagnostic source files hash-match pinned snapshots. Extra source reads are not retroactively learner evidence.",
+  "limits": [
+    "Sample-bound agent assessment, not human/native gold or admission.",
+    "No tool-result replay for this mixed legacy/new-tools packet; semantic evidence was read directly.",
+    "Older candidate holds remain; useful new hashes do not clear them."
+  ],
+  "rows": [
+    {
+      "id": "a1fbb8af3a41b3cf97bcd2af74b2c99399b473195e9b657b1d247819bbeeeb19",
+      "repository": "skiffos/SkiffOS",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/a1fbb8af3a41b3cf97bcd2af74b2c99399b473195e9b657b1d247819bbeeeb19/candidate.json",
+          "sha256": "daab08904e103d992d5e8706117c5698f60c72cd2e657224ee3e9f85f993e1c7"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/skiffos--SkiffOS/snapshot.json",
+          "sha256": "4bc8fea9a9c8e83d5ae04c583588af3ec8c639ce627182827071632ef3f68fea"
+        }
+      ],
+      "target_count": 3,
+      "max_view_tokens": 1512,
+      "assessment": "useful_supported_documented_purpose",
+      "evidence": "README:7-28 supports Buildroot configuration packages, hardware/environment separation, example targets and intended uses. The answer frames reliability as an aim rather than an independently tested guarantee.",
+      "correction_or_limit": "Prefer qualified portability across the same CPU architecture (README:21-24) over the broad 'any distribution anywhere' slogan.",
+      "admission_authorized": false
+    },
+    {
+      "id": "63504fbc340292d38fdb4dd59d6a2dca3b7aa8d2707798a7047ee97c5bc821b6",
+      "repository": "cmu-cs-academy/desktop-cmu-graphics",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/63504fbc340292d38fdb4dd59d6a2dca3b7aa8d2707798a7047ee97c5bc821b6/candidate.json",
+          "sha256": "85035e154327ede0d2a1767f6c9a46c9a23c52547ef689c6e6e1636eea9aa429"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/cmu-cs-academy--desktop-cmu-graphics/snapshot.json",
+          "sha256": "2fa693c15d6c02a0cde64c56e4950587d96a3dcdcbe1c91efdd1aa8801831a02"
+        }
+      ],
+      "target_count": 6,
+      "max_view_tokens": 1025,
+      "assessment": "hard_hold_false_absence_mouse_handling",
+      "evidence": "All meaningful searches use legacy literal prefix '.', which excludes ordinary source paths. The answer converts empty results into a false repository-wide absence claim. Pinned cmu_graphics/cmu_graphics.py:1252-1254 handles pygame.MOUSEBUTTONDOWN and dispatches onMousePress with coordinates and button index.",
+      "correction_or_limit": "Retrieve the actual event loop with a valid root/directory prefix. Do not treat this as an unavoidable missing-source response.",
+      "admission_authorized": false
+    },
+    {
+      "id": "329dc6f7a2ec565e098a624ccc1183857e5782bbba2517442059a3413f16ae5a",
+      "repository": "Yvan57/V2Ray-IP-Region-Renamer",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/329dc6f7a2ec565e098a624ccc1183857e5782bbba2517442059a3413f16ae5a/candidate.json",
+          "sha256": "aed2dd63579aca3511c2e9d2d3f114d0312a404ba2e86b30820231c91db79f49"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/Yvan57--V2Ray-IP-Region-Renamer/snapshot.json",
+          "sha256": "63b05d2809d3acdd8cd14ba8857220af1e684579647711df214cc83b51b00b7b"
+        }
+      ],
+      "target_count": 3,
+      "max_view_tokens": 1252,
+      "assessment": "useful_supported_purpose_with_minor_file_inference",
+      "evidence": "README:3-12 supports V2Ray profile renaming by server-IP geography and the Windows/Python instructions. Independent PIPInstall.bat read confirms pip dependency installation, but that content was not retrieved by the candidate.",
+      "correction_or_limit": "The file-list-based installation-script claim should be omitted or supported by a read in a corrected trajectory. The core purpose answer remains useful.",
+      "admission_authorized": false
+    },
+    {
+      "id": "23c12e6d911f4c0c319006b26b1ac91c91a3a033a1fabc7738c5fde366fc235f",
+      "repository": "sbingner/snappy",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/23c12e6d911f4c0c319006b26b1ac91c91a3a033a1fabc7738c5fde366fc235f/candidate.json",
+          "sha256": "d971793450501ac804de591a849a83d7baf7bbc6deb3751399e5c51e618056ca"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/sbingner--snappy/snapshot.json",
+          "sha256": "3620f3cbddc64b010a75c54775221af0c96e22ab2f3258f2e8ce72bff65d5cd3"
+        }
+      ],
+      "target_count": 5,
+      "max_view_tokens": 1352,
+      "assessment": "partial_wrapper_api_not_underlying_implementation",
+      "evidence": "The retrieved header supports SBSnappy and its declared methods. The user asks which framework/API implements snapshot management, but only the wrapper is described. Pinned libsnappy.m:89,93,97,113,121 directly calls fs_snapshot_create/delete/rename/mount/revert.",
+      "correction_or_limit": "Read those call sites and name the underlying system snapshot API. Keep the useful wrapper summary but do not present it as a complete implementation explanation.",
+      "admission_authorized": false
+    },
+    {
+      "id": "97376442dcc79bbdf04c9353d13640dd15fc500336ffe4faf901101f28ec29c0",
+      "repository": "neodyland/chat-lmsys",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/trajectories/97376442dcc79bbdf04c9353d13640dd15fc500336ffe4faf901101f28ec29c0/candidate.json",
+          "sha256": "2daf70b4c1aa57bcec3f257994e69f61a25905dbed70d1f6f49eeb5a6513e960"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/neodyland--chat-lmsys/snapshot.json",
+          "sha256": "4a0bfe4c5f096067ee87cf0f198ab7acf7ae07190755c242f8f84deaf274a812"
+        }
+      ],
+      "target_count": 3,
+      "max_view_tokens": 985,
+      "assessment": "useful_supported_documented_purpose",
+      "evidence": "README:3 and example:15-27 support automating chat.lmsys.org with a Python package and awaiting chat.ask for a named model.",
+      "correction_or_limit": "No live service availability or execution guarantee established or claimed. Purpose QA does not require reverse-engineering every implementation detail.",
+      "admission_authorized": false
+    },
+    {
+      "id": "e77fd200e555fc71228dea8ae2ff33ca861011891d7173411d068d29c2959cbc",
+      "repository": "mail4metablocks/zk-starks",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/generation-retry12-v1/trajectories/e77fd200e555fc71228dea8ae2ff33ca861011891d7173411d068d29c2959cbc/candidate.json",
+          "sha256": "412dd0e8b24f62b9d53944f9c2dd82b7ac8b7c4df6fd2abc179cd9e0bb656cb7"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/mail4metablocks--zk-starks/snapshot.json",
+          "sha256": "0307849255e6a3cb214ec88797b69c9da586f305c25d76ea2252067e5f5b6bf9"
+        }
+      ],
+      "target_count": 4,
+      "max_view_tokens": 2111,
+      "assessment": "useful_supported_example_not_own_implementation",
+      "evidence": "Complete root listing contains README, LICENSE and one sample. The sample imports external proof functions rather than implementing them. Answer appropriately distinguishes an illustrative wrapper/example from its own zk-STARK implementation and does not repeat the README's dubious cryptographic explanations.",
+      "correction_or_limit": "Do not certify that the named external API exists or that the sample compiles; neither was tested. Phrase as code purporting to use that external library if stricter.",
+      "admission_authorized": false
+    },
+    {
+      "id": "78ddffa9ed0073a388da2a46922d903d84bfe2b9ec9a190ee9112967eedc46bb",
+      "repository": "moonglow/pcan_cantact",
+      "pins": [
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/generation-retry12-v1/trajectories/78ddffa9ed0073a388da2a46922d903d84bfe2b9ec9a190ee9112967eedc46bb/candidate.json",
+          "sha256": "7514a31dc2aa98f3e60461cc8fb255badd1ff3d9a3d56e8411cc190acc2cbeb9"
+        },
+        {
+          "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/moonglow--pcan_cantact/snapshot.json",
+          "sha256": "e8e33b31d8c97071ab219f91993879e4775bf265d4b52e2dced9c867ba8cf9a9"
+        }
+      ],
+      "target_count": 7,
+      "max_view_tokens": 3225,
+      "assessment": "useful_supported_main_control_flow",
+      "evidence": "Delivered Src/main.c:85-108 contains initialization order, slow-blink LEDs and the USB/LED/protocol polling loop, all accurately summarized. Earlier clock code provides context. No runtime/test claim is invented.",
+      "correction_or_limit": "Module internals were not inspected; summary remains at the visible call-sequence level.",
+      "admission_authorized": false
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/independent-disposition-v1/pending-seven-manual-packet.json",
+      "sha256": "20b2e94d0d8416f3deaddfa98e6c888842dfd074fddbe8f6dfae3d0b6d46c65c"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/cmu-cs-academy--desktop-cmu-graphics/files/cmu_graphics/cmu_graphics.py",
+      "sha256": "0c64ffed75b90fd5c5b9eb0087cb3addd8a246ecca918e4bf8063caa93a67480"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/sbingner--snappy/files/libsnappy.m",
+      "sha256": "e323192412b43ed2deb2b632da28765740ca430f71d6f20891ff07b9c59af8e5"
+    },
+    {
+      "path": "data/dfm13/repochat-native-student25-20261001-v1/repositories/Yvan57--V2Ray-IP-Region-Renamer/files/PIPInstall.bat",
+      "sha256": "9bbfcfe61d76a5c84a958eaded65da662e0455f01f11ecccb838f1bae319c0e0"
+    }
+  ]
+}

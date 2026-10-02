@@ -1,0 +1,159 @@
+{
+  "schema": "dfm13-independent-quality-holds-v1",
+  "date": "2026-10-01",
+  "active_ledger_modified": false,
+  "automatically_enforced": false,
+  "export_readiness_guard": "scripts/dfm13_arena_export_readiness.py",
+  "enforcement_scope": "Mandatory readiness/export-preparation guard; no active ledger edits or automatic exporter launch.",
+  "sample_scope": "Eight deliberately selected main repairs, a separate ten-row source-stratified original-keep assessment, and three first-sequence next repairs from one source. None is a population error rate or matched repair-risk estimate.",
+  "original_keep_assessment": "docs/reports/dfm13_original_keep_manual10_20261001.md",
+  "holds": [
+    {
+      "disposition": "verification_hold",
+      "ledger": "logs/arena_audit/20261001-pending-next-repairs-v1/ledger.sqlite",
+      "seq": 49,
+      "source_id": "comparia:2c467f06-56c8-4540-bb40-c4b1a3f52e26:a",
+      "source_line": 49,
+      "source_sha256": "63df8a82a3c9f7c12b3577430da491571303c06f183711e0a367e8a60c8256ec",
+      "candidate_sha256": "c1b5050dc15352d15f0d222b27f5ffe86f4c5b4660ba0fb88d19db934f4b71b1",
+      "reason": "Accepted website analysis asserts specific mobile, performance and accessibility observations without retrieved content or measurements in visible history. External truth not established; verify or qualify before release.",
+      "assessment_path": "docs/reports/dfm13_next_repair_spotcheck_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "hard_hold",
+      "ledger": "logs/arena_audit/20261001-pending-next-repairs-v1/ledger.sqlite",
+      "seq": 89,
+      "source_id": "comparia:c5d88786-7aa7-4b3c-a4fa-f1ac88b2cfe8:b",
+      "source_line": 89,
+      "source_sha256": "63df8a82a3c9f7c12b3577430da491571303c06f183711e0a367e8a60c8256ec",
+      "candidate_sha256": "0c86780e5926eaee1426824cab2b0e6a5ea558bb51c84802fd008d2f63b5cf07",
+      "reason": "Pedagogical list categorizes regardent under g + r, but g is followed by a. Fresh review incorrectly calls all classifications correct. Localized repair and whole-target recheck required.",
+      "assessment_path": "docs/reports/dfm13_next_repair_spotcheck_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "verification_hold",
+      "candidate_kind": "original",
+      "ledger": "logs/arena_audit/20261001-bulk205242-reasonfirst-thinking-v3/ledger.sqlite",
+      "seq": 945,
+      "source_id": "11400852-0b7b-40df-92ad-9840b3f21988:b",
+      "source_line": 945,
+      "source_sha256": "c943d1f75116eb51289373bd023b91a9d3064055ee0bd1b687e7ee5411b27d3b",
+      "candidate_sha256": "5097f805939c353461e08ced7677274f880be2c29cf4348d318213a308592f04",
+      "reason": "Original-keep sample 3: emissions arithmetic is consistent, but route-specific factors and multiplier require scoped factual verification. Not established false.",
+      "assessment_path": "docs/reports/dfm13_original_keep_manual10_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "verification_hold",
+      "candidate_kind": "original",
+      "ledger": "logs/arena_audit/20261001-bulk205242-reasonfirst-thinking-v3/ledger.sqlite",
+      "seq": 60542,
+      "source_id": "arena_human_preference_100k:0ac6649e21cd43f385484d47c1360a69:a",
+      "source_line": 57940,
+      "source_sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+      "candidate_sha256": "15951f6399a700926e6db80f20591ece42a52cc8eb6b2b9896fb9d3ccb932dc1",
+      "reason": "Original-keep sample 6: localized repair required for unsupported autobiographical specifics about forms, approvals and prepared presentations. These are unsupported, not established false; preserve requested elaboration.",
+      "assessment_path": "docs/reports/dfm13_original_keep_manual10_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "hard_hold",
+      "candidate_kind": "original",
+      "ledger": "logs/arena_audit/20261001-bulk205242-reasonfirst-thinking-v3/ledger.sqlite",
+      "seq": 141981,
+      "source_id": "arena_human_preference_140k:51203302-0914-4c7f-a621-e5f6db4d758c:b",
+      "source_line": 74440,
+      "source_sha256": "4a3c048120d37035c850811eebea114485a66ecd74a63613cb80cabc2a34ff02",
+      "candidate_sha256": "40ae84a9b32119372e9ff65cabc2e153cd8456737a8dfba11f709807333360c4",
+      "reason": "Original-keep sample 8: localized example length mismatch; alice@example.com has 17 ASCII bytes, not illustrative Length:16. Clarify byte-count convention and correct the example without replacing the creative design.",
+      "assessment_path": "docs/reports/dfm13_original_keep_manual10_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "hard_hold",
+      "ledger": "logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "seq": 9,
+      "source_id": "0ef5568e-0842-4ad0-81c2-b9d8ff095b22:a",
+      "source_line": 9,
+      "source_sha256": "c943d1f75116eb51289373bd023b91a9d3064055ee0bd1b687e7ee5411b27d3b",
+      "candidate_sha256": "b6c8dce23db9ac338148f1ac2af18de9b316f74be74c35257a717b9fac00c3f4",
+      "reason": "Accepted correction retains incorrect publication year 1840 for Fyrtojet and incorrect canonical title Den lille tinsoldat. Fresh reviewer incorrectly asserts all work dates are correct.",
+      "required_corrections": [
+        "Fyrtojet: first published 8 May 1835, not 1840.",
+        "Use the canonical title Den standhaftige tinsoldat (1838).",
+        "Recheck remaining factual claims before releasing this candidate; these two fixes are not whole-answer certification."
+      ],
+      "authoritative_evidence": [
+        "https://andersen.sdu.dk/forskning/bib/bibpost.html?BibID=273",
+        "https://andersen.sdu.dk/forskning/motiver/tekststed.html?id=113&oph=1"
+      ],
+      "release_authorized": false
+    },
+    {
+      "disposition": "hard_hold",
+      "ledger": "logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "seq": 2616,
+      "source_id": "arena_human_preference_100k:a4a28719504e45dcb365ec3887dbd0b5:a",
+      "source_line": 14,
+      "source_sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+      "candidate_sha256": "985077936c169d07de8c68e22ed0d375736c88ece28aa9941921cd324b1f572a",
+      "reason": "Inverse-CDF normal sampling permits random.random()==0, yielding erfinv(-1) and negative infinity. Independent CPU boundary check confirmed the defect.",
+      "required_corrections": [
+        "Ensure 0 < u < 1 before inverse-CDF evaluation, including the zero endpoint.",
+        "Review the entire corrected target and numerical boundary behavior before release."
+      ],
+      "assessment_path": "docs/reports/dfm13_bulk_repair_sample_assessment_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "verification_hold",
+      "ledger": "logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "seq": 2606,
+      "source_id": "arena_human_preference_100k:a3e95b39341747be99c294f8c9f77839:b",
+      "source_line": 4,
+      "source_sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+      "candidate_sha256": "ac78e4d2d434d7bf1c61e0cbcbc5a2171b33da1a99711fd8a44ab8f3316f6d5f",
+      "reason": "Resolve generic platform overclaims and distinguish Midjourney-only --ar syntax from the shared Stable Diffusion example; not a certified version-specific recipe.",
+      "assessment_path": "docs/reports/dfm13_bulk_repair_sample_assessment_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "verification_hold",
+      "ledger": "logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "seq": 2609,
+      "source_id": "arena_human_preference_100k:4f68253d121f4c73b380c4fe5a4fd5a5:a",
+      "source_line": 7,
+      "source_sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+      "candidate_sha256": "22f57fabc8dcef34d0625f31523383edbb5ec48fa4ea9e8611a29b914f27570f",
+      "reason": "Resolve confusion between unlimited reelection eligibility and immunity from electoral challenge; clarify constitutional amendment roles rather than unilateral presidential change.",
+      "assessment_path": "docs/reports/dfm13_bulk_repair_sample_assessment_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "verification_hold",
+      "ledger": "logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "seq": 2613,
+      "source_id": "arena_human_preference_100k:cf13fa30653e4e88b328b2899f17c357:b",
+      "source_line": 11,
+      "source_sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+      "candidate_sha256": "a478742ba5f085bac2823695f468600e654de8b0d22aa463f363dfc97896c3e9",
+      "reason": "Uncertain phrase-fragment intent: verify expansion and claimed common expression; do not infer an unstated intended idiom. Not native-language gold.",
+      "assessment_path": "docs/reports/dfm13_bulk_repair_sample_assessment_20261001.md",
+      "release_authorized": false
+    },
+    {
+      "disposition": "verification_hold",
+      "ledger": "logs/arena_audit/20261001-repairs-followup-v1/ledger.sqlite",
+      "seq": 2632,
+      "source_id": "arena_human_preference_100k:56612b01cf1049e9b4c25284014112c8:a",
+      "source_line": 30,
+      "source_sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+      "candidate_sha256": "03da420826a53c6c42e7446ec0110560ce4c9a306802c49655f126a14f996794",
+      "reason": "Verify asserted chronology, feud/Wilks ordering and Mary Jane's described relationship to Huck and Jim. These are verification targets, not newly established factual failures.",
+      "assessment_path": "docs/reports/dfm13_bulk_repair_sample_assessment_20261001.md",
+      "release_authorized": false
+    }
+  ]
+}

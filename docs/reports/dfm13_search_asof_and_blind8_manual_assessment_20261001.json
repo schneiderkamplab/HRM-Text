@@ -1,0 +1,272 @@
+{
+  "schema": "dfm13-asof-repairs-and-blind-packet-manual-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "scope": "Two requested new drafts only (Qwen and Polish); tariff repair excluded and its explicit hold untouched. Eight supplied blind packets checked; exact-hash prior work reused where valid.",
+  "counts": {
+    "repairs_fresh_reviewed": 2,
+    "prior_repair_issues_resolved": 2,
+    "blind_cases": 8,
+    "blind_exact_hash_reused": 5,
+    "blind_newly_reviewed": 3,
+    "blind_new_useful_evidence_limitation": 1,
+    "blind_new_hard_holds": 2,
+    "blind_combined_useful_core_or_limitation": 2,
+    "blind_combined_useful_qualified_synthesis": 1,
+    "blind_combined_substantive_holds": 5
+  },
+  "budget_verification": "Both new repair drafts CPU re-rendered using the existing learner tokenizer/template; results match their pinned student-render files and fit 4096. User and tool messages exactly match saved actual generation requests. Generic generation-only instructions contain no case-specific answer facts.",
+  "interpretation": "This packet cannot estimate the nonheld pool's cleanliness: five cases duplicate the prior sample, including three exact-hash holds (Italian tax, tariffs, fictional scaling). New evidence adds one useful justified limitation and two substantive holds. Preserve useful cores and judge corrected bytes afresh; do not inflate independent review counts or imply all automatic keeps are clean.",
+  "limits": [
+    "Agent assessment, not human/native gold or automatic admission.",
+    "No unobserved full pages used to rescue missing candidate evidence.",
+    "Repair residual wording suggestions are distinguished from the prior defects now resolved.",
+    "Prior receipts are reused only after packet hash, source file hash and embedded candidate equality checks."
+  ],
+  "blind_packet": [
+    {
+      "id": "3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/packet.json",
+          "sha256": "8921bba110a14c275e8f0b1c4b4e4066fdbe43a052846f181016fcba20d25883"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/candidate.json",
+          "sha256": "1ddc84a6188b82ed0392fa8f27cf18abf53d8e1615871e5db81a1102043d1d8c"
+        }
+      ],
+      "original_timestamp": "2025-03-31 09:40:48.218000",
+      "review_mode": "reuse_exact_candidate_hash",
+      "prior_receipt": {
+        "path": "docs/reports/dfm13_search_remaining48_keeps8_manual_assessment_20261001.json",
+        "sha256": "d57a29aa90a3cc8fd9e78200ad87e9920a4d321db6413ade61594e3124b89ce9"
+      },
+      "assessment": "hold_overgeneralized_fiscal_guidance",
+      "evidence_diagnosis": "The answer contains useful bookkeeping and ASL information. However, its table turns members-only service into a sufficient condition for noncommercial, nonfiscal treatment. The extracts provide a consultant's nonfiscal-register suggestion and a generic statement about activity already described as noncommercial; they do not establish that every members-only activity qualifies. Its final accountant disclaimer does not undo the categorical table.",
+      "correction_or_limit": "Keep the bookkeeping suggestion attributed and conditional on the club's actual tax status. Do not decide that status from membership alone. Historical 2025 applicability of updated/undated pages is not established. This review does not independently adjudicate Italian tax law."
+    },
+    {
+      "id": "d331c427b4ff9a04ace0b7f284c4b3fd975dcfd7291c8365053226dc66dcc628",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/d331c427b4ff9a04ace0b7f284c4b3fd975dcfd7291c8365053226dc66dcc628/packet.json",
+          "sha256": "acb8b35be0bd1ee7dc518a5ead5eb83fe251138e4bf970a8cd8737321a509bb0"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d331c427b4ff9a04ace0b7f284c4b3fd975dcfd7291c8365053226dc66dcc628/candidate.json",
+          "sha256": "713ee1670e6c8672371fa05afc6f2401b1a4984afd4d479b475de7568bdb947a"
+        }
+      ],
+      "original_timestamp": "2025-03-27 19:23:09.371000",
+      "review_mode": "fresh_manual_review",
+      "assessment": "useful_honest_evidence_limitation",
+      "reason": "The exact results give a Ukrainian price for a different location and only generic Grodno pharmacy-network information. The answer correctly declines to invent a price or stock near the forts and links the observed local pharmacy portal. It does not misapply the Ukrainian amount.",
+      "utility": "Useful next step and calibrated limitation, not a completed price lookup. No pharmacy-specific location or historical March 2025 price is established. No medical-treatment claim assessed."
+    },
+    {
+      "id": "ee694ce0ae6c54da84b6f11542315e062284528acd02e1d76eadaccc2d1b6da2",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/ee694ce0ae6c54da84b6f11542315e062284528acd02e1d76eadaccc2d1b6da2/packet.json",
+          "sha256": "af8183a9e3bd0f46ee7aaaa2732e52c4cdd9cc14c9756340ce78bdea7ba15a86"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/ee694ce0ae6c54da84b6f11542315e062284528acd02e1d76eadaccc2d1b6da2/candidate.json",
+          "sha256": "eb0c413f610776f47a8af9fc1479a257efb9d3940bf322376f9f8cd87184c0b2"
+        }
+      ],
+      "original_timestamp": "2025-04-16 00:37:56.885000",
+      "review_mode": "fresh_manual_review",
+      "assessment": "hard_hold_future_evidence_used_as_historical_analysis",
+      "reason": "The original prompt is 2025-04-16. The Korean answer explicitly uses the 2026 trade agenda and a 2026-09-24 opinion article to assess policy advantage without declaring them unavailable at the request date. Its first-administration cost discussion is grounded, but later material cannot answer the historical question.",
+      "correction": "Keep supported historical analysis with source attribution; exclude post-request developments or state the historical evidence gap. Policy intentions should not be reported as demonstrated strategic gains."
+    },
+    {
+      "id": "42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/packet.json",
+          "sha256": "1420ab24e530788ed8ea2612bc960bb849c99b5dde9eefeedda2158a7f4fb2c1"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/candidate.json",
+          "sha256": "51352fc494e70468cc0e50d8b43f0c349984619664d922214c53462cf1780871"
+        }
+      ],
+      "original_timestamp": "2025-04-15 15:54:40.383000",
+      "review_mode": "reuse_exact_candidate_hash",
+      "prior_receipt": {
+        "path": "docs/reports/dfm13_search_remaining48_keeps8_manual_assessment_20261001.json",
+        "sha256": "d57a29aa90a3cc8fd9e78200ad87e9920a4d321db6413ade61594e3124b89ce9"
+      },
+      "assessment": "hard_hold_wrong_question_date",
+      "evidence_diagnosis": "The April 15, 2025 question is answered explicitly 'As of ... October 2026', using July 2026 rates and later legal developments. This is a definite temporal instruction failure even if the answer accurately summarizes its observed page.",
+      "correction_or_limit": "Retrieve/retain evidence applicable to April 15, 2025, or explain that the supplied material cannot establish the then-current position. Do not silently replace the question date."
+    },
+    {
+      "id": "f9669093fff7d954fe0956535a62252fc7975bd07b01022d64f7ab4b0a4c6689",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/f9669093fff7d954fe0956535a62252fc7975bd07b01022d64f7ab4b0a4c6689/packet.json",
+          "sha256": "a576e646d6554b0fdca700aa887ee7ce96fb4d29722656f853ee0443c36b743a"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/f9669093fff7d954fe0956535a62252fc7975bd07b01022d64f7ab4b0a4c6689/candidate.json",
+          "sha256": "e362f9bfb6b42ca264001b9996d786108cd42cfe9f466142f9d143696be1cd18"
+        }
+      ],
+      "original_timestamp": "2025-04-24 22:12:37.727000",
+      "review_mode": "fresh_manual_review",
+      "assessment": "hard_hold_unverified_unlimited_service_and_omitted_condition",
+      "reason": "The observed Luvvoice excerpt supports a pauses toolbar for logged-in users, 0.5-5 second durations, a recommendation not to exceed 20 pauses, and MP3 output. The answer omits login, certifies no trial/paywall restrictions from a 'No Word Limit' title, and makes unobserved Google/Amazon pricing and SSML claims. 'Only platform' and 'only way' are unsupported exclusivity claims.",
+      "correction": "Present Luvvoice as a possible match with observed login/pause constraints; do not certify unlimited free use or April 2025 feature availability. Remove unobserved comparisons and exact-silence guarantees. The benign TTS request is answerable despite its noisy wrapper."
+    },
+    {
+      "id": "42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/packet.json",
+          "sha256": "f7b37d0cec4ab73486b95dc5b853bf2cd373160542b072544edfde06f5499d81"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/candidate.json",
+          "sha256": "67dad2d9e9aef9cf97acf2a28fd0e2260f270eb9eb9444f8c68918c399862218"
+        }
+      ],
+      "original_timestamp": "2025-04-14 07:46:39.279000",
+      "review_mode": "reuse_exact_candidate_hash",
+      "prior_receipt": {
+        "path": "docs/reports/dfm13_search_remaining48_keeps8_manual_assessment_20261001.json",
+        "sha256": "d57a29aa90a3cc8fd9e78200ad87e9920a4d321db6413ade61594e3124b89ce9"
+      },
+      "assessment": "useful_supported_core",
+      "evidence_diagnosis": "The answer distinguishes deploying a web workload on the underlying OpenShift cluster from the AI/model-serving layer. That is supported by the exact developer overview and the observed example of a Kubernetes web app calling inference. No extraneous Elastic snippet or version-3.3 installation procedure is presented as a 2025 deployment requirement.",
+      "correction_or_limit": "Useful concise feasibility answer, not a deep implementation investigation. React/Flask/Node examples are illustrative. State that permissions/resources on the underlying cluster matter rather than implying the AI dashboard itself is a general web-hosting product. No material contradiction identified."
+    },
+    {
+      "id": "d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/packet.json",
+          "sha256": "82c448119b8a64da23d30265c69309c9ac43145a183a7e53122eaa665c07aeed"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/candidate.json",
+          "sha256": "86c018ababc61e011bc1c6f8ae114d85d9b414f4eb0149b2740587338498a018"
+        }
+      ],
+      "original_timestamp": "2025-04-05 13:52:49.716000",
+      "review_mode": "reuse_exact_candidate_hash",
+      "prior_receipt": {
+        "path": "docs/reports/dfm13_search_remaining48_keeps8_manual_assessment_20261001.json",
+        "sha256": "d57a29aa90a3cc8fd9e78200ad87e9920a4d321db6413ade61594e3124b89ce9"
+      },
+      "assessment": "useful_synthesis_with_outcome_and_date_qualification",
+      "evidence_diagnosis": "Agricultural work, community tourism, ritual traditions and Singapore student visits are in the observations, so the answer is useful rather than an unnecessary refusal. But the cited 2023 architecture text describes desired benefits of a proposed center; it is used as evidence of actual income diversification. 'Developed strongly' also exceeds the more tentative source description of gradually forming tourism offerings.",
+      "correction_or_limit": "Distinguish documented tourism activities from projected economic benefits. Attribute and qualify undated current-state claims relative to April 5, 2025; a proposal is not evidence that its outcomes occurred. No blanket rejection of the agriculture/culture synthesis is warranted."
+    },
+    {
+      "id": "461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a",
+      "pins": [
+        {
+          "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/packet.json",
+          "sha256": "b9c104495943a60acaa018968f3d5eca667b8435d1868c30632b400b802c943f"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/candidate.json",
+          "sha256": "c59070dd76544f228a6efed083067ee09c74286261c8fb613c0a3f50719e9cc9"
+        }
+      ],
+      "original_timestamp": "2025-04-23 19:58:46.416000",
+      "review_mode": "reuse_exact_candidate_hash",
+      "prior_receipt": {
+        "path": "docs/reports/dfm13_search_remaining48_keeps8_manual_assessment_20261001.json",
+        "sha256": "d57a29aa90a3cc8fd9e78200ad87e9920a4d321db6413ade61594e3124b89ce9"
+      },
+      "assessment": "hold_unsupported_scaling_and_consensus",
+      "evidence_diagnosis": "The answer usefully acknowledges subjective fan interpretation. Nevertheless, supplied forum snippets do not establish reality manipulation, cosmic/conceptual feats, many-fan consensus about the strongest Ichigo, or the attributed pro-Ichigo speed argument. One assertion becomes a broad scaling table; a caveat at the end does not ground those extra claims.",
+      "correction_or_limit": "Limit the result to the specific observed fan claims and acknowledge that the excerpts cannot establish both strongest forms or a robust outcome. Better feat evidence is needed; do not treat community speculation as canonical power facts."
+    }
+  ],
+  "repairs": [
+    {
+      "id": "56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4",
+      "pins": [
+        {
+          "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/candidate.json",
+          "sha256": "2d8631f14ab1629847f9111a8c64ece319200cc3ce98640169cd7a8a3ea41906"
+        },
+        {
+          "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/generation/actual-request.json",
+          "sha256": "89965a3ed60c27babee759012e3efc1a6f54a55e1049aa6fbd1c6c2f3a88816d"
+        },
+        {
+          "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/student-render.json",
+          "sha256": "0a0def258183c3395ff58c9fa0c0959fb4228c062c3d1dde789cac19205e2a90"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1573,
+          "target_tokens": 630,
+          "total_tokens": 2203,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1573,
+          "shifted_masked_tokens": 1572,
+          "target_kind": "final_answer"
+        }
+      ],
+      "assessment": "prior_scope_issue_resolved_useful_bounded_answer",
+      "reason": "The answer explicitly says the evidence contains no community-reception or real-world-success information. The retained Hello Qwen2 table now supports the actual 7B/57B/72B M-MMLU and MGSM comparisons, including settings. All listed numbers match the observations; Qwen1.5 comparisons are labelled separately.",
+      "residual": "The opening is broader than the demonstrated comparisons: coding superiority versus other Qwen2 models and general efficiency are not directly benchmarked in these tables. Prefer 'these vendor benchmarks' rather than overall capability. MMLU-Pro/GPQA should not be presented as a math improvement. These wording limits do not negate the resolved reception-evidence distinction."
+    },
+    {
+      "id": "7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454",
+      "pins": [
+        {
+          "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/candidate.json",
+          "sha256": "07b17cebbf5ef36b78715937c656f7eadf2298427b32f6bae016f24f0ae7c2ed"
+        },
+        {
+          "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/generation/actual-request.json",
+          "sha256": "a623b78227cb505d9c2d2081a823779bae72dba5cb6290eec19c1f00a49fd7fd"
+        },
+        {
+          "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/student-render.json",
+          "sha256": "80aca3273e48771457efeea0c75b2e9ae8e37d32613a6b90a0c5ab5bbf7ee91f"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1130,
+          "target_tokens": 443,
+          "total_tokens": 1573,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1130,
+          "shifted_masked_tokens": 1129,
+          "target_kind": "final_answer"
+        }
+      ],
+      "assessment": "prior_date_leakage_issue_resolved_useful_answer",
+      "reason": "The exact retained observation now begins '14 listopada 2012, 21:04', grounding relative beginning-of-year and September references. Winner, claimant, reported ruling, retained domain and unsuccessful post-ruling settlement talks all match the excerpt. No teacher-only year is needed.",
+      "residual": "Prefer 'the reported ruling allowed the name/domain to remain' over 'formally concluded' if formal finality beyond the newspaper report is intended. This is not independent legal-docket verification."
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-postbatch-accounting-20261001/blind8/queue.json",
+      "sha256": "134917559066f60d7b6f01ba8f0503e53a2f3c3aa3a1b554c369ecc55fde4b50"
+    },
+    {
+      "path": "docs/reports/dfm13_search_remaining48_keeps8_manual_assessment_20261001.json",
+      "sha256": "d57a29aa90a3cc8fd9e78200ad87e9920a4d321db6413ade61594e3124b89ce9"
+    }
+  ]
+}

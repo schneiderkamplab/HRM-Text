@@ -1,0 +1,336 @@
+{
+  "status": "passed",
+  "tasks": {
+    "dala_nb": {
+      "samples": 2000,
+      "max_prompt_tokens": 144,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_nb": {
+      "samples": 2000,
+      "max_prompt_tokens": 169,
+      "max_reference_tokens": 108,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_nn": {
+      "samples": 2000,
+      "max_prompt_tokens": 121,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_nn": {
+      "samples": 2000,
+      "max_prompt_tokens": 152,
+      "max_reference_tokens": 86,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_sv": {
+      "samples": 2000,
+      "max_prompt_tokens": 132,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_sv": {
+      "samples": 2000,
+      "max_prompt_tokens": 155,
+      "max_reference_tokens": 98,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_is": {
+      "samples": 2000,
+      "max_prompt_tokens": 195,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_is": {
+      "samples": 2000,
+      "max_prompt_tokens": 236,
+      "max_reference_tokens": 146,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_fo": {
+      "samples": 2000,
+      "max_prompt_tokens": 147,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_fo": {
+      "samples": 2000,
+      "max_prompt_tokens": 183,
+      "max_reference_tokens": 103,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_nl": {
+      "samples": 2000,
+      "max_prompt_tokens": 107,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_nl": {
+      "samples": 2000,
+      "max_prompt_tokens": 133,
+      "max_reference_tokens": 73,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_pl": {
+      "samples": 2000,
+      "max_prompt_tokens": 154,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_pl": {
+      "samples": 2000,
+      "max_prompt_tokens": 179,
+      "max_reference_tokens": 115,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_de": {
+      "samples": 2000,
+      "max_prompt_tokens": 136,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_de": {
+      "samples": 2000,
+      "max_prompt_tokens": 160,
+      "max_reference_tokens": 105,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_fr": {
+      "samples": 2000,
+      "max_prompt_tokens": 95,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_fr": {
+      "samples": 2000,
+      "max_prompt_tokens": 123,
+      "max_reference_tokens": 60,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_es": {
+      "samples": 2000,
+      "max_prompt_tokens": 97,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_es": {
+      "samples": 2000,
+      "max_prompt_tokens": 123,
+      "max_reference_tokens": 65,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_it": {
+      "samples": 2000,
+      "max_prompt_tokens": 106,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_it": {
+      "samples": 2000,
+      "max_prompt_tokens": 134,
+      "max_reference_tokens": 71,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_cs": {
+      "samples": 2000,
+      "max_prompt_tokens": 127,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_cs": {
+      "samples": 2000,
+      "max_prompt_tokens": 156,
+      "max_reference_tokens": 91,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_pt_pt": {
+      "samples": 2000,
+      "max_prompt_tokens": 91,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_pt_pt": {
+      "samples": 2000,
+      "max_prompt_tokens": 125,
+      "max_reference_tokens": 56,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_fi": {
+      "samples": 2000,
+      "max_prompt_tokens": 128,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_fi": {
+      "samples": 2000,
+      "max_prompt_tokens": 165,
+      "max_reference_tokens": 86,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_et": {
+      "samples": 2000,
+      "max_prompt_tokens": 154,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_et": {
+      "samples": 2000,
+      "max_prompt_tokens": 184,
+      "max_reference_tokens": 114,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_ca": {
+      "samples": 2000,
+      "max_prompt_tokens": 111,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_ca": {
+      "samples": 2000,
+      "max_prompt_tokens": 147,
+      "max_reference_tokens": 76,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_el": {
+      "samples": 2000,
+      "max_prompt_tokens": 150,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_el": {
+      "samples": 2000,
+      "max_prompt_tokens": 197,
+      "max_reference_tokens": 109,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_ro": {
+      "samples": 2000,
+      "max_prompt_tokens": 142,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_ro": {
+      "samples": 2000,
+      "max_prompt_tokens": 181,
+      "max_reference_tokens": 102,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_uk": {
+      "samples": 2000,
+      "max_prompt_tokens": 171,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_uk": {
+      "samples": 2000,
+      "max_prompt_tokens": 200,
+      "max_reference_tokens": 134,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "dala_en": {
+      "samples": 2000,
+      "max_prompt_tokens": 103,
+      "max_reference_tokens": 1,
+      "max_output_tokens": 32,
+      "context_limit": 4096,
+      "truncated": 0
+    },
+    "gec_dala_en": {
+      "samples": 2000,
+      "max_prompt_tokens": 119,
+      "max_reference_tokens": 75,
+      "max_output_tokens": 512,
+      "context_limit": 4096,
+      "truncated": 0
+    }
+  },
+  "total_samples": 80000,
+  "tokenizer_mode": "raw training tokenizer; no Mistral fix",
+  "pins": {
+    "/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json": "5c7e788f3081432068fc4f0c20d4caecab69e3e677a1c1706c90d1a31f20d942",
+    "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml": "511ee2b8904ef4006527b5f7df6c9c745e8e3c8654b540a6231b86865e77c34c",
+    "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+    "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+    "/work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py": "bfa194282e9b4c53d1d99e243e326cd5827fbdddca1416301736383941877cd0",
+    "/work/mimir/HRM-Text/dfm-evals/scripts/check_dala_heldout_tasks.py": "76f794ce2d42bed007d6cf45a51151dfc6e524085a65e633184ae94f39573d4c",
+    "/work/mimir/HRM-Text/config/dfm_dala_heldout_registry_20260930.json": "03460b51c7aef992702576fcd18c9fa56323f74e3c1ad5adffd96b0ef30c9df1"
+  }
+}

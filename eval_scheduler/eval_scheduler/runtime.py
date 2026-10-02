@@ -1253,6 +1253,10 @@ def start_native_proxy(
     ]
     if job.metadata.get("hrm_vllm_gemma_bfcl_tools"):
         argv.append("--gemma-native-bfcl-tools")
+    if job.metadata.get('euroeval_context_policy') == 'native_head_tail_v1':
+        argv.extend(['--prompt-tokenizer', str(job.metadata['hf_export_dir']),
+                     '--prompt-chat-template', str(Path('evaluation/chat_templates/gemma4_native_chat.jinja').resolve()),
+                     '--max-context', str(job.metadata.get('vllm_max_model_len', 4096))])
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("w") as log:
         log.write(f"{now()}\tSTART_PROXY\t{shlex.join(argv)}\n")
@@ -1406,7 +1410,7 @@ def run_dfm(
             str(job.metadata["dfm_evals_dir"]),
             "evals",
             "suite",
-            dfm_suite(job.name),
+            str(job.metadata.get("dfm_suite") or dfm_suite(job.name)),
             "--file",
             str(job.metadata["dfm_single_tasks_config"]),
             "--target-model",
@@ -1515,7 +1519,7 @@ def run_dfm_external(
             str(job.metadata["dfm_evals_dir"]),
             "evals",
             "suite",
-            dfm_suite(job.name),
+            str(job.metadata.get("dfm_suite") or dfm_suite(job.name)),
             "--file",
             str(job.metadata["dfm_single_tasks_config"]),
             "--target-model",
@@ -1823,6 +1827,7 @@ def run_euroeval(
             "EUROEVAL_BATCH_SIZE": str(batch),
             "EUROEVAL_BATCH_TIMEOUT_MS": "25",
             "EUROEVAL_DATASETS": job.name,
+            "EUROEVAL_LANGUAGES": ",".join(job.metadata.get("euroeval_languages", ["da", "en"])),
             "EUROEVAL_BIN": euroeval_bin,
             "EUROEVAL_PREFIX": "euroeval",
             "HOST": str(job.metadata["host"]),
@@ -2075,10 +2080,7 @@ def run_euroeval_openai(
             str(metrics_file),
             "--prefix",
             "euroeval",
-            "--language",
-            "da",
-            "--language",
-            "en",
+            *euroeval_language_args(job),
             *wandb_args(job),
         ]
         return run_command(merge_argv, log_path=run_root / "merge_and_wandb_sync.log")
@@ -2092,6 +2094,15 @@ def run_euroeval_openai(
         callback=callback,
         server_pool=server_pool,
     )
+
+
+def euroeval_language_args(job: Job) -> list[str]:
+    languages = job.metadata.get("euroeval_languages", ["da", "en"])
+    if not isinstance(languages, list) or not languages or any(
+        not isinstance(language, str) or not re.fullmatch(r"[a-z]{2,3}(?:-[a-z]{2})?", language) for language in languages
+    ):
+        raise ValueError("euroeval_languages must be a nonempty list of language codes")
+    return [arg for language in languages for arg in ("--language", language)]
 
 
 def wandb_args(job: Job) -> list[str]:
@@ -2221,6 +2232,25 @@ def run_merge_ifeval(job: Job) -> int:
 
 
 def run_average(job: Job) -> int:
+    if job.metadata.get("multilingual_manifest"):
+        argv = [python_bin(job), "scripts/log_multilingual_headline_averages.py",
+                "--manifest", str(job.metadata["multilingual_manifest"]),
+                "--dfm-root", str(job.metadata["dfm_log_root"]),
+                "--euroeval-root", f"{job.metadata['euroeval_log_root']}/{job.metadata['ckpt_tag']}",
+                "--epoch", str(job.metadata["eval_epoch"]), "--step", eval_step(job),
+                "--report", str(Path(job.log_dir) / "population_metrics.json")]
+        if job.metadata.get("population_require_complete", False):
+            argv.append("--require-complete")
+        for suite in ("standard", "dfm", "euroeval"):
+            for root in job.metadata.get(f"additional_{suite}_roots", []):
+                argv.extend([f"--additional-{suite}-root", str(root)])
+        if job.metadata.get("log_wandb", True):
+            argv.extend(["--project", str(job.metadata["wandb_project"]),
+                         "--run-id", str(job.metadata["wandb_run_id"]),
+                         "--run-name", str(job.metadata["wandb_run_name"])])
+        else:
+            argv.append("--dry-run")
+        return run_command(argv, log_path=Path(job.log_dir) / "multilingual_average.log")
     average_scope = str(job.metadata.get("average_scope") or "all")
     average_prefix = str(job.metadata.get("average_prefix") or "headline_avg_v2")
     extra_average_prefixes = job.metadata.get("extra_average_prefixes", [])

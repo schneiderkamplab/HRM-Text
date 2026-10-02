@@ -1,0 +1,806 @@
+{
+  "schema_version": 1,
+  "populations": [
+    {
+      "id": "cross_language_v2",
+      "kind": "cross_language",
+      "languages": [
+        "da",
+        "en",
+        "nb",
+        "nn",
+        "sv",
+        "is",
+        "fo",
+        "nl",
+        "pl",
+        "de",
+        "fr",
+        "es",
+        "it",
+        "cs",
+        "pt_pt",
+        "fi",
+        "et",
+        "ca",
+        "el",
+        "ro",
+        "uk"
+      ],
+      "required_tasks": {
+        "da": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "en": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "nb": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "nn": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "sv": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "is": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "fo": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "nl": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "pl": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "de": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "fr": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "es": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "it": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "cs": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec"
+        ],
+        "pt_pt": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "fi": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "et": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "ca": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "el": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "ro": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ],
+        "uk": [
+          "scala",
+          "multiifeval",
+          "dfm_la",
+          "dfm_gec",
+          "multiwikiqa"
+        ]
+      },
+      "metrics": {
+        "da": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/da/linguistic-acceptability/scala-da/macro_f1",
+            "scale": "percent",
+            "metric_language": "da"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/da/instruction-following/multi-ifeval-da/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "da"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/da/reading-comprehension/multi-wiki-qa-da/f1",
+            "scale": "percent",
+            "metric_language": "da"
+          }
+        },
+        "en": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/en/linguistic-acceptability/scala-en/macro_f1",
+            "scale": "percent",
+            "metric_language": "en"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/en/instruction-following/multi-ifeval-en/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "en"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_en/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_en/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/en/reading-comprehension/multi-wiki-qa-en/f1",
+            "scale": "percent",
+            "metric_language": "en"
+          }
+        },
+        "nb": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/linguistic-acceptability/scala-nb/macro_f1",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/instruction-following/multi-ifeval-nb/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nb/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nb/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/reading-comprehension/multi-wiki-qa-nb/f1",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          }
+        },
+        "nn": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/linguistic-acceptability/scala-nn/macro_f1",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/instruction-following/multi-ifeval-nn/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nn/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nn/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/reading-comprehension/multi-wiki-qa-nn/f1",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          }
+        },
+        "sv": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/linguistic-acceptability/scala-sv/macro_f1",
+            "scale": "percent",
+            "metric_language": "sv"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/instruction-following/multi-ifeval-sv/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sv"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sv/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sv/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/reading-comprehension/multi-wiki-qa-sv/f1",
+            "scale": "percent",
+            "metric_language": "sv"
+          }
+        },
+        "is": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/is/linguistic-acceptability/scala-is/macro_f1",
+            "scale": "percent",
+            "metric_language": "is"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/is/instruction-following/multi-ifeval-is/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "is"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_is/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_is/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/is/reading-comprehension/multi-wiki-qa-is/f1",
+            "scale": "percent",
+            "metric_language": "is"
+          }
+        },
+        "fo": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/linguistic-acceptability/scala-fo/macro_f1",
+            "scale": "percent",
+            "metric_language": "fo"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/instruction-following/multi-ifeval-fo/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "fo"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fo/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fo/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/reading-comprehension/multi-wiki-qa-fo/f1",
+            "scale": "percent",
+            "metric_language": "fo"
+          }
+        },
+        "nl": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/linguistic-acceptability/scala-nl/macro_f1",
+            "scale": "percent",
+            "metric_language": "nl"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/instruction-following/multi-ifeval-nl/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nl"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/reading-comprehension/multi-wiki-qa-nl/f1",
+            "scale": "percent",
+            "metric_language": "nl"
+          }
+        },
+        "pl": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/linguistic-acceptability/scala-pl/macro_f1",
+            "scale": "percent",
+            "metric_language": "pl"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/instruction-following/multi-ifeval-pl/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "pl"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_pl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_pl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/reading-comprehension/multi-wiki-qa-pl/f1",
+            "scale": "percent",
+            "metric_language": "pl"
+          }
+        },
+        "de": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/de/linguistic-acceptability/scala-de/macro_f1",
+            "scale": "percent",
+            "metric_language": "de"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/de/instruction-following/multi-ifeval-de/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "de"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_de/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_de/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/de/reading-comprehension/multi-wiki-qa-de/f1",
+            "scale": "percent",
+            "metric_language": "de"
+          }
+        },
+        "fr": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/linguistic-acceptability/scala-fr/macro_f1",
+            "scale": "percent",
+            "metric_language": "fr"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/instruction-following/multi-ifeval-fr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "fr"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/reading-comprehension/multi-wiki-qa-fr/f1",
+            "scale": "percent",
+            "metric_language": "fr"
+          }
+        },
+        "es": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/es/linguistic-acceptability/scala-es/macro_f1",
+            "scale": "percent",
+            "metric_language": "es"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/es/instruction-following/multi-ifeval-es/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "es"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_es/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_es/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/es/reading-comprehension/multi-wiki-qa-es/f1",
+            "scale": "percent",
+            "metric_language": "es"
+          }
+        },
+        "it": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/it/linguistic-acceptability/scala-it/macro_f1",
+            "scale": "percent",
+            "metric_language": "it"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/it/instruction-following/multi-ifeval-it/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "it"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_it/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_it/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/it/reading-comprehension/multi-wiki-qa-it/f1",
+            "scale": "percent",
+            "metric_language": "it"
+          }
+        },
+        "cs": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/linguistic-acceptability/scala-cs/macro_f1",
+            "scale": "percent",
+            "metric_language": "cs"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/instruction-following/multi-ifeval-cs/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "cs"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_cs/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_cs/exact_match/mean",
+            "scale": "fraction"
+          }
+        },
+        "pt_pt": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/linguistic-acceptability/scala-pt/macro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/pt/instruction-following/multi-ifeval-pt/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "pt"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_pt_pt/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_pt_pt/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/reading-comprehension/multi-wiki-qa-pt/f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          }
+        },
+        "fi": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/linguistic-acceptability/scala-fi/macro_f1",
+            "scale": "percent",
+            "metric_language": "fi"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/instruction-following/multi-ifeval-fi/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "fi"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fi/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fi/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/reading-comprehension/multi-wiki-qa-fi/f1",
+            "scale": "percent",
+            "metric_language": "fi"
+          }
+        },
+        "et": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/et/linguistic-acceptability/scala-et/macro_f1",
+            "scale": "percent",
+            "metric_language": "et"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/et/instruction-following/multi-ifeval-et/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "et"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_et/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_et/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/et/reading-comprehension/multi-wiki-qa-et/f1",
+            "scale": "percent",
+            "metric_language": "et"
+          }
+        },
+        "ca": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/linguistic-acceptability/scala-ca/macro_f1",
+            "scale": "percent",
+            "metric_language": "ca"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/instruction-following/multi-ifeval-ca/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "ca"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_ca/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_ca/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/reading-comprehension/multi-wiki-qa-ca/f1",
+            "scale": "percent",
+            "metric_language": "ca"
+          }
+        },
+        "el": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/el/linguistic-acceptability/scala-el/macro_f1",
+            "scale": "percent",
+            "metric_language": "el"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/el/instruction-following/multi-ifeval-el/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "el"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_el/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_el/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/el/reading-comprehension/multi-wiki-qa-el/f1",
+            "scale": "percent",
+            "metric_language": "el"
+          }
+        },
+        "ro": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/linguistic-acceptability/scala-ro/macro_f1",
+            "scale": "percent",
+            "metric_language": "ro"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/instruction-following/multi-ifeval-ro/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "ro"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_ro/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_ro/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/reading-comprehension/multi-wiki-qa-ro/f1",
+            "scale": "percent",
+            "metric_language": "ro"
+          }
+        },
+        "uk": {
+          "scala": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/linguistic-acceptability/scala-uk/macro_f1",
+            "scale": "percent",
+            "metric_language": "uk"
+          },
+          "multiifeval": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/instruction-following/multi-ifeval-uk/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "uk"
+          },
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_uk/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_uk/exact_match/mean",
+            "scale": "fraction"
+          },
+          "multiwikiqa": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/reading-comprehension/multi-wiki-qa-uk/f1",
+            "scale": "percent",
+            "metric_language": "uk"
+          }
+        }
+      }
+    }
+  ]
+}

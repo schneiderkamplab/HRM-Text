@@ -1,0 +1,87 @@
+{
+  "schema": "dfm13-search-targeted-cpu2-manual-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_source_review",
+  "admission_authorized": false,
+  "previous_holds_unchanged": true,
+  "active_ledgers_modified": false,
+  "new_paid_calls": 0,
+  "new_model_calls": 0,
+  "new_gpu_calls": 0,
+  "counts": {
+    "reviewed": 2,
+    "useful_scoped_answers": 2,
+    "new_hard_holds": 0
+  },
+  "verification": "Queue candidate hashes verified; two CPU re-renders match queue: 1338 and 1320 tokens, within 4096. Judgments concern new CPU-authored bytes only; no teacher generation or human-review claim.",
+  "limits": [
+    "Useful limitation/clarification answers, not full task completion or automatic admission.",
+    "No new browsing used to fill missing historical or jurisdictional evidence."
+  ],
+  "rows": [
+    {
+      "id": "deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3",
+      "pins": [
+        {
+          "path": "data/dfm13/search-targeted-cpu2-20261001/records/deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3/candidate.json",
+          "sha256": "e6cb0f8f0518958fc9d5b1876719e16c5a86c14000d41ded0ba40ababd5faac7"
+        },
+        {
+          "path": "data/dfm13/search-targeted16-20261001/generation/records/deb701de1b2fb3633f7467bf740ef0e2f17b8facdb73c846c6ab92484b7763a3/candidate.json",
+          "sha256": "ba26549f6aaefcb2263ee98870168c9c4f8154ab8d262efe6ebd6d876cb05aac"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1094,
+          "target_tokens": 244,
+          "total_tokens": 1338,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1094,
+          "shifted_masked_tokens": 1093,
+          "target_kind": "final_answer"
+        }
+      ],
+      "assessment": "useful_scoped_limitation_prior_overclaims_resolved",
+      "evidence": "The retained community excerpt now actually states physical presence, payment-method and yearly-change conditions. The answer accurately labels that as community text, explicitly declines to certify April 2025 official rules, and does not promise VPN/account success. The official observed balance passage supports its separate balance summary.",
+      "utility": "Asks which app and identifies exact availability/date gaps. This is a justified partial response, not a verified installation workflow or pointless refusal.",
+      "residual": "Balance policy is attributed to the retrieved page rather than proved historically archived. No claim that all country conditions have been verified."
+    },
+    {
+      "id": "e19e0b36aca7eb8308d0c4645f51197b3be1de912b688dfa497ea9f619c329eb",
+      "pins": [
+        {
+          "path": "data/dfm13/search-targeted-cpu2-20261001/records/e19e0b36aca7eb8308d0c4645f51197b3be1de912b688dfa497ea9f619c329eb/candidate.json",
+          "sha256": "e58ea2010de44239044223ae326cc7c5045d6980b06a450bfe1e205069615ee6"
+        },
+        {
+          "path": "data/dfm13/search-targeted16-20261001/generation/records/e19e0b36aca7eb8308d0c4645f51197b3be1de912b688dfa497ea9f619c329eb/candidate.json",
+          "sha256": "c4f21ee37d8c495c95fdc94fa432a4d88062845cadac4822a8a4ad87161fa32b"
+        }
+      ],
+      "render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1015,
+          "target_tokens": 305,
+          "total_tokens": 1320,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1015,
+          "shifted_masked_tokens": 1014,
+          "target_kind": "final_answer"
+        }
+      ],
+      "assessment": "useful_jurisdiction_and_document_status_clarification",
+      "evidence": "The answer asks for jurisdiction, identifies the observed NIST documents as US materials, marks revision 2 as draft, and treats the revision-1 filename/status conflict as unconfirmed rather than inventing a final-version status. References to FIPS/GAO are correctly framed as bibliographic pointers, not demonstrated Bluetooth requirements.",
+      "utility": "Provides relevant federal-document leads while distinguishing guidance, drafts, binding obligations and unknown applicable editions. Does not make a false broad claim that regulations do not exist.",
+      "residual": "Not a completed jurisdiction-specific normative answer; exact binding/current-at-date requirements remain unverified. A filename alone is not definitive draft status, and the answer appropriately states uncertainty."
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-targeted-cpu2-20261001/queue.json",
+      "sha256": "a435b5786eb89bf5bd4f99e19e228c1d7f1cc788c409ca225df371309460fab7"
+    }
+  ]
+}

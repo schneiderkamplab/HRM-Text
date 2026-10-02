@@ -1,0 +1,33 @@
+version: 1
+campaign: dfm12-multilingual-v1
+active_milestone: tenth
+seed: 20260925
+generator: google/gemma-4-26B-A4B-it
+auditor: google/gemma-4-26B-A4B-it
+audit_every_candidate: true
+pilot_accepted_per_language: 5000
+pilot_counts_toward_target: true
+require_pilot_review_before_bulk: true
+repeat: 1
+max_rendered_example_tokens: 4096
+# Targets are cumulative accepted conversations, not generation attempts.
+milestone_divisors:
+  tenth: 10
+  quarter: 4
+  half: 2
+  full: 1
+languages:
+  nb: 1
+  nn: 1
+  is: 1
+  fo: 1
+  nl: 2
+  sv: 2
+  pl: 2
+families:
+  multiturn: {full_priority_rows: 150000, estimated_tokens_per_row: 2400}
+  grounded-instruct: {full_priority_rows: 200000, estimated_tokens_per_row: 1800}
+  openhermes: {full_priority_rows: 150000, estimated_tokens_per_row: 700}
+  summary-rewrite: {full_priority_rows: 100000, estimated_tokens_per_row: 1500}
+  math-code: {full_priority_rows: 60000, estimated_tokens_per_row: 1200}
+  tool-dialogue: {full_priority_rows: 40000, estimated_tokens_per_row: 1600}

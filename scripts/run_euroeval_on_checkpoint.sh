@@ -362,13 +362,15 @@ if [[ -n "${EVAL_STEP}" ]]; then
   step_args=(--step "${EVAL_STEP}")
 fi
 
+log_language_args=()
+while IFS= read -r -d '' arg; do log_language_args+=("$arg"); done < <(split_csv_args --language "${EUROEVAL_LANGUAGES}")
+
 "${PYTHON_BIN}" scripts/log_euroeval_to_wandb.py \
   --results "${RESULTS_FILE}" \
   --epoch "${EVAL_EPOCH}" \
   "${step_args[@]}" \
   --output "${METRICS_FILE}" \
   --prefix "${EUROEVAL_PREFIX}" \
-  --language da \
-  --language en \
+  "${log_language_args[@]}" \
   "${wandb_args[@]}" \
   > "${LOG_ROOT}/merge_and_wandb_sync.log" 2>&1

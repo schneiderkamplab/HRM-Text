@@ -1,0 +1,490 @@
+{
+  "schema": "dfm13-search-diverse-keeps-manual-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "selection": {
+    "population": "20 automated keeps in the completed 44-job run",
+    "method": "Deterministic purposive coverage: explicit fixed ID-prefix list selected from the sorted keep inventory before reading answers, spanning eight distinct task domains. Not random, not a population error-rate estimate.",
+    "ordered_prefixes": [
+      "3812",
+      "42c1",
+      "42c535",
+      "461d",
+      "56c2",
+      "c957",
+      "d646",
+      "e591"
+    ],
+    "domains": [
+      "Italian private-club cash register",
+      "US tariffs on South Korea",
+      "OpenShift AI web deployment",
+      "Sora versus Ichigo",
+      "Qwen2-57B-A14B-Instruct reception",
+      "Russian fruit classification",
+      "Ngoc Lang social contributions",
+      "Cisco industrial switches"
+    ]
+  },
+  "counts": {
+    "reviewed_keeps": 8,
+    "useful_supported_core": 1,
+    "useful_partial_or_qualified_synthesis": 2,
+    "substantive_record_holds": 5
+  },
+  "cpu_verification": {
+    "renderer": "scripts.dfm13_search_training_contract.rendered_targets using manifest student tokenizer and Jinja template",
+    "rerendered_all_eight": true,
+    "all_saved_render_records_match": true,
+    "all_under_4096": true,
+    "min_total_tokens": 1554,
+    "max_total_tokens": 2936,
+    "all_generation_prefixes_match_after_argument_json_normalization": true,
+    "generation_system_suffix": "Same generic constraints across all eight; no case-specific answer-bearing facts or dates. Candidate has the exact user/tool observations; suffix excluded from learner system.",
+    "mask": "Only final assistant index 4 is targeted; earlier prompt/tool spans masked by the existing renderer.",
+    "no_gpu": true
+  },
+  "decision": "Candidate-generation pipeline produces useful material and valid compact rendering, but automatic keeps are not an admission certificate. Preserve the useful cores, route the listed corrections/holds separately, and do not describe all 20 keeps as clean.",
+  "generalizable_defects": [
+    "Explicit historical-date substitution despite instructions.",
+    "Unsupported inference promoted into product specifications, classification or broad consensus.",
+    "Benchmark capability substituted for reception; proposal objectives substituted for observed outcomes."
+  ],
+  "limits": [
+    "No native-language gold or human certification claimed.",
+    "No unseen full-page text or external facts used to rescue unsupported observations.",
+    "Tax and botany findings concern unsupported categorical conclusions; no external legal ruling or answer key supplied.",
+    "Hash-bound agent receipt is advisory; it does not itself enforce admission holds."
+  ],
+  "rows": [
+    {
+      "id": "3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe",
+      "original_timestamp": "2025-03-31 09:40:48.218000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/candidate.json",
+          "sha256": "1ddc84a6188b82ed0392fa8f27cf18abf53d8e1615871e5db81a1102043d1d8c"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/generation/actual-request.json",
+          "sha256": "94bd795debd1cf31b892873befeaec699e1996502fc978ffcdf15c71a534449b"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/generation/answer-response.json",
+          "sha256": "6d3f62752b4f62002aa7599d391f41fc0c7d72756211f68dd2d752f9bed935f3"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/student-render.json",
+          "sha256": "a7dd7b2456922ea19cd3da642dffa6ea24fbd493a57ada72c95e80e6a257c23e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe.json",
+          "sha256": "886ea2a257a85428b7cdf53b6edb42045feb42c117fb5c2a25199771128a1785"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1567,
+          "target_tokens": 625,
+          "total_tokens": 2192,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1567,
+          "shifted_masked_tokens": 1566,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "Italian private-club cash register",
+      "assessment": "hold_overgeneralized_fiscal_guidance",
+      "evidence_diagnosis": "The answer contains useful bookkeeping and ASL information. However, its table turns members-only service into a sufficient condition for noncommercial, nonfiscal treatment. The extracts provide a consultant's nonfiscal-register suggestion and a generic statement about activity already described as noncommercial; they do not establish that every members-only activity qualifies. Its final accountant disclaimer does not undo the categorical table.",
+      "correction_or_limit": "Keep the bookkeeping suggestion attributed and conditional on the club's actual tax status. Do not decide that status from membership alone. Historical 2025 applicability of updated/undated pages is not established. This review does not independently adjudicate Italian tax law.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840",
+      "original_timestamp": "2025-04-15 15:54:40.383000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/candidate.json",
+          "sha256": "51352fc494e70468cc0e50d8b43f0c349984619664d922214c53462cf1780871"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/generation/actual-request.json",
+          "sha256": "c784c25f9117832c1eaa98cd12a8a423c0be6cb0cde3942c32f6041175315012"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/generation/answer-response.json",
+          "sha256": "e41c05abac51d81d1102107a91187e2d2106eb666c35ebbd1093512f16e8f0e6"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/student-render.json",
+          "sha256": "d6014b1737c9c59b1fc3e44cf8c9cd202c16e8ee15aeee43c1476e38a2e465ee"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840.json",
+          "sha256": "67a587da227169485335646476436b6d34f79a15f96089d45181247fcdc6f2c1"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1409,
+          "target_tokens": 398,
+          "total_tokens": 1807,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1409,
+          "shifted_masked_tokens": 1408,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "US tariffs on South Korea",
+      "assessment": "hard_hold_wrong_question_date",
+      "evidence_diagnosis": "The April 15, 2025 question is answered explicitly 'As of ... October 2026', using July 2026 rates and later legal developments. This is a definite temporal instruction failure even if the answer accurately summarizes its observed page.",
+      "correction_or_limit": "Retrieve/retain evidence applicable to April 15, 2025, or explain that the supplied material cannot establish the then-current position. Do not silently replace the question date.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39",
+      "original_timestamp": "2025-04-14 07:46:39.279000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/candidate.json",
+          "sha256": "67dad2d9e9aef9cf97acf2a28fd0e2260f270eb9eb9444f8c68918c399862218"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/generation/actual-request.json",
+          "sha256": "9183f822f95125d406f339802d7316d0f4881d5e147312d1400b51f51d4eb47c"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/generation/answer-response.json",
+          "sha256": "96602bb4ea9d6aa09487976519612b591abee13faf6dc4ee4681e7ed7b674baf"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/student-render.json",
+          "sha256": "5e763cf714c2abb8f31b041e2cd7d962b1e709413326dbea63262eb2715a0f78"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/42c53538c8a995af4e69a0240bac0a1bddfc4ecf030af357c8a93c2bdee89f39.json",
+          "sha256": "0f6d1b4b40570c5bb7b9781eaa745c0dcd6c35e42c690d5932a1df4af5daabca"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1293,
+          "target_tokens": 355,
+          "total_tokens": 1648,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1293,
+          "shifted_masked_tokens": 1292,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "OpenShift AI web deployment",
+      "assessment": "useful_supported_core",
+      "evidence_diagnosis": "The answer distinguishes deploying a web workload on the underlying OpenShift cluster from the AI/model-serving layer. That is supported by the exact developer overview and the observed example of a Kubernetes web app calling inference. No extraneous Elastic snippet or version-3.3 installation procedure is presented as a 2025 deployment requirement.",
+      "correction_or_limit": "Useful concise feasibility answer, not a deep implementation investigation. React/Flask/Node examples are illustrative. State that permissions/resources on the underlying cluster matter rather than implying the AI dashboard itself is a general web-hosting product. No material contradiction identified.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a",
+      "original_timestamp": "2025-04-23 19:58:46.416000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/candidate.json",
+          "sha256": "c59070dd76544f228a6efed083067ee09c74286261c8fb613c0a3f50719e9cc9"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/generation/actual-request.json",
+          "sha256": "4e3addc51a37b6e5a9268c7db5f7329937252c6b60e08977123395e7f72bc4ed"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/generation/answer-response.json",
+          "sha256": "e73ae7cb834948ab6835ef34f0d7380312dbee219d9af3c5f5836853a016f7f9"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/student-render.json",
+          "sha256": "01cdd3d3693e2adfe4ec41eb1452eb4342a087a54ee5a450468c608dbabbabde"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/461d422e039ccfe91d608f4c8df67882b24dd1f40cfa9f7a6723b2db9813f20a.json",
+          "sha256": "329b938de9502cbd548b446c83f82a8d2dce2df46e2520d6d57184f69c57e916"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 996,
+          "target_tokens": 558,
+          "total_tokens": 1554,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 996,
+          "shifted_masked_tokens": 995,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "Sora versus Ichigo",
+      "assessment": "hold_unsupported_scaling_and_consensus",
+      "evidence_diagnosis": "The answer usefully acknowledges subjective fan interpretation. Nevertheless, supplied forum snippets do not establish reality manipulation, cosmic/conceptual feats, many-fan consensus about the strongest Ichigo, or the attributed pro-Ichigo speed argument. One assertion becomes a broad scaling table; a caveat at the end does not ground those extra claims.",
+      "correction_or_limit": "Limit the result to the specific observed fan claims and acknowledge that the excerpts cannot establish both strongest forms or a robust outcome. Better feat evidence is needed; do not treat community speculation as canonical power facts.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4",
+      "original_timestamp": "2025-04-13 21:46:47.141000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/candidate.json",
+          "sha256": "55fd6e04d7fee9ec3f92838fe239a46624a806ca9095f80b5cf11b25d1523f21"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/generation/actual-request.json",
+          "sha256": "3561e2763bd52fc2f9f7f47fe39648a9df3f685848127709abdcc924b7925aa5"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/generation/answer-response.json",
+          "sha256": "ea7b8733c89f0e5d8b6f3fed79f739b27050a9596a61ccac28fb19bfc88e081e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/student-render.json",
+          "sha256": "c33fe9944aaaf4e72eb7b5cb4549acb6520d83de76000cd0d27989d8ee568f72"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/56c21202ec2960bf8ade4288ac1c1deaa81476761162387448e59e254a8723d4.json",
+          "sha256": "d60cc3ba92d5da2a44a216f42735b23cd5d9360275b17b34e9938ba5c5fb5a42"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 2102,
+          "target_tokens": 407,
+          "total_tokens": 2509,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 2102,
+          "shifted_masked_tokens": 2101,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "Qwen2-57B-A14B-Instruct reception",
+      "assessment": "useful_benchmark_summary_but_incomplete_request",
+      "evidence_diagnosis": "Reported technical benchmark comparisons and 57B/14B architecture are supported. The answer does not import Qwen2.5 scores or mix Base benchmark scores with Instruct results. But author benchmarks versus Qwen1.5 and Yi do not answer how well received this model was relative to other Qwen2 models. 'Reception varies' is not supported by reception evidence.",
+      "correction_or_limit": "Explicitly distinguish vendor-reported capability from community reception and acknowledge that reception evidence/direct within-Qwen2 comparisons are missing. Preserve the useful benchmark summary as partial evidence, not an answer to popularity.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a",
+      "original_timestamp": "2025-05-08 15:23:24.878000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/candidate.json",
+          "sha256": "27c33a5f16d56548ac52518e29c46ca30851705e08bc6faa1ee8c342a5f1b6b8"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/generation/actual-request.json",
+          "sha256": "ea8aa143c3fbf8fccba3957dcf77abfbaca2214690d37a43aa6791106655b619"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/generation/answer-response.json",
+          "sha256": "bc56681ed811a9adea89ffed2fbe776177d175b67acba470047f59458d395198"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/student-render.json",
+          "sha256": "8495f0800aaf6690b76fbdf79233cbccf2167a8b1551c88bea5e90e471281348"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a.json",
+          "sha256": "df972632d51262784f20a72daaacd5abc4777cee016f6a96747636bd38faf11a"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 2392,
+          "target_tokens": 544,
+          "total_tokens": 2936,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 2392,
+          "shifted_masked_tokens": 2391,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "Russian fruit classification",
+      "assessment": "hard_hold_unsupported_selected_answer",
+      "evidence_diagnosis": "The answer selects hawthorn and asserts it is a drupe, citing a generic pericarp source that never names hawthorn. The actual university excerpt describes a raspberry constituent fruitlet with a woody endocarp and identifies raspberry as an aggregate of drupes. Neither the repeated question nor these snippets supplies a keyed answer supporting option b.",
+      "correction_or_limit": "Do not certify b from these observations. Verify the species classification and the question's intended whole-fruit versus fruitlet scope; present the exact grounded rationale or flag uncertainty. This receipt does not invent an alternative answer key.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315",
+      "original_timestamp": "2025-04-05 13:52:49.716000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/candidate.json",
+          "sha256": "86c018ababc61e011bc1c6f8ae114d85d9b414f4eb0149b2740587338498a018"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/generation/actual-request.json",
+          "sha256": "05b43c08080ed2c09d29931c336ec4c24a8788e836b7fd1183e4a977bf3172c4"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/generation/answer-response.json",
+          "sha256": "fdd0363b39162075b125a562db6addedc6f28f1556c5bde13a42416e742bc794"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/student-render.json",
+          "sha256": "4b3bc1f3e04df02f09637818f0bd3369263f556613b42962273659937bbac2b2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/d64649f47e39f18331b30342024bc34a300354d923f4f6f2f4a6ee04e9003315.json",
+          "sha256": "1142d3d3735ac6e0d60c1cbcd6c61c0d90ab3be13eac5e48f306821b972f0b62"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 2071,
+          "target_tokens": 844,
+          "total_tokens": 2915,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 2071,
+          "shifted_masked_tokens": 2070,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "Ngoc Lang social contributions",
+      "assessment": "useful_synthesis_with_outcome_and_date_qualification",
+      "evidence_diagnosis": "Agricultural work, community tourism, ritual traditions and Singapore student visits are in the observations, so the answer is useful rather than an unnecessary refusal. But the cited 2023 architecture text describes desired benefits of a proposed center; it is used as evidence of actual income diversification. 'Developed strongly' also exceeds the more tentative source description of gradually forming tourism offerings.",
+      "correction_or_limit": "Distinguish documented tourism activities from projected economic benefits. Attribute and qualify undated current-state claims relative to April 5, 2025; a proposal is not evidence that its outcomes occurred. No blanket rejection of the agriculture/culture synthesis is warranted.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    },
+    {
+      "id": "e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9",
+      "original_timestamp": "2025-04-08 12:06:16.141000",
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/candidate.json",
+          "sha256": "22ba242d46fffb0cb32930cb57fd0fe54a482539dfbf67d17157c77ef35ef66b"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/generation/actual-request.json",
+          "sha256": "c80af2b8bb2c93c268939fc4adfaef6592c84ffe6c476a6ea455797ea99f42da"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/generation/answer-response.json",
+          "sha256": "21239e164d0474254004b0ed1b74fe3b511c3aef90a4a2e42983c43b83344fbf"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/student-render.json",
+          "sha256": "f4f3191ebda088c787214f65bb33ffd7db6c8d40baa5d84d2809fffcaff52760"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining48-20261001/metadata/evidence/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9.json",
+          "sha256": "bfcd37edd9a800ddde245abf91ab409c5b019e8d8107c06f225ea4dab9174db3"
+        }
+      ],
+      "verified_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1102,
+          "target_tokens": 609,
+          "total_tokens": 1711,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1102,
+          "shifted_masked_tokens": 1101,
+          "target_kind": "final_answer"
+        }
+      ],
+      "stratum": "Cisco industrial switches",
+      "assessment": "hold_product_specific_evidence_overreach",
+      "evidence_diagnosis": "IE3400 rugged modularity and the existence of an IE4000 datasheet are supported. The IE1000 page's retained body describes a Siemens SCALANCE managed Layer-2 switch and a Cisco IE3400; it does not establish the asserted IE1000 managed specification. The community snippet says both switch types handle frames/protocols, not that IE products have the extra protocol optimization claimed.",
+      "correction_or_limit": "Retain verified series examples and the observed Cisco selector recommendation, but obtain model-specific dated datasheet passages for features and availability. Do not borrow a neighboring product's specifications or interpret generic interoperability as specialized optimization.",
+      "automatic_verdict": "keep",
+      "admission_authorized": false
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-budgeted-remaining48-20261001/manifest.json",
+      "sha256": "4d568a7a8ec7491b6cfbd14149ce746168718d86c891e94058cc47ce21b48c30"
+    },
+    {
+      "path": "data/dfm13/search-budgeted-remaining48-20261001/finished.json",
+      "sha256": "6076d7fdef192b0460d237a9011206c5bf639c58b5e882c5b30bf053ac349552"
+    },
+    {
+      "path": "data/dfm13/search-budgeted-remaining48-20261001/screening.json",
+      "sha256": "f79f24535b3899144fcf14dda1642b88c2ab1b94d23866b2abf0b0fb9a9a845a"
+    },
+    {
+      "path": "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json",
+      "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6"
+    },
+    {
+      "path": "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja",
+      "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e"
+    },
+    {
+      "path": "scripts/dfm13_search_training_contract.py",
+      "sha256": "b325ace82da485f7038e631bb0ce1745fa17d29fa7553d2803edd7d2c4a5fca4"
+    },
+    {
+      "path": "scripts/tokenize_chat_template.py",
+      "sha256": "64d95ba1812c580eb0484ac98f786fa108d36ed0dd73fb0a0a61a9bbaa7e46b9"
+    }
+  ],
+  "finished_snapshot": {
+    "total": 44,
+    "counts": {
+      "keep": 20,
+      "reject": 3,
+      "needs_verification": 13,
+      "error": 8
+    },
+    "paid_calls": 0,
+    "admission_authorized": false
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "independent-manual-assessment-v1",
+  "packet": "data/dfm13/repochat-qa-next-20261001-v1/first/boole-manual-sample.json",
+  "packet_sha256": "585b2ed5a44ca53153c258f5c347a91921ae3b099393437ac7109337cd159b71",
+  "method": "Independent CPU/manual inspection of questions, answers, saved source observations and selected pinned implementation; automated verdicts withheld. No execution of repository code or model calls.",
+  "gate": "proceed_with_generation_not_blanket_admission",
+  "counts": {"sample": 8, "broadly_supported": 6, "localized_correction": 1, "missing_final_answer": 1},
+  "admission_authorized": false,
+  "cases": [
+    {"id": "847a441252f60315d0f9c7e9833d3613019e2958cfbaf3ba2e0a689345c2f834", "assessment": "broadly_supported", "evidence": "backend/main.py setup/audio/image/forwarding logic and standalone constants/queue support architecture. Independently read pinned capture_audio implementation beyond supplied line120: 16kHz PyAudio PCM capture and WebSocket send confirmed.", "caveat": "Real-time capability is repository design, not tested service availability/performance; simultaneous input can be gated during playback."},
+    {"id": "491d53cbd3a14310df1ba661707a364f66bcc536f4d5ecd6873db7b929f7daec", "assessment": "broadly_supported", "evidence": "handlers.rs:219-252 and 276-284 directly support sequential calls, reasoning extraction, assistant-message insertion and combined output.", "caveat": "More accurate is an asserted benefit, not demonstrated by this code; remove that promotional claim if editing."},
+    {"id": "3ccaaed101420e4aa390861ee76957e22ba728e6710274cd1cdddefadcf846b2", "assessment": "missing_final_answer", "evidence": "Packet final_answer is null. Do not count as a reviewed successful answer; regenerate/recover separately."},
+    {"id": "014502b0ae6952a3374ab99eea1e34c9d089b766368bbd2f6523a1d208944ffc", "assessment": "broadly_supported", "evidence": "docs/specs.md:22-63 supports map size, tile types, nodes, ships and sap action. Appropriate scope for identifying game objects."},
+    {"id": "a393328c202e9fcf6d98f17c795df8eedd5b6abea6e381569246e301beb3e464", "assessment": "broadly_supported", "evidence": "README:7-16,41-59 supports rootfs workflow, customization, lifecycle hooks, installer and QEMU. Tested distributions are upstream author's claim, not this review's execution."},
+    {"id": "87ddbe118424f6fd72e57ba7be6121a7a517a04b688b9439d442372b0882a5b3", "assessment": "broadly_supported", "evidence": "tool_box.rs imports, struct at141-145 and scratchpad methods169-240 support high-level overview.", "caveat": "Partial-file overview, not exhaustive implementation analysis. README wording attributed in answer was not retrieved; remove that incidental attribution or retrieve it."},
+    {"id": "56ca164595e062eb23b9f4b18cadd36663ded8c2f400fab8aa72c1dd43341dab", "assessment": "localized_correction", "evidence": "README supports principal capabilities, but line76 explicitly says USB debugging is not required in OTG mode; answer lists OTG while stating debugging is required without exception.", "correction": "Qualify USB debugging as required for normal mirroring/control, except OTG mode. Core overview otherwise supported."},
+    {"id": "1f074f03a76150e1e25db430c91ae447bc5d68ce910e5e7fdcbba831e3223bd1", "assessment": "broadly_supported", "evidence": "demo_extractor_fetch.py:176,198-216,253,270 support per-segment doubled exploration budgets and return position.", "caveat": "Segment termination is distance threshold OR end of trajectory, not exclusively threshold crossing. Minor qualification, not wrong central answer."}
+  ],
+  "scope_limit": "Eight diagnostic cases do not certify the waiting81 or establish reviewer precision. No process launch or ledger changes performed."
+}

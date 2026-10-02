@@ -1,5 +1,7 @@
 # Model Architecture Concepts
 
+* [Wide Model Size Presets](wide-model-size-presets.md) - XXXL-wide and XXXXL-wide presets and parameter comparison of all sizes.
+
 * [HF Export and Eval Loader Compatibility](hf-export-and-eval-loader-compatibility.md) - Part of Model Architecture: HF Export and Eval Loader Compatibility.
 * [Current Two-Level Relation](current-two-level-relation.md) - Part of Model Architecture: Current Two-Level Relation.
 * [vLLM DFM Judge-Backed Eval Memory](vllm-dfm-judge-backed-eval-memory.md) - Part of Model Architecture: vLLM DFM Judge-Backed Eval Memory.

@@ -1,0 +1,338 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,landscape,margin=12mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs,graphicx}
+\newsavebox{\familytable}
+\begin{document}
+\section*{Common Sense Reasoning}
+Complete matched coverage: 18/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 3 & 75.76 (74.07--77.73) & 71.69 (69.49--73.36) & -4.07 \\
+English & 11 & 73.99 (3.63--91.83) & 77.01 (37.66--90.49) & +3.02 \\
+Norwegian Bokmal & 0 & -- & -- & -- \\
+Norwegian Nynorsk & 0 & -- & -- & -- \\
+Swedish & 1 & 68.20 (68.20--68.20) & 66.88 (66.88--66.88) & -1.33 \\
+Icelandic & 1 & 61.41 (61.41--61.41) & 62.42 (62.42--62.42) & +1.02 \\
+Faroese & 0 & -- & -- & -- \\
+Dutch & 1 & 63.67 (63.67--63.67) & 69.30 (69.30--69.30) & +5.62 \\
+Polish & 1 & 58.59 (58.59--58.59) & 65.55 (65.55--65.55) & +6.95 \\
+German & 1 & 67.58 (67.58--67.58) & 70.47 (70.47--70.47) & +2.89 \\
+French & 1 & 64.77 (64.77--64.77) & 65.66 (65.66--65.66) & +0.90 \\
+Spanish & 1 & 68.75 (68.75--68.75) & 73.12 (73.12--73.12) & +4.38 \\
+Italian & 1 & 67.50 (67.50--67.50) & 70.47 (70.47--70.47) & +2.97 \\
+Czech & 1 & 41.84 (41.84--41.84) & 51.09 (51.09--51.09) & +9.26 \\
+Portuguese & 1 & 68.59 (68.59--68.59) & 67.81 (67.81--67.81) & -0.78 \\
+Finnish & 1 & 62.97 (62.97--62.97) & 56.09 (56.09--56.09) & -6.87 \\
+Estonian & 1 & 47.97 (47.97--47.97) & 65.00 (65.00--65.00) & +17.03 \\
+Catalan & 1 & 60.00 (60.00--60.00) & 67.66 (67.66--67.66) & +7.66 \\
+Greek & 1 & 62.66 (62.66--62.66) & 63.52 (63.52--63.52) & +0.86 \\
+Romanian & 1 & 58.75 (58.75--58.75) & 68.28 (68.28--68.28) & +9.53 \\
+Ukrainian & 1 & 67.89 (67.89--67.89) & 65.70 (65.70--65.70) & -2.19 \\
+Norwegian (joint NB/NN) & 1 & 76.41 (76.41--76.41) & 77.66 (77.66--77.66) & +1.25 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/common-sense-reasoning.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: accuracy; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Grammatical Error Correction}
+Complete matched coverage: 21/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 1 & 91.99 (91.99--91.99) & 94.43 (94.43--94.43) & +2.44 \\
+English & 1 & 50.55 (50.55--50.55) & 88.25 (88.25--88.25) & +37.70 \\
+Norwegian Bokmal & 1 & 49.35 (49.35--49.35) & 95.20 (95.20--95.20) & +45.85 \\
+Norwegian Nynorsk & 1 & 40.65 (40.65--40.65) & 89.70 (89.70--89.70) & +49.05 \\
+Swedish & 1 & 30.40 (30.40--30.40) & 95.55 (95.55--95.55) & +65.15 \\
+Icelandic & 1 & 15.95 (15.95--15.95) & 84.75 (84.75--84.75) & +68.80 \\
+Faroese & 1 & 23.25 (23.25--23.25) & 75.30 (75.30--75.30) & +52.05 \\
+Dutch & 1 & 2.15 (2.15--2.15) & 94.05 (94.05--94.05) & +91.90 \\
+Polish & 1 & 0.75 (0.75--0.75) & 92.10 (92.10--92.10) & +91.35 \\
+German & 1 & 18.25 (18.25--18.25) & 85.25 (85.25--85.25) & +67.00 \\
+French & 1 & 20.80 (20.80--20.80) & 79.90 (79.90--79.90) & +59.10 \\
+Spanish & 1 & 18.25 (18.25--18.25) & 85.30 (85.30--85.30) & +67.05 \\
+Italian & 1 & 19.95 (19.95--19.95) & 88.85 (88.85--88.85) & +68.90 \\
+Czech & 1 & 1.70 (1.70--1.70) & 84.40 (84.40--84.40) & +82.70 \\
+Portuguese & 1 & 16.60 (16.60--16.60) & 94.40 (94.40--94.40) & +77.80 \\
+Finnish & 1 & 7.10 (7.10--7.10) & 80.30 (80.30--80.30) & +73.20 \\
+Estonian & 1 & 4.45 (4.45--4.45) & 79.90 (79.90--79.90) & +75.45 \\
+Catalan & 1 & 20.85 (20.85--20.85) & 90.60 (90.60--90.60) & +69.75 \\
+Greek & 1 & 0.00 (0.00--0.00) & 91.90 (91.90--91.90) & +91.90 \\
+Romanian & 1 & 5.45 (5.45--5.45) & 86.75 (86.75--86.75) & +81.30 \\
+Ukrainian & 1 & 3.65 (3.65--3.65) & 72.95 (72.95--72.95) & +69.30 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/grammatical-error-correction.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: not applicable; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Instruction Following}
+Complete matched coverage: 21/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 3 & 77.80 (75.86--80.33) & 77.61 (75.97--78.88) & -0.19 \\
+English & 2 & 78.05 (77.64--78.47) & 79.58 (78.61--80.56) & +1.53 \\
+Norwegian Bokmal & 1 & 70.99 (70.99--70.99) & 77.03 (77.03--77.03) & +6.04 \\
+Norwegian Nynorsk & 1 & 65.75 (65.75--65.75) & 75.10 (75.10--75.10) & +9.35 \\
+Swedish & 1 & 65.07 (65.07--65.07) & 75.93 (75.93--75.93) & +10.87 \\
+Icelandic & 1 & 45.32 (45.32--45.32) & 67.09 (67.09--67.09) & +21.77 \\
+Faroese & 1 & 50.89 (50.89--50.89) & 68.57 (68.57--68.57) & +17.68 \\
+Dutch & 1 & 58.82 (58.82--58.82) & 78.34 (78.34--78.34) & +19.52 \\
+Polish & 1 & 47.41 (47.41--47.41) & 70.02 (70.02--70.02) & +22.61 \\
+German & 1 & 62.18 (62.18--62.18) & 71.72 (71.72--71.72) & +9.54 \\
+French & 2 & 62.42 (60.90--63.93) & 72.08 (69.11--75.06) & +9.67 \\
+Spanish & 2 & 63.78 (60.77--66.79) & 73.32 (71.86--74.78) & +9.54 \\
+Italian & 1 & 64.53 (64.53--64.53) & 74.64 (74.64--74.64) & +10.11 \\
+Czech & 1 & 43.81 (43.81--43.81) & 69.81 (69.81--69.81) & +26.00 \\
+Portuguese & 1 & 62.30 (62.30--62.30) & 73.26 (73.26--73.26) & +10.96 \\
+Finnish & 1 & 42.63 (42.63--42.63) & 72.33 (72.33--72.33) & +29.70 \\
+Estonian & 2 & 35.08 (32.35--37.81) & 64.16 (60.93--67.39) & +29.08 \\
+Catalan & 2 & 53.09 (51.34--54.84) & 72.61 (69.61--75.61) & +19.53 \\
+Greek & 2 & 31.52 (29.39--33.65) & 68.22 (66.02--70.42) & +36.70 \\
+Romanian & 1 & 51.02 (51.02--51.02) & 75.25 (75.25--75.25) & +24.22 \\
+Ukrainian & 1 & 50.12 (50.12--50.12) & 68.07 (68.07--68.07) & +17.95 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/instruction-following.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: instruction\_accuracy; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Knowledge}
+Complete matched coverage: 19/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 3 & 83.88 (75.94--89.11) & 77.36 (66.09--85.32) & -6.52 \\
+English & 8 & 73.52 (40.87--93.35) & 70.55 (40.31--94.55) & -2.98 \\
+Norwegian Bokmal & 0 & -- & -- & -- \\
+Norwegian Nynorsk & 0 & -- & -- & -- \\
+Swedish & 1 & 30.94 (30.94--30.94) & 43.75 (43.75--43.75) & +12.81 \\
+Icelandic & 1 & 40.00 (40.00--40.00) & 39.14 (39.14--39.14) & -0.86 \\
+Faroese & 1 & 41.49 (41.49--41.49) & 58.39 (58.39--58.39) & +16.90 \\
+Dutch & 1 & 49.06 (49.06--49.06) & 50.78 (50.78--50.78) & +1.72 \\
+Polish & 1 & 39.65 (39.65--39.65) & 31.52 (31.52--31.52) & -8.12 \\
+German & 1 & 44.22 (44.22--44.22) & 47.50 (47.50--47.50) & +3.28 \\
+French & 1 & 47.97 (47.97--47.97) & 45.78 (45.78--45.78) & -2.19 \\
+Spanish & 1 & 57.66 (57.66--57.66) & 60.47 (60.47--60.47) & +2.81 \\
+Italian & 1 & 60.47 (60.47--60.47) & 62.19 (62.19--62.19) & +1.72 \\
+Czech & 1 & 65.94 (65.94--65.94) & 78.12 (78.12--78.12) & +12.19 \\
+Portuguese & 1 & 65.82 (65.82--65.82) & 63.89 (63.89--63.89) & -1.92 \\
+Finnish & 1 & 27.34 (27.34--27.34) & 33.75 (33.75--33.75) & +6.41 \\
+Estonian & 1 & 20.50 (20.50--20.50) & 18.83 (18.83--18.83) & -1.67 \\
+Catalan & 1 & 46.72 (46.72--46.72) & 49.88 (49.88--49.88) & +3.16 \\
+Greek & 1 & 45.04 (45.04--45.04) & 61.80 (61.80--61.80) & +16.76 \\
+Romanian & 1 & 44.18 (44.18--44.18) & 48.01 (48.01--48.01) & +3.83 \\
+Ukrainian & 1 & 53.28 (53.28--53.28) & 45.16 (45.16--45.16) & -8.12 \\
+Norwegian (joint NB/NN) & 1 & 41.09 (41.09--41.09) & 36.95 (36.95--36.95) & -4.14 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/knowledge.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: accuracy; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Linguistic Acceptability}
+Complete matched coverage: 21/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 2 & 90.93 (84.80--97.07) & 81.53 (66.82--96.24) & -9.40 \\
+English & 2 & 86.09 (83.25--88.92) & 86.84 (74.42--99.25) & +0.75 \\
+Norwegian Bokmal & 2 & 66.14 (63.06--69.22) & 80.07 (63.58--96.55) & +13.93 \\
+Norwegian Nynorsk & 2 & 58.40 (55.74--61.06) & 74.98 (57.47--92.48) & +16.58 \\
+Swedish & 2 & 61.90 (51.67--72.12) & 79.30 (62.41--96.20) & +17.41 \\
+Icelandic & 3 & 49.53 (46.70--53.24) & 71.18 (55.14--89.51) & +21.66 \\
+Faroese & 2 & 47.54 (40.05--55.02) & 72.77 (61.70--83.85) & +25.23 \\
+Dutch & 3 & 59.13 (48.02--66.61) & 77.04 (64.78--95.85) & +17.91 \\
+Polish & 2 & 54.05 (48.70--59.40) & 70.72 (46.64--94.80) & +16.67 \\
+German & 2 & 57.96 (54.77--61.16) & 86.01 (78.99--93.03) & +28.05 \\
+French & 2 & 67.96 (64.45--71.46) & 82.77 (73.87--91.67) & +14.81 \\
+Spanish & 2 & 65.28 (58.08--72.48) & 83.73 (70.56--96.90) & +18.45 \\
+Italian & 2 & 49.12 (32.87--65.37) & 83.67 (72.25--95.09) & +34.56 \\
+Czech & 3 & 41.78 (36.91--50.56) & 68.78 (57.15--88.28) & +26.99 \\
+Portuguese & 2 & 47.93 (34.76--61.09) & 82.28 (68.01--96.55) & +34.35 \\
+Finnish & 2 & 29.19 (18.92--39.47) & 66.87 (46.76--86.98) & +37.68 \\
+Estonian & 3 & 36.60 (35.16--38.81) & 66.65 (57.29--85.26) & +30.05 \\
+Catalan & 2 & 44.33 (40.59--48.06) & 81.35 (66.95--95.75) & +37.02 \\
+Greek & 2 & 35.00 (34.43--35.57) & 79.69 (66.34--93.04) & +44.69 \\
+Romanian & 2 & 57.09 (54.89--59.29) & 78.75 (66.84--90.67) & +21.66 \\
+Ukrainian & 2 & 55.87 (54.63--57.12) & 77.73 (64.23--91.23) & +21.86 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/linguistic-acceptability.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: macro\_f1; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Named Entity Recognition}
+Complete matched coverage: 21/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 1 & 42.32 (42.32--42.32) & 52.75 (52.75--52.75) & +10.43 \\
+English & 1 & 60.21 (60.21--60.21) & 70.49 (70.49--70.49) & +10.28 \\
+Norwegian Bokmal & 1 & 53.21 (53.21--53.21) & 64.07 (64.07--64.07) & +10.86 \\
+Norwegian Nynorsk & 1 & 54.50 (54.50--54.50) & 62.87 (62.87--62.87) & +8.37 \\
+Swedish & 1 & 36.39 (36.39--36.39) & 52.95 (52.95--52.95) & +16.56 \\
+Icelandic & 1 & 34.48 (34.48--34.48) & 38.13 (38.13--38.13) & +3.65 \\
+Faroese & 1 & 62.12 (62.12--62.12) & 65.21 (65.21--65.21) & +3.08 \\
+Dutch & 1 & 40.02 (40.02--40.02) & 54.44 (54.44--54.44) & +14.42 \\
+Polish & 1 & 27.24 (27.24--27.24) & 37.95 (37.95--37.95) & +10.71 \\
+German & 1 & 44.46 (44.46--44.46) & 48.34 (48.34--48.34) & +3.88 \\
+French & 1 & 51.23 (51.23--51.23) & 62.59 (62.59--62.59) & +11.37 \\
+Spanish & 1 & 49.40 (49.40--49.40) & 61.32 (61.32--61.32) & +11.92 \\
+Italian & 1 & 43.68 (43.68--43.68) & 41.50 (41.50--41.50) & -2.18 \\
+Czech & 1 & 27.00 (27.00--27.00) & 35.66 (35.66--35.66) & +8.66 \\
+Portuguese & 1 & 27.61 (27.61--27.61) & 32.44 (32.44--32.44) & +4.83 \\
+Finnish & 1 & 35.76 (35.76--35.76) & 29.40 (29.40--29.40) & -6.36 \\
+Estonian & 1 & 21.98 (21.98--21.98) & 25.78 (25.78--25.78) & +3.81 \\
+Catalan & 1 & 64.37 (64.37--64.37) & 61.85 (61.85--61.85) & -2.52 \\
+Greek & 1 & 0.00 (0.00--0.00) & 50.65 (50.65--50.65) & +50.65 \\
+Romanian & 1 & 30.19 (30.19--30.19) & 32.08 (32.08--32.08) & +1.88 \\
+Ukrainian & 1 & 37.00 (37.00--37.00) & 55.93 (55.93--55.93) & +18.94 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/named-entity-recognition.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: micro\_f1; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Sentiment Classification}
+Complete matched coverage: 19/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 1 & 70.80 (70.80--70.80) & 73.55 (73.55--73.55) & +2.75 \\
+English & 1 & 73.00 (73.00--73.00) & 69.00 (69.00--69.00) & -4.00 \\
+Norwegian Bokmal & 0 & -- & -- & -- \\
+Norwegian Nynorsk & 0 & -- & -- & -- \\
+Swedish & 1 & 59.31 (59.31--59.31) & 76.18 (76.18--76.18) & +16.87 \\
+Icelandic & 1 & 28.50 (28.50--28.50) & 56.70 (56.70--56.70) & +28.20 \\
+Faroese & 1 & 36.19 (36.19--36.19) & 73.23 (73.23--73.23) & +37.04 \\
+Dutch & 1 & 94.98 (94.98--94.98) & 95.33 (95.33--95.33) & +0.36 \\
+Polish & 1 & 85.24 (85.24--85.24) & 93.30 (93.30--93.30) & +8.05 \\
+German & 1 & 48.04 (48.04--48.04) & 64.80 (64.80--64.80) & +16.75 \\
+French & 1 & 93.54 (93.54--93.54) & 96.60 (96.60--96.60) & +3.07 \\
+Spanish & 1 & 15.80 (15.80--15.80) & 61.56 (61.56--61.56) & +45.76 \\
+Italian & 1 & 19.37 (19.37--19.37) & 70.50 (70.50--70.50) & +51.13 \\
+Czech & 1 & 49.17 (49.17--49.17) & 52.95 (52.95--52.95) & +3.78 \\
+Portuguese & 1 & 64.49 (64.49--64.49) & 91.22 (91.22--91.22) & +26.73 \\
+Finnish & 1 & 84.04 (84.04--84.04) & 91.45 (91.45--91.45) & +7.41 \\
+Estonian & 1 & 47.63 (47.63--47.63) & 56.45 (56.45--56.45) & +8.83 \\
+Catalan & 1 & 54.33 (54.33--54.33) & 55.91 (55.91--55.91) & +1.58 \\
+Greek & 1 & 42.56 (42.56--42.56) & 79.65 (79.65--79.65) & +37.09 \\
+Romanian & 1 & 83.78 (83.78--83.78) & 94.79 (94.79--94.79) & +11.01 \\
+Ukrainian & 1 & 55.41 (55.41--55.41) & 63.58 (63.58--63.58) & +8.17 \\
+Norwegian (joint NB/NN) & 1 & 68.78 (68.78--68.78) & 69.64 (69.64--69.64) & +0.86 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/sentiment-classification.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: macro\_f1; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\clearpage
+\section*{Summarization}
+Complete matched coverage: 18/21 languages. Scores: 0--100; mean (minimum--maximum) across tasks.
+\par\smallskip\noindent
+\begin{minipage}[t]{0.57\textwidth}\vspace{0pt}
+\sbox{\familytable}{%
+\begin{tabular}{llrrr}
+\toprule
+Language & Tasks & Epoch 10 & 2950K & Change (pp) \\
+\midrule
+Danish & 2 & 30.01 (29.78--30.24) & 29.64 (29.24--30.03) & -0.37 \\
+English & 2 & 33.56 (32.88--34.24) & 36.78 (35.94--37.62) & +3.21 \\
+Norwegian Bokmal & 0 & -- & -- & -- \\
+Norwegian Nynorsk & 0 & -- & -- & -- \\
+Swedish & 1 & 20.14 (20.14--20.14) & 30.17 (30.17--30.17) & +10.03 \\
+Icelandic & 1 & 22.62 (22.62--22.62) & 29.71 (29.71--29.71) & +7.09 \\
+Faroese & 0 & -- & -- & -- \\
+Dutch & 1 & 22.91 (22.91--22.91) & 28.50 (28.50--28.50) & +5.59 \\
+Polish & 1 & 7.25 (7.25--7.25) & 17.96 (17.96--17.96) & +10.71 \\
+German & 1 & 22.23 (22.23--22.23) & 30.50 (30.50--30.50) & +8.27 \\
+French & 1 & 20.41 (20.41--20.41) & 27.02 (27.02--27.02) & +6.61 \\
+Spanish & 1 & 17.85 (17.85--17.85) & 27.91 (27.91--27.91) & +10.06 \\
+Italian & 1 & 23.61 (23.61--23.61) & 33.64 (33.64--33.64) & +10.03 \\
+Czech & 1 & 9.71 (9.71--9.71) & 17.29 (17.29--17.29) & +7.58 \\
+Portuguese & 1 & 12.22 (12.22--12.22) & 19.76 (19.76--19.76) & +7.54 \\
+Finnish & 1 & 17.98 (17.98--17.98) & 29.06 (29.06--29.06) & +11.08 \\
+Estonian & 1 & 16.03 (16.03--16.03) & 22.61 (22.61--22.61) & +6.58 \\
+Catalan & 1 & 22.79 (22.79--22.79) & 27.60 (27.60--27.60) & +4.81 \\
+Greek & 1 & 6.41 (6.41--6.41) & 27.66 (27.66--27.66) & +21.24 \\
+Romanian & 1 & 20.95 (20.95--20.95) & 27.88 (27.88--27.88) & +6.93 \\
+Ukrainian & 1 & 18.83 (18.83--18.83) & 22.32 (22.32--22.32) & +3.49 \\
+Norwegian (joint NB/NN) & 1 & 21.83 (21.83--21.83) & 23.03 (23.03--23.03) & +1.20 \\
+\bottomrule\end{tabular}}
+\ifdim\wd\familytable>\linewidth\resizebox{\linewidth}{!}{\usebox{\familytable}}\else\usebox{\familytable}\fi
+\end{minipage}\hfill\begin{minipage}[t]{0.42\textwidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{\detokenize{docs/reports/multilingual_epoch10_2950k_plots/summarization.pdf}}
+\end{minipage}
+\par\smallskip\footnotesize
+Equal weight per task/suite; not per sample. Ranges are not confidence intervals. Missing/incomplete cells are withheld. Joint Norwegian results do not count as two languages. Change is last minus first checkpoint, in percentage points (not relative percent). All plots share the same horizontal scale.
+\par Checkpoint steps: Epoch 10: 2877261 (epoch 10.000000); 2950K: 2950000 (epoch 10.162422)
+\par Primary scores: EuroEval: chr\_f3pp; DFM: semantic macro-F1 for acceptability, exact match for correction, strict instruction accuracy for IFEval, answer F1 for QA, chrF3++ for summarization.
+\par Task membership and source paths are recorded in the accompanying JSON evidence file.\normalsize
+\end{document}

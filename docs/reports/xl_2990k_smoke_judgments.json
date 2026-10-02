@@ -1,0 +1,587 @@
+{
+  "reviewer": "Codex direct qualitative review; no external judge model",
+  "scale": "0 failed/unusable; 1 major problems; 2 usable with reservations; 3 strong on this specific prompt",
+  "dimensions": [
+    "task_success",
+    "language_correctness",
+    "fluency"
+  ],
+  "caveats": "One authored prompt per task and language is a qualitative diagnostic, not a statistically reliable language ranking. Scores are not native-speaker certification. The Finnish correction prompt is context-sensitive. Token caps constrain stories, but visible repetition and contradictions are failures independent of the cap.",
+  "findings": [
+    "Short corrections and summaries remain substantially stronger than creative writing.",
+    "Nineteen corrections succeed clearly. Polish correction fails; Finnish makes an unrequested tense change on a context-sensitive prompt.",
+    "Summaries generally preserve the main event in two sentences; the Polish answer changes April to February, and several summaries invent new reading clubs.",
+    "Stories frequently repeat, contradict their own beak premise, omit conversation, or contain substantial language errors. These results do not establish dependable open-ended multilingual writing.",
+    "Compared qualitatively with the earlier 2930K smoke, Icelandic and Faroese corrections improve, but weaknesses in long-form generation remain. This is not a statistically controlled improvement claim.",
+    "EMA export uses the training tokenizer with the Mistral regex fix disabled. No W&B metrics were written."
+  ],
+  "judgments": [
+    {
+      "index": 0,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correctly repairs the article and preserves the sentence."
+    },
+    {
+      "index": 1,
+      "scores": [
+        0,
+        2,
+        0
+      ],
+      "assessment": "Repeats the same request for help until truncation; no resolution or happy ending. Mostly readable Danish, but unusable as a finished story."
+    },
+    {
+      "index": 2,
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "assessment": "Two fluent sentences capture the change and result; the reference to new reading clubs slightly overstates the source."
+    },
+    {
+      "index": 3,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct article repair, with no extraneous explanation."
+    },
+    {
+      "index": 4,
+      "scores": [
+        2,
+        3,
+        2
+      ],
+      "assessment": "Grammatical and complete, with dialogue and an ending, but the duck inexplicably cannot use its own beak; the replacement button does not resolve that contradiction."
+    },
+    {
+      "index": 5,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Faithful two-sentence summary of the extended opening and increased visits."
+    },
+    {
+      "index": 6,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct gender/article repair."
+    },
+    {
+      "index": 7,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Solves the dusty-button obstacle and ends happily, but lacks the requested conversation. Danish-like phrasing weakens Bokmal correctness."
+    },
+    {
+      "index": 8,
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "assessment": "Clear two-sentence summary, but calling the reading groups new adds an unsupported detail."
+    },
+    {
+      "index": 9,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Nynorsk article repair."
+    },
+    {
+      "index": 10,
+      "scores": [
+        1,
+        1,
+        0
+      ],
+      "assessment": "Reaches a nominal resolution but degenerates into repeated paragraphs until the cap. Mixed forms and agreement errors weaken Nynorsk."
+    },
+    {
+      "index": 11,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Concise, faithful two-sentence summary, with the increased visits and continuation decision."
+    },
+    {
+      "index": 12,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Changes the noun to a valid plural agreeing with the determiner; a valid alternative correction."
+    },
+    {
+      "index": 13,
+      "scores": [
+        2,
+        1,
+        1
+      ],
+      "assessment": "Recognizable mission and ending, but self-talk is not a conversation and the beak is treated inconsistently. Non-Swedish forms and awkward phrasing recur."
+    },
+    {
+      "index": 14,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Two sentences capture the broad change and result, but wording is awkward and the increase is stated vaguely."
+    },
+    {
+      "index": 15,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correctly supplies the accusative feminine numeral before book."
+    },
+    {
+      "index": 16,
+      "scores": [
+        0,
+        1,
+        0
+      ],
+      "assessment": "Repeats the intention to go into space until truncation; no developed obstacle, conversation, or ending. Icelandic word choice is also faulty."
+    },
+    {
+      "index": 17,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Core facts remain recognizable in two sentences, but case and verbal constructions are awkward."
+    },
+    {
+      "index": 18,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correctly repairs the numeral/article agreement before book."
+    },
+    {
+      "index": 19,
+      "scores": [
+        0,
+        1,
+        0
+      ],
+      "assessment": "The setting and grammar become confused and repeated curiosity passages dominate until truncation. No usable completed space story."
+    },
+    {
+      "index": 20,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Captures the broad change and outcome but contains spelling/idiomatic problems and overstates an increase in reading groups."
+    },
+    {
+      "index": 21,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Dutch article repair."
+    },
+    {
+      "index": 22,
+      "scores": [
+        2,
+        1,
+        1
+      ],
+      "assessment": "Dialogue and a happy ending are present, but the beak solution is poorly motivated; multiple agreement, tense, and idiomatic errors reduce readability."
+    },
+    {
+      "index": 23,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Faithful and fluent two-sentence summary."
+    },
+    {
+      "index": 24,
+      "scores": [
+        0,
+        1,
+        1
+      ],
+      "assessment": "Produces the malformed adjective 'ciekaw e' instead of the required accusative feminine form; the requested repair fails."
+    },
+    {
+      "index": 25,
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "assessment": "Major grammatical and semantic problems, no clear conversation, and a repeated ending. The proposed solution is not explained coherently."
+    },
+    {
+      "index": 26,
+      "scores": [
+        1,
+        2,
+        2
+      ],
+      "assessment": "Changes April to February, a factual error; also has subject-verb agreement trouble. The general outcome is retained."
+    },
+    {
+      "index": 27,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct German article repair."
+    },
+    {
+      "index": 28,
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "assessment": "Contains dialogue and an ending but numerous case, agreement, and lexical errors; the action and solution are difficult to follow."
+    },
+    {
+      "index": 29,
+      "scores": [
+        3,
+        3,
+        2
+      ],
+      "assessment": "Accurately covers the main change and result in two sentences; the reading-group phrasing is somewhat unnatural."
+    },
+    {
+      "index": 30,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct French article repair."
+    },
+    {
+      "index": 31,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Complete and broadly coherent, but omits the requested conversation. Minor spelling and tense problems remain."
+    },
+    {
+      "index": 32,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Faithful, fluent two-sentence summary."
+    },
+    {
+      "index": 33,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Spanish article repair."
+    },
+    {
+      "index": 34,
+      "scores": [
+        2,
+        3,
+        2
+      ],
+      "assessment": "Meets most structural requirements and ends happily, but the duck forgetting its beak and the crew's beaks make the solution contrived."
+    },
+    {
+      "index": 35,
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "assessment": "Fluent two-sentence summary, but implies creation of reading clubs rather than existing clubs beginning to meet there."
+    },
+    {
+      "index": 36,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Italian article repair."
+    },
+    {
+      "index": 37,
+      "scores": [
+        1,
+        1,
+        0
+      ],
+      "assessment": "Dialogue and the button premise are present, but repeated action runs to the cap. Lexical and grammatical errors accompany loss of coherence."
+    },
+    {
+      "index": 38,
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "assessment": "Main opening-hours and attendance facts are retained, but the claimed increase in reading clubs is unsupported and the continuation decision is omitted."
+    },
+    {
+      "index": 39,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Czech adjective agreement."
+    },
+    {
+      "index": 40,
+      "scores": [
+        0,
+        1,
+        0
+      ],
+      "assessment": "Repeated book/button exchanges replace a plot until truncation. Frequent Czech agreement and construction errors; no happy ending."
+    },
+    {
+      "index": 41,
+      "scores": [
+        3,
+        2,
+        2
+      ],
+      "assessment": "Accurate two-sentence account, though the phrasing for evening attendance is awkward."
+    },
+    {
+      "index": 42,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Portuguese article repair."
+    },
+    {
+      "index": 43,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Complete with dialogue and a successful button solution, but some grammar and idioms are awkward and European/Brazilian usage is mixed."
+    },
+    {
+      "index": 44,
+      "scores": [
+        2,
+        3,
+        3
+      ],
+      "assessment": "Good two-sentence summary except that formation of reading clubs is an unsupported interpretation."
+    },
+    {
+      "index": 45,
+      "scores": [
+        1,
+        2,
+        2
+      ],
+      "assessment": "Changes the mother's reading to past tense without addressing the intended numeral agreement. The original agreement is context-sensitive, so this is a weak diagnostic prompt."
+    },
+    {
+      "index": 46,
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "assessment": "Incoherent physical events, repeated material, and lexical errors undermine the story. Self-talk does not supply the requested conversation."
+    },
+    {
+      "index": 47,
+      "scores": [
+        2,
+        3,
+        2
+      ],
+      "assessment": "Preserves the result, but shifts the purpose toward easing long workdays rather than enabling borrowing by long-hours workers."
+    },
+    {
+      "index": 48,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Estonian adjective case."
+    },
+    {
+      "index": 49,
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "assessment": "Includes dialogue and a nominal happy ending, but a floating star/button substitutes for a coherent mission obstacle. Repeated case and verb-form errors."
+    },
+    {
+      "index": 50,
+      "scores": [
+        2,
+        1,
+        1
+      ],
+      "assessment": "The main facts can be recovered, but sentence construction and case errors make the two-sentence summary unnatural."
+    },
+    {
+      "index": 51,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Catalan article repair."
+    },
+    {
+      "index": 52,
+      "scores": [
+        1,
+        1,
+        0
+      ],
+      "assessment": "Contains dialogue but repeatedly confuses space with the body, uses non-Catalan/incorrect forms, and ends mid-sentence at the cap."
+    },
+    {
+      "index": 53,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Broadly faithful two-sentence summary with agreement/spelling issues and some overinterpretation of reading-group participation."
+    },
+    {
+      "index": 54,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Greek article agreement."
+    },
+    {
+      "index": 55,
+      "scores": [
+        1,
+        2,
+        1
+      ],
+      "assessment": "Dialogue and a happy outcome exist, but the duck claims to lack a beak and the mechanism is incoherent. Several constructions are unnatural."
+    },
+    {
+      "index": 56,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Faithful two-sentence summary of the change, increased visits, and continuation decision."
+    },
+    {
+      "index": 57,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Romanian article repair."
+    },
+    {
+      "index": 58,
+      "scores": [
+        1,
+        1,
+        1
+      ],
+      "assessment": "No genuine two-party conversation; invented words and malformed clauses. An unmotivated phrase about trying to kill herself is particularly inappropriate for the requested light story."
+    },
+    {
+      "index": 59,
+      "scores": [
+        2,
+        2,
+        2
+      ],
+      "assessment": "Broad facts are retained, but malformed article/verb forms reduce Romanian quality."
+    },
+    {
+      "index": 60,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Correct Ukrainian adjective agreement; the unnecessary mother synonym remains valid."
+    },
+    {
+      "index": 61,
+      "scores": [
+        2,
+        2,
+        1
+      ],
+      "assessment": "Dialogue and return home satisfy much of the outline, but motivation and mechanism are confused, with case/agreement errors and repeated actions."
+    },
+    {
+      "index": 62,
+      "scores": [
+        3,
+        3,
+        3
+      ],
+      "assessment": "Faithful and readable two-sentence summary."
+    }
+  ]
+}

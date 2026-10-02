@@ -1,0 +1,28 @@
+{
+  "checkpoints": [
+    {
+      "label": "2900K",
+      "step": 2900000,
+      "epoch": 10.050805366878901,
+      "roots": [
+        "logs/euroeval/dfm12_multilingual/step_2900000/step_2900000",
+        "logs/euroeval/dfm12_XL_epoch11/step_2900000/step_2900000",
+        "logs/dfm_evals/dfm12_XL_epoch11/step_2900000",
+        "logs/dfm_evals/dfm12_multilingual/step_2900000",
+        "logs/eval/dfm12_XL_epoch11/step_2900000"
+      ]
+    },
+    {
+      "label": "2950K",
+      "step": 2950000,
+      "epoch": 10.162422415973765,
+      "roots": [
+        "logs/euroeval/dfm12_multilingual/step_2950000/step_2950000",
+        "logs/euroeval/dfm12_XL_epoch11/step_2950000/step_2950000",
+        "logs/dfm_evals/dfm12_XL_epoch11/step_2950000",
+        "logs/dfm_evals/dfm12_multilingual/step_2950000",
+        "logs/eval/dfm12_XL_epoch11/step_2950000"
+      ]
+    }
+  ]
+}

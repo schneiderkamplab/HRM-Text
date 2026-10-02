@@ -1,0 +1,1082 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=12mm]{geometry}
+\usepackage{fontspec,graphicx,xcolor}
+\setmainfont{DejaVu Serif}
+\newsavebox{\languagepage}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\begin{document}
+{\Large\bfseries Danish --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Ret den grammatiske fejl i denne sætning. Svar kun med den rettede sætning: De tre børn leger i haven, mens deres mor læser en bøger.\par\smallskip
+\textbf{Answer}\par De tre børn leger i haven, mens deres mor læser en bog.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correctly repairs the article and preserves the sentence.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Skriv en kort historie på dansk om en and, der bliver astronaut. Under sin første rumrejse opdager anden, at en vigtig knap kun kan trykkes ind med et næb. Historien skal indeholde en samtale, en uventet forhindring og en lykkelig slutning.\par\smallskip
+\textbf{Answer}\par Der var engang en lille, nysgerrig and ved navn Andros, der drømte om at rejse ud i rummet. Han havde altid været fascineret af stjernerne og planeterne, og en dag besluttede han sig for at blive astronaut.
+\par\smallskip
+Andros tog sin første rumrejse, og han var så spændt, at han næsten ikke kunne holde sig selv i skak. Han fløj gennem rummet, og han så stjernerne og planeterne i alle deres pragt.
+\par\smallskip
+Men pludselig opdagede Andros, at han havde en vigtig knap, som han ikke kunne trykke ind. Han kiggede på knappen og så, at den kun kunne trykkes ind med et næb.
+\par\smallskip
+Andros blev så forvirret, at han næsten ikke kunne finde ud af, hvad han skulle gøre. Han kiggede på sin ven, en lille kat, der sad ved siden af ham.
+\par\smallskip
+"Hej, ven," sagde Andros. "Jeg har en knap, som jeg ikke kan trykke ind. Kan du hjælpe mig?"
+\par\smallskip
+Katten så på Andros og sagde: "Selvfølgelig, ven. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på sin ven, katten, og sagde: "Kan du hjælpe mig med at trykke knappen ind?"
+\par\smallskip
+Katten nikkede og sagde: "Ja, selvfølgelig. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på sin ven, katten, og sagde: "Kan du hjælpe mig med at trykke knappen ind?"
+\par\smallskip
+Katten nikkede og sagde: "Ja, selvfølgelig. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på sin ven, katten, og sagde: "Kan du hjælpe mig med at trykke knappen ind?"
+\par\smallskip
+Katten nikkede og sagde: "Ja, selvfølgelig. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på sin ven, katten, og sagde: "Kan du hjælpe mig med at trykke knappen ind?"
+\par\smallskip
+Katten nikkede og sagde: "Ja, selvfølgelig. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på sin ven, katten, og sagde: "Kan du hjælpe mig med at trykke knappen ind?"
+\par\smallskip
+Katten nikkede og sagde: "Ja, selvfølgelig. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på sin ven, katten, og sagde: "Kan du hjælpe mig med at trykke knappen ind?"
+\par\smallskip
+Katten nikkede og sagde: "Ja, selvfølgelig. Jeg kan hjælpe dig."
+\par\smallskip
+Andros kiggede på knappen igen og så, at den kun kunne trykkes ind med et næb. Han kiggede på\par\smallskip
+\textbf{Evaluation: 0 / 2 / 0}\par Repeats the same request for help until truncation; no resolution or happy ending. Mostly readable Danish, but unusable as a finished story.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Opsummér følgende afsnit på dansk i præcis to sætninger. Medtag både ændringen og dens vigtigste resultat, og tilføj ingen nye oplysninger.
+\par\smallskip
+Byens bibliotek begyndte i april at holde åbent to aftener om ugen. Forsøget skulle gøre det lettere for folk med lange arbejdsdage at låne bøger. Efter tre måneder var antallet af aftenbesøg steget støt, men besøgstallet om formiddagen var næsten uændret. Flere lokale læseklubber begyndte også at mødes på biblioteket. Kommunen besluttede derfor at fortsætte ordningen resten af året.\par\smallskip
+\textbf{Answer}\par Biblioteket åbnede to aftener om ugen for at hjælpe folk med lange arbejdsdage. Dette førte til flere aftenbesøg og lokale læseklubber, hvilket fik kommunen til at fortsætte ordningen.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 3}\par Two fluent sentences capture the change and result; the reference to new reading clubs slightly overstates the source.
+\par {\color{gray} Output: 53 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries English --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Correct the grammatical mistake in this sentence. Return only the corrected sentence: The three children are playing in the garden while their mother reads a books.\par\smallskip
+\textbf{Answer}\par The three children are playing in the garden while their mother reads a book.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct article repair, with no extraneous explanation.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Write a short story in English about a duck who becomes an astronaut. On its first space voyage, the duck discovers that an important button can only be pressed with a beak. Include a conversation, an unexpected obstacle, and a happy ending.\par\smallskip
+\textbf{Answer}\par Once upon a time, there was a duck named Ducky who had always dreamed of being an astronaut. He spent his days watching the stars and dreaming of the vastness of space. One day, he was invited to join the space program and was selected for his first space voyage.
+\par\smallskip
+As Ducky was on his first space voyage, he was excited to see the stars and the planets. He was also excited to be in space and to explore the unknown. But as he was on his way to the moon, he noticed something strange. He was trying to press a button on the spacecraft, but it was only possible to press it with a beak.
+\par\smallskip
+Ducky was confused. He had never seen a button that could only be pressed with a beak before. He looked around the spacecraft and saw that there was no other duck in the crew. He was worried that he would be stuck in space forever.
+\par\smallskip
+But then, he remembered his best friend, a small bird named Birdie. Birdie had always been a good friend to Ducky and had always helped him with his dreams.
+\par\smallskip
+"Ducky, what's wrong?" Birdie asked.
+\par\smallskip
+"I'm stuck in space," Ducky said. "I can't press the button on the spacecraft."
+\par\smallskip
+"Don't worry," Birdie said. "I have a solution. I've been working on a new button that can be pressed with a beak. I'll get it ready for you."
+\par\smallskip
+Ducky was relieved. He knew that Birdie was always there to help him. He and Birdie worked together to design a new button that could be pressed with a beak. They spent hours and days working on it, and eventually, they were ready to use it.
+\par\smallskip
+Ducky and Birdie put the new button on the spacecraft and Ducky was able to press it. He was able to complete his mission and return to Earth.
+\par\smallskip
+Ducky was happy that he had found a solution to his problem. He knew that he had a friend who would always be there to help him. And he was excited to see the stars and the planets again.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 2}\par Grammatical and complete, with dialogue and an ending, but the duck inexplicably cannot use its own beak; the replacement button does not resolve that contradiction.
+\par {\color{gray} Output: 437 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Summarize the following paragraph in English in exactly two sentences. Include both the change and its main result, and do not add any new information.
+\par\smallskip
+In April, the town library began opening on two evenings each week. The trial was intended to make borrowing books easier for people with long working days. After three months, evening visits had risen steadily, while morning attendance had barely changed. Several local reading groups had also started meeting at the library. The council therefore decided to continue the arrangement for the rest of the year.\par\smallskip
+\textbf{Answer}\par The town library opened on two evenings each week to help people with long working days. This trial led to a steady increase in evening visits and the council decided to keep the arrangement.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Faithful two-sentence summary of the extended opening and increased visits.
+\par {\color{gray} Output: 37 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Norwegian Bokmal --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Rett den grammatiske feilen i denne setningen. Svar bare med den rettede setningen: De tre barna leker i hagen mens moren deres leser en bøker.\par\smallskip
+\textbf{Answer}\par De tre barna leker i hagen mens moren deres leser en bok.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct gender/article repair.
+\par {\color{gray} Output: 19 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Skriv en kort historie på norsk bokmål om en and som blir astronaut. På sin første romreise oppdager anden at en viktig knapp bare kan trykkes inn med et nebb. Historien skal inneholde en samtale, en uventet hindring og en lykkelig slutt.\par\smallskip
+\textbf{Answer}\par Det var en gang en and som het Andros. Andros var ikke bare en vanlig and; han hadde en drøm om å reise ut i verdensrommet. Han hadde studert astronomi og ingeniørvitenskap hele livet, og han var klar for å gjøre noe helt spesielt.
+\par\smallskip
+En dag ble Andros utnevnt til å være den første and-astronauten i historien. Han ble sendt ut på sin første romreise sammen med et team av andre astronauter. De reiste gjennom galaksen og oppdaget nye planeter og stjerner.
+\par\smallskip
+Under reisen oppdaget Andros en uventet hindring. En viktig knapp på romskipet var blokkert av en stor klump støv. Ingen av astronautene kunne få den opp uten å bruke en kraftig hammer.
+\par\smallskip
+Andros var frustrert. Han hadde prøvd alt han kunne, men knappen ble ved med å være blokkert. Han var ved å gi opp, men så kom han på en idé. Han tok sitt nebb og prøvde å trykke inn knappen.
+\par\smallskip
+Til sin store overraskelse virket det! Knappen ble løftet, og Andros kunne fortsette reisen sin. Han var så glad for sin oppdagelse, at han fortalte det til alle sine kolleger.
+\par\smallskip
+Andros ble en stor helt i romreisen sin, og han ble hyldet av alle som reiste med ham. Han var den første and-astronauten i historien, og han var en sand helt.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Solves the dusty-button obstacle and ends happily, but lacks the requested conversation. Danish-like phrasing weakens Bokmal correctness.
+\par {\color{gray} Output: 326 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Oppsummer avsnittet nedenfor på norsk bokmål i nøyaktig to setninger. Ta med både endringen og det viktigste resultatet, og ikke legg til nye opplysninger.
+\par\smallskip
+Byens bibliotek begynte i april å holde åpent to kvelder i uken. Forsøket skulle gjøre det lettere for folk med lange arbeidsdager å låne bøker. Etter tre måneder hadde antallet kveldsbesøk økt jevnt, mens besøkstallet om formiddagen nesten ikke hadde endret seg. Flere lokale lesesirkler hadde også begynt å møtes på biblioteket. Kommunen bestemte derfor at ordningen skulle fortsette ut året.\par\smallskip
+\textbf{Answer}\par Byens bibliotek startet i april med å holde åpent to kvelder i uken for å lette tilgangen for folk med lange arbeidsdager. På grunn av økt kveldsbesøk og nye lesesirkler valgte kommunen å fortsette ordningen ut året.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 3}\par Clear two-sentence summary, but calling the reading groups new adds an unsupported detail.
+\par {\color{gray} Output: 62 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Norwegian Nynorsk --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Rett den grammatiske feilen i denne setninga. Svar berre med den retta setninga: Dei tre barna leikar i hagen medan mora deira les ei bøker.\par\smallskip
+\textbf{Answer}\par Dei tre barna leikar i hagen medan mora deira les ei bok.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Nynorsk article repair.
+\par {\color{gray} Output: 19 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Skriv ei kort forteljing på nynorsk om ei and som blir astronaut. På den første romferda si oppdagar anda at ein viktig knapp berre kan trykkjast inn med eit nebb. Forteljinga skal innehalde ein samtale, ei uventa hindring og ein lukkeleg slutt.\par\smallskip
+\textbf{Answer}\par Det var ein gong ei and som heitte Nanna. Nanna var ikkje som dei andre andene; ho hadde ein drøm om å reise ut i rommet. Ho hadde studert astronomi og lærte seg å flyge, og då ho var klar, vart ho den første and-astronauten i verda.
+\par\smallskip
+Nanna var veldig spennande på den første romferda si. Ho hadde vore med på å byggje romskipa og hadde vore med på å teste alt. Men då ho kom ut i rommet, oppdaga ho noko uventa.
+\par\smallskip
+Nanna var i kontrollrommet og prøvde å trykkje inn ein viktig knapp. Men ho fekk ikkje trykkje inn knappen med fingrane sine. Ho prøvde å bruke nebbene sine, men det fungerte ikkje heller.
+\par\smallskip
+Nanna vart veldig frustrert. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.
+\par\smallskip
+Nanna prøvde å bruke nebbene sine på ein annan måte. Ho prøvde å trykkje inn knappen med ein annan vinkel. Men det fungerte ikkje heller.
+\par\smallskip
+Nanna vart veldig frustrert. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.
+\par\smallskip
+Plasslegvis kom ein av astronautane hennar og sa: "Hei, Nanna! Har du prøvd å trykkje inn knappen med eit anna nebb?"
+\par\smallskip
+Nanna såg på dei andre astronautane og sa: "Ja, eg har prøvd å trykkje inn knappen med eit anna nebb. Men det fungerer ikkje heller."
+\par\smallskip
+Astronauten sa: "Det er ikkje noko problem. Du kan prøve å trykkje inn knappen med eit anna nebb. Det er ikkje noko problem."
+\par\smallskip
+Nanna prøvde å trykkje inn knappen med eit anna nebb. Og plasslegvis fungerte det!
+\par\smallskip
+Nanna var veldig glad. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.
+\par\smallskip
+Nanna var veldig glad. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.
+\par\smallskip
+Nanna var veldig glad. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.
+\par\smallskip
+Nanna var veldig glad. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.
+\par\smallskip
+Nanna var veldig glad. Ho hadde vore med på å designe romskipa og hadde vore med på å teste alt. Men ho hadde ikkje tenkt på at ein viktig knapp berre kunne trykkjast inn med eit nebb.\par\smallskip
+\textbf{Evaluation: 1 / 1 / 0}\par Reaches a nominal resolution but degenerates into repeated paragraphs until the cap. Mixed forms and agreement errors weaken Nynorsk.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Oppsummer avsnittet nedanfor på nynorsk i nøyaktig to setningar. Ta med både endringa og det viktigaste resultatet, og ikkje legg til nye opplysningar.
+\par\smallskip
+Biblioteket i byen byrja i april å halde ope to kveldar i veka. Forsøket skulle gjere det lettare for folk med lange arbeidsdagar å låne bøker. Etter tre månader hadde talet på kveldsbesøk auka jamt, medan besøkstalet om føremiddagen nesten ikkje hadde endra seg. Fleire lokale lesesirklar hadde òg byrja å møtast på biblioteket. Kommunen vedtok derfor å halde fram med ordninga ut året.\par\smallskip
+\textbf{Answer}\par Biblioteket byrja å halde ope to kveldar i veka for å gjere det lettare for folk med lange arbeidsdagar. Sidan besøkstalet auka jamt, vedtok kommunen å halde fram med ordninga ut året.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Concise, faithful two-sentence summary, with the increased visits and continuation decision.
+\par {\color{gray} Output: 57 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Swedish --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Rätta det grammatiska felet i den här meningen. Svara bara med den rättade meningen: De tre barnen leker i trädgården medan deras mamma läser en böcker.\par\smallskip
+\textbf{Answer}\par De tre barnen leker i trädgården medan deras mamma läser några böcker.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Changes the noun to a valid plural agreeing with the determiner; a valid alternative correction.
+\par {\color{gray} Output: 21 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Skriv en kort berättelse på svenska om en anka som blir astronaut. Under sin första rymdresa upptäcker ankan att en viktig knapp bara kan tryckas in med en näbb. Berättelsen ska innehålla ett samtal, ett oväntat hinder och ett lyckligt slut.\par\smallskip
+\textbf{Answer}\par Det var en gång en anka som hade en dröm om att bli astronaut. Hon hade alltid varit fascinerad av rymden och ville se hur det var att vara där. En dag, efter att ha tränat hårt och övat sig i månader, blev hon utsedd att vara en del av en rymdresa.
+\par\smallskip
+Under sin första rymdresa upptäckte ankan att en viktig knapp bara kan tryckas in med en näbb. Hon var förvånad och förvirrad, men hon visste att hon måste hitta en lösning. Hon kigade på knappen och såg att den var utformad för att bara kunna tryckas in med en näbb.
+\par\smallskip
+"Jag kan inte trycka in den med mina ben," sa ankan till sig själv. "Jag måste hitta en annan lösning."
+\par\smallskip
+Ankan kigade på knappen igen och såg att den hade en liten rille i den. Hon tog en näbb och tryckte den in i rillen. Med ett litet tryck tryckte hon knappen in.
+\par\smallskip
+"Jag gjorde det!" råpte ankan. "Jag tryckte in knappen med en näbb!"
+\par\smallskip
+Ankan var lycklig och stolt över sin upptäckt. Hon visste att hon hade hittat en lösning på ett oväntat hinder.
+\par\smallskip
+"Jag är en astronaut nu," sa ankan till sig själv. "Jag har upptäckt en ny teknik för att trycka in knappar."
+\par\smallskip
+Ankan fortsatte sin rymdresa och upptäckte många andra spännande saker. Hon var en verklig astronaut och hon visste att hon hade en framtid i rymden.\par\smallskip
+\textbf{Evaluation: 2 / 1 / 1}\par Recognizable mission and ending, but self-talk is not a conversation and the beak is treated inconsistently. Non-Swedish forms and awkward phrasing recur.
+\par {\color{gray} Output: 366 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Sammanfatta följande stycke på svenska i exakt två meningar. Ta med både förändringen och dess viktigaste resultat, och lägg inte till nya uppgifter.
+\par\smallskip
+Stadens bibliotek började i april hålla öppet två kvällar i veckan. Försöket skulle göra det lättare för personer med långa arbetsdagar att låna böcker. Efter tre månader hade antalet kvällsbesök ökat stadigt, medan besöken på förmiddagarna nästan var oförändrade. Flera lokala läsecirklar hade också börjat träffas på biblioteket. Kommunen beslutade därför att fortsätta med de nya öppettiderna resten av året.\par\smallskip
+\textbf{Answer}\par Biblioteket började hålla öppet två kvällar i veckan för att underlätta lånet för personer med långa arbetsdagar. Efter en positiv utveckling i besöken beslutade kommunen fortsätta med de nya öppettiderna resten av året.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Two sentences capture the broad change and result, but wording is awkward and the increase is stated vaguely.
+\par {\color{gray} Output: 58 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Icelandic --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Leiðréttu málfræðivilluna í þessari setningu. Svaraðu aðeins með leiðréttri setningu: Börnin þrjú leika sér í garðinum á meðan móðir þeirra les einn bók.\par\smallskip
+\textbf{Answer}\par Börnin þrjú leika sér í garðinum á meðan móðir þeirra les eina bók.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correctly supplies the accusative feminine numeral before book.
+\par {\color{gray} Output: 29 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Skrifaðu stutta sögu á íslensku um önd sem verður geimfari. Í fyrstu geimferð sinni uppgötvar öndin að aðeins er hægt að ýta á mikilvægan hnapp með goggi. Sagan á að innihalda samtal, óvænta hindrun og farsælan endi.\par\smallskip
+\textbf{Answer}\par Það var einu sinni geimfari sem heitið var Önd. Önd var önd og hún var mjög áhugaverð í geimferðum. Hún var svo áhugaverð í geimferðum að hún varð geimfari.
+\par\smallskip
+Önd var í geimferðinni og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í geim. Hún var að fara í geim og hún var að fara í\par\smallskip
+\textbf{Evaluation: 0 / 1 / 0}\par Repeats the intention to go into space until truncation; no developed obstacle, conversation, or ending. Icelandic word choice is also faulty.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Taktu eftirfarandi málsgrein saman á íslensku í nákvæmlega tveimur setningum. Nefndu bæði breytinguna og helsta árangur hennar og ekki bæta við nýjum upplýsingum.
+\par\smallskip
+Í apríl byrjaði bókasafn bæjarins að hafa opið tvö kvöld í viku. Tilraunin átti að auðvelda fólki með langan vinnudag að fá bækur að láni. Eftir þrjá mánuði hafði kvöldgestum fjölgað jafnt og þétt en fjöldi gesta fyrir hádegi var nánast óbreyttur. Nokkrir leshópar úr bænum höfðu einnig byrjað að hittast á safninu. Bæjarstjórnin ákvað því að halda áfram með fyrirkomulagið út árið.\par\smallskip
+\textbf{Answer}\par Bókasafn bæjarins byrjaði að opna tvö kvöld í viku til að auðvelda fólki með langan vinnudag að fá bækur að láni. Tilraunin hafði árangur með fjölgaðum kvöldgestum og leshópa, sem leiddi til þess að bæjarstjórnin haldi áfram með fyrirkomulagið út árið.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Core facts remain recognizable in two sentences, but case and verbal constructions are awkward.
+\par {\color{gray} Output: 99 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Faroese --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Rætta mállærufeilin í hesum setningi. Svara bara við rættaða setninginum: Tey trý børnini spæla í urtagarðinum, meðan mamma teirra lesur ein bók.\par\smallskip
+\textbf{Answer}\par Tey trý børnini spæla í urtagarðinum, meðan mamma teirra lesur eina bók.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correctly repairs the numeral/article agreement before book.
+\par {\color{gray} Output: 29 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Skriva eina stutta søgu á føroyskum um eina ont, sum verður rúmdarfari. Á fyrstu rúmdarferðini varnast ontin, at ein týðandi knøttur bara kann trýstast inn við einum nevi. Søgan skal hava eina samrøðu, eina óvæntaða forðing og ein góðan enda.\par\smallskip
+\textbf{Answer}\par Her er ein stutt søga um ein ont, sum verður rúmdarfari:
+\par\smallskip
+**Ontin og knøtturin**
+\par\smallskip
+Eitt sindur longu síðani var tað ein ont, sum heitið Mýra. Mýra var ikki ein vanlig ont. Hon var sera nysgjerrig og hevur altíð viljað vita meira um heimin. Ein dag, tá hon var í skógnum, fann hon eina stóra, gráa knøtt, sum var sera týðandi.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon varð so nysgjerrig, at hon vildi trýstast inn í hann. Men knøtturin var sera stórur og torður, og hon vildi ikki trýstast inn í hann.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var. Hon vildi vera rúmdarfari og fara í rúmdina. Mýra var sera nysgjerrig og vildi vita, hvat knøtturin var.
+\par\smallskip
+Mýra var sera nysgjerrig og vildi vita, hvat\par\smallskip
+\textbf{Evaluation: 0 / 1 / 0}\par The setting and grammar become confused and repeated curiosity passages dominate until truncation. No usable completed space story.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Tak saman um hendan tekstin á føroyskum í júst tveimum setningum. Tak bæði broytingina og týdningarmesta úrslitið við, og legg ikki nýggjar upplýsingar afturat.
+\par\smallskip
+Í apríl fór bókasavnið í býnum at hava opið tvey kvøld um vikuna. Royndin skuldi gera tað lættari hjá fólki við longum arbeiðsdøgum at læna bøkur. Eftir tríggjar mánaðir var talið á vitjandi um kvøldið vaksið støðugt, meðan talið fyrrapart næstan var óbroytt. Fleiri lesibólkar í býnum vóru eisini farnir at hittast á bókasavninum. Býráðið gjørdi tí av at halda fram við skipanini restina av árinum.\par\smallskip
+\textbf{Answer}\par Bókasavið opnaði tvey kvøld um vikuna í apríl fyri at hjálpa fólki við longum arbeiðsdøgum. Við støðugum vaksandi vitjandi og fleiri lesibólkum, valdi býráðið at halda fram við skipanini.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Captures the broad change and outcome but contains spelling/idiomatic problems and overstates an increase in reading groups.
+\par {\color{gray} Output: 73 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Dutch --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Verbeter de grammaticale fout in deze zin. Geef alleen de verbeterde zin terug: De drie kinderen spelen in de tuin terwijl hun moeder een boeken leest.\par\smallskip
+\textbf{Answer}\par De drie kinderen spelen in de tuin terwijl hun moeder een boek leest.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Dutch article repair.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Schrijf een kort verhaal in het Nederlands over een eend die astronaut wordt. Tijdens zijn eerste ruimtereis ontdekt de eend dat een belangrijke knop alleen met een snavel kan worden ingedrukt. Verwerk een gesprek, een onverwacht obstakel en een gelukkig einde in het verhaal.\par\smallskip
+\textbf{Answer}\par Er was eens een eend genaamd Eendje. Eendje was niet zoals de andere eenden; hij droomde van het ruimtevaartje. Op een dag, terwijl hij op de hemel keek, zag hij een raket die naar de sterren streefde. Eendje besloot dat hij ook een astronaut zou worden.
+\par\smallskip
+Eendje was een hardwerkende eend die elke dag oefende om zijn vaardigheden te verbeteren. Op een dag, toen hij zijn eerste ruimtereis deed, ontdekte hij een onverwacht obstakel. Een belangrijke knop in zijn raket kon alleen met een snavel worden ingedrukt. Eendje was verward en kon niet vinden hoe hij de knop kon bedienen.
+\par\smallskip
+"Hé, ik kan het niet!" roep Eendje. "Ik heb geen knop die ik met mijn snavel kan bedienen!"
+\par\smallskip
+Eendje keek om zich heen en zag een andere eend die hij had ontmoet op de hemel. "Wat is er aan de hand?" vroeg de andere eend.
+\par\smallskip
+"Ik kan de knop niet bedienen," antwoordde Eendje. "Ik heb geen knop die ik met mijn snavel kan bedienen!"
+\par\smallskip
+De andere eend glimlachte en zei: "Nee, maar ik heb een knop die je met je snavel kunt bedienen. Wil je die knop gebruiken?"
+\par\smallskip
+Eendje was verrast, maar hij besloot dat hij de knop zou gebruiken. Hij drukte de knop met zijn snavel en de raket startte. Eendje was blij dat hij de knop kon bedienen en hij was trots op zijn eerste ruimtereis.
+\par\smallskip
+Eendje was een gelukkig eend die een astronaut werd en een belangrijke knop kon bedienen. Hij was een held en hij was een eend die droomde van het ruimtevaartje.\par\smallskip
+\textbf{Evaluation: 2 / 1 / 1}\par Dialogue and a happy ending are present, but the beak solution is poorly motivated; multiple agreement, tense, and idiomatic errors reduce readability.
+\par {\color{gray} Output: 415 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Vat de volgende alinea in het Nederlands samen in precies twee zinnen. Noem zowel de verandering als het belangrijkste resultaat en voeg geen nieuwe informatie toe.
+\par\smallskip
+In april begon de stadsbibliotheek twee avonden per week open te blijven. De proef moest het voor mensen met lange werkdagen gemakkelijker maken om boeken te lenen. Na drie maanden was het aantal avondbezoeken gestaag gestegen, terwijl het aantal bezoeken in de ochtend nauwelijks was veranderd. Ook waren verschillende plaatselijke leesclubs in de bibliotheek gaan samenkomen. De gemeente besloot daarom de regeling de rest van het jaar voort te zetten.\par\smallskip
+\textbf{Answer}\par De stadsbibliotheek begon in april twee avonden per week open te blijven om het lenen van boeken voor mensen met lange werkdagen te vergemakkelijken. Het aantal avondbezoeken steeg gestaag, waardoor de gemeente de regeling de rest van het jaar voortzet.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Faithful and fluent two-sentence summary.
+\par {\color{gray} Output: 64 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Polish --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Popraw błąd gramatyczny w tym zdaniu. Podaj wyłącznie poprawione zdanie: Troje dzieci bawi się w ogrodzie, podczas gdy ich mama czyta ciekawa książkę.\par\smallskip
+\textbf{Answer}\par Troje dzieci bawi się w ogrodzie, podczas gdy ich mama czyta ciekawe książkę.\par\smallskip
+\textbf{Evaluation: 0 / 1 / 1}\par Produces the malformed adjective 'ciekaw e' instead of the required accusative feminine form; the requested repair fails.
+\par {\color{gray} Output: 23 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Napisz krótkie opowiadanie po polsku o kaczce, która zostaje astronautką. Podczas pierwszej podróży kosmicznej odkrywa, że ważny przycisk można nacisnąć tylko dziobem. W opowiadaniu powinny pojawić się rozmowa, niespodziewana przeszkoda i szczęśliwe zakończenie.\par\smallskip
+\textbf{Answer}\par W małej, malowniczej wiosce, gdzie czas zdawał się płynąć wolniej, żyła kaczka o imieniu Maria. Maria nie była zwykłą kaczką. Była to kaczka z wielkim duszą i wielkim marzeniem. Każdego dnia, gdy słońce wchodziło na zachód, Maria patrzyła w niebo i marzyła o tym, by raz sam stać się astronautką.
+\par\smallskip
+Maria była bardzo zadowolona z swojej pracy. Każdego dnia, gdy kaczka wchodziła do domu, Maria czuła się tak, jakby była w domu. Jednak gdy w domu nie było kaczki, Maria czuła się samotna.
+\par\smallskip
+Pewnego dnia, podczas wizyty w kosmosie, Maria spotkała się z kosmonautą. Kosmonauta był bardzo ciekawy na Maria i zaprosił ją na podróż kosmiczną. Maria była bardzo zadowolona z tego, że może być astronautką.
+\par\smallskip
+Podczas podróży kosmicznej Maria odkryła, że ważny przycisk można nacisnąć tylko dziobem. Kosmonauta, który prowadził podróż, nie wiedział, jak to zrobić. Maria musiała znaleźć rozwiązanie.
+\par\smallskip
+Maria spojrzała na przycisk i myślała. Wtedy pamiętała, że w jej domu jest mały, mały dzwonek. Maria wzięła dzwonek i zaczął go naciskać. Kosmonauta patrzył na nią z zachwytem.
+\par\smallskip
+Maria poczuła się bardzo zadowolona z tego, że potrafiła rozwiązać problem. Kosmonauta podziękował jej za pomoc i zaprosił ją na kolejną podróż kosmiczną.
+\par\smallskip
+Maria była bardzo zadowolona z tego, że mogła być astronautką. Była bardzo zadowolona z tego, że mogła pomóc innym i być częścią wielkiej przygody. Maria i kosmonauta były bardzo bliskie i wspólnie odkrywały nowe rzeczy.
+\par\smallskip
+Maria była bardzo zadowolona z tego, że mogła być astronautką. Była bardzo zadowolona z tego, że mogła pomóc innym i być częścią wielkiej przygody. Maria i kosmonauta były bardzo bliskie i wspólnie odkrywały nowe rzeczy.\par\smallskip
+\textbf{Evaluation: 1 / 1 / 1}\par Major grammatical and semantic problems, no clear conversation, and a repeated ending. The proposed solution is not explained coherently.
+\par {\color{gray} Output: 511 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Streść poniższy akapit po polsku w dokładnie dwóch zdaniach. Uwzględnij zarówno zmianę, jak i jej najważniejszy rezultat. Nie dodawaj nowych informacji.
+\par\smallskip
+W kwietniu biblioteka miejska zaczęła być otwarta przez dwa wieczory w tygodniu. Próbna zmiana miała ułatwić wypożyczanie książek osobom pracującym do późna. Po trzech miesiącach liczba wieczornych wizyt systematycznie rosła, natomiast liczba odwiedzin przed południem prawie się nie zmieniła. Kilka miejscowych klubów czytelniczych zaczęło również spotykać się w bibliotece. Władze miasta postanowiły więc utrzymać ten system do końca roku.\par\smallskip
+\textbf{Answer}\par Biblioteka miejska w lutym wprowadziła system otwarcia przez dwa wieczory w tygodniu, aby ułatwić wypożyczanie książek. Dzięki systematycznemu wzrostowi liczby wieczornych wizyt i aktywności klubów czytelniczych, władze miasta postanowili utrzymać ten system do końca roku.\par\smallskip
+\textbf{Evaluation: 1 / 2 / 2}\par Changes April to February, a factual error; also has subject-verb agreement trouble. The general outcome is retained.
+\par {\color{gray} Output: 77 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries German --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Korrigiere den Grammatikfehler in diesem Satz. Gib nur den korrigierten Satz zurück: Die drei Kinder spielen im Garten, während ihre Mutter ein Bücher liest.\par\smallskip
+\textbf{Answer}\par Die drei Kinder spielen im Garten, während ihre Mutter ein Buch liest.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct German article repair.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Schreibe eine kurze Geschichte auf Deutsch über eine Ente, die Astronautin wird. Auf ihrer ersten Raumfahrt entdeckt sie, dass sich ein wichtiger Knopf nur mit einem Schnabel drücken lässt. Die Geschichte soll ein Gespräch, ein unerwartetes Hindernis und ein glückliches Ende enthalten.\par\smallskip
+\textbf{Answer}\par **Die erste Raumfahrt von Ente-Astronautin**
+\par\smallskip
+Ente war keine gewöhnliche Ente. Sie hatte immer die Sterne geschaut und die Welt von oben gesehen. Als sie 10 Jahre alt war, wurde sie von ihrem Vater, einem berühmten Astronauten, in die Raumfahrt eingeweiht.
+\par\smallskip
+„Ente, du bist die erste Ente, die in den Raum geht!“ rief ihr Vater. „Du bist ein Held!“
+\par\smallskip
+Ente war stolz. Sie hatte immer die Raumfahrt gefälscht, aber nun war sie es. Sie trug eine glitzernde Raumdracht und hatte eine kleine, aber wichtige Aufgabe: Sie musste den Raumschiff starten.
+\par\smallskip
+Auf der ersten Raumfahrt war alles wie geplant. Ente stieg in die Raumschiff-Kapsel und trat auf den Startknopf. Sie war sicher, dass sie den Button mit ihren Händen drücken konnte.
+\par\smallskip
+Doch als sie den Button drückte, geschah etwas Unglaubliches. Der Button war nicht mit Händen betätigbar. Es war nur mit einem Schnabel möglich, ihn zu betätigen.
+\par\smallskip
+„Was ist das?“ fragte Ente.
+\par\smallskip
+„Das ist ein spezieller Button, Ente. Er kann nur mit einem Schnabel betätigt werden. Aber es ist wichtig, dass du ihn betätigst, damit der Raumschiff starten kann.“
+\par\smallskip
+Ente war verblüfft. Sie hatte nie ein Schnabel in der Raumfahrt gesehen. „Wie kann ich ihn betätigen?“ fragte sie.
+\par\smallskip
+„Du musst nur deinen Schnabel mit dem Knochen des Raumschiffs berühren. Dann drücke du den Knochen mit dem Schnabel an.“
+\par\smallskip
+Ente war neugierig. Sie berührte den Knochen und drückte ihn mit ihrem Schnabel an. Plötzlich begann der Raumschiff zu vibrieren und zu leuchten.
+\par\smallskip
+„Ich habe es gemacht!“ rief Ente. „Ich bin die erste Ente, die den Raumschiff startet hat!“
+\par\smallskip
+Ente war stolz. Sie hatte ein unerwartetes Hindernis überwindet und eine große Leistung erreicht. Sie war nicht nur eine Astronautin, sondern auch eine Ente.
+\par\smallskip
+Ente lächelte und sah auf den Raumschiff, der nun in die Weltraum-Abenteuer stieg. Sie war bereit, die Welt von oben zu sehen und neue Dinge zu entdecken.
+\par\smallskip
+Und so begann die erste Raumfahrt von Ente-Astronautin – eine Reise, die sie für immer in ihrer Erinnerung behalten würde.\par\smallskip
+\textbf{Evaluation: 1 / 1 / 1}\par Contains dialogue and an ending but numerous case, agreement, and lexical errors; the action and solution are difficult to follow.
+\par {\color{gray} Output: 548 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Fasse den folgenden Absatz auf Deutsch in genau zwei Sätzen zusammen. Nenne sowohl die Änderung als auch ihr wichtigstes Ergebnis und füge keine neuen Informationen hinzu.
+\par\smallskip
+Im April begann die Stadtbibliothek, an zwei Abenden pro Woche länger geöffnet zu bleiben. Der Versuch sollte es Menschen mit langen Arbeitstagen erleichtern, Bücher auszuleihen. Nach drei Monaten war die Zahl der Abendbesuche stetig gestiegen, während sich die Zahl der Besuche am Vormittag kaum verändert hatte. Auch mehrere örtliche Lesekreise trafen sich inzwischen in der Bibliothek. Die Stadt beschloss deshalb, die Regelung bis zum Jahresende fortzuführen.\par\smallskip
+\textbf{Answer}\par Die Stadtbibliothek verlängerte ihre Öffnungszeiten an zwei Abenden pro Woche, um die Buchausleihe für Menschen mit langen Arbeitstagen zu erleichtern. Durch einen stetigen Anstieg der Abendbesuche und die Ankunft von Lesekreisen wurde die Regelung bis zum Jahresende fortgeführt.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 2}\par Accurately covers the main change and result in two sentences; the reading-group phrasing is somewhat unnatural.
+\par {\color{gray} Output: 68 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries French --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Corrige la faute de grammaire dans cette phrase. Réponds uniquement avec la phrase corrigée : Les trois enfants jouent dans le jardin pendant que leur mère lit un livres.\par\smallskip
+\textbf{Answer}\par Les trois enfants jouent dans le jardin pendant que leur mère lit un livre.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct French article repair.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Écris une courte histoire en français sur un canard qui devient astronaute. Lors de son premier voyage spatial, il découvre qu'un bouton important ne peut être actionné qu'avec un bec. L'histoire doit comporter une conversation, un obstacle inattendu et une fin heureuse.\par\smallskip
+\textbf{Answer}\par Il était une fois un canard nommé Canard, qui avait toujours été fasciné par les étoiles. Il passait ses journées à observer le ciel et à s'imaginer qu'il pourrait un jour devenir astronaute.
+\par\smallskip
+Un jour, Canard décida de prendre sa chance et de s'inscrire à l'école d'astronomie. Il travailla dur et fut sélectionné pour son premier voyage spatial.
+\par\smallskip
+Lors de son premier voyage, Canard se sentit très excité et curieux. Il était prêt à explorer l'espace et à découvrir de nouvelles choses.
+\par\smallskip
+Cependant, alors qu'il était en train de naviguer dans l'espace, Canard découvrit un obstacle inattendu. Un bouton important ne pouvait être actionné qu'avec un bec.
+\par\smallskip
+Canard se sentit un peu désespéré. Il ne pouvait pas utiliser ses bras pour presser le bouton. Il se demanda si il pouvait trouver un autre moyen de le faire.
+\par\smallskip
+Cependant, Canard ne se découraja pas. Il se souvint de son petit bec et il l'utilisa pour presser le bouton. Il était très heureux de pouvoir utiliser son bec pour faire ce qu'il avait besoin de faire.
+\par\smallskip
+Avec son bec, Canard a réussi à naviguer dans l'espace et a découvert de nouvelles choses. Il était très heureux de pouvoir être un astronaute et de pouvoir explorer l'espace avec son petit bec.
+\par\smallskip
+En fin de compte, Canard a été un astronaute heureux et épanoui. Il a découvert que même les plus petits objets peuvent être des outils précieux dans l'espace.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Complete and broadly coherent, but omits the requested conversation. Minor spelling and tense problems remain.
+\par {\color{gray} Output: 346 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Résume le paragraphe suivant en français en exactement deux phrases. Mentionne le changement et son principal résultat, sans ajouter d'informations nouvelles.
+\par\smallskip
+En avril, la bibliothèque municipale a commencé à ouvrir deux soirs par semaine. Cette expérimentation devait faciliter l'emprunt de livres pour les personnes ayant de longues journées de travail. Au bout de trois mois, la fréquentation du soir avait augmenté régulièrement, tandis que celle du matin avait à peine changé. Plusieurs clubs de lecture locaux avaient également commencé à se réunir à la bibliothèque. La municipalité a donc décidé de maintenir ce fonctionnement jusqu'à la fin de l'année.\par\smallskip
+\textbf{Answer}\par La bibliothèque municipale a ouvert deux soirs par semaine pour faciliter l'emprunt de livres. Cette expérience a entraîné une augmentation régulière de la fréquentation et a conduit la municipalité à maintenir ce fonctionnement.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Faithful, fluent two-sentence summary.
+\par {\color{gray} Output: 44 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Spanish --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Corrige el error gramatical de esta oración. Devuelve únicamente la oración corregida: Los tres niños juegan en el jardín mientras su madre lee un libros.\par\smallskip
+\textbf{Answer}\par Los tres niños juegan en el jardín mientras su madre lee un libro.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Spanish article repair.
+\par {\color{gray} Output: 15 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Escribe un cuento breve en español sobre un pato que se convierte en astronauta. En su primer viaje espacial descubre que un botón importante solo se puede pulsar con un pico. El cuento debe incluir una conversación, un obstáculo inesperado y un final feliz.\par\smallskip
+\textbf{Answer}\par Había una vez un pato llamado Pato, que no era un pato común. Mientras otros patos pasaban sus días saltando en el agua, Pato pasaba sus días observando las estrellas desde el balcón de su casa.
+\par\smallskip
+—¿Sabías que el espacio es un lugar lleno de misterios? —preguntó Pato a su amigo, un ratón llamado Rato.
+\par\smallskip
+—¡Claro que sí! —respondió Rato— pero no es tan fácil de llegar allí como parece.
+\par\smallskip
+Pato se sentó en su silla y pensó en su futuro. ¿Qué pasaría si se convertiera en astronauta? ¿Podría viajar por el espacio y descubrir nuevos mundos?
+\par\smallskip
+Pato se unió a una organización de patos que se dedicaban a la exploración espacial. Después de años de entrenamiento y práctica, finalmente se convirtió en el primer pato astronauta de la historia.
+\par\smallskip
+Su primer viaje espacial fue un éxito. Pato y su equipo se dirigieron a una galaxia lejana y descubrieron un planeta lleno de plantas y animales exóticos.
+\par\smallskip
+Pero mientras exploraban el planeta, Pato encontró un botón importante que solo podía pulsarse con un pico.
+\par\smallskip
+—¡Qué? —preguntó Pato a su equipo— ¿cómo puedo pulsarlo con un pico?
+\par\smallskip
+—¡No te preocupes! —respondió Rato— tenemos una solución.
+\par\smallskip
+Pato y su equipo utilizaron sus picos para pulsar el botón y abrir una puerta secreta.
+\par\smallskip
+Al entrar en la puerta, Pato y su equipo descubrieron un mundo de colores y sonidos que nunca habían visto antes.
+\par\smallskip
+—¡Qué es esto! —exclamó Pato— ¡es un mundo de colores y sonidos!
+\par\smallskip
+Pato y su equipo pasaron todo el día explorando el mundo y descubriendo nuevos lugares.
+\par\smallskip
+Cuando finalmente se fue a casa, Pato y Rato se miraron y sonrieron.
+\par\smallskip
+—¡Qué gran aventura! —dijo Pato— ¡y qué gran aventura es ser astronauta!
+\par\smallskip
+Rato sonrió y dijo:
+\par\smallskip
+—¡Y qué gran aventura es ser un pato!
+\par\smallskip
+Pato y Rato se miraron y sonrieron, sabiendo que su viaje espacial había sido un éxito y que siempre tendrían un lugar en el corazón de todos los patos.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 2}\par Meets most structural requirements and ends happily, but the duck forgetting its beak and the crew's beaks make the solution contrived.
+\par {\color{gray} Output: 491 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Resume el siguiente párrafo en español en exactamente dos oraciones. Incluye tanto el cambio como su principal resultado y no añadas información nueva.
+\par\smallskip
+En abril, la biblioteca municipal empezó a abrir dos tardes por semana hasta la noche. La prueba pretendía facilitar el préstamo de libros a las personas con jornadas laborales largas. Después de tres meses, las visitas en ese horario habían aumentado de forma constante, mientras que las visitas de la mañana apenas habían cambiado. Varios clubes de lectura locales también habían empezado a reunirse en la biblioteca. Por ello, el ayuntamiento decidió mantener la medida durante el resto del año.\par\smallskip
+\textbf{Answer}\par La biblioteca municipal abrió dos tardes por semana hasta la noche para facilitar el préstamo de libros a personas con largas jornadas. Este cambio generó un aumento constante de visitas y la formación de clubes de lectura, lo que llevó al ayuntamiento a mantener la medida.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 3}\par Fluent two-sentence summary, but implies creation of reading clubs rather than existing clubs beginning to meet there.
+\par {\color{gray} Output: 52 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Italian --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Correggi l'errore grammaticale in questa frase. Rispondi soltanto con la frase corretta: I tre bambini giocano in giardino mentre la loro madre legge un libri.\par\smallskip
+\textbf{Answer}\par I tre bambini giocano in giardino mentre la loro madre legge un libro.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Italian article repair.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Scrivi un breve racconto in italiano su un'anatra che diventa astronauta. Durante il suo primo viaggio nello spazio scopre che un pulsante importante può essere premuto soltanto con un becco. Il racconto deve contenere una conversazione, un ostacolo inatteso e un lieto fine.\par\smallskip
+\textbf{Answer}\par **L'Anatra e il Pulsante del Vento**
+\par\smallskip
+In un piccolo villaggio di terra e pioggia, viveva un anatra di nome Leo. Leo era un anatra molto speciale: non solo era grande e forte, ma aveva anche un cuore grande e un'immaginazione infinita. Ogni giorno, Leo si imbarazzava con il suo abito di astronauta, che era fatto di un vecchio t-shirt e un cappello di piuma, e si preparava per il suo primo viaggio nello spazio.
+\par\smallskip
+Un giorno, Leo decise di fare un salto di fiducia. "Non posso più aspettare che il mio padrone mi dia il permesso di andare a far parte dell'equipaggio," disse Leo, con un sorriso che brillava di determinazione. Il suo padrone, un vecchio anatra di nome Marco, sorrise e disse: "Leo, sei un'anatra molto coraggiosa. Se sei pronto, potremo fare un'eccezione."
+\par\smallskip
+Leo si imbarazzò con il suo abito di astronauta e si preparò per il suo primo viaggio. Quando arrivò l'ora del lancio, Leo si sentì un po' ansioso, ma anche eccitato. Il suo padrone Marco lo accompagnò, e insieme si lanciarono verso l'infinito.
+\par\smallskip
+Durante il viaggio, Leo si sentì un po' isolato. "Marco, non mi è mai stato così solo?" chiese Leo, guardando le stelle che brillavano nel cielo. Marco rispose: "Non è mai solo, Leo. Ho sempre la tua spalla. E ora, abbiamo l'intera squadra di astronauti che ci accompagnano."
+\par\smallskip
+Ma un giorno, mentre Leo era in orbita attorno alla Terra, notò qualcosa di strano. Un pulsante importante, che era essenziale per il suo viaggio, non si premeva con le sue zampe. Leo si avvicinò al pulsante e provò a premere con il suo becco. Al suo sorpresa, il pulsante si premetteva!
+\par\smallskip
+Leo era affascinato. "Marco, ho trovato un modo per premere quel pulsante!" esclamò. Marco sorrise e disse: "Che fantastico, Leo! Non sai cosa potremo scoprire insieme."
+\par\smallskip
+Leo e Marco iniziarono a esplorare l'equipaggio, scoprendo che il pulsante si premeva solo con il becco. Leo si sentì un po' confuso, ma Marco lo incoraggiò. "Non preoccuparti, Leo. Il becco è un strumento molto potente! Proviamo a usare il becco per premere altri pulsanti."
+\par\smallskip
+Leo provò a premere il pulsante del sistema di alimentazione con il becco. Al suo sorpresa, il pulsante si premetteva! Leo e Marco iniziarono a esplorare l'equipaggio, scoprendo che il becco poteva premere molti pulsanti importanti. Leo si sentiva un po' ansioso, ma Marco lo incoraggiò. "Non preoccuparti, Leo. Il becco è un strumento molto potente! Proviamo a usare il becco per premere altri pulsanti."
+\par\smallskip
+Un giorno, Leo e Marco scoprirono un pulsante che era ancora più importante. Leo si avvicinò al pulsante e provò a premere con il becco. Al suo sorpresa, il pulsante si premetteva! Leo e Marco si sorrisero e si sentirono felici.
+\par\smallskip
+Leo e Marco continuarono a esplorare l'equipaggio, scoprendo che il becco poteva premere molti pulsanti importanti. Leo si sentiva un po' ansioso, ma Marco lo\par\smallskip
+\textbf{Evaluation: 1 / 1 / 0}\par Dialogue and the button premise are present, but repeated action runs to the cap. Lexical and grammatical errors accompany loss of coherence.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Riassumi il seguente paragrafo in italiano in esattamente due frasi. Includi sia il cambiamento sia il suo risultato principale, senza aggiungere nuove informazioni.
+\par\smallskip
+Ad aprile la biblioteca comunale ha iniziato a rimanere aperta due sere alla settimana. La sperimentazione voleva facilitare il prestito dei libri a chi aveva lunghe giornate lavorative. Dopo tre mesi, il numero delle visite serali era aumentato costantemente, mentre quello delle visite mattutine era rimasto quasi invariato. Anche diversi gruppi di lettura locali avevano iniziato a riunirsi in biblioteca. Il Comune ha quindi deciso di proseguire con questo orario fino alla fine dell'anno.\par\smallskip
+\textbf{Answer}\par La biblioteca comunale ha aperto due sere alla settimana per facilitare il prestito dei libri a chi lavora molto. Questo cambiamento ha portato a un aumento costante delle visite serali e a un aumento dei gruppi di lettura locali.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 3}\par Main opening-hours and attendance facts are retained, but the claimed increase in reading clubs is unsupported and the continuation decision is omitted.
+\par {\color{gray} Output: 46 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Czech --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Oprav gramatickou chybu v této větě. Napiš pouze opravenou větu: Tři děti si hrají na zahradě, zatímco jejich matka čte zajímavý knihu.\par\smallskip
+\textbf{Answer}\par Tři děti si hrají na zahradě, zatímco jejich matka čte zajímavou knihu.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Czech adjective agreement.
+\par {\color{gray} Output: 26 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Napiš krátký příběh v češtině o kachně, která se stane astronautkou. Při své první cestě do vesmíru zjistí, že důležité tlačítko lze stisknout pouze zobákem. Příběh musí obsahovat rozhovor, nečekanou překážku a šťastný konec.\par\smallskip
+\textbf{Answer}\par Byl jednou kachně jménem Leo, který nebyl obyčejný. Zatímco ostatní kachně v domě jen hledaly včerejší jídlo, Leo trávil dny studiem astronomie a mapami galaxií. Jednoho dne, když se mu v domě dostal malý, kovový raketový raketový kousek, Leo se rozhodl, že se stane prvním kachněm v vesmíru.
+\par\smallskip
+„Je to čas, Leo,“ řekl mu starý pan, který mu dělal malý kousek plátna a kousek papíru. „Tady je tvůj průvodce.“
+\par\smallskip
+Leo se s nadšením přiblížil k raketě. Když se z ní vyletěl, pocítil zvláštní pocit – v prostoru, kde neexistuje gravitace, se jeho kůže začala lehce vznášet. Všiml si, že v raketě je jedna velká, červená kniha s symboly.
+\par\smallskip
+„Kdo to je?“ zeptal se Leo a pokusil se ji dotknout.
+\par\smallskip
+„To je klíč k přistání,“ odpověděl pan. „Ale pozor, v vesmíru se to děje jinak.“
+\par\smallskip
+Leo se pokusil stisknout knihu, ale v raketě nebylo žádné stisknutí. Místo toho se před ním objevila malá, modrá kniha s symboly. Leo se pokusil ji dotknout, ale i to nefungovalo.
+\par\smallskip
+„Co to je?“ zeptal se Leo.
+\par\smallskip
+„To je klíč k přistání,“ odpověděl pan. „Ale v vesmíru se to děje jinak.“
+\par\smallskip
+Leo se pokusil stisknout knihu, ale v raketě nebylo žádné stisknutí. Místo toho se před ním objevila malá, modrá kniha s symboly. Leo se pokusil ji dotknout, ale i to nefungovalo.
+\par\smallskip
+„Co to je?“ zeptal se Leo.
+\par\smallskip
+„To je klíč k přistání,“ odpověděl pan. „Ale v vesmíru se to děje jinak.“
+\par\smallskip
+Leo se pokusil stisknout knihu, ale v raketě nebylo žádné stisknutí. Místo toho se před ním objevila malá, modrá kniha s symboly. Leo se pokusil ji dotknout, ale i to nefungovalo.
+\par\smallskip
+„Co to je?“ zeptal se Leo.
+\par\smallskip
+„To je klíč k přistání,“ odpověděl pan. „Ale v vesmíru se to děje jinak.“
+\par\smallskip
+Leo se pokusil stisknout knihu, ale v raketě nebylo žádné stisknutí. Místo toho se před ním objevila malá, modrá kniha s symboly. Leo se pokusil ji dotknout, ale i to nefungovalo.
+\par\smallskip
+„Co to je?“ zeptal se Leo.
+\par\smallskip
+„To je klíč k přistání,“ odpověděl pan. „Ale v vesmíru se to děje jinak.“
+\par\smallskip
+Leo se pokusil stisknout knihu, ale v raketě nebylo žádné stisknutí. Místo toho se před ním objevila mal\par\smallskip
+\textbf{Evaluation: 0 / 1 / 0}\par Repeated book/button exchanges replace a plot until truncation. Frequent Czech agreement and construction errors; no happy ending.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Shrň následující odstavec v češtině přesně dvěma větami. Uveď změnu i její hlavní výsledek a nepřidávej nové informace.
+\par\smallskip
+V dubnu začala městská knihovna otevírat také dva večery v týdnu. Zkušební provoz měl usnadnit půjčování knih lidem s dlouhou pracovní dobou. Po třech měsících počet večerních návštěv soustavně rostl, zatímco dopolední návštěvnost se téměř nezměnila. V knihovně se také začalo scházet několik místních čtenářských klubů. Město se proto rozhodlo zachovat tento režim do konce roku.\par\smallskip
+\textbf{Answer}\par Městská knihovna začala otevírat dva večery v týdnu, aby usnadnila půjčování knih lidem s dlouhou pracovní dobou. Po třech měsících rostla návštěvnost večerních hodin a město tedy tento režim zachovalo do konce roku.\par\smallskip
+\textbf{Evaluation: 3 / 2 / 2}\par Accurate two-sentence account, though the phrasing for evening attendance is awkward.
+\par {\color{gray} Output: 69 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Portuguese --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Corrige o erro gramatical nesta frase. Responde apenas com a frase corrigida: As três crianças brincam no jardim enquanto a mãe delas lê um livros.\par\smallskip
+\textbf{Answer}\par As três crianças brincam no jardim enquanto a mãe delas lê um livro.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Portuguese article repair.
+\par {\color{gray} Output: 16 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Escreve uma história curta em português europeu sobre um pato que se torna astronauta. Na sua primeira viagem espacial, descobre que um botão importante só pode ser premido com um bico. A história deve incluir uma conversa, um obstáculo inesperado e um final feliz.\par\smallskip
+\textbf{Answer}\par Havia uma vez um pato chamado Pato, que sempre sonhou em explorar o espaço. Ele passava as suas dias a observar as estrelas e a sonhar com uma vida como astronauta.
+\par\smallskip
+Um dia, Pato decidiu que era hora de fazer sua visão uma realidade. Ele começou a estudar e a treinar para se tornar um astronauta, e após muitos anos de trabalho, ele finalmente foi escolhido para a missão.
+\par\smallskip
+Pato foi a sua primeira viagem espacial e estava entusiasmado com a possibilidade de explorar o universo. Ele estava pronto para enfrentar qualquer desafio que a missão lhe apresentasse.
+\par\smallskip
+No entanto, enquanto estava a bordo da nave espacial, Pato percebeu que havia um problema. Um dos botões importantes da nave só podia ser premido com um bico. Pato estava confuso e tentou usar todas as suas habilidades para resolver o problema, mas sem sucesso.
+\par\smallskip
+Pato ficou frustrado e começou a sentir-se desanimado. Ele não sabia como resolver o problema e não queria perder a oportunidade de explorar o espaço.
+\par\smallskip
+De repente, um dos outros astronautas, um cão chamado Cão, apareceu na porta da nave espacial. Cão disse: "Pato, você precisa usar o seu bico para premir o botão. É a única maneira de resolver o problema."
+\par\smallskip
+Pato ficou surpreso e confuso, mas Cão explicou-lhe que o bico era uma ferramenta muito importante para a nave espacial. Pato percebeu que ele precisava usar o seu bico para resolver o problema e que isso era a chave para o sucesso da missão.
+\par\smallskip
+Pato usou o seu bico para premir o botão e a nave espacial começou a funcionar corretamente. Pato e Cão continuaram a sua viagem espacial e exploraram o universo em busca de novas descobertas.
+\par\smallskip
+Pato e Cão foram muito felizes com o sucesso da missão e Pato se sentiu muito orgulhoso de ter sido um astronauta. Ele continuou a explorar o espaço e a fazer novas descobertas, sempre com o bico como sua ferramenta de escolha.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Complete with dialogue and a successful button solution, but some grammar and idioms are awkward and European/Brazilian usage is mixed.
+\par {\color{gray} Output: 447 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Resume o parágrafo seguinte em português europeu, em exatamente duas frases. Inclui tanto a mudança como o seu principal resultado e não acrescentes informações novas.
+\par\smallskip
+Em abril, a biblioteca municipal começou a abrir duas noites por semana. A experiência pretendia facilitar o empréstimo de livros a pessoas com longos dias de trabalho. Ao fim de três meses, o número de visitas noturnas tinha aumentado de forma constante, enquanto o número de visitas durante a manhã quase não tinha mudado. Vários clubes de leitura locais também tinham começado a reunir-se na biblioteca. A câmara municipal decidiu, por isso, manter o novo horário até ao fim do ano.\par\smallskip
+\textbf{Answer}\par Em abril, a biblioteca municipal abriu duas noites por semana para facilitar o empréstimo de livros. Este novo horário resultou num aumento constante das visitas noturnas e na formação de clubes de leitura, levando a que a câmara mantivesse a mudança até ao fim do ano.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 3}\par Good two-sentence summary except that formation of reading clubs is an unsupported interpretation.
+\par {\color{gray} Output: 60 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Finnish --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Korjaa tämän virkkeen kielioppivirhe. Vastaa vain korjatulla virkkeellä: Kolme lasta leikkivät puutarhassa, kun heidän äitinsä lukee kirjaa.\par\smallskip
+\textbf{Answer}\par Kolme lasta leikkivät puutarhassa, kun heidän äitinsä luki kirjaa.\par\smallskip
+\textbf{Evaluation: 1 / 2 / 2}\par Changes the mother's reading to past tense without addressing the intended numeral agreement. The original agreement is context-sensitive, so this is a weak diagnostic prompt.
+\par {\color{gray} Output: 25 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Kirjoita suomeksi lyhyt tarina ankasta, josta tulee astronautti. Ensimmäisellä avaruusmatkallaan ankka huomaa, että tärkeää nappia voi painaa vain nokalla. Tarinassa pitää olla keskustelu, odottamaton este ja onnellinen loppu.\par\smallskip
+\textbf{Answer}\par Ankka, joka oli aina ollut kiinnostunut avaruudesta, päätti lopulta tehdä avaruusmatkan. Hän oli valmis oppimaan uusia asioita ja tutkimaan maailmaa, joka oli niin erilainen kuin hänen oma.
+\par\smallskip
+Ensimmäisellä avaruusmatkallaan ankka, joka oli nyt nimeltään Anka, oli valmis aloittamaan matkan. Hän oli varustettu avaruusraketilla ja oli valmis lähtemään avaruuteen.
+\par\smallskip
+Kun Anka oli lähellä avaruusrakettia, hän huomasi, että hänellä oli tärkeä nappi, joka oli täynnä avaruusaineita. Hän tiesi, että hänellä oli aikaa vain muutamia minuutteja ennen kuin raketin ilmakehä alkoi heikentyä.
+\par\smallskip
+"Mitä minun pitäisi tehdä?" Anka kysyi itseltään. "En tiedä, miten painaa tätä nappia."
+\par\smallskip
+Anka ajatteli hetken ja sitten hän muisti, että hänellä oli nokka. Hän tiesi, että hänellä oli aikaa vain muutamia minuutteja ennen kuin raketin ilmakehä alkoi heikentyä.
+\par\smallskip
+"Tämä on se, mitä minun pitäisi tehdä", Anka ajatteli. "Painan nappia nokalla."
+\par\smallskip
+Anka paini nappia nokalla ja se painui oikein. Hän tiesi, että hän oli onnistunut.
+\par\smallskip
+Kun Anka oli lähellä avaruusrakettia, hän näki, että raketin ilmakehä alkoi heikentyä. Hän tiesi, että hänellä oli aikaa vain muutamia minuutteja ennen kuin raketin ilmakehä heikkenisi liikaa.
+\par\smallskip
+"Minun pitäisi lähteä", Anka ajatteli. "Minun pitäisi lähteä ennen kuin raketin ilmakehä heikkenisi liikaa."
+\par\smallskip
+Anka lähti avaruusraketista ja lähti avaruuteen. Hän tiesi, että hän oli onnistunut. Hän oli onnistunut painamaan nappia nokalla ja lähteemään avaruuteen.
+\par\smallskip
+Kun Anka oli lähellä avaruusrakettia, hän näki, että raketin ilmakehä alkoi heikentyä. Hän tiesi, että hänellä oli aikaa vain muutamia minuutteja ennen kuin raketin ilmakehä heikkenisi liikaa.
+\par\smallskip
+"Minun pitäisi lähteä", Anka ajatteli. "Minun pitäisi lähteä ennen kuin raketin ilmakehä heikkenisi liikaa."
+\par\smallskip
+Anka lähti avaruusraketista ja lähti avaruuteen. Hän tiesi, että hän oli onnistunut. Hän oli onnistunut painamaan nappia nokalla ja lähteemään avaruuteen.
+\par\smallskip
+Anka oli onnellinen. Hän oli onnellinen, koska hän oli onnistunut painamaan nappia nokalla ja lähteemään avaruuteen. Hän tiesi, että hän oli onnistunut.\par\smallskip
+\textbf{Evaluation: 1 / 1 / 1}\par Incoherent physical events, repeated material, and lexical errors undermine the story. Self-talk does not supply the requested conversation.
+\par {\color{gray} Output: 677 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Tiivistä seuraava kappale suomeksi täsmälleen kahteen virkkeeseen. Mainitse sekä muutos että sen tärkein tulos. Älä lisää uusia tietoja.
+\par\smallskip
+Kaupunginkirjasto alkoi huhtikuussa pitää ovensa auki kahtena iltana viikossa. Kokeilun tarkoituksena oli helpottaa kirjojen lainaamista niille, joiden työpäivät ovat pitkiä. Kolmen kuukauden aikana iltakäyntien määrä oli kasvanut tasaisesti, mutta aamupäivien kävijämäärä oli pysynyt lähes ennallaan. Myös useat paikalliset lukupiirit olivat alkaneet kokoontua kirjastossa. Kaupunki päätti siksi jatkaa järjestelyä vuoden loppuun.\par\smallskip
+\textbf{Answer}\par Kaupunginkirjasto alkoi pitää ovensa auki kahtena iltana viikossa helpottaakseen pitkiä työpäiviä. Iltakäyntien määrä kasvoi ja kaupunki päätti jatkaa järjestelyä vuoden loppuun.\par\smallskip
+\textbf{Evaluation: 2 / 3 / 2}\par Preserves the result, but shifts the purpose toward easing long workdays rather than enabling borrowing by long-hours workers.
+\par {\color{gray} Output: 62 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Estonian --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Paranda selles lauses olev grammatiline viga. Vasta ainult parandatud lausega: Lapsed mängivad aias, samal ajal kui nende ema loeb huvitav raamatut.\par\smallskip
+\textbf{Answer}\par Lapsed mängivad aias, samal ajal kui nende ema loeb huvitavat raamatut.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Estonian adjective case.
+\par {\color{gray} Output: 23 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Kirjuta eesti keeles lühike lugu pardist, kellest saab astronaut. Oma esimesel kosmosereisil avastab part, et üht tähtsat nuppu saab vajutada ainult nokaga. Loos peab olema vestlus, ootamatu takistus ja õnnelik lõpp.\par\smallskip
+\textbf{Answer}\par Muidugi, siin on lühike lugu pardist, kellest sai astronaut:
+\par\smallskip
+Pard, keda kutsuti Püssiks, oli alati unistanud kosmosest. Ta vaatas öötaevast, kuulas tähiste sosinat ja unistas, et saaks neid näha. Ühel päeval, kui ta oli õppimas, leidis ta vana, kulunud raamatu. Raamat rääkis kosmosest, tähtsatest nuppidest ja kosmosereisidest. Püssi silmad särasid. "See on see!" ta hüüdis. "Ma saan kosmosereisida!"
+\par\smallskip
+Püssi õpetaja, vana mees nimega Peeter, oli alguses skeptiline. "Püss, sa oled part, mitte astronaut!" ta ütles. "Sa ei saa kosmosereisida!"
+\par\smallskip
+Püss aga ei heitnud meelt. Ta õppis raamatut, vaatas teleskoobi ja harjutas kosmosereisi. Ta teadis, et ta peab olema valmis.
+\par\smallskip
+Ühel päeval, kui Püss oli õppimas, leidis ta raamatusse viitava "Kosmosereisi juhendi". Juhendis oli kirjas, et kosmosereisiks on vaja "tähtsat nuppu". Püss oli vaimustuses. "Ma saan selle nuppu!" ta hüüdis.
+\par\smallskip
+Püss otsustas, et ta peab leidma tähtsat nuppu. Ta otsis kõigist kohtadest, aga ei leidnud midagi. Ta oli väga kurb.
+\par\smallskip
+Äkitselt kuulis ta ukse ees nõrka helit. Ta avas ukse ja nägi seal väikest, sädelevat tähte. "See on täht!" ta hüüdis. "See on tähtsat nuppu!"
+\par\smallskip
+Püss võttis tähe ja vaatas seda. Ta nägi, et tähe sees on väike, sädelev nupp. Püss teadis, et ta peab nuppu vajutama.
+\par\smallskip
+Ta vaatas ümber. Ta nägi, et ta peab nuppu vajutama nokaga. Ta vaatas ümber ja nägi, et ta peab nuppu vajutama.
+\par\smallskip
+Püss võttis nuppu ja vajutas selle nokaga. *Vajutamine!* Nupp hakkas särama ja hakkas lahti lennuma.
+\par\smallskip
+Püss vaatas nuppu lennu ja oli väga õnnelik. Ta oli leidnud tähtsat nuppu ja vajutanud selle nokaga.
+\par\smallskip
+Püss naeratas. "Ma olen astronaut!" ta hüüdis. "Ma olen kosmosereisija!"
+\par\smallskip
+Püss lendas kosmosesse ja nägi tähtsat nuppu lennu. Ta oli õnnelik, et ta oli leidnud tähtsat nuppu ja vajutanud selle nokaga. Ta oli astronaut ja ta oli kosmosereisija.
+\par\smallskip
+Loodan, et meeldis! Kas soovid, et ma kirjutaksin veel midagi?\par\smallskip
+\textbf{Evaluation: 1 / 1 / 1}\par Includes dialogue and a nominal happy ending, but a floating star/button substitutes for a coherent mission obstacle. Repeated case and verb-form errors.
+\par {\color{gray} Output: 667 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Võta järgmine lõik eesti keeles kokku täpselt kahe lausega. Maini nii muudatust kui ka selle peamist tulemust ning ära lisa uut teavet.
+\par\smallskip
+Linnaraamatukogu hakkas aprillis olema avatud ka kahel õhtul nädalas. Katse eesmärk oli teha raamatute laenutamine lihtsamaks inimestele, kelle tööpäevad on pikad. Kolme kuu jooksul oli õhtuste külastuste arv pidevalt kasvanud, samas kui ennelõunane külastatavus oli peaaegu muutumatu. Raamatukogus olid hakanud kohtuma ka mitu kohalikku lugemisklubi. Seetõttu otsustas linn jätkata sama korraldusega aasta lõpuni.\par\smallskip
+\textbf{Answer}\par Linnaraamatukogu avas aprillis kahel õhtul nädalas, et lihtsustada laenutamist pikade tööpäevade inimestele. See muudatus viis suurema külastatavuse ja lugemisklubide kohtumiste tõttu, mistõttu jätkati korraldus aasta lõpuni.\par\smallskip
+\textbf{Evaluation: 2 / 1 / 1}\par The main facts can be recovered, but sentence construction and case errors make the two-sentence summary unnatural.
+\par {\color{gray} Output: 77 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Catalan --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Corregeix l'error gramatical d'aquesta frase. Respon només amb la frase corregida: Els tres infants juguen al jardí mentre la seva mare llegeix un llibres.\par\smallskip
+\textbf{Answer}\par Els tres infants juguen al jardí mentre la seva mare llegeix un llibre.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Catalan article repair.
+\par {\color{gray} Output: 20 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Escriu un conte breu en català sobre un ànec que es converteix en astronauta. En el seu primer viatge espacial descobreix que un botó important només es pot prémer amb un bec. El conte ha d'incloure una conversa, un obstacle inesperat i un final feliç.\par\smallskip
+\textbf{Answer}\par **El Viatge Espacial de Bússol**
+\par\smallskip
+Bússol era un ànec de la ciutat de Barcelona, conegut per la seva curiositat i el seu caràcter optimista. Tot i que era un petit animal, Bússol tenia un gran desig de viatjar al espai. Un dia, mentre observava les estrelles des de la seva finestra, va veure una imatge d'una nave espacial i va pensar: *"I si ho pogués fer, podria ser el primer ànec a viatjar al llarg del cos!"*
+\par\smallskip
+Bússol va començar a treure-se per a la seva missió. Va fer un programa de treball intens, aprendent a saltar, a nadar i a aprofitar els seus peus per a l'aument. Finalment, va ser elegit per a la seva primera missió espacial.
+\par\smallskip
+El dia del desplaçament, Bússol va ser transportat a la nau espacial *Estrelles de Bússol*. La nave era un espai lluminós i futurista, amb parets de vidre transparent i un sistema de suport vital que mantenia tot el seu entorn perfecte. Bússol va sentir-se excitat i nerviós al mateix temps.
+\par\smallskip
+En el seu primer viatge, Bússol va trobar un botó important que controlava la seva posició en el cos. No obstant això, el botó només es podia prémer amb un bec. Bússol va intentar fer-ho amb els seus peus, però no va poder. Es va sentir frustrat i va pensar que no podria fer-ho.
+\par\smallskip
+"No, no, no!" va dir Bússol, sentant-se en el seu lloc de treball. "No podré fer-ho! Què ho faré?"
+\par\smallskip
+En aquest moment, un altre ànec, anomenat Lluís, va entrar a la nau. Lluís era un ànec més gran i més experimentat, i va veure la frustració de Bússol.
+\par\smallskip
+"Hola, Bússol," va dir Lluís, amb un soroll de soroll. "No et preocupis, et ajudaré. El botó només es pot prémer amb un bec, però no és un bec normal. Ha de ser un bec especial, un bec de l'espai."
+\par\smallskip
+Lluís va mostrar-li un bec especial que estava guardat en un compartiment de la nau. "Aquest bec és especial, Bússol. És el bec que només es pot prémer amb un bec de l'espai. Si ho utilitzes, pots fer-ho."
+\par\smallskip
+Bússol va ser sorpresat per la seva resposta. "Com és possible? No ho coneixem en la ciutat!"
+\par\smallskip
+"Sí, sí," va dir Lluís. "El bec de l'espai és un bec especial que només es pot utilitzar en el cos. És un bec que només es pot prémer amb un bec de l'espai. Si ho utilitzes, pots fer-ho."
+\par\smallskip
+Bússol va prendre el bec de l'espai i va intentar-lo. A la seva sorpresa, el botó es va activar i Bússol va poder viatjar al llarg del cos.
+\par\smallskip
+El viatge va ser un èxit total. Bússol va veure galàxies, planetes i estrelles que mai havia\par\smallskip
+\textbf{Evaluation: 1 / 1 / 0}\par Contains dialogue but repeatedly confuses space with the body, uses non-Catalan/incorrect forms, and ends mid-sentence at the cap.
+\par {\color{gray} Output: 768 tokens; finish: length.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Resumeix el paràgraf següent en català en exactament dues frases. Inclou tant el canvi com el seu resultat principal i no hi afegeixis informació nova.
+\par\smallskip
+A l'abril, la biblioteca municipal va començar a obrir dos vespres per setmana. La prova volia facilitar el préstec de llibres a les persones amb jornades laborals llargues. Al cap de tres mesos, les visites al vespre havien augmentat de manera constant, mentre que les del matí gairebé no havien canviat. Diversos clubs de lectura locals també havien començat a reunir-se a la biblioteca. Per això, l'ajuntament va decidir mantenir la mesura fins a finals d'any.\par\smallskip
+\textbf{Answer}\par La biblioteca municipal va obrir dos vespres per setmana per facilitar el préstec a persones amb longs periodes laborals. Aquest canvi va augmentar les visites i la participació dels clubs de lectura, provocant que l'ajuntament mantingués la mesura fins a finals d'any.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Broadly faithful two-sentence summary with agreement/spelling issues and some overinterpretation of reading-group participation.
+\par {\color{gray} Output: 67 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Greek --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Διόρθωσε το γραμματικό λάθος στην παρακάτω πρόταση. Απάντησε μόνο με τη διορθωμένη πρόταση: Τα τρία παιδιά παίζουν στον κήπο, ενώ η μητέρα τους διαβάζει ένα βιβλία.\par\smallskip
+\textbf{Answer}\par Τα τρία παιδιά παίζουν στον κήπο, ενώ η μητέρα τους διαβάζει ένα βιβλίο.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Greek article agreement.
+\par {\color{gray} Output: 26 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Γράψε μια σύντομη ιστορία στα ελληνικά για μια πάπια που γίνεται αστροναύτισσα. Στο πρώτο της ταξίδι στο διάστημα ανακαλύπτει ότι ένα σημαντικό κουμπί μπορεί να πατηθεί μόνο με ράμφος. Η ιστορία πρέπει να περιλαμβάνει μια συζήτηση, ένα απρόσμενο εμπόδιο και ένα ευτυχισμένο τέλος.\par\smallskip
+\textbf{Answer}\par Η Μαρία ήταν μια πάπια που δεν πίστευε σε «δεν είναι αρκετά». Ενώ οι άλλοι πίστευαν ότι η ζωή της ήταν απλή, η Μαρία είχε μια φαντασία για τα αστέρια. Με την βοήθεια ενός μικρού, αλλά πολύ έξυπνου μηχανικού, καταφέρνει να μετατρέψει το σπίτι της σε ένα μικρό, φωσφορίζοντα σκάφος.
+\par\smallskip
+Το πρώτο της ταξίδι στο διάστημα ήταν μια περιπέτεια. Καθώς το σκάφος έπεφτε στην επιφάνεια ενός ξένου πλανήτη, η Μαρία ένιωσε μια ξαφνική πίεση στο στήθος της. Ένα κρίσιμο κουμπί, που έπρεπε να ενεργοποιήσει τον πυρήνα του σκάφους, δεν απαντούσε με το χέρι της.
+\par\smallskip
+«Είμαι σίγουρη ότι αυτό είναι ένα λάθος στο σύστημα!» φώναξε η Μαρία, προσπαθώντας να το πατήσει με το δάχτυλό της.
+\par\smallskip
+Ο μηχανικός, ένας μικρός και γρήγορος άνδρας με γυαλιά, έσπασε απότομα: «Μη ανησυχείς, Μαρία. Το κουμπί είναι προγραμματισμένο για να ενεργοποιηθεί μόνο με ράμφος. Είναι μια ασφάλεια για να μην το πατήσει κάποιος που δεν έχει την κατάλληλη τεχνική.»
+\par\smallskip
+Η Μαρία ένιωσε μια ξαφνική πτώση της αυτοπεποίθησης. «Αλλά πώς το κάνω; Δεν έχω ράμφος!»
+\par\smallskip
+Ο μηχανικός χαμογέλασε και της έδωσε ένα μικρό, χρυσό ράμφος. «Αν το πατήσεις με την πλάτη σου, θα ενεργοποιήσεις τον πυρήνα. Αλλά πρέπει να το κάνεις με ακρίβεια, γιατί αν το κάνεις λανθασμένα, θα σταματήσει ο πλανήτης από να περιστρέφεται.»
+\par\smallskip
+Η Μαρία προσπάθησε. Πρώτα, με το δάχτυλό της, δεν έκανε τίποτα. Στη συνέχεια, με το χέρι της, το κουμπί δεν απαντούσε. Τέλος, με την πλάτη της, το ράμφος έσπασε το σήμα.
+\par\smallskip
+«Καλώς ήρθες στο διάστημα, Μαρία!» φώναξε ο μηχανικός.
+\par\smallskip
+Το σκάφος άρχισε να τρέχει προς τα πάνω, και η Μαρία ένιωσε μια βαθιά ευτυχία. Δεν ήταν πια μια απλή πάπια, αλλά η πρώτη αστροναύτισσα της ιστορίας.\par\smallskip
+\textbf{Evaluation: 1 / 2 / 1}\par Dialogue and a happy outcome exist, but the duck claims to lack a beak and the mechanism is incoherent. Several constructions are unnatural.
+\par {\color{gray} Output: 631 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Σύνοψε την παρακάτω παράγραφο στα ελληνικά σε ακριβώς δύο προτάσεις. Ανάφερε τόσο την αλλαγή όσο και το βασικό αποτέλεσμά της, χωρίς να προσθέσεις νέες πληροφορίες.
+\par\smallskip
+Τον Απρίλιο η δημοτική βιβλιοθήκη άρχισε να μένει ανοιχτή δύο βράδια την εβδομάδα. Η δοκιμή είχε στόχο να διευκολύνει τον δανεισμό βιβλίων για όσους εργάζονταν πολλές ώρες. Έπειτα από τρεις μήνες, οι βραδινές επισκέψεις είχαν αυξηθεί σταθερά, ενώ οι πρωινές είχαν μείνει σχεδόν αμετάβλητες. Αρκετές τοπικές λέσχες ανάγνωσης είχαν επίσης αρχίσει να συναντιούνται στη βιβλιοθήκη. Ο δήμος αποφάσισε λοιπόν να συνεχίσει τη ρύθμιση μέχρι το τέλος του έτους.\par\smallskip
+\textbf{Answer}\par Η δημοτική βιβλιοθήκη άρχισε να είναι ανοιχτή δύο βράδια την εβδομάδα για να διευκολύνει τον δανεισμό βιβλίων. Λόγω της σταθερής αύξησης των επισκέψεων και της συμμετοχής των λέσχων ανάγνωσης, ο δήμος αποφάσισε να συνεχίσει τη ρύθμιση μέχρι το τέλος του έτους.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Faithful two-sentence summary of the change, increased visits, and continuation decision.
+\par {\color{gray} Output: 98 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Romanian --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Corectează greșeala gramaticală din această propoziție. Răspunde numai cu propoziția corectată: Cei trei copii se joacă în grădină, în timp ce mama lor citește un carte.\par\smallskip
+\textbf{Answer}\par Cei trei copii se joacă în grădină, în timp ce mama lor citește o carte.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Romanian article repair.
+\par {\color{gray} Output: 23 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Scrie o povestire scurtă în română despre o rață care devine astronaută. În prima sa călătorie în spațiu descoperă că un buton important poate fi apăsat numai cu un cioc. Povestirea trebuie să includă o conversație, un obstacol neașteptat și un final fericit.\par\smallskip
+\textbf{Answer}\par Într-o lume plină de rațe, a existat o mică rață numită Luna. Luna nu era ca celelalte; în timp ce ceilalți se ocupau de a găsi cele mai bune prăjituri sau de a juca cu piese de plastic, Luna a petrecut ore întregi studiată în bibliotecă, citind despre stele și galaxii.
+\par\smallskip
+Într-o zi, a primit un bilet de la „Centrul de Formare a Astronautelor”. Luna a fost selectată pentru prima sa călătorie în spațiu. În spațiu, Luna a fost extrem de nervoasă. „Ce dacă nu pot apăsa butonul de start?” a șoptit ea, privind cu uimire spre o mașină uriașă, albastră și strălucitoare.
+\par\smallskip
+În timp ce Luna a încercat să apăse un buton mic, a observat ceva ciudat. Botonul nu avea un tast, ci o mică ușă de metal. Luna a încercat să presene un pui, apoi un pui de pui, dar nimic nu a funcționat.
+\par\smallskip
+— „Nu mai am timp!” a urlat ea, încercând să se omoară în spatele mașinii.
+\par\smallskip
+În acel moment, Luna a văzut un cioc mic, albastru, care plutea în aer, ca o stea mică. Luna a zâmbit. „Nu e o problemă, ci o oportunitate!” a spus ea.
+\par\smallskip
+Luna a luat ciocul și a încercat să îl apăse pe buton. În momentul în care ciocul a atins metalul, un sunet metalic a răsunat și, cu un *clic*, butonul a deschis. Luna a zâmbit și a zâmbit din nou.
+\par\smallskip
+În timp ce Luna a explorat spațiul, ea a descoperit că ciudățeni și rațe pot fi prieteni. Luna a învățat că, chiar și în spațiu, există lucruri simple și amuzante, cum ar fi un cioc care poate apăsa un buton important.
+\par\smallskip
+Luna a fost o astronaută fericită și a fost recunoscută ca o personă specială pentru curajul și creativitatea ei. Luna a continuat să exploreze spațiul și a învățat de la fiecare experiență, devenind o legendă în univers.\par\smallskip
+\textbf{Evaluation: 1 / 1 / 1}\par No genuine two-party conversation; invented words and malformed clauses. An unmotivated phrase about trying to kill herself is particularly inappropriate for the requested light story.
+\par {\color{gray} Output: 533 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Rezumă paragraful următor în română, în exact două propoziții. Menționează atât schimbarea, cât și principalul ei rezultat, fără să adaugi informații noi.
+\par\smallskip
+În aprilie, biblioteca municipală a început să rămână deschisă două seri pe săptămână. Experimentul urmărea să le faciliteze împrumutul cărților persoanelor cu zile lungi de lucru. După trei luni, numărul vizitelor de seară crescuse constant, în timp ce numărul vizitelor de dimineață rămăsese aproape neschimbat. Mai multe cluburi locale de lectură începuseră și ele să se întâlnească la bibliotecă. Primăria a decis astfel să continue programul până la sfârșitul anului.\par\smallskip
+\textbf{Answer}\par Bibliotecă municipală a început să rămână deschisă două seri pe săptămână pentru a facilita împrumutul cărților persoanelor cu zile lungi de lucru. Acest experiment a crescut vizitele de seară și a atragut cluburi de lectură, ducând primăria să continue programul până la sfârșitul anului.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 2}\par Broad facts are retained, but malformed article/verb forms reduce Romanian quality.
+\par {\color{gray} Output: 77 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\clearpage
+{\Large\bfseries Ukrainian --- XL 2990K EMA}\par\smallskip
+\noindent\sbox{\languagepage}{\begin{minipage}{\textwidth}
+\fontsize{9}{10.5}\selectfont
+\textbf{Scores:} task success / language correctness / fluency; each 0--3. 3 strong; 2 usable with reservations; 1 major problems; 0 failed/unusable. Direct Codex review, not an external judge or native-speaker certification. One prompt per task; greedy decoding; no matched earlier-checkpoint/backend comparison.\par\smallskip
+\medskip\hrule\smallskip
+{\bfseries 1. Grammatical error correction}\par\smallskip
+\textbf{Instruction and input}\par Виправ граматичну помилку в цьому реченні. У відповіді наведи лише виправлене речення: Троє дітей граються в саду, поки їхня мама читає цікава книжку.\par\smallskip
+\textbf{Answer}\par Троє дітей граються в саду, поки їхня мати читає цікаву книжку.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Correct Ukrainian adjective agreement; the unnecessary mother synonym remains valid.
+\par {\color{gray} Output: 22 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 2. Creative writing}\par\smallskip
+\textbf{Instruction and input}\par Напиши коротку історію українською про качку, яка стає астронавткою. Під час своєї першої космічної подорожі вона виявляє, що важливу кнопку можна натиснути лише дзьобом. В історії мають бути розмова, несподівана перешкода та щасливий кінець.\par\smallskip
+\textbf{Answer}\par **Качка-астронавтка Мурка**
+\par\smallskip
+У маленькому містечку, де качки були найпопулярнішими, мешкала Мурка. Вона не просто любила миши, а мріяла про зірки. Коли її батьки вирішили, що вона занадто маленька для звичайного будинку, вони запросили її на «Космічну академію».
+\par\smallskip
+Мурка прибула в корабель «Срібний Сніг». Вона була звикла до тепла та м’яких ковдра, але тут панувала крижана тиша та тисячі світлових стрілок. Її перша задача — перевірити системі.
+\par\smallskip
+— Ой, це дивно, — прошепотіла вона, подивившись на великий екран. — Я не можу торкнутися цих кнопок.
+\par\smallskip
+Командувач, старий вчений з великим капелюхом, посміхнувся. — Не хвилюйтеся, Мурка. У космосі ми використовуємо спеціальні пристрої.
+\par\smallskip
+Але коли Мурка намагалася зайти в «Модуль Космічного Сну», вона помітила щось дивне. На екрані була одна велика, яскраво-червона кнопку: **«Повернення додому»**.
+\par\smallskip
+— Я не можу її натиснути — вигукнула вона, намагаючись затиснути лапками. — Я занадто маленька!
+\par\smallskip
+Командувач підняв очі. — Ви не можете. Але у цьому кораблі є особливий пристрій.
+\par\smallskip
+Мурка заціпеніла. — Я... я не можу?
+\par\smallskip
+— Так, — відповів він. — Але у цьому кораблі є «Дзьобний Кнопка». Вона працює лише за допомогою дзьобу.
+\par\smallskip
+Мурка подивилася на свій дзьоб. Він був дуже міцний і м’який. Вона заплющила очі, заплющила очі і...
+\par\smallskip
+— *Дзьоб!*
+\par\smallskip
+Звук був як глибокий, гучний гул. Екран раптом спалахнув, і на його місці з'явилася маленька, золота зірка.
+\par\smallskip
+— Ой, це працює! — вигукнула Мурка, відчаюючись. — Я — астронавтка! Я повернулася додому!
+\par\smallskip
+Командувач посміхнувся. — Ви не просто повернулися, Мурка. Ви стали першою качкою в історії, яка виявила, що навіть найменші тварини можуть досягти найвищих висот.
+\par\smallskip
+З того дня Мурка стала найвідомішою астронавткою у світі. Вона не просто вивчала космос — вона вивчала, що найцінніші речі в світі — це не великі кнопки, а маленькі, але потужні дзьоби.\par\smallskip
+\textbf{Evaluation: 2 / 2 / 1}\par Dialogue and return home satisfy much of the outline, but motivation and mechanism are confused, with case/agreement errors and repeated actions.
+\par {\color{gray} Output: 683 tokens; finish: stop.}\par
+\medskip\hrule\smallskip
+{\bfseries 3. Summarization}\par\smallskip
+\textbf{Instruction and input}\par Стисло виклади зміст наведеного абзацу українською рівно у двох реченнях. Згадай і зміну, і її головний результат, не додаючи нової інформації.
+\par\smallskip
+У квітні міська бібліотека почала працювати також два вечори на тиждень. Експеримент мав полегшити позичання книжок людям із довгим робочим днем. Через три місяці кількість вечірніх відвідувань стабільно зростала, тоді як кількість ранкових майже не змінилася. Кілька місцевих читацьких клубів також почали збиратися в бібліотеці. Тому міська рада вирішила зберегти цей режим роботи до кінця року.\par\smallskip
+\textbf{Answer}\par Міська бібліотека почала працювати два вечори на тиждень, щоб полегшити позичання книжок. Завдяки стабільному зростанню відвідувань та активності читацьких клубів, режим роботи був збережений до кінця року.\par\smallskip
+\textbf{Evaluation: 3 / 3 / 3}\par Faithful and readable two-sentence summary.
+\par {\color{gray} Output: 60 tokens; finish: stop.}\par
+\medskip\footnotesize All answer text is retained. Length finishes reflect the 768-token story / 384-token other-task caps. Long pages are scaled to fit. Scores are qualitative judgments, not benchmark estimates.
+\end{minipage}}%
+\noindent\ifdim\dimexpr\ht\languagepage+\dp\languagepage\relax>0.93\textheight%
+\resizebox*{!}{0.93\textheight}{\usebox{\languagepage}}%
+\else\usebox{\languagepage}\fi%
+\end{document}

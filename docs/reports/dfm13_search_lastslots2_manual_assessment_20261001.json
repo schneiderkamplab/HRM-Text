@@ -1,0 +1,114 @@
+{
+  "schema": "dfm13-lastslots2-manual-source-review-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "admission_authorized": false,
+  "previous_holds_unchanged": true,
+  "active_ledgers_modified": false,
+  "new_model_calls": 0,
+  "new_retrieval_calls": 0,
+  "scope": "Both newly generated candidates assessed afresh against exact delivered evidence and original dates. No automatic inheritance or clearance of older candidate holds.",
+  "counts": {
+    "reviewed": 2,
+    "useful_supported_core_with_local_citation_cleanup": 1,
+    "hard_hold": 1
+  },
+  "verification": "Candidate user and tool observations exactly match saved actual generation requests. Saved render records pinned and inspected, not independently rerun in this review. No GPU or new paid retrieval performed.",
+  "limits": [
+    "Agent assessment, not human/native gold.",
+    "No unseen full-page content used to rescue missing evidence.",
+    "Advisory hash-bound findings only; downstream admission owner must consume them."
+  ],
+  "rows": [
+    {
+      "id": "c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a",
+      "pins": [
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/generation/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/candidate.json",
+          "sha256": "4b033fad40e13cbbe836181bdd6f8a8a707c39972928028a22ce3e0d04c470c8"
+        },
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/generation/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/generation/actual-request.json",
+          "sha256": "0f4a366c613baf114a9e4b1c1be0388fb3295dd167d0da011ae7d7f4c96a9f8a"
+        },
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/generation/records/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a/student-render.json",
+          "sha256": "1003c93a4295c79e0da2277a19359c01233fc97f0b83c7ca3a639b3203098c60"
+        },
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/metadata/evidence/c95778af3297f0a55c25c3de7ee97d4c601c1af78332ecbf8687c19e0ccac57a.json",
+          "sha256": "2a2ca90cfe8aaa55cb17a35beebc79c247630d67f74b983398129656a5b6b90e"
+        }
+      ],
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 2216,
+          "target_tokens": 451,
+          "total_tokens": 2667,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 2216,
+          "shifted_masked_tokens": 2215,
+          "target_kind": "final_answer"
+        }
+      ],
+      "generation_suffix": "\nGeneration-only constraints: Use only facts supported by the retained tool observations. Do not introduce factual background from these instructions or from unobserved sources. Do not claim latestness or current validity without dated evidence at the original request date. Keep distinct versions, Base and Instruct models, benchmark settings, and historical versus current claims separate. Attribute source claims rather than certifying them independently. Explicitly label creative proposals and inferences. Cite exact observed URLs supporting factual claims. State specific evidence gaps instead of inventing details. Complete the requested answer concisely within the output allocation; avoid unnecessary introductions.",
+      "assessment": "hard_hold_invented_answer_key_and_classification_error",
+      "retrieval_value": "New sources explicitly classify apple and hawthorn as pomes and raspberry as an aggregate of drupes. They correct the old unsupported hawthorn-as-drupe assertion, but do not provide an examination key or a discriminating argument selecting option a.",
+      "issues": [
+        "The answer invents that standard tests prefer the 'classic' apple example over hawthorn and labels a the expected correct answer without observed support.",
+        "It calls raspberry a 'соплодие' (infructescence). The retained source distinguishes fruits arising from an entire inflorescence from aggregate fruits formed from multiple ovaries of one flower, and places raspberry in the latter group.",
+        "Detailed pome-layer anatomy is supplied without corresponding retained layer evidence. Merely establishing both species are pomes cannot distinguish the multiple-choice options.",
+        "The final answer omits source URLs despite the citation requirement."
+      ],
+      "disposition": "Do not admit. Explain what the classification sources establish and what remains unresolved; do not infer a test key from a preferred textbook example. This review does not supply an alternative keyed answer."
+    },
+    {
+      "id": "e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9",
+      "pins": [
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/generation/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/candidate.json",
+          "sha256": "a2c47e48475aba44e4051519708eebcd479127b2a181dce1d0dbe27145071add"
+        },
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/generation/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/generation/actual-request.json",
+          "sha256": "caacc2d050b2540e000efd00404168759e2967e5a9a72af5cec07c856fa800ab"
+        },
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/generation/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/student-render.json",
+          "sha256": "e409997abb3867b2bbe496c53a50f96bd2197e0bde9e486cb24d2fda57f650f1"
+        },
+        {
+          "path": "data/dfm13/search-lastslots2-20261001/metadata/evidence/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9.json",
+          "sha256": "db956aa9ce69a779858b40d8ecf8fa8fe142f33a9f9a2de72075b23470242991"
+        }
+      ],
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1511,
+          "target_tokens": 748,
+          "total_tokens": 2259,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1511,
+          "shifted_masked_tokens": 1510,
+          "target_kind": "final_answer"
+        }
+      ],
+      "generation_suffix": "\nGeneration-only constraints: Use only facts supported by the retained tool observations. Do not introduce factual background from these instructions or from unobserved sources. Do not claim latestness or current validity without dated evidence at the original request date. Keep distinct versions, Base and Instruct models, benchmark settings, and historical versus current claims separate. Attribute source claims rather than certifying them independently. Explicitly label creative proposals and inferences. Cite exact observed URLs supporting factual claims. State specific evidence gaps instead of inventing details. Complete the requested answer concisely within the output allocation; avoid unnecessary introductions.",
+      "assessment": "useful_supported_core_prior_product_evidence_gap_resolved",
+      "retrieval_value": "Substantial improvement: Cisco's own exact passages name IE2000/3000/4000/5000 managed families and describe IE1000 as GUI-based lightly-managed, rugged, compact, with web management and the named use cases. No Siemens specification is borrowed.",
+      "remaining_issues": [
+        "The IE1000 OT-user sentence cites the datasheet, but its precise support is in the separately observed hardware guide. The low-cost/low-port-count design clause cites the guide although its exact support is in the datasheet. Correct these nearby citation assignments; the information is present in retained evidence.",
+        "The excerpts are not date-stamped proof of April 2025 stock, support status or an exhaustive portfolio. The answer makes no precise availability claim; retain a limited 'these documented series' framing rather than certify date-specific availability."
+      ],
+      "disposition": "Useful series overview; localized citation cleanup recommended. No substantive model-feature contradiction found in this new candidate."
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-lastslots2-20261001/generation/manifest.json",
+      "sha256": "fff69f4c1a477d68ce403cd36b9c08650fae6ac7f507dcd3fa9cc3b6972d1f2e"
+    }
+  ]
+}

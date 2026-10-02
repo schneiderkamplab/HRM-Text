@@ -1,0 +1,84 @@
+\documentclass[10pt]{article}
+\usepackage[a3paper,landscape,margin=15mm]{geometry}
+\usepackage{fontspec,booktabs,graphicx}
+\setmainfont{DejaVu Serif}
+\setlength{\parindent}{0pt}
+\begin{document}
+\section*{DFM12 XL epoch 11: traceable training composition by language}
+Each cell: million rendered tokens (percentage of ALL epoch tokens / percentage of ALL epoch rows). Input + response + template; identity repeat 0. Dedicated family allocations are lower bounds, not a full semantic census.\par\medskip
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrrrrrr}
+\toprule
+Language/source block & Instr. follow. & Commonsense & Correction & Acceptability & Summary & Reading QA & Knowledge & NER & Sentiment & Mixed SFT & Other/mixed & Allocated total \\
+\midrule
+Danish & 12.689 (0.011\% / 0.008\%) & -- & 1,648.634 (1.409\% / 0.670\%) & 68.526 (0.059\% / 0.346\%) & -- & 71.629 (0.061\% / 0.445\%) & -- & 2.459 (0.002\% / 0.006\%) & 1.176 (0.001\% / 0.005\%) & 18,353.695 (15.687\% / 12.193\%) & 5,694.193 (4.867\% / 2.014\%) & 25,853.001 (22.096\% / 15.687\%) \\
+English & -- & -- & 66.027 (0.056\% / 0.244\%) & 38.896 (0.033\% / 0.249\%) & 1,198.117 (1.024\% / 0.224\%) & 3.447 (0.003\% / 0.004\%) & -- & -- & -- & 10,388.799 (8.879\% / 3.472\%) & 12,292.252 (10.506\% / 5.074\%) & 23,987.538 (20.502\% / 9.267\%) \\
+Norwegian Bokmal & -- & -- & 98.975 (0.085\% / 0.260\%) & 54.420 (0.047\% / 0.257\%) & -- & 1.340 (0.001\% / 0.001\%) & -- & -- & -- & 92.959 (0.079\% / 0.071\%) & 160.671 (0.137\% / 0.097\%) & 408.365 (0.349\% / 0.684\%) \\
+Norwegian Nynorsk & -- & -- & 96.889 (0.083\% / 0.258\%) & 51.708 (0.044\% / 0.259\%) & -- & -- & -- & -- & -- & 69.544 (0.059\% / 0.054\%) & 127.078 (0.109\% / 0.084\%) & 345.219 (0.295\% / 0.654\%) \\
+Swedish & -- & -- & 101.645 (0.087\% / 0.261\%) & 56.327 (0.048\% / 0.261\%) & -- & -- & -- & -- & -- & 353.221 (0.302\% / 0.173\%) & 177.752 (0.152\% / 0.070\%) & 688.945 (0.589\% / 0.764\%) \\
+Icelandic & -- & -- & 127.184 (0.109\% / 0.248\%) & 69.409 (0.059\% / 0.254\%) & -- & -- & -- & -- & -- & 79.622 (0.068\% / 0.035\%) & 153.051 (0.131\% / 0.066\%) & 429.266 (0.367\% / 0.603\%) \\
+Faroese & -- & -- & 19.562 (0.017\% / 0.045\%) & 10.939 (0.009\% / 0.046\%) & -- & -- & -- & -- & -- & 48.136 (0.041\% / 0.036\%) & 38.470 (0.033\% / 0.045\%) & 117.107 (0.100\% / 0.172\%) \\
+Dutch & -- & -- & 85.363 (0.073\% / 0.248\%) & 45.671 (0.039\% / 0.245\%) & -- & -- & -- & -- & -- & 735.644 (0.629\% / 0.403\%) & 94.813 (0.081\% / 0.049\%) & 961.490 (0.822\% / 0.945\%) \\
+Polish & -- & -- & 100.433 (0.086\% / 0.256\%) & 57.200 (0.049\% / 0.259\%) & -- & -- & -- & -- & -- & 369.641 (0.316\% / 0.167\%) & 176.014 (0.150\% / 0.074\%) & 703.288 (0.601\% / 0.757\%) \\
+German & -- & -- & 65.670 (0.056\% / 0.243\%) & 40.900 (0.035\% / 0.243\%) & -- & -- & -- & -- & -- & 394.961 (0.338\% / 0.186\%) & 270.018 (0.231\% / 0.117\%) & 771.549 (0.659\% / 0.790\%) \\
+French & -- & -- & 65.229 (0.056\% / 0.246\%) & 40.794 (0.035\% / 0.246\%) & -- & -- & -- & -- & -- & 383.620 (0.328\% / 0.181\%) & 241.135 (0.206\% / 0.113\%) & 730.778 (0.625\% / 0.787\%) \\
+Spanish & -- & -- & 64.481 (0.055\% / 0.247\%) & 40.362 (0.034\% / 0.247\%) & -- & -- & -- & -- & -- & 384.705 (0.329\% / 0.189\%) & 248.431 (0.212\% / 0.116\%) & 737.979 (0.631\% / 0.800\%) \\
+Italian & -- & -- & 67.531 (0.058\% / 0.244\%) & 41.798 (0.036\% / 0.244\%) & -- & -- & -- & -- & -- & 402.433 (0.344\% / 0.190\%) & 259.140 (0.221\% / 0.117\%) & 770.902 (0.659\% / 0.794\%) \\
+Czech & -- & -- & 64.785 (0.055\% / 0.222\%) & 39.690 (0.034\% / 0.222\%) & -- & -- & -- & -- & -- & 429.729 (0.367\% / 0.188\%) & 199.496 (0.171\% / 0.095\%) & 733.700 (0.627\% / 0.726\%) \\
+Portuguese & 9.567 (0.008\% / 0.003\%) & -- & 61.630 (0.053\% / 0.235\%) & 38.568 (0.033\% / 0.235\%) & 17.280 (0.015\% / 0.021\%) & -- & -- & -- & -- & 437.827 (0.374\% / 0.218\%) & 366.713 (0.313\% / 0.092\%) & 931.584 (0.796\% / 0.803\%) \\
+Finnish & -- & -- & 73.159 (0.063\% / 0.223\%) & 43.912 (0.038\% / 0.223\%) & -- & -- & -- & -- & -- & 686.249 (0.587\% / 0.295\%) & 169.209 (0.145\% / 0.095\%) & 972.530 (0.831\% / 0.836\%) \\
+Estonian & -- & -- & 60.708 (0.052\% / 0.189\%) & 36.580 (0.031\% / 0.189\%) & -- & -- & -- & -- & -- & 111.934 (0.096\% / 0.062\%) & 185.720 (0.159\% / 0.100\%) & 394.943 (0.338\% / 0.541\%) \\
+Catalan & -- & -- & 62.073 (0.053\% / 0.205\%) & 37.774 (0.032\% / 0.205\%) & -- & -- & -- & -- & -- & 53.434 (0.046\% / 0.035\%) & 190.545 (0.163\% / 0.100\%) & 343.825 (0.294\% / 0.546\%) \\
+Greek & -- & -- & 76.928 (0.066\% / 0.215\%) & 45.520 (0.039\% / 0.215\%) & -- & -- & -- & -- & -- & 466.999 (0.399\% / 0.176\%) & 260.811 (0.223\% / 0.095\%) & 850.258 (0.727\% / 0.701\%) \\
+Romanian & -- & -- & 50.205 (0.043\% / 0.170\%) & 30.698 (0.026\% / 0.170\%) & -- & -- & -- & -- & -- & 413.978 (0.354\% / 0.180\%) & 172.341 (0.147\% / 0.090\%) & 667.221 (0.570\% / 0.609\%) \\
+Ukrainian & -- & -- & 72.489 (0.062\% / 0.232\%) & 43.966 (0.038\% / 0.232\%) & -- & -- & -- & -- & -- & 448.613 (0.383\% / 0.191\%) & 186.024 (0.159\% / 0.093\%) & 751.092 (0.642\% / 0.749\%) \\
+Additions: language unassigned & -- & -- & -- & -- & -- & -- & -- & -- & -- & 1,082.947 (0.926\% / 0.460\%) & 462.174 (0.395\% / 2.970\%) & 1,545.120 (1.321\% / 3.430\%) \\
+Base: language unassigned & 235.240 (0.201\% / 0.374\%) & 48.824 (0.042\% / 0.105\%) & -- & -- & 306.510 (0.262\% / 0.125\%) & -- & -- & -- & -- & 40,307.402 (34.451\% / 24.087\%) & 12,407.014 (10.604\% / 33.663\%) & 53,304.990 (45.560\% / 58.354\%) \\
+\bottomrule\end{tabular}}
+\par\bigskip
+Full sampled epoch: 117,000,690,762 tokens. Base DFM11: 103,215,092,251; DFM12 additions: 13,785,598,511.\par\smallskip
+A dash means unavailable family attribution, NOT zero training exposure. Language-row totals exclude unassigned-language sources.\par\smallskip
+Mixed SFT is broad instruction/chat supervision without a validated family split. Other/mixed includes translation, math/code, tool use, text transformations, general reasoning, and combined summary/rewrite. General reasoning is not automatically commonsense reasoning.\par\smallskip
+Bilingual translation tokens are not arbitrarily split between source and target languages. Unspecified Norwegian is not silently assigned to Bokmal or Nynorsk.\par\smallskip
+Inherited source attribution was recovered from the originating machine and reconciled against the sampled epoch. Broad sources still need semantic task labels; recovered provenance is not a claim that every conversation has been classified.\par\smallskip
+Exact per-source row, rendered-token and response-token counts, provenance, and classification rationale are in dfm12\_training\_composition.json. These allocations do not measure causal contribution to evaluation scores.\par\smallskip
+\clearpage
+\section*{Error correction: recorded spelling and grammar corruptions}
+Identified sampled correction rows in the active DFM12 epoch. Counts are post-admission and sampling; mistake categories/counts require matching producer annotations.\par\medskip
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrrrrrrrrr}
+\toprule
+Language & Correction rows & Spelling rows (\% all) & Spell rules & Spell pairs & Spell tok. \% & Grammar rows (\% all) & Gram. rules & Gram. pairs & Gram. tok. \% & 0 errors \% & 1 error \% & 2 errors \% & 3 errors \% & 4+ errors \% & Unknown \% \\
+\midrule
+Danish & 3,266,822 & 15,048 (0.0053\%) & 1 & 66 & 0.0028 & 372,565 (0.1310\%) & 12 & 29510 & 0.0662 & 15.06 & 13.73 & 0.99 & 1.96 & 5.92 & 62.33 \\
+English & 1,529,551 & 274,339 (0.0965\%) & 72 & 32497 & 0.0226 & 113,430 (0.0399\%) & 8 & 5257 & 0.0093 & 22.16 & 12.90 & 10.38 & 0.00 & 0.00 & 54.56 \\
+Norwegian Bokmal & 738,211 & 92,934 (0.0327\%) & 5 & 52337 & 0.0102 & 281,276 (0.0989\%) & 8 & 7194 & 0.0328 & 49.30 & 50.69 & 0.00 & 0.00 & 0.00 & 0.01 \\
+Norwegian Nynorsk & 733,039 & 194,242 (0.0683\%) & 5 & 86324 & 0.0213 & 174,110 (0.0612\%) & 8 & 7684 & 0.0204 & 49.75 & 50.25 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Swedish & 742,384 & 60,950 (0.0214\%) & 5 & 39199 & 0.0065 & 313,046 (0.1101\%) & 8 & 9544 & 0.0373 & 49.62 & 50.38 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Icelandic & 704,375 & 136,996 (0.0482\%) & 5 & 71298 & 0.0201 & 206,452 (0.0726\%) & 13 & 14049 & 0.0329 & 51.24 & 48.76 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Faroese & 127,629 & 29,432 (0.0103\%) & 5 & 21257 & 0.0037 & 31,672 (0.0111\%) & 13 & 3675 & 0.0043 & 52.12 & 47.88 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Dutch & 706,359 & 178,984 (0.0629\%) & 50 & 25759 & 0.0180 & 170,082 (0.0598\%) & 5 & 1179 & 0.0182 & 49.86 & 50.14 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Polish & 729,165 & 70,905 (0.0249\%) & 5 & 52835 & 0.0075 & 292,189 (0.1027\%) & 12 & 41178 & 0.0353 & 50.20 & 49.80 & 0.00 & 0.00 & 0.00 & 0.00 \\
+German & 691,942 & 192,540 (0.0677\%) & 47 & 92667 & 0.0155 & 153,431 (0.0540\%) & 12 & 5521 & 0.0127 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+French & 700,764 & 202,520 (0.0712\%) & 3 & 83749 & 0.0159 & 147,862 (0.0520\%) & 8 & 4324 & 0.0121 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Spanish & 702,898 & 63,711 (0.0224\%) & 3 & 35980 & 0.0048 & 287,738 (0.1012\%) & 8 & 3150 & 0.0228 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Italian & 693,824 & 114,805 (0.0404\%) & 3 & 58932 & 0.0093 & 232,107 (0.0816\%) & 8 & 1391 & 0.0196 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Czech & 630,058 & 175,871 (0.0618\%) & 45 & 91564 & 0.0149 & 139,158 (0.0489\%) & 12 & 14555 & 0.0128 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Portuguese & 667,234 & 133,440 (0.0469\%) & 3 & 48973 & 0.0103 & 200,177 (0.0704\%) & 8 & 2070 & 0.0161 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Finnish & 634,358 & 252,501 (0.0888\%) & 3 & 138745 & 0.0247 & 64,678 (0.0227\%) & 6 & 8571 & 0.0066 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Estonian & 538,836 & 223,731 (0.0787\%) & 3 & 114855 & 0.0214 & 45,687 (0.0161\%) & 6 & 2741 & 0.0046 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Catalan & 583,584 & 69,471 (0.0244\%) & 3 & 37722 & 0.0061 & 222,321 (0.0782\%) & 8 & 2054 & 0.0204 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Greek & 610,258 & 112,952 (0.0397\%) & 3 & 65401 & 0.0114 & 192,177 (0.0676\%) & 8 & 2723 & 0.0215 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Romanian & 482,388 & 146,728 (0.0516\%) & 3 & 82596 & 0.0128 & 94,466 (0.0332\%) & 8 & 722 & 0.0086 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Ukrainian & 660,926 & 246,348 (0.0866\%) & 5 & 141196 & 0.0229 & 84,115 (0.0296\%) & 10 & 3065 & 0.0082 & 50.00 & 50.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+\bottomrule\end{tabular}}
+\par\bigskip
+The percentages in parentheses divide by ALL 284,380,704 sampled training rows, across all languages and tasks. They are row exposure percentages, not percentages of tokens.\par\smallskip
+Token percentages divide the full rendered tokens of affected correction rows by ALL 117,000,690,762 sampled tokens. They do not count only the misspelled/incorrect token spans.\par\smallskip
+The final six columns divide by identified correction rows in that language. Clean controls (0) and unknown annotation coverage remain in the denominator. A row with both spelling and grammar errors contributes to both coverage columns.\par\smallskip
+Rules = distinct producer rule IDs actually observed; pairs = distinct original edit span / corrupted edit span pairs. Neither is the number of linguistic phenomena, and neither is inferred from character edit distance.\par\smallskip
+Grammar uses an explicit morphology/syntax-label allowlist. Generic deletion/swap operations without such a label stay unclassified; spelling and grammar columns are therefore neither mutually exclusive nor exhaustive.\par\smallskip
+The mistake count is the number of recorded corruption operations, not a guarantee that every operation corresponds to exactly one human-perceived error. Multiple operations may share a linguistic cause.\par\smallskip
+Coverage follows identified correction components; embedded correction examples in broad instruction sources may remain unclassified. A dash is unknown, not zero. Missing or conflicting producer metadata is not treated as a clean sample. Recovered source provenance does not itself recover missing edit annotations.\par\smallskip
+Detailed counts, token-weighted exposure, producer taxonomy, exact source paths, hashes, and annotation coverage are recorded in dfm12\_error\_composition.json.\par\smallskip
+\end{document}

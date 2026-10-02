@@ -1,0 +1,8 @@
+path: data/sampled_dfm12
+target_only: true
+
+# Source registry: dfm12/training_sources.json (earlier exports, European expansion,
+# audited train-only DaLA, 19-language synthetic and 21-language identity).
+# Stage with python -m dfm12.build_training
+# --suffix completed-campaign-20260929 --prepare-only. Sampling/promotion is separate;
+# this config still points to the existing corpus and never changes a live run.

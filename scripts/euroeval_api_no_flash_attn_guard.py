@@ -25,6 +25,11 @@ def _find_spec_without_flash_attn(name: str, *args, **kwargs):
 
 importlib.util.find_spec = _find_spec_without_flash_attn
 
+from euroeval.benchmark_modules.litellm import LiteLLMModel  # noqa: E402
+from euroeval_json_output_compat import install_json_output_guard  # noqa: E402
+
+install_json_output_guard(LiteLLMModel)
+
 if max_concurrent_calls := os.environ.get("EUROEVAL_MAX_CONCURRENT_CALLS"):
     from euroeval.benchmark_modules.litellm import LiteLLMModel  # noqa: E402
 

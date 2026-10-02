@@ -1,0 +1,36 @@
+{
+  "review_type": "independent CPU reading of saved answers, original prompts and cached evidence; not human certification",
+  "root": "data/dfm13/search-salvage-error4-20261001",
+  "terminal_at_snapshot": 3,
+  "provider_calls": 0,
+  "admission_authorized": false,
+  "original_manual16_unchanged": true,
+  "rows": [
+    {
+      "id_prefix": "99fe14a8",
+      "candidate_sha256": "3274e540d3e14391592d4fdfd51393f94c4100709f55ad52d11adacf2e4612d4",
+      "automated_verdict": "keep",
+      "independent_disposition": "hold",
+      "reason": "Formatting-only repair succeeds. Price is user-provided, not fabricated. However the generic table promises long-term driver support and extended OS lifecycles for newer flagship devices without model-specific evidence, and reuses an old Meizu exit report alongside an actual Pro product page without resolving chronology. Keep supported product facts separate from unsupported general guarantees."
+    },
+    {
+      "id_prefix": "0cfb74ac",
+      "candidate_sha256": "16643a4bc287611a2727febd9afa72454e5c5dd8297d8fd841d18e429afccb11",
+      "automated_verdict": "keep",
+      "independent_disposition": "hold_historical_applicability",
+      "reason": "Exact observed URL repair succeeds and Alisson quotations match. March 27 prompt is nevertheless answered partly from retrospective full-season wiki/Substack analysis; the wiki's immediate success statement is tied to the eventual league title. Answer omits the title claim but historical applicability of this synthesis remains unestablished. This is not proof all football claims are false; it is insufficient support for the as-of answer."
+    },
+    {
+      "id_prefix": "31dbdb34",
+      "candidate_sha256": "8e9890853eece17fea9fc71db836705e7a00793af7d61d02e3258173fc7fd1c9",
+      "automated_disposition": "citation_error",
+      "independent_disposition": "defer_retry_exhausted",
+      "reason": "Second answer again has no citation and asserts psychological effects/benefits while mixing proposed exercises with sourced principles. No cosmetic source insertion or further automatic generation."
+    },
+    {
+      "id_prefix": "b6dacbac",
+      "independent_disposition": "pending_generation_and_review",
+      "reason": "Fourth scoped case still in flight at snapshot; no verdict inferred."
+    }
+  ]
+}

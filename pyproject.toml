@@ -30,6 +30,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+dfm12 = [
+    "ijson>=3.4",
+]
 data-quality = [
     "sentence-transformers",
 ]

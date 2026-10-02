@@ -1,5 +1,168 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-02: Prepared [jjzha additions](pages/dfm13-jjzha-native-additions.md): four validated structured sources registered, IMDb and CroCo audit-gated, client waiting for the eight shared Gemma servers without changing training.
+
+- 2026-10-01: User excluded RepoChat, SearchArena and Mimir Search from DFM13; preserved research artifacts and superseded their planned integration in the [DFM13 plan](pages/dfm13-plan.md).
+
+- 2026-10-01: Armed the [Repo bulk interlude](pages/dfm13-repo-bulk-checkpoint-interlude.md) at fully written step 2981000; all GPU stages must terminate before owned-server teardown and existing-plan training resume.
+
+- 2026-10-01: Planned [Mimir Evidence: Denmark & Europe](pages/dfm13-mimir-evidence.md), a distinct grounded-search dataset with 50% Danish and 90% stable/10% current topics, immutable retrieval provenance and staged quality/cost gates.
+
+- 2026-10-01: Recorded [TP8 inference beside XL training](pages/dfm13-tp8-training-headroom.md), the autotuning reserve failure, owned-worker cleanup correction, and successful lower-budget smoke.
+
+- 2026-10-01: Split [RepoChat reviewer calibration](pages/dfm13-repochat-reviewer-calibration.md) from the Arena quality collection; preserved frozen trajectories, recorded false-accept controls, and tested requirements-first read-only verification before scale.
+
+- 2026-10-01: Paused XL at preserved ephemeral2976000 and prepared its existing scheduler continuation; launched the shared-server setup for [DFM13 Arena calibrations](pages/dfm13-arena-calibration.md).
+
+- 2026-10-01: Recorded the [DFM13 Arena quality/context review](pages/dfm13-arena-quality-review.md): 15 manual samples, full SearchArena/RepoChat structural inventories, and the 2900K/2950K multilingual PDF. New candidate sources remain unintegrated pending quality decisions.
+
+- 2026-09-30: Started the [DFM13 additions plan](pages/dfm13-plan.md) with pinned AI-Arenaen vote-selected conversations: 2602 selected-turn targets, preserving history without supervising unselected answers. No current training data changed.
+
+- 2026-09-30: Added versioned semantic acceptability rescoring for all 21 DFM languages, preserved strict metrics, and queued additive comparable/language/headline/suite averages. Updated the multilingual workspace panels without removing legacy historical curves. See [semantic acceptability migration](pages/multilingual-headline-populations.md#semantic-acceptability-migration-2026-09-30).
+
+- 2026-09-30: Fixed oversized multilingual EuroEval prompts with an opt-in, audited native-template input budget policy; restarted Greek Wikipedia/FoQA and preserved completed evaluations. Recorded Danish/new-language sample counts and added multilingual panels to the owner's existing workspace. See [XL epoch-11 recovery](pages/dfm12-xl-epoch11-noidentity.md#multilingual-context-recovery-and-counts-2026-09-30).
+
+- 2026-09-30: Integrated the multilingual extension into the [XL epoch-11 plan](pages/dfm12-xl-epoch11-noidentity.md): 6852 rows, new epoch-10 baseline tasks and all old/new 2900K tasks before resuming training; additions recur at every later checkpoint. Added a separate multilingual workspace and fixed segment finalization against concurrent LR-manifest edits.
+
+- 2026-09-30: Added the [DFM12 multilingual EuroEval registry](pages/dfm12-euroeval-multilingual-registry.md): 190 coverage entries, 157 unique selected datasets, official-runtime credential access verified without dataset downloads, and explicit variant/contamination exclusions. No active plan or environment change.
+
+- 2026-09-30: Added opt-in [multilingual headline populations](pages/multilingual-headline-populations.md), with equal-language weighting, explicit fraction/percent units, complete-coverage gates, and a separate English LA/GEC pair summary. Legacy averages are unchanged; no live logging or scheduler changes were made by this implementation.
+
+- 2026-09-29: Prepared and launched the readiness-gated [original XL DFM12 epoch 11 campaign](pages/dfm12-xl-epoch11-noidentity.md), with identity repeat zero only for this epoch, exact packed endpoint 3325079, ten training/evaluation groups and the original W&B run. Bootstrap waits for verified data publication; GPU allocation waits for all eight GPUs to become free.
+
+- 2026-09-29: Completed the [joint multilingual campaign](pages/dfm12-joint-synthetic-production.md): 875,000 accepted conversations across 19 public, remotely verified HF releases. [DFM12 integration](pages/dfm12-status.md) now includes these and the 21-language identity replacement, with repeat 1/10 respectively. All 1,325 registered input files are tokenized; final epoch sampling is unchanged.
+
+- 2026-09-29: Completed [identity21 publication](pages/dfm12-identity-multilingual-extension.md):21repositories and42,000conversations remotely hash/row-count verified, nine updates and twelve new datasets. Corrected/curated DA/EN provenance remains explicit. The fresh identity21 export is authoritative; historical shared exports and training integration are unchanged.
+
+- 2026-09-29: Launched the [21-language identity extension](pages/dfm12-identity-multilingual-extension.md) under explicit user override at512clients per borrowed endpoint. Runner-local authorization preserves sealed queue pins; first3,809new accepts verified across21languages, with subsequent accepts confirmed on all8endpoints. No shared server or joint-production changes.
+
+- 2026-09-28: Prepared the [21-language identity extension queue](pages/dfm12-identity-multilingual-extension.md): 10,714 retained conversations and 31,286 pending candidate requests toward approximately 2,000 per language. Corrections and heldouts are preserved; generation remains coordination-blocked.
+
+- 2026-09-28: Added [two CPU clients per shared GPU server](pages/dfm12-joint-synthetic-production.md#two-clients-per-server-2026-09-28), retaining the combined 1024/server ceiling and a sole ledger owner with shared admission checks. Drained the previous launch safely; 114 focused tests passed.
+
+- 2026-09-28: Profiled and replaced the serial [joint multilingual client](pages/dfm12-joint-synthetic-production.md) with eight endpoint processes and a sole ledger owner. Preserved both campaigns and worker-lifetime locks; 100 tests pass. Initial measurements improve accepted throughput from about296/min to1125/min without server changes or preemptions.
+
+- 2026-09-28: Authorized [joint nineteen-language production](pages/dfm12-joint-synthetic-production.md) with 512 concurrent client requests per server, preserving both existing campaign ledgers and the accepted Faroese shortfalls. Shared server lifecycle remains untouched.
+
+- 2026-09-28: Recovered [final identity EMA evaluation](pages/dfm12-identity-full-eval-recovery.md): all 242 enabled GPU jobs were already complete; fixed 39 merge-path failures, restored EuroEval metric discovery, serially replayed writers, and verified 531 numeric keys in remote W&B history and summary without GPU reruns.
+
+- 2026-09-28: Documented [identity final evaluation recovery](pages/dfm12-identity-final-eval-archive-recovery.md): canonical archives, recursive-glob-safe EuroEval paths and serialized CPU merge publication, without GPU reruns.
+
+- 2026-09-28: Authorized [European synthetic production](pages/dfm12-european-synthetic-production.md) for twelve languages at 35K accepted rows each, based on available instruction sources; preserve the existing seven-language campaign and reuse borrowed servers without lifecycle changes.
+
+- 2026-09-28: Completed the [identity corrective continuation](pages/dfm12-identity-continuation.md) at2897261 and the [EMA-only composition review](pages/dfm12-identity-composition-evaluation.md):80 answers,63 correct/3 partial/12 failed/2 incomplete. Direct bilingual team recall works but compositional failures remain. A smaller optional evaluator allocator cap permits co-resident inference without changing shared servers or the half-device safety policy.
+
+- 2026-09-28: Added [production outage recovery](pages/dfm12-multilingual-outage-recovery.md): sealed 1,159 infrastructure-only retries, preserving 854 completed generations, original failures and frozen quality contracts, followed by detached production resume.
+
+- 2026-09-28: [Multilingual production](pages/dfm12-multilingual-quarter-production.md) accepts the existing Faroese supply and increases the client concurrency ceiling to64per borrowed server. Worker recovery replaces permanent retirement on transient disconnects; shared KVcache/waiting metrics gate new reservations. Training, servers, source cursors and quality policy remain unchanged.
+
+- 2026-09-27: Superseded the initial quarter multilingual milestone with [one tenth of the full plan](pages/dfm12-multilingual-quarter-production.md): 385,000 cumulative accepted rows, about611.05M estimated tokens, retaining pilots subject to current re-audit and preserving stable campaign IDs.
+
+- 2026-09-27: User authorized [first-pilot re-audit](pages/dfm12-first-pilot-reaudit.md) and inclusion in quarter production: review the 33,305 historical accepts under current checks, preserve originals, transfer passing fingerprints/quotas transactionally, and resume generation automatically without touching training or shared servers.
+
+- 2026-09-27: Launched [multilingual quarter production](pages/dfm12-multilingual-quarter-production.md): 962,500 accepted-row target, 16,850 strictly revalidated pilot keeps retained, broad incremental source preparation, durable non-reusing source allocation and quota reservations. Uses eight existing borrowed servers at 32 requests/server; identity training and server ownership unchanged. No automatic upload or sampling.
+
+- 2026-09-27: Prepared and launched the explicitly authorized [native-schema 35K multilingual pilot](pages/dfm12-multilingual-native-pilot.md), retaining strict pre-experiment contracts, existing eight borrowed servers and 32 requests/server. Failed/rejected outputs remain excluded; no automatic admission or upload.
+
+- 2026-09-27: Added [generation grammar diagnosis](pages/dfm12-generation-grammar-diagnosis.md): streaming A/B/C probes isolate punctuation-only compact-grammar outputs and CPU token-mask overhead (10.576s versus0.000397s for25tokens). Recommended native structural JSON schema with unchanged CPU content validation; no bulk regeneration or data admission.
+
+- 2026-09-27: Added [non-tool generation v4](pages/dfm12-multilingual-generation-v4.md): explicit turn pairs, bounded escape-aware JSON grammar, strict raw decoding, registered endpoint context budgets and actual Gemma CPU rendering/EOS tests. 82 CPU tests passed; live serialization remains unverified and no700launch or admission was performed.
+
+- 2026-09-27: Added [indexed multilingual review contract](pages/dfm12-multilingual-indexed-review.md): bounded assistant evidence ID/text pairs, precise fail-closed validation, independent semantic flags, 56 CPU tests and measured 8K/16K budgets. Legacy artifacts unchanged; parent owns GPU calibration.
+
+- 2026-09-27: Added [multilingual contract repair and recalibration](pages/dfm12-multilingual-contract-calibration.md) following the completed infrastructure retry. User authorized fixes for invalid review evidence/budgets and non-tool generation structure, plus a new isolated calibration. Existing quarantined outcomes and semantic admission gates remain unchanged.
+
+- 2026-09-27: Added [multilingual infrastructure retry](pages/dfm12-multilingual-infrastructure-retry.md): 298 transport-failed slots isolated from 700 frozen outcomes, preserved valid stages, three-attempt durable budgets and 32 CPU tests. Dedicated 0.40-utilization owned servers are guarded below half physical GPU memory; launch is blocked by foreign European campaign servers, which were not touched.
+
+- 2026-09-27: Added [EMA stochastic review handoff](pages/dfm12-identity-stochastic-review.md):140/560answers explicitly reviewed,420excluded;132train/34validation targeted rows parent-packed with actual loader checks. Published corpus remains immutable; separate recipe removes warmup and records exposure/EMA-lag decisions. No training or multilingual-pilot actions.
+
+- 2026-09-27: Explicit user override supersedes the blocked pilot dependency for [EMA preference sampling](pages/dfm12-identity-ema-preferences.md). Stopped only verified CPU watcher3481575, preserved old spec/code, launched all8 co-resident EMA workers with80GiB Torch cap, non-Torch allowance, actual process-memory monitoring and real headroom checks. Exclusive evaluator defaults and verified EMA loading remain intact.
+
+- 2026-09-27: Added [EMA identity preferences](pages/dfm12-identity-ema-preferences.md): all140 latest EMA turns reviewed,140 chosen SFT rows and114 same-history DPO pairs with factual/completeness/precision/style metadata. CPU watcher is pinned to the blocked indexed-v3 pilot; no GPU generation, training or full evaluation launched.
+
+- 2026-09-26: Added the separate [eight-GPU identity evaluator](pages/dfm12-identity-evaluation-v4.md): dynamic whole-conversation queues, atomic shard/merge validation, inherited torchrun-environment isolation and CPU tests. Final corrected-corpus review/preflight remains required before parent launch; no GPU actions taken.
+
+- 2026-09-26: [European CPU preparation](pages/dfm12-european-cpu-preparation.md) now supports bounded 64-worker preparation with a single ordered database writer. Resumed after 37 fully queued components; serial/parallel parity and recovery tests pass.
+
+- 2026-09-26: Added the separate [third identity evaluator](pages/dfm12-identity-evaluation-v3.md), preserving historical code and receipts. Fresh manifest pins are mandatory; old heldouts are development data. Length stops permit operational completion but never automatic identity/full-suite approval. Initially pending source review is now complete: no blocking findings in the final 28-request bank, sealed artifact and CPU preflight verified, evaluator frozen, 38 tests passed. No GPU actions.
+
+- 2026-09-26: Armed the [second identity interlude](pages/dfm12-identity-continuation.md) at a complete XXL checkpoint, with isolated zero-cursor resume metadata, non-EMA regression/heldout comparison and a bounded explicit parent gate before any full evaluation campaign.
+
+- 2026-09-26: Built the [DA/EN identity expansion](pages/dfm12-identity-extension.md) with 500 new training conversations and 50 held out per language. Preserved accepted originals and v1; final v2-r2 merged supply is 2,951 conversations and 1,128,371 rendered training tokens after correcting open-ended answer polarity. CPU validation and 45 identity tests passed; no training, upload, or active-corpus changes.
+
+- 2026-09-26: Launched the explicitly authorized [bounded TP2 diagnostic server](pages/dfm12-diagnostic-server.md) in physical GPU 6/7 headroom alongside uninterrupted XXL, with exact-PID ownership, readiness evidence, two-hour cleanup deadline and documented training contention. No diagnostic client was launched by the server owner.
+
+- 2026-09-26: Added [European CPU follow-up](pages/dfm12-european-cpu-preparation.md): resumable partial-reference screening, screened-only audit queue, transformation replenishment without relaxing pt-PT filters, and collected OPUS evidence. No expansion GPU work or final sampling started.
+
+- 2026-09-26: Started [DFM12 second European wave](pages/dfm12-european-expansion.md): 43 pinned source selections, twelve new languages, 174 OPUS pair edges, native transformation prompts, strict pt-PT document screening, and 19,937 queued TrustLLM generation jobs. CPU preparation runs detached; GPU audit/generation waits for capacity. Existing training and first-wave sampled DFM12 unchanged.
+
+- 2026-09-26: Authorized the multilingual reviewer/template checks, expanded
+  calibration and gated 700-row trial after XL identity training, retaining
+  26B-A4B. Armed a soft-stop/drain watcher with XXL resumption on trial success
+  or failure. See [pilot follow-up](pages/dfm12-multilingual-extension-plan.md).
+
+- 2026-09-26: Surveyed [additional instructions in existing DFM12 languages](pages/dfm12-missed-instruction-candidates.md): EU-Instruct NL/PL, TrustLLM prompt seeds, EuroBlocks/Aya and targeted English SmolTalk2. Flagged Icelandic translation-quality concerns and existing-source overlap. Research only.
+
+- 2026-09-26: Multilingual pilot two failed reviewer calibration before any
+  generation; XXL automatically resumed. Prepared the 1,000-step DA/EN identity
+  mixture and armed an XL interlude at XXL ephemeral 660500, constant base LR
+  1e-5, followed by terminal-barrier XXL continuation in the same plan. See
+  [identity adaptation](pages/dfm12-identity-export.md) and
+  [multilingual pilot outcome](pages/dfm12-multilingual-extension-plan.md).
+
+- 2026-09-26: Re-read updated DaLA grammar/spelling research: pt-PT 11/B and pt-BR 12/B are feasible second-wave candidates, not validated packs. Recorded variant-specific evidence gaps and marked initial joint score normalization historical.
+
+- 2026-09-26: [Reassessed Portuguese variants](pages/portuguese-expansion-reassessment.md): substantial AMALIA pt-PT supply and GigaVerbo-v2 additions, with counts and unresolved DaLA validation documented. No operational changes.
+
+- 2026-09-26: User made DaLA feasibility and sufficient high-quality text plus instruction supply mandatory independent gates for language expansion. Weighted ranking now prioritizes only candidates passing both; unresolved cases are deferred. Recorded in [joint priorities](pages/european-language-expansion-joint-priorities.md).
+
+- 2026-09-26: Compared the European HF language survey with DaLA's correction-readiness survey; added [joint priorities](pages/european-language-expansion-joint-priorities.md), an explicit 70/30 method, variant caveats and unassessed-language gaps. No operational changes.
+
+- 2026-09-26: Added a [five-score European language ranking](pages/european-language-expansion-ranking.md)
+  covering 28 additional languages and a separate [HF source inventory](pages/european-language-expansion-sources.md).
+  Verified per-language DOLCI/FinePDFs/EuroBlocks supply; distinguished native,
+  translated and synthetic sources, quality uncertainty and benchmark leakage.
+  Research only: no additional corpus integration or GPU launch authorized.
+
+- 2026-09-26: Reviewed the 33,305-conversation multilingual pilot; prepared a
+  new 35K cohort with fresh seeds, stronger language/meaning review, broader
+  deterministic math/code/tool references and automatic training handoff at
+  660K. Bulk generation and native-quality approval remain gated; see
+  [DFM12 multilingual extension](pages/dfm12-multilingual-extension-plan.md).
+
+- 2026-09-25: Approved quarter-first multilingual expansion and implemented the
+  resumable 35K pilot, independent audits and checkpoint-safe training handoff
+  at XXL 655K. Bulk generation remains gated by pilot review; see
+  [DFM12 multilingual extension](pages/dfm12-multilingual-extension-plan.md).
+
+- 2026-09-24: Added local accepted-only HF packaging for finished DFM12 audit
+  components, with frozen read-only snapshots, portable attribution, paired
+  translation expansion and standalone validation. No uploads authorized;
+  see [DFM12 audit readiness](pages/dfm12-audit-readiness.md).
+
+- 2026-09-24: Added [DFM12 paragraph repair](pages/dfm12-paragraph-repair.md):
+  actual pinned boundary formats, conservative paragraph-only selection,
+  regression tests and isolated bounded CPU preparation; no legacy output replacement.
+
+- 2026-09-24: Added [DFM12 addition status](pages/dfm12-status.md), a dated
+  dataset-level overview separating completed staging, active preparation,
+  audit requirements and review-held proposals.
+
+- 2026-09-24: Implemented independent DFM12 multilingual component preparation,
+  pinned source discovery, profile-aware identity requests, transformation and
+  OPUS converters, and leased generation/audit jobs. Prepared CPU pilots without
+  competing for occupied GPUs. Final corpus sampling explicitly deferred;
+  see [component preparation](pages/dfm12-components.md).
+
+- 2026-09-23: Implemented default-off absolute-step piecewise LR ramps and
+  scheduled the approved XXL 635K--650K rewarm, with a preserved rollback
+  checkpoint and same-run scheduler handoff. See
+  [module learning rates](pages/model-architecture/module-learning-rates.md).
+
+- 2026-09-22: Registered English and Dutch DaLA training configurations for
+  DFM12; recorded Gemma4 message rendering, split isolation, counts and quality
+  caveats in the [DFM12 plan](pages/dfm12-plan.md).
+
 - 2026-09-21: Preserved the XL DFM11 campaign scripts and statistics, improved monitor task labels, and repaired post-epoch-9 EuroEval suite/headline averaging. See [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md). Merged upstream main while retaining both knowledge histories.
 
 - 2026-09-21: Main-promotion preflight for `codex/mimir-apple-mvp`: fetched `origin/main` (`57c3d69`), already an ancestor with no incoming commits or merge conflicts. Flutter analysis and all 46 tests, feedback TypeScript checking and five tests, rebuilt native backend-policy/compaction tests, Swift storage/store checks, and OKF validation passed. Submodule pins remain unchanged. Promotion uses a fast-forward; cross-platform release evidence remains documented in the [app runbook](pages/model-architecture/mimir-app.md).
@@ -2466,3 +2629,24 @@ Added the Linux qualification record, existing Conda environment setup, and user
   hotspot (median 44.3x). The sampled batches were benign, so this establishes
   a depth-dependent local mechanism but not the reduction in rare-event tails.
   Normal BP=5 production resumed from the untouched 452500 checkpoint.
+
+## 2026-09-28 — Audited European DaLA additions
+
+User-authorized preparation/integration of twelve producer pair-audited releases.
+Added train-only screening/tokenization through shared adapters and a guarded
+local-additions interface for a later isolated DFM12 build. No public upload or
+live training-data replacement. See [runbook](pages/dfm12-audited-european-dala.md).
+
+
+Audited European DaLA integration completed: 24 registered local components,
+15,194,140 train-only rows and 1,265,448,830 tokens. No tokenization drops. Final
+manifest and pinned artifacts independently rechecked; current sampled corpus
+and uploads unchanged.
+
+## 2026-09-28 — Producer DaLA publication completed
+
+All twelve new accepted-only producer HF packages published and remotely
+checksum-verified following explicit user authorization. Portuguese HF card
+metadata corrected to pt + BCP47 pt-PT; corresponding local integration manifest
+pins updated, with training data/tokens unchanged. See
+[audited European DaLA](pages/dfm12-audited-european-dala.md).

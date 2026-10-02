@@ -1,0 +1,449 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=15mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\usepackage{array,booktabs,graphicx}
+\newsavebox{\pairtable}
+\setlength{\emergencystretch}{2em}
+\begin{document}
+\section*{Danish: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Bland tomatpuré og sennep i et skål med 1 dl piskefløde. & Bland tomatpuré og sennep i en skål med 1 dl piskefløde. \\ \addlinespace[5pt]
+Olie fra cykelkæden har en vis tendens til altid at sætte sig på buksebenende. & Olie fra cykelkæden har en vis tendens til altid at sætte sig på buksebenene. \\ \addlinespace[5pt]
+På den baggrund er hende forpligtiget til at underrette de socialde myndigheder, men hun erkender, at hun ikke har taget kontakt med kommunen. & På den baggrund er hun forpligtiget til at underrette de socialde myndigheder, men hun erkender, at hun ikke har taget kontakt med kommunen. \\ \addlinespace[5pt]
+Men mig er ikke blevet syg af det - ikke denne gang. & Men jeg er ikke blevet syg af det - ikke denne gang. \\ \addlinespace[5pt]
+Lige præcis sådan skulle det nu ikke forstås, men det forbløffede danske par skulle snart erfarer, at der var noget om snakken. & Lige præcis sådan skulle det nu ikke forstås, men det forbløffede danske par skulle snart erfare, at der var noget om snakken. \\ \addlinespace[5pt]
+Constantinescus folk, samlet i Demokratisk Forbund, får kun 23 pct., mens tidliger ministerpræsident Petre Romans socialdemokrati NSF tilskrives elleve pct.. & Constantinescus folk, samlet i Demokratisk Forbund, får kun 23 pct., mens tidligere ministerpræsident Petre Romans socialdemokrati NSF tilskrives elleve pct.. \\ \addlinespace[5pt]
+150 ansatte på hovedkontoret risikerer en fyreseddel, og mange lejere, fler kommuner, fagbevægelsen, en bank og staten har alle penge til gode. & 150 ansatte på hovedkontoret risikerer en fyreseddel, og mange lejere, flere kommuner, fagbevægelsen, en bank og staten har alle penge til gode. \\ \addlinespace[5pt]
+H.L. Hansen var et udsædvanlig og frodig personlighed. & H.L. Hansen var en udsædvanlig og frodig personlighed. \\ \addlinespace[5pt]
+Et salg der vil lægge betydeligt over børskursen på omkring 730 for Baltica-Holding-aktierne. & Et salg der vil ligge betydeligt over børskursen på omkring 730 for Baltica-Holding-aktierne. \\ \addlinespace[5pt]
+En referee anbefaler så om artiklen skal trykkes eller ej, eventuelt ned nogen forandringer. & En referee anbefaler så om artiklen skal trykkes eller ej, eventuelt ned nogle forandringer. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1024 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{English: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+The tragedy has inspired many bloggers to share their own experiences, as a way to raise awareness and help othres. & The tragedy has inspired many bloggers to share their own experiences, as a way to raise awareness and help others. \\ \addlinespace[5pt]
+I really don't understood people who can ride for free on puplic transportation. & I really don't understand people who can ride for free on public transportation. \\ \addlinespace[5pt]
+Student and puplic servant Fabio Hideki Harano was on his way home when he was arrested inside a subway station by plainclothes agents from DEIC, the police force investigating organised crime. & Student and public servant Fabio Hideki Harano was on his way home when he was arrested inside a subway station by plainclothes agents from DEIC, the police force investigating organised crime. \\ \addlinespace[5pt]
+Ecorio is a mobille application taht runs in the background tracking trips. & Ecorio is a mobile application that runs in the background tracking trips. \\ \addlinespace[5pt]
+This government has always approached the issue of non-national migration with a balance taht includes the humanitarian aspect. & This government has always approached the issue of non-national migration with a balance that includes the humanitarian aspect. \\ \addlinespace[5pt]
+The news taht Zeid Hamdan was briefly arrested for insulting our Dear Great Leader President General Suleiman (henceforth DGLPGS) was unsurprising, but nonetheless a sad reminder of the ataivsm of Lebanon's legal system. & The news that Zeid Hamdan was briefly arrested for insulting our Dear Great Leader President General Suleiman (henceforth DGLPGS) was unsurprising, but nonetheless a sad reminder of the atavism of Lebanon's legal system. \\ \addlinespace[5pt]
+These three films exposed the growing marginalizatoin of the Orang Asli on their own land. & These three films exposed the growing marginalization of the Orang Asli on their own land. \\ \addlinespace[5pt]
+They also organize evenings of literature, poerty, music, visual arts with support of the National Council of Macedonian National Minority, sittuated in Pančevo. & They also organize evenings of literature, poetry, music, visual arts with support of the National Council of Macedonian National Minority, situated in Pančevo. \\ \addlinespace[5pt]
+Thanks to the fact his novels and short stories have been translated into at least 50 diferent languages, Murakami has devveloped a global following. & Thanks to the fact his novels and short stories have been translated into at least 50 different languages, Murakami has developed a global following. \\ \addlinespace[5pt]
+After the polls closed on Dec. 4, Solidarnost movement invited protesters to Chistye Prudy metro sttation in Moscow, while the Communists, also unhappy with the election results, organized their rally at Pushkinskaya square. & After the polls closed on Dec. 4, Solidarnost movement invited protesters to Chistye Prudy metro station in Moscow, while the Communists, also unhappy with the election results, organized their rally at Pushkinskaya square. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Norwegian Bokmal: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Ved en slik generelt senking av strafferammen vil narkotikaforbrytelser omfattes. & Ved en slik generell senking av strafferammen vil narkotikaforbrytelser omfattes. \\ \addlinespace[5pt]
+Både voldsoffererstatningsloven § 5 og skadeserstatningsloven § 3-2 bygger i stort grad på reglene om menerstatning ved yrkesskade i lov 28. februar 1997 nr. 19 om folketrygd (folketrygdloven). & Både voldsoffererstatningsloven § 5 og skadeserstatningsloven § 3-2 bygger i stor grad på reglene om menerstatning ved yrkesskade i lov 28. februar 1997 nr. 19 om folketrygd (folketrygdloven). \\ \addlinespace[5pt]
+Departementet vil iverksette en elevundersøkelse om hvordan samisk elever i grunnopplæringen, også utenfor samiske distrikt, opplever sin egen opplæringssituasjon. & Departementet vil iverksette en elevundersøkelse om hvordan samiske elever i grunnopplæringen, også utenfor samiske distrikt, opplever sin egen opplæringssituasjon. \\ \addlinespace[5pt]
+Artikkel 5 slår fast at det skal etableres et mellomstatlig komité, som skal bestå av representanter fra 18 medlemsstater. & Artikkel 5 slår fast at det skal etableres en mellomstatlig komité, som skal bestå av representanter fra 18 medlemsstater. \\ \addlinespace[5pt]
+Protokollen åpner fortsatt for å praktiser ordningen med råvarepriskompensasjon. & Protokollen åpner fortsatt for å praktisere ordningen med råvarepriskompensasjon. \\ \addlinespace[5pt]
+Ved skoler med høyt forekomst av mobbing er ofte skolekulturen dårlig. & Ved skoler med høy forekomst av mobbing er ofte skolekulturen dårlig. \\ \addlinespace[5pt]
+I forbindelse med utarbeidelsen av en egen styreinstruks i 2012–2013 bestemte Finansdepartementet at styret skulle vedta oppdatert retningslinjer for Statistisk sentralbyrås oppdragsvirksomhet. & I forbindelse med utarbeidelsen av en egen styreinstruks i 2012–2013 bestemte Finansdepartementet at styret skulle vedta oppdaterte retningslinjer for Statistisk sentralbyrås oppdragsvirksomhet. \\ \addlinespace[5pt]
+Videre arbeider språksenteret med samiske radiosendinger i lokalradioen og med informasjonstavler som i hovedsak skal synliggjorde samisk skriftspråk i det offentlige rom gjennom formidling av temabasert informasjon på de samiske museene Gállogieddi og Vilgesvárri. & Videre arbeider språksenteret med samiske radiosendinger i lokalradioen og med informasjonstavler som i hovedsak skal synliggjøre samisk skriftspråk i det offentlige rom gjennom formidling av temabasert informasjon på de samiske museene Gállogieddi og Vilgesvárri. \\ \addlinespace[5pt]
+NOAH – for dyrs rettigheter mener endringen fra miljøerstatning til overtredelsesgebyr i naturmangfoldloven er velkommen, hvis det medfører mer bruk av administrativt sanksjoner som gir preventiv effekt. & NOAH – for dyrs rettigheter mener endringen fra miljøerstatning til overtredelsesgebyr i naturmangfoldloven er velkommen, hvis det medfører mer bruk av administrative sanksjoner som gir preventiv effekt. \\ \addlinespace[5pt]
+Departementet ønsket i utgangspunktet å slutte seg til dette forslaget, men er etter en inngående vurdering kommet til at det er behov for å kunne krevet fagutdanning på høyere nivå i særlige tilfeller. & Departementet ønsket i utgangspunktet å slutte seg til dette forslaget, men er etter en inngående vurdering kommet til at det er behov for å kunne kreve fagutdanning på høyere nivå i særlige tilfeller. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Norwegian Nynorsk: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Utvalet meiner at ei utvida statistikk i KOSTRA vil vere ein reiskap i den planlegginga som må gjerast lokalt for å møtte auken i talet på avlidne dei neste tiåra. & Utvalet meiner at ei utvida statistikk i KOSTRA vil vere ein reiskap i den planlegginga som må gjerast lokalt for å møte auken i talet på avlidne dei neste tiåra. \\ \addlinespace[5pt]
+På oppdrag frå Kulturdepartementet har Medietilsynet vurdert kva for eit effekt NRK har på den kommersielle mediemarknaden og det totale mediemangfaldet. & På oppdrag frå Kulturdepartementet har Medietilsynet vurdert kva for ein effekt NRK har på den kommersielle mediemarknaden og det totale mediemangfaldet. \\ \addlinespace[5pt]
+Fjorden strekkjer seg 6,5 km austover til Bjørnvika i botn av fjjorden. & Fjorden strekkjer seg 6,5 km austover til Bjørnvika i botn av fjorden. \\ \addlinespace[5pt]
+Kraftproduksjon og bedrifter som forbruker kraft, kan står for viktig aktivitet i distrikta. & Kraftproduksjon og bedrifter som forbruker kraft, kan stå for viktig aktivitet i distrikta. \\ \addlinespace[5pt]
+Ho vart kartlagd på ny og fotografert frå lufta av Ronne Antarctic Research Expedition (RARE), 1947–48, og karrtlagde på ny frå foto av RARE av Derek J.H. Searle frå Falkland Islands Dependencies Survey i 1960. & Ho vart kartlagd på ny og fotografert frå lufta av Ronne Antarctic Research Expedition (RARE), 1947–48, og kartlagde på ny frå foto av RARE av Derek J.H. Searle frå Falkland Islands Dependencies Survey i 1960. \\ \addlinespace[5pt]
+Dette inneber m.a. at det er opna for at russiske elevar i forsøksperioden kan nyttar den tidlegare læreplanen i norsk som andrespråk (NOA-planen), men elles følgje læreplanane etter Kunnskapsløftet. & Dette inneber m.a. at det er opna for at russiske elevar i forsøksperioden kan nytte den tidlegare læreplanen i norsk som andrespråk (NOA-planen), men elles følgje læreplanane etter Kunnskapsløftet. \\ \addlinespace[5pt]
+Historisk har Noreg klart å skape høgt verdiskaping ut frå naturressursane våre. & Historisk har Noreg klart å skape høg verdiskaping ut frå naturressursane våre. \\ \addlinespace[5pt]
+Seinare skifa han til Marion Michael Morrison. & Seinare skifta han til Marion Michael Morrison. \\ \addlinespace[5pt]
+Så langt syner evalueringa at LUK i mange tilfelle har medverkast til å styrkje samhandlinga mellom fylkeskommunane og kommunane. & Så langt syner evalueringa at LUK i mange tilfelle har medverka til å styrkje samhandlinga mellom fylkeskommunane og kommunane. \\ \addlinespace[5pt]
+Det er eit føresetnad at Jernbaneverket ser til at fullmakta blir utøvd forsvarleg. & Det er ein føresetnad at Jernbaneverket ser til at fullmakta blir utøvd forsvarleg. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Swedish: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Ett åtgärder som berörs här utgör därför statligt stöd. & De åtgärder som berörs här utgör därför statligt stöd. \\ \addlinespace[5pt]
+Undantagsklausulen har de vidare tillämpningsområde än vad som skulle vara tillåtet enligt ILO-konvention nr 87. & Undantagsklausulen har ett vidare tillämpningsområde än vad som skulle vara tillåtet enligt ILO-konvention nr 87. \\ \addlinespace[5pt]
+Resultatet av dessa analyser kan vara tydligt utan att ett företag måste gör några utförliga beräkningar. & Resultatet av dessa analyser kan vara tydligt utan att ett företag måste göra några utförliga beräkningar. \\ \addlinespace[5pt]
+Intäkter kan dock inte redovisas för en licens som ger rätt att använda ett företags immateriella egendom före början av de period under vilken kunden kan använda och dra nytta av licensen. & Intäkter kan dock inte redovisas för en licens som ger rätt att använda ett företags immateriella egendom före början av den period under vilken kunden kan använda och dra nytta av licensen. \\ \addlinespace[5pt]
+I denna bestämmelse anges att det enhet som valts ut kan erhålla ett schablonmässigt beräknat procenttal av de faktiska ersättningsgilla kostnaderna, på upp till 7 procent för indirekta kostnader, för att täcka enhetens allmänna administrativa kostnader. & I denna bestämmelse anges att den enhet som valts ut kan erhålla ett schablonmässigt beräknat procenttal av de faktiska ersättningsgilla kostnaderna, på upp till 7 procent för indirekta kostnader, för att täcka enhetens allmänna administrativa kostnader. \\ \addlinespace[5pt]
+Den verkställande direktören skall varje år till budgetmyndigheten överlämnar all relevant information om resultaten av utvärderingsförfarandena. & Den verkställande direktören skall varje år till budgetmyndigheten överlämna all relevant information om resultaten av utvärderingsförfarandena. \\ \addlinespace[5pt]
+Om systemen för egenkontroll redan har revideras på ett heltäckande och fullständigt sätt kan en partiell revision utföras för att få en närmare genomgång av vissa aspekter, t.ex. & Om systemen för egenkontroll redan har reviderats på ett heltäckande och fullständigt sätt kan en partiell revision utföras för att få en närmare genomgång av vissa aspekter, t.ex. \\ \addlinespace[5pt]
+På begäran av Kosovos myndigheter kan EU tillhandahålla bistånd med syfte att stöd Kosovos ansträngningar i detta avseende. & På begäran av Kosovos myndigheter kan EU tillhandahålla bistånd med syfte att stödja Kosovos ansträngningar i detta avseende. \\ \addlinespace[5pt]
+Som* ordförande i utskottet för kultur, ungdomsfrågor, utbildning och media är jag mycket besviken över att ordförandekonferensen inte ville tags upp den muntliga frågan från det utskottet på föredragningslistan. & Som* ordförande i utskottet för kultur, ungdomsfrågor, utbildning och media är jag mycket besviken över att ordförandekonferensen inte ville ta upp den muntliga frågan från det utskottet på föredragningslistan. \\ \addlinespace[5pt]
+Kommissionen översändde i sin tur denna skrivelse till alla medlemsstater. & Kommissionen översände i sin tur denna skrivelse till alla medlemsstater. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Icelandic: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Allir hinir sýknuðu stæðu þaning jafnfætis að því leyti. & Allir hinir sýknuðu stæðu þannig jafnfætis að því leyti. \\ \addlinespace[5pt]
+Tilskipun 2015/1794 var send utanríkismálanefnd í samræmi við framangreindar rgelur. & Tilskipun 2015/1794 var send utanríkismálanefnd í samræmi við framangreindar reglur. \\ \addlinespace[5pt]
+Varnaraðlii er í ákæru borinn sökum, sem geta varðað fangelsi allt að 10 árum. & Varnaraðili er í ákæru borinn sökum, sem geta varðað fangelsi allt að 10 árum. \\ \addlinespace[5pt]
+Með þessu takmörkunum er eignarréttur bænda stórlega skertur og verðmæti bújarða þeirra og fasteigna á þeim rýrð umtalsvert. & Með þessum takmörkunum er eignarréttur bænda stórlega skertur og verðmæti bújarða þeirra og fasteigna á þeim rýrð umtalsvert. \\ \addlinespace[5pt]
+Það er því ljóst að mikill meiri hluti stúdenta er fylgjandi þessarar breytingu. & Það er því ljóst að mikill meiri hluti stúdenta er fylgjandi þessari breytingu. \\ \addlinespace[5pt]
+Joseph Smith fæddist inn í mjög fátækt fjölskyldu, fimmta barnið af ellefu. & Joseph Smith fæddist inn í mjög fátæka fjölskyldu, fimmta barnið af ellefu. \\ \addlinespace[5pt]
+Aðspurður hvort hann hafi séð lögreglu aka frá bensínstöðinni svaraði hann játandi en hann viti ekki hvert þeir fór og kvaðst ekki hafa verið að fylgjast með því. & Aðspurður hvort hann hafi séð lögreglu aka frá bensínstöðinni svaraði hann játandi en hann viti ekki hvert þeir fóru og kvaðst ekki hafa verið að fylgjast með því. \\ \addlinespace[5pt]
+Þá sé enginn samanburður gerður miðað við að deiliskipulag hefði verið óbrreytt. & Þá sé enginn samanburður gerður miðað við að deiliskipulag hefði verið óbreytt. \\ \addlinespace[5pt]
+Samningurinn er prentaður sem fylgiskjal með tillögu þessi. & Samningurinn er prentaður sem fylgiskjal með tillögu þessari. \\ \addlinespace[5pt]
+Um líkamstjón vísar hann til læknisfræðilera gagna og matsgerðar sem liggi fyrir í málinu og sýni, ásamt öðrum gögnum málsins, fram á hagsmuni hans af málshöfðuninni. & Um líkamstjón vísar hann til læknisfræðilegra gagna og matsgerðar sem liggi fyrir í málinu og sýni, ásamt öðrum gögnum málsins, fram á hagsmuni hans af málshöfðuninni. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Faroese: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Hon fari uttan iva at taka arbeiði frá bygdafólki og virkjum runt landið við tí úrsliti, at Havnin bólgnar uppaftur meir, og bygdirnar framvegis fara at avtoftast. & Hon fer uttan iva at taka arbeiði frá bygdafólki og virkjum runt landið við tí úrsliti, at Havnin bólgnar uppaftur meir, og bygdirnar framvegis fara at avtoftast. \\ \addlinespace[5pt]
+Tað merkir, at níggja tøknin er greið, og í nógv minni mun enn áður, krevur serkunnleika. & Tað merkir, at nýggja tøknin er greið, og í nógv minni mun enn áður, krevur serkunnleika. \\ \addlinespace[5pt]
+Nú heldur ákæruvaldið uppá, at ákærdi hevur upplýsa skeivt tímatal í lønarseðlunum. & Nú heldur ákæruvaldið uppá, at ákærdi hevur upplýst skeivt tímatal í lønarseðlunum. \\ \addlinespace[5pt]
+Tøknin ger tað møguligt at rakk út til nógv fleiri fólk enn nakrantíð áður, og tí ber til at brúka fyrimunirnar við hópframleiðslu og samvirkandi fyrimunir. & Tøknin ger tað møguligt at røkka út til nógv fleiri fólk enn nakrantíð áður, og tí ber til at brúka fyrimunirnar við hópframleiðslu og samvirkandi fyrimunir. \\ \addlinespace[5pt]
+Øll, sum fáa fult rað, vinna ein peningaupphædd. & Øll, sum fáa fult rað, vinna eina peningaupphædd. \\ \addlinespace[5pt]
+Dyturin var javnur allan vegin, og langt var millum málini. & Dysturin var javnur allan vegin, og langt var millum málini. \\ \addlinespace[5pt]
+Eisini hevur Annika Hoydal eins sang við sama navni. & Eisini hevur Annika Hoydal ein sang við sama navni. \\ \addlinespace[5pt]
+Felagið hevur hesari seinastu tíðina ikki verið so virkið. & Felagið hevur hesa seinastu tíðina ikki verið so virkið. \\ \addlinespace[5pt]
+Tá ið marijuana verður roykt, vísir rúsurin seg eftir fáar minuttir og vair í 2-3 tímar. & Tá ið marijuana verður roykt, vísir rúsurin seg eftir fáar minuttir og varir í 2-3 tímar. \\ \addlinespace[5pt]
+Talan er um ørar tekningar um kynslív, átrnúað, rúsevni og gerandislív. & Talan er um ørar tekningar um kynslív, átrúnað, rúsevni og gerandislív. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Dutch: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Deze producten moeten uit in het Gemeenschap geoogste groenten en fruit worden verkregen. & Deze producten moeten uit in de Gemeenschap geoogste groenten en fruit worden verkregen. \\ \addlinespace[5pt]
+De Raad zal hieronder eerst de vier incidentten betreffende bedreiging, stalking, lijkvinding en brandstichting, bespreken. & De Raad zal hieronder eerst de vier incidenten betreffende bedreiging, stalking, lijkvinding en brandstichting, bespreken. \\ \addlinespace[5pt]
+De verzoek tot wraking zal daarom worden afgewezen. & Het verzoek tot wraking zal daarom worden afgewezen. \\ \addlinespace[5pt]
+Namens de politie is een beroepschrift ingediend en is aan het zitting van de rechtbank deelgenomen. & Namens de politie is een beroepschrift ingediend en is aan de zitting van de rechtbank deelgenomen. \\ \addlinespace[5pt]
+In het uitwerking van VO naar DO zullen in de uitwerking van de Koepoortlaan in coproductie definitieve keuzes worden gemaakt. & In de uitwerking van VO naar DO zullen in de uitwerking van de Koepoortlaan in coproductie definitieve keuzes worden gemaakt. \\ \addlinespace[5pt]
+Dit dient echter slechts onder strikte voorwaarden mogelijk te zijn, en alleen op het gebied van onderzoek, daar onderzoeksprojecten een hoger financieel risico meebrenggen dan projecten op andere beleidsterreinen. & Dit dient echter slechts onder strikte voorwaarden mogelijk te zijn, en alleen op het gebied van onderzoek, daar onderzoeksprojecten een hoger financieel risico meebrengen dan projecten op andere beleidsterreinen. \\ \addlinespace[5pt]
+De Commissie is niettemin van oordeel dat sommige van deze elementen niet mogen worden overshcat. & De Commissie is niettemin van oordeel dat sommige van deze elementen niet mogen worden overschat. \\ \addlinespace[5pt]
+Dit kunen we niet alleen als Koninkrijk maar moeten we samen doen met internationale partners, zowel bilateraal als in bondgenootschappen. & Dit kunnen we niet alleen als Koninkrijk maar moeten we samen doen met internationale partners, zowel bilateraal als in bondgenootschappen. \\ \addlinespace[5pt]
+Zoals ter zitting is besproken, heeft appellante telefonisch opdracht gegeven aan het loonwerker om het perceel te behandelen. & Zoals ter zitting is besproken, heeft appellante telefonisch opdracht gegeven aan de loonwerker om het perceel te behandelen. \\ \addlinespace[5pt]
+Het steun verleent Glunz en OSBD een voordeel, omdat zij anders alle investeringen zelf hadden moeten financieren. & De steun verleent Glunz en OSBD een voordeel, omdat zij anders alle investeringen zelf hadden moeten financieren. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Polish: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Ilość próbki stosowanej do ekstrakcji musi być wystarczająca do spełnienia wymogów dotyczących wystarczająco niski zakresu roboczego, obejmującego stężenia na najwyższym dopuszczalnym poziomie lub na poziomie reagowania. & Ilość próbki stosowanej do ekstrakcji musi być wystarczająca do spełnienia wymogów dotyczących wystarczająco niskiego zakresu roboczego, obejmującego stężenia na najwyższym dopuszczalnym poziomie lub na poziomie reagowania. \\ \addlinespace[5pt]
+Drogę do sukces otworzyły Pani talent, aktorski temperament, a także wyjątkowe warunki głosowe. & Drogę do sukcesu otworzyły Pani talent, aktorski temperament, a także wyjątkowe warunki głosowe. \\ \addlinespace[5pt]
+Podczas uroczystości wojewoda podlaski złożył wszystkimi pracownikom życzenia w związku ze zbliżającymi się Świętami Wielkiej Nocy. & Podczas uroczystości wojewoda podlaski złożył wszystkim pracownikom życzenia w związku ze zbliżającymi się Świętami Wielkiej Nocy. \\ \addlinespace[5pt]
+W repozytoriach deponują swoimi prace sami naukowcy. & W repozytoriach deponują swoje prace sami naukowcy. \\ \addlinespace[5pt]
+Państwa Członkowskie nie mogą odmówić lub zakazać sprzedaży, rejestracji, dopuszczenia do użytku lub eksploatowania pojazdów z powodów dotyczących zagłówków, które zostały objęte homologacją i są przeznaczone do zamontowania w typie pojazdu przedstawionym do homologacją. & Państwa Członkowskie nie mogą odmówić lub zakazać sprzedaży, rejestracji, dopuszczenia do użytku lub eksploatowania pojazdów z powodów dotyczących zagłówków, które zostały objęte homologacją i są przeznaczone do zamontowania w typie pojazdu przedstawionym do homologacji. \\ \addlinespace[5pt]
+W Portugalii wskaźniki wydajności w przypadku sporów z zakresu prawa cywilnego, handlowego i podatkowego pozostają na niski poziomie. & W Portugalii wskaźniki wydajności w przypadku sporów z zakresu prawa cywilnego, handlowego i podatkowego pozostają na niskim poziomie. \\ \addlinespace[5pt]
+Materiał prawnego w obrębie ksiąg układał w porządku chronologicznym. & Materiał prawny w obrębie ksiąg układał w porządku chronologicznym. \\ \addlinespace[5pt]
+Rejony te były twierdzą amerykańskiej ruchu ekspansjonistycznego. & Rejony te były twierdzą amerykańskiego ruchu ekspansjonistycznego. \\ \addlinespace[5pt]
+Komisja składa się przynajmniej z jednej członka, który może być przewodniczącym, wybranego spoza instytucji. & Komisja składa się przynajmniej z jednego członka, który może być przewodniczącym, wybranego spoza instytucji. \\ \addlinespace[5pt]
+Deklaracje na fakturze zostają opatrzone własnoręcznym podpisem eksporetra. & Deklaracje na fakturze zostają opatrzone własnoręcznym podpisem eksportera. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{German: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Das Staatspräsident wurde in direkter und geheimer Wahl vom Volk für eine Amtszeit von 5 Jahren gewählt. & Der Staatspräsident wurde in direkter und geheimer Wahl vom Volk für eine Amtszeit von 5 Jahren gewählt. \\ \addlinespace[5pt]
+Trainiert wurde er über fünf Monate vom Ex-Boxpofi Jimmy Gambina, der ihn beaufsichtigte und unterstützte. & Trainiert wurde er über fünf Monate vom Ex-Boxprofi Jimmy Gambina, der ihn beaufsichtigte und unterstützte. \\ \addlinespace[5pt]
+Auch bei der Produktion von Getreideprodukten, Obst und Gemüse würden Bineen benötigt und Schädlinge getötet. & Auch bei der Produktion von Getreideprodukten, Obst und Gemüse würden Bienen benötigt und Schädlinge getötet. \\ \addlinespace[5pt]
+Die als Mann verkleidete Frau ist einer wiederkehrendes Thema im Theater des Siglo de Oro, das von Lope de Vega über hundert Mal und von Tirso de Molina mehr als zwanzig Mal verwendet wurde. & Die als Mann verkleidete Frau ist ein wiederkehrendes Thema im Theater des Siglo de Oro, das von Lope de Vega über hundert Mal und von Tirso de Molina mehr als zwanzig Mal verwendet wurde. \\ \addlinespace[5pt]
+Bei der Volkszählung 2006 betrug die Bevölkerungszahl 76.971 Personen in 16.602 Famielien. & Bei der Volkszählung 2006 betrug die Bevölkerungszahl 76.971 Personen in 16.602 Familien. \\ \addlinespace[5pt]
+Auf des Insel befindet sich ein Leuchtturm. & Auf der Insel befindet sich ein Leuchtturm. \\ \addlinespace[5pt]
+Mit Adelheid von Lauffen zuegte Adolf einen Sohn, Adolf I. von Berg. & Mit Adelheid von Lauffen zeugte Adolf einen Sohn, Adolf I. von Berg. \\ \addlinespace[5pt]
+Er startetest in der Disziplin Aerials (Springen). & Er startete in der Disziplin Aerials (Springen). \\ \addlinespace[5pt]
+Im Jahr 1916 wurde in Neuruppin ein Flughafen gebaut, der Anschluss an die Eisenabhnstrecke erhielt. & Im Jahr 1916 wurde in Neuruppin ein Flughafen gebaut, der Anschluss an die Eisenbahnstrecke erhielt. \\ \addlinespace[5pt]
+Im Vereinigten Königreich wurde 1905 Knights erstes Patent für das Ausführung mit einem Schieber pro Zylinder ausgestellt. & Im Vereinigten Königreich wurde 1905 Knights erstes Patent für die Ausführung mit einem Schieber pro Zylinder ausgestellt. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{French: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+La maladie se manifeste par un réseau de filaments mycéliens blancs qui apparaît sur les feuilles et les pétioles, se ramifiant, formant des coussinets mycéliens denses, et s'étendant ensutie sur les branches et rameaux. & La maladie se manifeste par un réseau de filaments mycéliens blancs qui apparaît sur les feuilles et les pétioles, se ramifiant, formant des coussinets mycéliens denses, et s'étendant ensuite sur les branches et rameaux. \\ \addlinespace[5pt]
+À chaque extrémité du conncteur, il est généralement prévu de pouvoir serrer une petite vis dans son écrou correspondant afin d'assurer une bonne tenue mécanique. & À chaque extrémité du connecteur, il est généralement prévu de pouvoir serrer une petite vis dans son écrou correspondant afin d'assurer une bonne tenue mécanique. \\ \addlinespace[5pt]
+Le manoir de Blangy-le-Château est un éifice situé à Blangy-le-Château, en France. & Le manoir de Blangy-le-Château est un édifice situé à Blangy-le-Château, en France. \\ \addlinespace[5pt]
+L'architecte du porjet était Perry Coke Smith. & L'architecte du projet était Perry Coke Smith. \\ \addlinespace[5pt]
+Puis la couverture se fait avec une image expressionniste et une table des matieres. & Puis la couverture se fait avec une image expressionniste et une table des matières. \\ \addlinespace[5pt]
+Le joueur peut en effet creér des héros pouvant gagner de l’expérience et apprendre des sorts. & Le joueur peut en effet créer des héros pouvant gagner de l’expérience et apprendre des sorts. \\ \addlinespace[5pt]
+De nombreuses manufacutres sont aussitôt créées partout en France. & De nombreuses manufactures sont aussitôt créées partout en France. \\ \addlinespace[5pt]
+La bnde originale du film est composée d'une série de musiques choisies par Philippe Terrier-Hermann et que l'on retrouve dans les quatre films. & La bande originale du film est composée d'une série de musiques choisies par Philippe Terrier-Hermann et que l'on retrouve dans les quatre films. \\ \addlinespace[5pt]
+Elle est notamment attirée par le goût du blé, du maïs et d'aures graines. & Elle est notamment attirée par le goût du blé, du maïs et d'autres graines. \\ \addlinespace[5pt]
+Au moins quatre exécutions ont avoir lieu dans le pays en 2018. & Au moins quatre exécutions ont eu lieu dans le pays en 2018. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Spanish: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+De acuerdo a la fuentes, varios oficiales de alto rango estaban entre los muertos en el ataque. & De acuerdo a las fuentes, varios oficiales de alto rango estaban entre los muertos en el ataque. \\ \addlinespace[5pt]
+Atlético Nacional gana la Copa Libertadores depués de 27 años. & Atlético Nacional gana la Copa Libertadores después de 27 años. \\ \addlinespace[5pt]
+Se añadió una nuevo sistema de control de vuelo automático. & Se añadió un nuevo sistema de control de vuelo automático. \\ \addlinespace[5pt]
+Durante la infame Rebelión del Whiskey, Lee mandó a los 13.000 milicianos enviados para aplacar a el rebeldes. & Durante la infame Rebelión del Whiskey, Lee mandó a los 13.000 milicianos enviados para aplacar a los rebeldes. \\ \addlinespace[5pt]
+La serie gira en torno a unas prisión de máxima seguridad que fue el foco de un derramamiento de sangre en la década de 1990, lo que provocó su cierre. & La serie gira en torno a una prisión de máxima seguridad que fue el foco de un derramamiento de sangre en la década de 1990, lo que provocó su cierre. \\ \addlinespace[5pt]
+El localidad cuenta con una escuela media (n.º 57), un jardín de infancia y una Casa de Cultura. & La localidad cuenta con una escuela media (n.º 57), un jardín de infancia y una Casa de Cultura. \\ \addlinespace[5pt]
+Desde el 24 de julio de 2018, los canal produce y transmite su programación de forma nativa en alta definición. & Desde el 24 de julio de 2018, el canal produce y transmite su programación de forma nativa en alta definición. \\ \addlinespace[5pt]
+Henry (un castor) es el conserje y conductor del autobús y siempre está algere. & Henry (un castor) es el conserje y conductor del autobús y siempre está alegre. \\ \addlinespace[5pt]
+Para junio de 2018, las serie había vendido más de 15 millones de copias en todo el mundo. & Para junio de 2018, la serie había vendido más de 15 millones de copias en todo el mundo. \\ \addlinespace[5pt]
+Estas cosas sólo pasan, es la naturaleza humano. & Estas cosas sólo pasan, es la naturaleza humana. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Italian: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Lo direzione generale era nel Regno Unito, mentre l'azienda era presente in America, Cina e Italia. & La direzione generale era nel Regno Unito, mentre l'azienda era presente in America, Cina e Italia. \\ \addlinespace[5pt]
+Maria morì nel 1694 e Guglielmo continuò a regnare da solo; alla sua morte salì sul trono la srella di Maria, Anna Stuart. & Maria morì nel 1694 e Guglielmo continuò a regnare da solo; alla sua morte salì sul trono la sorella di Maria, Anna Stuart. \\ \addlinespace[5pt]
+La minima, che si rileva nell'alveo del fiume Oglio nei prsesi della località denominata Le Case, è di 161,2 m s.l.m. & La minima, che si rileva nell'alveo del fiume Oglio nei pressi della località denominata Le Case, è di 161,2 m s.l.m. \\ \addlinespace[5pt]
+La prima parte italiana si conclude poco prima dell'asta della casa cantiere, che è lo prima cosa che avviene nella seconda parte. & La prima parte italiana si conclude poco prima dell'asta della casa cantiere, che è la prima cosa che avviene nella seconda parte. \\ \addlinespace[5pt]
+In questo regione, e precisamente a Tolentino, l'esercito napoletano fu sconfitto in maniera decisiva dagli austriaci. & In questa regione, e precisamente a Tolentino, l'esercito napoletano fu sconfitto in maniera decisiva dagli austriaci. \\ \addlinespace[5pt]
+Nel 1405 tutto il Comune passa sotto gli dominio della Serenissima Repubblica di Venezia. & Nel 1405 tutto il Comune passa sotto il dominio della Serenissima Repubblica di Venezia. \\ \addlinespace[5pt]
+Gli immaturi imparano a volare 11 settimane dopo la schiusa e rimarranno con lo genitori per un altro anno ancora. & Gli immaturi imparano a volare 11 settimane dopo la schiusa e rimarranno con i genitori per un altro anno ancora. \\ \addlinespace[5pt]
+Grazie a tali contributi potranno essere recuperati edifici appartenenti al patrimonio culturale dei comuni colpiti dal sisma soprattutto per quanto riguarda lo edifici di culto. & Grazie a tali contributi potranno essere recuperati edifici appartenenti al patrimonio culturale dei comuni colpiti dal sisma soprattutto per quanto riguarda gli edifici di culto. \\ \addlinespace[5pt]
+La forze armene lasciarono la città in preda al panico, abbandonando armi ed equipaggiamento. & Le forze armene lasciarono la città in preda al panico, abbandonando armi ed equipaggiamento. \\ \addlinespace[5pt]
+Jack si reca sul posto e scopre che lo causa della distruzione è stata una cella energetica di un drone. & Jack si reca sul posto e scopre che la causa della distruzione è stata una cella energetica di un drone. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Czech: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Sedmičlenná porota soutěže bývá složena z předních českých i zahraničních osobností v daný oboru. & Sedmičlenná porota soutěže bývá složena z předních českých i zahraničních osobností v daném oboru. \\ \addlinespace[5pt]
+Jezera mají velmí čistou vodu a dosahují až osmdesátimetrové hloubky. & Jezera mají velmi čistou vodu a dosahují až osmdesátimetrové hloubky. \\ \addlinespace[5pt]
+Vlastní objekt se rozkládá do hloubko nevelkého pozemku. & Vlastní objekt se rozkládá do hloubky nevelkého pozemku. \\ \addlinespace[5pt]
+Stěny goelogického profilu jsou převážně zarostlé výsadbou akátu a náletem bezu černého, osiky a jívy. & Stěny geologického profilu jsou převážně zarostlé výsadbou akátu a náletem bezu černého, osiky a jívy. \\ \addlinespace[5pt]
+Obec Osek se nachází v západní části okresu Beroun, kraji Středočeském, asi 4 km jihozápadně od město Hořovice. & Obec Osek se nachází v západní části okresu Beroun, kraji Středočeském, asi 4 km jihozápadně od města Hořovice. \\ \addlinespace[5pt]
+Přes cestu je naatžena síť a za ní matrace. & Přes cestu je natažena síť a za ní matrace. \\ \addlinespace[5pt]
+Měísc o průměru 1,4 km obíhá kolem Idy v průměrné vzdálenosti 90 km. & Měsíc o průměru 1,4 km obíhá kolem Idy v průměrné vzdálenosti 90 km. \\ \addlinespace[5pt]
+Refrakterní doba tedy určuje maximální mžnou frekvenci vzruchů. & Refrakterní doba tedy určuje maximální možnou frekvenci vzruchů. \\ \addlinespace[5pt]
+Komárovský rybník je velkém rybník o rozloze vodní plochy cca 18 ha ležící v lesním údolí na Smíchovském potoce asi 2 km západně od vesnice Nouzov v okrese Nymburk. & Komárovský rybník je velký rybník o rozloze vodní plochy cca 18 ha ležící v lesním údolí na Smíchovském potoce asi 2 km západně od vesnice Nouzov v okrese Nymburk. \\ \addlinespace[5pt]
+Otázky vyvolává, že se během svého života k prací pro Sověty nikdy nepřihlásila, a že možná ve výzvědné činnosti pokračovala i po válce. & Otázky vyvolává, že se během svého života k práci pro Sověty nikdy nepřihlásila, a že možná ve výzvědné činnosti pokračovala i po válce. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Portuguese: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+A futura reforma da PCP tem de assegurar um sistema de pescas sustentável, e nós sou favoráveis a um novo sistema de gestão baseado no esforço de pesca. & A futura reforma da PCP tem de assegurar um sistema de pescas sustentável, e nós somos favoráveis a um novo sistema de gestão baseado no esforço de pesca. \\ \addlinespace[5pt]
+Nós, social-democratas suecos, votámos hoje a fvaor do acordo sobre o orçamento para 2006, estabelecido entre a Comissão, o Conselho e o Parlamento. & Nós, social-democratas suecos, votámos hoje a favor do acordo sobre o orçamento para 2006, estabelecido entre a Comissão, o Conselho e o Parlamento. \\ \addlinespace[5pt]
+Ao enviar tropas da UE e ao fornecer ajuda humanitária, a Europa já desempenhou uma papel importante. & Ao enviar tropas da UE e ao fornecer ajuda humanitária, a Europa já desempenhou um papel importante. \\ \addlinespace[5pt]
+Estas última alteração propõe uma mudança da terminologia a utilizar nesta medida. & Esta última alteração propõe uma mudança da terminologia a utilizar nesta medida. \\ \addlinespace[5pt]
+Esta facto, que é incontornável, torna as coisas ainda mais complexas. & Este facto, que é incontornável, torna as coisas ainda mais complexas. \\ \addlinespace[5pt]
+É verdade, todavia, que tais referendos apenas podem ser nacionais ou locais e dificilmente se imagina um referendo fiscais com a amplitude da União Europeia. & É verdade, todavia, que tais referendos apenas podem ser nacionais ou locais e dificilmente se imagina um referendo fiscal com a amplitude da União Europeia. \\ \addlinespace[5pt]
+Na verdade, são estes acordos as razão pela qual não tem havido violência nas ruas da Irlanda. & Na verdade, são estes acordos a razão pela qual não tem havido violência nas ruas da Irlanda. \\ \addlinespace[5pt]
+Presidente, antes de mais, gostaria de fazer uma certa autocrítica parlaentar. & Presidente, antes de mais, gostaria de fazer uma certa autocrítica parlamentar. \\ \addlinespace[5pt]
+A nossa firme convicção é que também as vida em fase de gestação, enquanto dádiva do Criador, merece ser defendida. & A nossa firme convicção é que também a vida em fase de gestação, enquanto dádiva do Criador, merece ser defendida. \\ \addlinespace[5pt]
+Ao que parece, o relator nunca visitou a região e, portanto, não poderá formar a sua própria opinião sobre o situação. & Ao que parece, o relator nunca visitou a região e, portanto, não poderá formar a sua própria opinião sobre a situação. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Finnish: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Oulun koulun arkkithdit ihailivat myös Heikuran rakennusten inhimillistä mittakaavaa ja sivistyneen humaania otetta. & Oulun koulun arkkitehdit ihailivat myös Heikuran rakennusten inhimillistä mittakaavaa ja sivistyneen humaania otetta. \\ \addlinespace[5pt]
+Muhammad Akbar Khan niitti mainetta vuonna 1837 skhejä vastaan käydyn Jamrudin taistelun afgaanikomentajana. & Muhammad Akbar Khan niitti mainetta vuonna 1837 sikhejä vastaan käydyn Jamrudin taistelun afgaanikomentajana. \\ \addlinespace[5pt]
+Hänen tehtäviään olivat muun muassa nimismiehen roua näytelmässä Kuopion takana, Kätchen näytelmässä Regina von Emmeritz ja nimirooli näytelmässä Salmin tyttö. & Hänen tehtäviään olivat muun muassa nimismiehen rouva näytelmässä Kuopion takana, Kätchen näytelmässä Regina von Emmeritz ja nimirooli näytelmässä Salmin tyttö. \\ \addlinespace[5pt]
+Lakin väri on yleensä keltainen, oranssi tai ruskea, ja lkin pinta on usein tahmea. & Lakin väri on yleensä keltainen, oranssi tai ruskea, ja lakin pinta on usein tahmea. \\ \addlinespace[5pt]
+Huhtikuun loppupuolella puna-armeijan joukot olivat jo Berliinissä ja Hitler alki tehdä valmisteluja itsemurhaansa varten. & Huhtikuun loppupuolella puna-armeijan joukot olivat jo Berliinissä ja Hitler alkoi tehdä valmisteluja itsemurhaansa varten. \\ \addlinespace[5pt]
+Siellä James ottaa pois paältään märät vaatteensa ja huomaa, että Emilla on yhä hänen Adventureland - paitansa. & Siellä James ottaa pois päältään märät vaatteensa ja huomaa, että Emilla on yhä hänen Adventureland - paitansa. \\ \addlinespace[5pt]
+Turnauksessa on eri tasoisia divisioonia ja 1. divisioonassa pelaa neljä joukkuetta, jotka ratkaisevat mestaruuden kohalon. & Turnauksessa on eri tasoisia divisioonia ja 1. divisioonassa pelaa neljä joukkuetta, jotka ratkaisevat mestaruuden kohtalon. \\ \addlinespace[5pt]
+Ellen on perustanut omien yrityksen ja etsii juttua saadakseen nimelleen ja yritykselleen julkisuutta. & Ellen on perustanut oman yrityksen ja etsii juttua saadakseen nimelleen ja yritykselleen julkisuutta. \\ \addlinespace[5pt]
+Siffillä on isänsä puolelta venäjänjuutalaiset sukujuuret ja hän olen kertonut identifioivansa itsensä juutalaiseksi. & Siffillä on isänsä puolelta venäjänjuutalaiset sukujuuret ja hän on kertonut identifioivansa itsensä juutalaiseksi. \\ \addlinespace[5pt]
+Norman George Painting OBE (23. huhtikuuta 1924 – 29. lokakuuta 2009) oli brittiläiset näyttelijä. & Norman George Painting OBE (23. huhtikuuta 1924 – 29. lokakuuta 2009) oli brittiläinen näyttelijä. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Estonian: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Ründaja keeldus poiltsei korraldustele allumast ja lasti maha. & Ründaja keeldus politsei korraldustele allumast ja lasti maha. \\ \addlinespace[5pt]
+Kui viimane vandenõu tulmeusena tapeti, puhkes riigis kodusõda. & Kui viimane vandenõu tulemusena tapeti, puhkes riigis kodusõda. \\ \addlinespace[5pt]
+Pärast mõisa riigistamist ostis Pajusi vald riigilt mõisahoone, selles tehti remont ja 1926. aasta sügisel alustas Tapiku 4-klassiline algkool uuest majas õppetööd. & Pärast mõisa riigistamist ostis Pajusi vald riigilt mõisahoone, selles tehti remont ja 1926. aasta sügisel alustas Tapiku 4-klassiline algkool uues majas õppetööd. \\ \addlinespace[5pt]
+Pärast 1908. aastat läks L. Krassin tülli Vladimir Leniniga ning loobus mõnda ajaks poliitikast, töötades Saksa firma Siemens-Schuckert juhtkonnas nii Saksamaal kui ka Venemaal. & Pärast 1908. aastat läks L. Krassin tülli Vladimir Leniniga ning loobus mõneks ajaks poliitikast, töötades Saksa firma Siemens-Schuckert juhtkonnas nii Saksamaal kui ka Venemaal. \\ \addlinespace[5pt]
+Pagari mõis (saksa keeles Paggar) oli rüütlimõis Jõhvi kiehlkonnas Virumaal. & Pagari mõis (saksa keeles Paggar) oli rüütlimõis Jõhvi kihelkonnas Virumaal. \\ \addlinespace[5pt]
+Keskerakondlasest volikogu kultuurikomisjoni esimees Vladimir Butuzov ütles, et tema toetab antud tänavate ümbernimetamist, selles olevat ka fraktsiooni sees kokku lepitud ja vastav ettepanek tehtud, aga seda ei võetud arutuesle. & Keskerakondlasest volikogu kultuurikomisjoni esimees Vladimir Butuzov ütles, et tema toetab antud tänavate ümbernimetamist, selles olevat ka fraktsiooni sees kokku lepitud ja vastav ettepanek tehtud, aga seda ei võetud arutusele. \\ \addlinespace[5pt]
+Ta võid tõesõpra põlustada, aga tõde jääb püsima. & Ta võib tõesõpra põlustada, aga tõde jääb püsima. \\ \addlinespace[5pt]
+Pärast keskaja lõppu kaotas Hamnöt läbiv meretee tahtsuse. & Pärast keskaja lõppu kaotas Hamnöt läbiv meretee tähtsuse. \\ \addlinespace[5pt]
+Tema mojukaiks oponentideks olid Johann Gottfried Herder ja Gotthold Ephraim Lessing. & Tema mõjukaiks oponentideks olid Johann Gottfried Herder ja Gotthold Ephraim Lessing. \\ \addlinespace[5pt]
+Maalasti (ka Maalaste, Mallaste, Mallast, Mallast) on küla Viljandi maaonnas Põhja-Sakala vallas. & Maalasti (ka Maalaste, Mallaste, Mallast, Mallast) on küla Viljandi maakonnas Põhja-Sakala vallas. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Catalan: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+L'anècdota més coneguda sobre Arquimedes explica com va inventar un mètode per determinar els volum d'un objecte amb una forma irregular. & L'anècdota més coneguda sobre Arquimedes explica com va inventar un mètode per determinar el volum d'un objecte amb una forma irregular. \\ \addlinespace[5pt]
+El canvi va comportar per Lagos la pèrdua d'algun prestigi i nivell econòmic, però va retenir el seva importància com la ciutat més gran del país i com un centre econòmic. & El canvi va comportar per Lagos la pèrdua d'algun prestigi i nivell econòmic, però va retenir la seva importància com la ciutat més gran del país i com un centre econòmic. \\ \addlinespace[5pt]
+Les fórmules per calcular el posició a partir d’elements orbitals normalment no proporcionen ni necessiten correccions per als efectes d’altres planetes. & Les fórmules per calcular la posició a partir d’elements orbitals normalment no proporcionen ni necessiten correccions per als efectes d’altres planetes. \\ \addlinespace[5pt]
+La seu cos lleuger el converteix en un home molt àgil per la seva alçada i el fa jugar a la posició d'aler pivot. & El seu cos lleuger el converteix en un home molt àgil per la seva alçada i el fa jugar a la posició d'aler pivot. \\ \addlinespace[5pt]
+La porció anterior està unida amb el lavi superior. & La porció anterior està unida amb el llavi superior. \\ \addlinespace[5pt]
+Les façana és de pedra amb finestres estretes i té un frontó singular. & La façana és de pedra amb finestres estretes i té un frontó singular. \\ \addlinespace[5pt]
+Sobre la primera d'aquesta caigudes anirà brodada l'orla de la Medalla Militar Col·lectiva. & Sobre la primera d'aquestes caigudes anirà brodada l'orla de la Medalla Militar Col·lectiva. \\ \addlinespace[5pt]
+Tot i això, la senyalització de el ruta literària està pendent de concretar. & Tot i això, la senyalització de la ruta literària està pendent de concretar. \\ \addlinespace[5pt]
+La renda mediana per habitatge era de 35.694 \$ i el renda mediana per família de 44.107 \$. & La renda mediana per habitatge era de 35.694 \$ i la renda mediana per família de 44.107 \$. \\ \addlinespace[5pt]
+Aquest estadi d'atletisme té una capacitat per 6.178 espectadors i alberga competicions atlètiques a nivell nacionals i els partits del segon equip del Manchester City. & Aquest estadi d'atletisme té una capacitat per 6.178 espectadors i alberga competicions atlètiques a nivell nacional i els partits del segon equip del Manchester City. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Greek: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Πιστεύεται ότι ιδρύθηκε ως φρούριο, φυλάκιο, του Βυζαντίου κατά της εισβολή φυλών από τον Βορρά. & Πιστεύεται ότι ιδρύθηκε ως φρούριο, φυλάκιο, του Βυζαντίου κατά την εισβολή φυλών από τον Βορρά. \\ \addlinespace[5pt]
+Η Λεωφόρος οι 62 Μαρτύρων στο σύγχρονο Ηράκλειο ονομάστηκε εις μνήμη των θυμάτων. & Η Λεωφόρος των 62 Μαρτύρων στο σύγχρονο Ηράκλειο ονομάστηκε εις μνήμη των θυμάτων. \\ \addlinespace[5pt]
+Σε κάθε περίπτωση, η ευθυγράμμιση πρέπει να είναι σχεδόν τέλεια για να προκαλέσι έκλειψη. & Σε κάθε περίπτωση, η ευθυγράμμιση πρέπει να είναι σχεδόν τέλεια για να προκαλέσει έκλειψη. \\ \addlinespace[5pt]
+Η τανία έκανε πρεμιέρα στις 11 Ιανουαρίου 1965, κόβοντας 534.085 εισιτήρια. & Η ταινία έκανε πρεμιέρα στις 11 Ιανουαρίου 1965, κόβοντας 534.085 εισιτήρια. \\ \addlinespace[5pt]
+Ως επιστήμονας χαρακτηρίζεται κάποιος που εξειδικεύεται σε έναν ή περισσότερους τομείς της επιστμήης και ο οποίος χρησιμοποιεί την επιστημονική μέθοδο προκειμένου να διεξάγει ερευνητική εργασία (θεωρητική ή εφαρμοσμένη). & Ως επιστήμονας χαρακτηρίζεται κάποιος που εξειδικεύεται σε έναν ή περισσότερους τομείς της επιστήμης και ο οποίος χρησιμοποιεί την επιστημονική μέθοδο προκειμένου να διεξάγει ερευνητική εργασία (θεωρητική ή εφαρμοσμένη). \\ \addlinespace[5pt]
+Το σπαθί είναι ένα ελαφρύ όπλο κοπής και ώθησης που στοχεύει ολόκληρο τα σώμα πάνω από τη μέση, εκτός από το χέρι του όπλου. & Το σπαθί είναι ένα ελαφρύ όπλο κοπής και ώθησης που στοχεύει ολόκληρο το σώμα πάνω από τη μέση, εκτός από το χέρι του όπλου. \\ \addlinespace[5pt]
+Οι πελαργοί θεωρούνται τυχερά πουλιά από τους Σλάβους και, η θαντάωση κάποιου θα φέρει δυστυχία. & Οι πελαργοί θεωρούνται τυχερά πουλιά από τους Σλάβους και, η θανάτωση κάποιου θα φέρει δυστυχία. \\ \addlinespace[5pt]
+Ο Πρόδρομος είναι κοινότητα της επαρχίς Λεμεσού στην Κύπρο. & Ο Πρόδρομος είναι κοινότητα της επαρχίας Λεμεσού στην Κύπρο. \\ \addlinespace[5pt]
+Ένας εργάτης σε εργοστάσιο πολεμικού υλικού, κατγορείται για ένα σαμποτάζ που δεν έκανε. & Ένας εργάτης σε εργοστάσιο πολεμικού υλικού, κατηγορείται για ένα σαμποτάζ που δεν έκανε. \\ \addlinespace[5pt]
+Η καθορισμός των ορίων του αιγιαλού, της παραλίας και του παλαιού αιγιαλού γίνεται από Επιτροπή, η οποία συγκροτείται σε επίπεδο νομού. & Ο καθορισμός των ορίων του αιγιαλού, της παραλίας και του παλαιού αιγιαλού γίνεται από Επιτροπή, η οποία συγκροτείται σε επίπεδο νομού. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Romanian: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Formarea raportului implică soluționarea unei conflict de legi, iar mai apoi dreptul se invocă în altă țară. & Formarea raportului implică soluționarea unui conflict de legi, iar mai apoi dreptul se invocă în altă țară. \\ \addlinespace[5pt]
+Pop este o canal de televiziune din Regatul Unit, deținut de Sony Pictures Television. & Pop este un canal de televiziune din Regatul Unit, deținut de Sony Pictures Television. \\ \addlinespace[5pt]
+Din anul 1952, după ce fiii lor se mută departe, ferma devine o povară pentru Olga și Nikolai, care acum sunt în vârstă și au probleme de sănăate. & Din anul 1952, după ce fiii lor se mută departe, ferma devine o povară pentru Olga și Nikolai, care acum sunt în vârstă și au probleme de sănătate. \\ \addlinespace[5pt]
+Proiectul este finanțat de către Austria și Italia, cu unei contribuție adițională din partea Uniunii Europene. & Proiectul este finanțat de către Austria și Italia, cu o contribuție adițională din partea Uniunii Europene. \\ \addlinespace[5pt]
+În această dosar Martin este acuzat de complicitate la abuz în serviciu și dare de mită. & În acest dosar Martin este acuzat de complicitate la abuz în serviciu și dare de mită. \\ \addlinespace[5pt]
+Consiliul este responsabil pentru politică și luaea deciziilor, monitorizarea funcționării și performanței orașului, analizarea și aprobarea bugetelor și determinarea priorităților la cheltuieli. & Consiliul este responsabil pentru politică și luarea deciziilor, monitorizarea funcționării și performanței orașului, analizarea și aprobarea bugetelor și determinarea priorităților la cheltuieli. \\ \addlinespace[5pt]
+În apropierea rotondei scriitorului se află un foișor unde în unele zile de sărbătoare cântă fanfara sau alte grupuri muziacle. & În apropierea rotondei scriitorului se află un foișor unde în unele zile de sărbătoare cântă fanfara sau alte grupuri muzicale. \\ \addlinespace[5pt]
+Un disc de acreție este un structură astrofizică formată din materie pe orbită în jurul unui obiect ceresc central. & Un disc de acreție este o structură astrofizică formată din materie pe orbită în jurul unui obiect ceresc central. \\ \addlinespace[5pt]
+Numărul echipelor retrogradate din Liga a IV-a Tulcea este variabil și depide de numărul de echipe retrogradate din Liga a III-a. & Numărul echipelor retrogradate din Liga a IV-a Tulcea este variabil și depinde de numărul de echipe retrogradate din Liga a III-a. \\ \addlinespace[5pt]
+Solurile au culorile maro tip scorțișaoră și galben-podzol. & Solurile au culorile maro tip scorțișoară și galben-podzol. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\clearpage
+\section*{Ukrainian: Grammatical Error Correction}
+\noindent Reference sentence pairs from held-out evaluation data; not model outputs.
+\par\smallskip\noindent\sbox{\pairtable}{\renewcommand{\arraystretch}{1.25}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.48\textwidth}@{\hspace{0.04\textwidth}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
+\toprule Incorrect & Correct \\ \midrule
+Регулярний чемпіонат УХЛ проводиться за коловою сситемою: в шість кіл, по чотири матчі на своєму майданчику і чотири матчі на виїзді проти кожного суперника. & Регулярний чемпіонат УХЛ проводиться за коловою системою: в шість кіл, по чотири матчі на своєму майданчику і чотири матчі на виїзді проти кожного суперника. \\ \addlinespace[5pt]
+О. К. Погорілко працював у Харківському технологічному інституті і Харківському університеті, читав лекції із загальної фізики, механічної теорії теплоти, термодинаіки. & О. К. Погорілко працював у Харківському технологічному інституті і Харківському університеті, читав лекції із загальної фізики, механічної теорії теплоти, термодинаміки. \\ \addlinespace[5pt]
+Очі невеличкі, їхній діаметр становить 8—10 \% довжини голви. & Очі невеличкі, їхній діаметр становить 8—10 \% довжини голови. \\ \addlinespace[5pt]
+Супутник випробовував експеирментальну телевізійну техніку й інфрачервоні пристрої. & Супутник випробовував експериментальну телевізійну техніку й інфрачервоні пристрої. \\ \addlinespace[5pt]
+Згідо з його концепцією мова перетворює навколишній світ у ідеї. & Згідно з його концепцією мова перетворює навколишній світ у ідеї. \\ \addlinespace[5pt]
+Виміряний за допомогою інтерферометра, радіус Веги за оцінками становить 2,73 ± 0,01 радуіса Сонця, що на 60 \% більше, ніж радіус Сіріуса. & Виміряний за допомогою інтерферометра, радіус Веги за оцінками становить 2,73 ± 0,01 радіуса Сонця, що на 60 \% більше, ніж радіус Сіріуса. \\ \addlinespace[5pt]
+У соборі міститься 8 малих віварів біля колон, що розділяють середню та бічні нави. & У соборі міститься 8 малих вівтарів біля колон, що розділяють середню та бічні нави. \\ \addlinespace[5pt]
+Він залишив в літописі також заис, що від чуми 1770 року померло 6 монахів, та 150 населення, яке належало монастиреві. & Він залишив в літописі також запис, що від чуми 1770 року померло 6 монахів, та 150 населення, яке належало монастиреві. \\ \addlinespace[5pt]
+Основна постновка фільму тривала з 24 вересня 2018 року по лютий 2019 року в Калгарі. & Основна постановка фільму тривала з 24 вересня 2018 року по лютий 2019 року в Калгарі. \\ \addlinespace[5pt]
+Коли майбутньому автомобілебудівникові було тільки шість років, батько покінчив життя самогубстовм. & Коли майбутньому автомобілебудівникові було тільки шість років, батько покінчив життя самогубством. \\ \addlinespace[5pt]
+\bottomrule\end{tabular}}%
+\ifdim\dimexpr\ht\pairtable+\dp\pairtable\relax>0.82\textheight%
+\resizebox*{!}{0.82\textheight}{\usebox{\pairtable}}%
+\else\usebox{\pairtable}\fi%
+\par\smallskip\footnotesize Seed 42; 10 of 1000 distinct corrupted pairs. References are dataset labels, not a fresh linguistic audit.\normalsize
+\end{document}

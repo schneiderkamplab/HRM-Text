@@ -8,11 +8,42 @@ tags:
 - evaluation
 - runtime
 status: stable
-last_updated: 2026-08-10
+last_updated: 2026-09-30
 confidence: high
 part_of: /pages/current-state.md
 ---
 # 2026-06-12 HRM DFM Headline Workspace
+
+## Semantic DALA Opt-In, 2026-09-30
+
+The legacy average builders now recognize exact prefixes
+`headline_avg_semantic_v1` and `suite_avg_semantic_v1`. Only these namespaces
+replace strict Danish DALA membership with
+`dfm_eval/dala/semantic_v1/macro_f1`. Danish and overall headline averages and
+the DFM suite therefore use semantic acceptability; existing prefixes retain
+strict membership and unchanged values. Superseding the initial partial-average
+policy for semantic namespaces: missing or invalid semantic DALA suppresses
+the Danish, overall and DFM-suite averages entirely, retaining coverage counts
+and unaffected averages. It never substitutes strict DALA or silently reduces
+the denominator of an affected average. Legacy partial-average behavior remains
+unchanged.
+
+For existing atomic-v3 scheduler jobs, keep `average_prefix=headline_avg_v3`
+and `atomic_v3_averages=true`, and opt in with
+`extra_average_prefixes=[headline_avg_semantic_v1,suite_avg_semantic_v1]`.
+Both new namespaces are explicitly registered and committed together with the
+unchanged legacy v3 row. Non-atomic jobs may use either new prefix directly
+with the existing `average_scope`. No scheduler runtime change is required.
+The chosen additive-plan integration instead uses separate clones with
+`average_prefix=headline_avg_semantic_v1`,
+`extra_average_prefixes=[suite_avg_semantic_v1]`,
+`atomic_v3_averages=false`, `average_scope=all`, and `--averages-only` (already
+supplied by the scheduler runtime). This emits only new semantic namespaces:
+headline sections/overall under the headline prefix and suites under the suite
+prefix, with no raw metrics or legacy average keys. Existing v3 jobs remain
+unchanged. The exact clone path is covered by a fake-W&B regression test.
+Implementation tests use a fake W&B module only; no live plan, population
+registry, manifest or W&B data was changed for this addition.
 
 Part of [Current State](/pages/current-state.md).
 

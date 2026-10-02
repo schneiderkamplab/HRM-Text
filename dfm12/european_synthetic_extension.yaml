@@ -1,0 +1,36 @@
+version: 1
+campaign: dfm12-european-synthetic-v1
+active_milestone: tenth
+seed: 20260928
+generator: google/gemma-4-26B-A4B-it
+auditor: google/gemma-4-26B-A4B-it
+audit_every_candidate: true
+repeat: 1
+max_rendered_example_tokens: 4096
+# Match the existing NL/SV/PL tenth targets. Counts are accepted conversations.
+# Keep the namespace stable if the milestone is expanded later.
+milestone_divisors:
+  tenth: 10
+  quarter: 4
+  half: 2
+  full: 1
+languages:
+  de: 2
+  fr: 2
+  es: 2
+  it: 2
+  cs: 2
+  pt_pt: 2
+  fi: 2
+  et: 1
+  ca: 1
+  el: 2
+  ro: 2
+  uk: 2
+families:
+  multiturn: {full_priority_rows: 150000, estimated_tokens_per_row: 2400}
+  grounded-instruct: {full_priority_rows: 200000, estimated_tokens_per_row: 1800}
+  openhermes: {full_priority_rows: 150000, estimated_tokens_per_row: 700}
+  summary-rewrite: {full_priority_rows: 100000, estimated_tokens_per_row: 1500}
+  math-code: {full_priority_rows: 60000, estimated_tokens_per_row: 1200}
+  tool-dialogue: {full_priority_rows: 40000, estimated_tokens_per_row: 1600}

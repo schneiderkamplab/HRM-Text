@@ -1,0 +1,71 @@
+{
+  "schema": "dfm13-independent-candidate-assessment-v1",
+  "date": "2026-10-01",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "queue": "data/dfm13/search-heldout-cpu-corrections-20261001-v3/queue.json",
+  "queue_sha256": "60bf5217e5a7b528c59e9760d3d88232c0d79419ae889205c94844f190d1b080",
+  "scope": "Fresh assessment of all four candidate answers against their exact supplied tool evidence and original requests. Previous holds were not inherited as judgments.",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "limits": [
+    "Independent agent assessment, not human review or native-language gold.",
+    "Tool evidence is curated cached retrieval, not a new live retrieval execution by this reviewer.",
+    "Queue-declared token lengths were read but the student renderer was not independently rerun.",
+    "Assessment is bounded to these four drafts; no conclusion about the larger pool or oversize-64 regeneration."
+  ],
+  "counts": {
+    "reviewed": 4,
+    "useful_no_material_issue_identified": 2,
+    "useful_with_localized_source_attribution_correction": 2,
+    "wholly_unhelpful_nonanswer": 0
+  },
+  "cases": [
+    {
+      "id": "bcb1803346d211b10ed452a43e3db6dcf40fc9ae52c72e7fe565226894f242e8",
+      "candidate_sha256": "e6395c15fd49956a343ed80fe9d863c6d4e43fc1726e4b4f8eb44c3b091e5c2d",
+      "topic": "Newsboat feed reload failure",
+      "purpose": "source_grounded_answer",
+      "assessment": "useful_no_material_issue_identified",
+      "evidence": "The supplied official Newsboat 2.16 documentation rows explicitly define download-timeout, download-retries, error-log and reload-threads. The answer uses these controls correctly, distinguishes diagnosing delays from accommodating a slow feed, and does not invent a root cause.",
+      "usefulness": "Actionable error logging and configuration checks rather than an unnecessary refusal. Increasing timeout or retries is appropriately not recommended as the default cure for apparent blocking.",
+      "residual_limit": "The user's installed version is unspecified; the citation visibly identifies the documented version.",
+      "required_correction": null
+    },
+    {
+      "id": "918bee08b956fc5482ff0a0ab060192d933deb86714a0027dc3ae05f36b21a76",
+      "candidate_sha256": "7c49eb716f807bde1d4aeb3be0a2b05e142b197144b51b7470ec17fed31bcd76",
+      "topic": "Ancient and modern language inflection",
+      "purpose": "source_grounded_answer",
+      "assessment": "useful_with_localized_source_attribution_correction",
+      "evidence": "The supplied discussion excerpts support rejecting a universal simplification premise, warn that overall complexity is difficult to compare, question necessary syntactic compensation, and acknowledge uncertainty about particular historical changes.",
+      "usefulness": "A useful qualified premise correction and explanation of why a language-specific comparison is needed, though not a full causal account. The discussion is not misrepresented as established scholarly consensus.",
+      "issue": "The sentence naming 'Forum suggestions about contact, sound change or population size' attributes specific proposals that do not appear in the exact supplied excerpts. Their possible presence elsewhere in the cached page does not ground that attribution in this candidate's evidence.",
+      "required_correction": "Remove that attribution or replace it with a neutral statement that a causal explanation requires language-specific evidence. No need to reject the supported premise correction."
+    },
+    {
+      "id": "118fd78c8659b66c00275dc26d6889abbdcfb103774882d16b2ff8c6eae243ca",
+      "candidate_sha256": "efca4d76aaebe3ce713926f383fd7593231fcf3dd621f77fba12914664e8bcb4",
+      "topic": "Five Portuguese social media marketing content ideas",
+      "purpose": "creative_task_with_retrieval_context",
+      "assessment": "useful_no_material_issue_identified",
+      "evidence": "The supplied headings include video and humanized content, matching the answer's limited attribution. The five concrete content proposals are explicitly presented as newly created suggestions, not historical trend findings.",
+      "usefulness": "Fulfills the requested five-item creative list with actionable ideas. Retrieval is optional for this task; each invented suggestion need not occur in a source.",
+      "temporal_assessment": "The later source does not establish March 2025 trends, but the answer expressly avoids that claim. Its use for generic creative inspiration is not itself a factual temporal error.",
+      "required_correction": null
+    },
+    {
+      "id": "814848737e6de1979da750bd11b469fb3e47293b8bbf3d953398d41394020000",
+      "candidate_sha256": "5264e6a58a12a8bd56e790c20e6ede6b8703c11ffbc04bd504579b3d2297822c",
+      "topic": "Spanish occupational prevention crossword",
+      "purpose": "creative_task_with_retrieval_context",
+      "assessment": "useful_with_localized_source_attribution_correction",
+      "evidence": "The supplied PDF excerpts name prevention regulations, suspension of activities and integration of prevention across hierarchical levels. They do not mention evaluation or planning.",
+      "usefulness": "Provides ten plausible terms with usable educational clues. The user explicitly asks to imagine likely textbook concepts; neither exact textbook recovery nor source support for every invented clue is required. The answer appropriately avoids claiming exhaustive legal definitions.",
+      "issue": "The closing statement says the consulted material covers integration, evaluation, planning and suspension. Evaluation and planning are absent from the exact supplied excerpts.",
+      "required_correction": "Limit the closing attribution to integration and suspension, or supply genuine matching evidence for evaluation and planning. Preserve the useful creative body."
+    }
+  ],
+  "operational_disposition": "No admission and no automatic transfer or clearance of historical holds. Two localized attribution corrections are recommended before any separate admission decision. Any changed candidate requires a new hash-bound review."
+}

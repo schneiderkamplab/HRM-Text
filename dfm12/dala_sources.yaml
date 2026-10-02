@@ -1,0 +1,23 @@
+# Independent local-source registry. Do not change the frozen HF catalog hash.
+version: 1
+producer_root: /work/mimir/DaLA
+current_run: wiki/artifacts/six-language-expansion/current-run.json
+sources:
+  dala-pl:
+    language: pl
+    dataset_name: dala-polish-dynaword
+  dala-sv:
+    language: sv
+    dataset_name: dala-swedish-dynaword
+  dala-nb:
+    language: nb
+    dataset_name: dala-norwegian-bokmaal-dynaword
+  dala-nn:
+    language: nn
+    dataset_name: dala-norwegian-nynorsk-dynaword
+  dala-fo:
+    language: fo
+    dataset_name: dala-faroese-dynaword
+  dala-is:
+    language: is
+    dataset_name: dala-icelandic-dynaword

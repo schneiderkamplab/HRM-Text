@@ -1,0 +1,16 @@
+[
+  {"dataset":"multi-ifeval-da","language":"da","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-da"},
+  {"dataset":"multi-ifeval-en","language":"en","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-en"},
+  {"dataset":"winogrande-da","language":"da","category":"common-sense-reasoning","metric":"accuracy","source":"EuroEval/winogrande-da"},
+  {"dataset":"winogrande","language":"en","category":"common-sense-reasoning","metric":"accuracy","source":"EuroEval/winogrande-en"},
+  {"dataset":"multi-wiki-qa-en","language":"en","category":"reading-comprehension","metric":"f1","source":"EuroEval/multi-wiki-qa-en-mini"},
+  {"dataset":"scala-nl","language":"nl","category":"linguistic-acceptability","metric":"macro_f1","source":"EuroEval/scala-nl"},
+  {"dataset":"scala-cs","language":"cs","category":"linguistic-acceptability","metric":"macro_f1","source":"EuroEval/scala-cs"},
+  {"dataset":"scala-et","language":"et","category":"linguistic-acceptability","metric":"macro_f1","source":"EuroEval/scala-et"},
+  {"dataset":"scala-is","language":"is","category":"linguistic-acceptability","metric":"macro_f1","source":"EuroEval/scala-is"},
+  {"dataset":"multi-ifeval-fr","language":"fr","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-fr"},
+  {"dataset":"multi-ifeval-es","language":"es","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-es"},
+  {"dataset":"multi-ifeval-et","language":"et","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-et"},
+  {"dataset":"multi-ifeval-ca","language":"ca","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-ca"},
+  {"dataset":"multi-ifeval-el","language":"el","category":"instruction-following","metric":"instruction_accuracy","source":"EuroEval/multi-ifeval-el"}
+]

@@ -1,0 +1,28 @@
+{
+  "checkpoints": [
+    {
+      "label": "Epoch 10",
+      "step": 2877261,
+      "epoch": 10.0,
+      "roots": [
+        "logs/euroeval/dfm12_multilingual/epoch_10/epoch_10",
+        "data/eval/dfm11-xl-epoch10-semantic-headlines/epoch_10",
+        "logs/dfm_evals/dfm11_XL_epoch10/epoch_10",
+        "logs/dfm_evals/dfm12_multilingual/epoch_10",
+        "logs/eval/dfm11_XL_epoch10/epoch_10"
+      ]
+    },
+    {
+      "label": "2950K",
+      "step": 2950000,
+      "epoch": 10.162422415973765,
+      "roots": [
+        "logs/euroeval/dfm12_multilingual/step_2950000/step_2950000",
+        "logs/euroeval/dfm12_XL_epoch11/step_2950000/step_2950000",
+        "logs/dfm_evals/dfm12_XL_epoch11/step_2950000",
+        "logs/dfm_evals/dfm12_multilingual/step_2950000",
+        "logs/eval/dfm12_XL_epoch11/step_2950000"
+      ]
+    }
+  ]
+}

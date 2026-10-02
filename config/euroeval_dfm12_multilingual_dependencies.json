@@ -1,0 +1,31 @@
+{
+  "checked_at": 1790743008.239487,
+  "python": "/work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python",
+  "euroeval_version": "18.1.0",
+  "scikit_learn_version": "1.6.1",
+  "module_availability": {
+    "nltk": true,
+    "langdetect": true,
+    "lingua": true,
+    "sacrebleu": true,
+    "seqeval": true,
+    "evaluate": true,
+    "sklearn": true,
+    "cloudpickle": true,
+    "litellm": true,
+    "datasets": true,
+    "huggingface_hub": true
+  },
+  "nltk_resources_default_paths": {
+    "tokenizers/punkt_tab": "/home/ucloud/nltk_data/tokenizers/punkt_tab",
+    "corpora/wordnet": null,
+    "corpora/omw-1.4": null
+  },
+  "downloads_performed": false,
+  "environment_modified": false,
+  "notes": [
+    "Selected metric dependencies are installed; this is not an execution test of every scoring path.",
+    "IFEval prepares punkt_tab, wordnet, omw-1.4 in each benchmark cache at runtime.",
+    "VaLEU loads a dataset-side pickle pipeline at runtime; inaccessible datasets also block this artifact."
+  ]
+}

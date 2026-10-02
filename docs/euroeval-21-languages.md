@@ -1,0 +1,17 @@
+# EuroEval Coverage: 21 Languages
+
+Scheduled coverage as of 2026-09-30; excludes all `valeu-*`. Names are exact EuroEval CLI dataset identifiers. A dash means no task scheduled.
+
+| Category | Danish | English | Norwegian Bokmal | Norwegian Nynorsk | Swedish | Icelandic | Faroese | Dutch | Polish | German | French | Spanish | Italian | Czech | Portuguese | Finnish | Estonian | Catalan | Greek | Romanian | Ukrainian |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| sentiment-classification | angry-tweets | sst5 | norec | norec | swerec | hotter-and-colder-sentiment | fosent | dbrd | polemo2 | sb10k | allocine | sentiment-headlines-es | sentipolc16 | csfd-sentiment | sst2-pt | scandisent-fi | estonian-valence | guia-cat | greek-sa | ro-sent | cross-domain-uk-reviews |
+| linguistic-acceptability | scala-da | scala-en | scala-nb | scala-nn | scala-sv | ice-ec, scala-is | scala-fo | dutch-cola, scala-nl | scala-pl | scala-de | scala-fr | scala-es | scala-it | cs-gec, scala-cs | scala-pt | scala-fi | grammar-et, scala-et | scala-ca | scala-el | scala-ro | scala-uk |
+| named-entity-recognition | dansk | conll-en | norne-nb | norne-nn | suc3 | mim-gold-ner | fone | conll-nl | kpwr-ner | germeval | eltec | conll-es | multinerd-it | poner | harem | turku-ner-fi | estner | wikiann-ca | elner | ronec | ner-uk |
+| reading-comprehension | multi-wiki-qa-da | squad, multi-wiki-qa-en | norquad | norquad | multi-wiki-qa-sv | nqii | foqa | squad-nl | poquad | germanquad | fquad | mlqa-es | squad-it | sqad | multi-wiki-qa-pt | tydiqa-fi | multi-wiki-qa-et | multi-wiki-qa-ca | multi-wiki-qa-el | multi-wiki-qa-ro | multi-wiki-qa-uk |
+| summarization | nordjylland-news | cnn-dailymail | no-sammendrag | no-sammendrag | swedn | rrn | - | wiki-lingua-nl | psc | mlsum-de | orange-sum | mlsum-es | ilpost-sum | czech-news | publico | xlsum-fi | err-news | dacsa-ca | greek-wikipedia | sumo-ro | lr-sum-uk |
+| knowledge | danske-talemaader, danish-citizen-tests | life-in-the-uk | nrk-quiz-qa | nrk-quiz-qa | skolprov | icelandic-knowledge | faroese-semantic-relations | include-nl | llmzszl | include-de | include-fr | include-es | include-it | umimeto-qa | alba-mcq-pt | include-fi | trivia-et | mmlu-ca | greek-mmlu | global-mmlu-ro | include-uk |
+| common-sense-reasoning | hellaswag-da, winogrande-da | hellaswag, winogrande | nor-common-sense-qa | nor-common-sense-qa | winogrande-sv | winogrande-is | - | winogrande-nl | winogrande-pl | winogrande-de | hellaswag-fr | winogrande-es | winogrande-it | hellaswag-cs | winogrande-pt | winogrande-fi | winogrande-et | winogrande-ca | winogrande-el | winogrande-ro | winogrande-uk |
+| instruction-following | ifeval-da, multi-ifeval-da | ifeval, multi-ifeval-en | multi-ifeval-nb | multi-ifeval-nn | multi-ifeval-sv | multi-ifeval-is | multi-ifeval-fo | multi-ifeval-nl | multi-ifeval-pl | multi-ifeval-de | ifeval-fr, multi-ifeval-fr | ifeval-es, multi-ifeval-es | multi-ifeval-it | multi-ifeval-cs | multi-ifeval-pt | multi-ifeval-fi | ifeval-et, multi-ifeval-et | ifeval-ca, multi-ifeval-ca | ifeval-el, multi-ifeval-el | multi-ifeval-ro | multi-ifeval-uk |
+| tool-calling | - | bfcl-v2 | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+
+The 14 additions apply to epoch_10, 2900K and all later checkpoints in the current plan. ScaLA and MultiIFEval now cover all 21 languages. Existing average definitions are unchanged. Shared Norwegian datasets run once, with results shown for both applicable variants.

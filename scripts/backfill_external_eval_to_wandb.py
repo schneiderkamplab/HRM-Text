@@ -96,6 +96,10 @@ def main() -> None:
         help="Optional explicit W&B history step. Omit when backfilling into an active run.",
     )
     args = parser.parse_args()
+    from log_dfm5_headline_averages import SEMANTIC_PREFIXES, SEMANTIC_DALA_KEY
+
+    semantic_prefixes = list(dict.fromkeys(prefix for prefix in
+        [args.average_prefix, *args.extra_average_prefix] if prefix in SEMANTIC_PREFIXES))
     args.euroeval_root = resolve_euroeval_root(args.euroeval_root, args.step)
     atomic_v3_averages = args.atomic_v3_averages or (
         args.averages_only
@@ -125,7 +129,8 @@ def main() -> None:
         if args.averages_only:
             from log_dfm5_headline_averages import HEADLINE_METRIC_KEYS
 
-            row.update({key: value for key, value in raw_metrics.items() if key in HEADLINE_METRIC_KEYS})
+            raw_keys = HEADLINE_METRIC_KEYS | ({SEMANTIC_DALA_KEY} if semantic_prefixes else set())
+            row.update({key: value for key, value in raw_metrics.items() if key in raw_keys})
         else:
             row.update(raw_metrics)
 
@@ -151,6 +156,10 @@ def main() -> None:
                 )
             )
             build_kwargs = None
+            for prefix in semantic_prefixes:
+                row.update(build_row(item, metric_prefix=prefix,
+                    include_sections=prefix == "headline_avg_semantic_v1",
+                    include_suites=prefix == "suite_avg_semantic_v1"))
         elif args.average_scope == "all":
             build_kwargs = {}
         elif args.average_scope == "sections":
@@ -170,7 +179,13 @@ def main() -> None:
             build_kwargs = {"include_sections": False, "include_suites": True, "suites": {args.average_scope}}
         if build_kwargs is not None:
             for average_prefix in [args.average_prefix, *args.extra_average_prefix]:
-                row.update(build_row(item, metric_prefix=average_prefix, **build_kwargs))
+                prefix_kwargs = dict(build_kwargs)
+                if average_prefix == "headline_avg_semantic_v1":
+                    prefix_kwargs["include_suites"] = False
+                elif average_prefix == "suite_avg_semantic_v1":
+                    prefix_kwargs.update(include_sections=False, include_overall=False,
+                                         overall_only=False)
+                row.update(build_row(item, metric_prefix=average_prefix, **prefix_kwargs))
 
     import wandb
 
@@ -183,7 +198,7 @@ def main() -> None:
     )
     assert run is not None
     average_prefixes = (
-        ["headline_avg_v3", "suite_avg_v3"]
+        ["headline_avg_v3", "suite_avg_v3", *semantic_prefixes]
         if atomic_v3_averages
         else [args.average_prefix, *args.extra_average_prefix]
     )
@@ -200,7 +215,8 @@ def main() -> None:
             if (
                 key.startswith(f"{prefix}/")
                 and key not in {epoch_key, train_step_key}
-                and (is_average or key in HEADLINE_METRIC_KEYS)
+                and (is_average or key in HEADLINE_METRIC_KEYS
+                     or (semantic_prefixes and key == SEMANTIC_DALA_KEY))
             ):
                 wandb.define_metric(key, step_metric=epoch_key, summary="last")
     if args.wandb_step is None:

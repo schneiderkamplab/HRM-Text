@@ -1,0 +1,26 @@
+{
+  "identity_repeat": 0,
+  "local_only_disabled_packages": [
+    "dfm12-identity-xxl-wide-full-bp-ca"
+  ],
+  "export_roots": [
+    "exports_dfm12",
+    "exports_dfm12/european-expansion",
+    "data/dfm12/identity21-export-20260929-v1",
+    "exports_dfm12/multilingual-completed-20260929-v1",
+    "exports_dfm12/multilingual-final-six-20260929-v1",
+    "exports_dfm12/identity-xxl-wide-21"
+  ],
+  "package_overrides": {
+    "dfm12-identity-xl-full-bp-da": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-en": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-nl": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-nb": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-nn": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-sv": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-is": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-fo": "data/dfm12/identity21-export-20260929-v1",
+    "dfm12-identity-xl-full-bp-pl": "data/dfm12/identity21-export-20260929-v1"
+  },
+  "local_dala_registry": "data/dfm12/local-audited-dala-additions.json"
+}

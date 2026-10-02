@@ -1,0 +1,3270 @@
+{
+  "schema": "dfm12-euroeval-access-v1",
+  "checked_at": 1790743239.5295074,
+  "input_config_sha256": "e81a4b72659eb0a2e786664fd6af66af31ae5c04f59c9c345fdcb425b69fff89",
+  "unique_sources": 157,
+  "unique_datasets": 157,
+  "metadata_only": true,
+  "mass_download": false,
+  "authentication": "installed_framework_primary_credential",
+  "counts": {
+    "accessible": 157
+  },
+  "sources": [
+    {
+      "source_dataset": "EuroEval/allocine-mini",
+      "datasets": [
+        "allocine"
+      ],
+      "status": "accessible",
+      "revision": "f8b3491d397993b09647f836a8ba5ca364854255",
+      "gated": false,
+      "checked_at": 1790743230.4352498,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 786630,
+      "head_commit": "f8b3491d397993b09647f836a8ba5ca364854255"
+    },
+    {
+      "source_dataset": "EuroEval/conll-es-mini",
+      "datasets": [
+        "conll-es"
+      ],
+      "status": "accessible",
+      "revision": "a9c6360120472a0d45fd098d994d2531bc7d2f52",
+      "gated": false,
+      "checked_at": 1790743230.4360564,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 251289,
+      "head_commit": "a9c6360120472a0d45fd098d994d2531bc7d2f52"
+    },
+    {
+      "source_dataset": "EuroEval/conll-nl-mini",
+      "datasets": [
+        "conll-nl"
+      ],
+      "status": "accessible",
+      "revision": "8b3624fc6bf6438c4ab30632ce4d466d6b09ab25",
+      "gated": false,
+      "checked_at": 1790743230.4366844,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 113495,
+      "head_commit": "8b3624fc6bf6438c4ab30632ce4d466d6b09ab25"
+    },
+    {
+      "source_dataset": "EuroEval/cross-domain-uk-reviews-mini",
+      "datasets": [
+        "cross-domain-uk-reviews"
+      ],
+      "status": "accessible",
+      "revision": "f2e9af65f9fb79a5f7422903610e88ef9cf395ad",
+      "gated": false,
+      "checked_at": 1790743230.437036,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 685825,
+      "head_commit": "f2e9af65f9fb79a5f7422903610e88ef9cf395ad"
+    },
+    {
+      "source_dataset": "EuroEval/cs-gec-mini",
+      "datasets": [
+        "cs-gec"
+      ],
+      "status": "accessible",
+      "revision": "86b350bb54ece5f032eb25d183add1db4b5bedab",
+      "gated": false,
+      "checked_at": 1790743230.4373634,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 109963,
+      "head_commit": "86b350bb54ece5f032eb25d183add1db4b5bedab"
+    },
+    {
+      "source_dataset": "EuroEval/csfd-sentiment-mini",
+      "datasets": [
+        "csfd-sentiment"
+      ],
+      "status": "accessible",
+      "revision": "e37a88400c5417f7865a67a6c33037540b72bafb",
+      "gated": false,
+      "checked_at": 1790743230.437611,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 522203,
+      "head_commit": "e37a88400c5417f7865a67a6c33037540b72bafb"
+    },
+    {
+      "source_dataset": "EuroEval/czech-news-mini",
+      "datasets": [
+        "czech-news"
+      ],
+      "status": "accessible",
+      "revision": "5cd874e7f187a27c251ea78a934a41460a20523c",
+      "gated": false,
+      "checked_at": 1790743230.437833,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 4153454,
+      "head_commit": "5cd874e7f187a27c251ea78a934a41460a20523c"
+    },
+    {
+      "source_dataset": "EuroEval/dacsa-ca-mini",
+      "datasets": [
+        "dacsa-ca"
+      ],
+      "status": "accessible",
+      "revision": "547965939bad29cd982e38db102835f265d6028a",
+      "gated": false,
+      "checked_at": 1790743230.4381387,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 3538737,
+      "head_commit": "547965939bad29cd982e38db102835f265d6028a"
+    },
+    {
+      "source_dataset": "EuroEval/dbrd-mini",
+      "datasets": [
+        "dbrd"
+      ],
+      "status": "accessible",
+      "revision": "1e8ed43db8117b4fc5ab495ef92b52626813cda4",
+      "gated": false,
+      "checked_at": 1790743230.842482,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1568080,
+      "head_commit": "1e8ed43db8117b4fc5ab495ef92b52626813cda4"
+    },
+    {
+      "source_dataset": "EuroEval/dutch-cola",
+      "datasets": [
+        "dutch-cola"
+      ],
+      "status": "accessible",
+      "revision": "31c590b928f49745b7720de5cc93e3f06f7ee25f",
+      "gated": false,
+      "checked_at": 1790743230.9009042,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 73499,
+      "head_commit": "31c590b928f49745b7720de5cc93e3f06f7ee25f"
+    },
+    {
+      "source_dataset": "EuroEval/elner-mini",
+      "datasets": [
+        "elner"
+      ],
+      "status": "accessible",
+      "revision": "5de2a2d591d55e08d9af7eca78d9fafe90faef5e",
+      "gated": false,
+      "checked_at": 1790743230.9026124,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 338648,
+      "head_commit": "5de2a2d591d55e08d9af7eca78d9fafe90faef5e"
+    },
+    {
+      "source_dataset": "EuroEval/eltec-mini",
+      "datasets": [
+        "eltec"
+      ],
+      "status": "accessible",
+      "revision": "8c6211cd0273d65f794658fd58d95569adae63a4",
+      "gated": false,
+      "checked_at": 1790743230.9064033,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 118507,
+      "head_commit": "8c6211cd0273d65f794658fd58d95569adae63a4"
+    },
+    {
+      "source_dataset": "EuroEval/err-news-mini",
+      "datasets": [
+        "err-news"
+      ],
+      "status": "accessible",
+      "revision": "1c4f3315de8f6806abacdb4ac31cd36124c03b35",
+      "gated": false,
+      "checked_at": 1790743230.9649029,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 2785358,
+      "head_commit": "1c4f3315de8f6806abacdb4ac31cd36124c03b35"
+    },
+    {
+      "source_dataset": "EuroEval/estner-mini",
+      "datasets": [
+        "estner"
+      ],
+      "status": "accessible",
+      "revision": "ad6e535d977d35aca07c1478a0ea0883008b0e09",
+      "gated": false,
+      "checked_at": 1790743231.0148792,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 357256,
+      "head_commit": "ad6e535d977d35aca07c1478a0ea0883008b0e09"
+    },
+    {
+      "source_dataset": "EuroEval/estonian-valence",
+      "datasets": [
+        "estonian-valence"
+      ],
+      "status": "accessible",
+      "revision": "8feabbdbb2857297c756b3e1204b680138613456",
+      "gated": false,
+      "checked_at": 1790743231.0623498,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet",
+        "data/validation-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 348917,
+      "head_commit": "8feabbdbb2857297c756b3e1204b680138613456"
+    },
+    {
+      "source_dataset": "EuroEval/euroeval-amalia-alba-mcq-pt",
+      "datasets": [
+        "alba-mcq-pt"
+      ],
+      "status": "accessible",
+      "revision": "8ec38ec06ea84415218f681613f229beea93bd7f",
+      "gated": false,
+      "checked_at": 1790743231.0851011,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 69704,
+      "head_commit": "8ec38ec06ea84415218f681613f229beea93bd7f"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-de",
+      "datasets": [
+        "valeu-de"
+      ],
+      "status": "accessible",
+      "revision": "348e69fee805bdb30c21936f78b7acfa8e806cd6",
+      "gated": false,
+      "checked_at": 1790743231.2228425,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 12375,
+      "head_commit": "348e69fee805bdb30c21936f78b7acfa8e806cd6"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-es",
+      "datasets": [
+        "valeu-es"
+      ],
+      "status": "accessible",
+      "revision": "1daa1db875005613d54dcf9998f0c16b9a2cdb97",
+      "gated": false,
+      "checked_at": 1790743231.3329456,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 12164,
+      "head_commit": "1daa1db875005613d54dcf9998f0c16b9a2cdb97"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-et",
+      "datasets": [
+        "valeu-et"
+      ],
+      "status": "accessible",
+      "revision": "9602fd1a5dc4fcef9a711d6b8a19bbdae8ec086c",
+      "gated": false,
+      "checked_at": 1790743231.3410041,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 12569,
+      "head_commit": "9602fd1a5dc4fcef9a711d6b8a19bbdae8ec086c"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-fi",
+      "datasets": [
+        "valeu-fi"
+      ],
+      "status": "accessible",
+      "revision": "9bdef9bc2c6c52fd83222a354ba271ca8aab4145",
+      "gated": false,
+      "checked_at": 1790743231.34983,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 11615,
+      "head_commit": "9bdef9bc2c6c52fd83222a354ba271ca8aab4145"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-fr",
+      "datasets": [
+        "valeu-fr"
+      ],
+      "status": "accessible",
+      "revision": "6fc80d88e79f475f04ca5eeba706294adc82229f",
+      "gated": false,
+      "checked_at": 1790743231.3958557,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 11381,
+      "head_commit": "6fc80d88e79f475f04ca5eeba706294adc82229f"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-is",
+      "datasets": [
+        "valeu-is"
+      ],
+      "status": "accessible",
+      "revision": "839fadfcc4c70e33b5a7e8442451132c8a1515e9",
+      "gated": false,
+      "checked_at": 1790743231.4509525,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 12693,
+      "head_commit": "839fadfcc4c70e33b5a7e8442451132c8a1515e9"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-it",
+      "datasets": [
+        "valeu-it"
+      ],
+      "status": "accessible",
+      "revision": "1a467e5bfb10be77d0b2eecfe71b0167df0daeef",
+      "gated": false,
+      "checked_at": 1790743231.5261009,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 12764,
+      "head_commit": "1a467e5bfb10be77d0b2eecfe71b0167df0daeef"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-nl",
+      "datasets": [
+        "valeu-nl"
+      ],
+      "status": "accessible",
+      "revision": "ab426347018a8604b59f69d03b06b3037e6f4c76",
+      "gated": false,
+      "checked_at": 1790743231.5608335,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 11156,
+      "head_commit": "ab426347018a8604b59f69d03b06b3037e6f4c76"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-no",
+      "datasets": [
+        "valeu-no"
+      ],
+      "status": "accessible",
+      "revision": "591a5845d5f6338986dacf139b1118c88e4510a7",
+      "gated": false,
+      "checked_at": 1790743231.5906684,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 11676,
+      "head_commit": "591a5845d5f6338986dacf139b1118c88e4510a7"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-pl",
+      "datasets": [
+        "valeu-pl"
+      ],
+      "status": "accessible",
+      "revision": "68a243f8cd235f8019a7545fe949afd35b8eaad4",
+      "gated": false,
+      "checked_at": 1790743231.808844,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 13172,
+      "head_commit": "68a243f8cd235f8019a7545fe949afd35b8eaad4"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-pt",
+      "datasets": [
+        "valeu-pt"
+      ],
+      "status": "accessible",
+      "revision": "e68718415c0ed18b2d10725892be29a890197b93",
+      "gated": false,
+      "checked_at": 1790743231.8431714,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 11128,
+      "head_commit": "e68718415c0ed18b2d10725892be29a890197b93"
+    },
+    {
+      "source_dataset": "EuroEval/european-values-sv",
+      "datasets": [
+        "valeu-sv"
+      ],
+      "status": "accessible",
+      "revision": "c8e35a37174d666acc6c71da7ef90a466183d115",
+      "gated": false,
+      "checked_at": 1790743231.9051516,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 11184,
+      "head_commit": "c8e35a37174d666acc6c71da7ef90a466183d115"
+    },
+    {
+      "source_dataset": "EuroEval/faroese-semantic-relations",
+      "datasets": [
+        "faroese-semantic-relations"
+      ],
+      "status": "accessible",
+      "revision": "49c2cd3bb2d4158cbf49eb2afee54fbe0520921b",
+      "gated": false,
+      "checked_at": 1790743231.9105113,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 47689,
+      "head_commit": "49c2cd3bb2d4158cbf49eb2afee54fbe0520921b"
+    },
+    {
+      "source_dataset": "EuroEval/fone-mini",
+      "datasets": [
+        "fone"
+      ],
+      "status": "accessible",
+      "revision": "215ac623bc30c385534174f0ee9446879d4cdb95",
+      "gated": false,
+      "checked_at": 1790743231.945169,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 381682,
+      "head_commit": "215ac623bc30c385534174f0ee9446879d4cdb95"
+    },
+    {
+      "source_dataset": "EuroEval/foqa",
+      "datasets": [
+        "foqa"
+      ],
+      "status": "accessible",
+      "revision": "3746906f81353d29c04214869c1e6a2e87ad35de",
+      "gated": false,
+      "checked_at": 1790743231.9679089,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 967390,
+      "head_commit": "3746906f81353d29c04214869c1e6a2e87ad35de"
+    },
+    {
+      "source_dataset": "EuroEval/fosent",
+      "datasets": [
+        "fosent"
+      ],
+      "status": "accessible",
+      "revision": "d57f23c500505d32c298a555fbf9fa68c358b091",
+      "gated": false,
+      "checked_at": 1790743231.9893343,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 137347,
+      "head_commit": "d57f23c500505d32c298a555fbf9fa68c358b091"
+    },
+    {
+      "source_dataset": "EuroEval/fquad-mini",
+      "datasets": [
+        "fquad"
+      ],
+      "status": "accessible",
+      "revision": "63d5707cb93fc76edc709b399c5537663baa20df",
+      "gated": false,
+      "checked_at": 1790743232.0386603,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 988979,
+      "head_commit": "63d5707cb93fc76edc709b399c5537663baa20df"
+    },
+    {
+      "source_dataset": "EuroEval/germanquad-mini",
+      "datasets": [
+        "germanquad"
+      ],
+      "status": "accessible",
+      "revision": "20ef897a94ac01ec58f6bfd1f44a4c4332279742",
+      "gated": false,
+      "checked_at": 1790743232.2514567,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1821527,
+      "head_commit": "20ef897a94ac01ec58f6bfd1f44a4c4332279742"
+    },
+    {
+      "source_dataset": "EuroEval/germeval-mini",
+      "datasets": [
+        "germeval"
+      ],
+      "status": "accessible",
+      "revision": "f8a5f7e7258c8b0a24fb1b00267324ede7398b5e",
+      "gated": false,
+      "checked_at": 1790743232.2916124,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 197430,
+      "head_commit": "f8a5f7e7258c8b0a24fb1b00267324ede7398b5e"
+    },
+    {
+      "source_dataset": "EuroEval/global-mmlu-ro-mini",
+      "datasets": [
+        "global-mmlu-ro"
+      ],
+      "status": "accessible",
+      "revision": "c30a6f35956dce2266ed15a194497423fb332631",
+      "gated": false,
+      "checked_at": 1790743232.3634808,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 604857,
+      "head_commit": "c30a6f35956dce2266ed15a194497423fb332631"
+    },
+    {
+      "source_dataset": "EuroEval/grammar-et",
+      "datasets": [
+        "grammar-et"
+      ],
+      "status": "accessible",
+      "revision": "441748489b2a3672286b19ab94c2c43ed435f935",
+      "gated": false,
+      "checked_at": 1790743232.4048364,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 142880,
+      "head_commit": "441748489b2a3672286b19ab94c2c43ed435f935"
+    },
+    {
+      "source_dataset": "EuroEval/greek-mmlu-mini",
+      "datasets": [
+        "greek-mmlu"
+      ],
+      "status": "accessible",
+      "revision": "7cd71aa0d7e914f914c46c36638dce957ca2cc5a",
+      "gated": false,
+      "checked_at": 1790743232.4083505,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 462690,
+      "head_commit": "7cd71aa0d7e914f914c46c36638dce957ca2cc5a"
+    },
+    {
+      "source_dataset": "EuroEval/greek-sa-mini",
+      "datasets": [
+        "greek-sa"
+      ],
+      "status": "accessible",
+      "revision": "d72b98006eaa98449af88264ac2dd5710c6d2fdc",
+      "gated": false,
+      "checked_at": 1790743232.4152617,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 521236,
+      "head_commit": "d72b98006eaa98449af88264ac2dd5710c6d2fdc"
+    },
+    {
+      "source_dataset": "EuroEval/greek-wikipedia-mini",
+      "datasets": [
+        "greek-wikipedia"
+      ],
+      "status": "accessible",
+      "revision": "cfb9c5c540732bd06465dbb9f655c92664a3ede3",
+      "gated": false,
+      "checked_at": 1790743232.4224312,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 5175944,
+      "head_commit": "cfb9c5c540732bd06465dbb9f655c92664a3ede3"
+    },
+    {
+      "source_dataset": "EuroEval/guia-cat-mini",
+      "datasets": [
+        "guia-cat"
+      ],
+      "status": "accessible",
+      "revision": "6b487cc03a7ef10c36db25070a11409ad98da0f8",
+      "gated": false,
+      "checked_at": 1790743232.4880772,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 293405,
+      "head_commit": "6b487cc03a7ef10c36db25070a11409ad98da0f8"
+    },
+    {
+      "source_dataset": "EuroEval/harem",
+      "datasets": [
+        "harem"
+      ],
+      "status": "accessible",
+      "revision": "58a9952359e29063c402721f9975729f9732fb7a",
+      "gated": false,
+      "checked_at": 1790743232.6648777,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 142711,
+      "head_commit": "58a9952359e29063c402721f9975729f9732fb7a"
+    },
+    {
+      "source_dataset": "EuroEval/hellaswag-cs-mini",
+      "datasets": [
+        "hellaswag-cs"
+      ],
+      "status": "accessible",
+      "revision": "d9c750b7bacccb68abe55a074c1d67d50a692ea0",
+      "gated": false,
+      "checked_at": 1790743232.7038226,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1108501,
+      "head_commit": "d9c750b7bacccb68abe55a074c1d67d50a692ea0"
+    },
+    {
+      "source_dataset": "EuroEval/hellaswag-fr-mini",
+      "datasets": [
+        "hellaswag-fr"
+      ],
+      "status": "accessible",
+      "revision": "22ce3fbeaebca06f2eec93ebec0cb5f3b56dd79b",
+      "gated": false,
+      "checked_at": 1790743232.741679,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1132866,
+      "head_commit": "22ce3fbeaebca06f2eec93ebec0cb5f3b56dd79b"
+    },
+    {
+      "source_dataset": "EuroEval/hotter-and-colder-sentiment",
+      "datasets": [
+        "hotter-and-colder-sentiment"
+      ],
+      "status": "accessible",
+      "revision": "72e98ece38fa091700f799eb867d16645a478dfc",
+      "gated": false,
+      "checked_at": 1790743232.834312,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 305473,
+      "head_commit": "72e98ece38fa091700f799eb867d16645a478dfc"
+    },
+    {
+      "source_dataset": "EuroEval/ice-ec",
+      "datasets": [
+        "ice-ec"
+      ],
+      "status": "accessible",
+      "revision": "310c674eefd27aa7e32cb605157761adb14199a1",
+      "gated": false,
+      "checked_at": 1790743232.8488226,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 185764,
+      "head_commit": "310c674eefd27aa7e32cb605157761adb14199a1"
+    },
+    {
+      "source_dataset": "EuroEval/icelandic-knowledge",
+      "datasets": [
+        "icelandic-knowledge"
+      ],
+      "status": "accessible",
+      "revision": "7e98944fa12d87abb04a6f6861ea5d489b3c3417",
+      "gated": false,
+      "checked_at": 1790743232.8502443,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 110124,
+      "head_commit": "7e98944fa12d87abb04a6f6861ea5d489b3c3417"
+    },
+    {
+      "source_dataset": "EuroEval/ifeval-ca",
+      "datasets": [
+        "ifeval-ca"
+      ],
+      "status": "accessible",
+      "revision": "09f65978dcdfbc67de5deee7df5a8a283ad7b4ef",
+      "gated": false,
+      "checked_at": 1790743232.851046,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 95045,
+      "head_commit": "09f65978dcdfbc67de5deee7df5a8a283ad7b4ef"
+    },
+    {
+      "source_dataset": "EuroEval/ifeval-el",
+      "datasets": [
+        "ifeval-el"
+      ],
+      "status": "accessible",
+      "revision": "726fe019a7954c63bb00fe96e812a94d5dbd8b03",
+      "gated": false,
+      "checked_at": 1790743232.928909,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 135871,
+      "head_commit": "726fe019a7954c63bb00fe96e812a94d5dbd8b03"
+    },
+    {
+      "source_dataset": "EuroEval/ifeval-es",
+      "datasets": [
+        "ifeval-es"
+      ],
+      "status": "accessible",
+      "revision": "5cf9480d57d46576fceab4245765b7b61c88f41b",
+      "gated": false,
+      "checked_at": 1790743233.1229017,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 95326,
+      "head_commit": "5cf9480d57d46576fceab4245765b7b61c88f41b"
+    },
+    {
+      "source_dataset": "EuroEval/ifeval-et",
+      "datasets": [
+        "ifeval-et"
+      ],
+      "status": "accessible",
+      "revision": "f7472356783c9e2515190f7ea3dd7212f3c4c11c",
+      "gated": false,
+      "checked_at": 1790743233.1304243,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 109433,
+      "head_commit": "f7472356783c9e2515190f7ea3dd7212f3c4c11c"
+    },
+    {
+      "source_dataset": "EuroEval/ifeval-fr",
+      "datasets": [
+        "ifeval-fr"
+      ],
+      "status": "accessible",
+      "revision": "6d6314bfad0e6f6dc50549f5ce1b28678cfa8edb",
+      "gated": false,
+      "checked_at": 1790743233.133615,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 54833,
+      "head_commit": "6d6314bfad0e6f6dc50549f5ce1b28678cfa8edb"
+    },
+    {
+      "source_dataset": "EuroEval/ilpost-sum",
+      "datasets": [
+        "ilpost-sum"
+      ],
+      "status": "accessible",
+      "revision": "6105e5abd51b57ab7472fb93833eb30944f5892d",
+      "gated": false,
+      "checked_at": 1790743233.2666354,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1705329,
+      "head_commit": "6105e5abd51b57ab7472fb93833eb30944f5892d"
+    },
+    {
+      "source_dataset": "EuroEval/include-de-mini",
+      "datasets": [
+        "include-de"
+      ],
+      "status": "accessible",
+      "revision": "445cd3bdfc15aaebeee329fcc99bc9670fdfd5e2",
+      "gated": false,
+      "checked_at": 1790743233.2681327,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 13258,
+      "head_commit": "445cd3bdfc15aaebeee329fcc99bc9670fdfd5e2"
+    },
+    {
+      "source_dataset": "EuroEval/include-es-mini",
+      "datasets": [
+        "include-es"
+      ],
+      "status": "accessible",
+      "revision": "13b453aaf49c8dd316567e09497191e80d639056",
+      "gated": false,
+      "checked_at": 1790743233.3025007,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 71519,
+      "head_commit": "13b453aaf49c8dd316567e09497191e80d639056"
+    },
+    {
+      "source_dataset": "EuroEval/include-fi-mini",
+      "datasets": [
+        "include-fi"
+      ],
+      "status": "accessible",
+      "revision": "356b7324c3873a1dc300459f5373d0b0296092fe",
+      "gated": false,
+      "checked_at": 1790743233.32137,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 132807,
+      "head_commit": "356b7324c3873a1dc300459f5373d0b0296092fe"
+    },
+    {
+      "source_dataset": "EuroEval/include-fr-mini",
+      "datasets": [
+        "include-fr"
+      ],
+      "status": "accessible",
+      "revision": "ed08b6d79135dba0956d344997779d844922819f",
+      "gated": false,
+      "checked_at": 1790743233.3780494,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 39050,
+      "head_commit": "ed08b6d79135dba0956d344997779d844922819f"
+    },
+    {
+      "source_dataset": "EuroEval/include-it-mini",
+      "datasets": [
+        "include-it"
+      ],
+      "status": "accessible",
+      "revision": "5aa09bfe19e83655e1bd85f326fad6c43eec5a4d",
+      "gated": false,
+      "checked_at": 1790743233.4911976,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 77158,
+      "head_commit": "5aa09bfe19e83655e1bd85f326fad6c43eec5a4d"
+    },
+    {
+      "source_dataset": "EuroEval/include-nl-mini",
+      "datasets": [
+        "include-nl"
+      ],
+      "status": "accessible",
+      "revision": "326c7e1ba91f101650bfe4d3d1df1e0174a69fca",
+      "gated": false,
+      "checked_at": 1790743233.5706758,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 91133,
+      "head_commit": "326c7e1ba91f101650bfe4d3d1df1e0174a69fca"
+    },
+    {
+      "source_dataset": "EuroEval/include-uk-mini",
+      "datasets": [
+        "include-uk"
+      ],
+      "status": "accessible",
+      "revision": "f5db25dc73fb69902ef99cffda7ae98dc48f2b6d",
+      "gated": false,
+      "checked_at": 1790743233.597954,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 107703,
+      "head_commit": "f5db25dc73fb69902ef99cffda7ae98dc48f2b6d"
+    },
+    {
+      "source_dataset": "EuroEval/kpwr-ner",
+      "datasets": [
+        "kpwr-ner"
+      ],
+      "status": "accessible",
+      "revision": "ca4e108e54c157c56f441453a0a1260c9d4102bf",
+      "gated": false,
+      "checked_at": 1790743233.670595,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 378106,
+      "head_commit": "ca4e108e54c157c56f441453a0a1260c9d4102bf"
+    },
+    {
+      "source_dataset": "EuroEval/llmzszl-mini",
+      "datasets": [
+        "llmzszl"
+      ],
+      "status": "accessible",
+      "revision": "31ee3d9cc8dff5bbd9449f99c3abc26625f38ffe",
+      "gated": false,
+      "checked_at": 1790743233.6987174,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 299643,
+      "head_commit": "31ee3d9cc8dff5bbd9449f99c3abc26625f38ffe"
+    },
+    {
+      "source_dataset": "EuroEval/lr-sum-uk-mini",
+      "datasets": [
+        "lr-sum-uk"
+      ],
+      "status": "accessible",
+      "revision": "033c9e302a524f11d42d9264366ddb0f610fd9de",
+      "gated": false,
+      "checked_at": 1790743233.7150958,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 5263383,
+      "head_commit": "033c9e302a524f11d42d9264366ddb0f610fd9de"
+    },
+    {
+      "source_dataset": "EuroEval/mim-gold-ner-mini",
+      "datasets": [
+        "mim-gold-ner"
+      ],
+      "status": "accessible",
+      "revision": "10d04e5710d83c882ae62acb2dd928958b49516a",
+      "gated": false,
+      "checked_at": 1790743233.8030102,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001-b6ad966bdd5dada5.parquet",
+        "data/train-00000-of-00001-1a0549cf66e960cc.parquet",
+        "data/val-00000-of-00001-01ae934469753071.parquet",
+        "dataset_infos.json"
+      ],
+      "head_file": "data/test-00000-of-00001-b6ad966bdd5dada5.parquet",
+      "head_bytes": 340128,
+      "head_commit": "10d04e5710d83c882ae62acb2dd928958b49516a"
+    },
+    {
+      "source_dataset": "EuroEval/mlqa-es",
+      "datasets": [
+        "mlqa-es"
+      ],
+      "status": "accessible",
+      "revision": "fac21d6e3aabb75f797ae7aa6bb3a3b5b1a69e82",
+      "gated": false,
+      "checked_at": 1790743233.8094976,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1096332,
+      "head_commit": "fac21d6e3aabb75f797ae7aa6bb3a3b5b1a69e82"
+    },
+    {
+      "source_dataset": "EuroEval/mlsum-es-mini",
+      "datasets": [
+        "mlsum-es"
+      ],
+      "status": "accessible",
+      "revision": "ff230d9c4c35ceeb59361bac250c8dce606b7949",
+      "gated": false,
+      "checked_at": 1790743233.8566399,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 5027111,
+      "head_commit": "ff230d9c4c35ceeb59361bac250c8dce606b7949"
+    },
+    {
+      "source_dataset": "EuroEval/mlsum-mini",
+      "datasets": [
+        "mlsum-de"
+      ],
+      "status": "accessible",
+      "revision": "b76fd41b5b3ffe1063de62b39a0d1f3e2651886d",
+      "gated": false,
+      "checked_at": 1790743234.0094903,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 4975654,
+      "head_commit": "b76fd41b5b3ffe1063de62b39a0d1f3e2651886d"
+    },
+    {
+      "source_dataset": "EuroEval/mmlu-ca-mini",
+      "datasets": [
+        "mmlu-ca"
+      ],
+      "status": "accessible",
+      "revision": "cdeac11b49eae0d3fa2e48d7c8e88d433bdad3ab",
+      "gated": false,
+      "checked_at": 1790743234.098769,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 562011,
+      "head_commit": "cdeac11b49eae0d3fa2e48d7c8e88d433bdad3ab"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-cs",
+      "datasets": [
+        "multi-ifeval-cs"
+      ],
+      "status": "accessible",
+      "revision": "8efd487c28ad640f7ff92fd63d1c41ec0f39b8cd",
+      "gated": false,
+      "checked_at": 1790743234.1277542,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 100345,
+      "head_commit": "8efd487c28ad640f7ff92fd63d1c41ec0f39b8cd"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-de",
+      "datasets": [
+        "multi-ifeval-de"
+      ],
+      "status": "accessible",
+      "revision": "7165a399fdc05f3e968eb5873158ad632545a74f",
+      "gated": false,
+      "checked_at": 1790743234.140286,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 103002,
+      "head_commit": "7165a399fdc05f3e968eb5873158ad632545a74f"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-fi",
+      "datasets": [
+        "multi-ifeval-fi"
+      ],
+      "status": "accessible",
+      "revision": "3943df87928d423219a167b00048f641a8372c82",
+      "gated": false,
+      "checked_at": 1790743234.1530387,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 98373,
+      "head_commit": "3943df87928d423219a167b00048f641a8372c82"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-fo",
+      "datasets": [
+        "multi-ifeval-fo"
+      ],
+      "status": "accessible",
+      "revision": "38b3a0020bbc91c78678e260ffaaecd067d15751",
+      "gated": false,
+      "checked_at": 1790743234.218951,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 91513,
+      "head_commit": "38b3a0020bbc91c78678e260ffaaecd067d15751"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-is",
+      "datasets": [
+        "multi-ifeval-is"
+      ],
+      "status": "accessible",
+      "revision": "cf7c53a3a98ad807cf3ded5d92dc7aa91e8d04a8",
+      "gated": false,
+      "checked_at": 1790743234.2250836,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 91263,
+      "head_commit": "cf7c53a3a98ad807cf3ded5d92dc7aa91e8d04a8"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-it",
+      "datasets": [
+        "multi-ifeval-it"
+      ],
+      "status": "accessible",
+      "revision": "d72c42874fbf906ab7b152941582461ad4a79139",
+      "gated": false,
+      "checked_at": 1790743234.2589264,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 96669,
+      "head_commit": "d72c42874fbf906ab7b152941582461ad4a79139"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-nl",
+      "datasets": [
+        "multi-ifeval-nl"
+      ],
+      "status": "accessible",
+      "revision": "086d8549cc9541fbda30b5fb88800a7c29e1abbc",
+      "gated": false,
+      "checked_at": 1790743234.42151,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 95004,
+      "head_commit": "086d8549cc9541fbda30b5fb88800a7c29e1abbc"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-nn",
+      "datasets": [
+        "multi-ifeval-nn"
+      ],
+      "status": "accessible",
+      "revision": "11604aa8dc4de6f67e1970c2642c47b081667495",
+      "gated": false,
+      "checked_at": 1790743234.5517344,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 93275,
+      "head_commit": "11604aa8dc4de6f67e1970c2642c47b081667495"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-no",
+      "datasets": [
+        "multi-ifeval-nb"
+      ],
+      "status": "accessible",
+      "revision": "1ebec885d5be1db88669b51529947635a1e39eb0",
+      "gated": false,
+      "checked_at": 1790743234.567692,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 91697,
+      "head_commit": "1ebec885d5be1db88669b51529947635a1e39eb0"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-pl",
+      "datasets": [
+        "multi-ifeval-pl"
+      ],
+      "status": "accessible",
+      "revision": "c88e11208b5d7f81edf43a04b5fdeaa5f3fbf0b1",
+      "gated": false,
+      "checked_at": 1790743234.5869312,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 102501,
+      "head_commit": "c88e11208b5d7f81edf43a04b5fdeaa5f3fbf0b1"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-pt",
+      "datasets": [
+        "multi-ifeval-pt"
+      ],
+      "status": "accessible",
+      "revision": "637d00a364ff620c1cfc36a21eb32da0c561a9ca",
+      "gated": false,
+      "checked_at": 1790743234.5898075,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 97644,
+      "head_commit": "637d00a364ff620c1cfc36a21eb32da0c561a9ca"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-ro",
+      "datasets": [
+        "multi-ifeval-ro"
+      ],
+      "status": "accessible",
+      "revision": "3b93df866de275af7336af2160a95ac584d7d3d2",
+      "gated": false,
+      "checked_at": 1790743234.6643949,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 91965,
+      "head_commit": "3b93df866de275af7336af2160a95ac584d7d3d2"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-sv",
+      "datasets": [
+        "multi-ifeval-sv"
+      ],
+      "status": "accessible",
+      "revision": "b5f9f3571b40e803cbabd14bc4392b5004b850a5",
+      "gated": false,
+      "checked_at": 1790743234.6899097,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 91906,
+      "head_commit": "b5f9f3571b40e803cbabd14bc4392b5004b850a5"
+    },
+    {
+      "source_dataset": "EuroEval/multi-ifeval-uk",
+      "datasets": [
+        "multi-ifeval-uk"
+      ],
+      "status": "accessible",
+      "revision": "7c8f6918f1c82f772652dd51d88f95e2152beb8c",
+      "gated": false,
+      "checked_at": 1790743234.6913319,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 118693,
+      "head_commit": "7c8f6918f1c82f772652dd51d88f95e2152beb8c"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-ca-mini",
+      "datasets": [
+        "multi-wiki-qa-ca"
+      ],
+      "status": "accessible",
+      "revision": "7f8c74dc9955a42515a003890edab052af581fee",
+      "gated": false,
+      "checked_at": 1790743234.8660784,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1579671,
+      "head_commit": "7f8c74dc9955a42515a003890edab052af581fee"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-el-mini",
+      "datasets": [
+        "multi-wiki-qa-el"
+      ],
+      "status": "accessible",
+      "revision": "46c8868c52cb2a4ae78db50545731cee226f39ae",
+      "gated": false,
+      "checked_at": 1790743234.9758713,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 2108348,
+      "head_commit": "46c8868c52cb2a4ae78db50545731cee226f39ae"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-et-mini",
+      "datasets": [
+        "multi-wiki-qa-et"
+      ],
+      "status": "accessible",
+      "revision": "e7eebf5c4184ac5b89745aa10355755fe3edcd9f",
+      "gated": false,
+      "checked_at": 1790743234.9790862,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1524369,
+      "head_commit": "e7eebf5c4184ac5b89745aa10355755fe3edcd9f"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-pt-pt-mini",
+      "datasets": [
+        "multi-wiki-qa-pt"
+      ],
+      "status": "accessible",
+      "revision": "044c8d89be2df6ed864acd6d785de43696813da3",
+      "gated": false,
+      "checked_at": 1790743235.0117838,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1648700,
+      "head_commit": "044c8d89be2df6ed864acd6d785de43696813da3"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-ro-mini",
+      "datasets": [
+        "multi-wiki-qa-ro"
+      ],
+      "status": "accessible",
+      "revision": "ceb45e50cbd1a3c31e104c1c9112c1257112b959",
+      "gated": false,
+      "checked_at": 1790743235.0387251,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1521010,
+      "head_commit": "ceb45e50cbd1a3c31e104c1c9112c1257112b959"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-sv-mini",
+      "datasets": [
+        "multi-wiki-qa-sv"
+      ],
+      "status": "accessible",
+      "revision": "42cb590f1cf4a3d7a2d4525261cb2e47d9ccc98b",
+      "gated": false,
+      "checked_at": 1790743235.1321013,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1385926,
+      "head_commit": "42cb590f1cf4a3d7a2d4525261cb2e47d9ccc98b"
+    },
+    {
+      "source_dataset": "EuroEval/multi-wiki-qa-uk-mini",
+      "datasets": [
+        "multi-wiki-qa-uk"
+      ],
+      "status": "accessible",
+      "revision": "c2e4878def737ca442706eece9b29d9fc73ee9f2",
+      "gated": false,
+      "checked_at": 1790743235.2754314,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 2176683,
+      "head_commit": "c2e4878def737ca442706eece9b29d9fc73ee9f2"
+    },
+    {
+      "source_dataset": "EuroEval/multinerd-mini-it",
+      "datasets": [
+        "multinerd-it"
+      ],
+      "status": "accessible",
+      "revision": "f232cf9f02e16ec87887b808a5c3c98a083484af",
+      "gated": false,
+      "checked_at": 1790743235.309243,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 464607,
+      "head_commit": "f232cf9f02e16ec87887b808a5c3c98a083484af"
+    },
+    {
+      "source_dataset": "EuroEval/ner-uk-mini",
+      "datasets": [
+        "ner-uk"
+      ],
+      "status": "accessible",
+      "revision": "c748fc324e19a49d8e9d74413f68b7b44acb340a",
+      "gated": false,
+      "checked_at": 1790743235.3102505,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 235635,
+      "head_commit": "c748fc324e19a49d8e9d74413f68b7b44acb340a"
+    },
+    {
+      "source_dataset": "EuroEval/no-sammendrag-mini",
+      "datasets": [
+        "no-sammendrag"
+      ],
+      "status": "accessible",
+      "revision": "e75ef1a845b0c516ca71f0b21fc2457f67ea963c",
+      "gated": false,
+      "checked_at": 1790743235.4005876,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 3014578,
+      "head_commit": "e75ef1a845b0c516ca71f0b21fc2457f67ea963c"
+    },
+    {
+      "source_dataset": "EuroEval/nor-common-sense-qa",
+      "datasets": [
+        "nor-common-sense-qa"
+      ],
+      "status": "accessible",
+      "revision": "f67b02d29612ff84b5a999df15a085a479fb53ed",
+      "gated": false,
+      "checked_at": 1790743235.4190466,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 86457,
+      "head_commit": "f67b02d29612ff84b5a999df15a085a479fb53ed"
+    },
+    {
+      "source_dataset": "EuroEval/norec-mini",
+      "datasets": [
+        "norec"
+      ],
+      "status": "accessible",
+      "revision": "07b99ab3363c2e7f8f87015b01c21f4d9b917ce3",
+      "gated": false,
+      "checked_at": 1790743235.4483562,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet",
+        "dataset_infos.json"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 144529,
+      "head_commit": "07b99ab3363c2e7f8f87015b01c21f4d9b917ce3"
+    },
+    {
+      "source_dataset": "EuroEval/norne-nb-mini",
+      "datasets": [
+        "norne-nb"
+      ],
+      "status": "accessible",
+      "revision": "67710dfa772469bf5d3653bf0ca9f431e782d85c",
+      "gated": false,
+      "checked_at": 1790743235.480693,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001-ee22118ec8e6b2b2.parquet",
+        "data/train-00000-of-00001-487979b9bee117b8.parquet",
+        "data/val-00000-of-00001-cac68fd8d19f2648.parquet",
+        "dataset_infos.json"
+      ],
+      "head_file": "data/test-00000-of-00001-ee22118ec8e6b2b2.parquet",
+      "head_bytes": 273553,
+      "head_commit": "67710dfa772469bf5d3653bf0ca9f431e782d85c"
+    },
+    {
+      "source_dataset": "EuroEval/norne-nn-mini",
+      "datasets": [
+        "norne-nn"
+      ],
+      "status": "accessible",
+      "revision": "b34982a3ffc391bf3c5d6c999a2c1804ae170780",
+      "gated": false,
+      "checked_at": 1790743235.5375593,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001-32d757b4093d5f09.parquet",
+        "data/train-00000-of-00001-27c028c07363b1e6.parquet",
+        "data/val-00000-of-00001-bbc38dd0d22098a1.parquet",
+        "dataset_infos.json"
+      ],
+      "head_file": "data/test-00000-of-00001-32d757b4093d5f09.parquet",
+      "head_bytes": 310221,
+      "head_commit": "b34982a3ffc391bf3c5d6c999a2c1804ae170780"
+    },
+    {
+      "source_dataset": "EuroEval/norquad-mini",
+      "datasets": [
+        "norquad"
+      ],
+      "status": "accessible",
+      "revision": "a47881440ce4b18ef61a99be66dc4badbf5aac6e",
+      "gated": false,
+      "checked_at": 1790743235.7395492,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1821378,
+      "head_commit": "a47881440ce4b18ef61a99be66dc4badbf5aac6e"
+    },
+    {
+      "source_dataset": "EuroEval/nqii-mini",
+      "datasets": [
+        "nqii"
+      ],
+      "status": "accessible",
+      "revision": "41f1b050ad604341829cf6a4a88d916b4cf787d0",
+      "gated": false,
+      "checked_at": 1790743235.788218,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 437738,
+      "head_commit": "41f1b050ad604341829cf6a4a88d916b4cf787d0"
+    },
+    {
+      "source_dataset": "EuroEval/nrk-quiz-qa-mini",
+      "datasets": [
+        "nrk-quiz-qa"
+      ],
+      "status": "accessible",
+      "revision": "452459a682790222fbe385f62464b8d04ae06bc5",
+      "gated": false,
+      "checked_at": 1790743235.7941144,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 298813,
+      "head_commit": "452459a682790222fbe385f62464b8d04ae06bc5"
+    },
+    {
+      "source_dataset": "EuroEval/orange-sum-mini",
+      "datasets": [
+        "orange-sum"
+      ],
+      "status": "accessible",
+      "revision": "b0c4cfb276542881793f81a7ddf9f71921402d58",
+      "gated": false,
+      "checked_at": 1790743235.8606765,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1638089,
+      "head_commit": "b0c4cfb276542881793f81a7ddf9f71921402d58"
+    },
+    {
+      "source_dataset": "EuroEval/polemo2-mini",
+      "datasets": [
+        "polemo2"
+      ],
+      "status": "accessible",
+      "revision": "b565f5cc441387c6ab62e4c105a221e5c63ad899",
+      "gated": false,
+      "checked_at": 1790743235.861091,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1134227,
+      "head_commit": "b565f5cc441387c6ab62e4c105a221e5c63ad899"
+    },
+    {
+      "source_dataset": "EuroEval/poner-mini",
+      "datasets": [
+        "poner"
+      ],
+      "status": "accessible",
+      "revision": "7aab741baed88bd99f50e3899b5dd88488c478e1",
+      "gated": false,
+      "checked_at": 1790743235.8706481,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 320844,
+      "head_commit": "7aab741baed88bd99f50e3899b5dd88488c478e1"
+    },
+    {
+      "source_dataset": "EuroEval/poquad-mini",
+      "datasets": [
+        "poquad"
+      ],
+      "status": "accessible",
+      "revision": "98b97a28700e833197b307f19c1609633626cf1c",
+      "gated": false,
+      "checked_at": 1790743235.8983612,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1644829,
+      "head_commit": "98b97a28700e833197b307f19c1609633626cf1c"
+    },
+    {
+      "source_dataset": "EuroEval/psc-mini",
+      "datasets": [
+        "psc"
+      ],
+      "status": "accessible",
+      "revision": "e9894e4eaa1a204f1c437659f0885aed47c6ae57",
+      "gated": false,
+      "checked_at": 1790743235.9458542,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1062547,
+      "head_commit": "e9894e4eaa1a204f1c437659f0885aed47c6ae57"
+    },
+    {
+      "source_dataset": "EuroEval/publico-mini",
+      "datasets": [
+        "publico"
+      ],
+      "status": "accessible",
+      "revision": "3153731935b25cbcb86ee5539a12b94ebfcd22fa",
+      "gated": false,
+      "checked_at": 1790743236.1949317,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 3687334,
+      "head_commit": "3153731935b25cbcb86ee5539a12b94ebfcd22fa"
+    },
+    {
+      "source_dataset": "EuroEval/ro-sent-mini",
+      "datasets": [
+        "ro-sent"
+      ],
+      "status": "accessible",
+      "revision": "7ef8263f940924aacce92c91cc02f9ca32f033ff",
+      "gated": false,
+      "checked_at": 1790743236.1977496,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 800657,
+      "head_commit": "7ef8263f940924aacce92c91cc02f9ca32f033ff"
+    },
+    {
+      "source_dataset": "EuroEval/ronec-mini",
+      "datasets": [
+        "ronec"
+      ],
+      "status": "accessible",
+      "revision": "d9faaffc51be55d3927b2bf3382d3afca5dd3736",
+      "gated": false,
+      "checked_at": 1790743236.2058156,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 400615,
+      "head_commit": "d9faaffc51be55d3927b2bf3382d3afca5dd3736"
+    },
+    {
+      "source_dataset": "EuroEval/rrn-mini",
+      "datasets": [
+        "rrn"
+      ],
+      "status": "accessible",
+      "revision": "bdc72f65521d348b7307578b8a25ce7d2ecc978c",
+      "gated": false,
+      "checked_at": 1790743236.292241,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1303400,
+      "head_commit": "bdc72f65521d348b7307578b8a25ce7d2ecc978c"
+    },
+    {
+      "source_dataset": "EuroEval/sb10k-mini",
+      "datasets": [
+        "sb10k"
+      ],
+      "status": "accessible",
+      "revision": "1a271bfd425ff6e75fe2ff0fc2ede0d165a2870b",
+      "gated": false,
+      "checked_at": 1790743236.3164682,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 65528,
+      "head_commit": "1a271bfd425ff6e75fe2ff0fc2ede0d165a2870b"
+    },
+    {
+      "source_dataset": "EuroEval/scala-ca",
+      "datasets": [
+        "scala-ca"
+      ],
+      "status": "accessible",
+      "revision": "18b2007f3f41702d0de09a2018abe8734967cd3a",
+      "gated": false,
+      "checked_at": 1790743236.3356986,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 3415632,
+      "head_commit": "18b2007f3f41702d0de09a2018abe8734967cd3a"
+    },
+    {
+      "source_dataset": "EuroEval/scala-de",
+      "datasets": [
+        "scala-de"
+      ],
+      "status": "accessible",
+      "revision": "7166de01694a6d6cc06fd368b500cec88f6b1927",
+      "gated": false,
+      "checked_at": 1790743236.3881178,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 2312451,
+      "head_commit": "7166de01694a6d6cc06fd368b500cec88f6b1927"
+    },
+    {
+      "source_dataset": "EuroEval/scala-el",
+      "datasets": [
+        "scala-el"
+      ],
+      "status": "accessible",
+      "revision": "b965b88a1b76fde9c599a7b4516a951d7086e4da",
+      "gated": false,
+      "checked_at": 1790743236.3959467,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 86862,
+      "head_commit": "b965b88a1b76fde9c599a7b4516a951d7086e4da"
+    },
+    {
+      "source_dataset": "EuroEval/scala-es",
+      "datasets": [
+        "scala-es"
+      ],
+      "status": "accessible",
+      "revision": "7af567057ea1ef89783c5723a36d3780c703cd05",
+      "gated": false,
+      "checked_at": 1790743236.5932581,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 3512826,
+      "head_commit": "7af567057ea1ef89783c5723a36d3780c703cd05"
+    },
+    {
+      "source_dataset": "EuroEval/scala-fi",
+      "datasets": [
+        "scala-fi"
+      ],
+      "status": "accessible",
+      "revision": "c687c0f504967f387587c41eee4d0d23dd487d1a",
+      "gated": false,
+      "checked_at": 1790743236.6395526,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 1460909,
+      "head_commit": "c687c0f504967f387587c41eee4d0d23dd487d1a"
+    },
+    {
+      "source_dataset": "EuroEval/scala-fo",
+      "datasets": [
+        "scala-fo"
+      ],
+      "status": "accessible",
+      "revision": "589bf8e142baa31881ea2f670c94acde1b4c5f5e",
+      "gated": false,
+      "checked_at": 1790743236.671835,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 79032,
+      "head_commit": "589bf8e142baa31881ea2f670c94acde1b4c5f5e"
+    },
+    {
+      "source_dataset": "EuroEval/scala-fr",
+      "datasets": [
+        "scala-fr"
+      ],
+      "status": "accessible",
+      "revision": "5af76237659d708f160a7ef65b459c06b68352fa",
+      "gated": false,
+      "checked_at": 1790743236.789881,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 2768923,
+      "head_commit": "5af76237659d708f160a7ef65b459c06b68352fa"
+    },
+    {
+      "source_dataset": "EuroEval/scala-it",
+      "datasets": [
+        "scala-it"
+      ],
+      "status": "accessible",
+      "revision": "7d31ea7e56580f0f8622d18be40bf77599d3d794",
+      "gated": false,
+      "checked_at": 1790743236.79163,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 1810772,
+      "head_commit": "7d31ea7e56580f0f8622d18be40bf77599d3d794"
+    },
+    {
+      "source_dataset": "EuroEval/scala-nb",
+      "datasets": [
+        "scala-nb"
+      ],
+      "status": "accessible",
+      "revision": "544d09f5b6e784ca615330d9219b74ebfc173f32",
+      "gated": false,
+      "checked_at": 1790743236.804099,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 1922527,
+      "head_commit": "544d09f5b6e784ca615330d9219b74ebfc173f32"
+    },
+    {
+      "source_dataset": "EuroEval/scala-nn",
+      "datasets": [
+        "scala-nn"
+      ],
+      "status": "accessible",
+      "revision": "442bc8cc1b97ac280d6f8b3631bada3eb7ffc53a",
+      "gated": false,
+      "checked_at": 1790743236.8207088,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 1827035,
+      "head_commit": "442bc8cc1b97ac280d6f8b3631bada3eb7ffc53a"
+    },
+    {
+      "source_dataset": "EuroEval/scala-pl",
+      "datasets": [
+        "scala-pl"
+      ],
+      "status": "accessible",
+      "revision": "af5e474cab598d98fea9df714145d9e2300e138f",
+      "gated": false,
+      "checked_at": 1790743236.8770564,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 133245,
+      "head_commit": "af5e474cab598d98fea9df714145d9e2300e138f"
+    },
+    {
+      "source_dataset": "EuroEval/scala-pt",
+      "datasets": [
+        "scala-pt"
+      ],
+      "status": "accessible",
+      "revision": "d209d8731e5a6f4813aef845fd4147e02c1f2a36",
+      "gated": false,
+      "checked_at": 1790743237.043558,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 662882,
+      "head_commit": "d209d8731e5a6f4813aef845fd4147e02c1f2a36"
+    },
+    {
+      "source_dataset": "EuroEval/scala-ro",
+      "datasets": [
+        "scala-ro"
+      ],
+      "status": "accessible",
+      "revision": "5e962844f2cb50d6cf87aca03c7f4d7d9cb2f2a1",
+      "gated": false,
+      "checked_at": 1790743237.071535,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 1374382,
+      "head_commit": "5e962844f2cb50d6cf87aca03c7f4d7d9cb2f2a1"
+    },
+    {
+      "source_dataset": "EuroEval/scala-sv",
+      "datasets": [
+        "scala-sv"
+      ],
+      "status": "accessible",
+      "revision": "a0a01f242a499284defa9162514fe29b50addcea",
+      "gated": false,
+      "checked_at": 1790743237.1147168,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 563714,
+      "head_commit": "a0a01f242a499284defa9162514fe29b50addcea"
+    },
+    {
+      "source_dataset": "EuroEval/scala-uk",
+      "datasets": [
+        "scala-uk"
+      ],
+      "status": "accessible",
+      "revision": "b1b4b3fbdc324c1df09a952d9f3897accd7a0750",
+      "gated": false,
+      "checked_at": 1790743237.2154083,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/full_train-00000-of-00001.parquet",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/full_train-00000-of-00001.parquet",
+      "head_bytes": 507950,
+      "head_commit": "b1b4b3fbdc324c1df09a952d9f3897accd7a0750"
+    },
+    {
+      "source_dataset": "EuroEval/scandisent-fi-mini",
+      "datasets": [
+        "scandisent-fi"
+      ],
+      "status": "accessible",
+      "revision": "2ce56803e10ea4d2bdde3c7b6f5b83e8ab73ddd0",
+      "gated": false,
+      "checked_at": 1790743237.2236464,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 236112,
+      "head_commit": "2ce56803e10ea4d2bdde3c7b6f5b83e8ab73ddd0"
+    },
+    {
+      "source_dataset": "EuroEval/sentiment-headlines-es",
+      "datasets": [
+        "sentiment-headlines-es"
+      ],
+      "status": "accessible",
+      "revision": "6357121680ccb1f20a26b946baba35451ca03510",
+      "gated": false,
+      "checked_at": 1790743237.2281451,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 57108,
+      "head_commit": "6357121680ccb1f20a26b946baba35451ca03510"
+    },
+    {
+      "source_dataset": "EuroEval/sentipolc16-mini",
+      "datasets": [
+        "sentipolc16"
+      ],
+      "status": "accessible",
+      "revision": "be2f860e008314868d8fd87aa87aba74cc9fd793",
+      "gated": false,
+      "checked_at": 1790743237.2289505,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 72400,
+      "head_commit": "be2f860e008314868d8fd87aa87aba74cc9fd793"
+    },
+    {
+      "source_dataset": "EuroEval/skolprov",
+      "datasets": [
+        "skolprov"
+      ],
+      "status": "accessible",
+      "revision": "baefd89c2c80f48913a1a3f6088f03f5c14be4d2",
+      "gated": false,
+      "checked_at": 1790743237.4191084,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 165534,
+      "head_commit": "baefd89c2c80f48913a1a3f6088f03f5c14be4d2"
+    },
+    {
+      "source_dataset": "EuroEval/sqad-mini",
+      "datasets": [
+        "sqad"
+      ],
+      "status": "accessible",
+      "revision": "442434c36eb4dfdd4f1ee2bdb2b2f6d834f13682",
+      "gated": false,
+      "checked_at": 1790743237.4463668,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 2979207,
+      "head_commit": "442434c36eb4dfdd4f1ee2bdb2b2f6d834f13682"
+    },
+    {
+      "source_dataset": "EuroEval/squad-it-mini",
+      "datasets": [
+        "squad-it"
+      ],
+      "status": "accessible",
+      "revision": "023d3dab819a18c95520720f74a8834e3f036f6b",
+      "gated": false,
+      "checked_at": 1790743237.4998748,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1059333,
+      "head_commit": "023d3dab819a18c95520720f74a8834e3f036f6b"
+    },
+    {
+      "source_dataset": "EuroEval/squad-nl-v2-mini",
+      "datasets": [
+        "squad-nl"
+      ],
+      "status": "accessible",
+      "revision": "44a840957f9a2d020c1a32938bd55a7c4bd1c718",
+      "gated": false,
+      "checked_at": 1790743237.522044,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 954243,
+      "head_commit": "44a840957f9a2d020c1a32938bd55a7c4bd1c718"
+    },
+    {
+      "source_dataset": "EuroEval/sst2-pt-mini",
+      "datasets": [
+        "sst2-pt"
+      ],
+      "status": "accessible",
+      "revision": "4e0622e0c7f5b24c89f9a6427fff0846b1848b1d",
+      "gated": false,
+      "checked_at": 1790743237.6434655,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 89653,
+      "head_commit": "4e0622e0c7f5b24c89f9a6427fff0846b1848b1d"
+    },
+    {
+      "source_dataset": "EuroEval/suc3-mini",
+      "datasets": [
+        "suc3"
+      ],
+      "status": "accessible",
+      "revision": "d8243105818293a2f5b4ba7ab6406e73098c9b8b",
+      "gated": false,
+      "checked_at": 1790743237.6669226,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001-9ce25f7ccfc669c2.parquet",
+        "data/train-00000-of-00001-97226488bbe3b1e2.parquet",
+        "data/val-00000-of-00001-2f9a78567414bdb5.parquet",
+        "dataset_infos.json"
+      ],
+      "head_file": "data/test-00000-of-00001-9ce25f7ccfc669c2.parquet",
+      "head_bytes": 309129,
+      "head_commit": "d8243105818293a2f5b4ba7ab6406e73098c9b8b"
+    },
+    {
+      "source_dataset": "EuroEval/sumo-ro-mini",
+      "datasets": [
+        "sumo-ro"
+      ],
+      "status": "accessible",
+      "revision": "708e3504bb3d843edd37b1c25aed93c70a06a75a",
+      "gated": false,
+      "checked_at": 1790743237.6696641,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 2890487,
+      "head_commit": "708e3504bb3d843edd37b1c25aed93c70a06a75a"
+    },
+    {
+      "source_dataset": "EuroEval/swedn-mini",
+      "datasets": [
+        "swedn"
+      ],
+      "status": "accessible",
+      "revision": "339a0ba4c4b3a1071f7c58c5e3a4d4479a44d6c3",
+      "gated": false,
+      "checked_at": 1790743237.7678304,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 5278381,
+      "head_commit": "339a0ba4c4b3a1071f7c58c5e3a4d4479a44d6c3"
+    },
+    {
+      "source_dataset": "EuroEval/swerec-mini",
+      "datasets": [
+        "swerec"
+      ],
+      "status": "accessible",
+      "revision": "ff5e9c50b5924accd23b396487f7a2e21e649785",
+      "gated": false,
+      "checked_at": 1790743237.9417589,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 424603,
+      "head_commit": "ff5e9c50b5924accd23b396487f7a2e21e649785"
+    },
+    {
+      "source_dataset": "EuroEval/trivia-et",
+      "datasets": [
+        "trivia-et"
+      ],
+      "status": "accessible",
+      "revision": "a3c11692a17fcc12a6ed44e566b199ed090d0567",
+      "gated": false,
+      "checked_at": 1790743237.9877431,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 45957,
+      "head_commit": "a3c11692a17fcc12a6ed44e566b199ed090d0567"
+    },
+    {
+      "source_dataset": "EuroEval/turku-ner-fi-mini",
+      "datasets": [
+        "turku-ner-fi"
+      ],
+      "status": "accessible",
+      "revision": "389a85c64672016202943e5d31f9554ec3753332",
+      "gated": false,
+      "checked_at": 1790743238.0411413,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 250710,
+      "head_commit": "389a85c64672016202943e5d31f9554ec3753332"
+    },
+    {
+      "source_dataset": "EuroEval/tydiqa-fi-mini",
+      "datasets": [
+        "tydiqa-fi"
+      ],
+      "status": "accessible",
+      "revision": "9585aa484da9c97a5c90186ded7dab2bd0503127",
+      "gated": false,
+      "checked_at": 1790743238.0729818,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 870186,
+      "head_commit": "9585aa484da9c97a5c90186ded7dab2bd0503127"
+    },
+    {
+      "source_dataset": "EuroEval/umimeto-qa",
+      "datasets": [
+        "umimeto-qa"
+      ],
+      "status": "accessible",
+      "revision": "8e96f264882e30039519f7e6b3d79ff338634a8d",
+      "gated": false,
+      "checked_at": 1790743238.137243,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 38252,
+      "head_commit": "8e96f264882e30039519f7e6b3d79ff338634a8d"
+    },
+    {
+      "source_dataset": "EuroEval/wiki-lingua-nl-mini",
+      "datasets": [
+        "wiki-lingua-nl"
+      ],
+      "status": "accessible",
+      "revision": "0c2c7bf15cefadf521d26cae4012ea13cbea29e5",
+      "gated": false,
+      "checked_at": 1790743238.1839974,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 3285151,
+      "head_commit": "0c2c7bf15cefadf521d26cae4012ea13cbea29e5"
+    },
+    {
+      "source_dataset": "EuroEval/wikiann-ca-mini",
+      "datasets": [
+        "wikiann-ca"
+      ],
+      "status": "accessible",
+      "revision": "389808ae4a10efac694307bf0fdfe3d8ab786f0f",
+      "gated": false,
+      "checked_at": 1790743238.3177838,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 134935,
+      "head_commit": "389808ae4a10efac694307bf0fdfe3d8ab786f0f"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-ca",
+      "datasets": [
+        "winogrande-ca"
+      ],
+      "status": "accessible",
+      "revision": "f362e22dcf6eb1a54287c1709154003a7c3b6755",
+      "gated": false,
+      "checked_at": 1790743238.3492043,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 84008,
+      "head_commit": "f362e22dcf6eb1a54287c1709154003a7c3b6755"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-de",
+      "datasets": [
+        "winogrande-de"
+      ],
+      "status": "accessible",
+      "revision": "a89f6c6c47c7f16e5e804771ec72e390217e6e0b",
+      "gated": false,
+      "checked_at": 1790743238.3668456,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 86064,
+      "head_commit": "a89f6c6c47c7f16e5e804771ec72e390217e6e0b"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-el",
+      "datasets": [
+        "winogrande-el"
+      ],
+      "status": "accessible",
+      "revision": "15b45b219b6625aea63065f515200ecf2e12fba3",
+      "gated": false,
+      "checked_at": 1790743238.5011277,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 122108,
+      "head_commit": "15b45b219b6625aea63065f515200ecf2e12fba3"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-es",
+      "datasets": [
+        "winogrande-es"
+      ],
+      "status": "accessible",
+      "revision": "0114116436fa847a85a7542bfe7c634d80e36fdb",
+      "gated": false,
+      "checked_at": 1790743238.5048945,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 83356,
+      "head_commit": "0114116436fa847a85a7542bfe7c634d80e36fdb"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-et",
+      "datasets": [
+        "winogrande-et"
+      ],
+      "status": "accessible",
+      "revision": "633cf60575bbfdb43afa97fcbb4be0875807b358",
+      "gated": false,
+      "checked_at": 1790743238.5142558,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 124333,
+      "head_commit": "633cf60575bbfdb43afa97fcbb4be0875807b358"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-fi",
+      "datasets": [
+        "winogrande-fi"
+      ],
+      "status": "accessible",
+      "revision": "b0b97590fe6e0129162d38fa16e33394ad1b7159",
+      "gated": false,
+      "checked_at": 1790743238.5536704,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 81729,
+      "head_commit": "b0b97590fe6e0129162d38fa16e33394ad1b7159"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-is",
+      "datasets": [
+        "winogrande-is"
+      ],
+      "status": "accessible",
+      "revision": "1be5e61b196bf1c947e14de060cd339a4c131388",
+      "gated": false,
+      "checked_at": 1790743238.606189,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 73252,
+      "head_commit": "1be5e61b196bf1c947e14de060cd339a4c131388"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-it",
+      "datasets": [
+        "winogrande-it"
+      ],
+      "status": "accessible",
+      "revision": "3229c396f2f154388d62eb03945bd06840175484",
+      "gated": false,
+      "checked_at": 1790743238.7749097,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 83996,
+      "head_commit": "3229c396f2f154388d62eb03945bd06840175484"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-nl",
+      "datasets": [
+        "winogrande-nl"
+      ],
+      "status": "accessible",
+      "revision": "ce62fbe0de33d6a365d9d04d4bcdfd55b88a09cf",
+      "gated": false,
+      "checked_at": 1790743238.7891343,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 81094,
+      "head_commit": "ce62fbe0de33d6a365d9d04d4bcdfd55b88a09cf"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-pl",
+      "datasets": [
+        "winogrande-pl"
+      ],
+      "status": "accessible",
+      "revision": "552963d840649478e5024619d8772e4a21e8095e",
+      "gated": false,
+      "checked_at": 1790743238.7988188,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 85027,
+      "head_commit": "552963d840649478e5024619d8772e4a21e8095e"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-pt",
+      "datasets": [
+        "winogrande-pt"
+      ],
+      "status": "accessible",
+      "revision": "36702672886ef6386684b9faa2114cbfa3cc582c",
+      "gated": false,
+      "checked_at": 1790743238.892302,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 81652,
+      "head_commit": "36702672886ef6386684b9faa2114cbfa3cc582c"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-ro",
+      "datasets": [
+        "winogrande-ro"
+      ],
+      "status": "accessible",
+      "revision": "f55b2a51cf82b2d174fad8b6466a0381f1cd5db5",
+      "gated": false,
+      "checked_at": 1790743238.9409122,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 85401,
+      "head_commit": "f55b2a51cf82b2d174fad8b6466a0381f1cd5db5"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-sv",
+      "datasets": [
+        "winogrande-sv"
+      ],
+      "status": "accessible",
+      "revision": "c9d27f4a1bae591455dac107179f34c2d65dcc0e",
+      "gated": false,
+      "checked_at": 1790743238.9418743,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 77605,
+      "head_commit": "c9d27f4a1bae591455dac107179f34c2d65dcc0e"
+    },
+    {
+      "source_dataset": "EuroEval/winogrande-uk",
+      "datasets": [
+        "winogrande-uk"
+      ],
+      "status": "accessible",
+      "revision": "4a94d19924a8d1e1d1285e09d881b8c8413dd2ec",
+      "gated": false,
+      "checked_at": 1790743239.02217,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 114464,
+      "head_commit": "4a94d19924a8d1e1d1285e09d881b8c8413dd2ec"
+    },
+    {
+      "source_dataset": "EuroEval/xlsum-fi-mini",
+      "datasets": [
+        "xlsum-fi"
+      ],
+      "status": "accessible",
+      "revision": "b8a4cbccf752130246259ef42e63c99a74c1c90a",
+      "gated": false,
+      "checked_at": 1790743239.081838,
+      "private": true,
+      "files": [
+        ".gitattributes",
+        "README.md",
+        "data/test-00000-of-00001.parquet",
+        "data/train-00000-of-00001.parquet",
+        "data/val-00000-of-00001.parquet"
+      ],
+      "head_file": "data/test-00000-of-00001.parquet",
+      "head_bytes": 1861196,
+      "head_commit": "b8a4cbccf752130246259ef42e63c99a74c1c90a"
+    }
+  ]
+}

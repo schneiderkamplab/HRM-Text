@@ -1,0 +1,15 @@
+{
+  "schema": "dfm13-agent-hash-hold-v1",
+  "admission_authorized": false,
+  "rows": [
+    {
+      "id": "42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840",
+      "candidate": {
+        "path": "data/dfm13/search-asof-scoped-repair3-20261001/records/42c1b060f2f8dc97feccf938b591a7219fd282548168d46225a0abb6e25aa840/candidate.json",
+        "sha256": "3962b6988be523d2f79c68890806eedb4ba5e559a7699947284309ab7a4b8535"
+      },
+      "assessment": "hard_hold_retrospective_date_misinterpretation",
+      "reason": "Answer calls November 2025 retrospective report a future projection/error and imports later economic impact into April 15 status. Missing citation is not the only problem; no further automatic retry."
+    }
+  ]
+}

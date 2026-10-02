@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import time
@@ -26,6 +27,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-key", default="inspectai")
     parser.add_argument("--log-jsonl", type=Path, default=None)
     parser.add_argument("--timeout", type=float, default=600.0)
+    parser.add_argument("--prompt-tokenizer", type=Path)
+    parser.add_argument("--prompt-chat-template", type=Path)
+    parser.add_argument("--max-context", type=int)
     parser.add_argument(
         "--gemma-native-bfcl-tools",
         action="store_true",
@@ -80,6 +84,58 @@ def normalize_stop(stop: Any) -> Any:
     if stop == []:
         return None
     return stop
+
+
+def fit_native_prompt(payload, tokenizer, template, max_context):
+    """Opt-in input truncation; keep template, input head/tail and output budget."""
+    output_tokens = payload.get("max_tokens")
+    if not isinstance(output_tokens, int) or not 0 < output_tokens < max_context:
+        raise ValueError("Explicit output budget must be positive and below context length")
+    budget = max_context - output_tokens
+
+    def count(messages):
+        rendered = tokenizer.apply_chat_template(messages, chat_template=template,
+                   tokenize=False, add_generation_prompt=True)
+        return len(tokenizer.encode(rendered, add_special_tokens=False))
+
+    original = count(payload['messages'])
+    if original <= budget:
+        return payload, None
+    messages = payload['messages']
+    if payload.get('tools') or len(messages) != 1 or messages[0]['role'] != 'user':
+        raise ValueError('Cannot truncate structured tool or multi-message prompts')
+    content = messages[0]['content']
+    ids = tokenizer.encode(content, add_special_tokens=False)
+
+    def candidate(keep):
+        head = (keep + 1) // 2
+        tail = keep // 2
+        text = tokenizer.decode(ids[:head], skip_special_tokens=False)
+        text += '\n[...]\n'
+        if tail:
+            text += tokenizer.decode(ids[-tail:], skip_special_tokens=False)
+        return [{'role': 'user', 'content': text}]
+
+    best = candidate(0)
+    if count(best) > budget:
+        raise ValueError('Output budget leaves no room for the chat template')
+    low, high = 0, len(ids) - 1
+    while low <= high:
+        keep = (low + high) // 2
+        trial = candidate(keep)
+        if count(trial) <= budget:
+            best = trial
+            low = keep + 1
+        else:
+            high = keep - 1
+    retained = count(best)
+    assert retained + output_tokens <= max_context
+    return {**payload, 'messages': best}, {
+        'policy': 'native_head_tail_v1', 'original_prompt_tokens': original,
+        'retained_prompt_tokens': retained, 'max_tokens': output_tokens,
+        'max_context': max_context,
+        'original_content_sha256': hashlib.sha256(content.encode()).hexdigest(),
+    }
 
 
 def as_openai_tool(function: dict[str, Any]) -> dict[str, Any]:
@@ -348,6 +404,14 @@ def make_app(args: argparse.Namespace) -> FastAPI:
     app = FastAPI(title="Native-compatible OpenAI proxy for HRM")
     target_base = args.target_base_url.rstrip("/")
     target_model = args.target_model_name or args.model_name
+    prompt_tokenizer = None
+    prompt_template = None
+    if getattr(args, 'prompt_tokenizer', None):
+        if not args.prompt_chat_template or not args.max_context:
+            raise ValueError('Prompt fitting requires tokenizer, chat template and context length')
+        from transformers import AutoTokenizer
+        prompt_tokenizer = AutoTokenizer.from_pretrained(args.prompt_tokenizer, local_files_only=True)
+        prompt_template = args.prompt_chat_template.read_text()
     if args.log_jsonl is not None:
         args.log_jsonl.parent.mkdir(parents=True, exist_ok=True)
 
@@ -416,6 +480,14 @@ def make_app(args: argparse.Namespace) -> FastAPI:
         if stop is not None:
             outgoing["stop"] = stop
 
+        context_fit = None
+        if prompt_tokenizer is not None:
+            try:
+                outgoing, context_fit = fit_native_prompt(
+                    outgoing, prompt_tokenizer, prompt_template, args.max_context)
+            except ValueError as exc:
+                raise HTTPException(status_code=400, detail=str(exc)) from exc
+
         log_record(
             {
                 "time": time.time(),
@@ -425,6 +497,7 @@ def make_app(args: argparse.Namespace) -> FastAPI:
                 "gemma_native_bfcl_tools": bfcl_tools is not None,
                 "gemma_native_bfcl_tools_as_text": bool(bfcl_tools is not None and args.gemma_native_bfcl_tools_as_text),
                 "bfcl_tool_count": len(bfcl_tools or []),
+                "context_fit": context_fit,
                 "outgoing": outgoing,
             }
         )

@@ -1,0 +1,154 @@
+version: 1
+seed: 20260924
+model: google/gemma-4-26B-A4B-it
+max_seq_len: 4096
+identity_per_language: 1000
+identity_repeat: 10
+transform_fraction: 0.25
+english_translation_fraction: 0.25
+other_translation_fraction: 0.0625
+languages:
+  en: English
+  da: Danish
+  nl: Dutch
+  nb: Norwegian Bokmål
+  nn: Norwegian Nynorsk
+  sv: Swedish
+  is: Icelandic
+  fo: Faroese
+  pl: Polish
+new_languages: [nl, nb, nn, sv, is, fo, pl]
+english_pairs: [sv, nl, nb, nn, pl]
+tasks: [denoising, prefix-continuation, span-filling, paragraph-reordering]
+sources:
+  dala-en:
+    repo: schneiderkamplab/dala-english-common-pile
+    revision: 243eaa2b50d740611db42b6b17e67c6e2fd2cfbf
+    kind: dala
+    language: en
+    patterns: [data/acceptability/train-*.jsonl.gz, data/correction/train-*.jsonl.gz]
+  dala-nl:
+    repo: schneiderkamplab/dala-dutch-dynaword
+    revision: a09dffe55c9db956f3ae39ed1916cb2d5dfaff73
+    kind: dala
+    language: nl
+    patterns: [data/acceptability/train-*.jsonl.gz, data/correction/train-*.jsonl.gz]
+  ultrachat-nl:
+    repo: BramVanroy/ultrachat_200k_dutch
+    kind: chat
+    language: nl
+    patterns: [data/train_sft-*.parquet]
+  dolci-nl:
+    repo: openeurollm/Dolci-Instruct-SFT-translated
+    kind: chat
+    language: nl
+    patterns: [nl/shard*.parquet]
+  dolci-pl:
+    repo: openeurollm/Dolci-Instruct-SFT-translated
+    kind: chat
+    language: pl
+    patterns: [pl/shard*.parquet]
+  dolci-sv:
+    repo: openeurollm/Dolci-Instruct-SFT-translated
+    kind: chat
+    language: sv
+    patterns: [sv/shard*.parquet]
+  scandi-instruct:
+    repo: V4ldeLund/scandi-translated-instruct
+    revision: 5da16f97d23330fd029fec4462140433f65295d7
+    kind: chat
+    languages: [da, nb, nn, sv]
+    patterns: [data/train-*.parquet]
+    review: owner inclusion approved 2026-09-25; use scoped Scandi admission with provenance, deduplication and quality audit, including generic Norwegian where lineage establishes it
+  norquad-wikipedia:
+    repo: danish-foundation-models/norwegian-dyna-instruct
+    revision: b7ea572dd64aa5d052e0086b57ad90da162db7d6
+    kind: chat
+    language: nb
+    patterns: [data/norquad-wikipedia/*.parquet]
+    note: owner included full Wikipedia training subset 2026-09-25; retain held-out passage-overlap annotations and quality audit
+  fleurs-alpaca-en-no:
+    repo: danish-foundation-models/norwegian-dyna-instruct
+    revision: b7ea572dd64aa5d052e0086b57ad90da162db7d6
+    kind: chat
+    language: nb
+    patterns: [data/fleurs-alpaca-en-no/*.parquet]
+    note: owner included 2026-09-25 despite FLORES evaluation-text origin; retain lineage and quality audit
+  dyna-instruct-no:
+    repo: danish-foundation-models/norwegian-dyna-instruct
+    kind: chat
+    languages: [nb, nn]
+    patterns: [data/magpie-qwen3-bokmaal/*.parquet, data/reasoning-norwegian/*.parquet, data/nb-samtale-pairs/*.parquet]
+    review: source quality and NB/NN language labels; NorQuAD and FLEURS now have separate owner-approved component routes
+  dyna-instruct-is:
+    repo: danish-foundation-models/icelandic-dyna-instruct
+    kind: chat
+    language: is
+    patterns: [data/**/*.parquet]
+    review: constituent currently has unknown license on source card
+  dyna-instruct-fo:
+    repo: danish-foundation-models/faroese-dyna-instruct
+    kind: chat
+    language: fo
+    patterns: [data/**/*.parquet]
+    review: constituent currently has unknown license on source card
+  pllumic:
+    repo: pelcra/PLLuMIC
+    kind: chat
+    language: pl
+    patterns: [pllumic.json]
+    review: gated access, inspect schema and identity answers
+  pllumic-syn:
+    repo: pelcra/PLLuMIC-syn-ext
+    kind: chat
+    language: pl
+    patterns: [pllumic_synthetic_extension_54k.jsonl]
+    review: gated access and overlap with PLLuMIC
+  pllum-align:
+    repo: NASK-PIB/PLLuM-Align
+    kind: preference-chosen
+    language: pl
+    patterns: [dialogs.jsonl, ranking.jsonl, rating.jsonl]
+    review: remove conflicting model identity and deduplicate chosen conversations
+  dyna-instruct-da-increments:
+    repo: danish-foundation-models/dfm-dyna-instruct
+    kind: chat
+    language: da
+    patterns: [data/**/*.parquet]
+    review: require inherited content fingerprint index; multilingual and English subsets must not be labelled Danish
+  dynaword-nl:
+    repo: danish-foundation-models/dutch-dynaword
+    kind: documents
+    language: nl
+    patterns: [data/**/*.parquet]
+    review: select high-quality constituents with documented rights
+  dynaword-no:
+    repo: danish-foundation-models/norwegian-dynaword
+    kind: documents
+    languages: [nb, nn]
+    patterns: [data/**/*.parquet]
+    review: select high-quality constituents; require explicit NB or NN labels
+  dynaword-sv:
+    repo: danish-foundation-models/swedish-dynaword
+    kind: documents
+    language: sv
+    patterns: [data/**/*.parquet]
+    review: select high-quality constituents; avoid uncorrected OCR
+  dynaword-is:
+    repo: danish-foundation-models/icelandic-dynaword
+    kind: documents
+    language: is
+    patterns: [data/**/*.parquet]
+    review: select high-quality constituents with documented rights
+  dynaword-fo:
+    repo: danish-foundation-models/faroese-dynaword
+    kind: documents
+    language: fo
+    patterns: [data/**/*.parquet]
+    review: select high-quality constituents; allow corpus exhaustion
+  dynaword-pl:
+    repo: SlayerLab/polish-dynaword
+    kind: documents
+    language: pl
+    patterns: [data/**/*.parquet]
+    review: select high-quality constituents with documented rights

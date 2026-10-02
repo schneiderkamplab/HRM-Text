@@ -1,0 +1,445 @@
+{
+  "schema": "dfm13-independent-search-batch-screening-v1",
+  "date": "2026-10-01",
+  "root": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2",
+  "reviewer_type": "coding_agent_manual_evidence_review",
+  "admission_authorized": false,
+  "active_ledgers_modified": false,
+  "new_model_calls": 0,
+  "new_paid_calls": 0,
+  "decision": {
+    "advance_remaining_48_bounded_candidate_generation": true,
+    "blanket_admission": false,
+    "conditions": [
+      "Continue individual evidence selection and small bounded batches; preserve all raw outputs and hashes.",
+      "Retain fail-closed handling of truncated finals and missing citations; do not repair or admit automatically.",
+      "Do not inject factual dates or answers solely through generation-only cautions. Put verified facts needed by the target in retained observations.",
+      "Qualify legacy technical instructions at the original request date and distinguish single-variant support from all-variant claims.",
+      "Review generated records independently; automated keeps are not sufficient admission proof."
+    ],
+    "rationale": "Useful outputs and locally repairable defects justify continuing candidate generation. This is not an estimate that the remaining 48 will all be acceptable. There is no need to demand perfection from every case before generating more."
+  },
+  "counts": {
+    "terminal_jobs": 8,
+    "complete_answers_reviewed": 5,
+    "incomplete_hard_holds": 3,
+    "broadly_useful_complete": 2,
+    "localized_creative_hold": 1,
+    "substantive_evidence_or_scope_holds": 2
+  },
+  "generalizable_findings": [
+    {
+      "priority": "high",
+      "issue": "Teacher-only factual hint",
+      "detail": "Polish 2012 year is introduced in generation-only caution and lost from learner context; retained evidence contains only relative year/month references."
+    },
+    {
+      "priority": "high",
+      "issue": "Historical implementation treated as current and complete",
+      "detail": "Waze 2019 parameter is presented as a 2025 must-use answer for all vignettes without proving continued support or multi-permit semantics."
+    },
+    {
+      "priority": "medium",
+      "issue": "Output-budget completion",
+      "detail": "Three of eight responses stop at exactly 512 tokens despite brevity instructions. Use more compact task-appropriate answer plans or a separately verified larger output allocation within 4096; never posthoc truncate or silently complete old fragments."
+    },
+    {
+      "priority": "medium",
+      "issue": "Creative provenance versus source facts",
+      "detail": "Kasamatsu's hypothetical amenities are legitimate creative content; factual US analogies need citations, not source proof that the imagined Japanese site exists."
+    }
+  ],
+  "limits": [
+    "Sample-bound manual agent assessment, not human/native gold.",
+    "No full unseen web pages or new external retrieval used to fill gaps in supplied observations.",
+    "Recorded student-render files inspected and pinned; renderer not rerun independently.",
+    "No processes, servers, source artifacts or admission ledgers changed."
+  ],
+  "rows": [
+    {
+      "id": "07b395e84677fbd1bfee9eb76aa8558d03948511a12941bac7cf20d5a07b11d8",
+      "outcome": {
+        "status": "error",
+        "error": "incomplete final answer",
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/07b395e84677fbd1bfee9eb76aa8558d03948511a12941bac7cf20d5a07b11d8/outcome.json",
+          "sha256": "0c1a954f5cda2433fedad6e7b21bbfd81f74ac13d6a369c2930a657b6709c381"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/07b395e84677fbd1bfee9eb76aa8558d03948511a12941bac7cf20d5a07b11d8/generation/actual-request.json",
+          "sha256": "bc77711482233f993529eb989e5f94d96e1d69a88ea9478dcd300c2454c57641"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/07b395e84677fbd1bfee9eb76aa8558d03948511a12941bac7cf20d5a07b11d8/generation/answer-response.json",
+          "sha256": "268103e8cea1d59d28eeefa8045ff70491eaa448c4ede4a36a84717b4e3eeaa2"
+        }
+      ],
+      "finish_reason": "length",
+      "completion_tokens": 512,
+      "topic": "Old Polish name elements",
+      "assessment": "hard_hold_incomplete",
+      "reason": "finish_reason=length at 512 tokens; answer ends mid-name in the suffix list. Not a complete candidate and not counted as a semantic false rejection."
+    },
+    {
+      "id": "5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d",
+      "outcome": {
+        "status": "reviewed",
+        "verdict": "needs_verification",
+        "reviewer_verdict": "needs_verification",
+        "independent_hold": null,
+        "essential_evidence_sufficient": true,
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d/outcome.json",
+          "sha256": "3661606553e5e2729eb27538c6855a177dbb47d56ec39f1b0aeccc9984d9eeb6"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d/candidate.json",
+          "sha256": "ccb95a20d838afc1905f428e6d69f48d0c5b03f3cbd5587af4d355064d4a7478"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d/student-render.json",
+          "sha256": "9a895151f0995142ef17e6ab057f1ee7b482794e97f5dad596343a94d4d24102"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d/generation/actual-request.json",
+          "sha256": "9671efb81a1fa85c4b8f156d1cbeb3904145d8becdc8950c4c13592fda7f693c"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d/generation/answer-response.json",
+          "sha256": "ebc94bcc3af863bb7842fab214e9be8f6030c233bf983da8a3ddb7608ed83a50"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/metadata/evidence/5235c2dc1c12762ce4ce5fe2dd749aa0f31a85208434726fff1431465dc5266d.json",
+          "sha256": "b6f0d57dd3bc01539f3c501dafc4d3ed2337473e44dc00e73a0ab4f7399fbda8"
+        }
+      ],
+      "original_timestamp": "2025-03-29 14:28:46.600000",
+      "exact_user_and_tool_retained": true,
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1765,
+          "target_tokens": 350,
+          "total_tokens": 2115,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1765,
+          "shifted_masked_tokens": 1764,
+          "target_kind": "final_answer"
+        }
+      ],
+      "finish_reason": "stop",
+      "completion_tokens": 353,
+      "topic": "Kasamatsu entertainment redevelopment",
+      "assessment": "useful_creative_answer_with_local_hold",
+      "reason": "Proposals are explicitly labelled original, and the US analogies (restaurants, boutiques, casino, Art Deco and monument) occur in the supplied JAIRS excerpts. Do not demand retrieved proof for imagined Japanese amenities. The answer lacks the required source URL. Casino installation is proposed without a local-feasibility condition; US examples do not establish Japanese implementation feasibility.",
+      "correction": "Add the observed JAIRS citation for US factual analogies; describe casino development as conditional on separate local feasibility/authorization, or offer a nongambling entertainment alternative. Do not invent a legal ruling. These are localized fixes, not evidence that the creative task is unusable."
+    },
+    {
+      "id": "7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454",
+      "outcome": {
+        "status": "reviewed",
+        "verdict": "keep",
+        "reviewer_verdict": "keep",
+        "independent_hold": null,
+        "essential_evidence_sufficient": true,
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/candidate.json",
+          "sha256": "a9dd46c289e353f913de91f38a48621a6e041fd54016225c68b609608c8d0144"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/student-render.json",
+          "sha256": "940c42301887a5cf8fade8682a94069bf6f7debc95a0dd601c63472b286a8305"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/generation/actual-request.json",
+          "sha256": "0149bc793cacc228de8b865818d605f6735aa6a32635b0798f7d155f948b72f9"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454/generation/answer-response.json",
+          "sha256": "e8d845060c5c7c039e3eb708d70a567c7b8f540f91b867b04292bb83d61110a4"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/metadata/evidence/7213d507b04bb7c5a2454593b5f0de0d544f9bc92dafc58245a1eabcbcbf8454.json",
+          "sha256": "2e3950736be884683b56ebbafe7e2e628110358506c3b63b4e5f9520cdddeb20"
+        }
+      ],
+      "original_timestamp": "2025-04-17 20:14:52.388000",
+      "exact_user_and_tool_retained": true,
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1387,
+          "target_tokens": 427,
+          "total_tokens": 1814,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1387,
+          "shifted_masked_tokens": 1386,
+          "target_kind": "final_answer"
+        }
+      ],
+      "finish_reason": "stop",
+      "completion_tokens": 430,
+      "topic": "nasza-biedronka.pl dispute",
+      "assessment": "hard_hold_missing_retained_date_evidence",
+      "reason": "Winner, claimant, trademark argument and September decision are in the supplied extract. The year 2012 is not. It appears in the actual request's generation-only caution ('Dated 2012 article'), which is absent from learner messages. Thus the dated answer has support in teacher-only metadata but not the retained evidence. This is not proof the year is false.",
+      "correction": "Include a verified publication-date observation in the retained evidence before regenerating, or omit unsupported calendar-year specificity. Preserve the source's distinction between ruling and subsequently unsuccessful settlement talks when describing the ending.",
+      "generalizable": "Fact-bearing generation-only cautions can supply answers that cannot be grounded from learner-visible observations."
+    },
+    {
+      "id": "820714598a7d4cf7cd8f9c0419231ba9ab25f8a07928d00017b9cf7e563e8487",
+      "outcome": {
+        "status": "error",
+        "error": "incomplete final answer",
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/820714598a7d4cf7cd8f9c0419231ba9ab25f8a07928d00017b9cf7e563e8487/outcome.json",
+          "sha256": "0c1a954f5cda2433fedad6e7b21bbfd81f74ac13d6a369c2930a657b6709c381"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/820714598a7d4cf7cd8f9c0419231ba9ab25f8a07928d00017b9cf7e563e8487/generation/actual-request.json",
+          "sha256": "fea7c7706c2ba6257a741d135296148d59f61a97240064edf9f64bd43e8243ee"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/820714598a7d4cf7cd8f9c0419231ba9ab25f8a07928d00017b9cf7e563e8487/generation/answer-response.json",
+          "sha256": "6424a014cc5decb6bd540349c5f5f8f1336fd93905884da0361ca34fc078b12e"
+        }
+      ],
+      "finish_reason": "length",
+      "completion_tokens": 512,
+      "topic": "Download linked xyz files",
+      "assessment": "hard_hold_incomplete",
+      "reason": "finish_reason=length at 512 tokens. Saved answer ends inside the main configuration block before completing the runnable usage. Do not auto-close or admit the fragment."
+    },
+    {
+      "id": "ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32",
+      "outcome": {
+        "status": "reviewed",
+        "verdict": "keep",
+        "reviewer_verdict": "keep",
+        "independent_hold": null,
+        "essential_evidence_sufficient": true,
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32/candidate.json",
+          "sha256": "3ee063cd33745f91db8c85ed60681894dda35c515a83b46297a2e00c03a39202"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32/student-render.json",
+          "sha256": "f551b327cd0bae06b33a5117595d72e2c8eb954e83251b2318737dc1fa9f4485"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32/generation/actual-request.json",
+          "sha256": "935edb6990bd216df2add48abcf83b412b638a6eb5fa3e382f0afbbea454e73b"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32/generation/answer-response.json",
+          "sha256": "5e51e3155ceed52812906265f75c62db5457ea037f797d23e1ffc8551e1d021e"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/metadata/evidence/ae46b63de8c8319065988823bcbb7e6044774c100f92572280cfaf3bc45e0b32.json",
+          "sha256": "e242f0d0850be9ca9e6b62fb4e81c5793dd7f322fe704e0f43471b86f582a182"
+        }
+      ],
+      "original_timestamp": "2025-04-16 08:56:10.584000",
+      "exact_user_and_tool_retained": true,
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 957,
+          "target_tokens": 291,
+          "total_tokens": 1248,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 957,
+          "shifted_masked_tokens": 956,
+          "target_kind": "final_answer"
+        }
+      ],
+      "finish_reason": "stop",
+      "completion_tokens": 294,
+      "topic": "Waze Live Map vignettes",
+      "assessment": "hard_hold_temporal_and_scope_overclaim",
+      "reason": "The parameter and eight IDs are in the 2019 discussion. The April 2025 answer nevertheless says users 'must' use it and calls IDs valid without marking the method as legacy/unverified at the request date. The extract does not document combining all permits or universal toll-road inclusion. It also repeats a historical participant's non-sharing request as current advice.",
+      "correction": "Explicitly frame this as a 2019 forum-described parameter, with current-at-request-date support and all-permit behavior unverified. Do not invent a separator or repeat-key syntax. Treat the historical non-sharing remark as source context, not a present user instruction."
+    },
+    {
+      "id": "e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c",
+      "outcome": {
+        "status": "reviewed",
+        "verdict": "keep",
+        "reviewer_verdict": "keep",
+        "independent_hold": null,
+        "essential_evidence_sufficient": true,
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c/candidate.json",
+          "sha256": "3c524553234cf5c804431e22fc6aab80bdb68645fcb823a5a2dddd6c2aa76ee2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c/student-render.json",
+          "sha256": "bf16f9db2589de5cc0102b2c37cf524a700d28bb9737b77c37d5fa0d8708ed18"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c/generation/actual-request.json",
+          "sha256": "69168c4e0cc91a044168396f909ba9234e36861ec18045c09128b4498be5a4c4"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c/generation/answer-response.json",
+          "sha256": "3012179386897b4f2cc7f068d0ea45d332f83023dabc1221e07461e7490467a1"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/metadata/evidence/e7e61db7907fd86eebb081e95b3d09120abcc185810e45c9b6c4336a7315f96c.json",
+          "sha256": "69e2fbbbb8b9366d6370d1223860b57e9e401c123c0765561276469e79b0d832"
+        }
+      ],
+      "original_timestamp": "2025-03-21 09:38:16.417000",
+      "exact_user_and_tool_retained": true,
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 861,
+          "target_tokens": 343,
+          "total_tokens": 1204,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 861,
+          "shifted_masked_tokens": 860,
+          "target_kind": "final_answer"
+        }
+      ],
+      "finish_reason": "stop",
+      "completion_tokens": 346,
+      "topic": "Sinners sermon analysis",
+      "assessment": "broadly_useful_with_optional_grounding_cleanup",
+      "reason": "The main analysis is supported: accumulatio, amplification, parallelism, polysyndeton/asyndeton and hell imagery appear in the exact excerpt. Repentance-oriented interpretation is a reasonable literary inference rather than a fabricated tool observation. No temporal variant conflict identified.",
+      "caveat": "The opening 1741/Great Awakening context is not in the supplied excerpt; remove it or retain a supporting historical passage for strictly source-contained training. This is an ancillary grounding gap, not a demonstrated falsehood or a reason to block further generation."
+    },
+    {
+      "id": "ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b",
+      "outcome": {
+        "status": "reviewed",
+        "verdict": "keep",
+        "reviewer_verdict": "keep",
+        "independent_hold": null,
+        "essential_evidence_sufficient": true,
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b/outcome.json",
+          "sha256": "addbef3e562c8c6e343a20dd40c77adcdd73688fdbd8ada5cdd87e6b9f468ac2"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b/candidate.json",
+          "sha256": "be75a709e682d1e96ccc7ad10b7d32a410f7b5d11b10b7b8fbd610eafbe853f1"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b/student-render.json",
+          "sha256": "a70aec8e2b5df89247ceb32814bc2d88a04b88617c3836708a327fb0f22f377f"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b/generation/actual-request.json",
+          "sha256": "da6295fd878464840a2370e4314eae98bce08e80b17ce4ef02579e2d4a1d0828"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b/generation/answer-response.json",
+          "sha256": "91b2ef8c36cd8bc1f35aa7c925af8f84c967cb3087c6a8c14a6f83285e850ab5"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/metadata/evidence/ea1b1cddb1eb9a6683dd78c4eb9cf50558ac88ac567a9a597fe7e5a94252635b.json",
+          "sha256": "f5aec22a05fb0619f75f634a0313180ded2a10bd750ebf3f549d75ee28f35aca"
+        }
+      ],
+      "original_timestamp": "2025-03-19 08:17:45.822000",
+      "exact_user_and_tool_retained": true,
+      "recorded_render": [
+        {
+          "target_message_index": 4,
+          "prompt_tokens": 1592,
+          "target_tokens": 322,
+          "total_tokens": 1914,
+          "fits_student_context": true,
+          "masked_prompt_tokens": 1592,
+          "shifted_masked_tokens": 1591,
+          "target_kind": "final_answer"
+        }
+      ],
+      "finish_reason": "stop",
+      "completion_tokens": 325,
+      "topic": "SDXL fine-tuning diversity",
+      "assessment": "broadly_supported",
+      "reason": "New observations really include both cited Replicate and rmsandu pages. The SDXL-specific account describes reduced pose/context diversity, LoRA/DreamBooth and inconsistent collar images. The answer says 'can' and 'may', not that all fine-tunes necessarily reduce diversity; no 2026 LLM result is substituted for SDXL.",
+      "caveat": "Prefer explicit attribution of the anecdotal experiment and conditional wording for the final generalization. No hard factual contradiction identified; this fresh evidence resolves the old absent-source problem only for this pinned candidate."
+    },
+    {
+      "id": "ea5c02b18bbdb2d6a14d9fc1e1b83bc06cd07f3f540f47282d6c1bfe99dbebe0",
+      "outcome": {
+        "status": "error",
+        "error": "incomplete final answer",
+        "admission_authorized": false
+      },
+      "pins": [
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea5c02b18bbdb2d6a14d9fc1e1b83bc06cd07f3f540f47282d6c1bfe99dbebe0/outcome.json",
+          "sha256": "0c1a954f5cda2433fedad6e7b21bbfd81f74ac13d6a369c2930a657b6709c381"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea5c02b18bbdb2d6a14d9fc1e1b83bc06cd07f3f540f47282d6c1bfe99dbebe0/generation/actual-request.json",
+          "sha256": "9b78c72c83cfdb0fffd3d7a646fa68f4e532191b0cff5aadf2cf4f93b9dbdb98"
+        },
+        {
+          "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/records/ea5c02b18bbdb2d6a14d9fc1e1b83bc06cd07f3f540f47282d6c1bfe99dbebe0/generation/answer-response.json",
+          "sha256": "4346a62da3ab09fe314831e686f38572099e456c1f6cdd27d7a7c1fb2a98a1d1"
+        }
+      ],
+      "finish_reason": "length",
+      "completion_tokens": 512,
+      "topic": "Creative German-division lesson",
+      "assessment": "hard_hold_incomplete",
+      "reason": "finish_reason=length at 512 tokens; ends mid-word during lesson activities. Creative nature does not excuse an incomplete artifact."
+    }
+  ],
+  "pins": [
+    {
+      "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/finished.json",
+      "sha256": "7d115882fea3990cb8e310d8d23f9c47d2db726f2e2dbb40175f301602050364"
+    },
+    {
+      "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/manifest.json",
+      "sha256": "8abcbdb7deb5dc0ba5cb93fd332f6eb8964865553d3950a3890228922d57b7ea"
+    },
+    {
+      "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/screening.json",
+      "sha256": "e217e5b03b714f976f9ae5413cdfe6b66364485373b0ae5bb228bd1a7c1d14b3"
+    },
+    {
+      "path": "data/dfm13/search-budgeted-remaining-batch1-20261001-v2/jobs.json",
+      "sha256": "5eb5a3f7700d7a685e8418ab438a3995680f23b3ae66207bd360de31ba89620f"
+    }
+  ]
+}

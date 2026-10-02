@@ -1,0 +1,36 @@
+{
+  "schema": "dfm13-agent-evidence-review-v1",
+  "admission_authorized": false,
+  "reviewer_type": "coding_agent_source_contained_review",
+  "scope": "Remaining four targeted16 automated keeps, read against complete delivered observations and selected full-cache date context. This is not legal advice, an independent web fact check, or human gold.",
+  "rows": [
+    {
+      "id": "3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a",
+      "candidate_sha256": "5000bac60152ba91b46aaf694d4e34a192885683a2a20533f58d972f40487ef9",
+      "assessment": "hold_fragmented_evidence_and_scope_generalization",
+      "evidence_diagnosis": "USCIS observation contains sentence fragments, including an incomplete Otherwise USCIS will not accept Form EOIR-40 condition. The jurisdiction sentence explicitly limits itself to Part 2 Item Number 8; answer removes that scope. One enumerated asylum-date class is not a complete eligibility test. The answer does not establish that the cited annual cap applies to the specific relief class.",
+      "next_step": "Extract complete contiguous PDF clauses with headings and surrounding exceptions from the already cached content before any further answer. Do not repair by merely adding citations."
+    },
+    {
+      "id": "e19e0b36aca7eb8308d0c4645f51197b3be1de912b688dfa497ea9f619c329eb",
+      "candidate_sha256": "c4f21ee37d8c495c95fdc94fa432a4d88062845cadac4822a8a4ad87161fa32b",
+      "assessment": "hold_partial_document_identification_unsupported_legal_status",
+      "evidence_diagnosis": "Titles support locating US Bluetooth guidance and its bibliography. They do not support the blanket claim that these documents are not mandatory absent departmental or contractual incorporation, nor confirm revision currency at the original date. User jurisdiction is unspecified; answer does at least label the US context.",
+      "next_step": "Retain exact observed document links, explicitly mark draft material, ask jurisdiction and avoid legal-force assertions based only on titles."
+    },
+    {
+      "id": "d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef",
+      "candidate_sha256": "d02d9b80b0717a0d99392f8478a8e3d734ad0263bb812602f34093964bc941a1",
+      "assessment": "hold_partial_report_relative_time_reanchoring",
+      "evidence_diagnosis": "Full cached Science text begins Addendum Wednesday Feb 5 and provider date is Feb 5 2025. The delivered observation omits that header. Answer opens as of March 18 and repeats over the next two months without attributing that interval to February. It correctly avoids inventing a total and calls the NSF figure staff, but this is not an updated count of scientists.",
+      "next_step": "Preserve the cached date header in a new observation, explicitly attribute the February forecast and state that staff is not a scientist count. No new search needed for that narrow historical partial answer."
+    },
+    {
+      "id": "4f8af9d116f97fa0f9f4196e8157d0a2c5c2ea6ca19229f27fa21c5b292299b8",
+      "candidate_sha256": "2cdf52440ef6eca95634037f4acc01f9402f3299d4feda00d54681aacab8e4ff",
+      "assessment": "hold_incomplete_list_and_global_absence_inference",
+      "evidence_diagnosis": "Observation supports a main-set mythic count, one named card and a gallery link. It does not support the claim that all names have not been listed in a single text format. Nor does the answer supply the requested names or establish all were revealed by the question cutoff. Cached collecting article has provider date March 18, so this is not a demonstrated future-source error.",
+      "next_step": "Inspect cached gallery/card entries with reveal dates; otherwise retain only an explicit limited-evidence answer, not a completed all-cards list."
+    }
+  ]
+}

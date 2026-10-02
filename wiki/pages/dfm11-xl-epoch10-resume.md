@@ -383,3 +383,37 @@ logged atomically with explicit per-metric epoch axes and the original
 fractional epochs. Main-run EuroEval averages are respectively 0.585735,
 0.611873, 0.625129, 0.671606, 0.657055, 0.690486; comparison is 0.670112.
 These corrective history rows do not delete older incomplete average rows.
+
+### Final Epoch-10 HF Upload Attempt (2026-09-23)
+
+Final checkpoint is `checkpoints/dfm11/XL-from-dfm10-epoch9/fsdp2_epoch_10`,
+step 2,877,261; EMA export is `exports/dfm11_XL_epoch10_epoch_10_ema_hf`.
+Created private HF model repo `danish-foundation-models/DFM-Mimir-2609` at
+user request. Upload was blocked by HTTP 403: organization private repository
+storage limit reached. The model upload did not complete; do not treat the
+repository as a published checkpoint. Preserve privacy; do not switch to a
+public repository to bypass quota. Requires more private storage or approval
+to use a different namespace. The unmodified local export still has
+`fix_mistral_regex=true`, matching its original production evaluation export.
+
+Public-release update (2026-09-23): user explicitly authorized publication as
+`danish-foundation-models/DFM-Mimir-v1.5`, superseding the private upload plan.
+All five original export files were uploaded unchanged at revision
+`f38913a7a976ecadd1e14eb9787f7605b3493653`, with sizes, SHA256 for LFS files,
+and exact small-file contents verified. Anonymous access was verified. The
+earlier empty private `DFM-Mimir-2609` repo was left unchanged.
+
+`scripts/package_mimir_v15_card.py` prepares a matching v1-style model card,
+license/logo copied from v1 revision `2fbf6ea5ce8794ee1f2684939a579d4741b4ca7a`,
+current-checkpoint evaluation tables/figure and machine-readable metrics under
+`logs/releases/DFM-Mimir-v1.5`. The card explicitly distinguishes current
+protocols and tokenizer settings from v1 and does not transfer v1 memorisation
+audit findings to the new checkpoint. Safetensors header inspection gives
+1,786,775,040 total parameters, 981,468,672 excluding embedding/head, all BF16.
+
+Documentation/assets upload completed and verified at revision
+`41aa96742c4cca2f2d925fc4897ee2a8a1254a40`. All v1 package filenames are present,
+plus `evaluation_results.json`; v1's comparison plot was replaced with a new
+epoch-10 figure. The card includes the corresponding task tables, use/runtime
+requirements, tokenizer caveat, historical report/audit distinction, limitations,
+license, funding/partners and citation. Weights and tokenizer remain unchanged.

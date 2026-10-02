@@ -1,5 +1,70 @@
 # Operational Knowledge and Plans
 
+* [DFM13 RepoChat Full Campaign](dfm13-repochat-full-campaign.md) - Whole-source native trajectories and automatic bounded technical follow-up.
+
+* [DFM13 Dataset Additions](dfm13-plan.md) - Vote-selected AI-Arenaen chats and incremental source preparation.
+* [DFM13 jjzha Native Additions and Audit](dfm13-jjzha-native-additions.md) - Train-only structured conversions, IMDb sampling and full CroCo audit clients.
+* [DFM13 Pending Arena Preparation](dfm13-pending-arena-preparation.md) - Local-only preferred-target audit candidates, source pins, duplicate ledgers and remaining coverage gaps.
+* [DFM13 Arena Quality Review](dfm13-arena-quality-review.md) - Preferred-response samples and retrieval/tool-context feasibility.
+* [DFM13 Search Reviewer Controls](dfm13-search-reviewer-controls.md) - Decoder recovery and bounded factual calibration on saved answers.
+* [DFM13 Search Parallel Budget Recovery](dfm13-search-parallel-budget-recovery.md) - Paid-call ceiling, provider failures and cached-only recovery.
+* [DFM13 RepoChat Reviewer Calibration](dfm13-repochat-reviewer-calibration.md) - Frozen-answer reviewer controls, trajectory gaps, and scale readiness.
+* [DFM13 Preferred Arena Bulk Audit](dfm13-arena-bulk-audit.md) - Authorized triage, disconnect recovery and residual semantic risks.
+* [DFM13 Arena Calibrations](dfm13-arena-calibration.md) - Shared GPU servers, XL pause/resume and 1000/100/100 audit/trajectory pilots.
+* [DFM13 Arena Reviewer V4](dfm13-arena-reviewer-v4.md) - Reviewer implementation and frozen semantic calibration experiments.
+
+* [DFM12 Multilingual EuroEval Registry](dfm12-euroeval-multilingual-registry.md) - Nineteen-language task coverage, cached-runtime access checks and benchmark contamination cautions.
+
+* [DFM12 Audit Client Throughput](dfm12-audit-client-throughput.md) - HTTP-pool feeding investigation and runtime verification.
+
+* [EMA Stochastic Review Handoff](dfm12-identity-stochastic-review.md) - Partial semantic review, targeted final-only SFT exports, parent packer verification and exposure/EMA readiness decisions.
+
+* [EMA Identity Preferences](dfm12-identity-ema-preferences.md) - Full latest EMA review, final-only SFT/DPO exports and fail-closed pilot-dependent sampling queue.
+
+* [DFM12 European CPU Preparation](dfm12-european-cpu-preparation.md) - Incremental screening, replenishment, evidence and audit queue ownership.
+
+* [DFM12 Second European Language Wave](dfm12-european-expansion.md) - Twelve new languages, shared CPU preparation, TrustLLM answers and OPUS mesh.
+* [DFM12 European Synthetic Production](dfm12-european-synthetic-production.md) - Twelve-language synthetic generation/audit targets, supply tiers and isolated execution.
+* [Identity Full Evaluation Recovery](dfm12-identity-full-eval-recovery.md) - Final EMA checkpoint archive-path repair and W&B completeness verification.
+* [Identity Versus Epoch 10](dfm12-identity-epoch10-comparison.md) - Suite changes, protocol failures, and temporary campaign pause.
+* [Joint Nineteen-Language Production](dfm12-joint-synthetic-production.md) - Shared scheduling with preserved campaign ledgers and 512-client endpoint ceilings.
+* [Identity EuroEval Regression Review](dfm12-identity-euroeval-regression-review.md) - Four largest declines and the tokenizer confound.
+* [DFM12 Multilingual Reviewer Calibration](dfm12-multilingual-calibration.md) - Diagnostic controls and reviewer startup calibration.
+* [DFM12 Multilingual Infrastructure Retry](dfm12-multilingual-infrastructure-retry.md) - Stage-aware quarantined transport retries, bounded ownership and half-GPU memory guard.
+* [DFM12 Indexed Multilingual Review Contract](dfm12-multilingual-indexed-review.md) - New opt-in bounded evidence IDs, precise structural errors and CPU calibration preflight.
+* [Multilingual Contract Repair and Recalibration](dfm12-multilingual-contract-calibration.md) - New generation/reviewer contracts and isolated post-retry calibration.
+* [Multilingual Calibration V6 Client](dfm12-multilingual-calibration-v6.md) - Pinned pilot execution, results, and infrastructure recovery.
+* [Generation Grammar Diagnosis](dfm12-generation-grammar-diagnosis.md) - Streaming evidence of compact-grammar content failures and expensive token masks.
+* [Native-Schema 35K Pilot](dfm12-multilingual-native-pilot.md) - Authorized seven-language pilot, retained strict contracts and borrowed-server ownership.
+* [Multilingual Quarter Production](dfm12-multilingual-quarter-production.md) - Accepted-row targets, broad source pools and resumable production ownership.
+* [Multilingual Production Outage Recovery](dfm12-multilingual-outage-recovery.md) - Infrastructure-only replay with preserved generation, immutable failure archives and transactional quota safety.
+* [21-Language Identity Extension](dfm12-identity-multilingual-extension.md) - CPU-prepared accepted-quota queue, corrected retained inventory and explicit coordination gate.
+* [Non-Tool Generation Contract V4](dfm12-multilingual-generation-v4.md) - Strict raw JSON, escape-aware grammar, turn pairs and CPU Gemma context checks.
+* [Native Multilingual Tool Dialogue Contract](dfm12-multilingual-tool-dialogue.md) - Opt-in v4 subtype schemas, canonical argument grounding and CPU-tested Gemma-native tool rendering.
+
+* [DFM12 Multilingual Extension Plan](dfm12-multilingual-extension-plan.md) - 42 proposed datasets, language targets and cost estimates.
+* [DFM12 Diagnostic Server](dfm12-diagnostic-server.md) - Bounded TP2 headroom server, exact-process cleanup and diagnostic endpoint.
+* [DFM12 Multilingual Reviewer Calibration](dfm12-multilingual-calibration.md) - Diagnostic controls, heldout splits and actual Gemma review rendering inspection.
+* [European Language Expansion Ranking](european-language-expansion-ranking.md) - Five-axis prioritization of 28 additional languages.
+* [DFM12 Missing Instruction Candidates](dfm12-missed-instruction-candidates.md) - Additional existing-language SFT, native prompt seeds, duplicates and quality holds.
+* [Portuguese Variant Reassessment](portuguese-expansion-reassessment.md) - AMALIA/GigaVerbo-v2 supply and remaining variant-specific DaLA gates.
+* [Joint European Language Priorities](european-language-expansion-joint-priorities.md) - Combined broad-training and DaLA correction-readiness recommendations.
+* [European Language Expansion Sources](european-language-expansion-sources.md) - HF source IDs, per-language supply and quality caveats.
+
+* [Mimir Training Corpus Collections](mimir-training-corpus-collections.md) - Public DFM8 and DFM11 Hub memberships.
+
+* [DFM12 audit readiness](dfm12-audit-readiness.md)
+* [DFM12 Export Orchestration](dfm12-export-orchestration.md) - Accepted-only publication and completion handoff.
+* [DFM12 Identity Export](dfm12-identity-export.md) - Audited identity packages and provenance validation.
+* [DFM12 DA/EN Identity Extension](dfm12-identity-extension.md) - Original-preserving expansion with 500 new training and 50 held-out conversations per language.
+* [DFM12 Second Identity Interlude](dfm12-identity-continuation.md) - Fresh-cursor continuation, non-EMA assessment and bounded full-suite approval gate.
+* [DFM12 Third Identity Evaluation](dfm12-identity-evaluation-v3.md) - Fresh-holdout pins, old-heldout development policy, and review-required operational completion.
+* [DFM12 Eight-GPU Identity Evaluation](dfm12-identity-evaluation-v4.md) - Whole-conversation dynamic sharding, atomic merge checks, and corrected-corpus review gate.
+* [Sealed Identity Composition EMA Evaluation](dfm12-identity-composition-evaluation.md) - Pinned composition holdout, post-training EMA verification, bounded GPU memory and mandatory manual semantic review.
+* [DFM12 Scoped Inclusion Audits](dfm12-scoped-inclusion-audits.md) - Isolated Scandi, NorQuAD and FLEURS audit queues.
+* [DFM12 token accounting](dfm12-token-accounting.md)
+* [DFM12 additional DaLA registration](dfm12-dala-registration.md)
+
 * [DFM11 Nemotron Assessment History](dfm11-nemotron-history.md) - Superseded proposal retained during origin/local reconciliation.
 
 ## Operations
@@ -10,6 +75,8 @@
 * [Open Issues](open-issues.md) - Known blockers, risks, and future improvements.
 
 ## Data Policies and Pipeline
+
+* [DFM12 Paragraph Repair](dfm12-paragraph-repair.md) - Pinned boundary diagnostics and isolated, bounded CPU paragraph recovery.
 
 * [Data Mix Policy](data-mix-policy.md) - Dataset inclusion, licensing, provenance, and privacy policy.
 * [Source Filtering](source-filtering.md) - Filtering rules applied before conversion and tokenization.
@@ -70,7 +137,22 @@
 
 ## Model and Runtime
 
+* [DFM12 Dataset Plan](dfm12-plan.md) - DaLA and multilingual additions; final sampling deferred.
+* [DFM12 Addition Status](dfm12-status.md) - Dataset-by-dataset status of identity, instructions, transformations and translations.
+* [DFM12 Training Composition Report](dfm12-training-composition-report.md) - Language/task token accounting and corruption-statistics evidence boundaries.
+* [XL DFM12 Epoch 11 Without Identity](dfm12-xl-epoch11-noidentity.md) - Original XL continuation, one-epoch sampling, exact LR boundaries and gated training/evaluation schedule.
+* [DFM12 Identity Generation](dfm12-identity-generation.md) - Nine-language generation, pinned training template, recovery and pilot audit gates.
+* [DFM12 Paragraph Repair](dfm12-paragraph-repair.md) - Paragraph-boundary diagnosis and isolated repair candidates.
+* [DFM12 Island Instructions](dfm12-island-instruct.md) - Icelandic and Faroese instruction preparation.
+* [DFM12 Polish Instructions](dfm12-polish-instructions.md) - Polish adapters, access blockers and deduplication.
+* [DFM12 Danish Increments](dfm12-danish-increments.md) - Inherited-source comparison and incremental inclusion evidence.
+* [DFM12 Norwegian DynaInstruct](dfm12-norwegian-dynainstruct.md) - Variant verification and eligible Norwegian instruction staging.
+* [DFM12 Scandi Instructions](dfm12-scandi-translated-instruct.md) - Constituent review, contamination findings and unresolved holds.
+* [DFM12 Structure-Preserving Reordering](dfm12-structure-preserving-reordering.md) - Native paragraph recovery and explicitly synthetic block fallbacks.
+* [DFM12 Component Preparation](dfm12-components.md) - Identity, transformations, OPUS, source reviews and resumable generation/auditing.
+
 * [XL DFM11 Epoch Ten Resume](dfm11-xl-epoch10-resume.md) - Transfer the 2,482,084-step XL endpoint and continue the same run with a 50K LR cooldown.
+* [XXL Resume After DFM12 Audit](dfm11-xxl-after-dfm12-audit-resume.md) - Deferred GPU-release handoff from step 650500, preserved training settings, and estimated epoch-boundary timing.
 
 * [Model Architecture](model-architecture.md) - HRM/CRM variants, checkpoint formats, serving, and resume behavior.
 * [FlashAttention on B200](flashattention-b200.md) - NVIDIA B200 attention and CUDA integration reference.
@@ -88,3 +170,11 @@
 * [Original-L Reproduction Records](original-l-reproduction/) - Focused reproduction procedures and observations.
 
 * [Linux PrefixLM qualification](linux-prefixlm-qualification.md) - Linux test environment, evidence, and acceptance gates.
+- [First Pilot Re-audit](dfm12-first-pilot-reaudit.md) - Recheck historical multilingual accepts and credit quarter quotas.
+
+* [Audited European DaLA](dfm12-audited-european-dala.md) - Passed-only producer packages and isolated local training additions.
+* [Identity Final Eval Recovery](dfm12-identity-final-eval-archive-recovery.md) - Archive mapping and serialized W&B recovery for step 2897261.
+* [Multilingual Headline Populations](multilingual-headline-populations.md) - Versioned complete-coverage averages with explicit metric units and origins.
+* [TP8 Training Headroom](dfm13-tp8-training-headroom.md) - Small owned Gemma service beside XL training and measured capacity.
+* [Repo Bulk Interlude](dfm13-repo-bulk-checkpoint-interlude.md) - Complete checkpoint gate, all-GPU-stage completion and automatic existing-plan resume.
+* [Mimir Search](dfm13-mimir-evidence.md) - Danish/English/multilingual search corpus, temporal quotas and evidence-quality gates.

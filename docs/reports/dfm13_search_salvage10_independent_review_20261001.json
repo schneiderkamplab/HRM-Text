@@ -1,0 +1,115 @@
+{
+  "rows": [
+    {
+      "id": "454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/454d90e05f79e53221c1e48a749cb5bbdd22b88ebcc30700b60d4ab8838f65c9/candidate.json",
+      "candidate_sha256": "41dc953920479711e0e46c64f9607e07253296b5e46ac087323dc0ebc64c6ece",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "hold",
+      "reason": "Answer explicitly claims March 2025 availability but uses pages titled 2026, including Qwen3-30B-A3B-Thinking-2507. Current source claims are not evidence of historical availability. Reviewer missed a material date contradiction.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/3e6744b772096d0d9ab76d8054e8a55dcf8687bd86e031ef3fa25ad8eae63e0a/candidate.json",
+      "candidate_sha256": "824f3b022ab9af4e66b9297cedd17cbfa4c8c3de9622f65b022c0a9f790ea61a",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "hold",
+      "reason": "EOIR answer substitutes generic filing/proceedings discussion for Salvadoran eligibility criteria. The official form excerpt ends at \"that:\" and omits the actual conditions. Acknowledging missing evidence does not make this a complete eligibility answer. Use the existing complete-clause CPU draft for separate assessment, not this automated keep.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/e59135682cb5c6f6a7c5b6200b2f7bb4fb463ad68193d912535f886a9cdb87b9/candidate.json",
+      "candidate_sha256": "9cb8609d3591e6acf618ded853daa2030b345fa9a7db3cf26a85456cd6810ca8",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "supported_scoped",
+      "reason": "Read all five observed pages. IE1000 and IE2000/3000/4000/5000 series are explicitly named in the Cisco datasheet; features and qualified management variability are supported. This version corrects prior citation assignment. This is a scoped series overview, not a complete SKU list or historical inventory certification.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/3812a931b7b0e5c5d2fd0844e29185fb25eb3de22901bd2d42c067916ee94efe/candidate.json",
+      "candidate_sha256": "61906b5deb08e67052cd345216433568603da3169c3addcb9c982fdddaa63928",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "hold",
+      "reason": "Answer generalizes member-only service to noncommercial/tax-free treatment from simplified secondary excerpts. Municipal observations distinguish affiliation scenarios and the full eligibility conditions are absent. Disclaimer does not restore missing conditions. Do not certify a tax answer from this keep.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "4f8af9d116f97fa0f9f4196e8157d0a2c5c2ea6ca19229f27fa21c5b292299b8",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/4f8af9d116f97fa0f9f4196e8157d0a2c5c2ea6ca19229f27fa21c5b292299b8/candidate.json",
+      "candidate_sha256": "0e9c7939897fe12bcc99382a66330b029189dd091ad78d4862d180f35eea4b85",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "partial_only",
+      "reason": "Observed official excerpts support 20 mythics, Elspeth and Commander rarity counts. Answer honestly lacks all requested names, so not task-complete. Retrieved article historical availability is not established for March 20. Retain only in an explicitly partial-answer review lane.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/d8174c0de3ffaafd138361834e3d99ed5d7992f8a71217abd9ff672566ebc7ef/candidate.json",
+      "candidate_sha256": "c5aacdb433d1b31185a5b01b99216e03e6276309536076bfce3d223ddb26bd7e",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "hold",
+      "reason": "March 18 question answered with Guardian March 19 material and NBC text explicitly describing April 2025 dismissals. Also mixes volunteer assessment contributors with government employee firing counts. Concrete temporal/population false accept.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "f911a4e737873778da9ecfdbb9da9cd474d659ef5f08b5d6cc75d996d2545f30",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/f911a4e737873778da9ecfdbb9da9cd474d659ef5f08b5d6cc75d996d2545f30/candidate.json",
+      "candidate_sha256": "e3dfea4e8f1ca7c6687ae603674b0116381e31574fa1859f5027cdafb810b822",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "partial_only",
+      "reason": "Accurately says no MarkText installation-size evidence and limits the comparison to observed VSCode-vs-VisualStudio text. No quantitative answer to requested MarkText-vs-VSCode size comparison. Evidence-gap response, not a successful retrieval answer.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/a9f75ccdbe62282b3f4ee44786744838f7893121709409a753812cb3daae61c2/candidate.json",
+      "candidate_sha256": "2dd827a6bbbaa4277319d1041e1f621c005d5462e8b848a28544dcc0bc8a5ef4",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "hold",
+      "reason": "2021 quotation and distinction from the 2023 profile are supported, but answer repeats serious lawsuit allegations while omitting explicit denial available in observations. It also treats the user paraphrase as a literal phrase to locate. Requires balanced, narrowly scoped correction, not automatic keep.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "12490c9672e0c6073f1eec45ff650aa67c9786343f930db8675efedddb4e993c",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/12490c9672e0c6073f1eec45ff650aa67c9786343f930db8675efedddb4e993c/candidate.json",
+      "candidate_sha256": "b8795cc70dc1643108aaa20ae8c1626aa131929aa9f14285562e123e127ae7e4",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "supported_scoped",
+      "reason": "Read all four pages. Answer attributes January layoffs and distinguishes organizational context from unknown specific reasons; does not invent internal financial motivation. Facebook reaction is explicitly attributed. Useful scoped explanation of evidence limits, not proof of why the unit was selected.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    },
+    {
+      "id": "70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801",
+      "candidate": "data/dfm13/search-salvage32-20261001/records/70d1096d94933ee6b062c0cc40f06e865d4c6552a2d7fcadf1cba5591c4f9801/candidate.json",
+      "candidate_sha256": "2965554bc2fd90238a4b273d7566de9c24cef50bb43ef5e38cbe4f4f55c91c4a",
+      "automated_outcome_sha256": "f2de8151448522ae1e2ced7f499704fde55ddbb01fe08eecac9d71cd713cb1fa",
+      "assessment": "hold",
+      "reason": "Question may mean diesel share in the manufacturer portfolio, but answer assumes vehicle mass without clarifying. Evidence is a Quora generalization and a 2026 seven-seater page, not diesel-model mass data as of May 2025. Admits missing comparison but does not resolve ambiguity; not a verified substantive answer.",
+      "reviewed_against": "entire saved final answer, original prompt/as-of and all job pages",
+      "admission_authorized": false
+    }
+  ],
+  "summary": {
+    "supported_scoped": 2,
+    "partial_only": 2,
+    "hold": 6
+  },
+  "review_type": "CPU agent assessment independent of automated judge; not human certification",
+  "source_jobs_sha256": "6b2a2a4da10bc8b31a60441cf7475f3712c25a63bf8529960e717a0798677306",
+  "original_manual16_unchanged": true,
+  "existing_holds_not_cleared": true,
+  "provider_calls": 0,
+  "admission_authorized": false
+}

@@ -32,6 +32,10 @@ DANISH_KEYS = [
     "euroeval/da/instruction-following/ifeval-da/instruction_accuracy",
 ]
 
+STRICT_DALA_KEY = "dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1"
+SEMANTIC_DALA_KEY = "dfm_eval/dala/semantic_v1/macro_f1"
+SEMANTIC_PREFIXES = frozenset({"headline_avg_semantic_v1", "suite_avg_semantic_v1"})
+
 ENGLISH_KEYS = [
     "eval/ARC/acc",
     "eval/BoolQ/acc",
@@ -228,6 +232,13 @@ def build_row(
     suites: set[str] | None = None,
 ) -> dict[str, Any]:
     metrics = gather_metrics(item)
+    # Exact opt-in namespaces only: never mutate legacy memberships or substitute
+    # strict DALA when semantic evidence is absent.
+    semantic = metric_prefix in SEMANTIC_PREFIXES
+    semantic_missing = semantic and section_average(metrics, [SEMANTIC_DALA_KEY])[1] != 1
+    def selected_keys(keys):
+        return [SEMANTIC_DALA_KEY if semantic and key == STRICT_DALA_KEY else key for key in keys]
+
     row: dict[str, Any] = {
         f"{metric_prefix}/epoch": item.epoch,
         f"{metric_prefix}/train_step": item.step,
@@ -238,27 +249,31 @@ def build_row(
         for section, keys in SECTION_KEYS.items():
             if section not in selected_sections:
                 continue
-            avg, count = section_average(metrics, keys)
+            avg, count = section_average(metrics, selected_keys(keys))
             row[f"{metric_prefix}/{section}/count"] = count
+            if semantic_missing and STRICT_DALA_KEY in keys:
+                continue
             if avg is not None:
                 row[f"{metric_prefix}/{section}"] = avg
                 section_values.append(avg)
-        if include_overall and not sections and section_values:
+        if include_overall and not sections and section_values and not semantic_missing:
             row[f"{metric_prefix}/overall"] = sum(section_values) / len(section_values)
     if overall_only:
         all_section_values = []
         for keys in SECTION_KEYS.values():
-            avg, _ = section_average(metrics, keys)
+            avg, _ = section_average(metrics, selected_keys(keys))
             if avg is not None:
                 all_section_values.append(avg)
-        if all_section_values:
+        if all_section_values and not semantic_missing:
             row[f"{metric_prefix}/overall"] = sum(all_section_values) / len(all_section_values)
     selected_suites = suites or set(SUITE_KEYS)
     for suite, keys in SUITE_KEYS.items():
         if not include_suites or suite not in selected_suites:
             continue
-        avg, count = section_average(metrics, keys)
+        avg, count = section_average(metrics, selected_keys(keys))
         row[f"{metric_prefix}/{suite}/count"] = count
+        if semantic_missing and STRICT_DALA_KEY in keys:
+            continue
         if avg is not None:
             row[f"{metric_prefix}/{suite}"] = avg
     return row

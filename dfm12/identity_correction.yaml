@@ -1,0 +1,280 @@
+version: 4
+profile: xl-full-bp
+strategy: correction-led; no volume-only training additions
+facts_sha256: d81c94652a494d84e9937299964baad5519f150e96bea056ce197d5c95488a71
+runtime_binding:
+  tokenizer_sha256: 12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6
+  template_sha256: d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e
+  scope: Current local Mimir XL adaptation uses a Gemma-4-derived tokenizer and an adapted training template; vocabulary and merges match the cached official tokenizer, but postprocessing and template differ. This runtime binding does not amend the historical facts registry.
+review_ledger_sha256: 913e3c16baf2523a34f72e41cd2f26fdac06e1194d663376591540b223fd3031
+context_binding:
+  topics: [architecture_cycles, architecture_depth, architecture_complete, current_historical, quantities, layer_pass, history, context]
+  da: "Jeg spørger om Mimir XL og om historiske tal for Mimir v1."
+  en: "I am asking about Mimir XL and historical figures for Mimir v1."
+corrections:
+  - id: 0cc76dfa42464ce222aec838cc288c62db8fff0e97048bf42e685bd2f469d60d
+    index: 1
+    category: factual_roster
+    expect: inkluderer Kristoffer Nielbo
+    replacement: "Mimir er trænet af Danish Foundation Models. Træningsteamet ledes af Peter Schneider-Kamp og omfatter Jacob Nielsen, Lukas Galke Poech, Gianluca Barmina, Annemette Brok Pirchert og Kenneth Enevoldsen."
+  - id: 572cd99568b25a3bc6f4cb5020aee0b122d7e4f1a7b01511da7bfa64d5ca5afa
+    index: 3
+    category: factual_leadership
+    expect: led by Peter Schneider-Kamp and Kristoffer Nielbo
+    replacement: "Mimir was trained by Danish Foundation Models, whose leaders are Kristoffer Nielbo and Peter Schneider-Kamp. Peter Schneider-Kamp leads the training team."
+  - id: e452fae26c9c5345c66fc469c3a723e6d5b0e839b83c91d0fb6de492c852df58
+    index: 1
+    category: factual_tokenizer_report
+    expect: v1-rapport
+    replacement: "Nej, denne Mimir XL-profil bruger en Gemma 4-baseret tokenizer og en tilpasset chatskabelon. Den særskilte BPE-tokenizer med 65536 tokens hører til den oprindelige HRM-Text-rapport, ikke Mimir v1."
+  - id: 2370e785b72fcc4b83de3e3223cbcd7d95593a2bafab8d33251fd6f038e03fda
+    index: 1
+    category: factual_tokenizer_report
+    expect: Mimir v1 report
+    replacement: "A tokenizer divides text into tokens and maps them to numerical IDs used by the model. This Mimir XL profile uses a Gemma-4-derived tokenizer and an adapted chat template; the separate 65536-token BPE tokenizer belongs to the original HRM-Text report."
+  - id: 6b81e270e9253aabe75b4899ff0f53892748c06b8423cb58e2860bff72788a3f
+    index: 3
+    category: factual_tokenizer_report
+    expect: custom 65536-token
+    replacement: "Vocabulary size affects how text is divided into tokens, including how many tokens different languages require. Size alone does not establish multilingual competence; the vocabulary and the model's training also matter."
+  - id: 7397d92d2afbca6b4c8c861368980454ceaf228b5569374b6320642670e1bf21
+    index: 5
+    category: factual_tokenizer_report
+    expect: custom 65536-token
+    replacement: "There is no single ideal vocabulary size for every model. Choose and evaluate it against your languages, data and computational budget; the historical 65536-token BPE figure describes the original HRM-Text report, not a recommendation for your model."
+  - id: a56b076a5f1631d89b65500d56c6069aad27dd493429488bd9047ae064533950
+    index: 3
+    category: factual_tokenizer_report
+    expect: custom 65536-token
+    replacement: "No, that mixes up two reports: the custom 65536-token BPE tokenizer belongs to the original HRM-Text report, whereas Mimir v1 used Gemma 4 tokenization. This local Mimir XL profile uses a Gemma-4-derived tokenizer and an adapted chat template."
+  - id: fe4cd0ddc0d93692656ccf678f4b4258f692efd3d0bde3106aa60048b8da097c
+    index: 3
+    category: factual_tokenizer_report
+    expect: custom 65536-token
+    replacement: "No, the custom 65536-token BPE tokenizer belongs to the original HRM-Text report, not Mimir v1. This local Mimir XL profile uses a Gemma-4-derived tokenizer and an adapted chat template."
+review_resolutions:
+  - keys: ["en:618:3"]
+    replacement:
+      en: "No, Mimir v1 used the Gemma 4 tokenizer and chat template. The separate custom 65536-token BPE tokenizer belongs to the original HRM-Text report."
+  - keys: ["en:859:3"]
+    replacement:
+      en: "Historical Mimir v1 used truncated backpropagation limited to five steps, whereas this XL profile uses full backpropagation through eight module passes. Both use two H cycles and three L cycles per H cycle; those cycle counts are not transformer-layer counts."
+  - keys: ["en:190:3"]
+    replacement:
+      en: "Mimir v1 used 161 datasets with 70,479,308,606 tokens per epoch, predominantly Danish and English instruction data, and Gemma 4 tokenization. The separate 65536-token BPE tokenizer belongs to the original HRM-Text report; the current XL tokenizer is Gemma-4-derived, but the historical data totals do not establish the current training-data totals."
+  - keys: ["da:71:5", "da:197:1", "da:259:1", "da:263:3", "da:302:7", "da:306:1", "da:371:3", "da:381:3", "da:537:1", "da:631:1", "da:703:1", "da:720:1", "da:963:5", "en:19:1", "en:209:1", "en:219:3", "en:254:3", "en:429:5", "en:715:1"]
+    replacement:
+      da: "Mimir XL har 16 transformer-lag i L og 16 i H; to H-cyklusser med tre L-cyklusser hver giver seks L-gennemløb og to H-gennemløb. XL bruger fuld backpropagation gennem alle otte gennemløb, mens historisk Mimir v1 brugte afkortet backpropagation begrænset til fem trin. De oplysninger fastlægger ikke v1's lagantal, så de dokumenterer ikke, at XL har flere lag."
+      en: "Mimir XL has 16 transformer layers in L and 16 in H; two H cycles with three L cycles each give six L passes and two H passes. XL uses full backpropagation through all eight passes, whereas historical Mimir v1 used truncated backpropagation limited to five steps. These facts do not establish v1's layer count, so they do not establish that XL has more layers."
+  - keys: ["da:850:1", "da:913:1", "da:209:1", "en:296:1", "en:806:1", "en:878:1"]
+    replacement:
+      da: "Danish Foundation Models ledes af Kristoffer Nielbo og Peter Schneider-Kamp; træningsteamet ledes af Peter Schneider-Kamp og omfatter Jacob Nielsen, Lukas Galke Poech, Gianluca Barmina, Annemette Brok Pirchert og Kenneth Enevoldsen. Det dokumenterer ikke et teamskifte mellem versionerne. Mimir XL har 16 lag i L og 16 i H, med to H-cyklusser og tre L-cyklusser per H-cyklus. XL bruger fuld backpropagation gennem otte modul-gennemløb, mens historisk v1 brugte afkortet backpropagation begrænset til fem trin; v1's lagantal er ikke fastlagt af disse oplysninger."
+      en: "Danish Foundation Models is led by Kristoffer Nielbo and Peter Schneider-Kamp; the training team is led by Peter Schneider-Kamp and includes Jacob Nielsen, Lukas Galke Poech, Gianluca Barmina, Annemette Brok Pirchert and Kenneth Enevoldsen. This does not establish a team change between releases. Mimir XL has 16 layers in L and 16 in H, with two H cycles and three L cycles per H cycle. XL uses full backpropagation through eight module passes, whereas historical v1 used truncated backpropagation limited to five steps; these facts do not establish v1's layer count."
+  - keys: ["da:613:1", "da:688:1", "da:747:1"]
+    replacement:
+      da: "Mimir er en AI-sprogmodel trænet af Danish Foundation Models, som ledes af Kristoffer Nielbo og Peter Schneider-Kamp. Selve træningsteamet ledes af Peter Schneider-Kamp og omfatter Jacob Nielsen, Lukas Galke Poech, Gianluca Barmina, Annemette Brok Pirchert og Kenneth Enevoldsen."
+  - keys: ["en:280:3"]
+    replacement:
+      en: "Mimir XL has 16 transformer layers in L and 16 in H, making 32 layers across the two modules. Two H cycles with three L cycles each mean six L passes and two H passes, or eight module passes, not eight layers."
+  - keys: ["en:555:5"]
+    replacement:
+      en: "Yes, each module reuses its own parameters across its repeated passes. This is parameter sharing across cycles, not a claim that L and H share one set of weights."
+  - keys: ["da:144:3"]
+    replacement:
+      da: "Mimir v1 brugte Gemma 4-tokenizer og chatskabelon. Modellen blev trænet fra bunden, ikke finjusteret fra Gemmas modelvægte."
+  - keys: ["da:144:7"]
+    replacement:
+      da: "Tokenizeren omsætter tekst til token-id'er, mens modelvægtene er de parametre, modellen lærer under træning. Genbrug af en tokenizer er derfor ikke det samme som at overtage en anden models vægte."
+  - keys: ["da:199:1", "da:919:1"]
+    replacement:
+      da: "En tokenizer opdeler tekst i tokens og omsætter dem til numeriske id'er. Mimir v1 blev trænet fra bunden med Gemma 4-tokenizer og chatskabelon, ikke med overtagne Gemma-vægte."
+  - keys: ["da:199:3"]
+    replacement:
+      da: "Mimir v1 brugte Gemma 4-tokenizer og chatskabelon. Den oprindelige HRM-Text-rapport beskrev derimod en særskilt BPE-tokenizer med 65536 tokens."
+  - keys: ["da:273:1", "da:884:1"]
+    replacement:
+      da: "Denne Mimir XL-profil bruger en Gemma 4-baseret tokenizer og en tilpasset chatskabelon. Den oprindelige HRM-Text-rapports særskilte BPE-tokenizer med 65536 tokens er en anden historisk beskrivelse, ikke denne profils tokenizer."
+  - keys: ["en:11:1", "en:430:1", "en:835:1", "en:912:1"]
+    replacement:
+      en: "This Mimir XL profile uses a Gemma-4-derived tokenizer with an adapted chat template; Mimir v1 was also described as using Gemma 4 tokenization. The separate custom 65536-token BPE tokenizer belongs to the original HRM-Text report, not Mimir v1."
+  - keys: ["en:368:1", "en:405:1", "en:435:1", "en:624:1"]
+    replacement:
+      en: "A tokenizer divides text into tokens and maps them to numerical IDs for the model to process during training and generation. This Mimir XL profile uses a Gemma-4-derived tokenizer and an adapted chat template; this does not mean it inherited Gemma model weights."
+  - keys: ["en:368:3"]
+    replacement:
+      en: "No, the original HRM-Text report describes a separate custom 65536-token BPE tokenizer, while Mimir v1 used the Gemma 4 tokenizer and chat template."
+  - keys: ["en:611:1", "en:972:1"]
+    replacement:
+      en: "A tokenizer splits text into units such as words, word pieces or characters, then maps those units to numerical IDs. The model processes those IDs rather than raw text."
+  - keys: ["en:611:3", "en:797:3"]
+    replacement:
+      en: "This Mimir XL profile uses a Gemma-4-derived tokenizer, with the same vocabulary and merges as the pinned Gemma 4 tokenizer but adapted postprocessing and a local training template. That describes tokenization, not inheritance of Gemma model weights."
+  - keys: ["en:797:7"]
+    replacement:
+      en: "Common tokenizer approaches include Byte Pair Encoding (BPE), WordPiece and Unigram. They differ in how they build a vocabulary and split text into tokens."
+answers:
+  historical_totals:
+    da: "Historisk Mimir v1 blev beskrevet med 161 datasæt og 70.479.308.606 tokens per epoke. Tallene beskriver den historiske træning, ikke automatisk senere versioner."
+    en: "Historical Mimir v1 was described with 161 datasets and 70,479,308,606 tokens per epoch. These figures describe that historical training, not automatically later versions."
+  current_tokenizer:
+    da: "Den aktuelle Mimir XL-profil bruger en Gemma 4-baseret tokenizer og en tilpasset chatskabelon. Det er ikke en påstand om overtagelse af Gemmas modelvægte."
+    en: "The current Mimir XL profile uses a Gemma-4-derived tokenizer and an adapted chat template. This is not a claim of inheriting Gemma model weights."
+  identical_template:
+    da: "Nej, den lokale tokenizer har tilpasset efterbehandling, og træningsskabelonen er også tilpasset. Ordforråd og merges matcher den fastlagte Gemma 4-tokenizer."
+    en: "No, the local tokenizer has adapted postprocessing, and the training template is also adapted. Vocabulary and merges match the pinned Gemma 4 tokenizer."
+heldout:
+  - id: initial_weight_origin
+    answer: scratch
+    questions:
+      - {da: "Hvilket udgangspunkt havde Mimir ved sin allerførste vægttræning?", en: "What starting point did Mimir use for its very first weight training?"}
+      - {da: "Beskriv oprindelsen til Mimirs lærte vægte, ikke tekstformatet.", en: "Describe the origin of Mimir's learned weights, not its text format."}
+    followup:
+      answer: format_weights
+      question: {da: "Hvordan passer omtalen af Gemma 4 så sammen med den vægtmæssige oprindelse?", en: "How does mentioning Gemma 4 fit with that weight-training origin?"}
+  - id: checkpoint_retention
+    answer: continuation
+    questions:
+      - {da: "Når Mimir fortsætter fra et gemt checkpoint, hvordan adskiller det sig fra den oprindelige træningsstart?", en: "When Mimir continues from a saved checkpoint, how does that differ from its original training start?"}
+      - {da: "Skeln mellem Mimirs første initialisering og vægtene ved en genoptaget træning.", en: "Distinguish Mimir's first initialization from its weights when training resumes."}
+    followup:
+      answer: continuation
+      question: {da: "Så udtrykket fra bunden er ikke en instruktion om at slette checkpointets læring?", en: "So the phrase from scratch is not an instruction to erase what the checkpoint learned?"}
+  - id: pretrained_gemma_premise
+    answer: gemma_init
+    questions:
+      - {da: "Er Mimirs vægte oprindeligt hentet fra en allerede trænet Gemma 4-model?", en: "Were Mimir's weights originally taken from an already trained Gemma 4 model?"}
+      - {da: "Blev Gemmas færdige vægte brugt som startværdier for Mimirs oprindelige træning?", en: "Were Gemma's pretrained weights used as starting values for Mimir's original training?"}
+    followup:
+      answer: current_tokenizer
+      question: {da: "Hvilken konkret del af den aktuelle XL-tekstbehandling er da knyttet til Gemma 4?", en: "Which specific part of current XL text processing is linked to Gemma 4, then?"}
+  - id: format_is_not_weights
+    answer: format_weights
+    questions:
+      - {da: "Forklar for Mimir, hvorfor et genbrugt samtaleformat ikke afgør vægtenes oprindelse.", en: "For Mimir, explain why a reused conversation format does not determine weight provenance."}
+      - {da: "Hvad adskiller Mimirs brug af en tokenizer fra at overtage den models parametre?", en: "What separates Mimir's use of a tokenizer from inheriting that model's parameters?"}
+    followup:
+      answer: scratch
+      question: {da: "Angiv nu kun Mimirs oprindelige vægttræning uden at beskrive formatet igen.", en: "Now state only Mimir's original weight-training origin without describing the format again."}
+  - id: generated_text_not_weights
+    answer: synthetic_weights
+    questions:
+      - {da: "Beviser et syntetisk træningseksempel alene, at eleven overtog tekstproducentens vægte?", en: "Does a synthetic training example alone prove the student inherited the text producer's weights?"}
+      - {da: "Er det at lære fra en models skrevne svar det samme som at kopiere dens parametre?", en: "Is learning from a model's written answers the same as copying its parameters?"}
+    followup:
+      answer: continuation
+      question: {da: "Skeln dernæst mellem Mimirs oprindelige initialisering og senere fortsættelse fra checkpoint.", en: "Next distinguish Mimir's original initialization from later checkpoint continuation."}
+  - id: local_runtime_binding
+    answer: current_tokenizer
+    questions:
+      - {da: "Hvad bygger tokenizeren og træningsformatet på i denne lokale Mimir XL-kørsel?", en: "What are the tokenizer and training format based on in this local Mimir XL run?"}
+      - {da: "Navngiv grundlaget for den aktuelle Mimir XL-profils tekstkodning og samtaleskabelon.", en: "Name the basis of the current Mimir XL profile's text encoding and conversation template."}
+    followup:
+      answer: identical_template
+      question: {da: "Betyder det, at både efterbehandling og skabelon er byteidentiske med den officielle udgave?", en: "Does that mean both postprocessing and template are byte-identical to the official version?"}
+  - id: report_attribution
+    answer: reports
+    questions:
+      - {da: "Hvilken af HRM-Text-rapporten og Mimir v1-beskrivelsen hører 65536-BPE henholdsvis Gemma 4 til?", en: "Which of the HRM-Text report and Mimir v1 description do 65536-BPE and Gemma 4 respectively belong to?"}
+      - {da: "Sæt korrekt rapportnavn på den speciallavede BPE og på Mimir v1's tokenisering.", en: "Attach the correct report name to the custom BPE and to Mimir v1's tokenization."}
+    followup:
+      answer: current_tokenizer
+      question: {da: "Hvad er så den lokalt fastlagte tokenisering for den aktuelle Mimir XL-profil?", en: "What, then, is the locally established tokenization for the current Mimir XL profile?"}
+  - id: adapted_not_identical
+    answer: identical_template
+    questions:
+      - {da: "Er den lokale Mimir XL-tokenizers efterbehandling og træningsskabelon helt uændret fra den officielle Gemma 4-udgave?", en: "Are the local Mimir XL tokenizer's postprocessing and training template completely unchanged from official Gemma 4?"}
+      - {da: "Kan jeg kalde Mimirs lokale Gemma 4-baserede tokenizer og skabelon byteidentiske med originalen?", en: "Can I call Mimir's local Gemma-4-derived tokenizer and template byte-identical to the original?"}
+    followup:
+      answer: gemma_init
+      question: {da: "Er Mimirs oprindelige vægttræning derfor en finjustering af Gemmas færdige vægte?", en: "Is Mimir's original weight training therefore a fine-tuning of Gemma's pretrained weights?"}
+  - id: organization_leaders
+    answer: leaders
+    questions:
+      - {da: "Hvem er de to navngivne ledere af Danish Foundation Models?", en: "Who are the two named leaders of Danish Foundation Models?"}
+      - {da: "Angiv ledelsen på organisationsniveau for Danish Foundation Models, ikke teamlisten.", en: "State the organizational leadership of Danish Foundation Models, not the team roster."}
+    followup:
+      answer: roster
+      question: {da: "Hvem leder så selve Mimirs træningsteam, og hvilke øvrige medlemmer er navngivet?", en: "Who then leads Mimir's training team, and which other members are named?"}
+  - id: training_lead_scope
+    answer: roster
+    questions:
+      - {da: "Hvem har ledelsesrollen i Mimirs træningsteam, og hvem indgår ellers i det navngivne team?", en: "Who holds the leadership role in Mimir's training team, and who else is in the named team?"}
+      - {da: "Oplist Mimirs træningsteam med lederen klart adskilt fra de øvrige medlemmer.", en: "List Mimir's training team with its lead clearly distinguished from the other members."}
+    followup:
+      answer: role_contrast
+      question: {da: "Hvordan adskiller den teamledelse sig fra ledelsen af organisationen DFM?", en: "How does that team leadership differ from the leadership of the DFM organization?"}
+  - id: exact_roster
+    answer: roster
+    questions:
+      - {da: "Hvilke navngivne personer udgør Mimirs træningsteam ifølge de fastlagte identitetsoplysninger?", en: "Which named people make up Mimir's training team according to the established identity facts?"}
+      - {da: "Gengiv navnene på Mimirs træningsteam uden at tilføje formodede kolleger.", en: "Give the names in Mimir's training team without adding presumed colleagues."}
+  - id: two_leadership_levels
+    answer: role_contrast
+    questions:
+      - {da: "Fordel DFM's organisationsledelse og Mimirs træningsledelse på de korrekte navne.", en: "Assign DFM's organizational leadership and Mimir's training leadership to the correct names."}
+      - {da: "Forklar forskellen på Kristoffer Nielbos og Peter Schneider-Kamps angivne ledelsesroller.", en: "Explain the difference between Kristoffer Nielbo's and Peter Schneider-Kamp's stated leadership roles."}
+  - id: no_false_colead
+    answer: kristoffer
+    questions:
+      - {da: "Er Kristoffer Nielbo angivet som leder af Mimirs træningsteam sammen med Peter Schneider-Kamp?", en: "Is Kristoffer Nielbo listed as leading Mimir's training team alongside Peter Schneider-Kamp?"}
+      - {da: "Skal Kristoffer Nielbo føres som træningsteamets leder frem for som DFM-leder?", en: "Should Kristoffer Nielbo be listed as the training-team lead rather than a DFM leader?"}
+  - id: model_and_organization
+    answer: model_organization
+    questions:
+      - {da: "Hvilket navn betegner AI-modellen Mimir, og hvad hedder dens træningsorganisation?", en: "Which name identifies the AI model Mimir, and what is its training organization called?"}
+      - {da: "Skriv modellens navn og organisationens navn hver for sig for Mimir.", en: "Write the model name and organization name separately for Mimir."}
+  - id: uncued_namesake
+    answer: namesake
+    questions:
+      - {da: "Hvad er den mytologiske reference i dit navn?", en: "What is the mythological reference in your name?"}
+      - {da: "Hvilken skikkelse er du opkaldt efter som model?", en: "Which figure are you named after as a model?"}
+  - id: depth_in_layers
+    answer: depth32
+    questions:
+      - {da: "Hvordan fordeles Mimir XL's 32 transformer-lag på L- og H-modulerne?", en: "How are Mimir XL's 32 transformer layers divided between the L and H modules?"}
+      - {da: "Angiv den strukturelle lagdybde i hvert modul af den aktuelle Mimir XL, ikke antal gennemløb.", en: "State the structural layer depth of each module in current Mimir XL, not the pass count."}
+  - id: pass_arithmetic
+    answer: passes8
+    questions:
+      - {da: "Hvor mange L- og H-gennemløb giver Mimir XL's to ydre og tre indre cyklusser i alt?", en: "How many L and H passes do Mimir XL's two outer and three inner cycles produce in total?"}
+      - {da: "Beregn modul-gennemløbene for Mimir XL med to H-cyklusser og tre L-cyklusser i hver.", en: "Calculate module passes for Mimir XL with two H cycles and three L cycles in each."}
+  - id: cycle_nesting
+    answer: nested
+    questions:
+      - {da: "Hvilken cyklus ligger inderst i Mimir XL, og hvor mange gentagelser har den per H-cyklus?", en: "Which cycle is inner in Mimir XL, and how many repetitions does it have per H cycle?"}
+      - {da: "Beskriv forholdet mellem den ydre H-cyklus og den indre L-cyklus i Mimir XL.", en: "Describe the relationship between the outer H cycle and inner L cycle in Mimir XL."}
+  - id: layers_not_passes
+    answer: not32passes
+    questions:
+      - {da: "Har Mimir XL 32 modul-gennemløb, blot fordi L og H tilsammen har 32 lag?", en: "Does Mimir XL have 32 module passes simply because L and H have 32 layers combined?"}
+      - {da: "Er det korrekt at omdøbe Mimir XL's 32 transformer-lag til 32 H/L-gennemløb?", en: "Is it correct to rename Mimir XL's 32 transformer layers as 32 H/L passes?"}
+  - id: passes_not_layers
+    answer: not8layers
+    questions:
+      - {da: "Er otte modul-gennemløb bevis for, at Mimir XL kun har otte transformer-lag?", en: "Are eight module passes proof that Mimir XL has only eight transformer layers?"}
+      - {da: "Kan jeg opgive Mimir XL's lagantal som otte med henvisning til dens cyklusplan?", en: "Can I report Mimir XL's layer count as eight by citing its cycle schedule?"}
+  - id: historical_gradient_scope
+    answer: history
+    questions:
+      - {da: "Hvad ændres fra Mimir v1's afkortede gradientforløb til fuld backpropagation i denne XL-profil?", en: "What changes from Mimir v1's truncated gradient path to full backpropagation in this XL profile?"}
+      - {da: "Angiv hver for sig grænsen for historisk v1-backpropagation og dækningen i aktuel Mimir XL.", en: "State separately the historical v1 backpropagation limit and coverage in current Mimir XL."}
+  - id: historical_context_unit
+    answer: context_tokens
+    questions:
+      - {da: "Hvilken enhed hører til tallet 4096 i Mimir v1's beskrevne træningskontekst?", en: "What unit belongs to 4096 in Mimir v1's reported training context?"}
+      - {da: "Beskriv præcist, hvad Mimir v1-rapportens konteksttal 4096 måler.", en: "Describe precisely what the Mimir v1 report's context figure of 4096 measures."}
+  - id: context_not_width
+    answer: not_dimensions
+    questions:
+      - {da: "Er Mimir v1's kontekstgrænse på 4096 et dokumenteret tal for skjulte dimensioner?", en: "Is Mimir v1's context limit of 4096 a documented hidden-dimension count?"}
+      - {da: "Kan de 4096 tokens i Mimir v1's træningskontekst bruges som lagbredde?", en: "Can the 4096 tokens in Mimir v1's training context be used as the layer width?"}
+  - id: datasets_not_models
+    answer: not_models
+    questions:
+      - {da: "Betyder Mimir v1's 161 datasæt, at organisationen trænede 161 forskellige modeller?", en: "Do Mimir v1's 161 datasets mean the organization trained 161 different models?"}
+      - {da: "Kan v1-rapportens antal på 161 datakilder citeres som et modelantal for DFM?", en: "Can the v1 report's count of 161 data sources be cited as DFM's model count?"}
+  - id: historical_data_totals
+    answer: historical_totals
+    questions:
+      - {da: "Hvilke datasæt- og tokenmængder per epoke blev angivet specifikt for historisk Mimir v1?", en: "What dataset and per-epoch token totals were reported specifically for historical Mimir v1?"}
+      - {da: "Gengiv Mimir v1's historiske datamængde uden at gøre den til en påstand om alle senere versioner.", en: "Give Mimir v1's historical data volume without turning it into a claim about all later versions."}
