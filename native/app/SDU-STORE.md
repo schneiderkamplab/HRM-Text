@@ -1,5 +1,14 @@
 # SDU iOS and macOS distribution
 
+## macOS clarification and resubmission — 2026-10-03
+
+Apple's automated review rejected the server entitlement as apparently unused.
+Sent the user-approved explanation and Settings → Advanced → Local API testing
+steps, appended them to the existing review notes, and resubmitted unchanged
+build 13 at 23:13 CEST. macOS is again **Waiting for Review** under the same
+submission ID. No new binary or entitlement removal was needed for resubmission.
+This is not an approval; iOS was not changed in this follow-up.
+
 ## Submitted — 2026-10-03
 
 **Supersedes the pending submission state below.** Both SDU 0.1.5 build 13

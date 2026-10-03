@@ -110,5 +110,9 @@ requires authenticated verification. The entitlement is used by the GUI's
 optional loopback HTTP API (Settings → Advanced → Local API, default port 8080,
 `GET /v1/models` and `POST /v1/chat/completions`). Removing it would break that
 feature. The separate CLI server's exclusion does not exclude the GUI server.
-The user authorized a reply and expanded review notes; the prepared text is in
-`native/app/store/SUBMISSION-DRAFT.md`. Sending/saving is pending sign-in.
+The user authorized a reply and expanded review notes; the text is in
+`native/app/store/SUBMISSION-DRAFT.md`. After sign-in, the reply was sent at
+23:12 CEST, the notes were saved, and unchanged build 13 was resubmitted at
+23:13 CEST on 3 October 2026. Apple confirmed **Waiting for Review** for macOS
+under the same submission ID. This supersedes the pending-sign-in state and
+the earlier rejection; it is not approval of the entitlement or app.

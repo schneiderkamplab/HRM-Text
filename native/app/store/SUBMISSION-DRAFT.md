@@ -5,9 +5,12 @@
 The user supplied Apple's automated notice that review cannot proceed because
 `com.apple.security.network.server` appears to lack matching functionality.
 The user authorized replying and adding reproduction steps to macOS App Review
-Information. Sending/saving is pending an authenticated App Store Connect session.
+Information. **Completed:** the reply was sent at 23:12 CEST on 3 October 2026,
+the reproduction steps were appended to the existing macOS review notes and
+saved, and the unchanged build 13 was resubmitted at 23:13 CEST. Apple confirmed
+**Waiting for Review**, submission `cdb16591-5865-4642-bf93-972f7dfb7c70`.
 
-Prepared reply (also append to the existing macOS review notes):
+Sent reply (also appended to the existing macOS review notes):
 
 > DFM Mimir includes an optional OpenAI-compatible HTTP server within the macOS
 > app. It accepts incoming connections from applications on the same computer
