@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+
+import 'network.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const searchEndpoint =
@@ -10,15 +13,20 @@ const searchEndpoint =
 const searchCredentialName = 'mimir-search-key';
 
 class WebSearchController extends ChangeNotifier {
-  WebSearchController({FlutterSecureStorage? storage, Uri? endpoint})
-    : storage =
-          storage ??
-          const FlutterSecureStorage(
-            mOptions: MacOsOptions(usesDataProtectionKeychain: false),
-          ),
-      endpoint = endpoint ?? Uri.parse(searchEndpoint);
+  WebSearchController({
+    FlutterSecureStorage? storage,
+    Uri? endpoint,
+    http.Client Function()? clientFactory,
+  }) : clientFactory = clientFactory ?? createNetworkClient,
+       storage =
+           storage ??
+           const FlutterSecureStorage(
+             mOptions: MacOsOptions(usesDataProtectionKeychain: false),
+           ),
+       endpoint = endpoint ?? Uri.parse(searchEndpoint);
   final FlutterSecureStorage storage;
   final Uri endpoint;
+  final http.Client Function() clientFactory;
   bool enabled = false, busy = false;
   String _key = '';
   bool get configured => _key.isNotEmpty;
@@ -26,7 +34,7 @@ class WebSearchController extends ChangeNotifier {
   String get configuredKey => _key;
   String? message;
   Future<void>? _loading;
-  HttpClient? _client;
+  NetworkSession? _client;
   int _revision = 0;
   static bool validKey(String value) =>
       RegExp(r'^mimir_[a-f0-9]{6,128}$').hasMatch(value);
@@ -84,20 +92,19 @@ class WebSearchController extends ChangeNotifier {
     if (!enabled) throw StateError('Online search is off.');
     busy = true;
     notifyListeners();
-    final client = HttpClient()
-      ..connectionTimeout = const Duration(seconds: 10);
+    final client = NetworkSession(clientFactory());
     _client = client;
-    final timer = Timer(
-      const Duration(seconds: 40),
-      () => client.close(force: true),
-    );
+    final timer = Timer(const Duration(seconds: 40), () => client.close());
     try {
-      final request = await client.postUrl(endpoint);
-      request.followRedirects = false;
-      request.headers.contentType = ContentType.json;
-      request.headers.set(HttpHeaders.authorizationHeader, 'Bearer $_key');
-      request.write(jsonEncode({'query': query}));
-      final response = await request.close();
+      final response = await client.send(
+        'POST',
+        endpoint,
+        headers: {
+          'content-type': 'application/json',
+          'authorization': 'Bearer $_key',
+        },
+        body: utf8.encode(jsonEncode({'query': query})),
+      );
       if (response.statusCode != 200) {
         throw StateError(switch (response.statusCode) {
           401 => 'Search key is invalid or disabled.',
@@ -106,7 +113,7 @@ class WebSearchController extends ChangeNotifier {
         });
       }
       final bytes = <int>[];
-      await for (final chunk in response) {
+      await for (final chunk in response.stream) {
         if (bytes.length + chunk.length > 65536) {
           throw const FormatException('Search response too large.');
         }
@@ -129,7 +136,7 @@ class WebSearchController extends ChangeNotifier {
       throw StateError('Search failed. Check your connection and try again.');
     } finally {
       timer.cancel();
-      client.close(force: true);
+      client.close();
       _client = null;
       busy = false;
       notifyListeners();
@@ -138,6 +145,6 @@ class WebSearchController extends ChangeNotifier {
 
   void cancel() {
     _revision++;
-    _client?.close(force: true);
+    _client?.close();
   }
 }

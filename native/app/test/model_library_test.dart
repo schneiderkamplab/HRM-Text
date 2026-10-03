@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:dfm_mimir/model_library_view.dart';
@@ -12,71 +13,38 @@ import 'package:dfm_mimir/store.dart';
 
 import 'widget_test.dart' show FakeEngine;
 
-class Headers implements HttpHeaders {
-  @override
-  String? value(String name) => null;
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+class Response extends http.StreamedResponse {
+  Response(
+    Stream<List<int>> stream,
+    int length, {
+    int status = 200,
+    Map<String, String> headers = const {},
+  }) : super(
+         stream,
+         status,
+         headers: headers,
+         contentLength: length < 0 ? null : length,
+       );
 }
 
-class Response extends Stream<List<int>> implements HttpClientResponse {
-  final Stream<List<int>> stream;
-  @override
-  final int contentLength;
-  Response(this.stream, this.contentLength);
-  @override
-  int get statusCode => 200;
-  @override
-  HttpHeaders get headers => Headers();
-  @override
-  StreamSubscription<List<int>> listen(
-    void Function(List<int>)? onData, {
-    Function? onError,
-    void Function()? onDone,
-    bool? cancelOnError,
-  }) => stream.listen(
-    onData,
-    onError: onError,
-    onDone: onDone,
-    cancelOnError: cancelOnError,
-  );
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class Request implements HttpClientRequest {
-  final Response response;
-  Request(this.response);
-  @override
-  bool followRedirects = false;
-  @override
-  Future<HttpClientResponse> close() async => response;
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class Client implements HttpClient {
+class Client extends http.BaseClient {
   final Response response;
   int requests = 0;
   bool closed = false;
   final List<Response>? responses;
   Client(this.response, {this.responses});
   @override
-  Duration? connectionTimeout;
-  @override
-  Future<HttpClientRequest> getUrl(Uri uri) async {
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
     requests++;
-    expect(uri.scheme, 'https');
-    return Request(responses?.removeAt(0) ?? response);
+    expect(request.url.scheme, 'https');
+    expect(request.followRedirects, false);
+    return responses?.removeAt(0) ?? response;
   }
 
   @override
-  void close({bool force = false}) {
+  void close() {
     closed = true;
   }
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 void main() {
@@ -245,6 +213,24 @@ void main() {
     await library.refresh();
     expect(library.error, contains('Enable'));
     expect(library.installed, isEmpty);
+    await library.close();
+  });
+  test('download rejects a redirect that downgrades HTTPS', () async {
+    final client = Client(
+      Response(
+        const Stream.empty(),
+        0,
+        status: 302,
+        headers: {'location': 'http://example.com/model.gguf'},
+      ),
+    );
+    final library = ModelLibrary(clientFactory: () => client)..directory = dir;
+    library.setOnline(true);
+    await library.download(ModelArtifact(descriptor));
+    expect(library.error, contains('HTTPS required'));
+    expect(client.requests, 1);
+    expect(library.installed, isEmpty);
+    expect(client.closed, true);
     await library.close();
   });
   test('streamed download verifies and installs without selecting', () async {

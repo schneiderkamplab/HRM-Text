@@ -1,0 +1,23 @@
+diff --git a/engine/src/build/toolchain/mac/BUILD.gn b/engine/src/build/toolchain/mac/BUILD.gn
+index a3dfd6f2db9..19db0746e3c 100644
+--- a/engine/src/build/toolchain/mac/BUILD.gn
++++ b/engine/src/build/toolchain/mac/BUILD.gn
+@@ -13,6 +13,8 @@ import("//build/toolchain/rbe.gni")
+ import("//build/toolchain/toolchain.gni")
+ 
+ declare_args() {
++  # Optional system linker for SDK formats newer than the bundled LLVM linker.
++  apple_system_linker = ""
+   # This controls whether whole module optimization is enabled when building
+   # Swift modules. If enabled, the compiler will compile the module as one
+   # unit, generating just one single object file. Otherwise, it will generate
+@@ -115,6 +117,9 @@ template("mac_toolchain") {
+     cxx = invoker.cxx
+     objc = invoker.objc
+     ld = invoker.ld
++    if (apple_system_linker != "") {
++      ld += " -fuse-ld=$apple_system_linker"
++    }
+ 
+     if (use_clang_static_analyzer) {
+       analyzer_wrapper =

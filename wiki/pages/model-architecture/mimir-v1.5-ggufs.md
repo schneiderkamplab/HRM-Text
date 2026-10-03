@@ -622,3 +622,31 @@ Flutter 3.47.5 / Dart 3.13.4 and DEPS BoringSSL revision
 2e508c973d634b3aa51b71db5062bc6b096e5031. TLS suite source capabilities are not
 claimed as negotiated-session measurements or a complete enabled-suite inventory.
 No declaration, email or new Apple compliance submission sent.
+
+Potential alternative (3 October, investigated but not implemented):
+[cupertino_http](https://pub.dev/packages/cupertino_http), published by dart.dev,
+provides Foundation URLSession networking for iOS/macOS with a shared package:http
+interface. Current outbound Dart HttpClient sites are search.dart, feedback.dart
+and model_library.dart. Migrating all of them would move application HTTPS to
+Apple's OS implementation. Apple's Security export-compliance documentation gives
+URLSession HTTPS as a typical exempt case. This does not yet establish exemption
+for the resulting Flutter binary: bundled runtime BoringSSL may remain, and
+third-party/reachable crypto must be assessed before changing declarations.
+The existing build-12 assessment remains valid; no migration or flag change made.
+
+## OS-only Apple TLS removal experiment — 2026-10-03
+
+The earlier unimplemented URLSession alternative is now implemented in application
+source, with 75 tests and analyzer passing. Both Apple app release builds succeed.
+Custom ARM64 macOS/iOS engines were built from pinned Flutter 6a19cca / Dart
+b530c21 using dart_disable_secure_socket=true, conditional BoringSSL dependencies,
+and Apple CommonCrypto shader hashing. GN framework dependency graphs have no
+BoringSSL; binary symbol/source-path scans agree. macOS native HTTPS and streaming
+abort pass with SecurityContext explicitly throwing; stock engine control fails
+that negative test as expected. iOS runtime/device testing remains unperformed.
+See native/app/store/APPLE-OS-TLS-EXPERIMENT.md and native/app/tool/apple_os_tls
+for evidence and patches. Custom framework selection is not yet part of release
+CI; ordinary Flutter builds still embed the stock engine. No compliance answer,
+release, upload or build-12 archive was changed. Engine build required gclient
+source dependencies, Xcode's linker for SDK27 arm64e.x1 TAPI, and installation of
+the Metal Toolchain. The experiment disables LTO and is not a size optimization.

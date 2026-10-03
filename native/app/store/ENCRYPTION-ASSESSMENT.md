@@ -69,3 +69,11 @@ signatures and non-public personal information out of this public repository.
 
 No inquiry, declaration or new Apple compliance submission has been sent as part
 of this assessment. No exemption flag or approval code has been invented.
+
+## Subsequent engineering experiment
+
+The [OS-only TLS experiment](APPLE-OS-TLS-EXPERIMENT.md) demonstrates a candidate
+custom engine without BoringSSL for both Apple platforms, with macOS native HTTPS
+runtime evidence. It does not change the assessment of submitted build 12.
+Final signed candidate archives, iOS runtime tests and compliance review remain
+necessary before claiming the OS-only exception for a replacement build.

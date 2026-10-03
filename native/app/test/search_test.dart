@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/io_client.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:dfm_mimir/search_view.dart';
@@ -151,6 +153,7 @@ void main() {
     });
     final s = WebSearchController(
       endpoint: Uri.parse('http://127.0.0.1:${server.port}'),
+      clientFactory: IOClient.new,
     );
     await s.setKey(testKey, remember: false);
     await expectLater(s.search('Danish models'), throwsStateError);

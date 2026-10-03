@@ -1,0 +1,32 @@
+diff --git a/runtime/bin/BUILD.gn b/runtime/bin/BUILD.gn
+index ecff06a6..9cbf3d00 100644
+--- a/runtime/bin/BUILD.gn
++++ b/runtime/bin/BUILD.gn
+@@ -561,7 +561,9 @@ template("dart_io") {
+       }
+     }
+ 
+-    deps += [ "//third_party/boringssl" ]
++    if (!dart_disable_secure_socket) {
++      deps += [ "//third_party/boringssl" ]
++    }
+ 
+     if (is_fuchsia) {
+       deps += [ "$fuchsia_sdk/fidl/fuchsia.io" ]
+@@ -857,13 +859,15 @@ template("dart_executable") {
+     deps = [
+       ":crashpad",
+       ":icudtl_cc",
+-      "//third_party/boringssl",
+       "//third_party/icu:icuuc",
+       "//third_party/zlib",
+     ]
+     if (is_fuchsia) {
+       deps += [ "$fuchsia_sdk/pkg/fdio" ]
+     }
++    if (!dart_disable_secure_socket) {
++      deps += [ "//third_party/boringssl" ]
++    }
+     defines = [ "DART_EMBED_ICU_DATA" ] + extra_defines
+     if (exclude_kernel_service) {
+       defines += [ "EXCLUDE_CFE_AND_KERNEL_PLATFORM" ]

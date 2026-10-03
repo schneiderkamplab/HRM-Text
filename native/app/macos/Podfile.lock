@@ -1,4 +1,7 @@
 PODS:
+  - cupertino_http (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - file_picker_darwin (1.0.0):
     - Flutter
     - FlutterMacOS
@@ -15,6 +18,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - cupertino_http (from `Flutter/ephemeral/.symlinks/plugins/cupertino_http/darwin`)
   - file_picker_darwin (from `Flutter/ephemeral/.symlinks/plugins/file_picker_darwin/darwin`)
   - flutter_secure_storage_darwin (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_darwin/darwin`)
   - FlutterMacOS (from `Flutter/ephemeral`)
@@ -24,6 +28,8 @@ DEPENDENCIES:
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
 EXTERNAL SOURCES:
+  cupertino_http:
+    :path: Flutter/ephemeral/.symlinks/plugins/cupertino_http/darwin
   file_picker_darwin:
     :path: Flutter/ephemeral/.symlinks/plugins/file_picker_darwin/darwin
   flutter_secure_storage_darwin:
@@ -40,6 +46,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
+  cupertino_http: 94ac07f5ff090b8effa6c5e2c47871d48ab7c86c
   file_picker_darwin: 4c2b9a50ea44cb3b071381ea0cf48591bdd80251
   flutter_secure_storage_darwin: 46e401699982ee74142909676535e0f6a7321e58
   FlutterMacOS: c232990155153907050900a2e175c7773903ba4e

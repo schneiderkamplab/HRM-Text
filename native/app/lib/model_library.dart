@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'engine.dart';
+import 'network.dart';
 import 'models.dart';
 import 'hf_model_discovery.dart';
 
@@ -50,9 +52,9 @@ class ModelLibrary extends ChangeNotifier {
     'https://raw.githubusercontent.com/schneiderkamplab/HRM-Text/main/native/app/assets/models.json',
   );
   Directory? directory;
-  final HttpClient Function() clientFactory;
-  ModelLibrary({HttpClient Function()? clientFactory})
-    : clientFactory = clientFactory ?? HttpClient.new;
+  final http.Client Function() clientFactory;
+  ModelLibrary({http.Client Function()? clientFactory})
+    : clientFactory = clientFactory ?? createNetworkClient;
   VoidCallback? onChanged;
   bool online = false, refreshing = false;
   List<ModelArtifact> catalog = [];
@@ -88,7 +90,7 @@ class ModelLibrary extends ChangeNotifier {
   List<Json> unavailable = [];
   String? downloading, error;
   int received = 0;
-  HttpClient? _client;
+  NetworkSession? _client;
   bool _cancelled = false;
   Future<void>? _work;
 
@@ -115,8 +117,11 @@ class ModelLibrary extends ChangeNotifier {
   }
 
   void remember(Json model) {
-    installed.removeWhere((m) => m['id'] == model['id'] ||
-        (model['bundled'] == true && m['bundled'] == true));
+    installed.removeWhere(
+      (m) =>
+          m['id'] == model['id'] ||
+          (model['bundled'] == true && m['bundled'] == true),
+    );
     installed.add(Json.from(model));
     onChanged?.call();
     notifyListeners();
@@ -124,7 +129,7 @@ class ModelLibrary extends ChangeNotifier {
 
   void cancel() {
     _cancelled = true;
-    _client?.close(force: true);
+    _client?.close();
   }
 
   void _check() {
@@ -133,22 +138,18 @@ class ModelLibrary extends ChangeNotifier {
     }
   }
 
-  Future<HttpClientResponse> _get(Uri uri) async {
+  Future<http.StreamedResponse> _get(Uri uri) async {
     _check();
     // Handle redirects ourselves so downloads never downgrade to plaintext.
     for (var i = 0; i < 8; i++) {
       if (uri.scheme != 'https') throw const HttpException('HTTPS required');
-      final request = await _client!
-          .getUrl(uri)
+      final response = await _client!
+          .send('GET', uri)
           .timeout(const Duration(seconds: 30));
-      request.followRedirects = false;
-      final response = await request.close().timeout(
-        const Duration(seconds: 30),
-      );
       _check();
       if ([301, 302, 303, 307, 308].contains(response.statusCode)) {
-        final location = response.headers.value(HttpHeaders.locationHeader);
-        await response.drain<void>();
+        final location = response.headers['location'];
+        await response.stream.drain<void>();
         if (location == null) throw const HttpException('Missing redirect');
         uri = uri.resolve(location);
         continue;
@@ -164,14 +165,16 @@ class ModelLibrary extends ChangeNotifier {
   Future<DiscoveryPage> _page(Uri uri) async {
     final response = await _get(uri);
     final bytes = <int>[];
-    await for (final chunk in response.timeout(const Duration(seconds: 30))) {
+    await for (final chunk in response.stream.timeout(
+      const Duration(seconds: 30),
+    )) {
       _check();
       if (bytes.length + chunk.length > 2 * 1024 * 1024) {
         throw const FormatException('Catalog response too large');
       }
       bytes.addAll(chunk);
     }
-    final link = response.headers.value('link');
+    final link = response.headers['link'];
     final next = link == null
         ? null
         : RegExp(r'<([^>]+)>;\s*rel="?next"?').firstMatch(link)?.group(1);
@@ -304,13 +307,15 @@ class ModelLibrary extends ChangeNotifier {
         return;
       }
       final response = await _get(artifact.url);
-      if (response.contentLength >= 0 &&
+      if (response.contentLength != null &&
           response.contentLength != artifact.bytes) {
         throw const FormatException('Unexpected download size');
       }
       sink = partial.openWrite();
       var lastUpdate = DateTime.now();
-      await for (final chunk in response.timeout(const Duration(seconds: 60))) {
+      await for (final chunk in response.stream.timeout(
+        const Duration(seconds: 60),
+      )) {
         _check();
         received += chunk.length;
         if (received > artifact.bytes) {
@@ -361,14 +366,14 @@ class ModelLibrary extends ChangeNotifier {
     }
     _cancelled = false;
     error = null;
-    _client = clientFactory()..connectionTimeout = const Duration(seconds: 30);
+    _client = NetworkSession(clientFactory());
     final work = () async {
       try {
         await action();
       } catch (e) {
         error = _cancelled ? 'Cancelled.' : '$e';
       } finally {
-        _client?.close(force: true);
+        _client?.close();
         _client = null;
         downloading = null;
         refreshing = false;
