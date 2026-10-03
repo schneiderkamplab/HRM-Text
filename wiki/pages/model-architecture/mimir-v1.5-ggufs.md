@@ -636,6 +636,11 @@ The existing build-12 assessment remains valid; no migration or flag change made
 
 ## OS-only Apple TLS removal experiment — 2026-10-03
 
+**Packaging status superseded later on 2026-10-03:** release builds now require
+the custom engine. See [Apple OS-only TLS packaging](mimir-apple-os-tls-packaging.md)
+for the implemented gates and current test evidence. The initial observations
+below remain historical; uploaded build 12 is unchanged.
+
 The earlier unimplemented URLSession alternative is now implemented in application
 source, with 75 tests and analyzer passing. Both Apple app release builds succeed.
 Custom ARM64 macOS/iOS engines were built from pinned Flutter 6a19cca / Dart

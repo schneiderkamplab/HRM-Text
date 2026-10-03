@@ -11,6 +11,8 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
+    # Build-time helper uses the pinned engine source's package configuration.
+    - tool/apple_os_tls/append_executable.dart
     - build/**
     - android/**
     - ios/**

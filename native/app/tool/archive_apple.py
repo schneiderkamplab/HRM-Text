@@ -6,9 +6,11 @@ import json
 from pathlib import Path
 import plistlib
 import re
+import shutil
 import subprocess
 
 from audit_feedback_bundle import audit
+from apple_engine import FLUTTER_REVISION, audit_app, engine_binary
 
 ROOT = Path(__file__).resolve().parents[3]
 APP = ROOT / 'native/app'
@@ -36,11 +38,16 @@ def main():
     if not re.fullmatch(r'\d+\.\d+\.\d+', args.version) or not args.build.isdigit():
         parser.error('Expected x.y.z version and numeric build')
     flutter = args.flutter.resolve(strict=True)
+    engine = engine_binary(args.platform)
+    sdk_revision = subprocess.check_output(
+        ['git', '-C', str(flutter.parent.parent), 'rev-parse', 'HEAD'], text=True).strip()
+    if sdk_revision != FLUTTER_REVISION:
+        raise ValueError('Flutter SDK must match the pinned custom engine revision')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     archive = output / 'DFM Mimir.xcarchive'
     configure = [flutter, 'build', 'ios' if args.platform == 'ios' else 'macos',
-                 '--release', '--config-only', '--build-name', args.version,
+                 '--release', '--config-only', '--target', 'lib/main.dart', '--build-name', args.version,
                  '--build-number', args.build]
     if args.platform == 'ios':
         configure.append('--no-codesign')
@@ -90,11 +97,19 @@ def main():
     if not symbol_source.is_dir():
         raise ValueError('Missing native symbols: rebuild native runtime with dSYMs')
     run('ditto', symbol_source, archive / 'dSYMs/MimirRuntime.framework.dSYM')
+    engine_name = 'FlutterMacOS' if args.platform == 'macos' else 'Flutter'
+    engine_symbols = archive / f'dSYMs/{engine_name}.framework.dSYM'
+    # Flutter's stock symbols no longer describe the replacement engine.
+    if engine_symbols.exists():
+        shutil.rmtree(engine_symbols)
+    run('xcrun', 'dsymutil', engine, '-o', engine_symbols)
     def uuids(path):
         result = subprocess.check_output(['xcrun', 'dwarfdump', '--uuid', str(path)], text=True)
         return set(re.findall(r'UUID: ([A-F0-9-]+) \(([^)]+)\)', result))
     if not uuids(native) or uuids(native) != uuids(archive / 'dSYMs/MimirRuntime.framework.dSYM'):
         raise ValueError('MimirRuntime symbols do not match archived binary')
+    if uuids(contents / f'Frameworks/{engine_name}.framework/{engine_name}') != uuids(engine_symbols):
+        raise ValueError('Custom engine symbols do not match archive')
     for path in (contents / 'Frameworks').glob('*.framework'):
         metadata = next(iter(path.glob('**/Info.plist')), None)
         if metadata is None:
@@ -105,6 +120,7 @@ def main():
     if not list(product.rglob('PrivacyInfo.xcprivacy')):
         raise ValueError('No privacy manifests in archive')
     audit(product)
+    crypto_audit = audit_app(product, args.platform)
     if args.team_id:
         run('codesign', '--verify', '--deep', '--strict', product)
         entitlements = plistlib.loads(subprocess.check_output(
@@ -130,7 +146,8 @@ def main():
               'sourceCommit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'workingTreeDirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT)),
               'archive': str(archive), 'architectures': architectures,
-              'nativeUUIDs': sorted(uuids(native))}
+              'nativeUUIDs': sorted(uuids(native)),
+              'osTLSEngine': True, 'boringSSLFreeMachO': crypto_audit}
     (output / 'audit.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=2))
 

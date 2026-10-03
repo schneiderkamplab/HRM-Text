@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-03: Integrated [Apple OS-only TLS packaging](pages/model-architecture/mimir-apple-os-tls-packaging.md): pinned custom Flutter/Dart runtimes, pre-signing replacement, fail-closed audits and local qualification. Uploaded build 12 remains unchanged.
+
 - 2026-10-03: Reconciled upstream main with the DFM12/13 and multilingual-evaluation work; retained both XXL piecewise and XXL-Wide staged-rewarm runbooks and both knowledge histories.
 
 - 2026-10-02: Prepared [jjzha additions](pages/dfm13-jjzha-native-additions.md): four validated structured sources registered, IMDb and CroCo audit-gated, client waiting for the eight shared Gemma servers without changing training.

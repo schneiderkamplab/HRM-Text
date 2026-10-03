@@ -1,5 +1,11 @@
 # Apple OS-only TLS experiment — 3 October 2026
 
+**Follow-up:** release builds now require the custom engine before final signing.
+See `../tool/apple_os_tls/README.md` for packaging and the repository knowledge
+page `wiki/pages/model-architecture/mimir-apple-os-tls-packaging.md` for current
+qualification. The observations below describe the initial experiment; uploaded
+build 12 remains unchanged.
+
 **Result: removing bundled BoringSSL is technically feasible with a custom Flutter
 engine.** Both ARM64 frameworks build without it. A macOS release probe runs with
 Dart TLS disabled and successfully uses Apple's URLSession for HTTPS and request
