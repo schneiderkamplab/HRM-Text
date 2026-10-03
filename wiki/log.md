@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-03: Uploaded SDU-signed OS-TLS build 13 and submitted both iOS/macOS 0.1.5 for App Review; verified Waiting for Review with manual release. Recorded rights confirmation, OS-only encryption answers and submission IDs in [Apple packaging](pages/model-architecture/mimir-apple-os-tls-packaging.md).
+
 - 2026-10-03: Integrated [Apple OS-only TLS packaging](pages/model-architecture/mimir-apple-os-tls-packaging.md): pinned custom Flutter/Dart runtimes, pre-signing replacement, fail-closed audits and local qualification. Uploaded build 12 remains unchanged.
 
 - 2026-10-03: Reconciled upstream main with the DFM12/13 and multilingual-evaluation work; retained both XXL piecewise and XXL-Wide staged-rewarm runbooks and both knowledge histories.

@@ -80,3 +80,23 @@ Evidence directory: `logs/apple-os-tls-packaging/`.
 
 This records technical evidence, not an export-compliance determination. App
 Store Connect answers and uploaded builds must be handled separately.
+
+## SDU upload — 3 October 2026
+
+The unsigned-only qualification above is superseded by SDU-signed build 13
+archives for both platforms. Signing, model, dSYM and whole-bundle crypto audits
+passed. `xcodebuild -exportArchive` with `destination=upload` succeeded for iOS
+at 07:29:23 CEST and macOS at 07:29:51 CEST. Evidence is under
+`logs/sdu-store/{ios,macos}-signed-13/` and `{ios,macos}-upload-13.log`.
+Apple processing completed, and build 13 replaced build 11 in both store versions.
+Both encryption questionnaires were saved as “None of the algorithms mentioned
+above”, corresponding to OS-only encryption. Both platforms passed submission
+validation and were submitted at approximately 07:39–07:40 CEST. The verified
+status is **Waiting for Review** on both platforms, not approval or publication.
+Submission IDs: iOS `57eb3e67-8ef4-4008-8009-5060e748e698`, macOS
+`cdb16591-5865-4642-bf93-972f7dfb7c70`, SDU app `6818524811`.
+
+The user confirmed SDU's distribution/content rights; Content Rights = Yes is
+saved. Free pricing and all 175 storefronts including France are configured.
+Manual release remains selected. OS-only encryption answers must apply to the
+new build 13, never retroactively to BoringSSL-containing builds 11/12.

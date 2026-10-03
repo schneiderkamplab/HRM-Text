@@ -1,6 +1,33 @@
 # DFM Mimir submission answers — draft, 2 October 2026
 
-Applies to SDU app 6818524811, iOS/macOS 0.1.5 (11). These are proposed answers,
+## Build 13 submission follow-up — 3 October 2026
+
+Both SDU-signed 0.1.5 (13) archives passed the OS-TLS and signing audits and
+uploaded successfully. Apple processing/build selection and final App Review
+submission are separate steps. Builds 11/12 retain their original encryption
+status; the OS-only answers apply only to the rebuilt version.
+
+The user explicitly confirmed SDU has the necessary rights to distribute the
+bundled model/branding and provide optional search content. Saved Content Rights
+= Yes. Free pricing and availability in all 175 storefronts (including France)
+were configured; manual release remains selected.
+
+Both build 13 encryption questionnaires were saved as “None of the algorithms
+mentioned above” (OS-only encryption; no bundled implementation). Both store
+versions were switched from build 11 to build 13, saved, added for review and
+submitted. Apple confirmed **Waiting for Review** for iOS and macOS on
+3 October 2026 at approximately 07:39–07:40 CEST. No public release occurred.
+
+- iOS submission: `57eb3e67-8ef4-4008-8009-5060e748e698`.
+- macOS submission: `cdb16591-5865-4642-bf93-972f7dfb7c70`.
+- App Store Connect app: `6818524811`, SDU team `46HSA3LZ7H`.
+- Local signed archives/audits: `logs/sdu-store/{ios,macos}-signed-13/`.
+- Upload evidence: `logs/sdu-store/{ios,macos}-upload-13.log`.
+
+
+## Historical draft — build 11, 2 October 2026
+
+The following applies to SDU app 6818524811, iOS/macOS 0.1.5 (11). These were proposed answers,
 not claims that all declarations have been submitted or approved.
 
 ## Listing and review contact

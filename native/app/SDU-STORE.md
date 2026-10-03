@@ -1,5 +1,21 @@
 # SDU iOS and macOS distribution
 
+## Submitted — 2026-10-03
+
+**Supersedes the pending submission state below.** Both SDU 0.1.5 build 13
+versions are **Waiting for Review**, verified in App Store Connect after final
+submission at approximately 07:39–07:40 CEST. Both signed archives passed the
+OS-TLS, signing, dSYM and bundled-model audits; both uploads succeeded.
+
+The new builds use Apple OS encryption without bundled BoringSSL. The OS-only
+questionnaire answers were saved for build 13 only. Content rights were explicitly
+confirmed by the user and saved. Pricing is free, availability includes France
+and all 175 storefronts, and **manual release** remains selected. No app has
+been published by this submission. See [submission record](store/SUBMISSION-DRAFT.md).
+
+- [iOS review](https://appstoreconnect.apple.com/apps/6818524811/distribution/reviewsubmissions/details/57eb3e67-8ef4-4008-8009-5060e748e698)
+- [macOS review](https://appstoreconnect.apple.com/apps/6818524811/distribution/reviewsubmissions/details/cdb16591-5865-4642-bf93-972f7dfb7c70)
+
 ## Public pages — 2026-10-02
 
 The user confirmed University of Southern Denmark as data controller and authorized
