@@ -8,6 +8,7 @@ import 'feedback_dialog.dart';
 
 import 'store.dart';
 import 'chat_widgets.dart';
+import 'markdown_text.dart';
 import 'settings_view.dart';
 
 class ChatView extends StatefulWidget {
@@ -70,10 +71,18 @@ class _ChatViewState extends State<ChatView> {
     }
   }
 
-  void send() {
+  Future<void> send() async {
     if (s.canSend) {
       focus.unfocus();
-      s.send();
+      await s.send();
+      if (!mounted) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && !s.busy && ModalRoute.of(context)?.isCurrent == true) {
+          focus.requestFocus();
+        }
+      });
+      // Ensure the callback runs even if generation finished between frames.
+      WidgetsBinding.instance.ensureVisualUpdate();
     }
   }
 
@@ -182,7 +191,7 @@ class _ChatViewState extends State<ChatView> {
             ],
           ),
           const SizedBox(height: 8),
-          SelectableText(m['summary'] as String),
+          MarkdownText(m['summary'] as String),
           const SizedBox(height: 8),
           Text(
             m['prompt'] == true
@@ -276,7 +285,7 @@ class _ChatViewState extends State<ChatView> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(14),
-                child: SelectableText(m['compactedContent'] as String),
+                child: MarkdownText(m['compactedContent'] as String),
               ),
             ],
           ),

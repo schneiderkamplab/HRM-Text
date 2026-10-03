@@ -8,7 +8,9 @@
 PRODUCT_NAME = DFM Mimir
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = dk.sdu.mimir
+MIMIR_BUNDLE_ID = dk.sdu.mimir
+PRODUCT_BUNDLE_IDENTIFIER = $(MIMIR_BUNDLE_ID)
+DEVELOPMENT_TEAM = $(MIMIR_TEAM_ID)
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 dk.sdu. All rights reserved.

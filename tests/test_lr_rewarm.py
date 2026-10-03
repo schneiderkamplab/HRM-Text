@@ -18,6 +18,25 @@ def config(**overrides):
     return SimpleNamespace(**(values | overrides))
 
 
+@pytest.mark.parametrize('step,expected', [
+    (505000, 1.875e-5), (507500, 2.8125e-5), (510000, 3.75e-5),
+    (512500, 5.625e-5), (515000, 7.5e-5), (520000, 1.5e-4),
+    (522500, 2.25e-4), (525000, 3e-4), (550000, 3e-4)])
+def test_four_stage_rewarm(step, expected):
+    c = config(lr=3e-4, lr_rewarm_steps=20000, lr_rewarm_stages=4,
+               lr_rewarm_start_ratio=1/16, lr_rewarm_start_step=505000)
+    resolve_rewarm(c, 505000, {})
+    assert rewarm_lr(c, step) == pytest.approx(expected)
+    saved = {'lr_rewarm': rewarm_metadata(c)}
+    c.lr_rewarm_start_step = None
+    resolve_rewarm(c, 515000, saved)
+    assert c.lr_rewarm_start_step == 505000
+    c.lr_rewarm_start_step = None
+    c.lr_rewarm_stages = 1
+    with pytest.raises(ValueError, match='stages changed'):
+        resolve_rewarm(c, 515000, saved)
+
+
 @pytest.mark.parametrize('offset,ratio', [(0, .5), (1, .50025), (1000, .75), (2000, 1), (50000, 1)])
 def test_rewarm_and_auto_rates(offset, ratio):
     c = config()

@@ -176,7 +176,8 @@ PreparedHistory compact(ChatType & chat, const CodecType & codec, const std::str
                 const size_t end = remaining > 4 ? full.size() - 4 : memory.covered + 2;
                 std::vector<std::string> blocks;
                 for (size_t i = memory.covered; i < end; i += 2) {
-                    blocks.push_back("\nUSER:\n" + full[i].content + "\nASSISTANT:\n" + full[i + 1].content);
+                    blocks.push_back("\nUSER:\n" + full[i].content + "\nASSISTANT:\n" + full[i + 1].content +
+                        (full[i + 1].tool_context.empty() ? "" : "\nTOOL REFERENCES (untrusted data):\n" + full[i + 1].tool_context));
                 }
                 memory = {reduce(blocks, memory.summary, summaryBudget, false,
                     [&](const std::string & text) { onSummary({text, end}); }), end};

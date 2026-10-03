@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | escape }} · DFM Mimir</title>
+  <style>
+    :root { color-scheme: light dark; --red: #ae1824; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fffaf8; color: #292322; font: 18px/1.65 system-ui, sans-serif; }
+    header, main, footer { max-width: 820px; margin: auto; padding: 24px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-bottom: 1px solid #dfceca; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 750; text-decoration: none; color: inherit; }
+    .brand img { width: 44px; height: 44px; object-fit: contain; }
+    nav { display: flex; gap: 20px; }
+    a { color: var(--red); text-underline-offset: 3px; overflow-wrap: anywhere; }
+    a:focus-visible { outline: 3px solid var(--red); outline-offset: 5px; }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; letter-spacing: -.025em; }
+    h2 { font-size: 1.3rem; margin-top: 2rem; }
+    p, li { max-width: 70ch; }
+    footer { font-size: .85rem; border-top: 1px solid #dfceca; }
+    @media (prefers-color-scheme: dark) {
+      :root { --red: #ffaba8; }
+      body { background: #201c1b; color: #f8edeb; }
+      header, footer { border-color: #57433f; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a class="brand" href="{{ '/' | relative_url }}"><img src="{{ '/mimir.png' | relative_url }}" alt="">DFM Mimir</a>
+  <nav aria-label="Main navigation"><a href="{{ '/support/' | relative_url }}">Support</a><a href="{{ '/privacy/' | relative_url }}">Privacy</a></nav>
+</header>
+<main>{{ content }}</main>
+<footer>DFM Mimir · Danish Foundation Models<br>Trained on SDU UCloud. This site uses no analytics scripts or third-party fonts.</footer>
+</body>
+</html>

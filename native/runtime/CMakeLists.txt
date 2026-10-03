@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(MimirRuntime LANGUAGES C CXX)
+project(MimirRuntime VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 option(MIMIR_DYNAMIC_BACKENDS "Package independently loadable desktop backends" OFF)
 if(MIMIR_DYNAMIC_BACKENDS)
@@ -22,6 +22,10 @@ target_link_libraries(MimirRuntime PRIVATE mimir-chat-lib)
 if(APPLE)
     set_target_properties(MimirRuntime PROPERTIES FRAMEWORK TRUE FRAMEWORK_VERSION A
         MACOSX_FRAMEWORK_IDENTIFIER dk.sdu.mimir.runtime PUBLIC_HEADER mimir_ffi.h
+        MACOSX_FRAMEWORK_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_FRAMEWORK_BUNDLE_VERSION "1"
+        XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym"
+        XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS YES
         XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED NO INSTALL_NAME_DIR "@rpath")
 endif()
 

@@ -38,6 +38,13 @@ What stays local, what is sent and when, separate network/submission/publication
 consent and defaults, attribution options, failure/cancellation behavior,
 provider/storage scope, administrative access separation and contact.
 
+## Optional web search
+
+State availability, separate permission/default, key setup and secure/session
+storage, exactly what is sent to which services, query limits, result use in
+chat, and whether automatic search/tool calling is supported. Include platform
+secure-storage dependencies and offline behavior.
+
 ## Changes and model provenance
 
 Version-specific changes, fixes and known regressions. Exact model repository,

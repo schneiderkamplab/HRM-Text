@@ -22,7 +22,7 @@ class ModelLibraryView extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             Text(
-              'Selected: ${store.model?['name'] ?? 'Bundled DFM Mimir v1 Q4_K_M'}',
+              'Selected: ${store.model?['name'] ?? 'Bundled DFM Mimir v1.5 Q4_K_M'}',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const Text(
@@ -90,10 +90,10 @@ class ModelLibraryView extends StatelessWidget {
             if (store.notice != null) Text(store.notice!),
             Card(
               child: ListTile(
-                title: const Text('DFM Mimir v1 Q4_K_M'),
+                title: const Text('DFM Mimir v1.5 Q4_K_M'),
                 subtitle: const Text(
                   'Bundled · 1.17 GB · no download needed\n'
-                  'Source: danish-foundation-models/DFM-Mimir-GGUF\n'
+                  'Source: danish-foundation-models/DFM-Mimir-v1.5-GGUF\n'
                   'Our tested GGUF conversion · trained context 4096',
                 ),
                 trailing: TextButton(

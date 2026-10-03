@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:dfm_mimir/model_library_view.dart';
@@ -12,71 +13,38 @@ import 'package:dfm_mimir/store.dart';
 
 import 'widget_test.dart' show FakeEngine;
 
-class Headers implements HttpHeaders {
-  @override
-  String? value(String name) => null;
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+class Response extends http.StreamedResponse {
+  Response(
+    Stream<List<int>> stream,
+    int length, {
+    int status = 200,
+    Map<String, String> headers = const {},
+  }) : super(
+         stream,
+         status,
+         headers: headers,
+         contentLength: length < 0 ? null : length,
+       );
 }
 
-class Response extends Stream<List<int>> implements HttpClientResponse {
-  final Stream<List<int>> stream;
-  @override
-  final int contentLength;
-  Response(this.stream, this.contentLength);
-  @override
-  int get statusCode => 200;
-  @override
-  HttpHeaders get headers => Headers();
-  @override
-  StreamSubscription<List<int>> listen(
-    void Function(List<int>)? onData, {
-    Function? onError,
-    void Function()? onDone,
-    bool? cancelOnError,
-  }) => stream.listen(
-    onData,
-    onError: onError,
-    onDone: onDone,
-    cancelOnError: cancelOnError,
-  );
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class Request implements HttpClientRequest {
-  final Response response;
-  Request(this.response);
-  @override
-  bool followRedirects = false;
-  @override
-  Future<HttpClientResponse> close() async => response;
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class Client implements HttpClient {
+class Client extends http.BaseClient {
   final Response response;
   int requests = 0;
   bool closed = false;
   final List<Response>? responses;
   Client(this.response, {this.responses});
   @override
-  Duration? connectionTimeout;
-  @override
-  Future<HttpClientRequest> getUrl(Uri uri) async {
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
     requests++;
-    expect(uri.scheme, 'https');
-    return Request(responses?.removeAt(0) ?? response);
+    expect(request.url.scheme, 'https');
+    expect(request.followRedirects, false);
+    return responses?.removeAt(0) ?? response;
   }
 
   @override
-  void close({bool force = false}) {
+  void close() {
     closed = true;
   }
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 void main() {
@@ -89,7 +57,7 @@ void main() {
     descriptor = {
       'id': sha256.convert(bytes).toString(),
       'name': 'Test Mimir',
-      'repo': 'danish-foundation-models/DFM-Mimir-GGUF',
+      'repo': 'danish-foundation-models/DFM-Mimir-v1.5-GGUF',
       'revision': 'a' * 40,
       'file': 'test.gguf',
       'bytes': bytes.length,
@@ -97,6 +65,33 @@ void main() {
     };
   });
   tearDown(() async => dir.delete(recursive: true));
+
+  test('bundled model upgrade replaces stale inventory but keeps downloads', () {
+    final library = ModelLibrary();
+    library.remember({...descriptor, 'id': 'old-bundle', 'bundled': true});
+    library.remember({...descriptor, 'id': 'download', 'bundled': false});
+    library.remember({...descriptor, 'id': 'new-bundle', 'bundled': true});
+    expect(library.installed.map((m) => m['id']), ['download', 'new-bundle']);
+  });
+
+  test('saved catalog retains discovered entries and gains shipped models', () async {
+    await File('${dir.path}/conversations.json').writeAsString(jsonEncode({
+      'version': 1,
+      'chats': [],
+      'modelCatalog': {'version': 1, 'models': [descriptor]},
+      'installedModels': [{...descriptor, 'bundled': true, 'path': 'obsolete'}],
+    }));
+    final store = ChatStore(engine: FakeEngine(), directory: dir, manualStartup: true)
+      ..persistence = false;
+    await store.initialize();
+    expect(store.library.catalog.any((a) => a.id == descriptor['id']), true);
+    expect(store.library.installed.any((m) => m['bundled'] == true), false);
+    expect(store.library.catalog.where((a) => a.data['repo'] ==
+      'danish-foundation-models/DFM-Mimir-v1.5-GGUF').length, greaterThanOrEqualTo(3));
+    expect(store.library.catalog.any((a) => a.data['repo'] ==
+      'danish-foundation-models/DFM-Mimir-GGUF'), true);
+    await store.shutdown();
+  });
 
   testWidgets(
     'model selector displays sizes and never enables feedback permission',
@@ -111,10 +106,10 @@ void main() {
         MaterialApp(home: ModelLibraryView(store: store)),
       );
       expect(find.textContaining('Selected:'), findsOneWidget);
-      expect(find.text('DFM Mimir v1 Q4_K_M'), findsOneWidget);
+      expect(find.text('DFM Mimir v1.5 Q4_K_M'), findsWidgets);
       expect(
         store.library.catalog.map((a) => a.data['repo']),
-        contains('danish-foundation-models/DFM-Mimir-GGUF'),
+        contains('danish-foundation-models/DFM-Mimir-v1.5-GGUF'),
       );
       await tester.tap(find.byType(SwitchListTile));
       await tester.pump();
@@ -218,6 +213,24 @@ void main() {
     await library.refresh();
     expect(library.error, contains('Enable'));
     expect(library.installed, isEmpty);
+    await library.close();
+  });
+  test('download rejects a redirect that downgrades HTTPS', () async {
+    final client = Client(
+      Response(
+        const Stream.empty(),
+        0,
+        status: 302,
+        headers: {'location': 'http://example.com/model.gguf'},
+      ),
+    );
+    final library = ModelLibrary(clientFactory: () => client)..directory = dir;
+    library.setOnline(true);
+    await library.download(ModelArtifact(descriptor));
+    expect(library.error, contains('HTTPS required'));
+    expect(client.requests, 1);
+    expect(library.installed, isEmpty);
+    expect(client.closed, true);
     await library.close();
   });
   test('streamed download verifies and installs without selecting', () async {
@@ -331,7 +344,7 @@ void main() {
     expect(reopened.library.online, false);
     expect(reopened.library.discovered, [allowed]);
     expect(reopened.library.unavailable.single['repo'], allowed);
-    expect(reopened.library.catalog.single.data['repo'], allowed);
+    expect(reopened.library.catalog.singleWhere((a) => a.id == descriptor['id']).data['repo'], allowed);
     await reopened.shutdown();
   });
   test('disallowed artifact cannot be downloaded directly', () async {
@@ -452,7 +465,7 @@ void main() {
     );
     await tester.runAsync(reopened.initialize);
     expect(reopened.library.userRepositories, ['noctrex/DFM-Mimir']);
-    expect(reopened.library.catalog.single.data['repo'], 'noctrex/DFM-Mimir');
+    expect(reopened.library.catalog.singleWhere((a) => a.id == descriptor['id']).data['repo'], 'noctrex/DFM-Mimir');
     expect(reopened.library.online, false);
     await tester.pumpWidget(
       MaterialApp(home: ModelLibraryView(store: reopened)),

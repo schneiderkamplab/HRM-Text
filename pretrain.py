@@ -88,6 +88,7 @@ class PretrainConfig(pydantic.BaseModel):
     lr_auto: bool = True
     lr_piecewise_points: Optional[list[tuple[int, float]]] = None
     lr_rewarm_steps: int = pydantic.Field(default=0, ge=0)
+    lr_rewarm_stages: int = pydantic.Field(default=1, ge=1)
     lr_rewarm_start_ratio: float = pydantic.Field(default=0.5, ge=0, le=1, allow_inf_nan=False)
     lr_rewarm_start_step: Optional[int] = pydantic.Field(default=None, ge=0)
     lr_decay_start_step: Optional[int] = pydantic.Field(default=None, ge=0)

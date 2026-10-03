@@ -1,0 +1,9 @@
+title: DFM Mimir
+baseurl: /HRM-Text
+url: https://schneiderkamplab.github.io
+markdown: kramdown
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

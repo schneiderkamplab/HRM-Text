@@ -8,6 +8,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'engine.dart';
+import 'search.dart';
+import 'search_tool.dart';
 import 'models.dart';
 import 'model_library.dart';
 
@@ -18,9 +20,10 @@ class ChatStore extends ChangeNotifier {
   Directory? directory;
   final bool manualStartup;
   String? _sessionDevice;
-  ChatStore({InferenceEngine? engine, this.directory, bool? manualStartup})
+  ChatStore({InferenceEngine? engine, WebSearchController? search, this.directory, bool? manualStartup})
     : manualStartup = manualStartup ?? Platform.isAndroid,
-      engine = engine ?? NativeEngine();
+      engine = engine ?? NativeEngine(),
+      search = search ?? WebSearchController();
   final ModelLibrary library = ModelLibrary();
   List<Conversation> chats = [];
   String? selected, notice;
@@ -31,6 +34,25 @@ class ChatStore extends ChangeNotifier {
   String? pending;
   List<String> backendFallbackReasons = [];
   String actualBackend = '';
+  String get modelStatus {
+    if (closing) return 'Closing model…';
+    if (loading) return 'Loading model…';
+    if (!ready) return 'Not loaded';
+    final backend = actualBackend.toLowerCase();
+    if (backend == 'cpu' || backend == 'blas' || backend == 'accelerate') {
+      return 'Loaded on CPU';
+    }
+    final name = switch (backend) {
+      'metal' => 'Apple Metal',
+      'cuda' => 'NVIDIA CUDA',
+      'vulkan' => 'Vulkan',
+      'sycl' => 'SYCL',
+      'hip' || 'rocm' => 'AMD ROCm',
+      _ => actualBackend,
+    };
+    return name.isEmpty ? 'Loaded' : 'Loaded with acceleration ($name)';
+  }
+
   Json? preview, model;
   late ModelProfile profile;
   bool conversationsReady = false;
@@ -40,6 +62,22 @@ class ChatStore extends ChangeNotifier {
       generating = false,
       compacting = false,
       closing = false;
+  final WebSearchController search;
+  bool searching = false, _stopRequested = false;
+  static const minimumTextScale = 0.75, maximumTextScale = 2.0;
+  double _textScale = 1.0;
+  double get textScale => _textScale;
+
+  Future<void> setTextScale(double value) async {
+    if (!value.isFinite || value < minimumTextScale ||
+        value > maximumTextScale || value == _textScale) {
+      return;
+    }
+    _textScale = value;
+    notifyListeners();
+    await save();
+  }
+
   bool onlineFeedback = false;
   void setOnlineFeedback(bool enabled) {
     onlineFeedback = enabled;
@@ -48,10 +86,31 @@ class ChatStore extends ChangeNotifier {
   }
 
   bool compact = true,
-      mixedLM = false,
+      mixedLM = true,
       showSummary = false,
       automatic = true,
       persistence = true;
+  static const defaultRepetitionPenalty = 1.1;
+  double temperature = 0, repetitionPenalty = defaultRepetitionPenalty;
+  static double _samplingValue(dynamic value, double fallback, double min, double max) {
+    return value is num && value.isFinite && value >= min && value <= max
+        ? value.toDouble() : fallback;
+  }
+
+  Future<void> setSampling({required double temperature, required double repetitionPenalty}) async {
+    if (busy) return;
+    if (!temperature.isFinite || temperature < 0 || temperature > 2 ||
+        !repetitionPenalty.isFinite || repetitionPenalty < 1 || repetitionPenalty > 2) {
+      notice = 'Temperature must be 0–2 and repetition penalty 1–2.';
+      notifyListeners();
+      return;
+    }
+    this.temperature = temperature;
+    this.repetitionPenalty = repetitionPenalty;
+    notifyListeners();
+    await save();
+  }
+
   int context = 1024, reply = 512;
   int? training, used;
   int lastReusedTokens = 0;
@@ -113,6 +172,7 @@ class ChatStore extends ChangeNotifier {
                 .clamp(0, messages.length)
             as int;
   String get activity =>
+      searching ? 'DFM Mimir is searching…' :
       compacting ? 'DFM Mimir is compacting…' : 'DFM Mimir is thinking…';
   void setNotice(String? value) {
     notice = value;
@@ -152,9 +212,18 @@ class ChatStore extends ChangeNotifier {
             throw const FormatException('Duplicate chats');
           }
           selected = j['selected'];
+          _textScale = _samplingValue(j['textScale'], 1, minimumTextScale, maximumTextScale);
           onlineFeedback = j['onlineFeedback'] == true;
+          search.enabled = j['onlineSearch'] == true;
           compact = j['compact'] ?? true;
-          mixedLM = j['mixedLM'] ?? false;
+          mixedLM = j['mixedLM'] ?? true;
+          temperature = _samplingValue(j['temperature'], 0, 0, 2);
+          repetitionPenalty = _samplingValue(
+            j['repetitionPenalty'], defaultRepetitionPenalty, 1, 2);
+          // Adopt the stronger default once; later explicit 1.0 choices persist.
+          if (j['samplingDefaultsVersion'] == null && repetitionPenalty == 1) {
+            repetitionPenalty = defaultRepetitionPenalty;
+          }
           showSummary = j['showSummary'] ?? false;
           automatic = j['automatic'] ?? true;
           context = j['context'] ?? 1024;
@@ -191,12 +260,21 @@ class ChatStore extends ChangeNotifier {
       library.directory = directory;
       library.readCatalog(await rootBundle.loadString('assets/models.json'));
       if (cachedCatalog != null) {
+        final shippedCatalog = List<ModelArtifact>.of(library.catalog);
         try { library.readCatalog(cachedCatalog); }
         catch (_) { notice = 'Saved model catalog could not be read; using the bundled catalog.'; }
+        final shippedIds = shippedCatalog.map((a) => a.id).toSet();
+        library.catalog = [
+          ...shippedCatalog,
+          ...library.catalog.where((a) => !shippedIds.contains(a.id)),
+        ];
       }
       library.addListener(notifyListeners);
       library.onChanged = save;
-      if (model != null) library.remember(model!);
+      // The app's bundled file may have changed during an upgrade. Register it
+      // only after useBundled has checked the actual file's identity.
+      library.installed.removeWhere((m) => m['bundled'] == true);
+      if (model != null && model!['bundled'] != true) library.remember(model!);
       conversationsReady = true;
       notifyListeners();
       if (manualStartup) {
@@ -270,10 +348,10 @@ class ChatStore extends ChangeNotifier {
       }
       model = {
         'id': id,
-        'name': 'DFM Mimir v1 Q4_K_M',
+        'name': 'DFM Mimir v1.5 Q4_K_M',
         'path': path,
         'bytes': await file.length(),
-        'repo': 'danish-foundation-models/DFM-Mimir-GGUF',
+        'repo': 'danish-foundation-models/DFM-Mimir-v1.5-GGUF',
         'bundled': true,
         'profile': profile.data,
       };
@@ -558,6 +636,7 @@ class ChatStore extends ChangeNotifier {
     try {
       final events = await engine.command({
         'op': 'count',
+        if (search.enabled && search.configured) 'tools': webSearchTools,
         'history': messages,
         'memory': active?.memory,
         'compact': compact,
@@ -588,49 +667,120 @@ class ChatStore extends ChangeNotifier {
     streaming = '';
     preview = null;
     generating = true;
+    _stopRequested = false;
     compacting = false;
     notice = null;
     _countRevision++;
     notifyListeners();
     await save();
     try {
-      final events = await engine.command(
-        {
-          'op': 'reply',
-          'conversation': c.id,
-          'history': c.messages,
-          'memory': c.memory,
-          'compact': compact,
-          'prompt': prompt,
-          'budget': reply,
-        },
-        onEvent: (e) {
-          switch (e['type']) {
-            case 'compacting':
-              compacting = true;
-            case 'summary':
-              preview = {
-                'summary': e['text'],
-                'covered': e['covered'],
-                'position': c.messages.length,
-              };
-            case 'promptSummary':
-              preview = {
-                'summary': e['text'],
-                'covered': 0,
-                'position': c.messages.length,
-                'prompt': true,
-              };
-            case 'prepared':
-              compacting = false;
-              used = e['tokens'];
-            case 'token':
-              streaming += e['text'] as String;
+      if (search.enabled) await search.load();
+      final toolContext = <Json>[];
+      Json result;
+      var generationMemory = c.memory;
+      for (var round = 0; ; round++) {
+        if (_stopRequested) {
+          result = {'cancelled': true};
+          break;
+        }
+        final toolsEnabled = search.enabled && search.configured && round < 2;
+        streaming = '';
+        String rawStream = '';
+        final events = await engine.command(
+          {
+            'op': 'reply',
+            if (toolsEnabled) 'tools': webSearchTools,
+            if (toolContext.isNotEmpty) 'toolContext': toolContext,
+            'conversation': c.id,
+            'history': c.messages,
+            'memory': generationMemory,
+            'compact': compact,
+            'prompt': prompt,
+            'budget': reply,
+            'temperature': temperature,
+            'repeat_penalty': repetitionPenalty,
+          },
+          onEvent: (e) {
+            switch (e['type']) {
+              case 'compacting':
+                compacting = true;
+              case 'summary':
+                preview = {
+                  'summary': e['text'],
+                  'covered': e['covered'],
+                  'position': c.messages.length,
+                };
+              case 'promptSummary':
+                preview = {
+                  'summary': e['text'],
+                  'covered': 0,
+                  'position': c.messages.length,
+                  'prompt': true,
+                };
+              case 'prepared':
+                compacting = false;
+                used = e['tokens'];
+              case 'token':
+                rawStream += e['text'] as String;
+                streaming = rawStream.split('<|tool_call>').first;
+            }
+            notifyListeners();
+          },
+        );
+        result = events.firstWhere((e) => e['type'] == 'reply');
+        if (_stopRequested) result = {'cancelled': true};
+        if (result['cancelled'] == true) break;
+        if (result['toolCall'] != true) {
+          if ((result['text'] as String? ?? '').contains('<|tool_call>')) {
+            throw StateError(
+              'Mimir produced an incomplete search request. Increase the reply budget or retry.',
+            );
           }
-          notifyListeners();
-        },
-      );
-      final result = events.firstWhere((e) => e['type'] == 'reply');
+          break;
+        }
+        if (!toolsEnabled) {
+          throw StateError(
+            'Mimir exceeded the two-search limit. Please try a more specific question.',
+          );
+        }
+        final query = parseSearchQuery(result['text'] as String);
+        searching = true;
+        streaming = '';
+        notifyListeners();
+        Object searchResult;
+        try {
+          final results = await search.search(query);
+          searchResult = {
+            'results': results
+                .map(
+                  (r) => {
+                    'title': r['title'],
+                    'url': r['url'],
+                    'description': (r['description'] ?? '').substring(
+                      0,
+                      (r['description'] ?? '').length.clamp(0, 500),
+                    ),
+                  },
+                )
+                .toList(),
+          };
+        } catch (_) {
+          searchResult = {
+            'error': 'Web search unavailable. Tell the user you could not verify current information.',
+          };
+        } finally {
+          searching = false;
+        }
+        if (_stopRequested) {
+          result = {'cancelled': true};
+          break;
+        }
+        toolContext.addAll(searchToolExchange(round, query, searchResult));
+        generationMemory = result['memory'] == null
+            ? generationMemory
+            : Json.from(result['memory']);
+        notifyListeners();
+      }
       lastReusedTokens = result['reusedPrefixTokens'] ?? 0;
       if (result['cancelled'] == true) {
         draft = prompt;
@@ -653,7 +803,11 @@ class ChatStore extends ChangeNotifier {
             if (result['compactedPrompt'] != null)
               'compactedContent': result['compactedPrompt'],
           },
-          {'role': 'assistant', 'content': result['text']},
+          {
+            'role': 'assistant',
+            'content': result['text'],
+            if (toolContext.isNotEmpty) 'toolContext': toolContext,
+          },
         ]);
         c.updated = DateTime.now();
         if (result['compactedPrompt'] != null) {
@@ -671,6 +825,7 @@ class ChatStore extends ChangeNotifier {
       notice = '$e';
     } finally {
       generating = false;
+      searching = false;
       compacting = false;
       pending = null;
       streaming = '';
@@ -682,11 +837,16 @@ class ChatStore extends ChangeNotifier {
   }
 
   void stop() {
-    if (generating) engine.cancel();
+    if (generating) {
+      _stopRequested = true;
+      search.cancel();
+      engine.cancel();
+    }
   }
 
   Future<void> save() {
     if (!persistence || directory == null) return Future.value();
+    if (model != null) model!['profile'] = profile.data;
     final installedIndex = library.installed.indexWhere((m) => m['id'] == model?['id']);
     if (installedIndex >= 0) library.installed[installedIndex] = Json.from(model!);
     final data = jsonEncode({
@@ -694,7 +854,9 @@ class ChatStore extends ChangeNotifier {
       'chats': chats.map((c) => c.toJson()).toList(),
       'selected': selected,
       'model': model,
+      'textScale': textScale,
       'onlineFeedback': onlineFeedback,
+      'onlineSearch': search.enabled,
       'modelNetwork': library.online,
       'userModelRepositories': library.userRepositories,
       'modelCatalog': {'version': 1, 'models': library.catalog.map((a) => a.data).toList()},
@@ -703,6 +865,9 @@ class ChatStore extends ChangeNotifier {
       'unavailableModels': library.unavailable,
       'compact': compact,
       'mixedLM': mixedLM,
+      'temperature': temperature,
+      'repetitionPenalty': repetitionPenalty,
+      'samplingDefaultsVersion': 1,
       'showSummary': showSummary,
       'automatic': automatic,
       'context': context,
@@ -726,6 +891,7 @@ class ChatStore extends ChangeNotifier {
   Future<void> shutdown() async {
     if (closing) return;
     stop();
+    search.cancel();
     closing = true;
     notifyListeners();
     await setApiEnabled(false);

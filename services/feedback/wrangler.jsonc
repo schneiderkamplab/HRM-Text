@@ -12,5 +12,5 @@
     "database_id": "fe4f6f32-9602-4215-80a6-848b0027f28b",
     "migrations_dir": "migrations"
   }],
-  "ratelimits": [{ "name": "SUBMISSION_LIMIT", "namespace_id": "1001", "simple": { "limit": 20, "period": 60 } }]
+  "ratelimits": [{ "name": "SEARCH_LIMIT", "namespace_id": "1002", "simple": { "limit": 10, "period": 60 } },{ "name": "SUBMISSION_LIMIT", "namespace_id": "1001", "simple": { "limit": 20, "period": 60 } }]
 }

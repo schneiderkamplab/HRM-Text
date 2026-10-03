@@ -1,0 +1,50 @@
+name: Mimir public pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - native/app/store/site/**
+      - native/app/store/PRIVACY.md
+      - native/app/store/SUPPORT.md
+      - native/app/assets/mimir.png
+      - .github/workflows/mimir-pages.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mimir-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - name: Stage public documents only
+        shell: bash
+        run: |
+          mkdir -p _pages/privacy _pages/support
+          cp -R native/app/store/site/. _pages/
+          cp native/app/assets/mimir.png _pages/mimir.png
+          for page in privacy support; do
+            { printf '%s\n' '---' "title: ${page^}" '---'; cat "native/app/store/${page^^}.md"; } > "_pages/$page/index.md"
+          done
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./_pages
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./_site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/io_client.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dfm_mimir/feedback.dart';
@@ -128,6 +130,7 @@ void main() {
       final client = FeedbackClient(
         Uri.parse('http://127.0.0.1:${server.port}/v1/feedback'),
         allowLoopback: true,
+        clientFactory: IOClient.new,
         timeout: const Duration(milliseconds: 500),
       );
       final json = body(FeedbackDraft());

@@ -249,6 +249,18 @@ repaired/failing strata.
 
 ## DFM11 repaired tool-source execution
 
+### DeepDive training-turn inspection (2026-09-23)
+
+`python -m scripts.export_deepdive_training_example` writes the first converted
+DeepDive trajectory to `docs/deepdive_first_trajectory_training_turns.jsonl`:
+one record per assistant turn, decoded native prompt/target and token counts.
+Eleven examples match the stored DFM11 training token arrays exactly; the
+fourth assistant turn (zero-based 3) is excluded by the tokenizer and recorded
+explicitly as excluded. The 4096-token policy trims older complete tool cycles
+where necessary. The final answer survives with 3895 prompt tokens and 7 target
+tokens. Thus retrieved results are training context, but not necessarily the
+entire original retrieval history for every target.
+
 On 2026-09-04, four replacement reservoirs were built under `exports_dfm11/`.
 Each package has pinned upstream provenance, deterministic gzip shards,
 checksums, a self-contained validator, and an audit receipt in

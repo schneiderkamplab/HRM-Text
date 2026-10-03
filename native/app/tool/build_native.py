@@ -23,7 +23,9 @@ def main():
     frameworks = []
     for platform in ('macos', 'simulator', 'ios'):
         dest = build / platform
-        flags = ['-DCMAKE_OSX_ARCHITECTURES=arm64', '-DCMAKE_POLICY_VERSION_MINIMUM=3.5']
+        flags = ['-DCMAKE_OSX_ARCHITECTURES=arm64', '-DCMAKE_POLICY_VERSION_MINIMUM=3.5',
+                 '-DCMAKE_C_FLAGS_RELEASE=-O3 -DNDEBUG -g',
+                 '-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -g']
         if platform == 'macos':
             flags += ['-DCMAKE_OSX_DEPLOYMENT_TARGET=14.0', '-DGGML_METAL=ON', '-DGGML_BLAS=ON']
             product = dest / 'Release/MimirRuntime.framework'
@@ -36,10 +38,14 @@ def main():
             product = dest / f'Release-{sdk}/MimirRuntime.framework'
         run('cmake', '-S', ROOT / 'native/runtime', '-B', dest, '-G', 'Xcode', *flags)
         run('cmake', '--build', dest, '--config', 'Release', '--target', 'MimirRuntime', '-j', '6')
-        frameworks.append(product)
+        symbols = product.with_suffix('.framework.dSYM')
+        if not symbols.is_dir():
+            raise SystemExit(f'Missing framework debug symbols: {symbols}')
+        frameworks.append((product, symbols))
     output = pathlib.Path(tempfile.mkdtemp(prefix='xcframework-', dir=build)) / 'MimirRuntime.xcframework'
     run('xcodebuild', '-create-xcframework',
-        *[arg for framework in frameworks for arg in ('-framework', framework)], '-output', output)
+        *[arg for framework, symbols in frameworks
+          for arg in ('-framework', framework, '-debug-symbols', symbols)], '-output', output)
     # CocoaPods does not traverse a Frameworks directory symlink for vendored binaries.
     for platform in ('macos', 'ios'):
         target = APP / 'packages/mimir_native' / platform / 'Frameworks/MimirRuntime.xcframework'

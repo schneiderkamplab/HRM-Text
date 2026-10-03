@@ -1,0 +1,53 @@
+{
+  "captured": "2026-10-02",
+  "source_commit": "e6e8495",
+  "listing": "SDU 6818524811 / 0.1.5",
+  "qualification": "Debug integration capture using production widgets and real bundled model; not a signed distribution install test.",
+  "model_sha256": "38ecdf6303394b256037287f2caf9b334e6a20814fd07d11bdc24555dc5d01e6",
+  "platforms": {
+    "macos": {
+      "device": "Apple Silicon Mac",
+      "dimensions": [
+        2560.0,
+        1600.0
+      ],
+      "method": "Flutter render boundary",
+      "backend": "Metal",
+      "files_sha256": {
+        "01-welcome.png": "653ad1bff299a2aebfbcfb873eadde93662f477db2c863922abce0c8f62fde70",
+        "02-danish.png": "818210618f2d4c3e06ad3b142d2c2749cbf1beb1a31237a8133fa54de44799c1",
+        "04-appearance.png": "8f9c0811416a6aada2aa870ec93238df685715e84524d7873eaf9ed1fe40f103"
+      }
+    },
+    "iphone": {
+      "device": "iPhone 16 Pro Max / iOS 18.4 simulator",
+      "dimensions": [
+        1320.0,
+        2868.0
+      ],
+      "method": "Native iOS integration-test screenshot",
+      "backend": "CPU",
+      "files_sha256": {
+        "01-welcome.png": "acc7ca7915b6b03dd48fb0ad2d34ac4fbe863f1bda74f359bcdf76503862f73f",
+        "02-danish.png": "417302850ccbcc6a397eaad4b06a4ee5b9270b9611ffb2eb196223a12fa8cb1a",
+        "03-english.png": "5f239785e6d24354d2a5f32648e150a4c07cc3d5f06deef17f583fec8bf63704",
+        "04-appearance.png": "51365e72b562c22b4972bd0c48fd99c0066d09e89cf0686c97d643f3a1f44a1b"
+      }
+    },
+    "ipad": {
+      "device": "iPad Pro 13 M4 / iOS 18.4 simulator",
+      "dimensions": [
+        2064.0,
+        2752.0
+      ],
+      "method": "Native iOS integration-test screenshot",
+      "backend": "CPU",
+      "files_sha256": {
+        "01-welcome.png": "348e8e3202817b0b61d1c38a5ada8d2c426024b5bd0829d78215190849d394e4",
+        "02-danish.png": "cbdbc970a54c0fa1519ef5222104281f00acdc82e0943cbea41788337206a7ad",
+        "03-english.png": "6b65705a18698f44236b3c9ce6340ead7e0b6ec64330b943560cfbc03ff9a659",
+        "04-appearance.png": "416cbd1c854ff65adc9130b9ef72300c770733687b15c462387af497d4bac8b5"
+      }
+    }
+  }
+}

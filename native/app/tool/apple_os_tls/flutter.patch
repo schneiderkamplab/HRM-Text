@@ -1,0 +1,70 @@
+diff --git a/engine/src/flutter/common/graphics/BUILD.gn b/engine/src/flutter/common/graphics/BUILD.gn
+index a18b23b466f..38e056cbc4a 100644
+--- a/engine/src/flutter/common/graphics/BUILD.gn
++++ b/engine/src/flutter/common/graphics/BUILD.gn
+@@ -26,10 +26,13 @@ source_set("graphics") {
+     "//flutter/shell/common:base64",
+     "//flutter/shell/version",
+     "//flutter/skia",
+-    "//flutter/third_party/boringssl",
+     "//flutter/third_party/rapidjson",
+   ]
+ 
++  if (!is_mac && !is_ios) {
++    deps += [ "//flutter/third_party/boringssl" ]
++  }
++
+   public_configs = [ "//flutter:config" ]
+   if (shell_enable_vulkan) {
+     public_deps = [
+diff --git a/engine/src/flutter/common/graphics/persistent_cache.cc b/engine/src/flutter/common/graphics/persistent_cache.cc
+index d304fa6adc3..1e87191f7b9 100644
+--- a/engine/src/flutter/common/graphics/persistent_cache.cc
++++ b/engine/src/flutter/common/graphics/persistent_cache.cc
+@@ -22,7 +22,13 @@
+ #include "flutter/fml/trace_event.h"
+ #include "flutter/shell/common/base64.h"
+ #include "flutter/shell/version/version.h"
++#if defined(__APPLE__)
++#include <CommonCrypto/CommonDigest.h>
++#include <algorithm>
++#include <limits>
++#else
+ #include "openssl/sha.h"
++#endif
+ #include "rapidjson/document.h"
+ #include "third_party/skia/include/gpu/ganesh/GrDirectContext.h"
+ 
+@@ -40,11 +46,31 @@ std::string PersistentCache::SkKeyToFilePath(const SkData& key) {
+     return "";
+   }
+ 
++#if defined(__APPLE__)
++  uint8_t sha_digest[CC_SHA1_DIGEST_LENGTH];
++  // SHA-1 preserves existing cache filenames; this is not an authenticity check.
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wdeprecated-declarations"
++  CC_SHA1_CTX context;
++  CC_SHA1_Init(&context);
++  const auto* bytes = static_cast<const uint8_t*>(key.data());
++  size_t remaining = key.size();
++  while (remaining != 0) {
++    const auto count = static_cast<CC_LONG>(std::min(
++        remaining, static_cast<size_t>(std::numeric_limits<CC_LONG>::max())));
++    CC_SHA1_Update(&context, bytes, count);
++    bytes += count;
++    remaining -= count;
++  }
++  CC_SHA1_Final(sha_digest, &context);
++#pragma clang diagnostic pop
++#else
+   uint8_t sha_digest[SHA_DIGEST_LENGTH];
+   SHA1(static_cast<const uint8_t*>(key.data()), key.size(), sha_digest);
++#endif
+ 
+   std::string_view view(reinterpret_cast<const char*>(sha_digest),
+-                        SHA_DIGEST_LENGTH);
++                        sizeof(sha_digest));
+   return fml::HexEncode(view);
+ }
+ 

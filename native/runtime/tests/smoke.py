@@ -14,6 +14,7 @@ parser.add_argument('device', nargs='?', default='auto')
 parser.add_argument('--mixed-lm', action='store_true')
 parser.add_argument('--report')
 parser.add_argument('--compaction-stress', action='store_true')
+parser.add_argument('--search-tool', action='store_true', help='Exercise native Mimir tool calls with an offline synthetic result')
 args = parser.parse_args()
 measurements = []
 lib = ctypes.CDLL(args.library)
@@ -134,6 +135,29 @@ try:
         assert stopped_reply['cancelled'] and stopped_reply['compactedPrompt'] is None
         assert next(e for e in run(reply) if e['type'] == 'reply')['text']
         print('PASS: oversized prompt, reusable prompt metadata, oversized old turn, disabled mode, cancellation/recovery')
+    if args.search_tool:
+        tools = [{'type': 'function', 'function': {'name': 'web_search',
+            'description': 'Search the web for current facts. Use the results to answer and cite their URLs.',
+            'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Search query'}},
+                           'required': ['query'], 'additionalProperties': False}}}]
+        request = dict(reply, prompt='Search the web to find who is the current prime minister of Sweden. Use the web_search tool before answering.', budget=128, tools=tools)
+        first = next(e for e in run(request) if e['type'] == 'reply')
+        assert first['toolCall'] and first['text'].endswith('<tool_call|>'), first
+        import re
+        matched = re.search(r'query:<\|"\|>(.*?)<\|"\|>', first['text'])
+        assert matched, first
+        transcript = [
+            {'role': 'assistant', 'content': '', 'tool_calls': [{'id': 'test_search', 'type': 'function',
+                'function': {'name': 'web_search', 'arguments': {'query': matched.group(1)}}}]},
+            {'role': 'tool', 'name': 'web_search', 'tool_call_id': 'test_search',
+             'content': '{"results":[{"title":"Synthetic test source","url":"https://example.org/test","description":"This offline fixture reports Ulf Kristersson."}]}'}]
+        final = next(e for e in run(dict(request, toolContext=transcript)) if e['type'] == 'reply')
+        assert not final['toolCall'] and final['text'] and not final['cancelled'], final
+        saved = [{'role': 'user', 'content': request['prompt']},
+                 {'role': 'assistant', 'content': final['text'], 'toolContext': transcript}]
+        counted = run({'op': 'count', 'history': saved, 'tools': tools})
+        assert counted[0]['type'] == 'count' and counted[0]['tokens'] > 0, counted
+        print('PASS: OpenAI tool definition, native tool stop, tool response continuation, restored transcript (no network)')
     print('PASS: devices, load, template generation, streaming, cancellation/recovery, streamed compaction, cache lifecycle')
     assert lib.mimir_submit(engine, json.dumps(dict(reply, budget=512, prompt='Skriv en lang historie om en rejse gennem Danmark.')).encode()) == 1
     deadline = time.monotonic() + 60

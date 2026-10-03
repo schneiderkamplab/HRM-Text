@@ -162,7 +162,9 @@ app entry point.
 
 Build on the matching host with Flutter 3.47.5, Python 3.12+, CMake and the
 [Flutter desktop prerequisites](https://docs.flutter.dev/platform-integration).
-Linux also needs GTK3 development libraries, clang, Ninja and pkg-config;
+Linux also needs GTK3 development libraries, clang, Ninja, pkg-config and
+`libsecret-1-dev`; installed apps need `libsecret-1-0` and a Secret Service to
+remember search credentials (session-only keys work without a Secret Service);
 Windows needs Visual Studio's Desktop development with C++ workload.
 
 ```sh
@@ -202,16 +204,17 @@ not implemented yet; they remain in the plan.
 
 ## Experimental MixedLM
 
-**Model and settings → MixedLM mode** enables approximate reuse of older prompt
-representations. It is off by default; switching reloads the model context.
+**Settings → Advanced → MixedLM mode** enables approximate reuse of older prompt
+representations. It is on by default for new settings; an existing saved choice
+is preserved. Switching reloads the model context.
 See [design, test evidence and observed quality limits](../mimir/MIXEDLM.md).
 
 ### Include weights in a previously tested desktop package
 
 The recommended ready-to-use downloads include the tested Mimir Q4_K_M weights.
-Version 0.1.2 bundles the corrected official Q4_K_M from
-[`danish-foundation-models/DFM-Mimir-GGUF`](https://huggingface.co/danish-foundation-models/DFM-Mimir-GGUF).
-Public downloads: [DFM Mimir 0.1.2](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.2).
+Version 0.1.5 bundles the official Mimir v1.5 Q4_K_M from
+[`danish-foundation-models/DFM-Mimir-v1.5-GGUF`](https://huggingface.co/danish-foundation-models/DFM-Mimir-v1.5-GGUF).
+Public downloads: [DFM Mimir 0.1.5](https://github.com/schneiderkamplab/HRM-Text/releases/tag/dfm-mimir-v0.1.5).
 CI's smaller import-only bundles can be assembled on any host without recompiling
 their native binaries:
 
@@ -260,3 +263,83 @@ See [API.md](API.md) for Settings, commands, supported fields, limits and tests.
 
 See [Models and downloads](MODELS.md) for the bundled HF source, available
 precisions, optional downloads, selector behavior, and adding future versions.
+
+## Reply sampling
+
+Model and settings includes temperature (0–2, default 0) and repetition penalty
+(1–2, default 1.1). Temperature 0 uses greedy decoding; higher values sample with
+more variation. A repetition penalty above 1 discourages tokens appearing in the
+last 64 generated tokens of the current reply. Penalty history resets each reply
+and does not penalize the prompt. Settings persist and apply to the next reply
+without reloading the model; they cannot change during generation.
+Compaction retains its deterministic defaults. These UI settings do not override
+sampling parameters supplied by OpenAI-compatible API clients.
+
+## Markdown replies
+
+Assistant replies (including streaming text) and visible compaction summaries
+render basic Markdown: headings, emphasis, lists, blockquotes, inline code and
+fenced code blocks. Text remains selectable. User prompts remain literal, and
+stored/shared transcripts retain their original Markdown source.
+
+Rendering is offline. Images become text placeholders rather than fetching
+remote resources or reading local files. Tapping a link shows its address and a
+Copy link action; it does not open a browser or make a network request.
+
+The former saved 1.0 default upgrades to 1.1 once. Other saved values are
+preserved; explicitly selecting 1.0 afterwards still disables the penalty.
+
+## Optional web search
+
+Enable **Allow online search** and enter a Mimir search key in settings. The
+model can call `web_search(query)` during a reply, then use the results to answer
+with sources. Search is available through the model during chat. Only queries go to the
+Mimir service and Jina AI; model-generated queries may include chat details.
+At most two searches run per answer, and Stop cancels searching too.
+Search stays off by default. Keys can be remembered in secure storage or used
+only for the current session; no keys are bundled or included in feedback.
+See the [search runbook](../../services/feedback/SEARCH.md) for service setup.
+
+## iOS TestFlight
+
+See [the 0.1.5 TestFlight handoff](TESTFLIGHT.md) for Apple Developer account
+setup, signing, archive/upload commands and tester invitations. GitHub packages
+and an unsigned iOS archive are separate from TestFlight distribution.
+
+### Text size
+
+**Settings → Appearance → Text size** scales app text from 75% to 200% in 5%
+steps on macOS, iOS, Android, Linux and Windows. Changes apply immediately to
+chat, Markdown, the composer and dialogs, and persist locally across restarts.
+100% preserves the system text size; app scaling is applied on top of system
+accessibility scaling. **Reset text size** restores 100%. No model reload or
+network access is needed. Native operating-system dialogs retain system sizing.
+
+### Settings tabs
+
+- **Model:** model selection/import, temperature, repetition penalty, context and
+  reply limits, and acceleration backend.
+- **Appearance:** text size.
+- **Online:** optional search and conversation feedback.
+- **Advanced:** compaction and summary visibility, selected profile and profile
+  import, desktop local API, experimental MixedLM, and licenses.
+
+The selected model shows a plain-language loading/acceleration status; detailed
+device information and fallback reasons appear beside the backend selector.
+
+Tabs retain unfinished edits and scroll positions while the dialog is open.
+The tab strip scrolls horizontally when enlarged text needs more room.
+
+Settings sections use bordered groups and a shared visual hierarchy: read-only
+values have separate labels, editable fields have persistent labels and outlined
+borders, and help text uses secondary typography. Generation/appearance changes
+apply immediately (generation affects the next reply); memory/backend fields
+require **Apply limits**, and search keys require **Save search key**. The local
+API displays its listening address separately from the editable port.
+
+Dependent options are hidden when unavailable: search key controls while search
+is off, summary visibility while compaction is off, and profile import/MixedLM
+before selecting a model. Saved choices and unfinished search-key edits are
+preserved; hiding search masks its key again. A running API shows its address;
+stop it to edit the port. Temporary generation/loading locks remain disabled
+in place to avoid layout jumps.

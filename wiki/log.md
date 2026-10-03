@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-03: Reconciled upstream main with the DFM12/13 and multilingual-evaluation work; retained both XXL piecewise and XXL-Wide staged-rewarm runbooks and both knowledge histories.
+
 - 2026-10-02: Prepared [jjzha additions](pages/dfm13-jjzha-native-additions.md): four validated structured sources registered, IMDb and CroCo audit-gated, client waiting for the eight shared Gemma servers without changing training.
 
 - 2026-10-01: User excluded RepoChat, SearchArena and Mimir Search from DFM13; preserved research artifacts and superseded their planned integration in the [DFM13 plan](pages/dfm13-plan.md).
@@ -162,6 +164,45 @@
 - 2026-09-22: Registered English and Dutch DaLA training configurations for
   DFM12; recorded Gemma4 message rendering, split isolation, counts and quality
   caveats in the [DFM12 plan](pages/dfm12-plan.md).
+
+- 2026-10-02: Uploaded reviewed SDU iPhone/iPad/Mac store screenshots; recorded [real-engine capture workflow and remaining listing gates](pages/model-architecture/mimir-v1.5-ggufs.md#sdu-store-screenshot-upload--2026-10-02).
+
+- 2026-09-23: Published [DFM Mimir 0.1.5 with v1.5 Q4_K_M](pages/model-architecture/mimir-v1.5-ggufs.md#015-publication-complete); verified four packages and checksums, preserved the 0.1.4 release, and prepared unsigned iOS build 7.
+
+- 2026-09-23: Added the DFM Mimir v1.5 GGUF export/validation runbook and artifact provenance.
+
+- 2026-09-23: Extended [Mimir search](pages/model-architecture/mimir-search.md) into a model tool, using the embedded chat template, bounded Worker execution, persisted tool transcripts and cancellation; 0.1.4 unreleased.
+
+- 2026-09-23: Added [optional Mimir search](pages/model-architecture/mimir-search.md), private D1-to-Jina credential mapping, focus restoration and stock system-prompt refresh; 0.1.4 remains unreleased.
+
+- 2026-09-23: Updated the [concise default system prompt](pages/model-architecture/mimir-app.md#concise-default-model-identity-2026-09-23) with Mimir identity, a short DFM description and SDU UCloud training credit; unreleased 0.1.4.
+
+- 2026-09-22: Prepared unreleased 0.1.4+6 with [UCloud training credit](pages/model-architecture/mimir-app.md#014-preparation-ucloud-training-credit-2026-09-22) beside/below DFM branding. The supplied SVG and offline raster are preserved; no release or tag created.
+
+- 2026-09-22: Published [DFM Mimir 0.1.3](pages/model-architecture/mimir-app.md#013-publication-completed) as Latest, with macOS/Android/Linux/Windows packages, bundled official Q4_K_M, verified remote hashes and self-contained notes.
+
+- 2026-09-22: Preparing DFM Mimir 0.1.3 (build 5), with bundled official Q4_K_M, MixedLM default, sampling controls and offline Markdown. Four-platform packaging and publication validation are pending; [release notes](../native/app/releases/0.1.3.md).
+
+- 2026-09-22: Raised the Flutter repetition-penalty default to 1.1, with a one-time upgrade of the former saved default and preservation of custom values; see [sampling default policy](pages/model-architecture/mimir-app.md#stronger-default-repetition-penalty-2026-09-22).
+
+- 2026-09-22: Added [offline basic Markdown rendering](pages/model-architecture/mimir-app.md#basic-markdown-rendering-2026-09-22) for Flutter replies and summaries, including streamed text, selectable content, image placeholders and inspect/copy links; all 51 tests pass.
+
+- 2026-09-22: Made MixedLM the default for new Flutter settings and added persisted temperature/repetition-penalty controls with native sampling support; see [app sampling policy](pages/model-architecture/mimir-app.md#mixedlm-default-and-reply-sampling-2026-09-22).
+## 2026-09-23 - OpenHermes English repair evidence
+
+Published after approval as Hub commit `9a461da6fa1e2792f9ba6430861804443b82d3db`:
+expanded card and ten evidence files, all verified remotely. Ten original
+training shards remain byte-identical; explicit data patterns exclude evidence.
+
+Prepared CPU-only [repair provenance](pages/dfm8-plan/openhermes-english-repair-evidence.md)
+and a local card/evidence proposal. All 918,095 packaged conversations match
+retained positive audit and source/repair evidence. Recomputed style-only and
+operational-exclusion counts and corrected the shadow-counter interpretation.
+No new judgments or uploads.
+
+## 2026-09-23 — Mimir v1.5 model-card provenance
+
+Added [model-card provenance](pages/mimir-v1-5-model-card.md) for published comparisons, training data and the distinct 2850K and final epoch-10 weights.
 
 - 2026-09-21: Preserved the XL DFM11 campaign scripts and statistics, improved monitor task labels, and repaired post-epoch-9 EuroEval suite/headline averaging. See [XL epoch-ten resume](pages/dfm11-xl-epoch10-resume.md). Merged upstream main while retaining both knowledge histories.
 

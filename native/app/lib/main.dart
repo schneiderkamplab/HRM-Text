@@ -6,6 +6,7 @@ import 'dart:ui' show AppExitResponse;
 
 import 'store.dart';
 import 'chat_view.dart';
+import 'text_scaling.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,6 +63,17 @@ class _MimirAppState extends State<MimirApp> {
         brightness: Brightness.dark,
       ),
       useMaterial3: true,
+    ),
+    builder: (context, child) => ListenableBuilder(
+      listenable: widget.store,
+      builder: (context, _) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: AppTextScaler(
+            MediaQuery.textScalerOf(context), widget.store.textScale,
+          ),
+        ),
+        child: child!,
+      ),
     ),
     home: ChatView(store: widget.store),
   );

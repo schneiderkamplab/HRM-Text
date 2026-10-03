@@ -1,5 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+import 'network.dart';
+
 import 'dart:math';
 
 import 'package:uuid/uuid.dart';
@@ -126,11 +131,13 @@ class FeedbackFailure implements Exception {
 class FeedbackClient {
   final Uri endpoint;
   final Duration timeout;
+  final http.Client Function() clientFactory;
   FeedbackClient(
     this.endpoint, {
     this.timeout = const Duration(seconds: 30),
     bool allowLoopback = false,
-  }) {
+    http.Client Function()? clientFactory,
+  }) : clientFactory = clientFactory ?? createNetworkClient {
     if (endpoint.scheme != 'https' &&
         !(allowLoopback &&
             endpoint.scheme == 'http' &&
@@ -145,15 +152,15 @@ class FeedbackClient {
         'This chat exceeds the 1 MiB feedback limit.',
       );
     }
-    final client = HttpClient()..connectionTimeout = timeout;
+    final client = NetworkSession(clientFactory());
     try {
       return await (() async {
-        final request = await client.postUrl(endpoint);
-        request.followRedirects = false;
-        request.headers.contentType = ContentType.json;
-        request.contentLength = bytes.length;
-        request.add(bytes);
-        final response = await request.close();
+        final response = await client.send(
+          'POST',
+          endpoint,
+          headers: {'content-type': 'application/json'},
+          body: bytes,
+        );
         if (response.statusCode != 200 && response.statusCode != 201) {
           throw FeedbackFailure(switch (response.statusCode) {
             413 => 'This chat is too large to send.',
@@ -165,7 +172,7 @@ class FeedbackClient {
           });
         }
         final data = <int>[];
-        await for (final chunk in response) {
+        await for (final chunk in response.stream) {
           data.addAll(chunk);
           if (data.length > 8192) {
             throw const FormatException('Oversized receipt');
@@ -185,7 +192,7 @@ class FeedbackClient {
         'Delivery could not be confirmed. Retry safely with the same submission, or copy it for later.',
       );
     } finally {
-      client.close(force: true);
+      client.close();
     }
   }
 }

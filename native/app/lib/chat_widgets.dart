@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'markdown_text.dart';
+
 class MimirMark extends StatelessWidget {
   final double size;
   const MimirMark({super.key, this.size = 24});
@@ -48,10 +50,13 @@ class ChatMessage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 9),
-          SelectableText(
-            content,
-            style: const TextStyle(fontSize: 15, height: 1.5),
-          ),
+          if (role == 'user')
+            SelectableText(
+              content,
+              style: const TextStyle(fontSize: 15, height: 1.5),
+            )
+          else
+            MarkdownText(content),
         ],
       ),
     ),
@@ -83,9 +88,39 @@ class ChatWelcome extends StatelessWidget {
             ),
             const SizedBox(height: 22),
             Container(
-              color: Colors.white,
               padding: const EdgeInsets.all(12),
-              child: Image.asset('assets/dfm.png', width: 170),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 24,
+                runSpacing: 16,
+                children: [
+                  Image.asset(
+                    'assets/dfm.png',
+                    width: 170,
+                    semanticLabel: 'Danish Foundation Models',
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/ucloud.png',
+                        width: 170,
+                        semanticLabel: 'UCloud',
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        'Trained on SDU UCloud',
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 24),
             for (final pair in [
