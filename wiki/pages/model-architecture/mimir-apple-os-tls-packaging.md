@@ -100,3 +100,15 @@ The user confirmed SDU's distribution/content rights; Content Rights = Yes is
 saved. Free pricing and all 175 storefronts including France are configured.
 Manual release remains selected. OS-only encryption answers must apply to the
 new build 13, never retroactively to BoringSSL-containing builds 11/12.
+
+## macOS entitlement review follow-up — 3 October 2026
+
+The user subsequently supplied Apple's automated notice blocking review over
+`com.apple.security.network.server`. This supersedes the assumption that macOS
+review can proceed without further clarification; current portal status still
+requires authenticated verification. The entitlement is used by the GUI's
+optional loopback HTTP API (Settings → Advanced → Local API, default port 8080,
+`GET /v1/models` and `POST /v1/chat/completions`). Removing it would break that
+feature. The separate CLI server's exclusion does not exclude the GUI server.
+The user authorized a reply and expanded review notes; the prepared text is in
+`native/app/store/SUBMISSION-DRAFT.md`. Sending/saving is pending sign-in.

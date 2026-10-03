@@ -1,5 +1,34 @@
 # DFM Mimir submission answers — draft, 2 October 2026
 
+## macOS server-entitlement clarification — 3 October 2026
+
+The user supplied Apple's automated notice that review cannot proceed because
+`com.apple.security.network.server` appears to lack matching functionality.
+The user authorized replying and adding reproduction steps to macOS App Review
+Information. Sending/saving is pending an authenticated App Store Connect session.
+
+Prepared reply (also append to the existing macOS review notes):
+
+> DFM Mimir includes an optional OpenAI-compatible HTTP server within the macOS
+> app. It accepts incoming connections from applications on the same computer
+> and serves on-device model inference.
+>
+> To test:
+> 1. Launch the app and wait for the bundled model to load.
+> 2. Open Settings → Advanced → Local API.
+> 3. Enable “OpenAI-compatible local API”. The default port is 8080, and the
+>    listening address is displayed.
+> 4. Run `curl http://127.0.0.1:8080/v1/models` to verify an incoming request.
+>    The server also supports `/v1/chat/completions`.
+>
+> The server is disabled by default and binds only to the loopback interface.
+> `com.apple.security.network.server` is required for this user-facing
+> functionality, rather than for outgoing downloads.
+
+Verified against `lib/settings_view.dart`, `lib/store.dart` and
+`packages/mimir_api/lib/api/server.dart`. The GUI server is included in the
+store app even though the separate command-line server is excluded.
+
 ## Build 13 submission follow-up — 3 October 2026
 
 Both SDU-signed 0.1.5 (13) archives passed the OS-TLS and signing audits and
