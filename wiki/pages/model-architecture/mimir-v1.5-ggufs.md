@@ -4,7 +4,7 @@ title: DFM Mimir v1.5 GGUF exports
 description: Source revision, conversion, validation and publication of the official v1.5 GGUFs.
 tags: [mimir, gguf, quantization, tokenizer, publication]
 status: draft
-last_updated: 2026-10-02
+last_updated: 2026-10-03
 confidence: high
 ---
 # DFM Mimir v1.5 GGUFs
@@ -594,3 +594,31 @@ verified calculated 13+ in App Store Connect (regional exceptions remain). User
 confirmed France inclusion; choosing Yes in the standard-encryption flow requires
 export compliance documentation and Apple approval. Compliance remains incomplete;
 no declaration file or approval code has been provided.
+
+## French encryption documentation research — 2026-10-03
+
+[Apple requirements](https://developer.apple.com/help/app-store-connect/reference/app-information/export-compliance-documentation-for-encryption)
+specify a French encryption declaration for non-OS industry-standard encryption
+when distributed in France; a generic self-written technical note is not identified
+as a substitute. [ANSSI filing instructions](https://cyber.gouv.fr/reglementation/reglementation-identite-confiance-numerique/controles-reglementaires-cryptographie/controle-moyen-de-cryptologie/controle-reglementaire-cryptographie-formulaires/)
+request both completed electronic and signed/scanned official forms plus supporting
+documentation. The FAQ lists organization presentation, recent registry evidence
+(or foreign equivalent), product brochure, technical description and available
+user/admin manuals. For SDU, confirm appropriate public-university evidence rather
+than assuming a French company registration. ANSSI distinguishes declaration
+attestation from export authorization/mass-market classification. Actual exemptions
+must be assessed separately; Apple’s questionnaire alone does not establish the
+French legal classification. No filing or email sent.
+
+Follow-up assessment: no public attestation demonstrably covering Mimir's bundled
+Flutter/BoringSSL was found. Article 6 of decree 2007-663 covers intermediaries
+redistributing a declared product under the same conditions; do not assume this
+covers embedding a library in a new app. The Annex 2 mass-market category is not
+a blanket exemption. Prepared review drafts in native/app/store:
+ENCRYPTION-ASSESSMENT.md, ENCRYPTION-TECHNICAL.md and ENCRYPTION-INQUIRY.md (unsent).
+Verified SDU public address and CVR 29283958; requested authorized signatory and
+internal existing coverage/contact from the user. Technical evidence identifies
+Flutter 3.47.5 / Dart 3.13.4 and DEPS BoringSSL revision
+2e508c973d634b3aa51b71db5062bc6b096e5031. TLS suite source capabilities are not
+claimed as negotiated-session measurements or a complete enabled-suite inventory.
+No declaration, email or new Apple compliance submission sent.
