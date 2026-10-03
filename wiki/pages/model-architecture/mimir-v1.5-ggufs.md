@@ -650,3 +650,14 @@ CI; ordinary Flutter builds still embed the stock engine. No compliance answer,
 release, upload or build-12 archive was changed. Engine build required gclient
 source dependencies, Xcode's linker for SDK27 arm64e.x1 TAPI, and installation of
 the Metal Toolchain. The experiment disables LTO and is not a size optimization.
+
+Open-source distinction (3 October): US EAR publicly available encryption source
+and qualifying corresponding object code have exclusions; BIS's official 2021
+change summary says source notification now applies only to non-standard
+cryptography, despite an older/general BIS overview still describing notification
+broadly. Sources: https://www.bis.gov/regulations/ear/734 and
+https://www.bis.gov/media/documents/table-changes-enc-wa2019-rule-final-version.pdf .
+This does not establish a French supply/import declaration exemption for Mimir.
+ANSSI's current procedures and decree 2007-663 do not provide a blanket
+open-source supply/import exemption in the provisions reviewed. Keep US export,
+French declaration and Apple's upload-document requirements distinct.
