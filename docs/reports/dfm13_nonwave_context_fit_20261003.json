@@ -1,0 +1,82 @@
+{
+  "entries": [
+    {
+      "name": "ai_arenaen_preferred",
+      "rows": 2267,
+      "tokens": 2016047,
+      "long_rows": 61,
+      "long_tokens": 367796,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/ai_arenaen_preferred/view.json"
+    },
+    {
+      "name": "arena_expert5k",
+      "rows": 1396,
+      "tokens": 2522604,
+      "long_rows": 487,
+      "long_tokens": 4053015,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/arena_expert5k/view.json"
+    },
+    {
+      "name": "arena_human_preference_100k",
+      "rows": 51664,
+      "tokens": 33719410,
+      "long_rows": 988,
+      "long_tokens": 6760643,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/arena_human_preference_100k/view.json"
+    },
+    {
+      "name": "arena_human_preference_140k",
+      "rows": 82008,
+      "tokens": 91929430,
+      "long_rows": 6766,
+      "long_tokens": 49130128,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/arena_human_preference_140k/view.json"
+    },
+    {
+      "name": "arena_human_preference_55k",
+      "rows": 30406,
+      "tokens": 12285734,
+      "long_rows": 40,
+      "long_tokens": 235439,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/arena_human_preference_55k/view.json"
+    },
+    {
+      "name": "comparia_preferred",
+      "rows": 388,
+      "tokens": 367272,
+      "long_rows": 11,
+      "long_tokens": 71774,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/comparia_preferred/view.json"
+    },
+    {
+      "name": "helpsteer3_edit",
+      "rows": 6255,
+      "tokens": 6275610,
+      "long_rows": 66,
+      "long_tokens": 314140,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/helpsteer3_edit/view.json"
+    },
+    {
+      "name": "helpsteer3_preference",
+      "rows": 16752,
+      "tokens": 16509879,
+      "long_rows": 123,
+      "long_tokens": 583194,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/helpsteer3_preference/view.json"
+    },
+    {
+      "name": "jjzha_croco",
+      "rows": 133266,
+      "tokens": 103871062,
+      "long_rows": 1200,
+      "long_tokens": 7087761,
+      "receipt": "data/dfm13/nonwave-context-fit-20261003-v1/jjzha_croco/view.json"
+    }
+  ],
+  "selected_rows": 324402,
+  "selected_tokens": 269497048,
+  "long_rows": 9742,
+  "long_tokens": 68603890,
+  "selection_reason": "4096-token training context, not quality rejection",
+  "full_parent_versions_preserved": true
+}

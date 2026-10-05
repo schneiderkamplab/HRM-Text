@@ -1,0 +1,13 @@
+{
+  "user_selected": "OPTION1",
+  "action": "reuse_existing12pinnedHFdatasets",
+  "handoff": "docs/reports/dfm13_inherited_dala_reuse_handoff_20261004.json",
+  "handoff_sha256": "675e96d0f6e895ccedc4b00dd2f043bbdb7a4dca54145f002114e9a13d156830",
+  "duplicate_uploads": false,
+  "overwrite": false,
+  "local_projection_provenance_retained": true,
+  "source_changes": false,
+  "verification": "12manifest/train-pair bindings;24/24Germanmessage samples exact; no missing or differing samples",
+  "scope": "bounded message comparison, not exhaustive all-language payload equality",
+  "owner": "parent/Tesla"
+}

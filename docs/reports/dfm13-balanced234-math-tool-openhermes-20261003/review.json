@@ -1,0 +1,2509 @@
+{
+  "schema": "dfm13-balanced234-independent-scoped-review-v1",
+  "reviewed_at": "2026-10-03T20:36:15.365601+00:00",
+  "root": "data/dfm13/gemma31-balanced-execution-20261003-v2",
+  "scope": [
+    "math-code",
+    "tool-dialogue",
+    "openhermes"
+  ],
+  "review_method": "Assistant read all selected full messages and their frozen references/scenarios/source turns; selected by effective_keep only, without using model review rationale. Mechanical checks supplement but do not generate semantic judgments.",
+  "coverage": {
+    "total_run_cases": 234,
+    "scope_terminal_cases": 117,
+    "automated_keeps": 83,
+    "reviewed": 83
+  },
+  "totals": {
+    "repair": 25,
+    "no_material_issue_found": 50,
+    "needs_verification": 8
+  },
+  "groups": [
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 1,
+      "reviewed": 1,
+      "dispositions": {
+        "repair": 1
+      }
+    },
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 1,
+      "reviewed": 1,
+      "dispositions": {
+        "repair": 1
+      }
+    },
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 2
+      }
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 0,
+      "reviewed": 0,
+      "dispositions": {}
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 1,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 1,
+        "repair": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "needs_verification": 1,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 1,
+        "needs_verification": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 1,
+      "reviewed": 1,
+      "dispositions": {
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "needs_verification": 1,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 3
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "repair": 2,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "repair": 1,
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "needs_verification": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "repair": 2,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 3
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 1,
+      "reviewed": 1,
+      "dispositions": {
+        "repair": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "needs_verification": 1,
+        "repair": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 3
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 1,
+      "reviewed": 1,
+      "dispositions": {
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 1,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 1,
+      "reviewed": 1,
+      "dispositions": {
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 2
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 2,
+        "repair": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 3
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "repair": 1,
+        "no_material_issue_found": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 2,
+        "repair": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "math-code",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "no_material_issue_found": 3
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "openhermes",
+      "terminal_cases": 3,
+      "automated_keeps": 3,
+      "reviewed": 3,
+      "dispositions": {
+        "needs_verification": 2,
+        "repair": 1
+      }
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "tool-dialogue",
+      "terminal_cases": 3,
+      "automated_keeps": 2,
+      "reviewed": 2,
+      "dispositions": {
+        "no_material_issue_found": 2
+      }
+    }
+  ],
+  "cases": [
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "4f644628e246c9e390235d350125596ae313489826183ac689cae9b238874e19",
+      "candidate_id": "d0f7ffbba81d4aa5617bf814ebd7a9755f9491791ff5672822d105c78587943a",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/4f644628e246c9e390235d350125596ae313489826183ac689cae9b238874e19.json",
+      "candidate_sha256": "ee0a0687763f68416a88775cd25fcad2c5bc9dec7f4ce1d30e981e1d326edf7f",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/4f644628e246c9e390235d350125596ae313489826183ac689cae9b238874e19.json",
+      "outcome_sha256": "70c9906fe5508a072942a30d339e388b66da15bbadacc0def6ab8f87eefbff55",
+      "spec_sha256": "9396fc3d23315c1ba8c89066e63c6f29fcefe76cf7f1d985676f7170837eb2b9",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "prompt_language",
+      "reason": "121-9+14=126 is correct. 'kartojot to kvadratos' asks for arranging in squares rather than naturally specifying a boxed final answer.",
+      "mechanical_checks": {
+        "recomputed_answer": 126,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "7cd6e38d63131552eee652c60412a849656e30b164be81cc8205671b282aff15",
+      "candidate_id": "ff7c99aac359399717303f6795348ac5f1850c08deb8a3be817895db277fa82b",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/7cd6e38d63131552eee652c60412a849656e30b164be81cc8205671b282aff15.json",
+      "candidate_sha256": "564eb534a2c565d9245de111edc42ea9b1761e5b206a3c02fca260ba7ce0edbc",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/7cd6e38d63131552eee652c60412a849656e30b164be81cc8205671b282aff15.json",
+      "outcome_sha256": "e1da29a51b0f103c69d7f9c61a44b0c271832e78be3e5dcaeb61d59d4ec18cc5",
+      "spec_sha256": "ede94531f25480c8ec2a5c49a3f4e243efb3335201f0f3014a36cd6fcd55bb92",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Venue requested before lookup; venue-1 is supplied by user; final correctly reports six tickets for event-170.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "math-code",
+      "slot": 1000003,
+      "outcome_id": "80f37ad878d5f413a573a03d30216eae993a37287b340a27f091b3d14a638d42",
+      "candidate_id": "df6cfda77f150cdf6d78919c56d0a36b729d1bd746a36fff0b8e244e8d794134",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/80f37ad878d5f413a573a03d30216eae993a37287b340a27f091b3d14a638d42.json",
+      "candidate_sha256": "c5095532cdaea3666e24bbba64072ac1f657bf1eace9aec57f84f99314bf051a",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/80f37ad878d5f413a573a03d30216eae993a37287b340a27f091b3d14a638d42.json",
+      "outcome_sha256": "71c0b3ba4d057e1b279745fef5755e571fa55b3b92ce3a9050394989366f5602",
+      "spec_sha256": "80bd91239b9ad0ae28eaf11d8a78951ae8426e06110b00dafa6877bfff2f87d4",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "prompt_language",
+      "reason": "Reference Python correctly returns sorted distinct values strictly above -3 without mutation. 'janoludz unikalus elementus' means to request elements, not select/return them; assistant also narrates the user request instead of directly explaining the solution.",
+      "mechanical_checks": {
+        "exact_reference_code": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "openhermes",
+      "slot": 1000002,
+      "outcome_id": "893352c287aeaf396c87338398d8d3c59b5cd3f28420d351fcac8910ea031d08",
+      "candidate_id": "afb629ba4c4ea026b058d26a195ddf644d64e76fda5d3f2a010c33856fa12971",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/893352c287aeaf396c87338398d8d3c59b5cd3f28420d351fcac8910ea031d08.json",
+      "candidate_sha256": "7dc7303849841397d382664c70b17a5ac326d083351c4898506368eeca3f2776",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/893352c287aeaf396c87338398d8d3c59b5cd3f28420d351fcac8910ea031d08.json",
+      "outcome_sha256": "156abe831d4b83110a5830b7d1227df49ef085859c5bc7c48f0080c177664496",
+      "spec_sha256": "79bafae4ba44a44cf6b0801b8ff3fbb398c89885d7e0c1de66e7601a7861ebb3",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "native_language",
+      "reason": "NLP examples and all substantive source claims preserved, but repeated 'naturalaus kalbos' has incorrect gender agreement; native Lithuanian term should agree with kalba.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "tool-dialogue",
+      "slot": 1000001,
+      "outcome_id": "d7e862f66613de279ac2d9077f4b7c21f977a43026377ee7fe116859db888c9a",
+      "candidate_id": "9957f7cecdf636debb87ac60b00de9472ba6d3654a47c50a21b8d0b57b34835a",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/d7e862f66613de279ac2d9077f4b7c21f977a43026377ee7fe116859db888c9a.json",
+      "candidate_sha256": "61972efc1065d31fdf1c539c669c86bf1af5694e09faf19e5e62c99e49d58b49",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/d7e862f66613de279ac2d9077f4b7c21f977a43026377ee7fe116859db888c9a.json",
+      "outcome_sha256": "2101e2d65730b729ae8a08b93287368711e143abb86a6fc95659081c9e30380c",
+      "spec_sha256": "04fc30d1bc4199c84e70b44b9fe6269fcada5d114374c1da24c961d9062dc682",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "No-call explanation explicitly describes a hypothetical lookup and claims no execution. Slightly awkward date wording is not a grounding failure.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 0,
+        "subtype": "no-call"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "e1208d33455e6a3b0a4604ad1955ca14cefeae6044ef35b506bf7cc91807af3d",
+      "candidate_id": "77ea0ba1802dfb6ffe904402d5248607821d2d5b7afc58144f6dacbad3afa5af",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/e1208d33455e6a3b0a4604ad1955ca14cefeae6044ef35b506bf7cc91807af3d.json",
+      "candidate_sha256": "a4e8850052a61f900a6c143ec07c03c533a2765043c0be88f9c51da82f4e22b4",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/e1208d33455e6a3b0a4604ad1955ca14cefeae6044ef35b506bf7cc91807af3d.json",
+      "outcome_sha256": "045caa1b52795659eb47f75ab3761b6d8ceb899209ec18533dfb6def76f18643",
+      "spec_sha256": "d35c15ef881b22c890891c71217eaf5925858a1c6be5e1c7ac1738b58e2124e1",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Retry repeats book-755/branch-17; final correctly reports copy-755 available without booking.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "ebb8d8c70eea9e57c851433c9c74970b2c694dcf0c21921262df82c233b98e87",
+      "candidate_id": "1d22ff81e84cf476377a12aef2b8d6d44912fe477a2b5a59f9fda3b998a43362",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/ebb8d8c70eea9e57c851433c9c74970b2c694dcf0c21921262df82c233b98e87.json",
+      "candidate_sha256": "850893668dae25a7f467bb0d006789f285547910cae0a8f7748b962d085a6bcb",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/ebb8d8c70eea9e57c851433c9c74970b2c694dcf0c21921262df82c233b98e87.json",
+      "outcome_sha256": "02d36ae1c546fc71a22a2f14bf219ff362b1163f78a078172045b1baa5f60c47",
+      "spec_sha256": "38e843a92a6905b30f62bf44b70b0e908b63ce707d128bdb5d4c9cb79fdc3dee",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Retry repeats book-988/branch-18 after temporary_unavailable; final reports availability and copy-988, not a reservation.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "f4a28d08a0d51c5f0f4eb0a1da0f2b57ee486687a72a371c8c398bfd30ffb45c",
+      "candidate_id": "570fa76fc63df8e4104b383ddb9c3ceadb7fb1aa197ade4b4ed026a53524771f",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/candidates/f4a28d08a0d51c5f0f4eb0a1da0f2b57ee486687a72a371c8c398bfd30ffb45c.json",
+      "candidate_sha256": "326ad4a421a606307c07c9917eb4aad21bcdc744e5fbc01ca7a5e2727ccfdbb8",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/outcomes/f4a28d08a0d51c5f0f4eb0a1da0f2b57ee486687a72a371c8c398bfd30ffb45c.json",
+      "outcome_sha256": "4a9df5e84514dad5403fb780bb4d4e853120487bcc66d5883738180f0091a9fb",
+      "spec_sha256": "5b536ff3a90c2e46d5f5ccb584a304114f9f093193cb5df2ca4f342db83a260d",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "prompt_language",
+      "reason": "193-9+23=207 is correct. The final user clause combines an imperative with a mismatched participle and a literal English boxed label; repair the localized instruction, not the arithmetic.",
+      "mechanical_checks": {
+        "recomputed_answer": 207,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "math-code",
+      "slot": 1000002,
+      "outcome_id": "004440fdbbe678504a5aef8a944ad03d9de1cf90b13faf1b2094fb8eb19e74d2",
+      "candidate_id": "f45024c675d4b4e9c1904731a567159cd5506d3974d8be2b3e687024f7a57a52",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/004440fdbbe678504a5aef8a944ad03d9de1cf90b13faf1b2094fb8eb19e74d2.json",
+      "candidate_sha256": "3ce69bacac15a1bb3096ce90255181d57263538ec6414e61fad7ec5863f1cb20",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/004440fdbbe678504a5aef8a944ad03d9de1cf90b13faf1b2094fb8eb19e74d2.json",
+      "outcome_sha256": "7815cdbb441001b5f99ec6f24e0e8e82f5658818ebe3dde717d4f922c6058b51",
+      "spec_sha256": "e106700717d4d535e43326097b73dd55bd750cd70b7c99b9fc2afb5f4753c1c2",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "18*60+12=1092; natural explanatory calculation and final box.",
+      "mechanical_checks": {
+        "recomputed_answer": 1092,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "02dc1ba4f1622a171e9f83442bf0c78a5234fc501536730a02b7e0a478e5cc90",
+      "candidate_id": "b18b0a0c1c15296025a56c7fdea52df7df2f3a81b430193456237d1dd4185708",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/02dc1ba4f1622a171e9f83442bf0c78a5234fc501536730a02b7e0a478e5cc90.json",
+      "candidate_sha256": "aabec1befb861ce8036c8c9bd1807b338cf84b98d7209e8d88cfb536be081191",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/02dc1ba4f1622a171e9f83442bf0c78a5234fc501536730a02b7e0a478e5cc90.json",
+      "outcome_sha256": "2535e8abe91b5fdead1ab026293b8951006d316e0f737aaaa7d58743ad5791ef",
+      "spec_sha256": "f35311e3d60ece53f53f2c0a95128de426c62f85b7114fbad09dadb7b4aca756",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Retry succeeds after error; copy-664 availability at branch-13 is grounded. 'After the initial attempt' need not mean that the failed first call succeeded.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "03a1317ceba15ec7db8b1a5c8467c398f241b11c5e9008ed37a2004dd61e4e26",
+      "candidate_id": "a0f56dcd08b8f92c5d37c47737c5a3ada357890587c05de6ce1128ec6f22b26e",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/03a1317ceba15ec7db8b1a5c8467c398f241b11c5e9008ed37a2004dd61e4e26.json",
+      "candidate_sha256": "4e4e202f91ec5fd481d8b1e931818d1159582def7ad75a60940f5e2475790b99",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/03a1317ceba15ec7db8b1a5c8467c398f241b11c5e9008ed37a2004dd61e4e26.json",
+      "outcome_sha256": "65326686661fa87674bc26e76b0e08be0d454dc132280eb323e71960506f4e88",
+      "spec_sha256": "295bb6167196ee5547076039797c88a8e3842dca7dab4e1456ab8e1d0e6945e0",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "Clarification and seven-ticket result are correct. 'odrediste' is awkward for venue but the question is understandable and answered before lookup.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "0535c7668f47f46e01aca70a79183e54d33f5f3611a0d5b3baaa323f579a633a",
+      "candidate_id": "66ac4b1fa80a4a2806f5fbc792e907fcb54211445edb267b5d0b185a6b46789d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/0535c7668f47f46e01aca70a79183e54d33f5f3611a0d5b3baaa323f579a633a.json",
+      "candidate_sha256": "9a93878384041d7f25b2097325ed907fa661a61e602c8b2b2dbc98e2387871c2",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/0535c7668f47f46e01aca70a79183e54d33f5f3611a0d5b3baaa323f579a633a.json",
+      "outcome_sha256": "01c098deb8cfe8e1e82fb462ede81bac761c54cdccdebcbfc9b14c527890cf7f",
+      "spec_sha256": "c859d05c524aa455ea33abf20c629b88b6e0a1beee3e4539c5415a1b9da9afa0",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Venue clarification occurs before lookup; final correctly reports ten tickets at venue-16.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "tool-dialogue",
+      "slot": 1000002,
+      "outcome_id": "06a40f07fbc1f74477811100eda7aef3a8c9d76a28ad4bebd0f7d1c6934ab93e",
+      "candidate_id": "9bb09c8e85f80fb9e64676c180f636ecf6cc2cba4367ca9b09c1bb6c72130c23",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/06a40f07fbc1f74477811100eda7aef3a8c9d76a28ad4bebd0f7d1c6934ab93e.json",
+      "candidate_sha256": "66e2103076092d439722690a6ee4d2becec2317b8110aa363bb8171ed0bd3e2f",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/06a40f07fbc1f74477811100eda7aef3a8c9d76a28ad4bebd0f7d1c6934ab93e.json",
+      "outcome_sha256": "19ed9e0c92f3956f52afb30f7aa7142f807bf0147d13ca4876f64c14f5baf34b",
+      "spec_sha256": "a77824fda66cdc7f7c12d8d3adb10346fec8a13062e1b72a499f629e0f24f5ff",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "unsupported_tool_result_claim",
+      "reason": "Final says the parcel is present in locker-11 ('dar laker locker-11 mojood ast'). Result only gives available_locker_id and redirect_allowed; it does not establish current parcel location or completed redirection.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "single"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "0a5e00749299e10ee7138ec2bdd14446eaf0591f00d7febbb0a98320795b69b7",
+      "candidate_id": "a3d5d3043fba2c718c32bfbacc270bb8e9e6f978ed8aa1138851d4cc6657fb09",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/0a5e00749299e10ee7138ec2bdd14446eaf0591f00d7febbb0a98320795b69b7.json",
+      "candidate_sha256": "4bf30d9bf4fe910055dab8610ce64f4ae222bf3cc99276f9f3468a4597cdf0a4",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/0a5e00749299e10ee7138ec2bdd14446eaf0591f00d7febbb0a98320795b69b7.json",
+      "outcome_sha256": "b29c259b429a2ec0707f55501f0c58542ee7e70fb27de5297fa04f6b6ea5d93b",
+      "spec_sha256": "47fe14cbff35bfb315f14ec1c760e1fcc65b7ed7f2596f069a5c0d3a78cdeae7",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "medium",
+      "issue_category": "prompt_language",
+      "reason": "64-1+9=72 is correct. 'kivevunk' and the wording for counters/boxed output are not idiomatic native Hungarian; recommend language repair, not numeric rejection.",
+      "mechanical_checks": {
+        "recomputed_answer": 72,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "0d8ee6602d32de08205bd5150d8a63b238112a7e2adc3145afa187e97dcf6361",
+      "candidate_id": "2d245949abaf2e6c5454a422208c4209ecf4ca50051f7535edc6e80aac9f861d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/0d8ee6602d32de08205bd5150d8a63b238112a7e2adc3145afa187e97dcf6361.json",
+      "candidate_sha256": "f61ecc0189c510e94aa947a3f3e883c3dd901f62244ce2ae48693cfe8f559bc4",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/0d8ee6602d32de08205bd5150d8a63b238112a7e2adc3145afa187e97dcf6361.json",
+      "outcome_sha256": "3bf194d5eb77faae643a810b1dd2dd793723ece4f07c9303820bb229615c5b56",
+      "spec_sha256": "7e7a89a37dbb18229908dcedb66133d388bf25df0da607537901f8b16af892ff",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "141-1+14=154; all operations and final format preserved.",
+      "mechanical_checks": {
+        "recomputed_answer": 154,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "0e3ff23a6f33362eb19febe8563e7b63597214d18f640e2ef3396c6d4ed6eabf",
+      "candidate_id": "fdd34e521f001cd82054378795075775e78fea1a648dc698b8c186f7819a604d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/0e3ff23a6f33362eb19febe8563e7b63597214d18f640e2ef3396c6d4ed6eabf.json",
+      "candidate_sha256": "789c0465bf4399207e56114ebc90b0a33eb84422eead37a629f6fd623579641e",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/0e3ff23a6f33362eb19febe8563e7b63597214d18f640e2ef3396c6d4ed6eabf.json",
+      "outcome_sha256": "9bd2f68e605fc67913e3e4e8b627d9aae609486484630b9a3f9ab33d4532d67f",
+      "spec_sha256": "2f288c249f18353ac7e122199eedac1867b8d8976fe3da80875aff42454816be",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Correct lookup retry; final identifies copy-381 at branch-10 as available without an action claim.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "openhermes",
+      "slot": 1000006,
+      "outcome_id": "10ad2c02d8d9723db950ca829c9e700a6563b46eb328499b53b442e7c6d3af56",
+      "candidate_id": "d7875bcfa0f384d88fc460e761a76d2dd8c3592ee8247450e988e93bc92ffdd8",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/10ad2c02d8d9723db950ca829c9e700a6563b46eb328499b53b442e7c6d3af56.json",
+      "candidate_sha256": "86b9b43c0f3a0891c92f66a7d0960883e0611cad0ea96c2708b67f1947ce681c",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/10ad2c02d8d9723db950ca829c9e700a6563b46eb328499b53b442e7c6d3af56.json",
+      "outcome_sha256": "6eac06e9c69642c84dfaa3401746022440e1038a7cd9cbd4fc452ebec5262345",
+      "spec_sha256": "bf8fa4b226f4fb6b16238330f47cc503fb757f44acbdb7896bc8452683633a11",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "instruction_ambiguity",
+      "reason": "Three named components faithfully match source. Opening user asks for a table, but ends with a direct question and already supplies a table; answer gives prose only. Also 'govornih vrsta' is an awkward translation of parts of speech. Do not call a definite factual rejection.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "1b1314d5981f372bca0c7a2102af7d98acbf9596063fcf8ae2f782eb830f9be4",
+      "candidate_id": "ba10216d6142f011b49bacce85056e9a69d2ff0deec742bfac2b183107bef52a",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/1b1314d5981f372bca0c7a2102af7d98acbf9596063fcf8ae2f782eb830f9be4.json",
+      "candidate_sha256": "3fe08aa7ba745ae083d810390ec06e6142bc8b636a06ed9fae1ab51f78414928",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/1b1314d5981f372bca0c7a2102af7d98acbf9596063fcf8ae2f782eb830f9be4.json",
+      "outcome_sha256": "f8181f7820fd50f2a950aa3e21890aa4a17aaebe4d570071584df5ce80a65702",
+      "spec_sha256": "31f9f8c407795ccb20d99fade6bf5aaf78a23004fa97aef0e725ca06a7e70745",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "(11+19+27)/3=19; question and answer consistent.",
+      "mechanical_checks": {
+        "recomputed_answer": 19.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "1f274ffbaf16b4fb4f860e7c812c8c8795af3e7b3766c06fd7219989766bfbc4",
+      "candidate_id": "38ce826415d060f3e801d0cf7a5d9298ecda282d91fa5d6cce544a4e21af0de4",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/1f274ffbaf16b4fb4f860e7c812c8c8795af3e7b3766c06fd7219989766bfbc4.json",
+      "candidate_sha256": "4b1d98b2b2cdcc4c581ca29dd51ec5101ea2ee8c77defbb83d00453fd90040dc",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/1f274ffbaf16b4fb4f860e7c812c8c8795af3e7b3766c06fd7219989766bfbc4.json",
+      "outcome_sha256": "8aaa41e300b1a1cb6dc73b33945ef7ba28b98663e158d3f51a05294045e35619",
+      "spec_sha256": "a3332ee4019fec038678602fde4ea4c1b38742ae709129dd0c04e48b4dda9fac",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "75-20+5=60; exact operations and final output.",
+      "mechanical_checks": {
+        "recomputed_answer": 60,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "openhermes",
+      "slot": 1000023,
+      "outcome_id": "1f3960a5a825a72d599926e0774ec667b523ed95c278b82735812bee6eedfd07",
+      "candidate_id": "d267e7ba988202ad344621401a8dec791867ef0d9f6bcc722f6490f4e9e1c2a4",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/1f3960a5a825a72d599926e0774ec667b523ed95c278b82735812bee6eedfd07.json",
+      "candidate_sha256": "04f0f65209bf1503b9ba2c5a160ddaecc00d824d200bca11e028dffc13070476",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/1f3960a5a825a72d599926e0774ec667b523ed95c278b82735812bee6eedfd07.json",
+      "outcome_sha256": "933285be52268d227a04ddb44e5674242ac04434e635af8d9408428878489600",
+      "spec_sha256": "0bd3d76398658ab4e385db866869c37866dd91c34c94cd673aadd5b0a209ccc1",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "source_schema_assumption",
+      "reason": "COUNT(orderId) correctly counts non-null IDs, as explained, but total orders equals that only if every order has a non-null ID. No table schema supplies that condition; use COUNT(*) or state the assumption rather than certify the total claim.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "219c106fc68aa15bd681b7b813b32dfe12d826bad43b10de5e613ce135e05176",
+      "candidate_id": "f4bff218d6c70333892262290f504b0283d50453d0b0e84b701764e572109151",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/219c106fc68aa15bd681b7b813b32dfe12d826bad43b10de5e613ce135e05176.json",
+      "candidate_sha256": "8a060f52f74a19bcc292b2566b618a5e0fa2c803834b0b78accdd452a9dde7eb",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/219c106fc68aa15bd681b7b813b32dfe12d826bad43b10de5e613ce135e05176.json",
+      "outcome_sha256": "297e75a373116d9d9fc21175d94bbf8b2abe6f6ad5a238c8c04eb1752ffd72af",
+      "spec_sha256": "37ae34edba77689d3ca5ea5a7017107a67abd99a1e4624d4bc9b817d36e19528",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "(18+29+40)/3=29; exact requested mean.",
+      "mechanical_checks": {
+        "recomputed_answer": 29.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "2a53fe7ff3b8865c81a2eea24f0123346941ee53344c75aebbe19ee6b100b4f8",
+      "candidate_id": "c4d94b3e56ec47502e6f39a4429b504ef6932c5a12416fd0769e69f5706e0600",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/2a53fe7ff3b8865c81a2eea24f0123346941ee53344c75aebbe19ee6b100b4f8.json",
+      "candidate_sha256": "57a45396b34ae09e01237395abf7da0cc496638f64e99804c554f6a4da683f00",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/2a53fe7ff3b8865c81a2eea24f0123346941ee53344c75aebbe19ee6b100b4f8.json",
+      "outcome_sha256": "06e95f9cf9e35c8bb7ac17628b85decacada8110cc560a79785691418d2f17c9",
+      "spec_sha256": "70d6040bb51a213f32da7b76248a477f11241ec822eaa56ff364af1031384c3b",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "47-17+15=45; prompt and single boxed answer agree.",
+      "mechanical_checks": {
+        "recomputed_answer": 45,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "openhermes",
+      "slot": 1000017,
+      "outcome_id": "2c2e1250454815f6f3849caae80d6484202f670984cac4c4d6b3dee0e86d4f3e",
+      "candidate_id": "59a0e46a626bed31a8e74efbcebef1ecb2389119000ea8a1b789fe19c14f1add",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/2c2e1250454815f6f3849caae80d6484202f670984cac4c4d6b3dee0e86d4f3e.json",
+      "candidate_sha256": "bbafc59e8bdaa595610f84c85c1de9369165c3fa7f1e9f5fd6689fcedf9d9aae",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/2c2e1250454815f6f3849caae80d6484202f670984cac4c4d6b3dee0e86d4f3e.json",
+      "outcome_sha256": "540a42ca54a81962f8accbf792a7844ec3adeb072d99c0762eca1b9bd8c25d3e",
+      "spec_sha256": "a2a4091bde3b734c2bb44f4eef39030fa23be58aede5b3b1ab985b5611b5b1b7",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Java x++ method preserved with explicit returned updated value. It does not promise mutation of the caller's primitive variable; no invented pass-by-reference requirement.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "openhermes",
+      "slot": 1000005,
+      "outcome_id": "2cdfaad7767a0c14568e0fed00be61bbd0d7d8c9b42791fb03e9f08305a79272",
+      "candidate_id": "9672f3c93a9e19f65134662a25601e0ba76537f15d9481e35c2ea05d5995f412",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/2cdfaad7767a0c14568e0fed00be61bbd0d7d8c9b42791fb03e9f08305a79272.json",
+      "candidate_sha256": "b59e405c0058707d20e122b855070d0eb4f0525efe1e377b550422a57f63dea2",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/2cdfaad7767a0c14568e0fed00be61bbd0d7d8c9b42791fb03e9f08305a79272.json",
+      "outcome_sha256": "9df19e36a2037a33e8996ba70cc01ffcf6f86faa8e3b341f22786f8eabe11bf1",
+      "spec_sha256": "3bff6a0e3462244e580cbb23d40bf91fd2e268a9c78dafcf55483cc7c67da862",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "One-sentence fictional story preserves cliff, wind, sun, freedom and flight; no added factual claims.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "2fd29839ccc4fc17fd2afe8cd3bd98d05b07139413d360fbc0883a9b21d506bc",
+      "candidate_id": "9621e55fcf4632aa128e6f2a78bc66429febabf8f0d6da2e54a8b6d2ac927c03",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/2fd29839ccc4fc17fd2afe8cd3bd98d05b07139413d360fbc0883a9b21d506bc.json",
+      "candidate_sha256": "751e7802b7c6cc4dfc332da8c39ac1616ff11242f0e08b4ce3664d33f1457f06",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/2fd29839ccc4fc17fd2afe8cd3bd98d05b07139413d360fbc0883a9b21d506bc.json",
+      "outcome_sha256": "4a1190ad183647106130d63b81064d9ffddeded1d553062c7b4f42ce5943a440",
+      "spec_sha256": "cb0a022e0ca0a25d905fdb538cb5fdb165e4f3d111f6afcbfd7e122f8cb8df61",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Clarification obtains venue-20; final correctly reports thirteen tickets, without booking.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "39fc23ab407bbbf1dd92d0a3b724e1189aee3ddabb9d071e488f929a5ead5ea2",
+      "candidate_id": "485c132f4247ac6234169f5e06794a77bfd1285a41ebd2e8953c5dc49a42fdff",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/39fc23ab407bbbf1dd92d0a3b724e1189aee3ddabb9d071e488f929a5ead5ea2.json",
+      "candidate_sha256": "a96c6a3be4c8d4cafb30bfe97673fe46ea6f6fc8ae7dd51c0a279d37b71f186a",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/39fc23ab407bbbf1dd92d0a3b724e1189aee3ddabb9d071e488f929a5ead5ea2.json",
+      "outcome_sha256": "5757fad691de16ee0594baab345ae90bffdaa625510ec111cf97df5c1720058e",
+      "spec_sha256": "26004eac1f13726d072798c884516ca6322b0084bdfd57607659eb8c13ef3544",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "native_language",
+      "reason": "Eight tickets at venue-8 are grounded and clarification order is correct. The repeated 'ploshchadtsy' venue wording appears Russian-influenced; native Belarusian review needed before calling the prose idiomatic.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "3f84ca172fe265f56c2347380dee7eb7d7ede53f032115c2d626dae836581c5b",
+      "candidate_id": "57b6842af20d230687a803d855cc44558924ff768ae06b11c2af833824eb4418",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/3f84ca172fe265f56c2347380dee7eb7d7ede53f032115c2d626dae836581c5b.json",
+      "candidate_sha256": "90b0f4e81ce9996b4f7298b5ed6662d803fc7c8266c7880d433614fdacbf18e9",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/3f84ca172fe265f56c2347380dee7eb7d7ede53f032115c2d626dae836581c5b.json",
+      "outcome_sha256": "e8c848ef03cb7a53de82d0f8bcbbe7eb9275d9dc875ac48aa6acdd6058fefbfc",
+      "spec_sha256": "3b5c9fa441baa15eb12db8dc6a3e1f6ee07245708a31e0694baeb08ffc05c179",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "146-18+16=144; question and boxed result match.",
+      "mechanical_checks": {
+        "recomputed_answer": 144,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "openhermes",
+      "slot": 1000013,
+      "outcome_id": "43aa20b629ab59bbd460d80548ad639b2abe95626da073f3c1ae55024864005c",
+      "candidate_id": "d08572b789ce1576e52594fec703b359579ede923641f0bd0f456b023a67d2a5",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/43aa20b629ab59bbd460d80548ad639b2abe95626da073f3c1ae55024864005c.json",
+      "candidate_sha256": "5d1c7538fe50d7b20b6749a0d5312d279bd59b2b3b884280ec7c1768debf5198",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/43aa20b629ab59bbd460d80548ad639b2abe95626da073f3c1ae55024864005c.json",
+      "outcome_sha256": "0d46b69b6d63cc3d2754962493c55f0481eeb403f0a520aac0653f4b6dfe1b0f",
+      "spec_sha256": "e32ffdd8269b3b3e11aaa6a086d7c18e3c154c868b1f08fec6ea9410939af55f",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "source_generalization",
+      "reason": "Translation faithfully carries source claims about liquidity, bond stability and opposite stock/bond movements. These are broad investment generalizations needing qualification; no evidence here establishes them for every bond or market. Not a translation-specific defect.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "498f8a5b95f6fdd9c33257c095ef359ff019427737476f6351f8639fb78a5fd9",
+      "candidate_id": "06ce0dec3f05fa2d0fd0966ba38b9f6d5efcf9ba9a94e2e968bd03b0ab6f3772",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/498f8a5b95f6fdd9c33257c095ef359ff019427737476f6351f8639fb78a5fd9.json",
+      "candidate_sha256": "02034397f19aacf2bdc73e5148de079246e512a01a780e042e482f678c810cc4",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/498f8a5b95f6fdd9c33257c095ef359ff019427737476f6351f8639fb78a5fd9.json",
+      "outcome_sha256": "f9e5a7a21c6ea4e8699885b510aebb8eb09f9ac982fd8ae59737dd2512a85426",
+      "spec_sha256": "d8870932fc5a1085018eec02ac51aac198276e66b8b647eafc0ddab009e5557c",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "105-9+16=112; preserves order and exact boxed result.",
+      "mechanical_checks": {
+        "recomputed_answer": 112,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "openhermes",
+      "slot": 1000000,
+      "outcome_id": "50668ad140da8842f419b59fa15204585e7f50d5f7deb9ae67c9c20ba3a458e4",
+      "candidate_id": "bbd64f3278fad15135a2a44819d0c59422a0ff31b0c19f2141d6c885856c3243",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/50668ad140da8842f419b59fa15204585e7f50d5f7deb9ae67c9c20ba3a458e4.json",
+      "candidate_sha256": "98a97e8f22c360392ff69e01547a45bb1ed886d381b93238ebd611dc08fa1bb0",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/50668ad140da8842f419b59fa15204585e7f50d5f7deb9ae67c9c20ba3a458e4.json",
+      "outcome_sha256": "cf0681fe4db7e1e7a3554f9da2ab0cb58fe2eedbc19743f773b24b984a008ad6",
+      "spec_sha256": "a6c75509a33b8ca992cd726c21b19650c8d1c157867128147e45d3ef062be8b4",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "translation_changes_meaning",
+      "reason": "Cast iron is translated as 'hekuri i gjetur' (found iron), not cast iron; 'te prona' calques prone incorrectly, with additional agreement errors. This changes the material example, beyond stylistic awkwardness.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "50929975960f84b22eef3893df1e6061501cf877ba9cd949bc10ed8d1bb9dc6a",
+      "candidate_id": "9efacbc6f375cefc04645dc2c15db5fcdb539c7a1e73304f03e193a3867e066e",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/50929975960f84b22eef3893df1e6061501cf877ba9cd949bc10ed8d1bb9dc6a.json",
+      "candidate_sha256": "c8aaa79bcf1034b31d221ffe9d3b90a67e6e1dad253350e56f9ead3136bdf5c5",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/50929975960f84b22eef3893df1e6061501cf877ba9cd949bc10ed8d1bb9dc6a.json",
+      "outcome_sha256": "8c867eaf7c260f4de2aa1b8698ad4e23f3c28c2c16ea843afed97e5655714783",
+      "spec_sha256": "319801995faa5905fd3c061f63c2d09039642d1208d4809f980780879f9a3571",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "prompt_language",
+      "reason": "139-6+19=152 is correct. 'zu Weekend' and 'puer Spueren noher ... hingeduecht' introduce garbled, unneeded wording into a simple count problem.",
+      "mechanical_checks": {
+        "recomputed_answer": 152,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "tool-dialogue",
+      "slot": 1000002,
+      "outcome_id": "537ac56b417d0597b6695fc03fe9abdeb4a578088d5a59d1b31e92484180f098",
+      "candidate_id": "2b74a2f4e51bc89b68ac65021c5f183df65282d5428010e907ac162d50528a03",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/537ac56b417d0597b6695fc03fe9abdeb4a578088d5a59d1b31e92484180f098.json",
+      "candidate_sha256": "ce4afb23ba05405f6f40a2d2ab5e570234fa24ceda00ce7b5b7ec5139c26a855",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/537ac56b417d0597b6695fc03fe9abdeb4a578088d5a59d1b31e92484180f098.json",
+      "outcome_sha256": "8d752c662952c8b35e6a1126912c9fa7f3766f1d7d5b67f640f0d37cf6d1ce96",
+      "spec_sha256": "d97a163df0161081847aa55a0be014fa2ea3a38d61fe4daaed2bc275aa40c7fa",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "Final distinguishes found parcel and available locker-11; redirection is only permitted, not claimed performed. Postcode is from the lookup context.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "single"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "5685639b40ae5c057204b6cfbc4cfa4c3fc937fb9bf9c1570320774a3ac0717a",
+      "candidate_id": "74bfb2777af13195fac5a9419ac1608fec105307727a368379d8196d81487b11",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/5685639b40ae5c057204b6cfbc4cfa4c3fc937fb9bf9c1570320774a3ac0717a.json",
+      "candidate_sha256": "20b0ce8367a1910bdac51d026dbea70deae91fed53cc0208a158c93a241cfe09",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/5685639b40ae5c057204b6cfbc4cfa4c3fc937fb9bf9c1570320774a3ac0717a.json",
+      "outcome_sha256": "4b790b483fd4ca8a0b8282ad1304f8df7d4cb14445af69dbc4bc6021e0244a86",
+      "spec_sha256": "1d5e209a808fead5c3102ce8a295bc159bb40a1b63ecdbe888a8a055626a7972",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Unchanged lookup retry; final correctly reports book-984/copy-984 at branch-2, with no action claim.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "openhermes",
+      "slot": 1000030,
+      "outcome_id": "58f3d7baea22f415952ccc2c796d61c264cb0edb28bb0821bc0e4676da65e98b",
+      "candidate_id": "15e8242979100778629be5a856eb3e11278ad8491446ecd08301ce596bb32725",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/58f3d7baea22f415952ccc2c796d61c264cb0edb28bb0821bc0e4676da65e98b.json",
+      "candidate_sha256": "4f16c63cc53ba7407b1bc8a77283c584acbf7cf8b23777fa61a5d859ae37fa26",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/58f3d7baea22f415952ccc2c796d61c264cb0edb28bb0821bc0e4676da65e98b.json",
+      "outcome_sha256": "45886c480dcc6bbcd19ab9eebdbc0c74a2bf7c9b98dc19b9aa380d566342ccde",
+      "spec_sha256": "953cf85a1122a4367e7f7993736b933681937969273499c2955e5c7c11c26597",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "inherited_code_explanation_error",
+      "reason": "next(reader) reads the first record, not the first record after a header; no header skip exists. Explanation also incorrectly says a1 uses row[2], although user code assigns row[1]. Faithful translation reproduces source defects.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "5c9197b7e466e506ac9e59166c3f6b348037d8928cf07ea542e9fc828c0fad68",
+      "candidate_id": "c45eca4de11cc2b55ff8afec776a0bad058ce160d941c419eea1de8ff13781d3",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/5c9197b7e466e506ac9e59166c3f6b348037d8928cf07ea542e9fc828c0fad68.json",
+      "candidate_sha256": "14b08cb48cd5158b5d8d3f1a19e358540fc003fffc8651ab939eb280df633e9b",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/5c9197b7e466e506ac9e59166c3f6b348037d8928cf07ea542e9fc828c0fad68.json",
+      "outcome_sha256": "27fa393b3ca1f3dd7b3781778975a3e3b61e1222740f67601e17999e725f0b26",
+      "spec_sha256": "c29ecc9b34d2cd737c2444b27052de483825935c82c3862f51e59cdcf464e251",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "clarification_wording",
+      "reason": "Final nine-ticket result is correct, but assistant asks which 'podujati' (event) event-790 occurs in, then parenthetically says venue. Replace the contradictory event/venue wording.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "openhermes",
+      "slot": 1000032,
+      "outcome_id": "5f3e3dbcc3abd44596e513b605d789041c307c8c4408521986e2ff396534f8d9",
+      "candidate_id": "72d1f6d0c443769ea0447458e986d96433cc933aae947ea08d0cd42520e27bf4",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/5f3e3dbcc3abd44596e513b605d789041c307c8c4408521986e2ff396534f8d9.json",
+      "candidate_sha256": "85da4ae94940dbfafa84b97c51c773f03f568ae43945c7d3a2610899643ea65e",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/5f3e3dbcc3abd44596e513b605d789041c307c8c4408521986e2ff396534f8d9.json",
+      "outcome_sha256": "e66c94f4e5eedb5b45a731021f6eb9190d0d7d321ae3cb942d3327b77c15d6ed",
+      "spec_sha256": "53541c2cd5d686c53d2080c1178e495957266c8564f097cc242b03b8b31ad594",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "C++ recursive code and all eight length-three outputs preserved; explanation matches the base case and two recursive branches. Negative lengths were not a supplied requirement.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "math-code",
+      "slot": 1000002,
+      "outcome_id": "616dca3225e4d631e99d88b3154a7fb8708b4f53735c101a6fb30e7483579ecf",
+      "candidate_id": "13d1d0e452e597b7e4c0e53b3d43b259f732ebeed347daea739a6a78a7cf4504",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/616dca3225e4d631e99d88b3154a7fb8708b4f53735c101a6fb30e7483579ecf.json",
+      "candidate_sha256": "54ea2da0fde5708a94481c44814c46c70f712eb1d68e86fe4b75b7eaf1235920",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/616dca3225e4d631e99d88b3154a7fb8708b4f53735c101a6fb30e7483579ecf.json",
+      "outcome_sha256": "9823063adcce713ddcb38969933e8f7f80dca90b2d266bd96365bc2fb7222f1a",
+      "spec_sha256": "2849d1bb9ece10f3e021f8894b7dbec8fa372d33c6aacb7628e0e96f985c41da",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "6*60+20=380; explanation and final box are consistent.",
+      "mechanical_checks": {
+        "recomputed_answer": 380,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "640ec450da610963a633a8949d896605978bb1adf5aa9878fccbfcddd5273eb6",
+      "candidate_id": "cb3692deea4a6b2215273e7729281c3e9db27a869e84d84dd443afe5e5628907",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/640ec450da610963a633a8949d896605978bb1adf5aa9878fccbfcddd5273eb6.json",
+      "candidate_sha256": "5e6a0f32c03a1a656be758ed3ef9ecaab5dbd9c5bbd64b8379504f3bdd4e2198",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/640ec450da610963a633a8949d896605978bb1adf5aa9878fccbfcddd5273eb6.json",
+      "outcome_sha256": "ccc367d744a695287aee0af3d71ef48781dacc6fd0bdfc39dd931b3910b74185",
+      "spec_sha256": "5f8effbd560b274f3b8ea25d06ea1829e6ab008bd979dbc32d153fe0fbb56d8d",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Correct unchanged retry; final explicitly distinguishes first failure and second successful availability lookup.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "openhermes",
+      "slot": 1000004,
+      "outcome_id": "641a7029e7fd916818e7544dfc0dc77b6ab265b3dbdac422ee664816b129ba1c",
+      "candidate_id": "874bcba8e9e869e5a8ff84e74a8b9430da93adb609ce53b132d4b727b910a73c",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/641a7029e7fd916818e7544dfc0dc77b6ab265b3dbdac422ee664816b129ba1c.json",
+      "candidate_sha256": "355796ef88796a78168923d9743e2f17783bda60cd67b8614d9fcf30b8c0a95e",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/641a7029e7fd916818e7544dfc0dc77b6ab265b3dbdac422ee664816b129ba1c.json",
+      "outcome_sha256": "94d662acae9142a688f1f982a1545776ffeb638523aa5b2b51f6390bcad143f1",
+      "spec_sha256": "3a4fb445c1e79392051a57603218c1a70b59e7182413a9571c76946b8a89b76e",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "mixed_language",
+      "reason": "JavaScript comparator, property names and sample output are preserved and correct. User contains Ukrainian 'potribna' rather than Belarusian wording.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "66871ff0dd6c9b4ed1d00cc9386a6b4f3e7d8f71ab1c2e6b98375b48a275530e",
+      "candidate_id": "93fa70524ccf77d3dcf7c7b7503cd896bf7d7116cef89cdede021d7200cb13ec",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/66871ff0dd6c9b4ed1d00cc9386a6b4f3e7d8f71ab1c2e6b98375b48a275530e.json",
+      "candidate_sha256": "f982a95ccd2ca46110e21c007e96b71e44974c446619b0c0c5c561394f5d9c19",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/66871ff0dd6c9b4ed1d00cc9386a6b4f3e7d8f71ab1c2e6b98375b48a275530e.json",
+      "outcome_sha256": "4563fc7def0165b9e1f64e374e235778e367181af10127933cc9ec83e96e3d93",
+      "spec_sha256": "8b3d1d6355c27a00d1bc328c5a4c662e07d29f25fa252c9d163ebe60e99edb72",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Retry arguments/results consistent; book-586/copy-586 at branch-11 reported without action claim.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "69402f84d361d48a8e0d4ffc786ef0004cd94a3929d9acc09d2da72d405e4f80",
+      "candidate_id": "71177d3e217e789b59cdaeb1c669b015fd4e7b0d981042abe6f9e64e044532aa",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/69402f84d361d48a8e0d4ffc786ef0004cd94a3929d9acc09d2da72d405e4f80.json",
+      "candidate_sha256": "3113bc7b4504475308d0964137d70bb581d3e490b4f06d3cd10d15e71f79d178",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/69402f84d361d48a8e0d4ffc786ef0004cd94a3929d9acc09d2da72d405e4f80.json",
+      "outcome_sha256": "8d152826a610d0b0cc04e32d216503720d908462ff7fffd2166aec1e57198b51",
+      "spec_sha256": "1c85d8f7f31a2b3ab4e376171fb4d4bfb2d083cf99922e9cc0ff71b29b3480bd",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "50-8+14=56; exact quantities and boxed final preserved.",
+      "mechanical_checks": {
+        "recomputed_answer": 56,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "6e79a4f9e0bc6e4626e79cc183ff2694e7c99f5a65ddf652ba4695019f6b5515",
+      "candidate_id": "450ed2ca4e6ee40fe7c39a45a6b777fc7684513dedc1942339c52b07f96a1849",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/6e79a4f9e0bc6e4626e79cc183ff2694e7c99f5a65ddf652ba4695019f6b5515.json",
+      "candidate_sha256": "aa3fd3fc6fc6be4458f5ae3010297c26b09333f71ab2dc3896a77ec0aef4f122",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/6e79a4f9e0bc6e4626e79cc183ff2694e7c99f5a65ddf652ba4695019f6b5515.json",
+      "outcome_sha256": "3d53a6a0f4e77fa91c2e9eba962172f59786ee61bc381c8e9c0b3e4b8ad73a0d",
+      "spec_sha256": "9df192b5ecb0d55ea9d89425d847dd64786cec42ba99d45f5837889c8831f1ab",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "156-2+14=168; a minor missing accent in the prompt does not change the task.",
+      "mechanical_checks": {
+        "recomputed_answer": 168,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "701b95660a9b38780d5992162baff51a597bc5164a979b473235303d11dcf2f7",
+      "candidate_id": "cfb250195c59a019954a058ce05a1c341cb6133a0150db649aa319156f5d3a26",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/701b95660a9b38780d5992162baff51a597bc5164a979b473235303d11dcf2f7.json",
+      "candidate_sha256": "4eacc69305dd7a519a0766177eda0e1bbfb2874898d493e5ec0b5fe4065abaf6",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/701b95660a9b38780d5992162baff51a597bc5164a979b473235303d11dcf2f7.json",
+      "outcome_sha256": "4550a33c453a784e5899a0b92dd2f58f21582aa0e3db273832b34a89c2b92468",
+      "spec_sha256": "e8f2838491c19d93769691d58af6f5e4e347c20110b1ab92118603c471ad7dc3",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "(18+30+42)/3=30; exact requested mean and boxed answer.",
+      "mechanical_checks": {
+        "recomputed_answer": 30.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "706a47c5facb6cc78d9c8299e792d2e07c7729a8a96888cdc5015eb9fa587ca8",
+      "candidate_id": "a99f6f64a861bf57da1bd7f8293b76745b1f87a811c99191f3e9ae6151e0f37d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/706a47c5facb6cc78d9c8299e792d2e07c7729a8a96888cdc5015eb9fa587ca8.json",
+      "candidate_sha256": "1dd36ddec20c7243911ac3e185fe95f8ac58641a4340e3e63d0a38e34d457146",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/706a47c5facb6cc78d9c8299e792d2e07c7729a8a96888cdc5015eb9fa587ca8.json",
+      "outcome_sha256": "46c58ecca30facaab6bb522ccdf939f27f03c645c64605f6a5104d7a1205619f",
+      "spec_sha256": "83ef9b1e624488d2833e8a1f4b937ad009f8a3df904fff04d0aed326fd5e2f77",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "User supplies venue-8 before call; six tickets and ticket-type-698 are directly in the result.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "openhermes",
+      "slot": 1000011,
+      "outcome_id": "758a1ff5bd9b7c5f58b0b75e6a4831935178acaa9750f169b2da524308037f4f",
+      "candidate_id": "8a183c4accd1f25a92eaef57a642a399e64c3e19b312265dba06f784ecf1929f",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/758a1ff5bd9b7c5f58b0b75e6a4831935178acaa9750f169b2da524308037f4f.json",
+      "candidate_sha256": "a6f7fb040fc8270e67023618ce5e4472a8914e021920da3ff863fc57afb35ebc",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/758a1ff5bd9b7c5f58b0b75e6a4831935178acaa9750f169b2da524308037f4f.json",
+      "outcome_sha256": "5f9a00358f88384784cb7bd49400d2493a05d1fc347c190e826e1e23519ce0ff",
+      "spec_sha256": "49bbf67a02db3efe419d61efb6fb82b9b3ef98a74ab60a915da1ec2d7fbabb27",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "inherited_code_explanation_error",
+      "reason": "set() fixes the method error, but x='val' and y='cat' are labeled Colors and Values in reverse. Both source and translation claim the labels are correct; distinguish preserving supplied label order from correctly labeling the represented quantities.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "7622c8d140994f0f4a4057147913a9ef5d3b34987f086ebbccf3a734646cf6d4",
+      "candidate_id": "0feb2cd6300b85c649a5489d04c613e77678e4fe61024482323061211ebae3e5",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/7622c8d140994f0f4a4057147913a9ef5d3b34987f086ebbccf3a734646cf6d4.json",
+      "candidate_sha256": "f86d79757693b53ce4c34c4d59f571e3ce1589b74cf3dad4cf57d7894a17c192",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/7622c8d140994f0f4a4057147913a9ef5d3b34987f086ebbccf3a734646cf6d4.json",
+      "outcome_sha256": "a8e623bc00960bc3432f863c478e837f81829a22459b8b69200a70b1acde4129",
+      "spec_sha256": "c1a713c0d5da7260cdf4264e74ca7d04c373993ef1ff8559d2f1c62fc4649310",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "native_language",
+      "reason": "Five tickets and clarification are correct. English/German-influenced 'Venue', 'stattfennt' and event phrasing merit native review; no demonstrated tool-grounding defect.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "tool-dialogue",
+      "slot": 1000001,
+      "outcome_id": "79039c151c9063c3c37697d65d4886e0b9d145ce5abde141a294e1925c6f7acb",
+      "candidate_id": "f2d5caf27f9427319b1badcf00bc9618b354c54e9c913feedef2e24cefaa683b",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/79039c151c9063c3c37697d65d4886e0b9d145ce5abde141a294e1925c6f7acb.json",
+      "candidate_sha256": "579ee3a7c0da82b387d00545fa2da990d49735e270085e25ddc0706e27b99840",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/79039c151c9063c3c37697d65d4886e0b9d145ce5abde141a294e1925c6f7acb.json",
+      "outcome_sha256": "ce21f7677c4916d00b2dba5cec95ab3cca60bc53e5de9b298eb271e35cdb7927",
+      "spec_sha256": "e983e6ec760332db0335e8c9c46e681f87c1f36a7a1075cafea5a9a586cf961e",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Hypothetical no-call explanation; describes availability lookup and explicitly excludes automatic reservation.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 0,
+        "subtype": "no-call"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "80751ef8457da2211f8ce065cd596ac21fb1a519eda8f9612c98b477803b7417",
+      "candidate_id": "fc544839ad066fd3522ebb4b238052542d3b7aca666f86ed8a29b17daff356f4",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/80751ef8457da2211f8ce065cd596ac21fb1a519eda8f9612c98b477803b7417.json",
+      "candidate_sha256": "4217796072a2cce653201150cf88ff7588da5337f42610ed97fb33307b10edd0",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/80751ef8457da2211f8ce065cd596ac21fb1a519eda8f9612c98b477803b7417.json",
+      "outcome_sha256": "319f789380846374c78596f569638274abd27314d5ff1128b92041333d3268e6",
+      "spec_sha256": "c8f10823a42ce94406d0cf23ce7b49e9bd2311932efeb2e9ef390e746d24fc48",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Venue-18 supplied by user; nine tickets reported accurately after lookup.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "openhermes",
+      "slot": 1000002,
+      "outcome_id": "810aa2ea63bd7e130831891d2acc6138406889fb12935f0cadcc5c824a79ca84",
+      "candidate_id": "f5278ee2a9d223b2d5a57221862f47c75b55ec34d906707798165ad7dee328e4",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/810aa2ea63bd7e130831891d2acc6138406889fb12935f0cadcc5c824a79ca84.json",
+      "candidate_sha256": "8a2548782995f8fd322b0699bd965ccac9203895335f2d085fafc2506c50dd98",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/810aa2ea63bd7e130831891d2acc6138406889fb12935f0cadcc5c824a79ca84.json",
+      "outcome_sha256": "d1e5ad11af553eb977c62671935e44fc0c3d4b94da0a26477256d45216c595c8",
+      "spec_sha256": "2471f6a3edcb30ba5918ada106e0665d5f3039cd3b47555b2e6619116db71e0b",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "NLP example and all virtual-assistant claims preserve the source. Minor diacritic inconsistency does not change the task or facts.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "openhermes",
+      "slot": 1000028,
+      "outcome_id": "84af349a0493983ad9d39224a03ceb3e70c78f773f4c9ee084c0f12ac7ea9104",
+      "candidate_id": "efdfa61e458197530e2409b856f2f8d159fa1ea2fe15440ab0684e56f4a118e6",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/84af349a0493983ad9d39224a03ceb3e70c78f773f4c9ee084c0f12ac7ea9104.json",
+      "candidate_sha256": "d3bced787142822f1e4ab89b3530ab318516ac635107f8e478f9e891793d6345",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/84af349a0493983ad9d39224a03ceb3e70c78f773f4c9ee084c0f12ac7ea9104.json",
+      "outcome_sha256": "973380ef4c741ad547fa27a4133304d95658fd228a8dbd0bef35f3d42a650784",
+      "spec_sha256": "f7e82eac17dec664e907d11a64d6eadace09c306a88bf5139d0e8c0dc2144f29",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "medium",
+      "issue_category": "prompt_language",
+      "reason": "Answer preserves rejection of magical night vision, but user 'jedenje' is not the normal Slovenian 'uzivanje/hranjenje' phrasing. Native-language cleanup needed, not factual reversal.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hr",
+      "family": "openhermes",
+      "slot": 1000014,
+      "outcome_id": "863d0cb8e2c9a294053656c4a6699e1d9f7f67891e4defb3565104712e095383",
+      "candidate_id": "ee008b6d99aa346bda9019a3d0331d4064b5eaaf3c68050930df016d8ec6feda",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/863d0cb8e2c9a294053656c4a6699e1d9f7f67891e4defb3565104712e095383.json",
+      "candidate_sha256": "95b77356f0d01c5d90b5659f33e5d16a26e80d22217e843e38ede8701ff945c6",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/863d0cb8e2c9a294053656c4a6699e1d9f7f67891e4defb3565104712e095383.json",
+      "outcome_sha256": "ed7ecc3e34c8adfa4341e18e8b7bc65dc3a36e5065b0a7aefc364824b4ad01b1",
+      "spec_sha256": "41a3cfe447a85b2d910ce362d8e325a4fdd9d6f7f174eef3f9267d3489b8e93d",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "source_facts_and_language",
+      "reason": "Translation preserves the multi-factor historical explanation and 9000-bank claim. Exact historical counts were not independently sourced in this CPU review; 'industrializiranog' and 'preprodukciju' also need native terminology review.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "openhermes",
+      "slot": 1000022,
+      "outcome_id": "86dd98acb4919c9d736e37a6576e47e875e93bfe1363dd13f163e8ef596adb13",
+      "candidate_id": "678aae6bcaf7fc401855352230e076d8899899364c1c3b3273913afaa8afa348",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/86dd98acb4919c9d736e37a6576e47e875e93bfe1363dd13f163e8ef596adb13.json",
+      "candidate_sha256": "cf0f085a2abce838ad2edd6a5388bc5ef20c5ce24f2cf6098e54578220ef6c6e",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/86dd98acb4919c9d736e37a6576e47e875e93bfe1363dd13f163e8ef596adb13.json",
+      "outcome_sha256": "fcd6cd29d314c5cd56aff1ac413cfb0875fd71945f3a93d2aa4de70805d0082a",
+      "spec_sha256": "b639a853b10258472e166f6823e9c483b7b4263080a53f9873a1036ea2af336b",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "source_generalization",
+      "reason": "Heating/boiling explanation preserves source including dependence on water volume and heat. 'A few minutes' and boil-over prevention are not assured by supplied conditions; assistant also has typo 'izizlaziti'. Source-level qualification needed, not a new translation fact.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "88e0d4dfcc1e8c3949f6514e53e2415bf6b32b821af28824fab1d6aaead7cff1",
+      "candidate_id": "5ffcba4cd4d1606f511a5588b887086eca45b7979844b100cddb095955857748",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/88e0d4dfcc1e8c3949f6514e53e2415bf6b32b821af28824fab1d6aaead7cff1.json",
+      "candidate_sha256": "80bc77228f442692a4952633d45e7385932e221bc9727530741ee29b1b3f579a",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/88e0d4dfcc1e8c3949f6514e53e2415bf6b32b821af28824fab1d6aaead7cff1.json",
+      "outcome_sha256": "e4166fee31d0cfb39d9f94c997860ba8d54b31ffeeeb0ca967b84265bcda7e1e",
+      "spec_sha256": "34abdee8fc7c3b7ff22a544510887ec6b893dfde4d7b21795f9bd6eb5418f672",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Venue-18 supplied before lookup; final twelve-ticket count matches result.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "math-code",
+      "slot": 1000002,
+      "outcome_id": "8a024cb2d5daf8fd3eac807abdab918a5b71e981996a0ccb86552b8b62d79bdc",
+      "candidate_id": "7779bcbb5c7e2a4744c3971289fd5fcc2ddd6f0d090dd7d978277ca24aec77c6",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/8a024cb2d5daf8fd3eac807abdab918a5b71e981996a0ccb86552b8b62d79bdc.json",
+      "candidate_sha256": "e283cdf2ccf5e74537e00576c80e92469dd891d9dbb616ed9bfbb47b2558b3c5",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/8a024cb2d5daf8fd3eac807abdab918a5b71e981996a0ccb86552b8b62d79bdc.json",
+      "outcome_sha256": "8606d093c45796af047f4f20880ff3c28c0ea700f41087d43af245d296064c61",
+      "spec_sha256": "ee4db5d2526175ea0857835b521d5529264a178d4ce826a570c13beb26fdcd8f",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "mixed_language",
+      "reason": "17*60+19=1039 and reasoning are correct. User's final word contains Korean '박' inside Belarusian text; not a native Belarusian instruction.",
+      "mechanical_checks": {
+        "recomputed_answer": 1039,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "math-code",
+      "slot": 1000002,
+      "outcome_id": "8ad9e226d3088b477a667679bdf22c445372aba5e0ccc434ecf652b8baa44c25",
+      "candidate_id": "edb09df226d197135182ee3754ab32cb2a9e4517ad8336da08f6671783407b82",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/8ad9e226d3088b477a667679bdf22c445372aba5e0ccc434ecf652b8baa44c25.json",
+      "candidate_sha256": "d7a2853c8f7e2c859262880450af1772ae255285704e19c0726b05c9577ded5e",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/8ad9e226d3088b477a667679bdf22c445372aba5e0ccc434ecf652b8baa44c25.json",
+      "outcome_sha256": "1ff8b1a5bbbfc1c3183f4803371e66ead34b1d60d1ca597c399110a8eada887c",
+      "spec_sha256": "4b888336d2f4715d26ead5f217484a6502bb285d9156ed10f00384ab06dd086c",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "23*60+10=1390 with correct explanation. English 'boxed' is a formatting label, not a mathematical error; native wording could be improved.",
+      "mechanical_checks": {
+        "recomputed_answer": 1390,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "8b3e8cde4bcae83d81f5ea554ad84615572a64c92009c33ad83c5a41ffa5dab8",
+      "candidate_id": "085f18a3fb4a48d448aa27cc205f16326405681590633f391397056eecb1a801",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/8b3e8cde4bcae83d81f5ea554ad84615572a64c92009c33ad83c5a41ffa5dab8.json",
+      "candidate_sha256": "31bb48b93efe688568886cda7fdb375d7276fccac856933a18db93c2a49bf666",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/8b3e8cde4bcae83d81f5ea554ad84615572a64c92009c33ad83c5a41ffa5dab8.json",
+      "outcome_sha256": "04451f898fefe87f349447e22521796a8fff2e6db0f8546a6da31f7af155869b",
+      "spec_sha256": "1513ecf8801f562fd1d245cf38cb1e2de4d9cf5bb72d3d81282cd47477e230c7",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "mixed_language",
+      "reason": "Call sequence and availability are correct, but final 'zweite Versuch', 'festgestellt', and 'verfugbar' retain German forms instead of native Luxembourgish prose.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "math-code",
+      "slot": 1000002,
+      "outcome_id": "8c710a01723da98287d6eee6871494e4da18ff95bfb7f363df44a48dcf542990",
+      "candidate_id": "a880cb9bacb6413ff6dcb8dc001a3069e4ab8f21fea78577480a9d0ebe95e64b",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/8c710a01723da98287d6eee6871494e4da18ff95bfb7f363df44a48dcf542990.json",
+      "candidate_sha256": "93eba44ff95e5302cf89a4f4076c1fb6b6f36ddc0bbb763fc023e8ee5875bdcd",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/8c710a01723da98287d6eee6871494e4da18ff95bfb7f363df44a48dcf542990.json",
+      "outcome_sha256": "6fc2fce58b35c4c83ab04403b338d620fa5435213b67e350887a299fd3012f76",
+      "spec_sha256": "d9579634867b528986e851b906872ff8706ba5a610ba3090093b07f44f49d4c8",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "18*60+10=1090; explanation and boxed final agree with the reference.",
+      "mechanical_checks": {
+        "recomputed_answer": 1090,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "openhermes",
+      "slot": 1000008,
+      "outcome_id": "967a65df5815b0aa67f581d35079a468ff99d79fd45f639c6d4d8bfa13b8f25f",
+      "candidate_id": "7a598b7071e4060869908be89809c988019acd57327632eab77ae2286f5e1f3d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/967a65df5815b0aa67f581d35079a468ff99d79fd45f639c6d4d8bfa13b8f25f.json",
+      "candidate_sha256": "1705220e1b6c7ca6e4c18e69d8fb152844bee93235608c5b22589abde61ab945",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/967a65df5815b0aa67f581d35079a468ff99d79fd45f639c6d4d8bfa13b8f25f.json",
+      "outcome_sha256": "7ad20d552a264beb9784a961c8db0fc68d9aff3a9cd3426161e7a70e7924479f",
+      "spec_sha256": "b264616d3afd2dd4e6515f5ce89c2f626c6958f3047f28f5e8c175bd1e65968c",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Python largest() and complete explanation preserved; works for a nonempty input array, including negative/duplicate values. Empty-array handling was not requested; do not invent that requirement.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "96e7aabf2f93d765ffa4694849b54365184b8ac33d069a78fa512e1b22a108e4",
+      "candidate_id": "5063f671b2c44c6c89f404001ca13fa7d43dfb8ea5b7f43f6e46917444ab84ba",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/96e7aabf2f93d765ffa4694849b54365184b8ac33d069a78fa512e1b22a108e4.json",
+      "candidate_sha256": "b2c42bf09c04f01223c1e34279fa78311cbb7b56bd39ee675a84303ca5819b05",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/96e7aabf2f93d765ffa4694849b54365184b8ac33d069a78fa512e1b22a108e4.json",
+      "outcome_sha256": "c1dfd962ed40b88de4e2dfaaa49bede35e30da553bfef78af290066cb53b8cdd",
+      "spec_sha256": "89cbf1445b55717d80c4b0bda54812ee33fa8529c20599ec20cc4799fd3102d2",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "medium",
+      "issue_category": "none",
+      "reason": "222-15+23=230; one boxed answer. The prompt retains all quantities and operation order; minor wording could be polished.",
+      "mechanical_checks": {
+        "recomputed_answer": 230,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "openhermes",
+      "slot": 1000016,
+      "outcome_id": "992314f05b20f5060ad31cab090707049427dfb04a43fb7648886bb5e1ccc769",
+      "candidate_id": "967cb2d8f2eeaaab572d0fd3b2ebd5663ca30279ab1f3477d1b9f09da326e7a2",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/992314f05b20f5060ad31cab090707049427dfb04a43fb7648886bb5e1ccc769.json",
+      "candidate_sha256": "f4504676fe1ba89faca16203127d5c1abd2da70061e4e5f704cc04636c317fd5",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/992314f05b20f5060ad31cab090707049427dfb04a43fb7648886bb5e1ccc769.json",
+      "outcome_sha256": "7453f8e48a6c43c14feed508c70c752dd472d1fdcd219deea7d276eade54d930",
+      "spec_sha256": "f310d453327ddf42d474de5ff242789b6769398661f29fde2bf9438c0d309f5e",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Epigenetics topic and gene-expression theme preserved. Dropping the literal 'No input' metadata is not a substantive loss.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "tool-dialogue",
+      "slot": 1000002,
+      "outcome_id": "9afeca90ed6b0d8310d356f2d0a27f728fa3b42465b2da2ac7376c868edda1cc",
+      "candidate_id": "224461e4b6f40137fc455f92eebe0de9f398dffe1a67340847f612281a04d99d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/9afeca90ed6b0d8310d356f2d0a27f728fa3b42465b2da2ac7376c868edda1cc.json",
+      "candidate_sha256": "23f197f1b95acde1b32e0507d0fb815b9714dcd1ff734b1f33665274bb817a83",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/9afeca90ed6b0d8310d356f2d0a27f728fa3b42465b2da2ac7376c868edda1cc.json",
+      "outcome_sha256": "df22f312e97f0076c7920f7b40b9b49c2928b2b8ca4dd112256616e8b3feae0e",
+      "spec_sha256": "299a0f261c2cfe167fef687c8a00b6da548a8f0b98f1116ee267194eac9c1117",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "native_language",
+      "reason": "Tool facts remain correct and no relocation is claimed. 'Postzeil', 'gefonnnen' (triple-n spelling), and 'Redirectioun' need a native-language repair.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "single"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "openhermes",
+      "slot": 1000027,
+      "outcome_id": "9fe268aa39126828ef9d5c7959aaa2a6535a2235b02bd0c756a725c1aafcb56f",
+      "candidate_id": "dd0cd0906903a2b57e42cc9bd50deb3eebfc48f4746595e4d0c28e1b00d772fe",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/9fe268aa39126828ef9d5c7959aaa2a6535a2235b02bd0c756a725c1aafcb56f.json",
+      "candidate_sha256": "baabde071c0d9fa90442ecd43efe0e6f5f9fefd81b09e121e581b64fec144c8b",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/9fe268aa39126828ef9d5c7959aaa2a6535a2235b02bd0c756a725c1aafcb56f.json",
+      "outcome_sha256": "7a1f7bd273cd7adb2209daa54ebe5ae15b149f9aa7483d5402b5eb716f40a721",
+      "spec_sha256": "90ea4b76d1049da27c44eeb3efc7aa026c73adf22a36f992137c2df8969e49ac",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "source_code_fidelity",
+      "reason": "Behavior remains substring search, but translate subtype renames function/parameters/variables and changes literal sample strings. Contract requires preserving code; source API search_string is replaced by iskanje_besedila. User also has 'dolocene besedile' agreement error.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "b1e2530fdae74b44da6ed13a9d0ae7963536d272aa214e18f593ec701518628f",
+      "candidate_id": "529a6812ff1546f650bb5dbf266528c3e4e28afc5e9a567aa74c63144ad6e371",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/b1e2530fdae74b44da6ed13a9d0ae7963536d272aa214e18f593ec701518628f.json",
+      "candidate_sha256": "c37fdfea532160fd22c3ae219948c99beea2a6e5b8cd36e859db349d82bf1b2f",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/b1e2530fdae74b44da6ed13a9d0ae7963536d272aa214e18f593ec701518628f.json",
+      "outcome_sha256": "41d59e19538b94a872a9239cffa5a5fb76155a70b1959893be0960dfc1e1eba4",
+      "spec_sha256": "c432506b86ba9f6e916df399aebec9bdee550cc3ea8be5e5d9463177a02e198b",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Retry arguments and call/result IDs match; final reports book-704/copy-704 available at branch-9.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "math-code",
+      "slot": 1000003,
+      "outcome_id": "c7b55eed0c2aca1f618baa63b2e28f45fc9298553ee73933e97a7b781e1bbe50",
+      "candidate_id": "18a4124643465d6ec5cafcbc77f7749d20bcdf35496480a5429d35389f6990ae",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/c7b55eed0c2aca1f618baa63b2e28f45fc9298553ee73933e97a7b781e1bbe50.json",
+      "candidate_sha256": "58d17c16bf6c9df20486c585152110e819aeff88f7d45cae37faa62d12c4624e",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/c7b55eed0c2aca1f618baa63b2e28f45fc9298553ee73933e97a7b781e1bbe50.json",
+      "outcome_sha256": "2abfd0313e442de5675cc52b2e98a89a94bdc44aaec212c2a17ab6a593c8d03f",
+      "spec_sha256": "b60dccba186dd273220cde26b81e132a4eb98e62ccdc85f598e87566da804406",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "mixed_language",
+      "reason": "Python matches the exact sorted-unique-above-4 reference and empty case. The prompt mixes German 'Bitte' and awkward 'LEED Array'; assistant 'frogt' and user-description framing are not clean native prose.",
+      "mechanical_checks": {
+        "exact_reference_code": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "openhermes",
+      "slot": 1000003,
+      "outcome_id": "c7cbcf3b96b773e4f7e2e71cd7446b52fcb248f19587b226d40ef6a779603d5e",
+      "candidate_id": "e6ecaa93c22f034c60e2e6f87ef4a6b652d96598f80c6ed7c5a7243cef28d069",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/c7cbcf3b96b773e4f7e2e71cd7446b52fcb248f19587b226d40ef6a779603d5e.json",
+      "candidate_sha256": "d615655edcc3853427c6bf415e69eb8cbcb5344218b90d3598d3f6d3471b9320",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/c7cbcf3b96b773e4f7e2e71cd7446b52fcb248f19587b226d40ef6a779603d5e.json",
+      "outcome_sha256": "50134422efdc4f384b8945387ad8d32eed14fb4937733671012084c89b8efb6b",
+      "spec_sha256": "ad8e70d658d92c565e0ea8ac786ef3f7227b770248533ccae01f66de94c65da2",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "medium",
+      "issue_category": "prompt_language",
+      "reason": "One-sentence magnet answer preserves iron/nickel/cobalt; the user's derived noun for behavior is malformed and should be corrected by a native Belarusian reviewer.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "c9f32a13909f3155e9c9ea7d48c8b78ff19dcc96e905b71f4fc6833d9b2e98a1",
+      "candidate_id": "d0144722dda08c2b3e05891fdffbc62546a07c3a5f56d01c3f8deacfec91efd0",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/c9f32a13909f3155e9c9ea7d48c8b78ff19dcc96e905b71f4fc6833d9b2e98a1.json",
+      "candidate_sha256": "6cb387cf096ed3435f2fb01f410bf93e43a1542fb07a73bec3868b993a082672",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/c9f32a13909f3155e9c9ea7d48c8b78ff19dcc96e905b71f4fc6833d9b2e98a1.json",
+      "outcome_sha256": "801f7f9e9d710332e4a9feb8444f1cb73751c802695ddcda8402a4395c5e84d2",
+      "spec_sha256": "19d6598d0ea84e8f052e33c23b8e42acbcc8abe19b51947fffa88ef3cdd7dfe4",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "(7+16+25)/3=16; temperature framing does not alter the mean.",
+      "mechanical_checks": {
+        "recomputed_answer": 16.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "openhermes",
+      "slot": 1000018,
+      "outcome_id": "cc93aac70e1d74706ecd247cfba115b45b31334639279cf5ce9128ca1f85252d",
+      "candidate_id": "7ad494418dc7d0078cfd257bb7823f689a1132357d31516eb423b9b9f6249823",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/cc93aac70e1d74706ecd247cfba115b45b31334639279cf5ce9128ca1f85252d.json",
+      "candidate_sha256": "3883999ee1f3f510cdeb36b99f5376bcd89bb57766f5fca250c8937bf1dd8777",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/cc93aac70e1d74706ecd247cfba115b45b31334639279cf5ce9128ca1f85252d.json",
+      "outcome_sha256": "0f3c86c465d0bffff2defceb756df3fb78a8e9a92a289012b2f170bc8179359a",
+      "spec_sha256": "7b8dd0d0dbb61e629ecd5eeeaf9881eb3384440ad06b232f6b61a71143a32723",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "mixed_language",
+      "reason": "English target words retained, but 'Bedeutungen', 'beide', 'referéieren' and 'Wuet' produce non-native mixed prose. Source also overgeneralizes vengeance as necessary to the synonyms; anger equivalence alone is adequate.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "openhermes",
+      "slot": 1000031,
+      "outcome_id": "cdb1f035f399e722f5b9e956a78cde21f4278cf85a35a99120f0616ba94e02d1",
+      "candidate_id": "d3677935e13e6808f29b39f8a663246ec0ebd0e64657885c6665503d0085bdf4",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/cdb1f035f399e722f5b9e956a78cde21f4278cf85a35a99120f0616ba94e02d1.json",
+      "candidate_sha256": "9e7e8ee988d556394ea3e7d4fabf40e4d834a8bfcc8cc7dc56373353058ee72f",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/cdb1f035f399e722f5b9e956a78cde21f4278cf85a35a99120f0616ba94e02d1.json",
+      "outcome_sha256": "701fe22405322500008af4399c0080c743a2be5b1eec1771bc6b571eff138989",
+      "spec_sha256": "3d4e73f00f21fcec048c8cbb3f36ffa190fb24457015440de42f03672c260633",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "source_fidelity",
+      "reason": "Translate subtype changes oatmeal/nuts/berries and avocado/scrambled eggs into additional halim/fruit/vegetable alternatives, replaces tofu at lunch with lentils/chickpeas, and narrows juice warning to industrial juice. Potentially useful advice is not a faithful preservation of supplied examples; no independent nutrition certification attempted.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "math-code",
+      "slot": 1000002,
+      "outcome_id": "ce30a04279a49b06756673082656d9cc117f95be78fc0d4fc100fab4e92eae8c",
+      "candidate_id": "1e4ca07747d482980b096aee3cfad4663870afc5fd500cf68da7328a6f40a07a",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/ce30a04279a49b06756673082656d9cc117f95be78fc0d4fc100fab4e92eae8c.json",
+      "candidate_sha256": "77adfb4ca860b81dbd968c837c84e03c7e6856d7fbacc3a521b4b04f0e224ebb",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/ce30a04279a49b06756673082656d9cc117f95be78fc0d4fc100fab4e92eae8c.json",
+      "outcome_sha256": "bcbc086b00bba23eeccd988959d02b428d2c69570667cb6e6a1b424602117d16",
+      "spec_sha256": "bf6bdadaba62281e40685f5d60cd7cd4b953a9d5a35f5d95eae0d54d9ecd75cd",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "14*60+1=841; Persian reasoning preserves units and exact arithmetic.",
+      "mechanical_checks": {
+        "recomputed_answer": 841,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "cef91c9fac3531003dcb5f97d7cdef1b38b4bb373d2d534933843af148f2fc2f",
+      "candidate_id": "6675fafb4cc10d8ca2c3cf4e35ee4213aa73b13cdee1ed16107e4f0a5e8cd95d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/cef91c9fac3531003dcb5f97d7cdef1b38b4bb373d2d534933843af148f2fc2f.json",
+      "candidate_sha256": "af86a8bcfce2dfae4d84f6535b10f411ddf84c5aff451cb1660a1c4a66c8e7e4",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/cef91c9fac3531003dcb5f97d7cdef1b38b4bb373d2d534933843af148f2fc2f.json",
+      "outcome_sha256": "0b558f28a5e64dd7cce5186e6d236e487738be5a629be16fabc51c2f1a5e6e74",
+      "spec_sha256": "a82fd993583ef9a98132fb6b48268b0b4c222b0cf852a617076e0504d723c152",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Valid unchanged retry and linked results; final book-661/copy-661 availability is grounded.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "tool-dialogue",
+      "slot": 1000002,
+      "outcome_id": "d284d7f28d15477b19971941319dd90d9969cdf712bce8f900758fef6c67dcec",
+      "candidate_id": "847a31ad55e44f70a81480fffca0e15a4fa385ca055a0d5c3363dc732faafb04",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/d284d7f28d15477b19971941319dd90d9969cdf712bce8f900758fef6c67dcec.json",
+      "candidate_sha256": "f5636ba0c9effba1fec9857688c7dd2b020e24514eae669cb020c8a42cd7c3bf",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/d284d7f28d15477b19971941319dd90d9969cdf712bce8f900758fef6c67dcec.json",
+      "outcome_sha256": "fab1504f2d6abf900d997c7e960b27ab708231fea353662b3ed156b805a64429",
+      "spec_sha256": "bcc4eb58de53e82e392297f2f2be26e7a0fa32b99b405a0f111f4c31439910b3",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "unsupported_tool_result_claim",
+      "reason": "Final says the parcel is currently available in locker-18, but result only identifies an available redirection destination. 'ridrejtumohet' and 'skapullin' also corrupt the native phrasing.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "single"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "tool-dialogue",
+      "slot": 1000002,
+      "outcome_id": "d516db375dce66dcb5a770980c79e97b7ee735c6e69b2fcd60073dab38d18379",
+      "candidate_id": "9a08009dca85f1579a9933bf1808319e84faad25f1a5e511b4fe703c79a40bf3",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/d516db375dce66dcb5a770980c79e97b7ee735c6e69b2fcd60073dab38d18379.json",
+      "candidate_sha256": "46e1f2770ea70d12cf25f536ef84ffa0201f46f79f911e025e2c4f664bac402a",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/d516db375dce66dcb5a770980c79e97b7ee735c6e69b2fcd60073dab38d18379.json",
+      "outcome_sha256": "d325d24b1feb31bcf0898c9669f9558bab5f86d9905f4c6294abaeb6a0485c68",
+      "spec_sha256": "8bd25c0a6a4b3d5b72605677836233c28315712d388e193790781fee7c2760d3",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "medium",
+      "issue_category": "prompt_language",
+      "reason": "Tool result is correctly described as available locker and permitted redirection. User phrase 'svoje paketke' is malformed for the parcel; repair localized prompt.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "single"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bg",
+      "family": "openhermes",
+      "slot": 1000010,
+      "outcome_id": "d730b07e05dd927eeac69468ba60a88b9160929086bc220dd29cc3fe3bf9b91b",
+      "candidate_id": "eca055d074b278424f7e4097ea7977c9dd7196d829a94caf6c19ac650cb86d41",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/d730b07e05dd927eeac69468ba60a88b9160929086bc220dd29cc3fe3bf9b91b.json",
+      "candidate_sha256": "038158e6be003ad851a009bea0b7863c7b799b2a26a54bb9693337f68b9e29c7",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/d730b07e05dd927eeac69468ba60a88b9160929086bc220dd29cc3fe3bf9b91b.json",
+      "outcome_sha256": "773483b91f5df3a4328a0eaa1285c5169d6c77365114da992e33d38eae639561",
+      "spec_sha256": "7b5a21ac884d9e63b511378ab17a239acef7b6c38f8b6faea87e4cbd5360f3b0",
+      "automated_keep": true,
+      "disposition": "needs_verification",
+      "confidence": "medium",
+      "issue_category": "source_assumption",
+      "reason": "Translation preserves the ordinary pen-chair-table size ordering. Actual dimensions are absent, so this is a typical-size assumption inherited from source, not a determined result from materials alone.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sq",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "db57c0aa54af6dc18ff6d083e84675362958fc239cb3ea8263f752e94b80da6c",
+      "candidate_id": "27ac57d5e54d157247e5c4c5ee57e972d00714036b3717b927a61ad325d47395",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/db57c0aa54af6dc18ff6d083e84675362958fc239cb3ea8263f752e94b80da6c.json",
+      "candidate_sha256": "e0e9e152588484ff21107c7614b01dc3efdcbcb1720cae510f631bf937a03341",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/db57c0aa54af6dc18ff6d083e84675362958fc239cb3ea8263f752e94b80da6c.json",
+      "outcome_sha256": "c34f40a62cb014f4e2477ec6377933278c39b7cd46f39cbc0c7501b03fa53103",
+      "spec_sha256": "3ea6bfc11eb9e632282c0222ef55f2fb71f4e214f193f84cc426d0f16887f20b",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Correct unchanged retry; book-636 and copy-636 availability faithfully reported.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sr",
+      "family": "openhermes",
+      "slot": 1000021,
+      "outcome_id": "dbf543d75f95bab4dc6c89be97d2424368fe0a1cbc04c911066e75a799ab5645",
+      "candidate_id": "1384e1a108163ad1c58178c62893f746f9af6aa99c7e3d1f3b5dfc8dc7d2b21c",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/dbf543d75f95bab4dc6c89be97d2424368fe0a1cbc04c911066e75a799ab5645.json",
+      "candidate_sha256": "f219a86e07fed776c939b0a467e5209fa368bab3384fd04691ca87e45dddf163",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/dbf543d75f95bab4dc6c89be97d2424368fe0a1cbc04c911066e75a799ab5645.json",
+      "outcome_sha256": "43fb3ecb8758c21782b61edfd37142ea642f342aaf90d094e2f051ff269f763d",
+      "spec_sha256": "102e9b52c68460518f388d5177b758ab8709256981982838750ea05df723b11e",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "high",
+      "issue_category": "source_literal_fidelity",
+      "reason": "User and code change the expressly requested exact string Hello, World! to Zdravo, svete!; internally consistent but violates translate contract preserving code and source literal.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "de6e41f65224041f4158392ee959d7b6ce08beab11e91b71b9b0783b572c6ab0",
+      "candidate_id": "8b0cd3f1d326fcf1a777fe5ddcf5c95e973052ccef498aa42840cfe80049198d",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/de6e41f65224041f4158392ee959d7b6ce08beab11e91b71b9b0783b572c6ab0.json",
+      "candidate_sha256": "8440c4c3d0ccc581831a0edf42047033adb746705b7144bf75ff533c9d2008f1",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/de6e41f65224041f4158392ee959d7b6ce08beab11e91b71b9b0783b572c6ab0.json",
+      "outcome_sha256": "91a360031d294111ad6c400f6e0ffffd8670ac575a17bbb7ec06a02d59e515bd",
+      "spec_sha256": "bb401502b75a67fd82cbe65242e6692dd15aa80284fee3af3678d2ed2a4ea048",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "(13+22+31)/3=22; three source numbers and boxed result preserved.",
+      "mechanical_checks": {
+        "recomputed_answer": 22.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "bs",
+      "family": "tool-dialogue",
+      "slot": 1000003,
+      "outcome_id": "e437c671d3dce1a65e93177b4b0fb661a535c36e2e6a2141ff2e314acaadf243",
+      "candidate_id": "0b404a1e959cf527f5bfff8cd0bb1ee02ddfc148f3790de2dce7794ad99c6400",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/e437c671d3dce1a65e93177b4b0fb661a535c36e2e6a2141ff2e314acaadf243.json",
+      "candidate_sha256": "251a66004bb69a84d436e9b6023417fdb9bee10999d35b6e9a082dd261b4cb4f",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/e437c671d3dce1a65e93177b4b0fb661a535c36e2e6a2141ff2e314acaadf243.json",
+      "outcome_sha256": "47e80a611525e05863902009709e71a997a74153f36cfb1129ef43108f533704",
+      "spec_sha256": "8a2350e884f004d2782f13741c7823b94b85d15ca06bfc6626266789f4a8d045",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Clarification obtains venue-1 before call; nine tickets are grounded. Parenthesized technical 'venue' does not change the request.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "clarify"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "openhermes",
+      "slot": 1000026,
+      "outcome_id": "e6175f0a7fb164830c7c0299faf189dfd30ce9de651345fce2a32641ebf3d109",
+      "candidate_id": "ef3b81af34b2c7fb7116ad2f7a63c3d2ce8dd8c6702149ffae38c4313bbde200",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/e6175f0a7fb164830c7c0299faf189dfd30ce9de651345fce2a32641ebf3d109.json",
+      "candidate_sha256": "a50c2093f70eeda8c3cdd21b8e1ea717680d2becc64aad12d656ddca7dce3da5",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/e6175f0a7fb164830c7c0299faf189dfd30ce9de651345fce2a32641ebf3d109.json",
+      "outcome_sha256": "2cde26a1efb36cde1b6bd3dd3e6d1e3c0af088db3c0e7b623ce5faf4529b1c83",
+      "spec_sha256": "3ad185c13153ff8127d4ee2977bde54cb1d6ef589586b0d6d30bb7f810471fb2",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "MongoDB field/operators and inclusive 30000..40000 range preserved; cursor explanation agrees. Minor spelling does not alter behavior.",
+      "mechanical_checks": {
+        "source_bound_to_frozen_spec": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "tool-dialogue",
+      "slot": 1000000,
+      "outcome_id": "ea4ae8b3a5ec75f5334a79cd39e28389ae975e4aaff4b3630585dac213087cff",
+      "candidate_id": "caca052d10279b75c37420b6c89e9c4532388916a88eae9e272071dd2df30242",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/ea4ae8b3a5ec75f5334a79cd39e28389ae975e4aaff4b3630585dac213087cff.json",
+      "candidate_sha256": "0fc470ec01049d08850403518032899e4a0d64f2df8cf70bb3c7db9a9718f476",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/ea4ae8b3a5ec75f5334a79cd39e28389ae975e4aaff4b3630585dac213087cff.json",
+      "outcome_sha256": "fedc5bda11746b1b10491370b3e2d7f72b747d422af175691b64e69ab04b42e0",
+      "spec_sha256": "0561acafadb465660a64e7c5d7714ccd709d93523cc1a9321829a6ad2271c6a5",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Unchanged retry; final book-879/copy-879 and branch-6 exactly match result.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 2,
+        "subtype": "retry"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "fa",
+      "family": "math-code",
+      "slot": 1000000,
+      "outcome_id": "eb78f7e72c2bf3b715dbdc849d92d8b07867a4201ffbee199f81b510e21ee8d9",
+      "candidate_id": "32ca9ff1bbd438c2637f9f1677c801c1c1934ae9c56b3eeb83e7b367d519c8ec",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/eb78f7e72c2bf3b715dbdc849d92d8b07867a4201ffbee199f81b510e21ee8d9.json",
+      "candidate_sha256": "e7ccb4e22ea79f61689a6bef05eb537c29971ed6e40fcc6738eba173eed6a0da",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/eb78f7e72c2bf3b715dbdc849d92d8b07867a4201ffbee199f81b510e21ee8d9.json",
+      "outcome_sha256": "ea3a0678b6e2ca6d6eea58b3f3ceec003cb6d0471b50238bf3db9d99831fe2d2",
+      "spec_sha256": "901313ccdc9e02cff9047345967ebd18ab8ead9717094c27decbd24085db8ab7",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "86-6+10=90; Persian prompt and boxed answer agree.",
+      "mechanical_checks": {
+        "recomputed_answer": 90,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "tool-dialogue",
+      "slot": 1000002,
+      "outcome_id": "f18b605c4d8e369c4ad5621eaf630cc4bfda0dd61efeb3a718b00b86564ffb11",
+      "candidate_id": "91d12aa2b0e8c0f079a0bcf23653f35eb47b1dbe5e061be3f34ad63b2c9a61e7",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/f18b605c4d8e369c4ad5621eaf630cc4bfda0dd61efeb3a718b00b86564ffb11.json",
+      "candidate_sha256": "9258981cef720f608d8852022a697db66f7b6594f7fa27a955572485746b1a1c",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/f18b605c4d8e369c4ad5621eaf630cc4bfda0dd61efeb3a718b00b86564ffb11.json",
+      "outcome_sha256": "826bc3cc4038c04b5eedb7bee898700d712f37a80ef0fed1d49167e51d053220",
+      "spec_sha256": "9d57751a4a6980a4716df824be2bd6d1767f9f452f8c72df0c1ecac52c82490f",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "Final says redirection to locker-5 is available, not completed; this matches lookup-only result.",
+      "mechanical_checks": {
+        "schema_and_arguments_exact": true,
+        "result_sequence_exact": true,
+        "call_count": 1,
+        "subtype": "single"
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "hu",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "f37849e0d93f13afeabcb099a4589e29baf70dfc1fd328a79eb3457671b6c3a7",
+      "candidate_id": "ab714d638b1a8c4c54faf4e328abaf320b7176e0ace238aa50a4d7a09fe1a05f",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/f37849e0d93f13afeabcb099a4589e29baf70dfc1fd328a79eb3457671b6c3a7.json",
+      "candidate_sha256": "c7fbceb151cfcc66a1057b84c69620c1b42e33cdb595f6f5f3a9b0e67a90882a",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/f37849e0d93f13afeabcb099a4589e29baf70dfc1fd328a79eb3457671b6c3a7.json",
+      "outcome_sha256": "ff2d40eddfa9cdb052502d719fb681b3b05659c6964a3fe04ea9ee982bbc282a",
+      "spec_sha256": "881b1ffca17c6688af4fa62f0cda735352d85b2d9e7532daa16fe8ca61ff7662",
+      "automated_keep": true,
+      "disposition": "repair",
+      "confidence": "medium",
+      "issue_category": "prompt_language",
+      "reason": "(22+34+46)/3=34 is correct. The phrase describing the three numbers is grammatically awkward ('a ... szamait tartalmazo harom ertek'); native wording needs repair.",
+      "mechanical_checks": {
+        "recomputed_answer": 34.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    },
+    {
+      "wave": "wave4",
+      "language": "sk",
+      "family": "math-code",
+      "slot": 1000004,
+      "outcome_id": "fb6a82903e345f61f7f3f042770bf40ac0cb033a1846feb6ad0d5695a4bf873f",
+      "candidate_id": "def76cb36a868b5f055ff74711fd99284032f5fa7be32f4cd08e4aafe26b22fa",
+      "candidate_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/candidates/fb6a82903e345f61f7f3f042770bf40ac0cb033a1846feb6ad0d5695a4bf873f.json",
+      "candidate_sha256": "c2df09d5e83c2577f4b2f80f59b6c389f2174f56d7a1dfa07bbcd5c3683ad5df",
+      "outcome_path": "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/outcomes/fb6a82903e345f61f7f3f042770bf40ac0cb033a1846feb6ad0d5695a4bf873f.json",
+      "outcome_sha256": "6eef59ba83a9d84e3045c5329047cefb99a583b4dbf5192e6de55d3e4aaf602e",
+      "spec_sha256": "59268f1b16990ad7353cb10e082f48e528561bd5a197debe741cff14013e7ff0",
+      "automated_keep": true,
+      "disposition": "no_material_issue_found",
+      "confidence": "high",
+      "issue_category": "none",
+      "reason": "(21+23+25)/3=23; exact three-number mean.",
+      "mechanical_checks": {
+        "recomputed_answer": 23.0,
+        "boxed_answer_exact": true
+      },
+      "admission_authorized": false,
+      "native_speaker_certification": false
+    }
+  ],
+  "input_pins": {
+    "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/specifications.json": "8493c4274ef16bd950b62de5de40aa6f91bfd3c04788c7bda0b83b227369f0c6",
+    "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/independent-review-queue.json": "d8d1eacc0b36d54bc4bb05b7b0a97c00fa68079c1794b79ed533c002c0fa95c9",
+    "data/dfm13/gemma31-balanced-execution-20261003-v2/baltic/progress.json": "f59e6ecc10e097f6c70cad34cb9e185f755c7136a4598725668ac30a4862fc15",
+    "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/specifications.json": "46f33798a0e44b5395f3022d20d6039b0d43a71afd1684cb833de2db131208b9",
+    "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/independent-review-queue.json": "f9dd275805ac4dccbb097f686923ad762c761d7b330cc3b79b659fb663d0c3c4",
+    "data/dfm13/gemma31-balanced-execution-20261003-v2/wave4/progress.json": "37221ab2f2f421a2aa21ade260444b390cb36360b706dfacbc3992906f512c57"
+  },
+  "limitations": [
+    "No GPU calls, model code execution, native-speaker certification or external factual verification.",
+    "No_material_issue_found is bounded review, not approval; all admission flags remain false.",
+    "Non-keeps and other three task families are outside this review; this cannot measure full false-reject rate.",
+    "Fine language judgments with medium confidence require native review; exact source-derived assumptions are explicitly separated from proven errors."
+  ]
+}

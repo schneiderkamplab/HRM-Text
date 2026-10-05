@@ -1,0 +1,67 @@
+{
+  "transform_components": {
+    "hu": {
+      "receipt": "data/dfm13/wave4/release/wikipedia-hu/status.json",
+      "receipt_sha256": "8b33a26fbd3d49b3c81f4cc3f7670977c0c58219fcfeda978e65fcb7735f4974",
+      "status": {
+        "component": "wikipedia-hu",
+        "counts": {
+          "accepted": 248818,
+          "audit_retry_pending": 8,
+          "rejected": 42490
+        },
+        "input_sha256": "5bf153526804ea4fc1230e9cbe549eb0919a80efebf9edaf1d71143e601e9976",
+        "input_rows": 291316,
+        "terminal": false,
+        "export_ready": false
+      },
+      "underlying_jobs": "Parent reports all terminal; awaiting existing controller finalization, not retried here"
+    },
+    "lb": {
+      "receipt": "data/dfm13/wave4/release/wikipedia-lb/status.json",
+      "receipt_sha256": "feb6a0536785d73d612538411b33ad86f51e238f0cadea3f4d389c37cc732f7c",
+      "status": {
+        "component": "wikipedia-lb",
+        "counts": {
+          "accepted": 56630,
+          "audit_retry_pending": 10,
+          "rejected": 9402
+        },
+        "input_sha256": "925af68f69efb61701653cec9d65d59429101fbedaeca0e3eaca9196b246e199",
+        "input_rows": 66042,
+        "terminal": false,
+        "export_ready": false
+      },
+      "underlying_jobs": "Parent reports all terminal; awaiting existing controller finalization, not retried here"
+    },
+    "sk": {
+      "receipt": "data/dfm13/wave4/release/wikipedia-sk/status.json",
+      "receipt_sha256": "59e402d4f1c5fcd85bb9a3396c09b507cf406dd94ba9f2ba5b4b575958bac68e",
+      "status": {
+        "component": "wikipedia-sk",
+        "counts": {
+          "accepted": 177530,
+          "audit_retry_pending": 67,
+          "rejected": 30872
+        },
+        "input_sha256": "24cd8a7cab47e03d6ddd78b58d8821704014a5a112181d0ba21e5546adbf1a7a",
+        "input_rows": 208469,
+        "terminal": false,
+        "export_ready": false
+      },
+      "underlying_jobs": "Parent reports all terminal; awaiting existing controller finalization, not retried here"
+    }
+  },
+  "owner_pid": 2355940,
+  "controller_restarted": false,
+  "duplicate_finalizers_started": false,
+  "source_holds": [
+    "baltic_lt_qa",
+    "baltic_lv_qa",
+    "latvian_p3_cc_by_4_0",
+    "latvian_p3_cc_by_sa_4_0",
+    "ParsiAI--FarsInstruct-fa-pn_sum",
+    "ParsiAI--FarsInstruct-fa-wiki_sum"
+  ],
+  "scope": "Not retroactively included in frozen assembly if absent from captured eligible registry"
+}

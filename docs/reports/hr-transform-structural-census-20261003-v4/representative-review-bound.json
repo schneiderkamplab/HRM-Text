@@ -1,0 +1,427 @@
+[
+  {
+    "id": "d4883418c8879afc336d69a5e55dbb2e6ad99b8bf9be6cd76d7d42dc6cffb82a",
+    "title": "Klickitat",
+    "assessment": "One substantive ethnographic block with attached heading, then link labels and categories. More genuine sparse-layout cases exist outside strict dictionary coverage; do not equate unresolved with good.",
+    "record_sha256": "31d9ad3791a454f4771688697cba79fc85b1d24e53680c61c76615390b04156e",
+    "window_sha256": "89ff1ef64df3d66bb308710ba1a3855072f27fbb74d446617a05da47c92befe4",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 29922,
+      "id": "103004",
+      "url": "https://hr.wikipedia.org/wiki/Klickitat",
+      "title": "Klickitat",
+      "paragraph_structure": "original",
+      "window_seed": 7121086092409085009,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "525bef45c30a3b82170e0be44e52f201e5b220ecafcd311864441a1208d6c0f8",
+    "title": "Donja Dubica",
+    "assessment": "One village sentence, empty population heading, a football-club listing, links and bibliography; bibliography/category concatenation artifact. Sparse layout, but contains a meaningful short inventory. Not part of 44-ID proposal.",
+    "record_sha256": "70da3a10e0081ede60290058b8710118793d52e678a1571182aa8f14f7bb980b",
+    "window_sha256": "4e4e8f49a7e9e803db336592f401a3c56e6d580ef029c8079e783c1c368065f3",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 63538,
+      "id": "215520",
+      "url": "https://hr.wikipedia.org/wiki/Donja%20Dubica",
+      "title": "Donja Dubica",
+      "paragraph_structure": "original",
+      "window_seed": 7995562699276668641,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "8ef8bb45da7e2ae02d9a9f5b55aea7898e8d0b9ac70045d3e1552d7c491dd343",
+    "title": "Prvenstvo Njemačke u softbolu",
+    "assessment": "Useful year-to-winner list, no narrative paragraph ordering. Not category garbage; list objective deserves separate judgment, not automatic exclusion across tasks.",
+    "record_sha256": "48cc8d41843058b8f6c2edef7a7df3e4c5ed84e1d90938a4b273a2ecea064526",
+    "window_sha256": "d2ea141cce1264d7ce9228af4735d54a9992daf8d548b8c6dd366508b3a2fe99",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 30863,
+      "id": "105858",
+      "url": "https://hr.wikipedia.org/wiki/Prvenstvo%20Njema%C4%8Dke%20u%20softbolu",
+      "title": "Prvenstvo Njemačke u softbolu",
+      "paragraph_structure": "original",
+      "window_seed": 8525129494809934951,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "8861ab9da784e34ee98e72f683448a1c0ee420f401d9c7c31bb00642c2a752cb",
+    "title": "Popis E brojeva",
+    "assessment": "Multiple numeric additive-list blocks can have intrinsic numeric ordering; no narrative prose, but meaningful structured information. Do not blanket-filter as metadata.",
+    "record_sha256": "78696c024cd4a8b21b0589ebafb07b8a47b9cc2d9ff2fe1d20805b9730a9a61e",
+    "window_sha256": "e3d623da3f54de108a31557146438d959d081727915d6af9b8add1c366c45db1",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 41404,
+      "id": "149883",
+      "url": "https://hr.wikipedia.org/wiki/Popis%20E%20brojeva",
+      "title": "Popis E brojeva",
+      "paragraph_structure": "original",
+      "window_seed": 2693735361752923020,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "7fb127df9a4ce83b95200202e835403ed11f3379756025dbf8f2104992106f4b",
+    "title": "Ivo Škrabalo",
+    "assessment": "Award fragment, bibliography and extensive categories, no two prose units. Deliberately excluded from automatic narrow bucket because useful award fragment/ambiguous references remain.",
+    "record_sha256": "12987d1d1f892e5e9484931ab2a41cbd39588b93796d40f672f8b16cb05650c9",
+    "window_sha256": "56041e6836b97c26e1c725b2e3444b584857ee11dcc048b3b19446f9347737b0",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 49167,
+      "id": "176561",
+      "url": "https://hr.wikipedia.org/wiki/Ivo%20%C5%A0krabalo",
+      "title": "Ivo Škrabalo",
+      "paragraph_structure": "original",
+      "window_seed": 6614011126261932013,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "86cb6d734e6a2074fa69885abf21d66f30fa17cdcb3f797b67573b4ffd7643ac",
+    "title": "Rab (grad)",
+    "assessment": "Many substantive history paragraphs plus economy/notable-person inventories. Meaningful list flag is not evidence of overall task failure.",
+    "record_sha256": "a3982b346be0a9ac92465210ca6e4fba528203afca5590c6d8b6a6206a07c940",
+    "window_sha256": "bc55af7a7d2d4b793a00d93f61e730e207ba2c9856c483ce3bd0aadf306ad3cd",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 4504,
+      "id": "14413",
+      "url": "https://hr.wikipedia.org/wiki/Rab%20%28grad%29",
+      "title": "Rab (grad)",
+      "paragraph_structure": "original",
+      "window_seed": 5259495179020005709,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "at_least_two_detected_prose"
+  },
+  {
+    "id": "376e3d59a062dc73867eb17785a98126f5d490e65fae94f75a70e09e029e3e57",
+    "title": "Joe's Garage",
+    "assessment": "Track, act/side and personnel listings with one explanatory sentence. Meaningful album ordering and attribution, not only category furniture; no blanket list removal.",
+    "record_sha256": "59e0249327c5ddde23c93db88094c26d7c9cc04bab22c8c2b05e0ed7fce98f80",
+    "window_sha256": "bb62d5707fe7a47ba0943996adaabead6cf9fafb98b7446ee51e2a0297b0279a",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 37504,
+      "id": "135380",
+      "url": "https://hr.wikipedia.org/wiki/Joe%27s%20Garage",
+      "title": "Joe's Garage",
+      "paragraph_structure": "original",
+      "window_seed": 5704701096241295011,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "ef0a22a43299d395d989ecfa16055e9b7674c2ca551a5f6b152a9b72e495835c",
+    "title": "Alyxia",
+    "assessment": "One short real sentence, long taxonomic inventory and synonyms. Lists are useful information, not prose paragraphs; uncertain/list bucket appropriately separate.",
+    "record_sha256": "ccffaaa3cf3cb253636846d52828fbea40aea7853232bb51d3680615110152c4",
+    "window_sha256": "10c80f893a7cd087872107c540daf279bdbd73c4661f07d72926ffdbbda7807c",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 185425,
+      "id": "682943",
+      "url": "https://hr.wikipedia.org/wiki/Alyxia",
+      "title": "Alyxia",
+      "paragraph_structure": "original",
+      "window_seed": 914756814778933030,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "2c17f2933e952a38d5e8aff3f6bc83f65e610f136a70905fdabebf24f3499903",
+    "title": "Velered kralja Dmitra Zvonimira s lentom i Danicom",
+    "assessment": "Multiple genuine wearing/protocol prose blocks plus names/citations. Initial narrative block lacks a detector verb and is undercounted; at-least-two bucket still correct.",
+    "record_sha256": "2271b1430f664fb5ece7780f1a1cdb7d0aa1599c217bc6b85ed3f1fc0dbb49f2",
+    "window_sha256": "b3780612139e0fdf49227135d4a1ffcbd9667211987a3de6a8302001053abdd8",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 29959,
+      "id": "103100",
+      "url": "https://hr.wikipedia.org/wiki/Velered%20kralja%20Dmitra%20Zvonimira%20s%20lentom%20i%20Danicom",
+      "title": "Velered kralja Dmitra Zvonimira s lentom i Danicom",
+      "paragraph_structure": "original",
+      "window_seed": 4896880615234041262,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "at_least_two_detected_prose"
+  },
+  {
+    "id": "7336b449f3b6f15e0567cd6996a85236b55b97143486d5adf5ba6acf3d91e353",
+    "title": "Sovke",
+    "assessment": "Five clear anatomical/ecological prose blocks. Empty parentheses in the opening and unknown category Neoaves do not erase multi-paragraph content; source noise separate.",
+    "record_sha256": "3fd9e3f1816b776cd10c56b2d8f79656fdd097ae613d45738cb90b7efde81222",
+    "window_sha256": "d2ddc95129e55fd95fd25b992ab141135a572f7dbbab693d624dfaa1cc8d6b38",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 13813,
+      "id": "40768",
+      "url": "https://hr.wikipedia.org/wiki/Sovke",
+      "title": "Sovke",
+      "paragraph_structure": "original",
+      "window_seed": 7565654607966069282,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "at_least_two_detected_prose"
+  },
+  {
+    "id": "b0c82b30decd2f8602d9a226cafe452b1055d2ddcab2763316a6c232a6cd34a7",
+    "title": "HKD Ljuba",
+    "assessment": "Four narrative blocks interleaved with headings. Unrecognized Sekcije/Aktivnosti headings inflate uncertainty but not the true prose count failure rate.",
+    "record_sha256": "24fe3fa04f27d328e5fb25f5d9dc3475b2799927c027d2a35ad9895e4f6ef486",
+    "window_sha256": "13843430a131288652bbdaba4999ba214f71a2a1f1ab8021310aaa7054f293d8",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 156866,
+      "id": "586055",
+      "url": "https://hr.wikipedia.org/wiki/HKD%20Ljuba",
+      "title": "HKD Ljuba",
+      "paragraph_structure": "original",
+      "window_seed": 6523915733860392373,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "at_least_two_detected_prose"
+  },
+  {
+    "id": "7aa07642972d331001b03fc941f9bdc917dc02ff8ea70d3a403d84aa1089d193",
+    "title": "Evanđelje po Tomi",
+    "assessment": "Three substantive argument paragraphs with contrast cues, followed by notes/categories. Useful reordering despite metadata tail.",
+    "record_sha256": "8fb50f6ac0cfee384c2d45df943d9c580e5697881e3969dac2eb4bc27154dc78",
+    "window_sha256": "62deacd15e7c4e22d87f762e8c6a7ea21e41e1300d9df7789d9dfcd80b08ffd2",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 165641,
+      "id": "625917",
+      "url": "https://hr.wikipedia.org/wiki/Evan%C4%91elje%20po%20Tomi",
+      "title": "Evanđelje po Tomi",
+      "paragraph_structure": "original",
+      "window_seed": 5031024553164146131,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "at_least_two_detected_prose"
+  },
+  {
+    "id": "60290e356faefc1e92001f5bff4529dbe8b9152dfac45e2009534f2569a91017",
+    "title": "Prva hrvatska liga u bejzbolu 2012.",
+    "assessment": "Denoising list control: scores and fixture labels are structured content. Many empty fixture blocks and a 2010-dated line in 2012 context warrant separate source review; not a zero-prose all-task rejection.",
+    "record_sha256": "52a6f7854dcbcdf880f2cd4409078d930215d9226490373129295c23a94f917a",
+    "window_sha256": "4c17bb8cac8bc98500b86a420a4c824597d7fe922b434afe93558381aac3c719",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 112052,
+      "id": "342846",
+      "url": "https://hr.wikipedia.org/wiki/Prva%20hrvatska%20liga%20u%20bejzbolu%202012.",
+      "title": "Prva hrvatska liga u bejzbolu 2012.",
+      "paragraph_structure": "original",
+      "window_seed": 16131686675253367627,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "4d2b7054ce60033d432816d71bb36ea442cbe42da6351ee22dc4b72689d3dcb6",
+    "title": "Renzo Agasso",
+    "assessment": "Denoising control: a real biography plus meaningful bibliography. Preserve lists; do not equate a bibliography block with useless metadata.",
+    "record_sha256": "d7c53ad66db2fa3454cd34ba2366a6ab26858dab962753364b826ef22810b143",
+    "window_sha256": "f97b921736f84f7fdd2dab8047bdd619773dceeeb9066474bafe42a99784b489",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 162303,
+      "id": "606110",
+      "url": "https://hr.wikipedia.org/wiki/Renzo%20Agasso",
+      "title": "Renzo Agasso",
+      "paragraph_structure": "original",
+      "window_seed": 13870549539606695958,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "b78587e0c39008e9fb468310a436502d78bc5c69b62f0c1d4d7cb75b4dcd21c8",
+    "title": "Clupea",
+    "assessment": "Denoising control: taxonomic definition and species/authorship list. Useful named entities despite no detected finite-verb prose; not category-only.",
+    "record_sha256": "ec43750c8816f097003072c58d3ce46b51ffa9b5bec303173303c01ba6785f85",
+    "window_sha256": "75e4c5d1ffdb483dd29162f76c7a3bfaf1811ccf1ebf571ee2e0c85a8675cfbc",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 125725,
+      "id": "489086",
+      "url": "https://hr.wikipedia.org/wiki/Clupea",
+      "title": "Clupea",
+      "paragraph_structure": "original",
+      "window_seed": 16812957538877952007,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_with_unresolved_or_list_blocks"
+  },
+  {
+    "id": "4e06fe9703f50a5e2de643f85de13a40eed0a5024da4f56707fd994a2cf5d643",
+    "title": "60. pr. Kr.",
+    "assessment": "Denoising control: dated events and regional snippets. Year-led opening is structured historical text, not automatically a numbered-list marker.",
+    "record_sha256": "6045d21fb064a050c460bfc712d4014fb191ec454e53fcdc395bb924d4cd6449",
+    "window_sha256": "56474e6fb41041440962922c2930e58d0730a923bc7fffb5a7f1778a0d93be28",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 189888,
+      "id": "697663",
+      "url": "https://hr.wikipedia.org/wiki/60.%20pr.%20Kr.",
+      "title": "60. pr. Kr.",
+      "paragraph_structure": "original",
+      "window_seed": 12049089938637209102,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "at_least_two_detected_prose"
+  },
+  {
+    "id": "d3ad7837743664c6656bafddbfc5285261981b327ab9458b05408011189f0740",
+    "title": "Jadranka Brnčić",
+    "assessment": "Link-only tail plus writer category, no narrative. This is reference furniture, not strictly category-and-heading-only. Keep separate from the reordering proposal; corrupted URL restoration could be underdetermined.",
+    "record_sha256": "503a89b606e7082bbe7492d358d534ae6f45daa2a755ff47f70993a085d62ba5",
+    "window_sha256": "7b6ed58a69ab0a821d5c494333bf8a6e5812a0f30ef7fbb6332736e8f4eeb5cd",
+    "provenance": {
+      "repo": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "config": "20231101.hr",
+      "file": "20231101.hr/train-00000-of-00001.parquet",
+      "row": 104407,
+      "id": "319812",
+      "url": "https://hr.wikipedia.org/wiki/Jadranka%20Brn%C4%8Di%C4%87",
+      "title": "Jadranka Brnčić",
+      "paragraph_structure": "original",
+      "window_seed": 13932496741698377784,
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+    },
+    "classification": "below_two_furniture_only_remainder"
+  }
+]

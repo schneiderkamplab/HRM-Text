@@ -1,0 +1,16 @@
+{
+  "files": {
+    "review.json": "1509894adafa8263dbf5b76281d2aeb64a9ae2586c39b841a8defa93af7fcaa0",
+    "assessments.tsv": "85dd30c4f103a22314ba614273babd049653b11a08d38c737b73c0305c9b7d56",
+    "report.md": "4fa89c51565d3b0ae88675e2b27ecc4ff0fa724b714fbfa3095b75848b87e681",
+    "group-counts.md": "6d4f114b07bd43af639ccddbf647b456f2148be29776b1e208d05d3c3f3a2bd8"
+  },
+  "reviewed": 83,
+  "groups": 39,
+  "candidate_hashes_rechecked": true,
+  "all_selected_still_automated_keeps": true,
+  "admission_authorized": false,
+  "production_approved": false,
+  "gpu_calls": 0,
+  "model_code_executed": false
+}

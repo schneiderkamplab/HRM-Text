@@ -1,0 +1,8 @@
+{
+  "jobs_sha256": "0a53f837b98a88c1ea6d93b61f38c720ef589c6f69bfce863bc4784fe7efcb31",
+  "report_sha256": "652e7c70a89109e34c9a8b69f85e14e6a0d2461afa01e2aa30c25a9f9e8c85c5",
+  "inspection_script_sha256": "8baaccf66f981c1f1b0ced5c149de33ffc232e0d48b44dec58fc75799d028cdf",
+  "read_only": true,
+  "live_database_writes": 0,
+  "full_payloads_loaded": 0
+}

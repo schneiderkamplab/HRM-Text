@@ -1,0 +1,22 @@
+{
+  "documents": {
+    "<urn:uuid:37076053-bd9b-4805-891f-5e5a51191efe>": {
+      "row": 31841,
+      "url": "http://journals.rta.lv/index.php/ER/article/download/6497/5538",
+      "author": "Inese Brivere; Livija Levinska",
+      "title": "Elements of Escape Games in Latvian History Lessons in Primary School Classes (2021)",
+      "evidence": "article.pdf"
+    }
+  },
+  "document_license": "cc-by-4.0",
+  "database_license": "odc-by-1.0",
+  "primary_url": "https://journals.rta.lv/index.php/ER/article/download/6497/5538",
+  "final_url": "https://journals.rta.lv/index.php/ER/article/download/6497/5538",
+  "files": {
+    "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+    "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+    "article.txt": "54364585038f1a39ed4d2fc0e837f71872ad45a2a171a977e9ce9743ac4aea97",
+    "article.pdf": "8184efdb3223312b79ff28725e709142586cbd34e86935329dfcff40b32a76a5"
+  },
+  "scope": "Exact article 6497 only; no publisher-wide grant; page-one CC BY notice"
+}

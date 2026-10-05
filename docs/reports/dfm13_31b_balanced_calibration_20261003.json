@@ -1,0 +1,80 @@
+{
+  "root": "data/dfm13/gemma31-balanced-calibration-20261003-v2",
+  "manifest_sha256": "06a009e6597966c054fff3d857906a5f34cc3ef670cb6345eb320239d958a200",
+  "total": 234,
+  "groups": 78,
+  "production_approved": false,
+  "waves": {
+    "wave4": {
+      "cases": 198,
+      "max_prompt_plus_reserve": 5936,
+      "historical_reference_scenario_overlaps": {
+        "reference": 0,
+        "scenario": 0
+      },
+      "subtypes": {
+        "grounded-instruct/explanation": 9,
+        "grounded-instruct/factual QA": 17,
+        "grounded-instruct/comparison": 3,
+        "summary-rewrite/rewrite for a child": 4,
+        "summary-rewrite/one-sentence summary": 3,
+        "summary-rewrite/bullet summary": 4,
+        "multiturn/follow-up reference resolution": 15,
+        "openhermes/translate": 17,
+        "openhermes/adapt scenario": 16,
+        "math-code/math": 31,
+        "tool-dialogue/retry": 11,
+        "tool-dialogue/no-call": 1,
+        "tool-dialogue/single": 11,
+        "summary-rewrite/plain-language rewrite": 5,
+        "summary-rewrite/rewrite and preserve all numbers": 3,
+        "summary-rewrite/longer summary": 4,
+        "multiturn/clarify ambiguity": 4,
+        "multiturn/change requirements": 10,
+        "multiturn/collaborative writing": 3,
+        "tool-dialogue/clarify": 10,
+        "grounded-instruct/structured extraction": 4,
+        "summary-rewrite/past-tense rewrite": 4,
+        "math-code/code": 2,
+        "summary-rewrite/two-sentence summary": 2,
+        "summary-rewrite/summary with exactly three bullets": 3,
+        "summary-rewrite/formal rewrite": 1,
+        "multiturn/correct a misunderstanding": 1
+      },
+      "exclusions": 261
+    },
+    "baltic": {
+      "cases": 36,
+      "max_prompt_plus_reserve": 5738,
+      "historical_reference_scenario_overlaps": {
+        "reference": 0,
+        "scenario": 0
+      },
+      "subtypes": {
+        "grounded-instruct/explanation": 3,
+        "grounded-instruct/factual QA": 2,
+        "summary-rewrite/bullet summary": 1,
+        "summary-rewrite/plain-language rewrite": 1,
+        "summary-rewrite/summary with exactly three bullets": 1,
+        "multiturn/change requirements": 1,
+        "multiturn/clarify ambiguity": 2,
+        "multiturn/collaborative writing": 1,
+        "openhermes/translate": 3,
+        "openhermes/adapt scenario": 3,
+        "math-code/math": 4,
+        "math-code/code": 2,
+        "tool-dialogue/retry": 2,
+        "tool-dialogue/no-call": 1,
+        "tool-dialogue/single": 2,
+        "grounded-instruct/comparison": 1,
+        "summary-rewrite/two-sentence summary": 1,
+        "summary-rewrite/past-tense rewrite": 1,
+        "summary-rewrite/rewrite for a child": 1,
+        "multiturn/correct a misunderstanding": 1,
+        "multiturn/follow-up reference resolution": 1,
+        "tool-dialogue/clarify": 1
+      },
+      "exclusions": 5
+    }
+  }
+}

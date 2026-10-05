@@ -1,0 +1,65 @@
+{
+  "records": [
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-denoising",
+      "hf_revision": "483dd2568ae064919cce5169d640994dd6a9e960",
+      "rows": 2,
+      "output_sha256": "b569b3e52a0cb67e6e9ccac534c94cf53c10dbb8b154ce0135d7c9ea8a85ecbb",
+      "tokenized_tokens": 4789,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising/verified.json"
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-paragraph-reordering",
+      "hf_revision": "25dca7321be06274e67a2765ccd6064a51a28133",
+      "rows": 1,
+      "output_sha256": "4c65ed4c4de455ead0c6499aaa849246a98f523dd3f63aa0e9856c9756d987de",
+      "tokenized_tokens": 3220,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering/verified.json"
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-prefix-continuation",
+      "hf_revision": "21067cf396db0ee85e8ee3a2fb4b30ea227f5b74",
+      "rows": 2,
+      "output_sha256": "a953737d629b2d90b34573535d06dd17ca0f1d3a5404c92ca3838c81fd8eca7d",
+      "tokenized_tokens": 2426,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation/verified.json"
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-span-filling",
+      "hf_revision": "583cbd3936ac6ebb06af11ceeb75d8bf5bc40a42",
+      "rows": 2,
+      "output_sha256": "17ffa41eb3c50f63edd78acc6d18c7d5121df19c8e48f4a213aeeda2a207c09c",
+      "tokenized_tokens": 2431,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling/verified.json"
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lv-exact-ccby-v1-denoising",
+      "hf_revision": "2b7d3f1a7fb96c7c25ee30dad7f210adf9109450",
+      "rows": 1,
+      "output_sha256": "4298e0d73ec8ce2e8136c76f2e031a18657cf274607a089f2ed8da101291dde8",
+      "tokenized_tokens": 3374,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising/verified.json"
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lv-exact-ccby-v1-prefix-continuation",
+      "hf_revision": "8bfefb1ad9647c92122b67d9ec7db90ba9ef6b71",
+      "rows": 1,
+      "output_sha256": "4a80258ddb50fca3c9e96364c4e3374aed33ed0a4f0d478a46c3219e403a996f",
+      "tokenized_tokens": 1704,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation/verified.json"
+    }
+  ],
+  "verified_original_messages": 9,
+  "tokenized_rows": 9,
+  "tokenized_tokens": 17944,
+  "publisher_sha256": "9f8f531bed1f9ab8482b0b2862a250a9ef89a199ce3795c64fcabf12db558925",
+  "tests_sha256": "385c6a63ee158f11d45cd577327ce2f43bd7f8f84bcec378aa79cdf9663fdb27",
+  "gpu_requests": 0,
+  "live_audit_writes": 0
+}

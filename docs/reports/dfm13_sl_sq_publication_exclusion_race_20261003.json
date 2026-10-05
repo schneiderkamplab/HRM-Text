@@ -1,0 +1,58 @@
+{
+  "entries": [
+    {
+      "name": "dfm13_wave4_wikipedia_sl_denoising",
+      "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-denoising/data/train.jsonl",
+      "output_sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+      "rows": 61365,
+      "tokenized": false,
+      "confirmed_bad_ids": [],
+      "assembly_certified": false
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+      "revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5",
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-paragraph-reordering/data/train.jsonl",
+      "output_sha256": "9319a41f3c512f0ee15fb691772c06c08efaccb0d0097c7213ece677fd9345a2",
+      "rows": 31015,
+      "tokenized": false,
+      "confirmed_bad_ids": [
+        {
+          "id": "000bffa8d3d55f61241e1b2d83ef0cc16dec7c5b55123a669020452239a25b4e",
+          "line": 3,
+          "case": 14
+        }
+      ],
+      "assembly_certified": false
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+      "revision": "5964d460dd114eaaff522d395f71734eb20cc9a4",
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-prefix-continuation/data/train.jsonl",
+      "output_sha256": "b0d17297375f8bcc97eb0b29a701efc58767a04a0b86b1522b935b3810203a5f",
+      "rows": 60100,
+      "tokenized": false,
+      "confirmed_bad_ids": [
+        {
+          "id": "00006a4aba1e1927de20182cf5a3ea7edaa680be036320a20df5e49604be4225",
+          "line": 1,
+          "case": 1
+        }
+      ],
+      "assembly_certified": false
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_span_filling",
+      "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd",
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-span-filling/data/train.jsonl",
+      "output_sha256": "02e47e63a2f50329573af5d0fe2ae83c2919360650c4131c004a4e290a508398",
+      "rows": 35091,
+      "tokenized": false,
+      "confirmed_bad_ids": [],
+      "assembly_certified": false
+    }
+  ],
+  "action": "Evidence only; Jason owns coordinated correction; do not certify affected entries for assembly.",
+  "registry_modified": false
+}

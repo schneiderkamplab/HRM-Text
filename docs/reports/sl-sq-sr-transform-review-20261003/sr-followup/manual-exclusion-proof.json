@@ -1,0 +1,149 @@
+{
+  "status": "applied_prepublication",
+  "excluded_cases": [
+    32,
+    36,
+    37,
+    47
+  ],
+  "excluded_ids": [
+    "000032d181b17d3afc56ee57f553a903c0d1cadfe8f399370b3f577bea51d686",
+    "0005826fcf472897e267254a9f1186e9a3ca242e6723da282917ebe937ec3079",
+    "00072e477233c2a7415c7caf467b27371a35ce1fab6101fe174a95da00baccd4",
+    "0008ef735ff6b8114ba9788234d026ad4b2bacd3a224b3f1ce5fa419d1a0a9dc"
+  ],
+  "retained_case45": "000070fcd8d840af7759e5117eeac3a43ebcd0a50fee9be968450d55440461f8",
+  "all_16_original_records_and_model_reviews_unchanged": true,
+  "other_12_sample_statuses_accepted": true,
+  "publication_absent_at_verification": true,
+  "ledger_status": {
+    "component": "wikipedia-sr",
+    "counts": {
+      "accepted": 254271,
+      "audit_retry_pending": 22,
+      "excluded_manual_review": 4,
+      "excluded_unreviewed": 1,
+      "rejected": 37018
+    },
+    "input_sha256": "57f955639216453b01d6f76b18604dba3a930c9f2d6c38db25475fbf5f8f8412",
+    "input_rows": 291316,
+    "terminal": false,
+    "export_ready": false
+  },
+  "events": [
+    {
+      "id": "000032d181b17d3afc56ee57f553a903c0d1cadfe8f399370b3f577bea51d686",
+      "decision_sha256": "5fadf829c1474207f841faa32aa3ca88d8968b7646a3d9160ede13e3a660d8cb",
+      "decision": {
+        "authorization": {
+          "id": "000032d181b17d3afc56ee57f553a903c0d1cadfe8f399370b3f577bea51d686",
+          "component": "wikipedia-sr",
+          "record_sha256": "a3afba0c3f99ff8eedea7531101ee4e03872ca99e69a940046882c4265083d53",
+          "review_sha256": "67b885746af1c1df3651823c7105ebd810bd79820a0a8e235632a71b834d0ec3",
+          "reason": "Gregor Mendel: selected window is English external-link titles plus Serbian categories, without biography prose. Denoising restores English titles rather than meaningful Serbian text. Exact source replay, but poor native-window selection; source has biography prose earlier. No blanket rejection of multilingual titles proposed.",
+          "review_pins": {
+            "evidence.json": "4d9b8c575768f7bb2a2874724b06c63fafe76d137a950cc12ad7e5a165b662e2",
+            "snapshot.json": "84e5378819fac0e7d74d0be346502b0d774965b8878d870b7e0528d579dd6a68",
+            "review.json": "d7c356899a5132cce61446776eeaffcb632156ee8414ae751f8c4366b5fdfc1c",
+            "report.md": "7051ea4e4b5fb957c58227bca0a787d651def125f3f18aa0090a19b7f78669f3",
+            "receipt.json": "d6a3f6b728d484ead750ff67c0af51b845c1d4752359ddaafeafbfacb7fb9d51"
+          },
+          "scope_judgment": "Main-agent review selects cases 32,36,37,47; case45 retained: meaningful Serbian intro, cast table and coherent gap answer; markers/empty heading alone insufficient"
+        },
+        "prior_status": "accepted",
+        "status": "excluded_manual_review",
+        "original_record": "{\"id\": \"000032d181b17d3afc56ee57f553a903c0d1cadfe8f399370b3f577bea51d686\", \"language\": \"sr\", \"task\": \"denoising\", \"messages\": [{\"role\": \"user\", \"content\": \"(српски) Исправи грешке у тексту.\\n\\n-{Mendelweb}-\\n -{Mendel Museum of Genetics }-\\n -{1913 Catholic encyclopedia entry, \\\"Mendel, Mendalism\\\"}-\\n -{Online Mendelian Inheritence in Man}-\\n -{Augustinin Abbe of St. ThoMas at Brno}-\\n\\n-{Biography, bibliography and access to digiTal sources in the Virtual Laboratory o the Max Planck Institute for the History of Science}-\\n -{Biography of Gregor Mendel}-\\n -{GCSE studEnt}-\\n -{Gregor Mendel (1822–1884)}-\\n -{Gregor Mendel Primary Sources}-\\n -{JohaNn Gregor Mendel: Why his discoveries were ignored for 35 (72) years}-\\n -{Masaryk University to rebuild Mendel’s greenhouse | Brno NOw}-\\n -{Mendel Museum Of Genetics}-\\n -{A photographic tour of St. Thomas' Abbey, Brno, Czech Republic}-\\n\\nРођени 1822.\\nУмрли 1884.\\nФрањевци\\nАустријски биолози\\nАустријски ботаниЧари\\nАустријски математичари\\nГенетичари\\nКласична генетика\"}, {\"role\": \"assistant\", \"content\": \"-{Mendelweb}-\\n -{Mendel Museum of Genetics }-\\n -{1913 Catholic Encyclopedia entry, \\\"Mendel, Mendalism\\\"}-\\n -{Online Mendelian Inheritence in Man}-\\n -{Augustinian Abbey of St. Thomas at Brno}-\\n\\n-{Biography, bibliography and access to digital sources in the Virtual Laboratory of the Max Planck Institute for the History of Science}-\\n -{Biography of Gregor Mendel}-\\n -{GCSE student}-\\n -{Gregor Mendel (1822–1884)}-\\n -{Gregor Mendel Primary Sources}-\\n -{Johann Gregor Mendel: Why his discoveries were ignored for 35 (72) years}-\\n -{Masaryk University to rebuild Mendel’s greenhouse | Brno Now}-\\n -{Mendel Museum of Genetics}-\\n -{A photographic tour of St. Thomas' Abbey, Brno, Czech Republic}-\\n\\nРођени 1822.\\nУмрли 1884.\\nФрањевци\\nАустријски биолози\\nАустријски ботаничари\\nАустријски математичари\\nГенетичари\\nКласична генетика\"}], \"provenance\": {\"repo\": \"wikimedia/wikipedia\", \"revision\": \"b04c8d1ceb2f5cd4588862100d08de323dccfbaa\", \"config\": \"20231101.sr\", \"file\": \"20231101.sr/train-00000-of-00004.parquet\", \"row\": 26426, \"id\": \"63060\", \"url\": \"https://sr.wikipedia.org/wiki/%D0%93%D1%80%D0%B5%D0%B3%D0%BE%D1%80%20%D0%9C%D0%B5%D0%BD%D0%B4%D0%B5%D0%BB\", \"title\": \"Грегор Мендел\", \"paragraph_structure\": \"original\", \"window_seed\": 5728072842349176558}, \"audit_context\": {\"original\": \"-{Mendelweb}-\\n -{Mendel Museum of Genetics }-\\n -{1913 Catholic Encyclopedia entry, \\\"Mendel, Mendalism\\\"}-\\n -{Online Mendelian Inheritence in Man}-\\n -{Augustinian Abbey of St. Thomas at Brno}-\\n\\n-{Biography, bibliography and access to digital sources in the Virtual Laboratory of the Max Planck Institute for the History of Science}-\\n -{Biography of Gregor Mendel}-\\n -{GCSE student}-\\n -{Gregor Mendel (1822–1884)}-\\n -{Gregor Mendel Primary Sources}-\\n -{Johann Gregor Mendel: Why his discoveries were ignored for 35 (72) years}-\\n -{Masaryk University to rebuild Mendel’s greenhouse | Brno Now}-\\n -{Mendel Museum of Genetics}-\\n -{A photographic tour of St. Thomas' Abbey, Brno, Czech Republic}-\\n\\nРођени 1822.\\nУмрли 1884.\\nФрањевци\\nАустријски биолози\\nАустријски ботаничари\\nАустријски математичари\\nГенетичари\\nКласична генетика\", \"seed\": 20261003}, \"rendered_tokens\": 553, \"admission_authorized\": false, \"audit_status\": \"pending\", \"component\": \"wikipedia-sr\"}",
+        "original_model_review": "{\"keep\": true, \"language_quality\": 5, \"coherence\": 5, \"usefulness\": 5, \"reason\": \"The model correctly performed the denoising task. It fixed capitalization errors in the English bibliographic references (e.g., 'Encyclopedia', 'Abbey', 'digital', 'student', 'Johann', 'Now') and corrected the casing error in the Serbian text ('\\u0431\\u043e\\u0442\\u0430\\u043d\\u0438\\u0447\\u0430\\u0440\\u0438').\"}",
+        "authority": "Main-agent exact-case quality judgment under the user broad quality-review task; not direct user per-case adjudication",
+        "timestamp": "2026-10-03T18:09:49.521238+00:00"
+      }
+    },
+    {
+      "id": "0005826fcf472897e267254a9f1186e9a3ca242e6723da282917ebe937ec3079",
+      "decision_sha256": "cf1331005b17a27b11ba6f24daf7d05fcb1cd5abb15774a0c6769a3340db0cb5",
+      "decision": {
+        "authorization": {
+          "id": "0005826fcf472897e267254a9f1186e9a3ca242e6723da282917ebe937ec3079",
+          "component": "wikipedia-sr",
+          "record_sha256": "a31f14283f2a211ec79049b6680c0e830077b82a8fdb47d56e27ab95b6a5f3c8",
+          "review_sha256": "a7a14c30cf3ed89da51d7332216a5a305d266129d03221a3b364c856f10fc445",
+          "reason": "Chinese constellations: four shuffled blocks are an external-links heading, English/Chinese link titles, another link title and a category. Zero prose paragraphs; no native astronomical exposition. Earlier source has Serbian prose. Propose exact-row review and paragraph-aware reselection, not general title/script deletion.",
+          "review_pins": {
+            "evidence.json": "4d9b8c575768f7bb2a2874724b06c63fafe76d137a950cc12ad7e5a165b662e2",
+            "snapshot.json": "84e5378819fac0e7d74d0be346502b0d774965b8878d870b7e0528d579dd6a68",
+            "review.json": "d7c356899a5132cce61446776eeaffcb632156ee8414ae751f8c4366b5fdfc1c",
+            "report.md": "7051ea4e4b5fb957c58227bca0a787d651def125f3f18aa0090a19b7f78669f3",
+            "receipt.json": "d6a3f6b728d484ead750ff67c0af51b845c1d4752359ddaafeafbfacb7fb9d51"
+          },
+          "scope_judgment": "Main-agent review selects cases 32,36,37,47; case45 retained: meaningful Serbian intro, cast table and coherent gap answer; markers/empty heading alone insufficient"
+        },
+        "prior_status": "accepted",
+        "status": "excluded_manual_review",
+        "original_record": "{\"id\": \"0005826fcf472897e267254a9f1186e9a3ca242e6723da282917ebe937ec3079\", \"language\": \"sr\", \"task\": \"paragraph-reordering\", \"messages\": [{\"role\": \"user\", \"content\": \"(српски) Врати изворни редослед пасуса; наведи цео текст без нумерације.\\n\\n[1] -{Hong Kong Space Museum: Interactive Star Maps (download)}-\\n -{Hong Kong Space Museum: English-Chinese Glossary of Chinese Star Regions, Asterisms and Star Name}-\\n -{Hong Kong Space Museum: Chinese Starlore}-\\n -{天丈 Astronomy}-\\n -{SHOOTING STARS: China's Astronomical Legacy}-\\n -{Ian Ridpath's Star Tales: The Chinese sky – a lost tradition}-\\n -{The Mathematics of the Chinese Calendary by Helmar Aslaksen}-\\n -{Boundaries Crossing: Western Astronomy in Confucian China, 1600–1800 by Pingyi Chu}-\\n -{Homepage of the National Astronomical Observatories, Chinese Academy of Sciences}-\\n -{Chinese astronomy at the University of Maine }-\\n -{Ian Ridpath's Star Tales}-\\n\\n[2] Спољашње везе\\n\\n[3] Сазвежђа\\n\\n[4] -{The Korean star map (Cheonsangyolchabunyajido 2308 x 3663) redrawn by Oh Gil-Sun on Astronote site}-\"}, {\"role\": \"assistant\", \"content\": \"Спољашње везе\\n\\n-{Hong Kong Space Museum: Interactive Star Maps (download)}-\\n -{Hong Kong Space Museum: English-Chinese Glossary of Chinese Star Regions, Asterisms and Star Name}-\\n -{Hong Kong Space Museum: Chinese Starlore}-\\n -{天丈 Astronomy}-\\n -{SHOOTING STARS: China's Astronomical Legacy}-\\n -{Ian Ridpath's Star Tales: The Chinese sky – a lost tradition}-\\n -{The Mathematics of the Chinese Calendary by Helmar Aslaksen}-\\n -{Boundaries Crossing: Western Astronomy in Confucian China, 1600–1800 by Pingyi Chu}-\\n -{Homepage of the National Astronomical Observatories, Chinese Academy of Sciences}-\\n -{Chinese astronomy at the University of Maine }-\\n -{Ian Ridpath's Star Tales}-\\n\\n-{The Korean star map (Cheonsangyolchabunyajido 2308 x 3663) redrawn by Oh Gil-Sun on Astronote site}-\\n\\nСазвежђа\"}], \"provenance\": {\"repo\": \"wikimedia/wikipedia\", \"revision\": \"b04c8d1ceb2f5cd4588862100d08de323dccfbaa\", \"config\": \"20231101.sr\", \"file\": \"20231101.sr/train-00002-of-00004.parquet\", \"row\": 11051, \"id\": \"1595973\", \"url\": \"https://sr.wikipedia.org/wiki/%D0%9A%D0%B8%D0%BD%D0%B5%D1%81%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B7%D0%B2%D0%B5%D0%B6%D1%92%D0%B0\", \"title\": \"Кинеска сазвежђа\", \"paragraph_structure\": \"original\", \"window_seed\": 3958992470885802959}, \"audit_context\": {\"original\": \"Спољашње везе\\n\\n-{Hong Kong Space Museum: Interactive Star Maps (download)}-\\n -{Hong Kong Space Museum: English-Chinese Glossary of Chinese Star Regions, Asterisms and Star Name}-\\n -{Hong Kong Space Museum: Chinese Starlore}-\\n -{天丈 Astronomy}-\\n -{SHOOTING STARS: China's Astronomical Legacy}-\\n -{Ian Ridpath's Star Tales: The Chinese sky – a lost tradition}-\\n -{The Mathematics of the Chinese Calendary by Helmar Aslaksen}-\\n -{Boundaries Crossing: Western Astronomy in Confucian China, 1600–1800 by Pingyi Chu}-\\n -{Homepage of the National Astronomical Observatories, Chinese Academy of Sciences}-\\n -{Chinese astronomy at the University of Maine }-\\n -{Ian Ridpath's Star Tales}-\\n\\n-{The Korean star map (Cheonsangyolchabunyajido 2308 x 3663) redrawn by Oh Gil-Sun on Astronote site}-\\n\\nСазвежђа\", \"seed\": 20261003}, \"rendered_tokens\": 499, \"admission_authorized\": false, \"audit_status\": \"pending\", \"component\": \"wikipedia-sr\"}",
+        "original_model_review": "{\"keep\": true, \"language_quality\": 5, \"coherence\": 5, \"usefulness\": 5, \"reason\": \"The model correctly reordered the paragraphs according to the provided numbered list and followed the instruction to provide the text without numbering. It correctly identified the logical order: [2] External links (\\u0421\\u043f\\u043e\\u0459\\u0430\\u0448\\u045a\\u0435 \\u0432\\u0435\\u0437\\u0435), [1] the list of links, [4] the Korean star map, and [3] Constellations (\\u0421\\u0430\\u0437\\u0432\\u0435\\u0436\\u0452\\u0430).\"}",
+        "authority": "Main-agent exact-case quality judgment under the user broad quality-review task; not direct user per-case adjudication",
+        "timestamp": "2026-10-03T18:09:49.521828+00:00"
+      }
+    },
+    {
+      "id": "00072e477233c2a7415c7caf467b27371a35ce1fab6101fe174a95da00baccd4",
+      "decision_sha256": "37162498e2f8a8c532b61d50577bc34cc686d25a2689f01d1ae608ca1d3b441b",
+      "decision": {
+        "authorization": {
+          "id": "00072e477233c2a7415c7caf467b27371a35ce1fab6101fe174a95da00baccd4",
+          "component": "wikipedia-sr",
+          "record_sha256": "bca156c059cb5e3777cc67935d4030479cf56f50f2fb2cd3134970abf5ee8b17",
+          "review_sha256": "eef9bb60596e9c3234d31bc42806776b9202758014a46c5fd0a5da8528eff5c3",
+          "reason": "Otto Sep: only one substantive commemorative paragraph, an empty references heading and category block. This is footer placement, not multiple meaningful paragraph reordering. Source biography has earlier prose. Mixed aprila script is secondary and not itself a reason for exclusion.",
+          "review_pins": {
+            "evidence.json": "4d9b8c575768f7bb2a2874724b06c63fafe76d137a950cc12ad7e5a165b662e2",
+            "snapshot.json": "84e5378819fac0e7d74d0be346502b0d774965b8878d870b7e0528d579dd6a68",
+            "review.json": "d7c356899a5132cce61446776eeaffcb632156ee8414ae751f8c4366b5fdfc1c",
+            "report.md": "7051ea4e4b5fb957c58227bca0a787d651def125f3f18aa0090a19b7f78669f3",
+            "receipt.json": "d6a3f6b728d484ead750ff67c0af51b845c1d4752359ddaafeafbfacb7fb9d51"
+          },
+          "scope_judgment": "Main-agent review selects cases 32,36,37,47; case45 retained: meaningful Serbian intro, cast table and coherent gap answer; markers/empty heading alone insufficient"
+        },
+        "prior_status": "accepted",
+        "status": "excluded_manual_review",
+        "original_record": "{\"id\": \"00072e477233c2a7415c7caf467b27371a35ce1fab6101fe174a95da00baccd4\", \"language\": \"sr\", \"task\": \"paragraph-reordering\", \"messages\": [{\"role\": \"user\", \"content\": \"(српски) Врати изворни редослед пасуса; наведи цео текст без нумерације.\\n\\n[1] Референце\\n\\n[2] Рођени 1909.\\nТузлаци\\nЈугословенски пилоти у Другом светском рату\\nУмрли 1941.\\nЈевреји у Србији\\n\\n[3] Дана 16. aprila 2021. године, у селу Дулене је откривено спомен обележје Оту Сепу, постављено на иницијативу Савета месне заједнице Дулене, уз подршку СУБНОР-а и града Крагујевца. Споменик је свечано откривен интонирањем химне Србије и у присуству представника команде Гарнизона Крагујевца, градоначелника Николе Дашића, мештане Дулена и околних села, који су положили венце и поклонили се сенима погинулих пилота.\"}, {\"role\": \"assistant\", \"content\": \"Дана 16. aprila 2021. године, у селу Дулене је откривено спомен обележје Оту Сепу, постављено на иницијативу Савета месне заједнице Дулене, уз подршку СУБНОР-а и града Крагујевца. Споменик је свечано откривен интонирањем химне Србије и у присуству представника команде Гарнизона Крагујевца, градоначелника Николе Дашића, мештане Дулена и околних села, који су положили венце и поклонили се сенима погинулих пилота.\\n\\nРеференце\\n\\nРођени 1909.\\nТузлаци\\nЈугословенски пилоти у Другом светском рату\\nУмрли 1941.\\nЈевреји у Србији\"}], \"provenance\": {\"repo\": \"wikimedia/wikipedia\", \"revision\": \"b04c8d1ceb2f5cd4588862100d08de323dccfbaa\", \"config\": \"20231101.sr\", \"file\": \"20231101.sr/train-00003-of-00004.parquet\", \"row\": 137882, \"id\": \"4237570\", \"url\": \"https://sr.wikipedia.org/wiki/%D0%9E%D1%82%D0%BE%20%D0%A1%D0%B5%D0%BF\", \"title\": \"Ото Сеп\", \"paragraph_structure\": \"original\", \"window_seed\": 1598599011344084004}, \"audit_context\": {\"original\": \"Дана 16. aprila 2021. године, у селу Дулене је откривено спомен обележје Оту Сепу, постављено на иницијативу Савета месне заједнице Дулене, уз подршку СУБНОР-а и града Крагујевца. Споменик је свечано откривен интонирањем химне Србије и у присуству представника команде Гарнизона Крагујевца, градоначелника Николе Дашића, мештане Дулена и околних села, који су положили венце и поклонили се сенима погинулих пилота.\\n\\nРеференце\\n\\nРођени 1909.\\nТузлаци\\nЈугословенски пилоти у Другом светском рату\\nУмрли 1941.\\nЈевреји у Србији\", \"seed\": 20261003}, \"rendered_tokens\": 461, \"admission_authorized\": false, \"audit_status\": \"pending\", \"component\": \"wikipedia-sr\"}",
+        "original_model_review": "{\"keep\": true, \"language_quality\": 5, \"coherence\": 5, \"usefulness\": 5, \"reason\": \"The model correctly reordered the paragraphs to match the original reference text and followed the instruction to remove numbering. The Serbian language is natural and accurate.\"}",
+        "authority": "Main-agent exact-case quality judgment under the user broad quality-review task; not direct user per-case adjudication",
+        "timestamp": "2026-10-03T18:09:49.521875+00:00"
+      }
+    },
+    {
+      "id": "0008ef735ff6b8114ba9788234d026ad4b2bacd3a224b3f1ce5fa419d1a0a9dc",
+      "decision_sha256": "83746253e76f5dfa5e42907d0cf86602ea080f0303736e2d177f2e2cac735b63",
+      "decision": {
+        "authorization": {
+          "id": "0008ef735ff6b8114ba9788234d026ad4b2bacd3a224b3f1ce5fa419d1a0a9dc",
+          "component": "wikipedia-sr",
+          "record_sha256": "b2df94b2d00fa8e7c84cc2da92a36c43aaa1f4d7da3b4b7b85032477e57c04f5",
+          "review_sha256": "ea92c210365914902aab2aa9132da3bab7e327d204f4f3fd5728bba161adcff3",
+          "reason": "Donji Junuzovici: window begins with five empty section headings, then bibliography and categories. Gap asks for a citation fragment, with no settlement prose; opening source paragraph with settlement facts was omitted. Prefer that meaningful prose window; do not fabricate missing geography/history sections.",
+          "review_pins": {
+            "evidence.json": "4d9b8c575768f7bb2a2874724b06c63fafe76d137a950cc12ad7e5a165b662e2",
+            "snapshot.json": "84e5378819fac0e7d74d0be346502b0d774965b8878d870b7e0528d579dd6a68",
+            "review.json": "d7c356899a5132cce61446776eeaffcb632156ee8414ae751f8c4366b5fdfc1c",
+            "report.md": "7051ea4e4b5fb957c58227bca0a787d651def125f3f18aa0090a19b7f78669f3",
+            "receipt.json": "d6a3f6b728d484ead750ff67c0af51b845c1d4752359ddaafeafbfacb7fb9d51"
+          },
+          "scope_judgment": "Main-agent review selects cases 32,36,37,47; case45 retained: meaningful Serbian intro, cast table and coherent gap answer; markers/empty heading alone insufficient"
+        },
+        "prior_status": "accepted",
+        "status": "excluded_manual_review",
+        "original_record": "{\"id\": \"0008ef735ff6b8114ba9788234d026ad4b2bacd3a224b3f1ce5fa419d1a0a9dc\", \"language\": \"sr\", \"task\": \"span-filling\", \"messages\": [{\"role\": \"user\", \"content\": \"(српски) Попуни <GAP>; наведи само текст који недостаје.\\n\\nГеографија\\n\\nИсторија\\n\\nСтановништво\\n\\nНапомене\\n\\nРеференце\\n\\nИзвори \\n Књига: „Национални састав становништва — Резултати за Републику по општинама и насељеним мјестима 1991.“, статистички <GAP> завода за статистику Републике Босне и Херцеговине, Сарајево.\\n интернет — извор, „Попис по мјесним заједницама“ — https://web.archive.org/web/20090520191154/http://www.fzs.ba/Podaci/nacion%20po%20mjesnim.pdf\\n\\nОпштина Завидовићи\\nНасељена мјеста у Федерацији Босне и Херцеговине\\nВикипројект географија/Насеља у Босни и Херцеговини\"}, {\"role\": \"assistant\", \"content\": \"билтен бр. 234, Издање Државног\"}], \"provenance\": {\"repo\": \"wikimedia/wikipedia\", \"revision\": \"b04c8d1ceb2f5cd4588862100d08de323dccfbaa\", \"config\": \"20231101.sr\", \"file\": \"20231101.sr/train-00000-of-00004.parquet\", \"row\": 103590, \"id\": \"414342\", \"url\": \"https://sr.wikipedia.org/wiki/%D0%94%D0%BE%D1%9A%D0%B8%20%D0%88%D1%83%D0%BD%D1%83%D0%B7%D0%BE%D0%B2%D0%B8%D1%9B%D0%B8\", \"title\": \"Доњи Јунузовићи\", \"paragraph_structure\": \"original\", \"window_seed\": 5029102660289668902}, \"audit_context\": {\"original\": \"Географија\\n\\nИсторија\\n\\nСтановништво\\n\\nНапомене\\n\\nРеференце\\n\\nИзвори \\n Књига: „Национални састав становништва — Резултати за Републику по општинама и насељеним мјестима 1991.“, статистички билтен бр. 234, Издање Државног завода за статистику Републике Босне и Херцеговине, Сарајево.\\n интернет — извор, „Попис по мјесним заједницама“ — https://web.archive.org/web/20090520191154/http://www.fzs.ba/Podaci/nacion%20po%20mjesnim.pdf\\n\\nОпштина Завидовићи\\nНасељена мјеста у Федерацији Босне и Херцеговине\\nВикипројект географија/Насеља у Босни и Херцеговини\", \"seed\": 20261003}, \"rendered_tokens\": 246, \"admission_authorized\": false, \"audit_status\": \"pending\", \"component\": \"wikipedia-sr\"}",
+        "original_model_review": "{\"keep\": true, \"language_quality\": 5, \"coherence\": 5, \"usefulness\": 5, \"reason\": \"The assistant correctly filled the gap with the exact missing text from the reference source, following the instruction to provide only the missing text. The Serbian language usage is correct.\"}",
+        "authority": "Main-agent exact-case quality judgment under the user broad quality-review task; not direct user per-case adjudication",
+        "timestamp": "2026-10-03T18:09:49.521916+00:00"
+      }
+    }
+  ],
+  "review_receipt_sha256": "d6a3f6b728d484ead750ff67c0af51b845c1d4752359ddaafeafbfacb7fb9d51",
+  "code_pins": {
+    "dfm12/sr_manual_exclusion.py": "a5c7f35549940bd3e9cb67999a89a78049c130afa1dbc6fa25a175e1580b99a1",
+    "dfm12/wave_manual_exclusion.py": "d2c86818b08e312acba57b2cc8f8d208ae006996097493b6cd1a807d259fe20c"
+  },
+  "prior_sl_sq_handoff_sha256": "17849fb5af37777c5ff062fe2592118bef643d22f39bab36742c8ce3d79cc123"
+}

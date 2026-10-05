@@ -1,0 +1,11 @@
+{
+  "data/dfm13/wave4/downloads/wikipedia-hr/20231101.hr/train-00000-of-00001.parquet": "b7765a0e521b7df6d7bf72a8c8aaba3a66f5d110aa0be57d16fccfcb85266787",
+  "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+  "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/denoising/publication.json": "fd8b9eaa6c41931487b06c08f0eb057ff80e7bac290e056067be08e8d726ceaf",
+  "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+  "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/paragraph-reordering/publication.json": "5426041a9f743aed121f429a732a20341e0430fddff2b58a11390689309bb7b2",
+  "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+  "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/prefix-continuation/publication.json": "50339e2c936b759ed116275d386c2bacf15608c7e246c3e54216dee5e12faf0b",
+  "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+  "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/span-filling/publication.json": "424b7bd1dbc3b2c8ddc3682f3d9d9aeff6b50ec0476af6c88f5bbe0e83f6a442"
+}

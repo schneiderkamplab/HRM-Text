@@ -1,0 +1,291 @@
+{
+  "time": 1791108910.9624398,
+  "ledger": {
+    "accepted": 15989,
+    "active": 3972,
+    "attempts": 90976
+  },
+  "servers": [
+    {
+      "port": 8800,
+      "kv": 0.026048569784081543,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 14.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8801,
+      "kv": 0.026412922371776948,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 14.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8802,
+      "kv": 0.02346641883650069,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 12.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8803,
+      "kv": 0.02006051421239119,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 11.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8804,
+      "kv": 0.01692391367483903,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 9.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8805,
+      "kv": 0.012688974901915229,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 7.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8806,
+      "kv": 0.022880286412816808,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 12.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    },
+    {
+      "port": 8807,
+      "kv": 0.007265929864767151,
+      "waiting": 0.0,
+      "request_metrics": [
+        "vllm:num_requests_running{engine=\"0\",model_name=\"dfm13-gemma4\"} 4.0",
+        "vllm:num_requests_waiting{engine=\"0\",model_name=\"dfm13-gemma4\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"capacity\"} 0.0",
+        "vllm:num_requests_waiting_by_reason{engine=\"0\",model_name=\"dfm13-gemma4\",reason=\"deferred\"} 0.0"
+      ]
+    }
+  ],
+  "timings": {
+    "time": 1791108903.881697,
+    "parallel_workers": 16,
+    "operations": {
+      "parallel:write_json": {
+        "count": 552713,
+        "queue_seconds": 1122109.824179574,
+        "service_seconds": 5817.482912640087,
+        "max_queue_seconds": 46.03266476886347
+      },
+      "owner:verify": {
+        "count": 1,
+        "queue_seconds": 0.00031633488833904266,
+        "service_seconds": 0.047269627917557955,
+        "max_queue_seconds": 0.00031633488833904266
+      },
+      "owner:Ledger": {
+        "count": 1,
+        "queue_seconds": 2.871314063668251e-05,
+        "service_seconds": 0.0005744630470871925,
+        "max_queue_seconds": 2.871314063668251e-05
+      },
+      "owner:db,execute,fetchone": {
+        "count": 1,
+        "queue_seconds": 2.2514257580041885e-05,
+        "service_seconds": 5.0425995141267776e-05,
+        "max_queue_seconds": 2.2514257580041885e-05
+      },
+      "owner:recover": {
+        "count": 1,
+        "queue_seconds": 2.3025088012218475e-05,
+        "service_seconds": 0.00022286409512162209,
+        "max_queue_seconds": 2.3025088012218475e-05
+      },
+      "owner:SourceProvider,Path,load": {
+        "count": 1,
+        "queue_seconds": 1.8647871911525726e-05,
+        "service_seconds": 0.0028586620464920998,
+        "max_queue_seconds": 1.8647871911525726e-05
+      },
+      "owner:v6,Budget": {
+        "count": 1,
+        "queue_seconds": 1.9730068743228912e-05,
+        "service_seconds": 8.512753993272781e-06,
+        "max_queue_seconds": 1.9730068743228912e-05
+      },
+      "parallel:write_json,time,time_ns": {
+        "count": 1,
+        "queue_seconds": 4.205387085676193e-05,
+        "service_seconds": 0.0013496051542460918,
+        "max_queue_seconds": 4.205387085676193e-05
+      },
+      "owner:v6,verify_pins": {
+        "count": 1,
+        "queue_seconds": 2.195313572883606e-05,
+        "service_seconds": 0.0412829308770597,
+        "max_queue_seconds": 2.195313572883606e-05
+      },
+      "parallel:write_json,dict,os,getpid,time,len,file_hash,POLICY": {
+        "count": 1,
+        "queue_seconds": 2.792244777083397e-05,
+        "service_seconds": 0.0013463706709444523,
+        "max_queue_seconds": 2.792244777083397e-05
+      },
+      "owner:report": {
+        "count": 35,
+        "queue_seconds": 1499.945541543886,
+        "service_seconds": 0.653272564522922,
+        "max_queue_seconds": 67.96738717192784
+      },
+      "parallel:write_json,dict,time,os,getpid,status": {
+        "count": 35,
+        "queue_seconds": 95.24704113788903,
+        "service_seconds": 0.3368931054137647,
+        "max_queue_seconds": 20.249277252238244
+      },
+      "owner:reserve,SeedUnavailable": {
+        "count": 64678,
+        "queue_seconds": 3213395.790305942,
+        "service_seconds": 1440.9127325545996,
+        "max_queue_seconds": 105.98906219284981
+      },
+      "parallel:write_json,dict,digest": {
+        "count": 64674,
+        "queue_seconds": 176920.80162459565,
+        "service_seconds": 739.3503108853474,
+        "max_queue_seconds": 56.3983257827349
+      },
+      "parallel:v6,RawResponseWriter": {
+        "count": 64670,
+        "queue_seconds": 116714.25345041743,
+        "service_seconds": 235.16342597920448,
+        "max_queue_seconds": 55.96032026363537
+      },
+      "parallel:v6,generation_request,list,values": {
+        "count": 64660,
+        "queue_seconds": 120590.11276032869,
+        "service_seconds": 1261.6554089975543,
+        "max_queue_seconds": 22.30246570892632
+      },
+      "parallel:v6,compact_request": {
+        "count": 122168,
+        "queue_seconds": 240327.83415050386,
+        "service_seconds": 6.334715834353119,
+        "max_queue_seconds": 22.30162402614951
+      },
+      "parallel:budget,measure": {
+        "count": 122164,
+        "queue_seconds": 240115.61885215668,
+        "service_seconds": 924.5280850003473,
+        "max_queue_seconds": 8.525377780199051
+      },
+      "parallel:write_json,root,dict": {
+        "count": 122157,
+        "queue_seconds": 235864.94169190293,
+        "service_seconds": 1244.8452122518793,
+        "max_queue_seconds": 9.243489988148212
+      },
+      "parallel:begin": {
+        "count": 122137,
+        "queue_seconds": 247610.83194954088,
+        "service_seconds": 1248.7634412627667,
+        "max_queue_seconds": 8.524481934960932
+      },
+      "parallel:finish,base64,b64encode,decode,time,monotonic": {
+        "count": 122033,
+        "queue_seconds": 250870.08126323344,
+        "service_seconds": 1384.5802639448084,
+        "max_queue_seconds": 8.335578623227775
+      },
+      "parallel:validate": {
+        "count": 120760,
+        "queue_seconds": 234534.03476939537,
+        "service_seconds": 131.9558880268596,
+        "max_queue_seconds": 8.523643526714295
+      },
+      "parallel:validate,schema": {
+        "count": 56192,
+        "queue_seconds": 114964.85422786651,
+        "service_seconds": 62.92085798410699,
+        "max_queue_seconds": 7.785021731164306
+      },
+      "parallel:decode": {
+        "count": 56187,
+        "queue_seconds": 116389.31481386768,
+        "service_seconds": 35.055150696542114,
+        "max_queue_seconds": 7.170367021579295
+      },
+      "parallel:v6,generation_assemble": {
+        "count": 59421,
+        "queue_seconds": 121058.5129265706,
+        "service_seconds": 295.97151229623705,
+        "max_queue_seconds": 7.1646073260344565
+      },
+      "owner:finish": {
+        "count": 60710,
+        "queue_seconds": 2934259.0410643043,
+        "service_seconds": 406.85907013807446,
+        "max_queue_seconds": 72.92585765291005
+      },
+      "owner:_claim": {
+        "count": 57533,
+        "queue_seconds": 2635499.2115877904,
+        "service_seconds": 190.08071810007095,
+        "max_queue_seconds": 72.93233909271657
+      },
+      "parallel:v6,audit_record": {
+        "count": 57520,
+        "queue_seconds": 117823.54299842194,
+        "service_seconds": 0.603965240996331,
+        "max_queue_seconds": 7.182900425046682
+      },
+      "parallel:v6,review_request": {
+        "count": 57517,
+        "queue_seconds": 114892.14286004053,
+        "service_seconds": 3.9954903721809387,
+        "max_queue_seconds": 7.168612417764962
+      },
+      "parallel:v6,review_result": {
+        "count": 38821,
+        "queue_seconds": 71672.26180831157,
+        "service_seconds": 6.634404601994902,
+        "max_queue_seconds": 5.643589608836919
+      },
+      "parallel:materialize": {
+        "count": 11504,
+        "queue_seconds": 21026.79321906576,
+        "service_seconds": 164.10941002471372,
+        "max_queue_seconds": 5.249168989714235
+      }
+    }
+  },
+  "interpretation": "Ledger active is whole conversations not HTTP inflight. Server metrics include other clients. Cumulative queue_seconds is completed-operation wait, not current queue length."
+}

@@ -1,0 +1,30 @@
+{
+  "execution_root": "data/dfm13/gemma31-balanced-execution-20261003-v2",
+  "manifest_sha256": "2f336c77d2e8f224ae213b77acfc92a3bfa512968a6894e5af220bc15030775b",
+  "total": 234,
+  "verified": true,
+  "freeze_receipt_sha256": "14fc13db3f796adf933d4b9dc231295db1ac3c8f134b49c15e819430d25e522d",
+  "companion_roots": {
+    "data/dfm13/wave4/synthetic31-full-staged-v3": {
+      "target": 770000,
+      "verified": true,
+      "production_approved": false
+    },
+    "data/dfm13/baltic/synthetic31-full-staged-v3": {
+      "target": 140000,
+      "verified": true,
+      "production_approved": false
+    },
+    "data/dfm13/wave4/gemma31-fresh-comparison30-v5": {
+      "total": 30,
+      "verified": true
+    },
+    "data/dfm13/baltic/gemma31-fresh-comparison12-v3": {
+      "total": 12,
+      "verified": true
+    }
+  },
+  "execution_started": false,
+  "production_approved": false,
+  "gpu_calls": 0
+}

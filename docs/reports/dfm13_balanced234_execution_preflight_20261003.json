@@ -1,0 +1,26 @@
+{
+  "root": "/work/mimir/HRM-Text/data/dfm13/gemma31-balanced-execution-20261003-v2",
+  "manifest_sha256": "2f336c77d2e8f224ae213b77acfc92a3bfa512968a6894e5af220bc15030775b",
+  "waves": {
+    "wave4": {
+      "cases": 198,
+      "max_prompt_plus_reserve": 5936,
+      "exact_runtime_transport_parity": true
+    },
+    "baltic": {
+      "cases": 36,
+      "max_prompt_plus_reserve": 5738,
+      "exact_runtime_transport_parity": true
+    }
+  },
+  "cpu_only": true,
+  "tests_passed": 28,
+  "production_approved": false,
+  "server_calls": 0,
+  "source": "data/dfm13/gemma31-balanced-calibration-20261003-v4",
+  "freeze": "data/dfm13/wave4/transition-frozen-v2.json",
+  "original234_specifications_and_requests_equal": true,
+  "production_freeze_receipt": "data/dfm13/wave4/production31-successors-v3-receipt.json",
+  "production_freeze_receipt_sha256": "14fc13db3f796adf933d4b9dc231295db1ac3c8f134b49c15e819430d25e522d",
+  "production_freeze_match": true
+}

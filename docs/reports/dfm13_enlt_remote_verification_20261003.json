@@ -1,0 +1,15 @@
+{
+  "repo": "schneiderkamplab/dfm13-wave3-opus-en-lt",
+  "revision": "aafee45fc3cf94bf7a3707128a31f2a9b3573bd9",
+  "rows": 1243134,
+  "rendered_tokens": 116050220,
+  "output_sha256": "8417699b3e06265456adeabc5748553a937decb7f3db5e0cdce96b0471f3c51b",
+  "remote_data_verified": true,
+  "remote_attribution_verified": {
+    "e766aa866eb75a1bae7c928a254c1d8e4a9e2604af92ec628de9095b6379ea41": "attribution/e766aa866eb75a1bae7c928a254c1d8e4a9e2604af92ec628de9095b6379ea41.json",
+    "11f4c00a143050367d630b11245838c3063d7dac358d2ecc57bdba9b69e56884": "attribution/11f4c00a143050367d630b11245838c3063d7dac358d2ecc57bdba9b69e56884.json",
+    "05d08141543de3e0fbd22eb1fa2efeb3c06c9361199847c62742c08a438b3656": "attribution/05d08141543de3e0fbd22eb1fa2efeb3c06c9361199847c62742c08a438b3656.json",
+    "38024cff5e728491b81227a1266eb64dbb1ddb48932deb253deb63d9a9b72094": "attribution/38024cff5e728491b81227a1266eb64dbb1ddb48932deb253deb63d9a9b72094.json"
+  },
+  "tokenization_verified": false
+}

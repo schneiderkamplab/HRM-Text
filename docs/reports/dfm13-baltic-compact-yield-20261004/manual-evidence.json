@@ -1,0 +1,155 @@
+[
+  {
+    "id": "0004355083a8e2bf5c463e5b09d7fe05cb014ef45ed90ee12cae459b08c946c9",
+    "completed": 1791080527.6646345,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/04/candidates/0004355083a8e2bf5c463e5b09d7fe05cb014ef45ed90ee12cae459b08c946c9.json": "46def2780ae4d48c3adce54dd204c920ba79d2d2d0c93ba7e4e00bb2fefd4f66",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/04/stages/0004355083a8e2bf5c463e5b09d7fe05cb014ef45ed90ee12cae459b08c946c9-generate.json": "5aecde46c2fe163268c57237e7dc8e82e14da7266cd3d79656a2850354a1068b",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/04/stages/0004355083a8e2bf5c463e5b09d7fe05cb014ef45ed90ee12cae459b08c946c9-review.json": "6f3934a8c8da754dbc4e11fd36b30dec1974db1932a6a49eabecd08b7869b827",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/04/requests/0004355083a8e2bf5c463e5b09d7fe05cb014ef45ed90ee12cae459b08c946c9-generate.json": "ea921f3b30ded5c7b43f27e10c9cd5d5d4d57de804040f309bccb56ec50a5833",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/04/requests/0004355083a8e2bf5c463e5b09d7fe05cb014ef45ed90ee12cae459b08c946c9-review.json": "bf11cb4c9c29bcec2706f3cdd0b731777e573b3f8f0ba2cabf54d8cc4b3eb827"
+    }
+  },
+  {
+    "id": "00082d6de42ba77c5671f1d0f553f5e5f25484591fa543c71c48a03c3dc18d84",
+    "completed": 1791078996.127468,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/08/candidates/00082d6de42ba77c5671f1d0f553f5e5f25484591fa543c71c48a03c3dc18d84.json": "ab970589c01f9ff975649c216ed29bbaa176082474e885f94d58aedfee5cebcf",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/08/stages/00082d6de42ba77c5671f1d0f553f5e5f25484591fa543c71c48a03c3dc18d84-generate.json": "5616b8fca55ce16651ad12c7b718046ee4e800904c8ae16a473e82d7e8934f79",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/08/stages/00082d6de42ba77c5671f1d0f553f5e5f25484591fa543c71c48a03c3dc18d84-review.json": "4f5880d3946fb142c1936ecb65f1c9a8c3a9d59537a8eb0ce5d4ce82218a282b",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/08/requests/00082d6de42ba77c5671f1d0f553f5e5f25484591fa543c71c48a03c3dc18d84-generate.json": "d49ccf3f53792226b31ca128791313ab9f28efaa08351aeee79ef135b66acf2e",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/08/requests/00082d6de42ba77c5671f1d0f553f5e5f25484591fa543c71c48a03c3dc18d84-review.json": "8046b7f0b925468c1a92c185ba58e83fc2529028732752326ae405d4c2147605"
+    }
+  },
+  {
+    "id": "000f51251b960749bc507e3340ac7ae7b78af4e58006a1606abebc4f1920a586",
+    "completed": 1791079096.013181,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0f/candidates/000f51251b960749bc507e3340ac7ae7b78af4e58006a1606abebc4f1920a586.json": "3db470ee28756ab7362d64d45b2e90398bb6e20047ebc249188b3a8ed1d9324e",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0f/stages/000f51251b960749bc507e3340ac7ae7b78af4e58006a1606abebc4f1920a586-generate.json": "1efb80331c60251770994c63983b34a325ce18ea6df853282c6d647f92a581ee",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0f/stages/000f51251b960749bc507e3340ac7ae7b78af4e58006a1606abebc4f1920a586-review.json": "2f754e94b3794dda857f51ed1463e37ded540d61841046a72abaee22a3de858b",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0f/requests/000f51251b960749bc507e3340ac7ae7b78af4e58006a1606abebc4f1920a586-generate.json": "e05304a080698cc18157502715ace3d42b1f65575a74ba86a99c6d80e7bdc275",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0f/requests/000f51251b960749bc507e3340ac7ae7b78af4e58006a1606abebc4f1920a586-review.json": "6986f72f98780f7c679831c102f258d292503245e609ed3c85256286edf30237"
+    }
+  },
+  {
+    "id": "00023f0cf251a74d3e63323a3fb5f51642017d59e7265f8852faafc772803e0b",
+    "completed": 1791078990.3466458,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/02/candidates/00023f0cf251a74d3e63323a3fb5f51642017d59e7265f8852faafc772803e0b.json": "023723bf5f1c88724d84b687869075a2fd4302d9c8e3d31f5d784c39cb9eb6fe",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/02/stages/00023f0cf251a74d3e63323a3fb5f51642017d59e7265f8852faafc772803e0b-generate.json": "e4ddfe8a1d3f106aa6de2bd070d3d9d9f7e3cb1bca85a3a75a89e341d52f6290",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/02/stages/00023f0cf251a74d3e63323a3fb5f51642017d59e7265f8852faafc772803e0b-review.json": "eafb51aca276a43580a96248f03db2112a3a5cc198167fc198dc66d8e64d680d",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/02/requests/00023f0cf251a74d3e63323a3fb5f51642017d59e7265f8852faafc772803e0b-generate.json": "e90b64f3f6d0396ea8ced778fe7a040e7a5297f47d5f2acfbe884f612d558d31",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/02/requests/00023f0cf251a74d3e63323a3fb5f51642017d59e7265f8852faafc772803e0b-review.json": "4b3d63922778c5b8afbcdf59b4b8d8543774aea2ca093ba16d52f7aea6b6ebc0"
+    }
+  },
+  {
+    "id": "000b47927c29ac6b3f5aa6053b6c8f8094391b84046f2a0ace0eaed9e54fc3db",
+    "completed": 1791079459.4660335,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0b/candidates/000b47927c29ac6b3f5aa6053b6c8f8094391b84046f2a0ace0eaed9e54fc3db.json": "5540a6577c73626aa023096831515da33c980b30545dd000a12285d0066ea854",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0b/stages/000b47927c29ac6b3f5aa6053b6c8f8094391b84046f2a0ace0eaed9e54fc3db-generate.json": "f32311de3dba3708cdeb67461342cf8079af2efa852a601ceb08311ca14a8ff6",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0b/stages/000b47927c29ac6b3f5aa6053b6c8f8094391b84046f2a0ace0eaed9e54fc3db-review.json": "850726c92a4721780ee045ebaa96091e032c8631c89704e288df651d5b237c7c",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0b/requests/000b47927c29ac6b3f5aa6053b6c8f8094391b84046f2a0ace0eaed9e54fc3db-generate.json": "63fe50170c8b049843c8f1d841a008cd3fc127e9d527dfe8e48b6babf163e31f",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/0b/requests/000b47927c29ac6b3f5aa6053b6c8f8094391b84046f2a0ace0eaed9e54fc3db-review.json": "45d947cd81bb998d308c63670ea11182b0b1efd57ce65d4ec598c7aa9aa516c7"
+    }
+  },
+  {
+    "id": "00248c298b745631aad85499906028748f38fcd3eaf244fc8672b1a237719d3b",
+    "completed": 1791080473.2885191,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/24/candidates/00248c298b745631aad85499906028748f38fcd3eaf244fc8672b1a237719d3b.json": "6f6aa2248eee61de8a6550937c4282317ea183d55f116c6ed83d960b807209fd",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/24/stages/00248c298b745631aad85499906028748f38fcd3eaf244fc8672b1a237719d3b-generate.json": "5c9111610451877b17a01139c46aa2462fc6eef8de5cce17ca0253d47bd8332b",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/24/stages/00248c298b745631aad85499906028748f38fcd3eaf244fc8672b1a237719d3b-review.json": "13b9a2e2cebfe31a9ec48c54cd26d1e3ac622f7fd5107c20e88da5695ffdb85c",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/24/requests/00248c298b745631aad85499906028748f38fcd3eaf244fc8672b1a237719d3b-generate.json": "e5ee463d27b5f59123c6af04beda8cf43fbcb1401676ab859b5e8f849ee1ad29",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/24/requests/00248c298b745631aad85499906028748f38fcd3eaf244fc8672b1a237719d3b-review.json": "440a6c6ec4773cb54b84c1461feb0489f0eb89a539ce6f642d94ac4f7b5d0345"
+    }
+  },
+  {
+    "id": "000198537db1f6b8a057456267f056d1d216f91ecbacf1bdc5b38c9317973611",
+    "completed": 1791079701.5374866,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/01/candidates/000198537db1f6b8a057456267f056d1d216f91ecbacf1bdc5b38c9317973611.json": "5b5801097c0e2b3a7238abba0679ebfce7a505d6767d1972067cdcad05c8689b",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/01/stages/000198537db1f6b8a057456267f056d1d216f91ecbacf1bdc5b38c9317973611-generate.json": "1d1a7870dcc2040af90414199283236a7c0b582c10a68959ad50eedab1cd502a",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/01/stages/000198537db1f6b8a057456267f056d1d216f91ecbacf1bdc5b38c9317973611-review.json": "80dc6b12c74b1cc6efe2160730e2c1a3c579e1f6317fde13ffbd50e75262a558",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/01/requests/000198537db1f6b8a057456267f056d1d216f91ecbacf1bdc5b38c9317973611-generate.json": "62cae45e1dac7ae59458b822fccc7a8313dfdd7e308bb9621085b4280cda6105",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/01/requests/000198537db1f6b8a057456267f056d1d216f91ecbacf1bdc5b38c9317973611-review.json": "dd8c6fed86ce52042ff3f1f610dd054038f8cbdb57d0cbe65941034ee0c40b87"
+    }
+  },
+  {
+    "id": "0017c95be7d1d44bc69e8edbdeffc7401fb3e0342cfba2110e4fe4c57d8dcedb",
+    "completed": 1791080056.7675698,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/17/candidates/0017c95be7d1d44bc69e8edbdeffc7401fb3e0342cfba2110e4fe4c57d8dcedb.json": "262aa157998935991b39c86899fdb1a79d50f7c99232943ed7eb9442410a4af3",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/17/stages/0017c95be7d1d44bc69e8edbdeffc7401fb3e0342cfba2110e4fe4c57d8dcedb-generate.json": "41f6d187a5f84ba371d59742307a5d374308178560aa35d34b9b7cab44b250cf",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/17/stages/0017c95be7d1d44bc69e8edbdeffc7401fb3e0342cfba2110e4fe4c57d8dcedb-review.json": "bda34f6407313a1de134d143464662fbcfe95c99353a52691521f64e851f8259",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/17/requests/0017c95be7d1d44bc69e8edbdeffc7401fb3e0342cfba2110e4fe4c57d8dcedb-generate.json": "37b496091f9114ef46c07beaafb596a82c395b633d19441c02b0d228e09954da",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/17/requests/0017c95be7d1d44bc69e8edbdeffc7401fb3e0342cfba2110e4fe4c57d8dcedb-review.json": "eb7c9189d5e1163e5968a4bf4d22964834574f3b0ed008d2d35296c93976acc5"
+    }
+  },
+  {
+    "id": "001ddf9009d411b8fb4d0a189ca6798f103e9d00e2dc0688096cf9ee73b49795",
+    "completed": 1791078452.189736,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1d/candidates/001ddf9009d411b8fb4d0a189ca6798f103e9d00e2dc0688096cf9ee73b49795.json": "db6795c6512204535ad7993e68c4a026cd92dbb0dc3f9a9dca5c03ce6a4af541",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1d/stages/001ddf9009d411b8fb4d0a189ca6798f103e9d00e2dc0688096cf9ee73b49795-generate.json": "d21f50d1b0f868b26c5517d0a2b1a1037c76d133da14abd28f86414e29ad13af",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1d/stages/001ddf9009d411b8fb4d0a189ca6798f103e9d00e2dc0688096cf9ee73b49795-review.json": "f6d35ddfc9274909fb531eef25cdde49862e74b811a7917a10c8780e36d3fafb",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1d/requests/001ddf9009d411b8fb4d0a189ca6798f103e9d00e2dc0688096cf9ee73b49795-generate.json": "69c8a7c62dc2f009a4887a754287455792379605d4802c520f2bdb0502e6f2a4",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1d/requests/001ddf9009d411b8fb4d0a189ca6798f103e9d00e2dc0688096cf9ee73b49795-review.json": "6f0b9d8aae0588c624c16476a074b91c18849a87f62eafb33642077619cc1895"
+    }
+  },
+  {
+    "id": "0026a1afdc71426e0cbb0f6151ada153e135a4c3d67d2763a954b34002353edb",
+    "completed": 1791079211.8091886,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/26/candidates/0026a1afdc71426e0cbb0f6151ada153e135a4c3d67d2763a954b34002353edb.json": "97e0ca018e8bc0a50629dc58d5f01dcaec61d7111de3db485788989f8029a160",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/26/stages/0026a1afdc71426e0cbb0f6151ada153e135a4c3d67d2763a954b34002353edb-generate.json": "c7c64379582375fa9812baba0f1ce9fd7f349d79856950083336995dd699ea64",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/26/stages/0026a1afdc71426e0cbb0f6151ada153e135a4c3d67d2763a954b34002353edb-review.json": "a238e53208062977c2c8450e4b34fc3ce4789aa5ef5c2cfec277c5fefd37e18f",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/26/requests/0026a1afdc71426e0cbb0f6151ada153e135a4c3d67d2763a954b34002353edb-generate.json": "30dbcb37cb42e5cdcdf205c78199f7a5ae81f9c2f50fcde240cf23854179437a",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/26/requests/0026a1afdc71426e0cbb0f6151ada153e135a4c3d67d2763a954b34002353edb-review.json": "54dceccc7e33be949755d6e945acc89ec67f8bccf7fb9e7f89a16ded85aa3245"
+    }
+  },
+  {
+    "id": "001bf2286870aeb211757cc2d3aa762a9ff75181fe715f67ffe94cd10b055ac5",
+    "completed": 1791080257.5958421,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1b/candidates/001bf2286870aeb211757cc2d3aa762a9ff75181fe715f67ffe94cd10b055ac5.json": "16d8271a1f6aacadbffbe0688214b08ebd8a87048534b20d9d69d989779adc59",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1b/stages/001bf2286870aeb211757cc2d3aa762a9ff75181fe715f67ffe94cd10b055ac5-generate.json": "568546c6b23660eeb50c06e31c465f471db52c8e431fc67b8d71afbd86926e2f",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1b/stages/001bf2286870aeb211757cc2d3aa762a9ff75181fe715f67ffe94cd10b055ac5-review.json": "62ef613f60a760f8a1fc587d80e1189148ecce1857c6e30b2fe1bfe5f3ea6e8f",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1b/requests/001bf2286870aeb211757cc2d3aa762a9ff75181fe715f67ffe94cd10b055ac5-generate.json": "bf35de3c106e2dcb3d5b6139bd0c8fc6c1661d51574d5f0f844105c396a299db",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/1b/requests/001bf2286870aeb211757cc2d3aa762a9ff75181fe715f67ffe94cd10b055ac5-review.json": "9c7bdd63b3313255540e76afda402a04247bf744d575d7940b3a1cca66e56c69"
+    }
+  },
+  {
+    "id": "0085c87d38ed3f12e8784b5b7d783f49d3dc572bab780d035565957bd7d6849d",
+    "completed": 1791079672.08447,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/85/stages/0085c87d38ed3f12e8784b5b7d783f49d3dc572bab780d035565957bd7d6849d-generate.json": "579162334cef131bdd61b74fc307e1b2c3366c8fc3a2efa5b3af7ec192f4ab92",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/85/requests/0085c87d38ed3f12e8784b5b7d783f49d3dc572bab780d035565957bd7d6849d-generate.json": "0104c3200fc4b92c67d052e48ed7bcd65ca4ebc936a0d97d4fe7b3b159f99813"
+    }
+  },
+  {
+    "id": "0033149d6f9109508832126f0faf6e5373fc42498f9373861c8134b785efdf4a",
+    "completed": 1791080694.7029033,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/33/stages/0033149d6f9109508832126f0faf6e5373fc42498f9373861c8134b785efdf4a-generate.json": "443db326fbebbdd9a59042f6ca5cf47a36487437e6c6c16260980ff911a15f1e",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/33/requests/0033149d6f9109508832126f0faf6e5373fc42498f9373861c8134b785efdf4a-generate.json": "42449404bf7bfbde6ff2368e44e39aaf9fae763ef1acf7d7320f9fce51a3cebe"
+    }
+  },
+  {
+    "id": "0042fe32eb5b1734ce94c645301cfc282e6cc44f4cb97bb4cd86ca691986f667",
+    "completed": 1791081038.2298074,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/42/stages/0042fe32eb5b1734ce94c645301cfc282e6cc44f4cb97bb4cd86ca691986f667-generate.json": "46f4399dac678d103da093d3b672e4362f924d7e56023bf61597ee3acf0ccb59",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/42/requests/0042fe32eb5b1734ce94c645301cfc282e6cc44f4cb97bb4cd86ca691986f667-generate.json": "a462932cf5b7aa87f914a9994747d76309efe454dc1d0c488b09b7e0681ad575"
+    }
+  },
+  {
+    "id": "004a1742294948aeabeaeb8f079794239af6a5ea614ba9fb0f0acf4cf430cd3d",
+    "completed": 1791079573.9545808,
+    "files": {
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/4a/stages/004a1742294948aeabeaeb8f079794239af6a5ea614ba9fb0f0acf4cf430cd3d-generate.json": "dd4fbd07509f9cd578502398f03a9b4607d4f9d51b6e70beff29f2a309a2388c",
+      "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/00/4a/requests/004a1742294948aeabeaeb8f079794239af6a5ea614ba9fb0f0acf4cf430cd3d-generate.json": "f6b8e6c4a271cb8a3e55c32b34730a72b21e140d56f0ce89c5291ae0d1bad169"
+    }
+  }
+]

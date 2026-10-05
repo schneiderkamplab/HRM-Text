@@ -1,0 +1,18 @@
+{
+  "reviewed_rows": 32,
+  "languages": {
+    "sl": 16,
+    "sq": 16,
+    "sr": 0
+  },
+  "all_mechanical_checks_pass": true,
+  "sr_availability": "Empty release ledger; additional first 256 candidate audit jobs all pending (65 denoising,65 prefix,65 span,61 reorder); not a census of the live audit queue",
+  "pins": {
+    "evidence.json": "66772bf4839a5cd6e6ee958da9cb54038d5ae133a0fe79a4618d2648c1682a1e",
+    "snapshot.json": "b0c7f7d672c7c60994f86f230fbcf9d35f0f8d3d00d2338622df4cdf9e118e9b",
+    "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+    "case-review.md": "37bbc0b30a71232ab3f85c0f9335a8bd0365ef7202276030d72ee656e55d67bc",
+    "extract.py": "5e07ba9365cfecc6a400095573e6830d220e414ede53a61f822d5355126c1bbe",
+    "finalize.py": "84a1988900aa05bb41228dcdf47d5646a0a89824888f68812127e3ee9802fcb4"
+  }
+}

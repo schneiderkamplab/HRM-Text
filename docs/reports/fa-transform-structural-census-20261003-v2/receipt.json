@@ -1,0 +1,19 @@
+{
+  "status": "diagnostic_only_no_filter_applied",
+  "rows": 242042,
+  "proposed_minimal_exclusions": 7086,
+  "remaining_untouched": 234956,
+  "strict_category_only": 6095,
+  "strict_heading_only": 0,
+  "empty_field_heavy": 7180,
+  "tests_passed": 7,
+  "publication_inputs_unchanged": true,
+  "code_sha256": "9cc7a83249cef416eddc6ca71bb9bc81135cb5be877b65fff62307ed3c60a691",
+  "files": {
+    "report.json": "8f3c77afe2558090de312b8632b18e8c952102163d6c819cc57a8673da7369cd",
+    "report.md": "5d5a6d52eee6eba31588fbce76fcb21b84a5012db1c1898bb66a00d5069daf52",
+    "examples.json": "eafe34a81cc25f4bb8f568aae59602c87cd037c719ba7a71aeec7a87f66debee",
+    "flags.jsonl": "7bba7ec4ec7d0c94d1bdfe4f38763b9e1e4f3ce6033866086c35fd7b9ecd1ddc",
+    "summary.json": "31ae99614f710bce706b1c01ec04a8b9dc8cd06cc549e5bc6f0d99226fb3f3ac"
+  }
+}

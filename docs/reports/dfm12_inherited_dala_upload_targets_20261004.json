@@ -1,0 +1,177 @@
+{
+  "components": 24,
+  "unique_dataset_targets": 12,
+  "targets": {
+    "schneiderkamplab/dala-ca-audited": [
+      {
+        "component": "dfm12-dala-ca-acceptability",
+        "config": "acceptability",
+        "language": "ca",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ca-audited"
+      },
+      {
+        "component": "dfm12-dala-ca-correction",
+        "config": "correction",
+        "language": "ca",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ca-audited"
+      }
+    ],
+    "schneiderkamplab/dala-cs-audited": [
+      {
+        "component": "dfm12-dala-cs-acceptability",
+        "config": "acceptability",
+        "language": "cs",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-cs-audited"
+      },
+      {
+        "component": "dfm12-dala-cs-correction",
+        "config": "correction",
+        "language": "cs",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-cs-audited"
+      }
+    ],
+    "schneiderkamplab/dala-de-audited": [
+      {
+        "component": "dfm12-dala-de-acceptability",
+        "config": "acceptability",
+        "language": "de",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-de-audited"
+      },
+      {
+        "component": "dfm12-dala-de-correction",
+        "config": "correction",
+        "language": "de",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-de-audited"
+      }
+    ],
+    "schneiderkamplab/dala-el-audited": [
+      {
+        "component": "dfm12-dala-el-acceptability",
+        "config": "acceptability",
+        "language": "el",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-el-audited"
+      },
+      {
+        "component": "dfm12-dala-el-correction",
+        "config": "correction",
+        "language": "el",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-el-audited"
+      }
+    ],
+    "schneiderkamplab/dala-es-audited": [
+      {
+        "component": "dfm12-dala-es-acceptability",
+        "config": "acceptability",
+        "language": "es",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-es-audited"
+      },
+      {
+        "component": "dfm12-dala-es-correction",
+        "config": "correction",
+        "language": "es",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-es-audited"
+      }
+    ],
+    "schneiderkamplab/dala-et-audited": [
+      {
+        "component": "dfm12-dala-et-acceptability",
+        "config": "acceptability",
+        "language": "et",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-et-audited"
+      },
+      {
+        "component": "dfm12-dala-et-correction",
+        "config": "correction",
+        "language": "et",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-et-audited"
+      }
+    ],
+    "schneiderkamplab/dala-fi-audited": [
+      {
+        "component": "dfm12-dala-fi-acceptability",
+        "config": "acceptability",
+        "language": "fi",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fi-audited"
+      },
+      {
+        "component": "dfm12-dala-fi-correction",
+        "config": "correction",
+        "language": "fi",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fi-audited"
+      }
+    ],
+    "schneiderkamplab/dala-fr-audited": [
+      {
+        "component": "dfm12-dala-fr-acceptability",
+        "config": "acceptability",
+        "language": "fr",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fr-audited"
+      },
+      {
+        "component": "dfm12-dala-fr-correction",
+        "config": "correction",
+        "language": "fr",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fr-audited"
+      }
+    ],
+    "schneiderkamplab/dala-it-audited": [
+      {
+        "component": "dfm12-dala-it-acceptability",
+        "config": "acceptability",
+        "language": "it",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-it-audited"
+      },
+      {
+        "component": "dfm12-dala-it-correction",
+        "config": "correction",
+        "language": "it",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-it-audited"
+      }
+    ],
+    "schneiderkamplab/dala-pt-pt-audited": [
+      {
+        "component": "dfm12-dala-pt-pt-acceptability",
+        "config": "acceptability",
+        "language": "pt-PT",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited"
+      },
+      {
+        "component": "dfm12-dala-pt-pt-correction",
+        "config": "correction",
+        "language": "pt-PT",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited"
+      }
+    ],
+    "schneiderkamplab/dala-ro-audited": [
+      {
+        "component": "dfm12-dala-ro-acceptability",
+        "config": "acceptability",
+        "language": "ro",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ro-audited"
+      },
+      {
+        "component": "dfm12-dala-ro-correction",
+        "config": "correction",
+        "language": "ro",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ro-audited"
+      }
+    ],
+    "schneiderkamplab/dala-uk-audited": [
+      {
+        "component": "dfm12-dala-uk-acceptability",
+        "config": "acceptability",
+        "language": "uk",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-uk-audited"
+      },
+      {
+        "component": "dfm12-dala-uk-correction",
+        "config": "correction",
+        "language": "uk",
+        "source_package": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-uk-audited"
+      }
+    ]
+  },
+  "upload_performed": false,
+  "receipt_scope": "local integration/publication records only; no remote query",
+  "counting_policy": "Union repo IDs with parent DaLA targets; do not add24 components to repo counts"
+}

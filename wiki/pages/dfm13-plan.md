@@ -9,6 +9,18 @@ tags: [data, dfm13, danish, preferences]
 ---
 # DFM13 Dataset Additions
 
+## Baltic Expansion Preparation (2026-10-03)
+
+Lithuanian and Latvian source selection is recorded in the
+[Baltic source inventory](dfm13-baltic-language-sources.md), including verified
+HF revisions/counts, native text, SFT, translation candidates and admission
+gates. The discovery-only status is superseded by CPU download, conversion,
+transformation and all-43-pair translation preparation. Candidates remain
+audit-gated, not admitted training additions. The separate synthetic campaign
+targets 70K accepted conversations per language. DaLA creation for these
+languages is explicitly owned by a parallel thread and excluded from this work;
+original DaLA source articles/sittings are retained as explicitly requested.
+
 ## Existing Model Charter Inheritance (2026-10-02)
 
 User requested integration of `danish-foundation-models/model-charter` unless
@@ -35,6 +47,18 @@ No claim that later charter amendments are covered, and no automatic source
 revision update or regeneration was made.
 
 ## MATH Repeat Update (2026-10-02)
+
+### HF-ready Package (2026-10-04)
+
+The missing CPU publication package is now prepared and verified at
+`exports_dfm13/dfm13-hendrycks-math-worked`, with an external `.ready.json`
+receipt.7,496 unchanged physical rows, repeat5 metadata only; full existing
+MATH source/token adapter verification passed. Source MIT card/citation,
+license attribution, screening and original provenance are included. No HF
+upload or registry change is claimed. Tesla owns publication-metadata integration;
+see [MATH and TLPC handoff](../../docs/reports/dfm13-math-package-tesla-handoff-20261004.md).
+The earlier inventory's missing-package finding is superseded, not its
+observation that remote publication was absent.
 
 User request supersedes the repeat-1 policy below: `hendrycks_math_worked`
 now uses **repeat 5** in the additions registry and preparation defaults.

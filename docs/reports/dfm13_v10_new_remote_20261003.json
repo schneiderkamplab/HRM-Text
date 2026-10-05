@@ -1,0 +1,2463 @@
+{
+  "checked_at": "2026-10-03T19:40:40.324505+00:00",
+  "new_verified": [
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising",
+      "entry": {
+        "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising",
+        "repo_id": "HuggingFaceFW/finepdfs-edu",
+        "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-denoising",
+        "license": "cc-by-4.0",
+        "database_license": "odc-by-1.0",
+        "task": "denoising",
+        "rows": 2,
+        "rendered_tokens": 4789,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-denoising/data/train.jsonl",
+        "output_sha256": "b569b3e52a0cb67e6e9ccac534c94cf53c10dbb8b154ce0135d7c9ea8a85ecbb",
+        "files": {
+          "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+          "gamlec.txt": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+          "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "NOTICE.txt": "7091a15819cd65ba3d2a13b2c3cccaabc6046b37765fab9b9cfe8327cfbe43c9",
+          "cemivet.pdf": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+          "rights-receipt.json": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+          "attribution.json": "826c1e7b9ba25d7838eaebfbcce35ed3b55033ccb9fd419e765fb97f72e87507",
+          "exclusions.json": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+          "README.md": "8b6d13a865570f310874ec3854b103c403e6f5ee3579a3dd837ebbfa63e4fdc7",
+          "cemivet.txt": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+          "gamlec.pdf": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+          "data/train.jsonl": "b569b3e52a0cb67e6e9ccac534c94cf53c10dbb8b154ce0135d7c9ea8a85ecbb"
+        },
+        "repeat": 1,
+        "uploaded": true,
+        "tokenization_performed": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "input_sha256": "e64b21c4695db8e5a5c62885877e908883218bd58ec3577cdce50e6439a99300",
+        "rights_receipt_sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+        "publisher_sha256": "61007757a330c17e6a9eba14661b4a4a50bfe62a5f049eed494940bff6d99620",
+        "status": "accepted_uploaded",
+        "hf_revision": "483dd2568ae064919cce5169d640994dd6a9e960",
+        "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-denoising/manifest.json",
+        "export_manifest_sha256": "95cf0df5a37cf1eaf0b574c6c7c8b7ee741edb1d5d82543e97773200f2b6be53",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising/tokens",
+        "tokenized_tokens": 4789,
+        "tokenized_rows": 2,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-denoising",
+        "revision": "483dd2568ae064919cce5169d640994dd6a9e960",
+        "head_matches": true,
+        "files": {
+          "ODC-BY-1.0.html": {
+            "sha256": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+            "git_blob_sha1": "d3a322430b7cfb4d2a9fa115c8527b165a8a0b45",
+            "method": "revision_bound_git_blob"
+          },
+          "gamlec.txt": {
+            "sha256": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+            "git_blob_sha1": "47adb625a8e058d3b3e68f95499c5d0e1920e567",
+            "method": "revision_bound_git_blob"
+          },
+          "CC-BY-4.0.txt": {
+            "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+            "git_blob_sha1": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+            "method": "revision_bound_git_blob"
+          },
+          "NOTICE.txt": {
+            "sha256": "7091a15819cd65ba3d2a13b2c3cccaabc6046b37765fab9b9cfe8327cfbe43c9",
+            "git_blob_sha1": "3a8a8ce5ab9fe7f09e1d647f6ceb43ae2cb1b7b0",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.pdf": {
+            "sha256": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "rights-receipt.json": {
+            "sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+            "git_blob_sha1": "217ca238d416ee631f306671ea2d9bfd2e6524e0",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution.json": {
+            "sha256": "826c1e7b9ba25d7838eaebfbcce35ed3b55033ccb9fd419e765fb97f72e87507",
+            "git_blob_sha1": "213c39a1c977197a62050131802f6a8289669b1b",
+            "method": "revision_bound_git_blob"
+          },
+          "exclusions.json": {
+            "sha256": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "README.md": {
+            "sha256": "8b6d13a865570f310874ec3854b103c403e6f5ee3579a3dd837ebbfa63e4fdc7",
+            "git_blob_sha1": "8cc658b7cc4b42c1948d36ef1b6b3f3e56df6fd7",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.txt": {
+            "sha256": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+            "git_blob_sha1": "18652906408431a83c306e240d76cfe422ea0166",
+            "method": "revision_bound_git_blob"
+          },
+          "gamlec.pdf": {
+            "sha256": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "data/train.jsonl": {
+            "sha256": "b569b3e52a0cb67e6e9ccac534c94cf53c10dbb8b154ce0135d7c9ea8a85ecbb",
+            "git_blob_sha1": "d67343b28e99d716d00057f3a20d05a0dbee7eff",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "95cf0df5a37cf1eaf0b574c6c7c8b7ee741edb1d5d82543e97773200f2b6be53",
+            "git_blob_sha1": "473b457bda339110e5c198064848345f5a301393",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering",
+      "entry": {
+        "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering",
+        "repo_id": "HuggingFaceFW/finepdfs-edu",
+        "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-paragraph-reordering",
+        "license": "cc-by-4.0",
+        "database_license": "odc-by-1.0",
+        "task": "paragraph-reordering",
+        "rows": 1,
+        "rendered_tokens": 3220,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-paragraph-reordering/data/train.jsonl",
+        "output_sha256": "4c65ed4c4de455ead0c6499aaa849246a98f523dd3f63aa0e9856c9756d987de",
+        "files": {
+          "rights-receipt.json": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+          "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+          "cemivet.txt": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+          "NOTICE.txt": "be8df3341d51e05e67761a52a9cf53660dc45a208b92a7e1c8d47ddc1e5b50d2",
+          "cemivet.pdf": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+          "exclusions.json": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+          "gamlec.txt": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+          "attribution.json": "a4f4af48cf7098ecf3044c446d84273f077ca8df9552f049ef02c09dd7f25ff4",
+          "gamlec.pdf": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+          "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "README.md": "d0ee3d7628fac3971b7a37c8c9330223b6acf0052cd7f92b0a3885943bcfeadb",
+          "data/train.jsonl": "4c65ed4c4de455ead0c6499aaa849246a98f523dd3f63aa0e9856c9756d987de"
+        },
+        "repeat": 1,
+        "uploaded": true,
+        "tokenization_performed": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "input_sha256": "e64b21c4695db8e5a5c62885877e908883218bd58ec3577cdce50e6439a99300",
+        "rights_receipt_sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+        "publisher_sha256": "61007757a330c17e6a9eba14661b4a4a50bfe62a5f049eed494940bff6d99620",
+        "status": "accepted_uploaded",
+        "hf_revision": "25dca7321be06274e67a2765ccd6064a51a28133",
+        "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-paragraph-reordering/manifest.json",
+        "export_manifest_sha256": "eaacb74afb5409ead0cabb076bb18a333e2f851355486575f6b056b8207a62eb",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering/tokens",
+        "tokenized_tokens": 3220,
+        "tokenized_rows": 1,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-paragraph-reordering",
+        "revision": "25dca7321be06274e67a2765ccd6064a51a28133",
+        "head_matches": true,
+        "files": {
+          "rights-receipt.json": {
+            "sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+            "git_blob_sha1": "217ca238d416ee631f306671ea2d9bfd2e6524e0",
+            "method": "revision_bound_git_blob"
+          },
+          "ODC-BY-1.0.html": {
+            "sha256": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+            "git_blob_sha1": "d3a322430b7cfb4d2a9fa115c8527b165a8a0b45",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.txt": {
+            "sha256": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+            "git_blob_sha1": "18652906408431a83c306e240d76cfe422ea0166",
+            "method": "revision_bound_git_blob"
+          },
+          "NOTICE.txt": {
+            "sha256": "be8df3341d51e05e67761a52a9cf53660dc45a208b92a7e1c8d47ddc1e5b50d2",
+            "git_blob_sha1": "f75a8d63abdd866ee9b40cb17626d1893fbb105c",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.pdf": {
+            "sha256": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "exclusions.json": {
+            "sha256": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "gamlec.txt": {
+            "sha256": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+            "git_blob_sha1": "47adb625a8e058d3b3e68f95499c5d0e1920e567",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution.json": {
+            "sha256": "a4f4af48cf7098ecf3044c446d84273f077ca8df9552f049ef02c09dd7f25ff4",
+            "git_blob_sha1": "98ee9088e7dfcce13adaf78e71471c854bd7d0d0",
+            "method": "revision_bound_git_blob"
+          },
+          "gamlec.pdf": {
+            "sha256": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "CC-BY-4.0.txt": {
+            "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+            "git_blob_sha1": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "d0ee3d7628fac3971b7a37c8c9330223b6acf0052cd7f92b0a3885943bcfeadb",
+            "git_blob_sha1": "9c20d2032079652c56901ea4ae61ff6e7d03094f",
+            "method": "revision_bound_git_blob"
+          },
+          "data/train.jsonl": {
+            "sha256": "4c65ed4c4de455ead0c6499aaa849246a98f523dd3f63aa0e9856c9756d987de",
+            "git_blob_sha1": "1d08e614e02db92688093e7cc62a31459a743989",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "eaacb74afb5409ead0cabb076bb18a333e2f851355486575f6b056b8207a62eb",
+            "git_blob_sha1": "e646b67c023525605023ef9339f06cb167e54388",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation",
+      "entry": {
+        "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation",
+        "repo_id": "HuggingFaceFW/finepdfs-edu",
+        "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-prefix-continuation",
+        "license": "cc-by-4.0",
+        "database_license": "odc-by-1.0",
+        "task": "prefix-continuation",
+        "rows": 2,
+        "rendered_tokens": 2426,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-prefix-continuation/data/train.jsonl",
+        "output_sha256": "a953737d629b2d90b34573535d06dd17ca0f1d3a5404c92ca3838c81fd8eca7d",
+        "files": {
+          "NOTICE.txt": "56d33b9323cac8a95296ed11d54b81416875ad81757a83677810398b66d3430e",
+          "rights-receipt.json": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+          "cemivet.txt": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+          "cemivet.pdf": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+          "attribution.json": "12d43b47e498b2c34eddde2100098c797943469b18c6ac91de5c8c8f8630431c",
+          "README.md": "94619879f81424ae10ace02cfb1fbe8cdad12e191473f5d3d4c44f1606eb901f",
+          "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+          "exclusions.json": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+          "gamlec.pdf": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+          "gamlec.txt": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+          "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "data/train.jsonl": "a953737d629b2d90b34573535d06dd17ca0f1d3a5404c92ca3838c81fd8eca7d"
+        },
+        "repeat": 1,
+        "uploaded": true,
+        "tokenization_performed": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "input_sha256": "e64b21c4695db8e5a5c62885877e908883218bd58ec3577cdce50e6439a99300",
+        "rights_receipt_sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+        "publisher_sha256": "61007757a330c17e6a9eba14661b4a4a50bfe62a5f049eed494940bff6d99620",
+        "status": "accepted_uploaded",
+        "hf_revision": "21067cf396db0ee85e8ee3a2fb4b30ea227f5b74",
+        "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-prefix-continuation/manifest.json",
+        "export_manifest_sha256": "ca9eb07213fde7886a98557db2685bcab84c8e9032c4c3c0c6d8a6eeeafdd7f4",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation/tokens",
+        "tokenized_tokens": 2426,
+        "tokenized_rows": 2,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-prefix-continuation",
+        "revision": "21067cf396db0ee85e8ee3a2fb4b30ea227f5b74",
+        "head_matches": true,
+        "files": {
+          "NOTICE.txt": {
+            "sha256": "56d33b9323cac8a95296ed11d54b81416875ad81757a83677810398b66d3430e",
+            "git_blob_sha1": "d2137840f552e32a84e30249b160d61fc0fddc74",
+            "method": "revision_bound_git_blob"
+          },
+          "rights-receipt.json": {
+            "sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+            "git_blob_sha1": "217ca238d416ee631f306671ea2d9bfd2e6524e0",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.txt": {
+            "sha256": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+            "git_blob_sha1": "18652906408431a83c306e240d76cfe422ea0166",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.pdf": {
+            "sha256": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "attribution.json": {
+            "sha256": "12d43b47e498b2c34eddde2100098c797943469b18c6ac91de5c8c8f8630431c",
+            "git_blob_sha1": "961d5dd47d06fd758b90ed330ad8885fde753a44",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "94619879f81424ae10ace02cfb1fbe8cdad12e191473f5d3d4c44f1606eb901f",
+            "git_blob_sha1": "95fced46049d340d9da264c19e6db4511bd668a2",
+            "method": "revision_bound_git_blob"
+          },
+          "ODC-BY-1.0.html": {
+            "sha256": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+            "git_blob_sha1": "d3a322430b7cfb4d2a9fa115c8527b165a8a0b45",
+            "method": "revision_bound_git_blob"
+          },
+          "exclusions.json": {
+            "sha256": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "gamlec.pdf": {
+            "sha256": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "gamlec.txt": {
+            "sha256": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+            "git_blob_sha1": "47adb625a8e058d3b3e68f95499c5d0e1920e567",
+            "method": "revision_bound_git_blob"
+          },
+          "CC-BY-4.0.txt": {
+            "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+            "git_blob_sha1": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+            "method": "revision_bound_git_blob"
+          },
+          "data/train.jsonl": {
+            "sha256": "a953737d629b2d90b34573535d06dd17ca0f1d3a5404c92ca3838c81fd8eca7d",
+            "git_blob_sha1": "2f78f1b4d7305cfab9cd26128982525ae85b4d35",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "ca9eb07213fde7886a98557db2685bcab84c8e9032c4c3c0c6d8a6eeeafdd7f4",
+            "git_blob_sha1": "7237fd587c711d59768040042c63487327200264",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling",
+      "entry": {
+        "name": "dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling",
+        "repo_id": "HuggingFaceFW/finepdfs-edu",
+        "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-span-filling",
+        "license": "cc-by-4.0",
+        "database_license": "odc-by-1.0",
+        "task": "span-filling",
+        "rows": 2,
+        "rendered_tokens": 2431,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-span-filling/data/train.jsonl",
+        "output_sha256": "17ffa41eb3c50f63edd78acc6d18c7d5121df19c8e48f4a213aeeda2a207c09c",
+        "files": {
+          "NOTICE.txt": "31550862b426a537d077f2317e9cba3fb82c31c706eb659e5195f222f4199de0",
+          "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "cemivet.txt": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+          "gamlec.txt": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+          "exclusions.json": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+          "cemivet.pdf": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+          "rights-receipt.json": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+          "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+          "attribution.json": "d191990c84f8658ae090d29de4f60171f3ca73376bd5292fa238fdd51e8e93dd",
+          "README.md": "bd8a3fe55222de51b21b8904834e9e4be14c082bc98f28c861a1919134caf6d4",
+          "gamlec.pdf": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+          "data/train.jsonl": "17ffa41eb3c50f63edd78acc6d18c7d5121df19c8e48f4a213aeeda2a207c09c"
+        },
+        "repeat": 1,
+        "uploaded": true,
+        "tokenization_performed": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "input_sha256": "e64b21c4695db8e5a5c62885877e908883218bd58ec3577cdce50e6439a99300",
+        "rights_receipt_sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+        "publisher_sha256": "61007757a330c17e6a9eba14661b4a4a50bfe62a5f049eed494940bff6d99620",
+        "status": "accepted_uploaded",
+        "hf_revision": "583cbd3936ac6ebb06af11ceeb75d8bf5bc40a42",
+        "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lt-exact-ccby-v1-span-filling/manifest.json",
+        "export_manifest_sha256": "a16e284bac38f6331dda529edb297470b1f20e1e0ebada08601b09c2c89e045c",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling/tokens",
+        "tokenized_tokens": 2431,
+        "tokenized_rows": 2,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave3-finepdfs-lt-exact-ccby-v1-span-filling",
+        "revision": "583cbd3936ac6ebb06af11ceeb75d8bf5bc40a42",
+        "head_matches": true,
+        "files": {
+          "NOTICE.txt": {
+            "sha256": "31550862b426a537d077f2317e9cba3fb82c31c706eb659e5195f222f4199de0",
+            "git_blob_sha1": "0ebb50305ac2a789b4305bdf871fa18dbe37f5cf",
+            "method": "revision_bound_git_blob"
+          },
+          "CC-BY-4.0.txt": {
+            "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+            "git_blob_sha1": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+            "method": "revision_bound_git_blob"
+          },
+          "cemivet.txt": {
+            "sha256": "9f5bb9502bc1611c43b9c7d9d9f5ce17e2737978a16cfe1eeb367e6e1b5eebac",
+            "git_blob_sha1": "18652906408431a83c306e240d76cfe422ea0166",
+            "method": "revision_bound_git_blob"
+          },
+          "gamlec.txt": {
+            "sha256": "3cdf6fe0b2e243574652556d69e12faadd0544dbf14fd59388b31e0e081d1758",
+            "git_blob_sha1": "47adb625a8e058d3b3e68f95499c5d0e1920e567",
+            "method": "revision_bound_git_blob"
+          },
+          "exclusions.json": {
+            "sha256": "5cc20613ab670d20e1d36222ea5bf7d9ca5403b994e2ee0cc1301baa8c93ba41",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "cemivet.pdf": {
+            "sha256": "e4f664efa249bf8d3793da6f5363c9adf3a86a74f28ac5d747e2d8c745016678",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "rights-receipt.json": {
+            "sha256": "a526ac34450a7b0a3d62aa8dd33c1a05bbc739c170e6554c598ca31f228c686b",
+            "git_blob_sha1": "217ca238d416ee631f306671ea2d9bfd2e6524e0",
+            "method": "revision_bound_git_blob"
+          },
+          "ODC-BY-1.0.html": {
+            "sha256": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+            "git_blob_sha1": "d3a322430b7cfb4d2a9fa115c8527b165a8a0b45",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution.json": {
+            "sha256": "d191990c84f8658ae090d29de4f60171f3ca73376bd5292fa238fdd51e8e93dd",
+            "git_blob_sha1": "1487cfed6e5c6d9a9947ee7f5a865f7d9fefdb30",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "bd8a3fe55222de51b21b8904834e9e4be14c082bc98f28c861a1919134caf6d4",
+            "git_blob_sha1": "958218417a96ee8c10c649eec6c6dd27893df81d",
+            "method": "revision_bound_git_blob"
+          },
+          "gamlec.pdf": {
+            "sha256": "2e80dde9a3985613a8d4c1416252e4fad0f955bc839a663ef32c1a9408af7fc7",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "data/train.jsonl": {
+            "sha256": "17ffa41eb3c50f63edd78acc6d18c7d5121df19c8e48f4a213aeeda2a207c09c",
+            "git_blob_sha1": "4f7435314b8467b58cfd1a791ab8e22befa28831",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "a16e284bac38f6331dda529edb297470b1f20e1e0ebada08601b09c2c89e045c",
+            "git_blob_sha1": "1e2db74ef0af1bcc340eb0b1928919a2d21bbcc4",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_bs",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_bs",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-bs",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-bs",
+        "rows": 102,
+        "pairs": 51,
+        "rendered_tokens": 3780,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-bs/data/train.jsonl",
+        "output_sha256": "4733084322a4bcf1d68bec3eef3d326a35936e7e41dc50e415cf6c40f7783ee4",
+        "selection_sha256": "048d00a507fe891cd72bb86b2202181d43e7b2924a748a57cb830aef2cc9bbda",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948": "attribution/be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948.json",
+          "1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90": "attribution/1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "90e2c9a9ad72d1289d97085122d2fcbbdfc2f39a",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-bs/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_bs/tokens",
+        "tokenized_tokens": 3780,
+        "tokenized_rows": 102,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_bs/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-bs",
+        "revision": "90e2c9a9ad72d1289d97085122d2fcbbdfc2f39a",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "4733084322a4bcf1d68bec3eef3d326a35936e7e41dc50e415cf6c40f7783ee4",
+            "git_blob_sha1": "d19f785981c64e2dd10726a0e07a0cef260e00c4",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948.json": {
+            "sha256": "be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948",
+            "git_blob_sha1": "a3e15cb0c75cb181a470da7f151b04294f2305f7",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90.json": {
+            "sha256": "1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90",
+            "git_blob_sha1": "cabbd9a1bf695cc76650857594dbd2fbe68f6540",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "5e0438ce4f8d1d9f5d8bf8bb9af16478ec2376f3d8dbe612ee696c8ebcc412f5",
+            "git_blob_sha1": "b03e3b9ba052dab8d9ed46b88e5fa7e847203257",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "f469878a9cd46116eb1953d20a87dee8ac79d46018d22d8745cdc8c670467b23",
+            "git_blob_sha1": "6f5e5dbb4d87ef827e4dfed559118b810d56de94",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_ca",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_ca",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-ca",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-ca",
+        "rows": 182,
+        "pairs": 91,
+        "rendered_tokens": 7476,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-ca/data/train.jsonl",
+        "output_sha256": "0f0527a8a941bc86034c525313c5449b14307dca7da6c8952d75ef3b22b63af9",
+        "selection_sha256": "1d49462e00590973430abea56e65f7abc1558840ad80e8f3f3da55c9e2c22b83",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575": "attribution/f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "f0b507f1acec86a1ff9f8d8dddf53fdf04f0cbeb",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-ca/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_ca/tokens",
+        "tokenized_tokens": 7476,
+        "tokenized_rows": 182,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_ca/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-ca",
+        "revision": "f0b507f1acec86a1ff9f8d8dddf53fdf04f0cbeb",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "0f0527a8a941bc86034c525313c5449b14307dca7da6c8952d75ef3b22b63af9",
+            "git_blob_sha1": "ddf348c48524c0f5cfcec16aa956786ec5246e6a",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575.json": {
+            "sha256": "f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575",
+            "git_blob_sha1": "6b5732b44f19ec5eb7cbbd25246766d23f30e40f",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "051aada5d7ffdf8889900af95f2f7bec7d4805057c8f7a86b0fb82f1e1d78d71",
+            "git_blob_sha1": "60554d98a256374c946b2607747d8c85bffa3e00",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "7372524b1ed96724780c22d6ace0b6a70780ce9c36549a8381d288276b7da31f",
+            "git_blob_sha1": "c8a86562fa192602aab0e56383c60caee6fdfd60",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_es",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_es",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-es",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-es",
+        "rows": 4340,
+        "pairs": 2170,
+        "rendered_tokens": 195244,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-es/data/train.jsonl",
+        "output_sha256": "f0880e7cf02bf2c9a18090cb5714262a208c2c7929eab48a8a7857da1f20b0f7",
+        "selection_sha256": "258748ef0bf23e6afb55e8ada5b2e8af318d688cf7ce7e28bb58678d71a57ceb",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "3271add7906e7a80e72544161566f2aba5001aa311037625b62676684cb15f0a": "attribution/3271add7906e7a80e72544161566f2aba5001aa311037625b62676684cb15f0a.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "a881976bda444d95fd3bb3dbf39036a540910f30a0c2a5748c96bb101b29dce4": "attribution/a881976bda444d95fd3bb3dbf39036a540910f30a0c2a5748c96bb101b29dce4.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "f0d2403901c124fc92fc5c0c68ec453678146c98",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-es/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_es/tokens",
+        "tokenized_tokens": 195244,
+        "tokenized_rows": 4340,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_es/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-es",
+        "revision": "f0d2403901c124fc92fc5c0c68ec453678146c98",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "f0880e7cf02bf2c9a18090cb5714262a208c2c7929eab48a8a7857da1f20b0f7",
+            "git_blob_sha1": "8c4464ba983d5dca92cb0619e65294cb80ffa3f6",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/3271add7906e7a80e72544161566f2aba5001aa311037625b62676684cb15f0a.json": {
+            "sha256": "3271add7906e7a80e72544161566f2aba5001aa311037625b62676684cb15f0a",
+            "git_blob_sha1": "089e9c87981dcb03a14f3a95248ce603a31ab5d3",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/a881976bda444d95fd3bb3dbf39036a540910f30a0c2a5748c96bb101b29dce4.json": {
+            "sha256": "a881976bda444d95fd3bb3dbf39036a540910f30a0c2a5748c96bb101b29dce4",
+            "git_blob_sha1": "be70ef591d333302e903c9706a1b190d473cdd01",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "5148e7d4ee22ccaf31d533c8cc824f9e6912027001864b1b7aeac02cb50f5f1e",
+            "git_blob_sha1": "f52d928875c95b63b8d5e06361e13aaef34838c5",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "ec7729781a59f5edb68d5256bdd68a4d4abaf1d79b26c75a947cd8b25667cc65",
+            "git_blob_sha1": "f702d49de3accb510322f93743accede8668ed92",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_et",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_et",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-et",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-et",
+        "rows": 318,
+        "pairs": 159,
+        "rendered_tokens": 12544,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-et/data/train.jsonl",
+        "output_sha256": "4995616760e64ca13b270147b90b7a95fd6e749127411aa4d44098334e64d141",
+        "selection_sha256": "9e17d747aa9da9e5bd124f631552c13b604a68fab2b048d01648ed4f62b053a4",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "04f274a7d2b3d269b2916fa1aa6f30ff795b6bf65880687d24b2c9aa7a5b2476": "attribution/04f274a7d2b3d269b2916fa1aa6f30ff795b6bf65880687d24b2c9aa7a5b2476.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "60e15551cff4c72fbcb17612e10d11a346368eac61259bd7c7d5a1bd27b254d7": "attribution/60e15551cff4c72fbcb17612e10d11a346368eac61259bd7c7d5a1bd27b254d7.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "1218146975504d17032825790ec627b040dd52de",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-et/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_et/tokens",
+        "tokenized_tokens": 12544,
+        "tokenized_rows": 318,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_et/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-et",
+        "revision": "1218146975504d17032825790ec627b040dd52de",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "4995616760e64ca13b270147b90b7a95fd6e749127411aa4d44098334e64d141",
+            "git_blob_sha1": "346b0e7a378bfc3935ab55ae5d31b97f3f57584c",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/04f274a7d2b3d269b2916fa1aa6f30ff795b6bf65880687d24b2c9aa7a5b2476.json": {
+            "sha256": "04f274a7d2b3d269b2916fa1aa6f30ff795b6bf65880687d24b2c9aa7a5b2476",
+            "git_blob_sha1": "bf808d0f9a3e281d2477ea206e9cc14a6e32de15",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/60e15551cff4c72fbcb17612e10d11a346368eac61259bd7c7d5a1bd27b254d7.json": {
+            "sha256": "60e15551cff4c72fbcb17612e10d11a346368eac61259bd7c7d5a1bd27b254d7",
+            "git_blob_sha1": "d74f035f5fbf02596df822eaca819bc5f105f525",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "549346dec3d3c2e3763064765c072a8bc3a5906dd6ca0c501edacd8a0fd8fbb7",
+            "git_blob_sha1": "adfa700455d9356e6992aa14e14586a760192389",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "3d8fa3a36412140e6f4fc4be2e9a64e74fe5c0c70d166575ba15da23ae389fba",
+            "git_blob_sha1": "855c3995deafa605bc89c3b4d9c01082b387a7a8",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising",
+      "entry": {
+        "name": "dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising",
+        "repo_id": "HuggingFaceFW/finepdfs-edu",
+        "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lv-exact-ccby-v1-denoising",
+        "license": "cc-by-4.0",
+        "database_license": "odc-by-1.0",
+        "task": "denoising",
+        "rows": 1,
+        "rendered_tokens": 3374,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-lv-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lv-exact-ccby-v1-denoising/data/train.jsonl",
+        "output_sha256": "4298e0d73ec8ce2e8136c76f2e031a18657cf274607a089f2ed8da101291dde8",
+        "files": {
+          "NOTICE.txt": "7091a15819cd65ba3d2a13b2c3cccaabc6046b37765fab9b9cfe8327cfbe43c9",
+          "README.md": "b8202453ecd1a27b7539d03bb561ef7577d02a7b4adbb970ad9262068a7c3833",
+          "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "article.txt": "54364585038f1a39ed4d2fc0e837f71872ad45a2a171a977e9ce9743ac4aea97",
+          "attribution.json": "ab118200516c171f430cfe09c2c5a0e06284f757f0fc70860bbc040f6340921c",
+          "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+          "rights-receipt.json": "bbecaab2751ff316099892327ff8eb88d7b5278708efd3d63b523cd1c7277b29",
+          "exclusions.json": "0075b3da6b7f809026176acf09d94ad8ae81d21d859ee435de578ea126811c13",
+          "article.pdf": "8184efdb3223312b79ff28725e709142586cbd34e86935329dfcff40b32a76a5",
+          "data/train.jsonl": "4298e0d73ec8ce2e8136c76f2e031a18657cf274607a089f2ed8da101291dde8"
+        },
+        "repeat": 1,
+        "uploaded": true,
+        "tokenization_performed": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "input_sha256": "608bc0c73d6f354ac15c9d5ec58d6eed09c10b128d3ce2a016695a07f54318e5",
+        "rights_receipt_sha256": "bbecaab2751ff316099892327ff8eb88d7b5278708efd3d63b523cd1c7277b29",
+        "publisher_sha256": "9f8f531bed1f9ab8482b0b2862a250a9ef89a199ce3795c64fcabf12db558925",
+        "status": "accepted_uploaded",
+        "hf_revision": "2b7d3f1a7fb96c7c25ee30dad7f210adf9109450",
+        "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-lv-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lv-exact-ccby-v1-denoising/manifest.json",
+        "export_manifest_sha256": "410b259bbf01897ebde96f674861c6e02a2c7a755f19dd2040749dc36243715e",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising/tokens",
+        "tokenized_tokens": 3374,
+        "tokenized_rows": 1,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave3-finepdfs-lv-exact-ccby-v1-denoising",
+        "revision": "2b7d3f1a7fb96c7c25ee30dad7f210adf9109450",
+        "head_matches": true,
+        "files": {
+          "NOTICE.txt": {
+            "sha256": "7091a15819cd65ba3d2a13b2c3cccaabc6046b37765fab9b9cfe8327cfbe43c9",
+            "git_blob_sha1": "3a8a8ce5ab9fe7f09e1d647f6ceb43ae2cb1b7b0",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "b8202453ecd1a27b7539d03bb561ef7577d02a7b4adbb970ad9262068a7c3833",
+            "git_blob_sha1": "451a59d320966b0ecd3a4a8138ab502b2792736d",
+            "method": "revision_bound_git_blob"
+          },
+          "CC-BY-4.0.txt": {
+            "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+            "git_blob_sha1": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+            "method": "revision_bound_git_blob"
+          },
+          "article.txt": {
+            "sha256": "54364585038f1a39ed4d2fc0e837f71872ad45a2a171a977e9ce9743ac4aea97",
+            "git_blob_sha1": "707142054db495dc3f8a1015b93e7fcee1ad24cd",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution.json": {
+            "sha256": "ab118200516c171f430cfe09c2c5a0e06284f757f0fc70860bbc040f6340921c",
+            "git_blob_sha1": "9d43fbec84922365035c90f636148a1e3891a567",
+            "method": "revision_bound_git_blob"
+          },
+          "ODC-BY-1.0.html": {
+            "sha256": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+            "git_blob_sha1": "d3a322430b7cfb4d2a9fa115c8527b165a8a0b45",
+            "method": "revision_bound_git_blob"
+          },
+          "rights-receipt.json": {
+            "sha256": "bbecaab2751ff316099892327ff8eb88d7b5278708efd3d63b523cd1c7277b29",
+            "git_blob_sha1": "2a90de338ffea668c28bd2aa8eb5e5a5e9b82c63",
+            "method": "revision_bound_git_blob"
+          },
+          "exclusions.json": {
+            "sha256": "0075b3da6b7f809026176acf09d94ad8ae81d21d859ee435de578ea126811c13",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "article.pdf": {
+            "sha256": "8184efdb3223312b79ff28725e709142586cbd34e86935329dfcff40b32a76a5",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "data/train.jsonl": {
+            "sha256": "4298e0d73ec8ce2e8136c76f2e031a18657cf274607a089f2ed8da101291dde8",
+            "git_blob_sha1": "ad67eb56a56267103a0e668de1143022ec9633db",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "410b259bbf01897ebde96f674861c6e02a2c7a755f19dd2040749dc36243715e",
+            "git_blob_sha1": "e0de7b5737671957618e0c7ee9f3b41f6ddc3463",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation",
+      "entry": {
+        "name": "dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation",
+        "repo_id": "HuggingFaceFW/finepdfs-edu",
+        "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave3-finepdfs-lv-exact-ccby-v1-prefix-continuation",
+        "license": "cc-by-4.0",
+        "database_license": "odc-by-1.0",
+        "task": "prefix-continuation",
+        "rows": 1,
+        "rendered_tokens": 1704,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-lv-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lv-exact-ccby-v1-prefix-continuation/data/train.jsonl",
+        "output_sha256": "4a80258ddb50fca3c9e96364c4e3374aed33ed0a4f0d478a46c3219e403a996f",
+        "files": {
+          "README.md": "b76ab5571fb8d99c2947a714db945b542beeba114deef916e0dec324df394295",
+          "article.txt": "54364585038f1a39ed4d2fc0e837f71872ad45a2a171a977e9ce9743ac4aea97",
+          "rights-receipt.json": "bbecaab2751ff316099892327ff8eb88d7b5278708efd3d63b523cd1c7277b29",
+          "exclusions.json": "0075b3da6b7f809026176acf09d94ad8ae81d21d859ee435de578ea126811c13",
+          "CC-BY-4.0.txt": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "NOTICE.txt": "56d33b9323cac8a95296ed11d54b81416875ad81757a83677810398b66d3430e",
+          "ODC-BY-1.0.html": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+          "attribution.json": "8d1e1a2614339ce0325e8a509eb7e9ee7c0c820db52af45bcb490d27fe634f8a",
+          "article.pdf": "8184efdb3223312b79ff28725e709142586cbd34e86935329dfcff40b32a76a5",
+          "data/train.jsonl": "4a80258ddb50fca3c9e96364c4e3374aed33ed0a4f0d478a46c3219e403a996f"
+        },
+        "repeat": 1,
+        "uploaded": true,
+        "tokenization_performed": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "input_sha256": "608bc0c73d6f354ac15c9d5ec58d6eed09c10b128d3ce2a016695a07f54318e5",
+        "rights_receipt_sha256": "bbecaab2751ff316099892327ff8eb88d7b5278708efd3d63b523cd1c7277b29",
+        "publisher_sha256": "9f8f531bed1f9ab8482b0b2862a250a9ef89a199ce3795c64fcabf12db558925",
+        "status": "accepted_uploaded",
+        "hf_revision": "8bfefb1ad9647c92122b67d9ec7db90ba9ef6b71",
+        "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/finepdfs-lv-exact-ccby-20261003-v1/dfm13-wave3-finepdfs-lv-exact-ccby-v1-prefix-continuation/manifest.json",
+        "export_manifest_sha256": "83513b551f9ab92a875f943f93622641e7827f2a5026db3a05b495d638910cf6",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation/tokens",
+        "tokenized_tokens": 1704,
+        "tokenized_rows": 1,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave3-finepdfs-lv-exact-ccby-v1-prefix-continuation",
+        "revision": "8bfefb1ad9647c92122b67d9ec7db90ba9ef6b71",
+        "head_matches": true,
+        "files": {
+          "README.md": {
+            "sha256": "b76ab5571fb8d99c2947a714db945b542beeba114deef916e0dec324df394295",
+            "git_blob_sha1": "113d5851dd0e0b31be960195d8320327aafecb20",
+            "method": "revision_bound_git_blob"
+          },
+          "article.txt": {
+            "sha256": "54364585038f1a39ed4d2fc0e837f71872ad45a2a171a977e9ce9743ac4aea97",
+            "git_blob_sha1": "707142054db495dc3f8a1015b93e7fcee1ad24cd",
+            "method": "revision_bound_git_blob"
+          },
+          "rights-receipt.json": {
+            "sha256": "bbecaab2751ff316099892327ff8eb88d7b5278708efd3d63b523cd1c7277b29",
+            "git_blob_sha1": "2a90de338ffea668c28bd2aa8eb5e5a5e9b82c63",
+            "method": "revision_bound_git_blob"
+          },
+          "exclusions.json": {
+            "sha256": "0075b3da6b7f809026176acf09d94ad8ae81d21d859ee435de578ea126811c13",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "CC-BY-4.0.txt": {
+            "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+            "git_blob_sha1": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+            "method": "revision_bound_git_blob"
+          },
+          "NOTICE.txt": {
+            "sha256": "56d33b9323cac8a95296ed11d54b81416875ad81757a83677810398b66d3430e",
+            "git_blob_sha1": "d2137840f552e32a84e30249b160d61fc0fddc74",
+            "method": "revision_bound_git_blob"
+          },
+          "ODC-BY-1.0.html": {
+            "sha256": "7d7e622bbb4b5f21b1c5cb2dd7ce8b1b747ee2c3ab9fc8309c19082e12d13b2d",
+            "git_blob_sha1": "d3a322430b7cfb4d2a9fa115c8527b165a8a0b45",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution.json": {
+            "sha256": "8d1e1a2614339ce0325e8a509eb7e9ee7c0c820db52af45bcb490d27fe634f8a",
+            "git_blob_sha1": "f0c3879bcf9217df67b308c6a03b56181f831b37",
+            "method": "revision_bound_git_blob"
+          },
+          "article.pdf": {
+            "sha256": "8184efdb3223312b79ff28725e709142586cbd34e86935329dfcff40b32a76a5",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "data/train.jsonl": {
+            "sha256": "4a80258ddb50fca3c9e96364c4e3374aed33ed0a4f0d478a46c3219e403a996f",
+            "git_blob_sha1": "9e353597a7c63768fcc42cd6d175fcb893524e64",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "83513b551f9ab92a875f943f93622641e7827f2a5026db3a05b495d638910cf6",
+            "git_blob_sha1": "d4813d10912f54422955f0ef5bdc8085196e2712",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_fo",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_fo",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-fo",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-fo",
+        "rows": 68,
+        "pairs": 34,
+        "rendered_tokens": 2788,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-fo/data/train.jsonl",
+        "output_sha256": "b35a1f61d2e826cf851fd10d8ec972c69f05df813a4b7485c3fa3e4a6987e810",
+        "selection_sha256": "a867a6164eb7a16a6f5eaf5e5ba0a5f531068a9375b9e741c9e7b164ede21c7f",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "781e6d458a91e9b05e1620076eecc4c22c273d8cc6b6e1099a99da7dd0c386dc": "attribution/781e6d458a91e9b05e1620076eecc4c22c273d8cc6b6e1099a99da7dd0c386dc.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "361bf06eca87909e5bcf7675034ed8969954728b",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-fo/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_fo/tokens",
+        "tokenized_tokens": 2788,
+        "tokenized_rows": 68,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_fo/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-fo",
+        "revision": "361bf06eca87909e5bcf7675034ed8969954728b",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "b35a1f61d2e826cf851fd10d8ec972c69f05df813a4b7485c3fa3e4a6987e810",
+            "git_blob_sha1": "eeb651b6ef2cc42e439a0a5eb144e84949305995",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/781e6d458a91e9b05e1620076eecc4c22c273d8cc6b6e1099a99da7dd0c386dc.json": {
+            "sha256": "781e6d458a91e9b05e1620076eecc4c22c273d8cc6b6e1099a99da7dd0c386dc",
+            "git_blob_sha1": "28c9c5665187610b140aa2da14f55213a3530a9b",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "ca1b39894550cdb528fa870ea599146119634bcc0068a97a28264a729d0c326b",
+            "git_blob_sha1": "1d417b28dcf269b32fa61a077b77a35199441223",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "60d824e72e2ccef6b4e706f173745b6ad642b0942b36a0c393a547aa436271aa",
+            "git_blob_sha1": "1a499933ec7c2773a685fcacaf561587a837e162",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_hr",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_hr",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-hr",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-hr",
+        "rows": 348,
+        "pairs": 174,
+        "rendered_tokens": 13398,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-hr/data/train.jsonl",
+        "output_sha256": "87c55f5462213ea6669ca74d465f2cd9448f6c646bdf811b91f5d32a6f214342",
+        "selection_sha256": "e62b9d1a0153b7a08ce52b774f6cf7bdd70a139962a3d27127dff4546ed93b40",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "1fbd5835ec7ac78c64cf953220a6d36c378b76b8cef6316b8313d2af635c4da0": "attribution/1fbd5835ec7ac78c64cf953220a6d36c378b76b8cef6316b8313d2af635c4da0.json",
+          "6583afb071e57c0f440400d4ccb0ac6a1d132434514f8c7cbb569a836124d9a8": "attribution/6583afb071e57c0f440400d4ccb0ac6a1d132434514f8c7cbb569a836124d9a8.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "e28b5a5d68086141b140b3b5ba3c54fb526f1840",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-hr/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_hr/tokens",
+        "tokenized_tokens": 13398,
+        "tokenized_rows": 348,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_hr/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-hr",
+        "revision": "e28b5a5d68086141b140b3b5ba3c54fb526f1840",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "87c55f5462213ea6669ca74d465f2cd9448f6c646bdf811b91f5d32a6f214342",
+            "git_blob_sha1": "29095e53074c00eb9894fcc7d53c58a0197f0aa1",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/1fbd5835ec7ac78c64cf953220a6d36c378b76b8cef6316b8313d2af635c4da0.json": {
+            "sha256": "1fbd5835ec7ac78c64cf953220a6d36c378b76b8cef6316b8313d2af635c4da0",
+            "git_blob_sha1": "9b5c2779b2e5f83520be7a663e1e709182e4cf83",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/6583afb071e57c0f440400d4ccb0ac6a1d132434514f8c7cbb569a836124d9a8.json": {
+            "sha256": "6583afb071e57c0f440400d4ccb0ac6a1d132434514f8c7cbb569a836124d9a8",
+            "git_blob_sha1": "960bac7e879c7bc061a341d5cbf3e7c952f714f3",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "b8c2f14107be73e9f142ca85316a6f4e1022940eae5ac188292759696ae85322",
+            "git_blob_sha1": "f226e03bc5ce298db45d249716f46a8ecdd876af",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "1f59f16a734dcc0606a829b200d648384129055b47698fe9bde85b457c7b538e",
+            "git_blob_sha1": "80d3d13a618498d86ba387d36368d335c1ff168f",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_is",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_is",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-is",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-is",
+        "rows": 698,
+        "pairs": 349,
+        "rendered_tokens": 31074,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-is/data/train.jsonl",
+        "output_sha256": "4e764c359e40d44c74cca9ad5f4e93308b2089705155b75599bc31a2053864a9",
+        "selection_sha256": "ed49bc04433c93c603d20a27c4902929d7c2cd4d81657ab8b0e2e70f73a899d1",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "a78fff8ed72f4bcbc8043787dbedf03ca3b20b493ebf135147871cf773ae0590": "attribution/a78fff8ed72f4bcbc8043787dbedf03ca3b20b493ebf135147871cf773ae0590.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "f1ba70843ef10c12e1c3e725cd108937567e82ba",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-is/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_is/tokens",
+        "tokenized_tokens": 31074,
+        "tokenized_rows": 698,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_is/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-is",
+        "revision": "f1ba70843ef10c12e1c3e725cd108937567e82ba",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "4e764c359e40d44c74cca9ad5f4e93308b2089705155b75599bc31a2053864a9",
+            "git_blob_sha1": "bd6dcca14d5784e37bdc279cb46298696a7e91e8",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/a78fff8ed72f4bcbc8043787dbedf03ca3b20b493ebf135147871cf773ae0590.json": {
+            "sha256": "a78fff8ed72f4bcbc8043787dbedf03ca3b20b493ebf135147871cf773ae0590",
+            "git_blob_sha1": "c16a2c0995d31010a05e2a3c0331d87fe189e677",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "7adabea859e366881180201b26e3dbaa24aec95fa225eaf39ba7be4061cf41c7",
+            "git_blob_sha1": "14ba3b299822d2630f9e9cbbde6a6e08a9ba8328",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "d4b5bcaa9b8ca8bdaf24da99ee438b0a2cd0e213d3ffa614ed414f144f48ed4c",
+            "git_blob_sha1": "c38ac394262a6b604a33b7b7467b7929809a1a3b",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_it",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_it",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-it",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-it",
+        "rows": 2440,
+        "pairs": 1220,
+        "rendered_tokens": 107150,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-it/data/train.jsonl",
+        "output_sha256": "783eace2debee9f49e30e2c7f1d46fa3c25aa13b4888f579986868f7630aa1dd",
+        "selection_sha256": "04e2ba15bd3b50c8929b7cb2f30213e0602b4829aa4da2cf4e2a16fb6d584ace",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "f55edc645f307e9ea0439bf93b056bc56e3f231d974cb88917cf707e5fc88ba7": "attribution/f55edc645f307e9ea0439bf93b056bc56e3f231d974cb88917cf707e5fc88ba7.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "94454e6afc6236a3b6253e52c7281727046bdcc75fe7ebbfbf87ac2262130557": "attribution/94454e6afc6236a3b6253e52c7281727046bdcc75fe7ebbfbf87ac2262130557.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "65b50ae574d4e1ba412b1843287537b88eca8def",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-it/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_it/tokens",
+        "tokenized_tokens": 107150,
+        "tokenized_rows": 2440,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_it/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-it",
+        "revision": "65b50ae574d4e1ba412b1843287537b88eca8def",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "783eace2debee9f49e30e2c7f1d46fa3c25aa13b4888f579986868f7630aa1dd",
+            "git_blob_sha1": "3771085979471080e295374c1180db6ddeba0f99",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/f55edc645f307e9ea0439bf93b056bc56e3f231d974cb88917cf707e5fc88ba7.json": {
+            "sha256": "f55edc645f307e9ea0439bf93b056bc56e3f231d974cb88917cf707e5fc88ba7",
+            "git_blob_sha1": "60e1a178fab7fac53ff4adfdca17ce0f53e7c46e",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/94454e6afc6236a3b6253e52c7281727046bdcc75fe7ebbfbf87ac2262130557.json": {
+            "sha256": "94454e6afc6236a3b6253e52c7281727046bdcc75fe7ebbfbf87ac2262130557",
+            "git_blob_sha1": "7a77b36f689ad2b08568136e8e3ee60b0df77bc9",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "36c8860793f43d71c44bc13def8e173e02119d7f01b7b4fafd95bc05da91e110",
+            "git_blob_sha1": "03f87b90bc238d0a16bbb1a11d656e96f2793a74",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "78890b53e45e2713035a5226049b4d0e61577e9d8b44d30ffd6df1a699ec22f2",
+            "git_blob_sha1": "2be33f1f1ede596934bd16bd815ae7f382745f01",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_lb",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_lb",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-lb",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-lb",
+        "rows": 32,
+        "pairs": 16,
+        "rendered_tokens": 1324,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-lb/data/train.jsonl",
+        "output_sha256": "5bc32c085780af1edd9ff684b13b3c045cdc44eef47ab26792e96169a9124bfc",
+        "selection_sha256": "e50dd23d9d3ce494f5ce6f7cb0df71b2b22859422605fcbcfc2c7c59753728bc",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "4e34991a39795cf5dafc148cebed4f6207e166b189e8f13abd1f6e9d06a4f26d": "attribution/4e34991a39795cf5dafc148cebed4f6207e166b189e8f13abd1f6e9d06a4f26d.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "7b7aa80247c032b094f8fee0e7c26411d730a670",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-lb/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_lb/tokens",
+        "tokenized_tokens": 1324,
+        "tokenized_rows": 32,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_lb/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-lb",
+        "revision": "7b7aa80247c032b094f8fee0e7c26411d730a670",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "5bc32c085780af1edd9ff684b13b3c045cdc44eef47ab26792e96169a9124bfc",
+            "git_blob_sha1": "0bf465d85a15c8a768af19b793253d1d2bd8a196",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/4e34991a39795cf5dafc148cebed4f6207e166b189e8f13abd1f6e9d06a4f26d.json": {
+            "sha256": "4e34991a39795cf5dafc148cebed4f6207e166b189e8f13abd1f6e9d06a4f26d",
+            "git_blob_sha1": "32197ccc1d72fa3c277c8023bc36ca7d3d3dedef",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "c5013eb707cbb58dabd6c667f75b7f7f448ff793aa85f46a8754261c70deea7b",
+            "git_blob_sha1": "99e0521207946cf7b693768ab9fa58b37a77074b",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "30822694b7ed5a6ca0dcc78dee083b020d8a310a7ace736729d339cc38b790bb",
+            "git_blob_sha1": "aea37cfb4df02cb8263f73690356b54dce3492e5",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_nb",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_nb",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-nb",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-nb",
+        "rows": 718,
+        "pairs": 359,
+        "rendered_tokens": 32898,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-nb/data/train.jsonl",
+        "output_sha256": "4152d5d18d49df2b1f7559854a197379cc8615999b37b7a5a1da6c34626859ca",
+        "selection_sha256": "6bafd1fe5c8f58af9ccedbbf564bb950c769d5a996527c3c315d1006af635583",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "3cc75278dd691d34f38e8e25dac447730194cf8177fafc683e8b107045b5c9b8": "attribution/3cc75278dd691d34f38e8e25dac447730194cf8177fafc683e8b107045b5c9b8.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "0a848de53ac91259177eabf58892d15cafda0cd4c85e70e630844648d33a67f2": "attribution/0a848de53ac91259177eabf58892d15cafda0cd4c85e70e630844648d33a67f2.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "e9998bd2131e19033833e1c7eb01585dc34f7134",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-nb/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_nb/tokens",
+        "tokenized_tokens": 32898,
+        "tokenized_rows": 718,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_nb/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-nb",
+        "revision": "e9998bd2131e19033833e1c7eb01585dc34f7134",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "4152d5d18d49df2b1f7559854a197379cc8615999b37b7a5a1da6c34626859ca",
+            "git_blob_sha1": "b2c14af27dc15cfed8e2c52eb0fe146c01fed682",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/3cc75278dd691d34f38e8e25dac447730194cf8177fafc683e8b107045b5c9b8.json": {
+            "sha256": "3cc75278dd691d34f38e8e25dac447730194cf8177fafc683e8b107045b5c9b8",
+            "git_blob_sha1": "eed15eec6c38bbcf1d80244aec527fcfb929f631",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/0a848de53ac91259177eabf58892d15cafda0cd4c85e70e630844648d33a67f2.json": {
+            "sha256": "0a848de53ac91259177eabf58892d15cafda0cd4c85e70e630844648d33a67f2",
+            "git_blob_sha1": "070231feac01c4c1cc98e530f631ecbe2e66f567",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "d667385aa803f91826b59bd940248fba6a9ccbeea106e88b74bc27a2e48dd7ad",
+            "git_blob_sha1": "1231b2123c2773b740ba542bbf3be3ffbc11487f",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "86b42741b3a1057d28bca9deb3383bf1564d6329286323d58ca5bb915db072b3",
+            "git_blob_sha1": "b2f8954464767aee3ce908b494b089aaf15e8e9d",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_nl",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_nl",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-nl",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-nl",
+        "rows": 3620,
+        "pairs": 1810,
+        "rendered_tokens": 155752,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-nl/data/train.jsonl",
+        "output_sha256": "76cfb37cfc0a9073ec95e0097266fd8f5670219ec6e634ac512056954f7d3223",
+        "selection_sha256": "4ce51c3d0c13a3b58b2fa98151fbedd305a063c12338bdef47fea483acec0f86",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "be5eb935723c3ea9ea86b8b0a30da062fa6930dcef9418cff02dbbc9c191e3bd": "attribution/be5eb935723c3ea9ea86b8b0a30da062fa6930dcef9418cff02dbbc9c191e3bd.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "782257188573ddf672d9d5bebfd94eebb5a22d00ac1cfd9264c0f7c683da12dc": "attribution/782257188573ddf672d9d5bebfd94eebb5a22d00ac1cfd9264c0f7c683da12dc.json",
+          "0536280abc35ebb874a3cf4a18c85930528db44645a3c755f98c4aa55f54a01c": "attribution/0536280abc35ebb874a3cf4a18c85930528db44645a3c755f98c4aa55f54a01c.json",
+          "553735b531b20f12d84715cbe0190fcc2cd480553f6782409d8dd995b446cf60": "attribution/553735b531b20f12d84715cbe0190fcc2cd480553f6782409d8dd995b446cf60.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0",
+          "cc0-1.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "64efe6b0281ed0b4d39295c366b9162962099aad",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-nl/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_nl/tokens",
+        "tokenized_tokens": 155752,
+        "tokenized_rows": 3620,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_nl/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-nl",
+        "revision": "64efe6b0281ed0b4d39295c366b9162962099aad",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "76cfb37cfc0a9073ec95e0097266fd8f5670219ec6e634ac512056954f7d3223",
+            "git_blob_sha1": "45ff5c8b40c70a09d3e666cab37facbe3633fef7",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/be5eb935723c3ea9ea86b8b0a30da062fa6930dcef9418cff02dbbc9c191e3bd.json": {
+            "sha256": "be5eb935723c3ea9ea86b8b0a30da062fa6930dcef9418cff02dbbc9c191e3bd",
+            "git_blob_sha1": "e17aee61f9ce14d440d61a31c474da45efebfb35",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/782257188573ddf672d9d5bebfd94eebb5a22d00ac1cfd9264c0f7c683da12dc.json": {
+            "sha256": "782257188573ddf672d9d5bebfd94eebb5a22d00ac1cfd9264c0f7c683da12dc",
+            "git_blob_sha1": "c9b0fe2698bebb034acb1e23aeaa4ded6e21aada",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/0536280abc35ebb874a3cf4a18c85930528db44645a3c755f98c4aa55f54a01c.json": {
+            "sha256": "0536280abc35ebb874a3cf4a18c85930528db44645a3c755f98c4aa55f54a01c",
+            "git_blob_sha1": "1e583770a774c6fcb4b88845e0c312230278ec8c",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/553735b531b20f12d84715cbe0190fcc2cd480553f6782409d8dd995b446cf60.json": {
+            "sha256": "553735b531b20f12d84715cbe0190fcc2cd480553f6782409d8dd995b446cf60",
+            "git_blob_sha1": "af8dc50630698df09d89e47168cf916134090c73",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "62736bfa9e82157f44d53772d67430c7aa8270da7d36698b85306747940232d3",
+            "git_blob_sha1": "b4c0014f9950644593c8eb124bdd5815e80b0f81",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "dfd984c7453211eb88b009dc72e320a1421be9315c241112bc6165e25ea5f003",
+            "git_blob_sha1": "b5dede704603d35d69688e4391d50db464b8866c",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_nn",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_nn",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-nn",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-nn",
+        "rows": 80,
+        "pairs": 40,
+        "rendered_tokens": 3960,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-nn/data/train.jsonl",
+        "output_sha256": "dcc7cb682ba569a068c6541a630f25c704c53495055b1c3183f71bfd3f5d6a75",
+        "selection_sha256": "67ce2be8c6258191047721ac98507d184cfdbb9ff696c5cea4ff6ad070191f97",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "fe455093e05d1da96b402476407329736c1d52feae429419cce72e42c2ca643f": "attribution/fe455093e05d1da96b402476407329736c1d52feae429419cce72e42c2ca643f.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "f8b0e44bbec3cd4b696f7f586ca4c4291a864dbe",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-nn/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_nn/tokens",
+        "tokenized_tokens": 3960,
+        "tokenized_rows": 80,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_nn/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-nn",
+        "revision": "f8b0e44bbec3cd4b696f7f586ca4c4291a864dbe",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "dcc7cb682ba569a068c6541a630f25c704c53495055b1c3183f71bfd3f5d6a75",
+            "git_blob_sha1": "cff199e31ba5c819d8fa0212b0d98a19b04f5480",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/fe455093e05d1da96b402476407329736c1d52feae429419cce72e42c2ca643f.json": {
+            "sha256": "fe455093e05d1da96b402476407329736c1d52feae429419cce72e42c2ca643f",
+            "git_blob_sha1": "0ea0349d7f31d8153d75d6279ea3d745252847ae",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "3a3d9443a4c5bbba4f47e901507a00e28a93b085f065faf2407f777a6ada1917",
+            "git_blob_sha1": "a00a4175f96e40cd49442f3463f43567300555ff",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "16172c339ec7ba5ab3e4d9a17c9e4383cdfe4d89c8c21eec5d666086a269df54",
+            "git_blob_sha1": "aa3f22bcb6903f6bbc9f4085cb24a0aff0521078",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_pl",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_pl",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-pl",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-pl",
+        "rows": 2618,
+        "pairs": 1309,
+        "rendered_tokens": 113360,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-pl/data/train.jsonl",
+        "output_sha256": "8a2cce962c80911ccedf174ad36ae7cf33f1719143d5ee6923c092a150ee47d0",
+        "selection_sha256": "66a9729ab93319d85eed7f5a52f0b6c09875d72ba6fd3cb0d3132f5c2b65de7d",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "14cbdff784e45a07d1f97f0bb2b1f468b01988a43ef4891e6262deb52840f71c": "attribution/14cbdff784e45a07d1f97f0bb2b1f468b01988a43ef4891e6262deb52840f71c.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "28246cf269b1e7c04fbe1914f13cde722d9124aae64fb6fdbda049f1b35c58e9": "attribution/28246cf269b1e7c04fbe1914f13cde722d9124aae64fb6fdbda049f1b35c58e9.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "12ba819d74c69d387efbfff1901cd27d7f069666",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-pl/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_pl/tokens",
+        "tokenized_tokens": 113360,
+        "tokenized_rows": 2618,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_pl/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-pl",
+        "revision": "12ba819d74c69d387efbfff1901cd27d7f069666",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "8a2cce962c80911ccedf174ad36ae7cf33f1719143d5ee6923c092a150ee47d0",
+            "git_blob_sha1": "4bcc2cbbef74ca80b584395abfdb076f70a91fe2",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/14cbdff784e45a07d1f97f0bb2b1f468b01988a43ef4891e6262deb52840f71c.json": {
+            "sha256": "14cbdff784e45a07d1f97f0bb2b1f468b01988a43ef4891e6262deb52840f71c",
+            "git_blob_sha1": "42c1296f492d5a3477276cb6328a5fd0a639d354",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/28246cf269b1e7c04fbe1914f13cde722d9124aae64fb6fdbda049f1b35c58e9.json": {
+            "sha256": "28246cf269b1e7c04fbe1914f13cde722d9124aae64fb6fdbda049f1b35c58e9",
+            "git_blob_sha1": "f886f3b6c31ccf37e6d4ef4dc9bdba8cd743fbf7",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "14aefed0af31519877b7d6c1022f2c601bf3cd37734115fa21430dc07840a9a4",
+            "git_blob_sha1": "ab6ab771e74d6c57f461dac0d8d9fb25e7ce4035",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "769cdd860622ca85b2dec03150d2d4ec31cdc029d45507761cd2f222cacf2bd3",
+            "git_blob_sha1": "1cd7955e799195ca25469954a880a0e94468eba5",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_ro",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_ro",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-ro",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-ro",
+        "rows": 922,
+        "pairs": 461,
+        "rendered_tokens": 38918,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-ro/data/train.jsonl",
+        "output_sha256": "ae19b2334ed26832b37e8fe10a623c2e3c3faa5b463d97dbf04b05726c3ef876",
+        "selection_sha256": "f3ab8a619e540c4e7e40190f398c4bbf530d3496bf934c51f40ce60bb6ae6ebf",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "35235f5fbe60d9490f3aa783525b03bd8f71a89bfc796489e3d032dc2ca1474f": "attribution/35235f5fbe60d9490f3aa783525b03bd8f71a89bfc796489e3d032dc2ca1474f.json",
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "5a85f0a06f43027829e9c2781798abc667201789bb4f335a39e6784b009eb223": "attribution/5a85f0a06f43027829e9c2781798abc667201789bb4f335a39e6784b009eb223.json",
+          "d4704621064601b96584726fc7dd1d74a8f2d40b64e0df845ca53624002b6d8c": "attribution/d4704621064601b96584726fc7dd1d74a8f2d40b64e0df845ca53624002b6d8c.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "7fe449780224e6b4c430f785b1369da2d2cc42be",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-ro/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_ro/tokens",
+        "tokenized_tokens": 38918,
+        "tokenized_rows": 922,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_ro/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-ro",
+        "revision": "7fe449780224e6b4c430f785b1369da2d2cc42be",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "ae19b2334ed26832b37e8fe10a623c2e3c3faa5b463d97dbf04b05726c3ef876",
+            "git_blob_sha1": "2780f711de50cf24fc0b800074d558041a38e171",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/35235f5fbe60d9490f3aa783525b03bd8f71a89bfc796489e3d032dc2ca1474f.json": {
+            "sha256": "35235f5fbe60d9490f3aa783525b03bd8f71a89bfc796489e3d032dc2ca1474f",
+            "git_blob_sha1": "2b85cf3a4ff8705e0dceaf8804f12f5cf3a9c002",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5a85f0a06f43027829e9c2781798abc667201789bb4f335a39e6784b009eb223.json": {
+            "sha256": "5a85f0a06f43027829e9c2781798abc667201789bb4f335a39e6784b009eb223",
+            "git_blob_sha1": "9e370531173ab4dce23075ecbad15e030e0b92ca",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/d4704621064601b96584726fc7dd1d74a8f2d40b64e0df845ca53624002b6d8c.json": {
+            "sha256": "d4704621064601b96584726fc7dd1d74a8f2d40b64e0df845ca53624002b6d8c",
+            "git_blob_sha1": "fcbd6d5fce06305293d944a9e9af6d8beca9aaf1",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "5d2cdd068b0803a70e14c67f5514f0ec2174234895798ac9014259cf1abe3a87",
+            "git_blob_sha1": "81e4ee0700368ecf2244516dbd132ba56c2120d6",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "12d160be68e22d2ee5163fb4cf8e4543f7339d504cb70e1b8e6d8c0cb3f0f9f6",
+            "git_blob_sha1": "1a2da730cbe6cdd4b24b094b0a7d7cd85921e091",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_sq",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_sq",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-sq",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-sq",
+        "rows": 190,
+        "pairs": 95,
+        "rendered_tokens": 7352,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-sq/data/train.jsonl",
+        "output_sha256": "4de7cb382d3b55ee7feca725e86ba9a92aac205f44064aee35b86dea7234331c",
+        "selection_sha256": "c09f97b25aab544113e17dd4d930aad6d4f3dd09718eb291940058b693caeb77",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "9af73119029228fce721aa657b76b5f2600871168b1980b64b79b99db1e0cac1": "attribution/9af73119029228fce721aa657b76b5f2600871168b1980b64b79b99db1e0cac1.json",
+          "359b446a6f6921e9c2b0264f9e0f17c87a90a302479b7585100de873ba98c7fa": "attribution/359b446a6f6921e9c2b0264f9e0f17c87a90a302479b7585100de873ba98c7fa.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "917908df7a309c3f7a7772cb506dba267905ac5f",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-sq/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_sq/tokens",
+        "tokenized_tokens": 7352,
+        "tokenized_rows": 190,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_sq/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-sq",
+        "revision": "917908df7a309c3f7a7772cb506dba267905ac5f",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "4de7cb382d3b55ee7feca725e86ba9a92aac205f44064aee35b86dea7234331c",
+            "git_blob_sha1": "e51217c12b01bd68e7e1b163e6f622e1b1ba2ca4",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/9af73119029228fce721aa657b76b5f2600871168b1980b64b79b99db1e0cac1.json": {
+            "sha256": "9af73119029228fce721aa657b76b5f2600871168b1980b64b79b99db1e0cac1",
+            "git_blob_sha1": "2c02e5b1808058c40a6d00591901e28b7241423c",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/359b446a6f6921e9c2b0264f9e0f17c87a90a302479b7585100de873ba98c7fa.json": {
+            "sha256": "359b446a6f6921e9c2b0264f9e0f17c87a90a302479b7585100de873ba98c7fa",
+            "git_blob_sha1": "ebdd1176b5c17213ca3c2c9e4f01bbc1f7e47a14",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "75384bea10cee31ddd47a066c3fce75cdf72b7b9896818bf8343b61f03da07e7",
+            "git_blob_sha1": "e9d5fe284b25b4c02dda03be3a4820a4c8de2cbc",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "6f547d0ad181614eb09828003583f4e893dcab4f2bcc2d22d95e7f96409b5f54",
+            "git_blob_sha1": "1d876eb810149e3e22cff57507565b1fcd4ddf19",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_uk",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_uk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-uk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-uk",
+        "rows": 6654,
+        "pairs": 3327,
+        "rendered_tokens": 308764,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-uk/data/train.jsonl",
+        "output_sha256": "24d7bb8c4f0b491101aeee1b347361603122556e55667b4e0c5a4f7993698974",
+        "selection_sha256": "3f881320b501dbfceffacbbca6ee1b34e34a6ea0a5cbaed9dd045cf158160065",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "96dd1f3e4378a33ed137987a87fabaaccba533df05fe46879afed42b8d4babe3": "attribution/96dd1f3e4378a33ed137987a87fabaaccba533df05fe46879afed42b8d4babe3.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "7ecb2c32adc15f8f701e07be688744c3f83db19a",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/be-uk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_uk/tokens",
+        "tokenized_tokens": 308764,
+        "tokenized_rows": 6654,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_uk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-uk",
+        "revision": "7ecb2c32adc15f8f701e07be688744c3f83db19a",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "24d7bb8c4f0b491101aeee1b347361603122556e55667b4e0c5a4f7993698974",
+            "git_blob_sha1": "702b0adaf748ec29e8b2f274e9872f67d2f6f940",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/96dd1f3e4378a33ed137987a87fabaaccba533df05fe46879afed42b8d4babe3.json": {
+            "sha256": "96dd1f3e4378a33ed137987a87fabaaccba533df05fe46879afed42b8d4babe3",
+            "git_blob_sha1": "e8a6be031729ddf221be5c163d9548f3f9a3bd3c",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "7fb711e31679610beb4f00d14c7725c9514f262c528037143dde6ec95319c4ba",
+            "git_blob_sha1": "3e4509b761d5f2c6b185de90eb8828b0ff6ed7c3",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "cfe8b89d8a81a7b217d6285cc17b1fef3139cbb228c0bb1c6d45291528b32796",
+            "git_blob_sha1": "f424cb97785864ba135abcef31955ca8714693ad",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_bs",
+      "entry": {
+        "name": "dfm13_wave4_opus_bg_bs",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-bs",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-bs",
+        "rows": 232172,
+        "pairs": 116086,
+        "rendered_tokens": 25029988,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-bg-bs/data/train.jsonl",
+        "output_sha256": "8f22ee18012b5d7c854d9c14cc83731c32439cc230590de8c677d397de400d53",
+        "selection_sha256": "df45fc8c1d722fe5a4ee763f620d5c09d143e323643ef3ca385b8ce4603fe8ba",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "f778d4ac9b22727bee91d476d4c2b43a2cb474c2f3585a3e3f8b5c925f6480c5": "attribution/f778d4ac9b22727bee91d476d4c2b43a2cb474c2f3585a3e3f8b5c925f6480c5.json"
+        },
+        "licenses": [
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "c2bcf0650623519aff44ec9f4486e547694d6d4d",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/bg-bs/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_bs/tokens",
+        "tokenized_tokens": 25029988,
+        "tokenized_rows": 232172,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_bs/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-bg-bs",
+        "revision": "c2bcf0650623519aff44ec9f4486e547694d6d4d",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "8f22ee18012b5d7c854d9c14cc83731c32439cc230590de8c677d397de400d53",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "attribution/f778d4ac9b22727bee91d476d4c2b43a2cb474c2f3585a3e3f8b5c925f6480c5.json": {
+            "sha256": "f778d4ac9b22727bee91d476d4c2b43a2cb474c2f3585a3e3f8b5c925f6480c5",
+            "git_blob_sha1": "0aaf74fc7b041af83f4e60cdc7bf93436c0990d0",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "84618a47f325bf8325bd93578b2ac7d409f0a1d21f511f7c6709ada67d1bb846",
+            "git_blob_sha1": "858c9e5dd8c0ad845ea02c9000def503bb3bfcfb",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "f20ad03af62cdfd617d505ac2b59ba2c49f0457d2faf3d14a804e0edacd8119b",
+            "git_blob_sha1": "985dee65396ff44698ddc5f8d2716c1ce4b2ee7b",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_ca",
+      "entry": {
+        "name": "dfm13_wave4_opus_bg_ca",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-ca",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-ca",
+        "rows": 196,
+        "pairs": 98,
+        "rendered_tokens": 8400,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-bg-ca/data/train.jsonl",
+        "output_sha256": "dd29ef69da3f1592d57be0dc6e773f4256ec85e740971118f2001d2a32c74f4f",
+        "selection_sha256": "46bbd9fd9b8e2d1aa53b215f48e8ea35d676cce6a9899f8a1e17f9333799a673",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2": "attribution/456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2.json",
+          "f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575": "attribution/f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575.json"
+        },
+        "licenses": [
+          "cc-by-2.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "2809b8395419e2d62a39be4f99f7e77e48458e43",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/bg-ca/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_ca/tokens",
+        "tokenized_tokens": 8400,
+        "tokenized_rows": 196,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_ca/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-bg-ca",
+        "revision": "2809b8395419e2d62a39be4f99f7e77e48458e43",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "dd29ef69da3f1592d57be0dc6e773f4256ec85e740971118f2001d2a32c74f4f",
+            "git_blob_sha1": "05a732523fb23c9c5d21dcdc41a38bcb9a72bafe",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2.json": {
+            "sha256": "456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2",
+            "git_blob_sha1": "74ef95f4ed259d2e34d8dbcebcdad51d63636331",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575.json": {
+            "sha256": "f6a31cfc4b06b11c796dbdd7a9953a757ba1beb3de6ca190f10cd50e0753b575",
+            "git_blob_sha1": "6b5732b44f19ec5eb7cbbd25246766d23f30e40f",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "1bce52860311427f4bc7eb4d0f09500778c029e0fb3664f436ed72059b818d79",
+            "git_blob_sha1": "3e628974d777454f38eb678507777804d65c125c",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "1b2a63092cc9433063e6d8a74fbd64e4ae787a1e2f0dcf8bd70dd01d681c2c74",
+            "git_blob_sha1": "0f9117e9517ca2d058ea811f9107a1d28a104ae6",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_el",
+      "entry": {
+        "name": "dfm13_wave4_opus_bg_el",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-el",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-el",
+        "rows": 359330,
+        "pairs": 179665,
+        "rendered_tokens": 45955120,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-bg-el/data/train.jsonl",
+        "output_sha256": "26ebeed685a5a859a81f1ac5eea40f41e8b88104ed1329ef61e88cd0336727fb",
+        "selection_sha256": "f3a3d202f8e53aa1e5253755cb7ee3e6c30e9fb3772b8d002554552dd5ec6e46",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "01862005450608ccd64e3239da1a503d7547731248f2acc4f21ee63596039f6a": "attribution/01862005450608ccd64e3239da1a503d7547731248f2acc4f21ee63596039f6a.json",
+          "219e956108c63790eb614ccacf50e20b2871b509ad5b42873c63c79007be5cf2": "attribution/219e956108c63790eb614ccacf50e20b2871b509ad5b42873c63c79007be5cf2.json",
+          "39d0b23b2d271da6a0bf28a751ab6537377fc0f4c6d68be5a10659885624f82c": "attribution/39d0b23b2d271da6a0bf28a751ab6537377fc0f4c6d68be5a10659885624f82c.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "cf148a650f9276b4c1200b087de36ae2f2ceabb7",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/translation-release/bg-el/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_el/tokens",
+        "tokenized_tokens": 45955120,
+        "tokenized_rows": 359330,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_el/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-bg-el",
+        "revision": "cf148a650f9276b4c1200b087de36ae2f2ceabb7",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "26ebeed685a5a859a81f1ac5eea40f41e8b88104ed1329ef61e88cd0336727fb",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "attribution/01862005450608ccd64e3239da1a503d7547731248f2acc4f21ee63596039f6a.json": {
+            "sha256": "01862005450608ccd64e3239da1a503d7547731248f2acc4f21ee63596039f6a",
+            "git_blob_sha1": "1c9ca5e2d5eb82d8750f60920f507bd912f6faab",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/219e956108c63790eb614ccacf50e20b2871b509ad5b42873c63c79007be5cf2.json": {
+            "sha256": "219e956108c63790eb614ccacf50e20b2871b509ad5b42873c63c79007be5cf2",
+            "git_blob_sha1": "1e09962c981cb106ba6ad5185925600e1c3aa0af",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/39d0b23b2d271da6a0bf28a751ab6537377fc0f4c6d68be5a10659885624f82c.json": {
+            "sha256": "39d0b23b2d271da6a0bf28a751ab6537377fc0f4c6d68be5a10659885624f82c",
+            "git_blob_sha1": "f9f2f6e251406c0ac68f63300b5b0c4830b8dfec",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "b1d912e8c3935021300a30eaae7e12dd4fa0610f73205f7b42fefd52cd670651",
+            "git_blob_sha1": "661fb620af18699ec7d85c063868d1f6a359336d",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "bf777872514099e94c42750577265cfdc76a225b9100c4201870cc6d5899be46",
+            "git_blob_sha1": "f97994f74a5118b9aef73e53b6104e56b748d452",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_be_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_be_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-be-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-be-sk",
+        "rows": 10,
+        "pairs": 5,
+        "rendered_tokens": 300,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-be-sk/data/train.jsonl",
+        "output_sha256": "b57bd216a69996fc15ea538c302d8652b728ac6f9ff8fb9b4952b9c192e129ab",
+        "selection_sha256": "f8e5a8bad54e547c517487f5117f0faadfac9c1663755d69e6d9c0c91e3dd17b",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c": "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "277190fd9e844002cef488ba9bfd1bcd46b18ea3",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/be-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_sk/tokens",
+        "tokenized_tokens": 300,
+        "tokenized_rows": 10,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_be_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-be-sk",
+        "revision": "277190fd9e844002cef488ba9bfd1bcd46b18ea3",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "b57bd216a69996fc15ea538c302d8652b728ac6f9ff8fb9b4952b9c192e129ab",
+            "git_blob_sha1": "7c28070ccfa523f040088b5a09dc8839b3635676",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c.json": {
+            "sha256": "aa588d54ed93a74db737573b1cac32ea099f311fb261913bc4dcd97c7c36f78c",
+            "git_blob_sha1": "16a6dc74250af5308344d732914a3ad775118691",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "3bd875d073102b25f8c0257cac0e95d4b38ee82adf42257f6c0409df618754b4",
+            "git_blob_sha1": "1902f01681bf3364a88c63559185f1ac92b3d950",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "eda0c7b50aa69df9b3d3a0ce3d8d33d6b0b444f7615d6c6c760baf83522241c3",
+            "git_blob_sha1": "3897221914015550ab3fc280ceef72b256d21f10",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_bg_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-bg-sk",
+        "rows": 12,
+        "pairs": 6,
+        "rendered_tokens": 344,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-bg-sk/data/train.jsonl",
+        "output_sha256": "b72f2b97b2c68d65c555ddc35a72ebc7854bf528207e84c21f8ae2faa3913a67",
+        "selection_sha256": "a480135cac8780bbe5529634b9f8fd847875ee6822729822320d8fba4e57701f",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "ef8963e710fb68a15c33ff27c16a3c43239aec4eeb647d76df308e604758b330": "attribution/ef8963e710fb68a15c33ff27c16a3c43239aec4eeb647d76df308e604758b330.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json",
+          "456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2": "attribution/456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "9ee7f23479b01b5be8970a0cde2a7e48d9c14080",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/bg-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_sk/tokens",
+        "tokenized_tokens": 344,
+        "tokenized_rows": 12,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bg_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-bg-sk",
+        "revision": "9ee7f23479b01b5be8970a0cde2a7e48d9c14080",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "b72f2b97b2c68d65c555ddc35a72ebc7854bf528207e84c21f8ae2faa3913a67",
+            "git_blob_sha1": "68d562c4b9b74d3a67b83d29565c8020fa2cb9de",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/ef8963e710fb68a15c33ff27c16a3c43239aec4eeb647d76df308e604758b330.json": {
+            "sha256": "ef8963e710fb68a15c33ff27c16a3c43239aec4eeb647d76df308e604758b330",
+            "git_blob_sha1": "221787f0991976e7a7cb4de18ed0331b04bcf8d7",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2.json": {
+            "sha256": "456dc723c0400ffab7e29f5d77a1232ed323ca6086f02cd24a5b8be1ab771df2",
+            "git_blob_sha1": "74ef95f4ed259d2e34d8dbcebcdad51d63636331",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "643570362ad455edf652c62627350588822570679bd4a849da192f4dda543b47",
+            "git_blob_sha1": "1330e1ab18363c679081090580ad4656aab15c43",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "024d87f27c2332d18d00d11890f4974d89d480d1db8d897881c0a8a57efa9328",
+            "git_blob_sha1": "6549617ab25eb20fdd565a7e6ac84fa24da0d41f",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_bs_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_bs_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-bs-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-bs-sk",
+        "rows": 10,
+        "pairs": 5,
+        "rendered_tokens": 302,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-bs-sk/data/train.jsonl",
+        "output_sha256": "a291b50a022d4c20f9c0e8859432243c22dd4e886c6481aae832d112fc34c2a8",
+        "selection_sha256": "fffcca35ef5a7621021b0452e44e5eff8e62623204672465652b4324ea9a4331",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90": "attribution/1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json",
+          "be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948": "attribution/be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0",
+          "cc-by-sa-3.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "815a5ca43e3cfe3dbab586f824b73d0f3ca4eca8",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/bs-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bs_sk/tokens",
+        "tokenized_tokens": 302,
+        "tokenized_rows": 10,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_bs_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-bs-sk",
+        "revision": "815a5ca43e3cfe3dbab586f824b73d0f3ca4eca8",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "a291b50a022d4c20f9c0e8859432243c22dd4e886c6481aae832d112fc34c2a8",
+            "git_blob_sha1": "2bd8fd5242edaf4eb6865c7dd52d5dd85b754f06",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90.json": {
+            "sha256": "1b4d3af967f248b4ef670b5dd02fe295384356cebeba3e27e2d14ba5434fef90",
+            "git_blob_sha1": "cabbd9a1bf695cc76650857594dbd2fbe68f6540",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948.json": {
+            "sha256": "be749af5818460d9ba5189124b82f003416cc6a891619a4e42538d2d483e7948",
+            "git_blob_sha1": "a3e15cb0c75cb181a470da7f151b04294f2305f7",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "52a2a7eb99bdef0e9d3c959dbbe09386cc130d07c8816c110a5356cb07391e96",
+            "git_blob_sha1": "478be0e0033de0ff4b50f8402f121ef124515a4a",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "dc75cd3b73002988b5d6cfd7f5754bfba87c25a20d1455b97e3db7ae34d32ac8",
+            "git_blob_sha1": "55fca1cfd6026f1d8a37b2f07f7658572390a57a",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_cs_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_cs_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-cs-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-cs-sk",
+        "rows": 8,
+        "pairs": 4,
+        "rendered_tokens": 258,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-cs-sk/data/train.jsonl",
+        "output_sha256": "1dd58454c6c896cf07dbf202dbf71d3933a78f42b8414528b41b24a2a666dc70",
+        "selection_sha256": "0dba58dcbfecbda291c13b07be72fd38901918a0ad4e35f782061c860c52f4fc",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "fd5281cc087c6ce0075d59911adc78de709299469d98c6e5dbec8bf4a2ee17af": "attribution/fd5281cc087c6ce0075d59911adc78de709299469d98c6e5dbec8bf4a2ee17af.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "04a1c23be3b32925ec5a34f340a5e412b8ea53c4",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/cs-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_cs_sk/tokens",
+        "tokenized_tokens": 258,
+        "tokenized_rows": 8,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_cs_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-cs-sk",
+        "revision": "04a1c23be3b32925ec5a34f340a5e412b8ea53c4",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "1dd58454c6c896cf07dbf202dbf71d3933a78f42b8414528b41b24a2a666dc70",
+            "git_blob_sha1": "6b7fda8544d683374e70692ebed396ed135b0d42",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/fd5281cc087c6ce0075d59911adc78de709299469d98c6e5dbec8bf4a2ee17af.json": {
+            "sha256": "fd5281cc087c6ce0075d59911adc78de709299469d98c6e5dbec8bf4a2ee17af",
+            "git_blob_sha1": "dade935c105f4e458e1e1fb70704526df7f281fe",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "ec74fb77dfce3d0c519b8b748783b939c1f8cecdc175824a00fe931e204347b7",
+            "git_blob_sha1": "ee9048f0cf1f7dd3199c4a916dd8638d1aa2d408",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "7ccc55823c91419202a03f741ea1712192ae83cefc08cc1b3123e164f5aea790",
+            "git_blob_sha1": "a761f6c7ac85c4dc6d33c2781211b77d2f144aac",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_da_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_da_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-da-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-da-sk",
+        "rows": 10,
+        "pairs": 5,
+        "rendered_tokens": 318,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-da-sk/data/train.jsonl",
+        "output_sha256": "84da94f3ca8be6fcc58474dd6062cf7dfc3c6e97d6eeb356592b1ce6ece14e8f",
+        "selection_sha256": "a50e37aa275a4a22408fd81d07e2f4b39d3d3581c7f4e13c950763d5b75c7245",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "e9bd5a5cd3d6c3fb3cfc140dc7fbcc2d61250a46261ad49b03d79e84e9ac7c52": "attribution/e9bd5a5cd3d6c3fb3cfc140dc7fbcc2d61250a46261ad49b03d79e84e9ac7c52.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "99de97cdd5b5aef8d47547f921be0dd4f655c61b",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/da-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_da_sk/tokens",
+        "tokenized_tokens": 318,
+        "tokenized_rows": 10,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_da_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-da-sk",
+        "revision": "99de97cdd5b5aef8d47547f921be0dd4f655c61b",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "84da94f3ca8be6fcc58474dd6062cf7dfc3c6e97d6eeb356592b1ce6ece14e8f",
+            "git_blob_sha1": "274f90222e78b63832fea25b6de4b9a3689860e2",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/e9bd5a5cd3d6c3fb3cfc140dc7fbcc2d61250a46261ad49b03d79e84e9ac7c52.json": {
+            "sha256": "e9bd5a5cd3d6c3fb3cfc140dc7fbcc2d61250a46261ad49b03d79e84e9ac7c52",
+            "git_blob_sha1": "64f8405371f85bfbf284b95b748373675891186b",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "789471ff3c97817c83bccf39d9e326276c8cf688d2d462d2a460204afeb97395",
+            "git_blob_sha1": "700ea372945294fb945107d5055ecddb9834e63f",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "cbb1eb7b308a3021257b770aa6272064191a89a5c57b361323ac3cb5b916001c",
+            "git_blob_sha1": "e8c25e0f00c1254b9c0de2d3ca0145d218817cc6",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_de_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_de_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-de-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-de-sk",
+        "rows": 30,
+        "pairs": 15,
+        "rendered_tokens": 1068,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-de-sk/data/train.jsonl",
+        "output_sha256": "f822b39408d9386da3f20dee9f16239ddaa67001d873d7f05bbfbb3aaf0dc119",
+        "selection_sha256": "8258652a9d3fdfcf4484e46cbb469568fda6bc10460ddeae3972f7e28cb8313e",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "83b897eb5ba85f4902fddbcf2c684360cf8474b0d92d7df62e33872eb5f6c63b": "attribution/83b897eb5ba85f4902fddbcf2c684360cf8474b0d92d7df62e33872eb5f6c63b.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json",
+          "a51d55f674472503947a0315e6ddf51e55b1d839873b14520cf3b90a1420ec0c": "attribution/a51d55f674472503947a0315e6ddf51e55b1d839873b14520cf3b90a1420ec0c.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0",
+          "public-domain"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "0df013d6d92e8a7cdcccd1f12ba3cd35871cf6dc",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/de-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_de_sk/tokens",
+        "tokenized_tokens": 1068,
+        "tokenized_rows": 30,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_de_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-de-sk",
+        "revision": "0df013d6d92e8a7cdcccd1f12ba3cd35871cf6dc",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "f822b39408d9386da3f20dee9f16239ddaa67001d873d7f05bbfbb3aaf0dc119",
+            "git_blob_sha1": "5a4e1074eef3a2e6f98bb3dd2c6a7e98a8d5021e",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/83b897eb5ba85f4902fddbcf2c684360cf8474b0d92d7df62e33872eb5f6c63b.json": {
+            "sha256": "83b897eb5ba85f4902fddbcf2c684360cf8474b0d92d7df62e33872eb5f6c63b",
+            "git_blob_sha1": "aa01c92c18d6529f99a88efa8dc39df3a65a7537",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/a51d55f674472503947a0315e6ddf51e55b1d839873b14520cf3b90a1420ec0c.json": {
+            "sha256": "a51d55f674472503947a0315e6ddf51e55b1d839873b14520cf3b90a1420ec0c",
+            "git_blob_sha1": "599ead58fd651818049f36e2e2e2472aa0f26a19",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "4d0e2c925bea82eae3e38e3cb73697a9398487bc35bc99d5d692171248e52225",
+            "git_blob_sha1": "c8478e5087c9e5e836e6ce9d53770e4495e8bf39",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "b17f29d8824a0bf702fbd9d46993e03fd838474280873eb31fb4323d73716ea6",
+            "git_blob_sha1": "8193b8787e78708368f8bf7d1583cd00b83538e0",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_opus_el_sk",
+      "entry": {
+        "name": "dfm13_wave4_opus_el_sk",
+        "repo_id": "schneiderkamplab/dfm13-wave4-opus-el-sk",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-opus-el-sk",
+        "rows": 6,
+        "pairs": 3,
+        "rendered_tokens": 190,
+        "repeat": 1,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-opus-el-sk/data/train.jsonl",
+        "output_sha256": "6c62ed0bbc3c535cf40572f80a40faa5f3e38f3cedeae4721b56c94a3e9ec634",
+        "selection_sha256": "efb16e125955fe8df9b01b3fa0eaeaa7c97ffb7041e460b44e530a89094420e5",
+        "token_cap": 165312851,
+        "attribution_files": {
+          "f61a33cd2af3bc9c400fa2372755cf06772f605b95081ff604721d2062120e82": "attribution/f61a33cd2af3bc9c400fa2372755cf06772f605b95081ff604721d2062120e82.json",
+          "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750": "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json"
+        },
+        "licenses": [
+          "cc-by-2.0",
+          "cc-by-4.0"
+        ],
+        "tokenization_performed": true,
+        "uploaded": true,
+        "target_policy": "final_assistant_only_native_gemma",
+        "hf_revision": "de81af4cdcc9230cc380c1bc5b84aaac5ea5323a",
+        "status": "accepted_uploaded",
+        "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/slovak-additive-20261003-v1/translation-release/el-sk/publication.json",
+        "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_el_sk/tokens",
+        "tokenized_tokens": 190,
+        "tokenized_rows": 6,
+        "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_opus_el_sk/verified.json"
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-opus-el-sk",
+        "revision": "de81af4cdcc9230cc380c1bc5b84aaac5ea5323a",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "6c62ed0bbc3c535cf40572f80a40faa5f3e38f3cedeae4721b56c94a3e9ec634",
+            "git_blob_sha1": "91724999e622230c9d5c5a8eec55f80c761331bd",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/f61a33cd2af3bc9c400fa2372755cf06772f605b95081ff604721d2062120e82.json": {
+            "sha256": "f61a33cd2af3bc9c400fa2372755cf06772f605b95081ff604721d2062120e82",
+            "git_blob_sha1": "742cb8c674b7ae7197468d38f6f5185da08344bf",
+            "method": "revision_bound_git_blob"
+          },
+          "attribution/5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750.json": {
+            "sha256": "5f4e0903beadac764555eed5e700888fa945d8dc3eb9a8f4f51f732cda2eb750",
+            "git_blob_sha1": "ccbf4bd31532c5a0b662b51b5382350c3aafefe0",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "c7331f87123f6f1b369c340d5b4b9b52cda3fd4f35dd8ce8c2c2fe2762dd27bc",
+            "git_blob_sha1": "a5c2ec01c13030683f45aecb9a5cc8d219c1445b",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "c0107dc712c71d5ce4c94128fd882141a93721d2d2b4d099121e049adfffe8cf",
+            "git_blob_sha1": "cd8575ab4d8b88346cf755979adc6690dc186429",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    }
+  ]
+}

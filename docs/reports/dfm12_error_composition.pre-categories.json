@@ -1,0 +1,1895 @@
+{
+  "schema_version": 1,
+  "status": "in_progress",
+  "denominators": {
+    "sampled_rows": 284380704,
+    "sampled_tokens": 117000690762,
+    "dataset": "/work/mimir/HRM-Text/data/sampled_dfm12_xl_epoch11_noidentity",
+    "epoch": "epoch_10",
+    "inherited_rows": 235520711,
+    "addition_rows": 48859993
+  },
+  "definitions": {
+    "correction_rows": "Sampled row occurrences whose accepted student task is correction. Acceptability rows excluded.",
+    "mistake_count": "Number of explicit producer edits, not edit distance. Zero requires an exact producer clean-control match.",
+    "distinct_rule_ids": "Distinct nonempty producer edit.rule_id values among sampled annotated corrupted correction rows; lower bound when coverage partial.",
+    "distinct_edit_pairs": "Distinct exact (original edit span, replacement edit span) strings; NOT whole-sentence pairs and NOT edit distance.",
+    "percentages": "100 * sampled identified correction row/token exposure divided by whole active training row/token denominator.",
+    "distribution_denominator": "All identified sampled correction rows in this language, including clean controls and unknown annotations.",
+    "categories": "Verbatim explicit corruption_type labels; no inferred spelling/grammar labels.",
+    "annotation_join": "Exact (target original sentence, input sentence) join to train-only producer pairs; conflicts unknown.",
+    "limitations": "Not a complete whole-corpus correction census. Inherited base and non-DaLA embedded correction instructions lack complete local attribution."
+  },
+  "languages": {
+    "da": {
+      "correction_rows": null,
+      "correction_tokens": null,
+      "pct_all_training_rows": null,
+      "pct_all_training_tokens": null,
+      "mistake_count_rows": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [
+        "Inherited Danish source attribution unavailable; these are unknown, not zero."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "unknown_inherited"
+    },
+    "en": {
+      "correction_rows": 695073,
+      "correction_tokens": 66026769,
+      "pct_all_training_rows": 0.24441637221630902,
+      "pct_all_training_tokens": 0.05643280272106262,
+      "mistake_count_rows": {
+        "0": 338983,
+        "1": 197368,
+        "2": 158722,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 48.76940983177307,
+        "1": 28.39529085434192,
+        "2": 22.835299313885017,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.0
+      },
+      "distinct_rule_ids": 82,
+      "distinct_edit_pairs": 42287,
+      "corruption_type_edit_occurrences": {
+        "demonstrative_number": 8426,
+        "do_support_form": 10775,
+        "modal_verb_form": 40450,
+        "noun_number": 2742,
+        "perfect_participle": 14447,
+        "spelling": 377957,
+        "subject_verb_agreement": 36590,
+        "word_deletion": 154,
+        "word_swap": 23271
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": false,
+      "rule_ids": [
+        "demonstrative_number:that:those",
+        "demonstrative_number:these:this",
+        "demonstrative_number:this:these",
+        "do_support_form:productive",
+        "fallback:delete_progressive_auxiliary",
+        "fallback:swap_article_noun",
+        "modal_verb_form:productive",
+        "noun_number:productive",
+        "perfect_participle:productive",
+        "spelling:absence:absense",
+        "spelling:accommodate:accomodate",
+        "spelling:accommodation:acomodation",
+        "spelling:address:adress",
+        "spelling:advertisement:advertisment",
+        "spelling:although:allthought",
+        "spelling:always:allways",
+        "spelling:appreciate:apreciate",
+        "spelling:available:avaliable",
+        "spelling:basically:basicly",
+        "spelling:beautiful:beatifull",
+        "spelling:because:beacuse",
+        "spelling:because:becasue",
+        "spelling:because:becouse",
+        "spelling:beginning:begining",
+        "spelling:bicycle:bicicle",
+        "spelling:broccoli:brocolli",
+        "spelling:career:carreer",
+        "spelling:cemetery:cemetary",
+        "spelling:colleagues:collegues",
+        "spelling:comfortable:confortable",
+        "spelling:committee:commitee",
+        "spelling:consensus:concensus",
+        "spelling:convenient:convinient",
+        "spelling:country:contry",
+        "spelling:decide:dicide",
+        "spelling:definite:definate",
+        "spelling:definitely:definately",
+        "spelling:different:diferent",
+        "spelling:disappointed:dissapointed",
+        "spelling:embarrassing:embarrasing",
+        "spelling:environment:envirnoment",
+        "spelling:environment:enviroment",
+        "spelling:environment:enviromment",
+        "spelling:especially:expecially",
+        "spelling:excellent:excelent",
+        "spelling:famous:fameous",
+        "spelling:football:footbal",
+        "spelling:forward:foward",
+        "spelling:friend:freind",
+        "spelling:government:goverment",
+        "spelling:grateful:greatful",
+        "spelling:independent:independant",
+        "spelling:library:libabry",
+        "spelling:necessary:neccesary",
+        "spelling:nowadays:nowdays",
+        "spelling:opinion:oppinion",
+        "spelling:opportunity:oportunity",
+        "spelling:opportunity:oppotunity",
+        "spelling:plagiarism:plagarism",
+        "spelling:pollution:polution",
+        "spelling:prefer:prefere",
+        "spelling:prepare:prepar",
+        "spelling:public:puplic",
+        "spelling:receive:recieve",
+        "spelling:recommend:recomend",
+        "spelling:responsibility:responsability",
+        "spelling:responsible:responsable",
+        "spelling:restaurant:resturant",
+        "spelling:separate:seperate",
+        "spelling:sincerely:sinserely",
+        "spelling:successful:succesful",
+        "spelling:successful:succesfull",
+        "spelling:technology:technolgy",
+        "spelling:that:taht",
+        "spelling:tomorrow:tommorrow",
+        "spelling:until:untill",
+        "spelling:vacuum:vaccum",
+        "spelling:zucchini:zuchinni",
+        "spelling_pattern:delete_doubled_consonant",
+        "spelling_pattern:duplicate_consonant",
+        "spelling_pattern:transpose_internal",
+        "subject_verb_agreement:productive"
+      ]
+    },
+    "nb": {
+      "correction_rows": 738211,
+      "correction_tokens": 98974656,
+      "pct_all_training_rows": 0.2595854745475277,
+      "pct_all_training_tokens": 0.08459322364286881,
+      "mistake_count_rows": {
+        "0": 363922,
+        "1": 374210,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 79
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 49.29782948235667,
+        "1": 50.69146897025376,
+        "2": 0.0,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.010701547389567481
+      },
+      "distinct_rule_ids": 13,
+      "distinct_edit_pairs": 59531,
+      "corruption_type_edit_occurrences": {
+        "adjective_definite": 15287,
+        "adjective_gender": 21679,
+        "adjective_number": 42110,
+        "determiner_gender": 61860,
+        "determiner_number": 13527,
+        "governed_infinitive": 106104,
+        "perfect_verb_form": 18363,
+        "pronoun_case": 2346,
+        "spelling": 92934
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": true,
+      "rule_ids": [
+        "nb_adjective_definite_ud",
+        "nb_adjective_gender_ud",
+        "nb_adjective_number_ud",
+        "nb_determiner_gender_ud",
+        "nb_determiner_number_ud",
+        "nb_governed_infinitive_ud",
+        "nb_perfect_verb_form_ud",
+        "nb_spelling_delete_doubled_consonant",
+        "nb_spelling_delete_internal",
+        "nb_spelling_duplicate_consonant",
+        "nb_spelling_substitute_character",
+        "nb_spelling_transpose_internal",
+        "nb_subject_pronoun_case"
+      ]
+    },
+    "nn": {
+      "correction_rows": 733039,
+      "correction_tokens": 96889327,
+      "pct_all_training_rows": 0.2577667857521022,
+      "pct_all_training_tokens": 0.08281090168697375,
+      "mistake_count_rows": {
+        "0": 364687,
+        "1": 368352,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 49.750013300793,
+        "1": 50.249986699207,
+        "2": 0.0,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.0
+      },
+      "distinct_rule_ids": 13,
+      "distinct_edit_pairs": 94008,
+      "corruption_type_edit_occurrences": {
+        "adjective_definite": 6409,
+        "adjective_gender": 13043,
+        "adjective_number": 27722,
+        "determiner_gender": 42390,
+        "determiner_number": 5148,
+        "governed_infinitive": 62931,
+        "perfect_verb_form": 15095,
+        "pronoun_case": 1372,
+        "spelling": 194242
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": false,
+      "rule_ids": [
+        "nn_adjective_definite_ud",
+        "nn_adjective_gender_ud",
+        "nn_adjective_number_ud",
+        "nn_determiner_gender_ud",
+        "nn_determiner_number_ud",
+        "nn_governed_infinitive_ud",
+        "nn_perfect_verb_form_ud",
+        "nn_spelling_delete_doubled_consonant",
+        "nn_spelling_delete_internal",
+        "nn_spelling_duplicate_consonant",
+        "nn_spelling_substitute_character",
+        "nn_spelling_transpose_internal",
+        "nn_subject_pronoun_case"
+      ]
+    },
+    "sv": {
+      "correction_rows": 742384,
+      "correction_tokens": 101645096,
+      "pct_all_training_rows": 0.2610528736858321,
+      "pct_all_training_tokens": 0.08687563751804168,
+      "mistake_count_rows": {
+        "0": 368388,
+        "1": 373996,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 49.62229789435117,
+        "1": 50.37770210564883,
+        "2": 0.0,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.0
+      },
+      "distinct_rule_ids": 13,
+      "distinct_edit_pairs": 48743,
+      "corruption_type_edit_occurrences": {
+        "adjective_definite": 8399,
+        "adjective_gender": 23879,
+        "adjective_number": 23333,
+        "determiner_gender": 62168,
+        "determiner_number": 70758,
+        "governed_infinitive": 106640,
+        "perfect_verb_form": 15405,
+        "pronoun_case": 2464,
+        "spelling": 60950
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": false,
+      "rule_ids": [
+        "sv_adjective_definite_ud",
+        "sv_adjective_gender_ud",
+        "sv_adjective_number_ud",
+        "sv_determiner_gender_ud",
+        "sv_determiner_number_ud",
+        "sv_governed_infinitive_ud",
+        "sv_perfect_verb_form_ud",
+        "sv_spelling_delete_doubled_consonant",
+        "sv_spelling_delete_internal",
+        "sv_spelling_duplicate_consonant",
+        "sv_spelling_substitute_character",
+        "sv_spelling_transpose_internal",
+        "sv_subject_pronoun_case"
+      ]
+    },
+    "is": {
+      "correction_rows": 704375,
+      "correction_tokens": 127183885,
+      "pct_all_training_rows": 0.24768733957420683,
+      "pct_all_training_tokens": 0.10870353343358836,
+      "mistake_count_rows": {
+        "0": 360927,
+        "1": 343448,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 51.240745341614904,
+        "1": 48.759254658385096,
+        "2": 0.0,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.0
+      },
+      "distinct_rule_ids": 18,
+      "distinct_edit_pairs": 85347,
+      "corruption_type_edit_occurrences": {
+        "adjective_case": 15146,
+        "adjective_definite": 1042,
+        "adjective_gender": 8232,
+        "adjective_number": 10064,
+        "determiner_case": 24566,
+        "determiner_gender": 14854,
+        "determiner_number": 11628,
+        "governed_infinitive": 62497,
+        "perfect_verb_form": 17658,
+        "preposition_case": 19311,
+        "spelling": 136996,
+        "verb_number_agreement": 21101,
+        "verb_person_agreement": 353
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": false,
+      "rule_ids": [
+        "is_adjective_case_ud",
+        "is_adjective_definite_ud",
+        "is_adjective_gender_ud",
+        "is_adjective_number_ud",
+        "is_determiner_case_ud",
+        "is_determiner_gender_ud",
+        "is_determiner_number_ud",
+        "is_governed_infinitive_ud",
+        "is_perfect_verb_form_ud",
+        "is_preposition_case_dat",
+        "is_preposition_case_gen",
+        "is_spelling_delete_doubled_consonant",
+        "is_spelling_delete_internal",
+        "is_spelling_duplicate_consonant",
+        "is_spelling_substitute_character",
+        "is_spelling_transpose_internal",
+        "is_verb_number_agreement_ud",
+        "is_verb_person_agreement_ud"
+      ]
+    },
+    "fo": {
+      "correction_rows": 127629,
+      "correction_tokens": 19561835,
+      "pct_all_training_rows": 0.044879627275977205,
+      "pct_all_training_tokens": 0.016719418383428365,
+      "mistake_count_rows": {
+        "0": 66525,
+        "1": 61104,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 52.123733634205394,
+        "1": 47.876266365794606,
+        "2": 0.0,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.0
+      },
+      "distinct_rule_ids": 18,
+      "distinct_edit_pairs": 24932,
+      "corruption_type_edit_occurrences": {
+        "adjective_case": 577,
+        "adjective_definite": 181,
+        "adjective_gender": 216,
+        "adjective_number": 115,
+        "determiner_case": 2605,
+        "determiner_gender": 2035,
+        "determiner_number": 1568,
+        "governed_infinitive": 9766,
+        "perfect_verb_form": 3233,
+        "preposition_case": 1501,
+        "spelling": 29432,
+        "verb_number_agreement": 6910,
+        "verb_person_agreement": 2965
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": false,
+      "rule_ids": [
+        "fo_adjective_case_ud",
+        "fo_adjective_definite_ud",
+        "fo_adjective_gender_ud",
+        "fo_adjective_number_ud",
+        "fo_determiner_case_ud",
+        "fo_determiner_gender_ud",
+        "fo_determiner_number_ud",
+        "fo_governed_infinitive_ud",
+        "fo_perfect_verb_form_ud",
+        "fo_preposition_case_dat",
+        "fo_preposition_case_gen",
+        "fo_spelling_delete_doubled_consonant",
+        "fo_spelling_delete_internal",
+        "fo_spelling_duplicate_consonant",
+        "fo_spelling_substitute_character",
+        "fo_spelling_transpose_internal",
+        "fo_verb_number_agreement_ud",
+        "fo_verb_person_agreement_ud"
+      ]
+    },
+    "nl": {
+      "correction_rows": 706359,
+      "correction_tokens": 85362545,
+      "pct_all_training_rows": 0.24838499591027105,
+      "pct_all_training_tokens": 0.07295900942469001,
+      "mistake_count_rows": {
+        "0": 352186,
+        "1": 354173,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": 49.8593491411591,
+        "1": 50.1406508588409,
+        "2": 0.0,
+        "3": 0.0,
+        "4+": 0.0,
+        "unknown": 0.0
+      },
+      "distinct_rule_ids": 64,
+      "distinct_edit_pairs": 26950,
+      "corruption_type_edit_occurrences": {
+        "adjective_inflection": 10315,
+        "article_gender": 151197,
+        "article_number": 6739,
+        "demonstrative_agreement": 4192,
+        "possessive_agreement": 847,
+        "relative_pronoun_agreement": 37,
+        "spelling": 178984,
+        "subject_verb_agreement": 1831,
+        "verb_dt": 31
+      },
+      "coverage_notes": [
+        "Inherited correction exposure remains unassigned; reported exposure is an identified lower bound.",
+        "Distinct counts refer only to sampled correction rows with unambiguous producer annotations."
+      ],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "complete_identified_additions",
+      "distinct_counts_are_lower_bounds": false,
+      "rule_ids": [
+        "adjective_inflection:indefinite_neuter",
+        "article_gender:de:de>het",
+        "article_gender:het:het>de",
+        "article_number:plural:de>het",
+        "demonstrative_agreement:de:deze>dit",
+        "demonstrative_agreement:het:dat>die",
+        "demonstrative_agreement:het:dit>deze",
+        "demonstrative_agreement:plural:deze>dit",
+        "possessive_agreement:ons>onze",
+        "possessive_agreement:onze>ons",
+        "relative_pronoun_agreement:inanimate_het",
+        "spelling:curated:aantal>aantap",
+        "spelling:curated:aanwijzingen>aanwijzigingen",
+        "spelling:curated:allemaal>alemaal",
+        "spelling:curated:altijd>altij",
+        "spelling:curated:altijd>altijt",
+        "spelling:curated:balans>ballans",
+        "spelling:curated:beginnen>beginen",
+        "spelling:curated:begonnen>begonen",
+        "spelling:curated:bewoners>bewoonders",
+        "spelling:curated:bezoek>besoek",
+        "spelling:curated:blijven>blijfen",
+        "spelling:curated:creëren>creëeren",
+        "spelling:curated:eerste>irste",
+        "spelling:curated:eigen>ijgen",
+        "spelling:curated:gebeurt>geburt",
+        "spelling:curated:gelukkig>gelukig",
+        "spelling:curated:gevallen>gevalen",
+        "spelling:curated:geven>geefen",
+        "spelling:curated:gezien>gesien",
+        "spelling:curated:grond>gront",
+        "spelling:curated:handen>hanten",
+        "spelling:curated:hebben>heben",
+        "spelling:curated:kamer>kaamer",
+        "spelling:curated:kenmerken>kernmerken",
+        "spelling:curated:krijgen>kijgen",
+        "spelling:curated:kunnen>kunen",
+        "spelling:curated:laatste>laaste",
+        "spelling:curated:laatste>laatse",
+        "spelling:curated:maakt>makat",
+        "spelling:curated:maken>maaken",
+        "spelling:curated:misschien>mischien",
+        "spelling:curated:omstandigheden>opstandigheden",
+        "spelling:curated:ontstaan>onstaan",
+        "spelling:curated:terug>tereg",
+        "spelling:curated:uitgevoerd>uitgeboerd",
+        "spelling:curated:vandaag>fandaag",
+        "spelling:curated:verkiezingen>verliezingen",
+        "spelling:curated:vertelt>fertelt",
+        "spelling:curated:vraag>fraag",
+        "spelling:curated:vraagt>fraagt",
+        "spelling:curated:waarom>warom",
+        "spelling:curated:water>waater",
+        "spelling:curated:zitten>siten",
+        "spelling:lexical:hogedrukgebied>hoogdrukgebied",
+        "spelling:lexical:onmiddellijk>onmiddelijk",
+        "spelling:lexical:openlijk>openelijk",
+        "spelling:lexical:sowieso>zowiezo",
+        "spelling:productive:delete_doubled_consonant",
+        "spelling:productive:duplicate_consonant",
+        "spelling:productive:transpose_internal",
+        "subject_verb_agreement:dictionary:plural",
+        "verb_dt:hij:wordt>word",
+        "verb_dt:ik:vind>vindt"
+      ]
+    },
+    "pl": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "de": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "fr": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "es": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "it": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "cs": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "pt_pt": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "fi": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "et": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "ca": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "el": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "ro": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    },
+    "uk": {
+      "correction_rows": 0,
+      "correction_tokens": 0,
+      "pct_all_training_rows": 0.0,
+      "pct_all_training_tokens": 0.0,
+      "mistake_count_rows": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4+": 0,
+        "unknown": 0
+      },
+      "mistake_count_pct_within_correction": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4+": null,
+        "unknown": null
+      },
+      "distinct_rule_ids": null,
+      "distinct_edit_pairs": null,
+      "corruption_type_edit_occurrences": {},
+      "coverage_notes": [],
+      "scope": "Identified sampled DFM12 DaLA additions only; inherited coverage missing",
+      "total_correction_rows_including_inherited": null,
+      "status": "pending"
+    }
+  },
+  "components": [
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00000.jsonl.gz",
+      "sha256": "8ddc06f28f6e1e97f4fb8f41cbdd3bef4f315727d16e05e97db2a4e8dda8f529",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00001.jsonl.gz",
+      "sha256": "faac9e32d25cb08d7e31f7dd537a5665d2ed2cecba3fbb87eab3f09f64102ac7",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00002.jsonl.gz",
+      "sha256": "b03bac4047d339f2e880d64ddc7dcfe4e4139870f8ecba4e7043cb6e7abb8a8b",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00003.jsonl.gz",
+      "sha256": "617d9a6123bc657da7a10e2515894705ce574f7bbc94c8a81f96b5810ae940af",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00004.jsonl.gz",
+      "sha256": "ac3a7a7883177901a1789907c594f62cedc8281864a50520c1e1a3dfbba4e5be",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00005.jsonl.gz",
+      "sha256": "5b98328b51f5e441d0f06459c85d2f7ac691ced4948049d1ab270c425aaebd22",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00006.jsonl.gz",
+      "sha256": "12b202dee00b0ed5726f778a7dd16f8afc8856e2158e00fb150a3b69160894ab",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00007.jsonl.gz",
+      "sha256": "4475204de21e210e087cd2acc4513987f138e0d77fdd0135c3a7c5bd626805f1",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00008.jsonl.gz",
+      "sha256": "9058c2fb276f04b14f77e84bd5ca708f7c051d6699dd7f883c4ba73606bb58c1",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00009.jsonl.gz",
+      "sha256": "56e52b707b662bb4e7825c28c688e8775c0a7dcebe90b2d018155f570b1f77f5",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00010.jsonl.gz",
+      "sha256": "ce557687ab619587e36d47b769dc511ba60d874b1a97fc070604f1acbf96ee91",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00011.jsonl.gz",
+      "sha256": "2493f56be39b507b6c15d7341fa6e41892d67d0bdfecae9749d5d75a39d56023",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00012.jsonl.gz",
+      "sha256": "663e8719725200629c3ebe4060ccc4cb90e1e61af3c48b01b32c1f7178452e99",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00013.jsonl.gz",
+      "sha256": "a4737c0001093068233c9a75fa591f54519fa628671481297810b984c07627b1",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00014.jsonl.gz",
+      "sha256": "459bceef89e58d7bb7b66ab8e9319757fbb5127fffd4de488dc36791ad322d6f",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 42773
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00015.jsonl.gz",
+      "sha256": "6510d22a69fa52a3a49882ab671a0d5a38993b64dbe58ae036c76d8ad1e20e5f",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00016.jsonl.gz",
+      "sha256": "beea16018ff0d24163042f53c62df7962d73b10b590ad7f9d4de739e61918227",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00017.jsonl.gz",
+      "sha256": "c57da7c724ae47b789800e52f54ae2bc205e02f328e69286ff11ae5dacdd3dbb",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00018.jsonl.gz",
+      "sha256": "3d67df5462a043ebddb5dd67c3061202643fe40da099ee3038077bce87f1f35e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00019.jsonl.gz",
+      "sha256": "975b1c3635069485326e8de447b264a14b3b0f6044137bc1007a375f54b272eb",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00020.jsonl.gz",
+      "sha256": "974829f40a6db4d2a69194bd26281aa944282f2c571b0ea597974529bde40790",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00021.jsonl.gz",
+      "sha256": "582b8a2126c902c1a75a2224aa74004bcdbc2a9956198fccb30df4ab3ae78c96",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00022.jsonl.gz",
+      "sha256": "5be2383afdbdf5749c1e6616ebd0977782a0464e5b961a3bc3288d450ee1df47",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00023.jsonl.gz",
+      "sha256": "dfd739a0205a3a38f0ce1a078ea1281291d021d17b592ba8bf095f1988266e2b",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00024.jsonl.gz",
+      "sha256": "3e3d8a01658f3146b319c140451eb8a87baf8b876368784a4779d1e1690d275d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00025.jsonl.gz",
+      "sha256": "08fb0861bde50b613a797e3229cec58fb8121efaba390af6097217ccbdea0876",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00026.jsonl.gz",
+      "sha256": "4621cca56c5830365db7cb31257335be8d5ae6903d65388c91122bcf9b8b78af",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00027.jsonl.gz",
+      "sha256": "429afdf02b0c78982334777d80751174d33318d9f9dc9815c38a8facf5a9ed11",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-en",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-en/train-00028.jsonl.gz",
+      "sha256": "cc7ed41bd05b30b8008260e173cec8a9326a6e3e4da932b0502ddb36922a2e5d",
+      "accepted_rows": 2300,
+      "sampled_correction_rows": 2300
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00000.jsonl.gz",
+      "sha256": "e0f3332deca59ff94ce50f29411f44ddac21edc017606280aac39791eaef5ed3",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00001.jsonl.gz",
+      "sha256": "117da1a02ede3a8eb2f2ec3a169d7fb1420271a52a880d759c612373bfa3b131",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00002.jsonl.gz",
+      "sha256": "873a7395b3de171642d993adf2bfba4d84f58f15510a0bbf89a849aab480b26d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00003.jsonl.gz",
+      "sha256": "558ae01c93a252e04c472cb9981b21c4c4cabe9214258ea8f21dc3cbdd127ca3",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00004.jsonl.gz",
+      "sha256": "cd841a702d2d083d480820622589a355a8108431c98818856b33cbc893c1f59d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00005.jsonl.gz",
+      "sha256": "10a49cb2b8860912b73b32dcd7e5ba4943fded84b8f581469af7c06fa3a58b93",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00006.jsonl.gz",
+      "sha256": "3200a6ba336dac72c037c8d7e596a237fb07ce55185d61e177770346f437ac4e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00007.jsonl.gz",
+      "sha256": "50decaca4ddf29c30fdfdf4372fed9893c102523a2af4ad609554d20c1210535",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00008.jsonl.gz",
+      "sha256": "1d33713704297b6ad66be0a19cd263b48eb6f46ad406dfb8441b9f42476f0753",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00009.jsonl.gz",
+      "sha256": "38fd6b50c89442f34f1fc2ce2d06150757cb571e8c7a05383df1237647ea127d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00010.jsonl.gz",
+      "sha256": "1793d4cdbac35b4e9e7b777667fa04962e2afda79436a6f0fe71742105f5480b",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00011.jsonl.gz",
+      "sha256": "f01d70c77acf991be6c959e46aa043b307cb4edf5187bc41d994078b4f8e77b4",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00012.jsonl.gz",
+      "sha256": "8be0e866a57cf3cebfaf516313dfd6efd190994cbc8f533eb983254e420bfc34",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00013.jsonl.gz",
+      "sha256": "75c3dde9e0e0227c01ee49ea566040521bc228aaf4d8b900068694620ac30c64",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nb-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nb-correction/train-00014.jsonl.gz",
+      "sha256": "3e4d944b7c9e281b6fb3e3eb07e2d60a6d61293ba1fc353e6549b2f15c3b00cb",
+      "accepted_rows": 38211,
+      "sampled_correction_rows": 38211
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00000.jsonl.gz",
+      "sha256": "a7bc4ca86c07a1dad79612f66fe6f2561288bfdc1146d0743fa6ca19f408a63d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00001.jsonl.gz",
+      "sha256": "7b210ce8723dbeda467e26774a521fed0266b6f24d019b2ddecf5af604d265e6",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00002.jsonl.gz",
+      "sha256": "8b90f2c024850c6f44d2afc781e00160f9051227fcca2cb68b53f48806c4aa55",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00003.jsonl.gz",
+      "sha256": "dda126fd8644e55dba272e7265d23dfe6e95055a3c17e7fa244e39c074bc351b",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00004.jsonl.gz",
+      "sha256": "0c32e35587ca8dbc1063a99ad27dafaa80a2911cd52af3d58ca8e683937e2544",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00005.jsonl.gz",
+      "sha256": "ddc33e41ced29914956aa15fa2b158306a030a0a11591f2ee2804376d9474920",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00006.jsonl.gz",
+      "sha256": "6712a53645becd0b951907964f05b235a53a8297ccdf74412f39c470b1fd37b0",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00007.jsonl.gz",
+      "sha256": "7d83282a648f8eab67f481cd33c52a924627e6698160da421b7cd577a4fd5716",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00008.jsonl.gz",
+      "sha256": "6d562845e0def9ec17b61c81258cd3321d71e4c1dbae8ccbfbc7588a02320c8d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00009.jsonl.gz",
+      "sha256": "7264ffb8c8c7aa223f435af8e1e5f8796260427f584a246abb5f5194d9b56dc1",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00010.jsonl.gz",
+      "sha256": "3060fe6bed6ed45e403c831817a97ddcf41f38ceabfebefcfca9050262cd8b63",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00011.jsonl.gz",
+      "sha256": "59f4d789fe06fdbe777f763db8a7377225d4b351915ae5bd85f8fb7a7b20fbe4",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00012.jsonl.gz",
+      "sha256": "c61197cad46cb2b22311443e7aa97c2335876c9c5254cb3b2865f8ba34e67a85",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00013.jsonl.gz",
+      "sha256": "71a1cf59d6aeafaaf4155c13c617c033fb793a6cdc196b133185a847b4170c20",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nn-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nn-correction/train-00014.jsonl.gz",
+      "sha256": "d7754bc6b91453061c06d4268ff879d718a9ce4d032abd18941f681006509e3f",
+      "accepted_rows": 33039,
+      "sampled_correction_rows": 33039
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00000.jsonl.gz",
+      "sha256": "9ca758714acbbbbe83d62980826a5ce2efad75c5476e8ed77a63ca32e798c1fc",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00001.jsonl.gz",
+      "sha256": "9c6e68d3f904d308f09ea7fa1ecdfdecec12a46907aab68b3b0549b80d28caf2",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00002.jsonl.gz",
+      "sha256": "d4d7f2c0023cd8dcb6b1631bf1b038810f7a1de8e9567293f9948f613980633a",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00003.jsonl.gz",
+      "sha256": "7e562831fa9ff6cafb82783e7d6fafc872f8b34007ff254bd987ecd2d33444fd",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00004.jsonl.gz",
+      "sha256": "507a2033e3feca73f04b73b0f51dd58a0a2a976090f61ca6cb06e6c7126d259c",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00005.jsonl.gz",
+      "sha256": "46f204882fc02d5319d22afd23c5cdb8cac8ec764fbc40177cf36c1cf5407c2b",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00006.jsonl.gz",
+      "sha256": "d51840a62235e8f93560c6b6a0ac974e75b9fa615559e18739cc7cb51d2863be",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00007.jsonl.gz",
+      "sha256": "cd3347bea9a2f69ac489c910c0670a9459ac6f754e8f28bf7e7a9a43259f88a4",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00008.jsonl.gz",
+      "sha256": "04070c9adf857e5fbd72738bc500f9f15428740f31a5a4d722865d65e6b46eec",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00009.jsonl.gz",
+      "sha256": "a31010942f18bd5eebefc79c36e99e69a209b98c6c81d30b34eada069b51bf6c",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00010.jsonl.gz",
+      "sha256": "8224a69e290a6c2e3cc3c52c1e8261329e728d6e4f26ae884032a59e8ab524dd",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00011.jsonl.gz",
+      "sha256": "72fffe03a690c3eb0f052b5c87595a7603a50ce372866650b65bd1992fdfc0f8",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00012.jsonl.gz",
+      "sha256": "f09cc5dc7ed86a5d0de093c74919331625042a9a530e0a047a9ef98f620a73d9",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00013.jsonl.gz",
+      "sha256": "8eeaf28f3f44b04abddc1a7c0304c6de276fa64397612508ecd83496b96a2bf9",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-sv-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-sv-correction/train-00014.jsonl.gz",
+      "sha256": "2fbedee3e127b5f0e67d9be05ebac924a1bd24f34312f29b2314a0f233be468b",
+      "accepted_rows": 42384,
+      "sampled_correction_rows": 42384
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00000.jsonl.gz",
+      "sha256": "dfda0612a8882f8ec61a2612c26b43420d5268dbc34deed76bfb6e9ee5898b66",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00001.jsonl.gz",
+      "sha256": "0924a6c177bbe7861890f59df5b2f9b09f473fc3a381b3a8190a255ae0640fd2",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00002.jsonl.gz",
+      "sha256": "ed0aa3e1bbbadb29bfdd2b995a1773d8937669ea1946bd3dc993c5e064ed6e8e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00003.jsonl.gz",
+      "sha256": "74c577897773ca26ad8836f3d6cd35126914a50fe355471217a0c245f9156992",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00004.jsonl.gz",
+      "sha256": "5fa34f1cb86e90c468ad122138e972def60ebad62272d9be7744991ba71d511e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00005.jsonl.gz",
+      "sha256": "7343487055b2fa9d5943947a5ae723616e8187fc92f8098704ae3b9a29c56743",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00006.jsonl.gz",
+      "sha256": "d21a3b4c3ba65bcad7b9bbc662b116ff488e79d1778bd917c6df3f8b3dd553a0",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00007.jsonl.gz",
+      "sha256": "bec50bcb6ac5f2c0e10fc2b75890affc093d3d2b2e5e0e2618b26c09710bdeaf",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00008.jsonl.gz",
+      "sha256": "002dd25d392e7432d613ff55935f73cd95b4a1cb62b4725e195acb3b40be9bec",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00009.jsonl.gz",
+      "sha256": "544bb1d51cc852f999a61a1623ce9b7b507d7336301491c0a9846b174fbd4177",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00010.jsonl.gz",
+      "sha256": "d4f6e58c14f009af459d69d1db25b873e945b53e0d931be8a8236b95e32bf82c",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00011.jsonl.gz",
+      "sha256": "1e86d6a2e8de08a18d37ca03c9a5f378f5361d925d2bcc8bce1c27fae9c3633d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00012.jsonl.gz",
+      "sha256": "6ec98950323123d76da3a52c9c7dc2862bf9c79454c93e54fdeb4d844707c78f",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00013.jsonl.gz",
+      "sha256": "619a5cbbfb181d29d3f36903229c3375410ffc321a398042835d9ac919e8a1ea",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-is-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-is-correction/train-00014.jsonl.gz",
+      "sha256": "89a079243fe51c2d12d46b4ca9dc2e0802f4a38c12742511acef6b86e17654cf",
+      "accepted_rows": 4375,
+      "sampled_correction_rows": 4375
+    },
+    {
+      "component": "dfm12-dala-fo-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-fo-correction/train-00000.jsonl.gz",
+      "sha256": "5006a50a9b4186cbe3eb1bbeab05aba7ca89dc220872718f0cf7a329e8ff0ea2",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-fo-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-fo-correction/train-00001.jsonl.gz",
+      "sha256": "64451ae7c2be6ce45c13173b3cee8b4fadc1ea4a0d5396913d47d53e4e47334d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-fo-correction",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-fo-correction/train-00002.jsonl.gz",
+      "sha256": "bcd057d8d3be1b5a84eaa43acafa38c898edd5d669f40a4abbf8d722f319f1c4",
+      "accepted_rows": 27629,
+      "sampled_correction_rows": 27629
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00000.jsonl.gz",
+      "sha256": "2d94d23c99629919ed877a189a467ebae61fd238097197ded4a019829b606ac2",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00001.jsonl.gz",
+      "sha256": "0533069fb145a9f84706765ba646f72fca672ee96ed6b572706be146f506433e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00002.jsonl.gz",
+      "sha256": "12fc5312089f7c07ad5cb5c4311b62eca196a44e3eb00f77bfeff4795c18d9fa",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00003.jsonl.gz",
+      "sha256": "8512390bb6612dead0caa54c1eefaae3fc5b82e96b420f36f5b5f5cd7e98a75b",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00004.jsonl.gz",
+      "sha256": "05eaa62bc11b8c7446df3890b38bffe016cf5bdfb2b52193409c1b7cf1dfbd92",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00005.jsonl.gz",
+      "sha256": "dc356a2f99aa56cb9424132e65d4dad056e02065b17f1c25c842ecd6a98a693e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00006.jsonl.gz",
+      "sha256": "9ec6ebdf7848ec3519cee66f08400cdbce573c5eaf3b20260abd76f0c9586b13",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00007.jsonl.gz",
+      "sha256": "c0c9eb0c6a20013200c2c206d5b72e77a8b0b35a56bb826e3ce8be07e59c80dc",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00008.jsonl.gz",
+      "sha256": "bd95cb8d9eed576b93ffd030fd97f412045491db70eaf89bb650712917083001",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00009.jsonl.gz",
+      "sha256": "9da90543c10f952ee4de1130fb540a7d99bbec1776dcc53e335237e02c3ca6f3",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00010.jsonl.gz",
+      "sha256": "11635770eb0fe93d7d8680152c4a9795efadf26f705a8722a754fc5166621974",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00011.jsonl.gz",
+      "sha256": "d7587345750f7a86b18ee3ecffde5c5217d335a5d715d1a153a434ff7efabe57",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00012.jsonl.gz",
+      "sha256": "953bec0aa56d912e6a9d1e20405109be732d7cf26ab2a79ae62fc55388336a84",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 0
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00013.jsonl.gz",
+      "sha256": "4b9ef24071d9b2e6e4010da37269e14102f27276d64d23ea0f4d87adbfcb2885",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 3275
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00014.jsonl.gz",
+      "sha256": "076773c64bd099a86858ce7b787b74d98870174383b3063147c553d8f577b619",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00015.jsonl.gz",
+      "sha256": "8c174f0753e78e049bf2e69befe0d55346a9029e9d0bc9a3292807d575a33e0c",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00016.jsonl.gz",
+      "sha256": "0332e36a0f163e63e054b35bfaca685b38b83c1069689e510c9537e689547e88",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00017.jsonl.gz",
+      "sha256": "b55174b0fac1689f06dc758dfa4b51aa24f58475d8fb01dbb7dda3aefda5270d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00018.jsonl.gz",
+      "sha256": "b91a6425852b517cd488d97ab4349035c940c0f1ff5fb935da1e04506cacf3f5",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00019.jsonl.gz",
+      "sha256": "0230eb142a2688243ac5271a314d0176529ad1e367cc16a36ec8cb6df0271fa1",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00020.jsonl.gz",
+      "sha256": "3282e21d0924742b5aa20b2f76147d2958f1e89f4bd49142b192a24a1ef16671",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00021.jsonl.gz",
+      "sha256": "5b842917653e2853bbe2672e7bc48592a973f8637f2b070f8adfb4fbae5c6942",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00022.jsonl.gz",
+      "sha256": "bd87dbb1d6a3a3fd51ff61574baae75d6579d976652be7046bc1e4d0085b379e",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00023.jsonl.gz",
+      "sha256": "aa9344844c88d2ace21849dce3780a71df1c4086db4480c92c9e036970ec752d",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00024.jsonl.gz",
+      "sha256": "d978be5512885bd5815b01604748e8e29811c58daf87bdff00b68ec3b6d9c099",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00025.jsonl.gz",
+      "sha256": "aa87564a1b5246e3575afdf87bb556da67cf1d7a096aa9252f6b431a54514759",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00026.jsonl.gz",
+      "sha256": "d6acd7be37d4e897b6c589626703e277037c5974c022645a9800fff8173ec6c6",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00027.jsonl.gz",
+      "sha256": "98f621890e04901f09fe255dce276c84e270a1a5d9081f01661198c27f9ce50a",
+      "accepted_rows": 50000,
+      "sampled_correction_rows": 50000
+    },
+    {
+      "component": "dfm12-dala-nl",
+      "file": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/accepted_inputs/dfm12-dala-nl/train-00028.jsonl.gz",
+      "sha256": "a98db75ce8adb1cab13a7e4ee9bad0372a3ffe02655bd9806e171b7d28f36933",
+      "accepted_rows": 3084,
+      "sampled_correction_rows": 3084
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/work/mimir/HRM-Text/data/sampled_dfm12_xl_epoch11_noidentity/build-receipt.json",
+      "sha256": "41305947e5b89c5a3bb5ce13be2f9ecbef5e5558d820e9992ce4693b865387ff"
+    },
+    {
+      "path": "/work/mimir/HRM-Text/data/sampled_dfm12_xl_epoch11_noidentity/metadata.json",
+      "sha256": "68900816e917991b7f0b6f66612d38395d44b91308c8cd3dc506ca8f75a03ffa"
+    },
+    {
+      "path": "/work/mimir/HRM-Text/data/dfm12/training-build-completed-campaign-20260929/sources.json",
+      "sha256": "ba97ab0a827a452046f8363ea3911046c477b9aacfcd127b596aa13d2444cbfa"
+    },
+    {
+      "path": "/work/mimir/HRM-Text/scripts/dfm12_error_composition.py",
+      "sha256": "6230941ec919df1fb2d1c940145d5da569401e24937f91f715c96c94f4f6834d"
+    },
+    {
+      "path": "/work/mimir/DaLA/export-upload/dala-english-common-pile/provenance/train.pairs.jsonl.gz",
+      "sha256": "04037a96bbd6740db52377b21a7d3476ee1dad92c23faf878a07ff2eb484f5f1",
+      "producer_train_pairs": 383144
+    },
+    {
+      "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nb/train/pairs.jsonl",
+      "sha256": "947d6530eb8cf0eb31e0d3a786b5ef7114e5d011771dc7d766fdf7889a9cbbb1",
+      "producer_train_pairs": 383078
+    },
+    {
+      "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nn/train/pairs.jsonl",
+      "sha256": "54cf931d8dc945d43e2e3a0fcbaa72960d76fe13949cf9583985b739a7df07bc",
+      "producer_train_pairs": 383144
+    },
+    {
+      "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/sv/train/pairs.jsonl",
+      "sha256": "22f0480b68b65519219c597d66ba95361e13ad15dacb37bad9226b7f675cde60",
+      "producer_train_pairs": 383143
+    },
+    {
+      "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/is/train/pairs.jsonl",
+      "sha256": "513c060e35ba752bfb7028328d4283130806d88480761f29d4797f558fa71296",
+      "producer_train_pairs": 383142
+    },
+    {
+      "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/fo/train/pairs.jsonl",
+      "sha256": "47faa51ef1bb32d8930677a4f3a73d2fc770ddcce174d9ec7e3f737b12f15145",
+      "producer_train_pairs": 70349
+    },
+    {
+      "path": "/work/mimir/DaLA/export-upload/dala-dutch-dynaword/provenance/train.pairs.jsonl.gz",
+      "sha256": "a23293030291d397135a091f0117b774ed27a1d66e6b9f98eabdd051856d1096",
+      "producer_train_pairs": 383131
+    }
+  ],
+  "missing_coverage": [
+    {
+      "scope": "inherited_DFM11_base",
+      "rows": 235520711,
+      "reason": "Local transferred sampled base lacks the complete tokenized source-boundary/row provenance map; Danish DaLA and Folketing correction metadata cannot be joined to active sampled rows reliably."
+    }
+  ],
+  "completed_languages": [
+    "en",
+    "nb",
+    "nn",
+    "sv",
+    "is",
+    "fo",
+    "nl"
+  ]
+}

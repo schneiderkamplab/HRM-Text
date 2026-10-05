@@ -1,0 +1,27 @@
+{
+  "status": "independent_read_only_review_complete",
+  "cases": 16,
+  "per_task": 4,
+  "population_rate_claim": false,
+  "all_source_and_publication_files_unchanged": true,
+  "input_pins": {
+    "data/dfm13/wave4/downloads/wikipedia-fa/20231101.fa/train-00001-of-00004.parquet": "d2c9f32e5a00ecec8466004a59f729d24ca5a89b4b59af33a7b679517f7ef475",
+    "data/dfm13/wave4/downloads/wikipedia-fa/20231101.fa/train-00000-of-00004.parquet": "05f900d1af751cfea23d039d1c0d94261a531430b279e8d64fd8698eda76b73e",
+    "data/dfm13/wave4/downloads/wikipedia-fa/20231101.fa/train-00002-of-00004.parquet": "481098614931b05b5cb9248af6bbdb8897303e8070fc29b01f7c63edd30aa82c",
+    "data/dfm13/wave4/downloads/wikipedia-fa/20231101.fa/train-00003-of-00004.parquet": "973d361f8ec1158359de1ac7d54c52c703345780087dc10f0b0ac051a3444005",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-fa-denoising/data/train.jsonl": "1d10e7551359b4e099e5724ea504dbe7250c8cae22e00873b28ca88f6b4b36d3",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-fa-paragraph-reordering/data/train.jsonl": "668719681660c9b76eb1d4147deabe4add37e5e59eb044fe7c53e69d33cf5767",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-fa-prefix-continuation/data/train.jsonl": "218d97a51b855afc4bfac70101aff651485cf8b0efcabf8120988e307751d9ed",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-fa-span-filling/data/train.jsonl": "299e06fa8ea8f1487b7e9669d0697d6f3045332a954184769ddfef6c79be0c76"
+  },
+  "files": {
+    "evidence.json": "093d792842302c3dde3ba832954bd1adac786dffe9101d6095b9d1b1b3d45cae",
+    "findings.json": "2ab49ad3e76a3cc36f0d94eafc2fe137a681738f61a04712cf6aa15cac2dc61d",
+    "mechanical-checks.json": "c319418d73d5880b7e032f97ebbbc38490f5abaabd97774bc41d9a1947036e78",
+    "overview.md": "6f4627b57ec5aec51acebf3c4c1686451231b750753709263c528da8919ffc4c",
+    "review.json": "41519ab775f5e9b25456cdaf7130ad75245ba94cc71f0a3a8f189192f46e46f4",
+    "report.md": "f76b317439c5980deb6668826ae9d622edd4a052bb7439f8ff5c6fd4c6cb5047"
+  },
+  "gpu_calls": 0,
+  "eligibility_changes": false
+}

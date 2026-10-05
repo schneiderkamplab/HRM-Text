@@ -1,0 +1,151 @@
+{
+  "root": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1",
+  "progress_sha256": "a0843066304dcee6f40b318f9cdd6bc68c5aa1c1e64d3954b5d8a6e3cd7b2c30",
+  "all_sources_tokenized": true,
+  "sources": 14,
+  "rows": 370026,
+  "tokens": 350165042,
+  "over_4096_rows": 9742,
+  "admitted": {
+    "jjzha_skillspan": {
+      "rows": 3713,
+      "tokens": 785924,
+      "sequences_over_4096": 0,
+      "max_sequence_tokens": 3829,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/jjzha_skillspan/tokenization-receipt.json",
+      "promoted": true
+    },
+    "jjzha_kompetencer": {
+      "rows": 740,
+      "tokens": 145302,
+      "sequences_over_4096": 0,
+      "max_sequence_tokens": 1274,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/jjzha_kompetencer/tokenization-receipt.json",
+      "promoted": true
+    },
+    "jjzha_green": {
+      "rows": 7612,
+      "tokens": 1756644,
+      "sequences_over_4096": 0,
+      "max_sequence_tokens": 1288,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/jjzha_green/tokenization-receipt.json",
+      "promoted": true
+    },
+    "jjzha_imdb_dutch": {
+      "rows": 22611,
+      "tokens": 9228387,
+      "sequences_over_4096": 0,
+      "max_sequence_tokens": 3745,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/jjzha_imdb_dutch/tokenization-receipt.json",
+      "promoted": true
+    },
+    "jjzha_dutch_exam": {
+      "rows": 1206,
+      "tokens": 147847,
+      "sequences_over_4096": 0,
+      "max_sequence_tokens": 333,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/jjzha_dutch_exam/tokenization-receipt.json",
+      "promoted": true
+    }
+  },
+  "blocked": {
+    "ai_arenaen_preferred": {
+      "rows": 2328,
+      "tokens": 2383843,
+      "sequences_over_4096": 61,
+      "max_sequence_tokens": 14866,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/ai_arenaen_preferred/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "arena_human_preference_140k": {
+      "rows": 88774,
+      "tokens": 141059558,
+      "sequences_over_4096": 6766,
+      "max_sequence_tokens": 23369,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/arena_human_preference_140k/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "arena_human_preference_100k": {
+      "rows": 52652,
+      "tokens": 40480053,
+      "sequences_over_4096": 988,
+      "max_sequence_tokens": 22806,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/arena_human_preference_100k/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "arena_human_preference_55k": {
+      "rows": 30446,
+      "tokens": 12521173,
+      "sequences_over_4096": 40,
+      "max_sequence_tokens": 14005,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/arena_human_preference_55k/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "comparia_preferred": {
+      "rows": 399,
+      "tokens": 439046,
+      "sequences_over_4096": 11,
+      "max_sequence_tokens": 9918,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/comparia_preferred/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "helpsteer3_edit": {
+      "rows": 6321,
+      "tokens": 6589750,
+      "sequences_over_4096": 66,
+      "max_sequence_tokens": 8439,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/helpsteer3_edit/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "helpsteer3_preference": {
+      "rows": 16875,
+      "tokens": 17093073,
+      "sequences_over_4096": 123,
+      "max_sequence_tokens": 8626,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/helpsteer3_preference/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "arena_expert5k": {
+      "rows": 1883,
+      "tokens": 6575619,
+      "sequences_over_4096": 487,
+      "max_sequence_tokens": 22315,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/arena_expert5k/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    },
+    "jjzha_croco": {
+      "rows": 134466,
+      "tokens": 110958823,
+      "sequences_over_4096": 1200,
+      "max_sequence_tokens": 16393,
+      "receipt": "/work/mimir/HRM-Text/data/dfm13/nonwave-tokenization-20261003-v1/jjzha_croco/tokenization-receipt.json",
+      "promoted": false,
+      "blocker": "full_native_rows_exceed_current_4096_admission_no_rows_removed",
+      "artifact_registered_with_admission_blocker": true
+    }
+  },
+  "admitted_rows": 35882,
+  "admitted_tokens": 12064104,
+  "workers": 16,
+  "rows_dropped": 0,
+  "hard_truncation": false,
+  "source_outputs_mutated": false,
+  "shared_wave_watcher_interrupted": false,
+  "sampling_performed": false
+}

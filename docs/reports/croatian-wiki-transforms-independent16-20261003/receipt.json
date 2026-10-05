@@ -1,0 +1,45 @@
+{
+  "status": "independent_read_only_review_complete",
+  "summary": {
+    "cases": 16,
+    "per_task": 4,
+    "source_replay_exact": 16,
+    "category_only": 0,
+    "heading_only": 0,
+    "paragraph_reordering_with_nonprose_blocks": 4,
+    "paragraph_reordering_below_two_prose": 1,
+    "list_only_denoising_not_category_only": 1,
+    "internal_date_contradictions_confirmed": 1,
+    "population_rate_claim": false
+  },
+  "input_pins": {
+    "data/dfm13/wave4/downloads/wikipedia-hr/20231101.hr/train-00000-of-00001.parquet": "b7765a0e521b7df6d7bf72a8c8aaba3a66f5d110aa0be57d16fccfcb85266787",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+    "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/denoising/publication.json": "fd8b9eaa6c41931487b06c08f0eb057ff80e7bac290e056067be08e8d726ceaf",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+    "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/paragraph-reordering/publication.json": "5426041a9f743aed121f429a732a20341e0430fddff2b58a11390689309bb7b2",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+    "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/prefix-continuation/publication.json": "50339e2c936b759ed116275d386c2bacf15608c7e246c3e54216dee5e12faf0b",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+    "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/span-filling/publication.json": "424b7bd1dbc3b2c8ddc3682f3d9d9aeff6b50ec0476af6c88f5bbe0e83f6a442"
+  },
+  "all_source_and_publication_files_unchanged": true,
+  "files": {
+    "evidence.json": "1528b2ac833616f8354ac97ab92e7a6af9e2729f23073227c180913ba6f76f00",
+    "finalize.py": "4fa676f4eb566ea2a051ab30e51afe82b868fd46699dbb442aad2becd24c4c00",
+    "findings.json": "f7bd65082749c8fae4af872ae079a95815963c6cfd9bb899db7bef042ea61cca",
+    "input-pins.json": "8b2aee804734ee5ca2b88f2ff6bd5e77ec12205054187657f0a342db3e9e1605",
+    "mechanical-checks.json": "41c28ab367921cbfe666bd6c0893a8ecf497912e5f24cfad0f8c809c792e1f52",
+    "overview.md": "5bf422ce3cf71b3acf7d4ff87d05f5d1b2b363614b78d182ca6a34b4f7b4a3c3",
+    "replay.py": "21ff9df00d576b6ab1e9f0655beae7cf5f2d790505bfbd95011a1f74ceb5c1fb",
+    "report.md": "a639febb685150921935ce2e4a5b9314c9342a14f53256e4665bc4d93a115f64",
+    "review.json": "56ef762565e61c90cda0fb9257732dd5bfe9412c0e4f7df74ba8b3c52ae8df8c"
+  },
+  "code_pins": {
+    "dfm12/transform.py": "4a040747d7400fb5bec239f09bdd5f7a37656691b4476c26ee532257b3a4ce02",
+    "dfm12/wave4_transforms.py": "b15b27db437ffb5b2056702eedc8ca6b04660e4c7785f51a09bd5d02a292d219"
+  },
+  "gpu_calls": 0,
+  "eligibility_changes": false,
+  "filters_applied": false
+}

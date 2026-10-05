@@ -1,0 +1,32 @@
+{
+  "status": "diagnostic_and_manual_review_complete_no_filter",
+  "census_rows": 203291,
+  "reordering_rows": 30986,
+  "manually_reviewed_narrow_candidates": 44,
+  "other_manual_cases": 17,
+  "narrow_candidate_source_replays": 44,
+  "tests_passed": 10,
+  "filtering_applied": false,
+  "population_semantic_certification": false,
+  "all_input_hashes_unchanged": true,
+  "input_pins": {
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+    "data/dfm13/wave4/downloads/wikipedia-hr/20231101.hr/train-00000-of-00001.parquet": "b7765a0e521b7df6d7bf72a8c8aaba3a66f5d110aa0be57d16fccfcb85266787"
+  },
+  "code_sha256": "1b1087635239724b03693485df939f9420caa15b01ddc7c373ca26ac7d77fa84",
+  "files": {
+    "examples.json": "1eab342b970011e58eb241832f7134b6e191abe28232ba6414a93fc9f3328d88",
+    "finalize.py": "13a22d96ffaf81fa6c5e2eb576c0918086082cb127074944cd0780e5718c3858",
+    "flags.jsonl": "e7d640ab6207079047e482f21dd2ac2f1c56610ee8406b74e90901f688cacb4e",
+    "manual44.json": "f0f585d462911b37ea6548e8a670bda02d1f8edd7b5405a75d6a84aa77fe95c2",
+    "proposed-reordering-ids.json": "29b69b0373fa10e2e1bf3c9e458687767fa29f7ce63d145f4481ecb684e0d131",
+    "report.json": "b617546735a2e8649536cbac6545ee7099134578fbf06e0d9029dcf28e442e35",
+    "report.md": "124aa7866a41a36b179385ab49c4ba2e60b5f86f94fd3a0e345f955b990e609f",
+    "representative-review-bound.json": "5109603d15ffec5218a06f02bb5c79a1544639257908b03622ce4d702b8d0399",
+    "representative-review.json": "84d1558d391888b0e6e0a0a5fa4b654bcaa37cd539e1072e1c7f3dae6d7a7012",
+    "reviewed44.jsonl": "3cfba448b85c151c7265b5e34d6bb017892025b60ca1089735e675088ddd37ca"
+  }
+}

@@ -1,0 +1,629 @@
+{
+  "evidence_sha256": "18e4c1cbc65ab078c96874210979439650db7a11bf6432abf7a48dcca1591d04",
+  "conversations": 20,
+  "assistant_turns_read": 44,
+  "counts": {
+    "no_material_issue_observed": 6,
+    "minor_or_uncertain_detail": 3,
+    "material_defect": 9,
+    "uncertain_hold_recommended": 2
+  },
+  "cases": [
+    {
+      "case": 0,
+      "verdict": "no_material_issue_observed",
+      "confidence": "limited",
+      "affected_message_indices": [],
+      "reason": "Complete and relevant Lithuanian answer; identical to upstream. Exact historical weather figures and dates lack the underlying article in the local source, so not independently certified accurate.",
+      "language": "lt",
+      "status": "accepted",
+      "original_id": "00015f48af9dd6f80d60428ada922ca07f48f2ac472727450a284128635876b1",
+      "candidate_id": "00015f48af9dd6f80d60428ada922ca07f48f2ac472727450a284128635876b1",
+      "published_record_sha256": "39e1aef8aae5c56d77a161b85c2b75b76a9ed24b34a3554bf022bc2e7e250f8e",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "675551572fe70a839a2dc3b9dac1aafee41fdb58a3fcc2dbbd6dd59a932fe280",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 845,
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": []
+    },
+    {
+      "case": 1,
+      "verdict": "no_material_issue_observed",
+      "confidence": "limited",
+      "affected_message_indices": [],
+      "reason": "Direct birth date/place answer, unchanged from upstream. No internal contradiction or language defect; obscure biographical facts not independently verified.",
+      "language": "lt",
+      "status": "accepted",
+      "original_id": "3fbe108b9dfd640c842f9a3ce46edf68eb65de978744594411e259b952e995eb",
+      "candidate_id": "3fbe108b9dfd640c842f9a3ce46edf68eb65de978744594411e259b952e995eb",
+      "published_record_sha256": "cd1e6bf47fec6c3ffa51379bd6f33a9c6307ec3037ff5641e20625376fd24ce4",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "cf2fa9bec1920e5a09cb6e122291a5bd8ff6c93ab55ee6d86b33896fa544f1f7",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 5987,
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": []
+    },
+    {
+      "case": 2,
+      "verdict": "no_material_issue_observed",
+      "confidence": "limited",
+      "affected_message_indices": [],
+      "reason": "Responsive ethnographic/history answer matching upstream. Minor spelling ikurto in the source spelling įkūrto, rather than įkurto, is not a material hold. Film-location and historical-year claims not independently certified.",
+      "language": "lt",
+      "status": "accepted",
+      "original_id": "82203b7bbc52c8c901f9769a5dc506feafda09a0196934eaf08a16da8ac5148f",
+      "candidate_id": "82203b7bbc52c8c901f9769a5dc506feafda09a0196934eaf08a16da8ac5148f",
+      "published_record_sha256": "65cdb3fa338dbe694a7d161af8816aafa72271c749153a923ffc6085160ed9b9",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "982dc2f1f3bb77e0bbf2e645601e00b5a9e53a64f7c03ff5206c7d8ba7c8b512",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 10873,
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": []
+    },
+    {
+      "case": 3,
+      "verdict": "minor_or_uncertain_detail",
+      "confidence": "medium",
+      "affected_message_indices": [
+        1
+      ],
+      "reason": "Otherwise coherent lake description identical to upstream. The length direction šiaurės rytų-pietryčių is odd as an axis; likely source error, but not established from the available source. Do not convert this suspicion into a confirmed geography failure.",
+      "language": "lt",
+      "status": "accepted",
+      "original_id": "c17a6d142324258af03e2a64b80e3ef78cfc20d7dfd970f202efe93e6744bcab",
+      "candidate_id": "c17a6d142324258af03e2a64b80e3ef78cfc20d7dfd970f202efe93e6744bcab",
+      "published_record_sha256": "ef84fbd3bfc0e7b9f18259477457d653f533a47c4e85ba9a3959c7e41645a956",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "ff8cdd1a8e2119472372fa6757eff330b0b59ac2f10bd21a42b6f28fd6a2905f",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 1807,
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": []
+    },
+    {
+      "case": 4,
+      "verdict": "no_material_issue_observed",
+      "confidence": "limited",
+      "affected_message_indices": [],
+      "reason": "Answers both when and who, natural Lithuanian, unchanged upstream. Exact seventeenth-century date and attribution not independently certified.",
+      "language": "lt",
+      "status": "accepted",
+      "original_id": "fff21bda8014902571bf5f4f1f1cdf9ed4589072ce7bbc158f67f7c1a8dd80fb",
+      "candidate_id": "fff21bda8014902571bf5f4f1f1cdf9ed4589072ce7bbc158f67f7c1a8dd80fb",
+      "published_record_sha256": "cedecb1fe75b987d07821fb7546b114a46dc4f416a43b0fd166094a149019022",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "7308d19479cfb3fc4df4061b69d818d156f2f2864b17721fd0d7c8463ba8b466",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 8211,
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": []
+    },
+    {
+      "case": 5,
+      "verdict": "no_material_issue_observed",
+      "confidence": "high_for_repair_delta",
+      "affected_message_indices": [],
+      "reason": "Valid bounded repair: changes four trolleybus routes to five to match the five listed IDs (2,4,10,14,19). Other facts and the twenty bus IDs are preserved. Historical/current transport accuracy remains source-bound, not certified current.",
+      "language": "lt",
+      "status": "accepted_repair",
+      "original_id": "00f1aaf2dc1d32298685d2bfabf63fa68e9245fb559a1af79aa1e2941782917d",
+      "candidate_id": "353e5619ebc7f12e265ab6f5bd694f9cfd7157c88dd9518ce2faae4ff950c3d1",
+      "published_record_sha256": "d6346f8058e7ee9dec247238622f00f6e7bb16f0f2adecf4bc8a1f1971b1d9ba",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "58253d22dc70ba54d51ada027edea6fd88571cfa6624c60c2bf9f51f1e6d07a3",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 4170,
+        "repair_parent": "00f1aaf2dc1d32298685d2bfabf63fa68e9245fb559a1af79aa1e2941782917d",
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": [
+        1
+      ]
+    },
+    {
+      "case": 6,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        1
+      ],
+      "origin": "repair_introduced",
+      "reason": "Repair severely degrades Lithuanian and adds unsupported specifics: važkas, bebrai kailius, gelių, hempo (kanapių), grūdos. This is not one cosmetic typo; multiple malformed words/cases and an English-derived nonword undermine the trade-products answer. The original was short but intelligible. Re-audit incorrectly calls it natural and even quotes vaškas, not the actual važkas.",
+      "language": "lt",
+      "status": "accepted_repair",
+      "original_id": "37d7545adf4348a8238b04f693c1ebe274a1cd4858ec3dec1626f91539bc7132",
+      "candidate_id": "87cf0e214f912cc183698a21ac8671a414a2788bfd4ac23c4b3bde284af11b29",
+      "published_record_sha256": "8082d749f8998f888bb6f956130e4c4dd1ae2f05945ad2a688dce7f0215cc63a",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "68c5a1d7b09a21a941416a06be08e92404b507d4583a84e82905f37b44bfce1b",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 380,
+        "repair_parent": "37d7545adf4348a8238b04f693c1ebe274a1cd4858ec3dec1626f91539bc7132",
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": [
+        1
+      ]
+    },
+    {
+      "case": 7,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        1
+      ],
+      "origin": "repair_introduced",
+      "reason": "Entity substitution: upstream identifies the Trakai village in Švenčionys district, 4 km east of Švenčionys. Repair switches to the Galvė-lake Trakai and gives 110–120 km. It also places that town in Vilniaus rajono savivaldybė. Even allowing question-name ambiguity, repair abandons the supplied source referent without clarification. Re-audit rubber-stamps the changed entity/distance.",
+      "language": "lt",
+      "status": "accepted_repair",
+      "original_id": "7fd0362b2839dc85df04c364777e965dcf0b4d4a7f38db0b863e08819c838840",
+      "candidate_id": "e77678f03d4862c5382fd0ce428d1f15605d03b0b534db71493aa5ec890293f9",
+      "published_record_sha256": "1fa9ee44b3200ed2520588ce17e2622d5f8b5b94d31770efd402aa9b48e941f0",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "42505558ff2786ee8e836fb122a9e3a396cfcdb26a5028270fd5299a5b8599e4",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 9345,
+        "repair_parent": "7fd0362b2839dc85df04c364777e965dcf0b4d4a7f38db0b863e08819c838840",
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": [
+        1
+      ]
+    },
+    {
+      "case": 8,
+      "verdict": "no_material_issue_observed",
+      "confidence": "medium",
+      "affected_message_indices": [],
+      "reason": "Coherent summary of seasonal cycles and a subset of the original named Romuva festivals. Removing some names does not by itself invent facts; no exhaustive-list demand. No material repair regression observed.",
+      "language": "lt",
+      "status": "accepted_repair",
+      "original_id": "aeeb050c8373b0a6cebc2773c43f6a7def8794af29f670d10fc7a1f39a136917",
+      "candidate_id": "46917e3945b616b62b990c427610d9c3b5fca21147b29962d219b1c34d814e25",
+      "published_record_sha256": "25eda38dc0be3a680a1bda13ce931a1f5af2b471527fd1400aa980f56030699f",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "252ceb451950251a5feb867c6ac49cbf6c1f28b4d2fbcfea120a1eaf65905fd4",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 12816,
+        "repair_parent": "aeeb050c8373b0a6cebc2773c43f6a7def8794af29f670d10fc7a1f39a136917",
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": [
+        1
+      ]
+    },
+    {
+      "case": 9,
+      "verdict": "material_defect",
+      "confidence": "high_for_source_scope",
+      "affected_message_indices": [
+        1
+      ],
+      "origin": "repair_introduced",
+      "reason": "Geographic scope regression: original explicitly includes present-day Latvia and Lithuania and identifies Joniškis on the Lithuanian side. Repair recasts the answer solely as a central Latvian region between Lielupė and Mēmele and adds Bērze as an important city without source support. Historical Lithuanian extent is independently corroborated by VLE. Also contains conspicuous agreement errors. Do not treat unverified Bērze city claim alone as the proof.",
+      "language": "lt",
+      "status": "accepted_repair",
+      "original_id": "ff94d30ab951fe542707f87530d1c212aadcffbac7351f21d38d1334125100b1",
+      "candidate_id": "f06cf547c2c93b7d93e2dda3f6e1ce51f808a6076ad6631210893e9d35ad79b4",
+      "published_record_sha256": "05497cdc5a6e05a164c867a6a2697ab92d2f873a61cec06d02c60d6e159fe82b",
+      "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+      "hf_revision": "b3c073c6aba1b97f1bafecd9554a1f317817f5d2",
+      "upstream_row_sha256": "163ec2b6567fad09c1d58db70fd9dfe3986b1d4882486c303b130dd756d1b8d7",
+      "provenance": {
+        "repo": "neurotechnology/lithuanian-qa-v1",
+        "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+        "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+        "row": 657,
+        "repair_parent": "ff94d30ab951fe542707f87530d1c212aadcffbac7351f21d38d1334125100b1",
+        "license": null,
+        "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+      },
+      "target_message_index": 1,
+      "changed_message_indices": [
+        1
+      ]
+    },
+    {
+      "case": 10,
+      "verdict": "minor_or_uncertain_detail",
+      "confidence": "medium",
+      "affected_message_indices": [
+        1,
+        3
+      ],
+      "reason": "The ghazal structure/theme explanation is broadly coherent; final answer correctly permits themes beyond love. Earlier turns contain awkward wording such as struktūrvārda piemetums and malformed veidoti stihus. Mark language polish issues, not a demonstrated material factual failure. Unchanged upstream.",
+      "language": "lv",
+      "status": "accepted",
+      "original_id": "00000278cf51fabaf3df8659d232418cfc887ceec1d582c49758e0ad9b5658d4",
+      "candidate_id": "00000278cf51fabaf3df8659d232418cfc887ceec1d582c49758e0ad9b5658d4",
+      "published_record_sha256": "75ce0763e62ea712d0b7969cf2d5e21d1080dafbc471cf9dbf5825531291de33",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "97ba864b6156c637b9188579262fc48a4f79af281717a8754c24173748ee215d",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 105865,
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 7,
+      "changed_message_indices": []
+    },
+    {
+      "case": 11,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        3
+      ],
+      "origin": "inherited_unrepaired",
+      "reason": "Misleading scientific contrast: says other botany branches study land plants while algology studies aquatic organisms, and contrasts algal spore/cell reproduction with plant sexual reproduction. Algae also reproduce sexually; this does not define the distinction. The oxygen comparison in the final answer is additionally unqualified, but not the primary confirmed error. All content inherited from upstream.",
+      "language": "lv",
+      "status": "accepted",
+      "original_id": "40abf950a0cfb533c59c686b5480fae9a35a7dad25d52c55e42559e67c9bfec7",
+      "candidate_id": "40abf950a0cfb533c59c686b5480fae9a35a7dad25d52c55e42559e67c9bfec7",
+      "published_record_sha256": "f46055aaf6046611ae337e628606f2d74294a16a348661de7ca6036fa4ee484f",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "a8cadc7bf1568c90c642b8b8f88372504d9a76361503db60cb6593613efb1987",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 4192,
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 5,
+      "changed_message_indices": []
+    },
+    {
+      "case": 12,
+      "verdict": "material_defect",
+      "confidence": "high_for_language",
+      "affected_message_indices": [
+        5
+      ],
+      "origin": "inherited_unrepaired",
+      "reason": "Final causal answer contains semantically broken Latvian: ierobežota piekāpšana pamatojoties uz Dienvidosetijas apvidu and pakaujot par kontroli. This is more than minor agreement/spelling: the sentence does not express a coherent military-logistics cause. No conclusion drawn here about contested battle chronology; inherited answer was falsely praised as natural and grammatically correct.",
+      "language": "lv",
+      "status": "accepted",
+      "original_id": "8075043df16094d17eb7ed46afe9820b10b95469c6f4043b4104748c027989e9",
+      "candidate_id": "8075043df16094d17eb7ed46afe9820b10b95469c6f4043b4104748c027989e9",
+      "published_record_sha256": "7d9fd278433286aa2069f8d1bb57695ddc0ac6397e48e7bb1052eba4e27b5e0e",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "94c15db1d51ca71de274ee4a8f03fe5b15a9b7f8ab3768caf01372786a67dc10",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 87620,
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 5,
+      "changed_message_indices": []
+    },
+    {
+      "case": 13,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        3
+      ],
+      "origin": "inherited_unrepaired",
+      "reason": "Conflates league name with tier: says Latvia's 2. līga is the second level. LFF identifies that competition as the third tier. Final stadium-capacity answer is internally consistent with earlier history, but the erroneous earlier assistant answer remains in its prompt. Club currentness and exact stadium capacity were not independently checked.",
+      "language": "lv",
+      "status": "accepted",
+      "original_id": "c0a8fed4c3c4b4095865038385767ba06b525f4e891f34275078d814d06136b7",
+      "candidate_id": "c0a8fed4c3c4b4095865038385767ba06b525f4e891f34275078d814d06136b7",
+      "published_record_sha256": "78577814b51763488572bd479bcbbdf384fd13bae94bc27c63721e42c14a8791",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "0794b8f7114c6271995219b481f4571e3136094a019463e1a5283a25a1061a32",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 3610,
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 5,
+      "changed_message_indices": []
+    },
+    {
+      "case": 14,
+      "verdict": "minor_or_uncertain_detail",
+      "confidence": "medium",
+      "affected_message_indices": [
+        1,
+        3,
+        5
+      ],
+      "reason": "Final 1897 population answer matches the prior context and source. Earlier text is padded with explicitly hedged speculation about lake uses/community life and awkward Cits tuvums. No demonstrated material contradiction in the inspected conversation; do not label the hedges established facts.",
+      "language": "lv",
+      "status": "accepted",
+      "original_id": "ffff781dfce3dc55b151cb321c0840f728495863b275786b3b3781130263c0b6",
+      "candidate_id": "ffff781dfce3dc55b151cb321c0840f728495863b275786b3b3781130263c0b6",
+      "published_record_sha256": "a547b9c01f0ec305ae623d83ba170d0e35574ac4a7ce9cead30c4bc3ef5b79b0",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "1bf4d52ae4f64b535bf512d8958933eabd942c392c0e9490f26c12e10cfbf6e0",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 91962,
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 7,
+      "changed_message_indices": []
+    },
+    {
+      "case": 15,
+      "verdict": "uncertain_hold_recommended",
+      "confidence": "medium",
+      "affected_message_indices": [
+        5
+      ],
+      "origin": "repair_introduced_uncertain",
+      "reason": "Repair adds Zilupes novadā (Zilupē) to the confluence answer although no supplied source establishes that district/town locator. It risks conflating the river with its namesake administrative area/town; Astaševa city status is also unverified and inherited. Earlier regulated-channel-implies-border reasoning is not substantiated. Hold for source verification, not counted as proven factual hallucination.",
+      "language": "lv",
+      "status": "accepted_repair",
+      "original_id": "001575ec23f341793c935ca4da482b6715e02fa7a0736d297a7657df9f1f425c",
+      "candidate_id": "484ecf186b17abe7827e19dd2c907b758041966e82ec241215de2cad3bfd09c2",
+      "published_record_sha256": "0b633aa99da06164bb25722088a00f6777ab41a15c6a3c6ca84eb7b837e74640",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "f30e945521027d33fb6ab9a8b71ea29172635699914fd3b5cc491402e46996ed",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 12309,
+        "repair_parent": "001575ec23f341793c935ca4da482b6715e02fa7a0736d297a7657df9f1f425c",
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 5,
+      "changed_message_indices": [
+        5
+      ]
+    },
+    {
+      "case": 16,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        3
+      ],
+      "origin": "inherited_survives_repair",
+      "reason": "Repair appropriately removes the final invented inference that Bērzkrasti lies between Riga and Jelgava, but retains the earlier placement of Dobele/Auri in Kurzeme instead of Zemgale. Municipal/regional evidence supports Zemgale. Earlier ceļojošā vieta is also nonsensical for a settlement. Final refusal of an unknown distance is reasonable; this is not a claim that the repair introduced the region error.",
+      "language": "lv",
+      "status": "accepted_repair",
+      "original_id": "419515c8c38462c2e1d5cab836e96fb7edb4e751cb5bcc3912e424944873c2c8",
+      "candidate_id": "31b527afc548e2c45b90c0f4416ac15d3a895cef8b68dd5931240911258a6071",
+      "published_record_sha256": "51b27ae40b28d74a76a2b60357b3fc8305e4aa1eaebe55fb8158dd0678166f6a",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "a0178b640cc129d166277cda7a068af68c7c42e47d8e591eacee25f5a75c8726",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 46134,
+        "repair_parent": "419515c8c38462c2e1d5cab836e96fb7edb4e751cb5bcc3912e424944873c2c8",
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 5,
+      "changed_message_indices": [
+        5
+      ]
+    },
+    {
+      "case": 17,
+      "verdict": "uncertain_hold_recommended",
+      "confidence": "medium",
+      "affected_message_indices": [
+        1,
+        3,
+        5
+      ],
+      "origin": "inherited_survives_repair",
+      "reason": "Repair fixes a masculine-prince pronoun phrase, but the surrounding biography makes broad ungrounded claims about education, motivation, communication style and political impact. The final answer lists children by marriage instead of explicitly totaling them; totals are inferable, not contradictory. Historical claims are not independently certified. Re-audit explicitly confuses Humašaha with Mihrimah Sultan, so its claimed historical validation is unreliable; this is a judge error, not an assertion that the candidate names Mihrimah.",
+      "language": "lv",
+      "status": "accepted_repair",
+      "original_id": "801cb0549ca9266f828630e64b5c99b7b4252927fb826b0ab5cfbf3a148e09df",
+      "candidate_id": "02879ee722230a4bc53dbfd45522a9fd267c84f589dc6f57995784a49716febd",
+      "published_record_sha256": "37f10b780f75671776c9ed20a206128bdcc559b5a594cb6c347f84b78032601e",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "bc884d63c5ba0b416ebe4e5c83082f65520cac4abbb28aa43f3473c89ba494d0",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 114835,
+        "repair_parent": "801cb0549ca9266f828630e64b5c99b7b4252927fb826b0ab5cfbf3a148e09df",
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 7,
+      "changed_message_indices": [
+        1
+      ]
+    },
+    {
+      "case": 18,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        3
+      ],
+      "origin": "repair_introduced",
+      "reason": "Repair replaces an admission of missing achievement details with confident new club/achievement claims, including Sassuolo. This club is absent from upstream and inconsistent with the documented contemporary career sequence (Udinese, Ascoli, Sampdoria, Getafe, Sparta, Cagliari); apparent Sampdoria/Sassuolo substitution. Also deteriorated grammar: viņam nav guvis masīvus individuālos balvas, līmenļa. Re-audit explicitly endorses Sassuolo. Final midfielder answer remains unchanged and sound in context.",
+      "language": "lv",
+      "status": "accepted_repair",
+      "original_id": "bf959783cf796873446f18aef40ab44178843214fbb6c128ebba71c60935375a",
+      "candidate_id": "94e1faaafa00dcd49f8082937b32c35e07d902995d225bf9219510867aac2e0c",
+      "published_record_sha256": "9970d5d7c3c267396fe67c5de37b6b5c87d3e9cc48602ee645722b726e9fc11e",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "a339d169f8852e0b672ac351f71030615f57e0ba2de940058528fcfee5fb3213",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 80210,
+        "repair_parent": "bf959783cf796873446f18aef40ab44178843214fbb6c128ebba71c60935375a",
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 5,
+      "changed_message_indices": [
+        3
+      ]
+    },
+    {
+      "case": 19,
+      "verdict": "material_defect",
+      "confidence": "high",
+      "affected_message_indices": [
+        0,
+        5,
+        7
+      ],
+      "origin": "inherited_survives_partial_repair",
+      "reason": "Opening asks about these data without supplying any data; assistant invents an unseen document's contents. Earlier medical explanation retains sirds īssavienojumi (heart short circuits) and nelādu. Repair usefully removes tea/coffee/smelling-spirit advice, but final emergency answer gives unconditional removal of the casualty without rescuer-safety qualification and retains malformed clinical prose. NHS emphasizes leaving the site and not returning until advice. Not a blanket rejection of CO education, and not all defects were repair-introduced.",
+      "language": "lv",
+      "status": "accepted_repair",
+      "original_id": "ffedabfd2898164253e2ef0efddf5ea2e568e8e04df84d38ae5d28f17d281072",
+      "candidate_id": "478ae9398c34384dfda2449f8338629d6db3ade36b0432f5ee3d4e4c434eae7f",
+      "published_record_sha256": "37fc19eebb9dba8dc48e168f1c237ba81e3b7ddccb4fe213a004ef93825d4211",
+      "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+      "hf_revision": "0b39a8a96f463d73f8546d36b1016c55ed7f67d1",
+      "upstream_row_sha256": "ef247750268ac40303089b9c1fdf634d78e8ba60da1e16fe7c6317b634928c59",
+      "provenance": {
+        "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+        "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+        "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+        "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+        "row": 198,
+        "repair_parent": "ffedabfd2898164253e2ef0efddf5ea2e568e8e04df84d38ae5d28f17d281072",
+        "license": "cc-by-sa-3.0",
+        "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+      },
+      "target_message_index": 7,
+      "changed_message_indices": [
+        7
+      ]
+    }
+  ]
+}

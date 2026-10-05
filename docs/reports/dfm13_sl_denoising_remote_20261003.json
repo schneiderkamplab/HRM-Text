@@ -1,0 +1,53 @@
+{
+  "source": {
+    "name": "dfm13_wave4_wikipedia_sl_denoising",
+    "repo_id": "wikimedia/wikipedia",
+    "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+    "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-denoising",
+    "license": [
+      "cc-by-sa-3.0",
+      "gfdl"
+    ],
+    "rows": 61365,
+    "rendered_tokens": 80325058,
+    "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-denoising/data/train.jsonl",
+    "output_sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+    "counts": {
+      "accepted": 187571,
+      "excluded_unreviewed": 2,
+      "rejected": 33185
+    },
+    "repeat": 1,
+    "tokenization_performed": false,
+    "target_policy": "final_assistant_only_native_gemma",
+    "uploaded": true,
+    "input_sha256": "d5a2afa47c6b7fd638e668f67bfeba2a3ebefa68ceccccf86041023b661a5cc4",
+    "task": "denoising",
+    "hf_revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+    "status": "accepted_uploaded",
+    "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sl/denoising/publication.json"
+  },
+  "remote": {
+    "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-denoising",
+    "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "README.md": {
+        "sha256": "f16098efc0899663937bc1082edb5cb775fe026642ccafe9e7345afedee0c494",
+        "git_blob_sha1": "89242fdfc5b40ed8b25985f8efb5e689ccb4c998",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "aea5b8d60b2b8e56035d544cd52d8e6988d59130260cac0c16a34017ec385e69",
+        "git_blob_sha1": "6910536e810cedff52aee23abb55c7a58dcef53a",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "tokenization_verified": false,
+  "assembly_certified": false
+}

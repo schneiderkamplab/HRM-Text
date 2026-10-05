@@ -1,0 +1,20 @@
+{
+  "pid": 3120078,
+  "elapsed": 5.012187719345093,
+  "waits": {
+    "3120078": {
+      "futex_do_wait": 14,
+      "ep_poll": 49,
+      "0": 35,
+      "commit_blocking_request": 2
+    },
+    "3120089": {
+      "0": 28,
+      "folio_wait_bit_common": 5,
+      "commit_blocking_request": 45,
+      "futex_do_wait": 22
+    }
+  },
+  "io_before": "rchar: 3181724670\nwchar: 3703113759\nsyscr: 667834\nsyscw: 726035\nread_bytes: 0\nwrite_bytes: 4251422720\ncancelled_write_bytes: 2609152\n",
+  "io_after": "rchar: 3188147517\nwchar: 3737609400\nsyscr: 669559\nsyscw: 733001\nread_bytes: 0\nwrite_bytes: 4291133440\ncancelled_write_bytes: 2609152\n"
+}

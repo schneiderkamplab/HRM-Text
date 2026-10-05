@@ -1,0 +1,1757 @@
+[
+  {
+    "case": 0,
+    "ordinal": 0,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_denoising",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-denoising",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 67456,
+      "rendered_tokens": 82854863,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl",
+      "output_sha256": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "denoising",
+      "hf_revision": "a332d149c56692d43d2993bfb08499838250b1b5",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/denoising/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/tokens",
+      "tokenized_tokens": 82854863,
+      "tokenized_rows": 67456,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/verified.json"
+    },
+    "record": {
+      "id": "00000877aa71c41357ea525cf1658067dfa36c206059bdad1d3d4afd1639171e",
+      "language": "hr",
+      "task": "denoising",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Ispravi pogreške u tekstu.\n\nU vrijeme GLadi, osobito za vrijeme režima Crvenih Kmera, ljudi u Kambodi jeli su mlado lišće i stabljiku ove penjačice, koja se na kmerskom jeziku naZiva krâllam' paè ili trâllA' paè. Različiti dijelovi biljke također se koriste u tradicionalnoj medicini za liječenje brojnih boleti, uključujući probleme s mnsruacijom.\n\nRod je opisan 1948.\n\nSinonimi \n Aganosma sect. Amphineurion A. DC., bazionim\n Aganosma acuminata G.Don\n Agnosma euloba Miq.\n Aganosma maCrocarpa A.DC.\n Aganosma marginata (Roxb.) G.Don\n Aganosma veutina A.DC.\n Amphineurion acuminatum (G.Don) Pichon\n Amphineurion velutinum (A.DC.) Pichon\n Chonemorpha cristata (Roth) G.Don\n Echites acuminatus Roxb.\n Echites apoxys Voigt\n Echites cristatus Roth\n Echites marginatus Roxb.\n EchiTes procumbens Blanco\n Echites repens Blanco\n Holarrhena procumbens (Blanco) Merr.\n Ichnocarpus acuminatus (G.Don) Fern.-Vill.\n Ichnocarpus macrocarpus (A.DC.) Fern.-Vill.\n Ichnocarpus marginatus (Roxb.) MotteT\n Ichnocarpus velutinus (A.DC.) ern.-Vill.\n\nIzvori\n\nVanjske poveznice\n\nRauVolfioideae"
+        },
+        {
+          "role": "assistant",
+          "content": "U vrijeme gladi, osobito za vrijeme režima Crvenih Kmera, ljudi u Kambodži jeli su mlado lišće i stabljiku ove penjačice, koja se na kmerskom jeziku naziva krâllam' paè ili trâllam' paè. Različiti dijelovi biljke također se koriste u tradicionalnoj medicini za liječenje brojnih bolesti, uključujući probleme s menstruacijom.\n\nRod je opisan 1948.\n\nSinonimi \n Aganosma sect. Amphineurion A. DC., bazionim\n Aganosma acuminata G.Don\n Aganosma euloba Miq.\n Aganosma macrocarpa A.DC.\n Aganosma marginata (Roxb.) G.Don\n Aganosma velutina A.DC.\n Amphineurion acuminatum (G.Don) Pichon\n Amphineurion velutinum (A.DC.) Pichon\n Chonemorpha cristata (Roth) G.Don\n Echites acuminatus Roxb.\n Echites apoxys Voigt\n Echites cristatus Roth\n Echites marginatus Roxb.\n Echites procumbens Blanco\n Echites repens Blanco\n Holarrhena procumbens (Blanco) Merr.\n Ichnocarpus acuminatus (G.Don) Fern.-Vill.\n Ichnocarpus macrocarpus (A.DC.) Fern.-Vill.\n Ichnocarpus marginatus (Roxb.) Mottet\n Ichnocarpus velutinus (A.DC.) Fern.-Vill.\n\nIzvori\n\nVanjske poveznice\n\nRauvolfioideae"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 194193,
+        "id": "719590",
+        "url": "https://hr.wikipedia.org/wiki/Amphineurion",
+        "title": "Amphineurion",
+        "paragraph_structure": "original",
+        "window_seed": 12186167939128373589,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "U vrijeme gladi, osobito za vrijeme režima Crvenih Kmera, ljudi u Kambodži jeli su mlado lišće i stabljiku ove penjačice, koja se na kmerskom jeziku naziva krâllam' paè ili trâllam' paè. Različiti dijelovi biljke također se koriste u tradicionalnoj medicini za liječenje brojnih bolesti, uključujući probleme s menstruacijom.\n\nRod je opisan 1948.\n\nSinonimi \n Aganosma sect. Amphineurion A. DC., bazionim\n Aganosma acuminata G.Don\n Aganosma euloba Miq.\n Aganosma macrocarpa A.DC.\n Aganosma marginata (Roxb.) G.Don\n Aganosma velutina A.DC.\n Amphineurion acuminatum (G.Don) Pichon\n Amphineurion velutinum (A.DC.) Pichon\n Chonemorpha cristata (Roth) G.Don\n Echites acuminatus Roxb.\n Echites apoxys Voigt\n Echites cristatus Roth\n Echites marginatus Roxb.\n Echites procumbens Blanco\n Echites repens Blanco\n Holarrhena procumbens (Blanco) Merr.\n Ichnocarpus acuminatus (G.Don) Fern.-Vill.\n Ichnocarpus macrocarpus (A.DC.) Fern.-Vill.\n Ichnocarpus marginatus (Roxb.) Mottet\n Ichnocarpus velutinus (A.DC.) Fern.-Vill.\n\nIzvori\n\nVanjske poveznice\n\nRauvolfioideae",
+        "seed": 20261003
+      },
+      "rendered_tokens": 732,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The model correctly performed the denoising task in Croatian. It fixed capitalization errors (GLadi -> gladi, naZiva -> naziva, maCrocarpa -> macrocarpa, EchiTes -> Echites, MotteT -> Mottet), spelling errors (Kambodi -> Kambodži, boleti -> bolesti, mnsruacijom -> menstruacijom), and corrected the broken word 'RauVolfioideae' to 'Rauvolfioideae'. It also fixed the phonetic transcription error in the Khmer terms."
+      }
+    },
+    "record_sha256": "21d949ce1a9f093e7a3497beaad1715713a47ca684e9f7d57c02656f0444fc20",
+    "source_document": {
+      "id": "719590",
+      "url": "https://hr.wikipedia.org/wiki/Amphineurion",
+      "title": "Amphineurion",
+      "text": "Amphineurion, monotipski biljni rod iz porodice zimzelenovki smješten u podtribus Amphineuriinae. Jedina vrsta je A. marginatum,  lijana koja može narasti do 8 metara (26 stopa) u duljinu. Kad je mlada, ponekad tvori grm sa zakrivljenim granama. Staništa su mu planinske šume i primorska šikara u Kini (Guangdong) i tropskoj Aziji. .[ \n\nU vrijeme gladi, osobito za vrijeme režima Crvenih Kmera, ljudi u Kambodži jeli su mlado lišće i stabljiku ove penjačice, koja se na kmerskom jeziku naziva krâllam' paè ili trâllam' paè. Različiti dijelovi biljke također se koriste u tradicionalnoj medicini za liječenje brojnih bolesti, uključujući probleme s menstruacijom. \n\nRod je opisan 1948.\n\nSinonimi \n Aganosma sect. Amphineurion A. DC., bazionim\n Aganosma acuminata G.Don\n Aganosma euloba Miq.\n Aganosma macrocarpa A.DC.\n Aganosma marginata (Roxb.) G.Don\n Aganosma velutina A.DC.\n Amphineurion acuminatum (G.Don) Pichon\n Amphineurion velutinum (A.DC.) Pichon\n Chonemorpha cristata (Roth) G.Don\n Echites acuminatus Roxb.\n Echites apoxys Voigt\n Echites cristatus Roth\n Echites marginatus Roxb.\n Echites procumbens Blanco\n Echites repens Blanco\n Holarrhena procumbens (Blanco) Merr.\n Ichnocarpus acuminatus (G.Don) Fern.-Vill.\n Ichnocarpus macrocarpus (A.DC.) Fern.-Vill.\n Ichnocarpus marginatus (Roxb.) Mottet\n Ichnocarpus velutinus (A.DC.) Fern.-Vill.\n\nIzvori\n\nVanjske poveznice \n\nRauvolfioideae"
+    },
+    "source_text_sha256": "3367dab195cde79e62bdfcf908d882f970c8900e26ca70212d03a2440dc0f38c",
+    "window": "U vrijeme gladi, osobito za vrijeme režima Crvenih Kmera, ljudi u Kambodži jeli su mlado lišće i stabljiku ove penjačice, koja se na kmerskom jeziku naziva krâllam' paè ili trâllam' paè. Različiti dijelovi biljke također se koriste u tradicionalnoj medicini za liječenje brojnih bolesti, uključujući probleme s menstruacijom.\n\nRod je opisan 1948.\n\nSinonimi \n Aganosma sect. Amphineurion A. DC., bazionim\n Aganosma acuminata G.Don\n Aganosma euloba Miq.\n Aganosma macrocarpa A.DC.\n Aganosma marginata (Roxb.) G.Don\n Aganosma velutina A.DC.\n Amphineurion acuminatum (G.Don) Pichon\n Amphineurion velutinum (A.DC.) Pichon\n Chonemorpha cristata (Roth) G.Don\n Echites acuminatus Roxb.\n Echites apoxys Voigt\n Echites cristatus Roth\n Echites marginatus Roxb.\n Echites procumbens Blanco\n Echites repens Blanco\n Holarrhena procumbens (Blanco) Merr.\n Ichnocarpus acuminatus (G.Don) Fern.-Vill.\n Ichnocarpus macrocarpus (A.DC.) Fern.-Vill.\n Ichnocarpus marginatus (Roxb.) Mottet\n Ichnocarpus velutinus (A.DC.) Fern.-Vill.\n\nIzvori\n\nVanjske poveznice\n\nRauvolfioideae",
+    "window_sha256": "f38504c341a20719c86f254bd683156c90d0ff61a49d46594be7af2c8ac9733a",
+    "replay": {
+      "case": 0,
+      "id": "00000877aa71c41357ea525cf1658067dfa36c206059bdad1d3d4afd1639171e",
+      "task": "denoising",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 1390,
+      "window_chars": 1051,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "deleted_chars": 8,
+      "corruption_changed": true
+    }
+  },
+  {
+    "case": 1,
+    "ordinal": 22485,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_denoising",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-denoising",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 67456,
+      "rendered_tokens": 82854863,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl",
+      "output_sha256": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "denoising",
+      "hf_revision": "a332d149c56692d43d2993bfb08499838250b1b5",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/denoising/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/tokens",
+      "tokenized_tokens": 82854863,
+      "tokenized_rows": 67456,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/verified.json"
+    },
+    "record": {
+      "id": "54af845b941be0a8e0b6924f37ee3ae050f2bcf957899bd541eadaefef30e2e4",
+      "language": "hr",
+      "task": "denoising",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Ispravi pogreške u tekstu.\n\nRobert De Niro  : Travis Bickle\nJodie Foster  :  IriS Steensma\nCybill Shepherd  :  Betsy\nHavey Keitel  :  'Sport' Matthew\nPeter Boyle  :  Wizard\nLeonard Harris  :  Sen. Charls Paantine\nAlbErt Brooks  :  Tom\n\nRadnja\n\nTravis Bickle je osamljeni i depresivni 26-godišnjaK; u svojim kasnijim aKcjama pokazuje da vjerojatno ima i nekih ozbiljnijih psihičkih problema (mogUće je da ima PTSP jer je služio kao marinac u Vijetnamu). U New Yorku se zapošljava kao taksist i radi prekovremeno jer pati i od nesanice. Slobodno vrijeme provodi u pornografskim kinima ili lutajući gradom. Prostitutke, lopovi i narkomani koje susreće u siromašnim gradskim četvrtima u njemu izaziVaju odvratnost i želju \"za čišćenjem prljavštine ulica\".\n\nTravis uskoro postaje opsjednut Betsy, mladom ženom zaposlenom u predsjedničkoj kampanji snatoRA Palantinea. Nakon što je neko vrijeme uhodi, odlučuje joj prići smatrajući da Je i oa osaljena poput njega.  Zbunjena, ali i zaintrigirana njegovom hrabrošću i otvorenošću prIstaje izaći s njim. NA spoju je Travis odvodi na u kino na porn-film; sam u tome ne vidi ništa neobično, no ona se naLjuti i ostavlja ga. Travis je pokušava ponovno kontaktirati, ali na kraju zaključuje da je \"hadna i distancirana\" te zapada u još veću depresiju.\n\nJedne noći njegov taksi ulazi mlada prostitutka Iris koja, čini e, želi pobjeći od svojeg svodnika Matthewa. No on ju izvlači iz automobila prije nego što je Travis krenuo. Kasnije ju opet susreće i izražAva želJu da joj pomogne; ona je nesigurna u svoje osjćaje prema svodniku koji njome lako manipulira.\n\nTravis postaje sve nzadovoljniji i odlučuje se za poduzImanje promjena u životu. Počinje se baviti tjelovježbom, nabavlja oružje i vježba rukovanje njime. U lokalnoj trgovini ubija pljačkaša. PočiNje hodati naoružan u vojničkoj jakni i obrijane glve.\n\nNa političkom skupu pokušava izvrŠiti Atentat na senatora Palantinea no agenti osiguranja ga uočavaju prije nego izvuče oružje iz jakne; iPak im uspijeva pobjeći. dlazi u bordel gdje je Iris i tamo brutalno ubija njezinu mušteriju, svodnika i vratara. Pri tome je teško ranjen i gubi mnogo kRvi; po dolasku policije upire krvavi prst u glavu i oponaša pucanje iz pištolja; kamera postupno pokazuje krvavi trag njegovog osvetničkog pohoda.\n\nU eplogu saznajemo da je Travis u komi, a Iris se vratila roditeljima. Mediji su od njega napravili junaka.  Na kraju nstavlja voziti taksi i jedne večeri ponovno susreće Betsy koja okazuje impatije prema njemu. Posljednja scena s Betsy je čest predmet razgovora o filmu jer e moguće da se radi o fantaziji Travisa koj zapravo umire u komi. kao argument za ovu tvrdnju mnogi ističu kko b u stvarnoSti Travis vjerojatno bio u zatvoru ili sanatoriju jer je ilegalnim oružjem brutAlno ubio nekoliko ljudi a prije toga je pokušAo i atentat na senatora. Budući da nema nikakvog sLužbeNog objašnjenja, interpretacija posljednje scene ostaje stvar gledatelja. Poznati filmski kritičar Robert Ebert smatra da kraj i Ne treba tumačiti doslovno jer on zakljčuje film prvenstveno na emotivnom nivou - Travis je ostvario svoj cilj.\n\nKritike"
+        },
+        {
+          "role": "assistant",
+          "content": "Robert De Niro  : Travis Bickle\nJodie Foster  :  Iris Steensma\nCybill Shepherd  :  Betsy\nHarvey Keitel  :  'Sport' Matthew\nPeter Boyle  :  Wizard\nLeonard Harris  :  Sen. Charles Palantine\nAlbert Brooks  :  Tom\n\nRadnja\n\nTravis Bickle je osamljeni i depresivni 26-godišnjak; u svojim kasnijim akcijama pokazuje da vjerojatno ima i nekih ozbiljnijih psihičkih problema (moguće je da ima PTSP jer je služio kao marinac u Vijetnamu). U New Yorku se zapošljava kao taksist i radi prekovremeno jer pati i od nesanice. Slobodno vrijeme provodi u pornografskim kinima ili lutajući gradom. Prostitutke, lopovi i narkomani koje susreće u siromašnim gradskim četvrtima u njemu izazivaju odvratnost i želju \"za čišćenjem prljavštine ulica\".\n\nTravis uskoro postaje opsjednut Betsy, mladom ženom zaposlenom u predsjedničkoj kampanji senatora Palantinea. Nakon što je neko vrijeme uhodi, odlučuje joj prići smatrajući da je i ona osamljena poput njega.  Zbunjena, ali i zaintrigirana njegovom hrabrošću i otvorenošću pristaje izaći s njim. Na spoju je Travis odvodi na u kino na porno-film; sam u tome ne vidi ništa neobično, no ona se naljuti i ostavlja ga. Travis je pokušava ponovno kontaktirati, ali na kraju zaključuje da je \"hladna i distancirana\" te zapada u još veću depresiju.\n\nJedne noći njegov taksi ulazi mlada prostitutka Iris koja, čini se, želi pobjeći od svojeg svodnika Matthewa. No on ju izvlači iz automobila prije nego što je Travis krenuo. Kasnije ju opet susreće i izražava želju da joj pomogne; ona je nesigurna u svoje osjećaje prema svodniku koji njome lako manipulira.\n\nTravis postaje sve nezadovoljniji i odlučuje se za poduzimanje promjena u životu. Počinje se baviti tjelovježbom, nabavlja oružje i vježba rukovanje njime. U lokalnoj trgovini ubija pljačkaša. Počinje hodati naoružan u vojničkoj jakni i obrijane glave.\n\nNa političkom skupu pokušava izvršiti atentat na senatora Palantinea no agenti osiguranja ga uočavaju prije nego izvuče oružje iz jakne; ipak im uspijeva pobjeći. Odlazi u bordel gdje je Iris i tamo brutalno ubija njezinu mušteriju, svodnika i vratara. Pri tome je teško ranjen i gubi mnogo krvi; po dolasku policije upire krvavi prst u glavu i oponaša pucanje iz pištolja; kamera postupno pokazuje krvavi trag njegovog osvetničkog pohoda.\n\nU epilogu saznajemo da je Travis u komi, a Iris se vratila roditeljima. Mediji su od njega napravili junaka.  Na kraju nastavlja voziti taksi i jedne večeri ponovno susreće Betsy koja pokazuje simpatije prema njemu. Posljednja scena s Betsy je čest predmet razgovora o filmu jer je moguće da se radi o fantaziji Travisa koji zapravo umire u komi. Kao argument za ovu tvrdnju mnogi ističu kako bi u stvarnosti Travis vjerojatno bio u zatvoru ili sanatoriju jer je ilegalnim oružjem brutalno ubio nekoliko ljudi a prije toga je pokušao i atentat na senatora. Budući da nema nikakvog službenog objašnjenja, interpretacija posljednje scene ostaje stvar gledatelja. Poznati filmski kritičar Robert Ebert smatra da kraj i ne treba tumačiti doslovno jer on zaključuje film prvenstveno na emotivnom nivou - Travis je ostvario svoj cilj.\n\nKritike"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 14143,
+        "id": "42059",
+        "url": "https://hr.wikipedia.org/wiki/Taksist",
+        "title": "Taksist",
+        "paragraph_structure": "original",
+        "window_seed": 54218222869269319,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Robert De Niro  : Travis Bickle\nJodie Foster  :  Iris Steensma\nCybill Shepherd  :  Betsy\nHarvey Keitel  :  'Sport' Matthew\nPeter Boyle  :  Wizard\nLeonard Harris  :  Sen. Charles Palantine\nAlbert Brooks  :  Tom\n\nRadnja\n\nTravis Bickle je osamljeni i depresivni 26-godišnjak; u svojim kasnijim akcijama pokazuje da vjerojatno ima i nekih ozbiljnijih psihičkih problema (moguće je da ima PTSP jer je služio kao marinac u Vijetnamu). U New Yorku se zapošljava kao taksist i radi prekovremeno jer pati i od nesanice. Slobodno vrijeme provodi u pornografskim kinima ili lutajući gradom. Prostitutke, lopovi i narkomani koje susreće u siromašnim gradskim četvrtima u njemu izazivaju odvratnost i želju \"za čišćenjem prljavštine ulica\".\n\nTravis uskoro postaje opsjednut Betsy, mladom ženom zaposlenom u predsjedničkoj kampanji senatora Palantinea. Nakon što je neko vrijeme uhodi, odlučuje joj prići smatrajući da je i ona osamljena poput njega.  Zbunjena, ali i zaintrigirana njegovom hrabrošću i otvorenošću pristaje izaći s njim. Na spoju je Travis odvodi na u kino na porno-film; sam u tome ne vidi ništa neobično, no ona se naljuti i ostavlja ga. Travis je pokušava ponovno kontaktirati, ali na kraju zaključuje da je \"hladna i distancirana\" te zapada u još veću depresiju.\n\nJedne noći njegov taksi ulazi mlada prostitutka Iris koja, čini se, želi pobjeći od svojeg svodnika Matthewa. No on ju izvlači iz automobila prije nego što je Travis krenuo. Kasnije ju opet susreće i izražava želju da joj pomogne; ona je nesigurna u svoje osjećaje prema svodniku koji njome lako manipulira.\n\nTravis postaje sve nezadovoljniji i odlučuje se za poduzimanje promjena u životu. Počinje se baviti tjelovježbom, nabavlja oružje i vježba rukovanje njime. U lokalnoj trgovini ubija pljačkaša. Počinje hodati naoružan u vojničkoj jakni i obrijane glave.\n\nNa političkom skupu pokušava izvršiti atentat na senatora Palantinea no agenti osiguranja ga uočavaju prije nego izvuče oružje iz jakne; ipak im uspijeva pobjeći. Odlazi u bordel gdje je Iris i tamo brutalno ubija njezinu mušteriju, svodnika i vratara. Pri tome je teško ranjen i gubi mnogo krvi; po dolasku policije upire krvavi prst u glavu i oponaša pucanje iz pištolja; kamera postupno pokazuje krvavi trag njegovog osvetničkog pohoda.\n\nU epilogu saznajemo da je Travis u komi, a Iris se vratila roditeljima. Mediji su od njega napravili junaka.  Na kraju nastavlja voziti taksi i jedne večeri ponovno susreće Betsy koja pokazuje simpatije prema njemu. Posljednja scena s Betsy je čest predmet razgovora o filmu jer je moguće da se radi o fantaziji Travisa koji zapravo umire u komi. Kao argument za ovu tvrdnju mnogi ističu kako bi u stvarnosti Travis vjerojatno bio u zatvoru ili sanatoriju jer je ilegalnim oružjem brutalno ubio nekoliko ljudi a prije toga je pokušao i atentat na senatora. Budući da nema nikakvog službenog objašnjenja, interpretacija posljednje scene ostaje stvar gledatelja. Poznati filmski kritičar Robert Ebert smatra da kraj i ne treba tumačiti doslovno jer on zaključuje film prvenstveno na emotivnom nivou - Travis je ostvario svoj cilj.\n\nKritike",
+        "seed": 20261003
+      },
+      "rendered_tokens": 1918,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant successfully performed the denoising task. It corrected numerous typographical errors (e.g., '26-godišnjaK;' to '26-godišnjak', 'akcjama' to 'akcijama', 'Palantinea' to 'Palantinea' - though the name was already correct, it fixed casing and spacing issues like 'AlbErt' to 'Albert'), fixed broken words ('eplogu' to 'epilogu'), and corrected punctuation and capitalization throughout the Croatian text while preserving the original meaning and structure."
+      }
+    },
+    "record_sha256": "ae4db10e2091cdea3fb811ad506033ae05040a692ac459562bbd2ec87cb49f28",
+    "source_document": {
+      "id": "42059",
+      "url": "https://hr.wikipedia.org/wiki/Taksist",
+      "title": "Taksist",
+      "text": "Taksist (eng. Taxi Driver)  američki je igrani film iz 1976., redatelja Martina Scorsesea.  Opisuje poteškoće osamljenog njujorškog taksista Travisa Bicklea koji očajnički pokušava promijeniti vlastiti život. Film je stekao brojne obožavatelje, a neke scene su postale elementom popularne kulture.\n\nGlavne uloge \n\nRobert De Niro  : Travis Bickle\nJodie Foster  :  Iris Steensma\nCybill Shepherd  :  Betsy\nHarvey Keitel  :  'Sport' Matthew\nPeter Boyle  :  Wizard\nLeonard Harris  :  Sen. Charles Palantine\nAlbert Brooks  :  Tom\n\nRadnja \n\nTravis Bickle je osamljeni i depresivni 26-godišnjak; u svojim kasnijim akcijama pokazuje da vjerojatno ima i nekih ozbiljnijih psihičkih problema (moguće je da ima PTSP jer je služio kao marinac u Vijetnamu). U New Yorku se zapošljava kao taksist i radi prekovremeno jer pati i od nesanice. Slobodno vrijeme provodi u pornografskim kinima ili lutajući gradom. Prostitutke, lopovi i narkomani koje susreće u siromašnim gradskim četvrtima u njemu izazivaju odvratnost i želju \"za čišćenjem prljavštine ulica\".\n\nTravis uskoro postaje opsjednut Betsy, mladom ženom zaposlenom u predsjedničkoj kampanji senatora Palantinea. Nakon što je neko vrijeme uhodi, odlučuje joj prići smatrajući da je i ona osamljena poput njega.  Zbunjena, ali i zaintrigirana njegovom hrabrošću i otvorenošću pristaje izaći s njim. Na spoju je Travis odvodi na u kino na porno-film; sam u tome ne vidi ništa neobično, no ona se naljuti i ostavlja ga. Travis je pokušava ponovno kontaktirati, ali na kraju zaključuje da je \"hladna i distancirana\" te zapada u još veću depresiju.\n\nJedne noći njegov taksi ulazi mlada prostitutka Iris koja, čini se, želi pobjeći od svojeg svodnika Matthewa. No on ju izvlači iz automobila prije nego što je Travis krenuo. Kasnije ju opet susreće i izražava želju da joj pomogne; ona je nesigurna u svoje osjećaje prema svodniku koji njome lako manipulira.\n\nTravis postaje sve nezadovoljniji i odlučuje se za poduzimanje promjena u životu. Počinje se baviti tjelovježbom, nabavlja oružje i vježba rukovanje njime. U lokalnoj trgovini ubija pljačkaša. Počinje hodati naoružan u vojničkoj jakni i obrijane glave.\n\nNa političkom skupu pokušava izvršiti atentat na senatora Palantinea no agenti osiguranja ga uočavaju prije nego izvuče oružje iz jakne; ipak im uspijeva pobjeći. Odlazi u bordel gdje je Iris i tamo brutalno ubija njezinu mušteriju, svodnika i vratara. Pri tome je teško ranjen i gubi mnogo krvi; po dolasku policije upire krvavi prst u glavu i oponaša pucanje iz pištolja; kamera postupno pokazuje krvavi trag njegovog osvetničkog pohoda.  \n\nU epilogu saznajemo da je Travis u komi, a Iris se vratila roditeljima. Mediji su od njega napravili junaka.  Na kraju nastavlja voziti taksi i jedne večeri ponovno susreće Betsy koja pokazuje simpatije prema njemu. Posljednja scena s Betsy je čest predmet razgovora o filmu jer je moguće da se radi o fantaziji Travisa koji zapravo umire u komi. Kao argument za ovu tvrdnju mnogi ističu kako bi u stvarnosti Travis vjerojatno bio u zatvoru ili sanatoriju jer je ilegalnim oružjem brutalno ubio nekoliko ljudi a prije toga je pokušao i atentat na senatora. Budući da nema nikakvog službenog objašnjenja, interpretacija posljednje scene ostaje stvar gledatelja. Poznati filmski kritičar Robert Ebert smatra da kraj i ne treba tumačiti doslovno jer on zaključuje film prvenstveno na emotivnom nivou - Travis je ostvario svoj cilj.\n\nKritike \n\nJedno od ključnih djela američkog filma 1970–ih, Taksist je likovno-scenografski te dramaturški čvrsto lociran u New York, pa je kritika govorila o vrhunskom djelu »realistične« tendencije razdoblja. Film se odlikuje dojmljivom fotografijom i glazbom te preciznom modernističkom režijom, više usmjerenom na prikaz psihološke rastrzanosti junaka nego na neklasično izlaganje događaja te lišenom romantizacije nasilnoga gubitništva kriminalaca (za razliku od drugog vrhunskog primjera sličnih tendencija u američkoj kinematografiji Bonnie i Clyde), a s iznimno dojmljivim vrhuncem u sceni krvave pucnjave kojom Bickle postaje svojevrstan američki junak. Scenarij Paula Schradera, nadahnut stvarnim pokušajem umorstva guvernera Alabame, također oslonjen i na Bressonova Džepara, Sartreovu Mučninu i Zapise iz podzemlja F. M. Dostojevskoga, razrađen je u potresan prikaz junakove neurotične postvijetnamske egzistencije, u interpretacijama ugl. smještane u kontekst propasti kontrakulturnih pokreta iz 1960-ih te krize identiteta amer. muškarca. Komercijalno prilično uspješan, film je popraćen uglavnom pozitivnim kritikama, unatoč zamjerkama izrazitoj nasilnosti, utjecajima novoga vala te (osobito od strane marksističkih kritičara) ograničavanju velikih društv. problema na perspektivu pojedinca. Nominiran za četiri Oscara (i za najbolji film), u Cannesu je osvojio Zlatnu palmu, označivši definitivnu redateljevu afirmaciju u svjetskim razmjerima. Utjecao je na američki (npr. Quentin Tarantino) i europski film (npr. Mržnja M. Kassowitza, 1995.).\n\nZanimljivosti \n\n Scena u kojoj Travis govori pred ogledalom je De Nirova improvizacija; u scenariju piše samo: \"Travis gleda u zrcalo\".\n Film na koji je Travis izveo Betsy je Kärlekens Språk, švedski pornografski film maskiran kao dokumentarac.\n Scorsese tvrdi da je najvažnija scena u filmu telefonski razgovor kojim Travis pokušava dogovoriti novi spoj s Betsy.  Kamera se postupno udaljava od njega i prelazi u prazni hodnik pored, sugerirajući da je razgovor pretežak da bi se izdržao.\n Poznati skladatelj Bernard Herrmann umro je na Božić 1975., samo nekoliko sati nakon što je završio glazbu za film.\n\nIzvori\n\nVanjske poveznice \n\nAmerički filmovi\nDobitnici Zlatne palme\nDramski filmovi\nFilmovi 1970-ih\nFilmovi Martina Scorsesea\nKriminalistički filmovi\nPsihološki trileri"
+    },
+    "source_text_sha256": "8feec6a2c6a77ea4268a39f3cf39ad476fb6b58abe5ebb4c2c602e501e4d702a",
+    "window": "Robert De Niro  : Travis Bickle\nJodie Foster  :  Iris Steensma\nCybill Shepherd  :  Betsy\nHarvey Keitel  :  'Sport' Matthew\nPeter Boyle  :  Wizard\nLeonard Harris  :  Sen. Charles Palantine\nAlbert Brooks  :  Tom\n\nRadnja\n\nTravis Bickle je osamljeni i depresivni 26-godišnjak; u svojim kasnijim akcijama pokazuje da vjerojatno ima i nekih ozbiljnijih psihičkih problema (moguće je da ima PTSP jer je služio kao marinac u Vijetnamu). U New Yorku se zapošljava kao taksist i radi prekovremeno jer pati i od nesanice. Slobodno vrijeme provodi u pornografskim kinima ili lutajući gradom. Prostitutke, lopovi i narkomani koje susreće u siromašnim gradskim četvrtima u njemu izazivaju odvratnost i želju \"za čišćenjem prljavštine ulica\".\n\nTravis uskoro postaje opsjednut Betsy, mladom ženom zaposlenom u predsjedničkoj kampanji senatora Palantinea. Nakon što je neko vrijeme uhodi, odlučuje joj prići smatrajući da je i ona osamljena poput njega.  Zbunjena, ali i zaintrigirana njegovom hrabrošću i otvorenošću pristaje izaći s njim. Na spoju je Travis odvodi na u kino na porno-film; sam u tome ne vidi ništa neobično, no ona se naljuti i ostavlja ga. Travis je pokušava ponovno kontaktirati, ali na kraju zaključuje da je \"hladna i distancirana\" te zapada u još veću depresiju.\n\nJedne noći njegov taksi ulazi mlada prostitutka Iris koja, čini se, želi pobjeći od svojeg svodnika Matthewa. No on ju izvlači iz automobila prije nego što je Travis krenuo. Kasnije ju opet susreće i izražava želju da joj pomogne; ona je nesigurna u svoje osjećaje prema svodniku koji njome lako manipulira.\n\nTravis postaje sve nezadovoljniji i odlučuje se za poduzimanje promjena u životu. Počinje se baviti tjelovježbom, nabavlja oružje i vježba rukovanje njime. U lokalnoj trgovini ubija pljačkaša. Počinje hodati naoružan u vojničkoj jakni i obrijane glave.\n\nNa političkom skupu pokušava izvršiti atentat na senatora Palantinea no agenti osiguranja ga uočavaju prije nego izvuče oružje iz jakne; ipak im uspijeva pobjeći. Odlazi u bordel gdje je Iris i tamo brutalno ubija njezinu mušteriju, svodnika i vratara. Pri tome je teško ranjen i gubi mnogo krvi; po dolasku policije upire krvavi prst u glavu i oponaša pucanje iz pištolja; kamera postupno pokazuje krvavi trag njegovog osvetničkog pohoda.\n\nU epilogu saznajemo da je Travis u komi, a Iris se vratila roditeljima. Mediji su od njega napravili junaka.  Na kraju nastavlja voziti taksi i jedne večeri ponovno susreće Betsy koja pokazuje simpatije prema njemu. Posljednja scena s Betsy je čest predmet razgovora o filmu jer je moguće da se radi o fantaziji Travisa koji zapravo umire u komi. Kao argument za ovu tvrdnju mnogi ističu kako bi u stvarnosti Travis vjerojatno bio u zatvoru ili sanatoriju jer je ilegalnim oružjem brutalno ubio nekoliko ljudi a prije toga je pokušao i atentat na senatora. Budući da nema nikakvog službenog objašnjenja, interpretacija posljednje scene ostaje stvar gledatelja. Poznati filmski kritičar Robert Ebert smatra da kraj i ne treba tumačiti doslovno jer on zaključuje film prvenstveno na emotivnom nivou - Travis je ostvario svoj cilj.\n\nKritike",
+    "window_sha256": "050d8c73fe3f7cb001319e2bcecc4c23333f7da663302c4705811bb507c5ab73",
+    "replay": {
+      "case": 1,
+      "id": "54af845b941be0a8e0b6924f37ee3ae050f2bcf957899bd541eadaefef30e2e4",
+      "task": "denoising",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 5759,
+      "window_chars": 3112,
+      "window_blocks": 9,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "deleted_chars": 23,
+      "corruption_changed": true
+    }
+  },
+  {
+    "case": 2,
+    "ordinal": 44970,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_denoising",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-denoising",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 67456,
+      "rendered_tokens": 82854863,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl",
+      "output_sha256": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "denoising",
+      "hf_revision": "a332d149c56692d43d2993bfb08499838250b1b5",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/denoising/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/tokens",
+      "tokenized_tokens": 82854863,
+      "tokenized_rows": 67456,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/verified.json"
+    },
+    "record": {
+      "id": "aa641953b412a31480c1263e5af8e649599bceb6fbc8a7b0aff626c5f81194a8",
+      "language": "hr",
+      "task": "denoising",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Ispravi pogreške u tekstu.\n\nJa te volim\n\nU masliniku\n\nUnter Südlicher Sonne (1973) – s Ivicom Šerfezi\n Mojim Prijteljima (1974)\n Dalmatinske Noći (1980) – tomislav Ivčić i Đani Maršan\n Pisme Iz Konobe (1982) – Tomislav Ivčić i Đani Maršan\n Sine, Vrati Se (1985) – Tomisav Ivčić i Đani Maršan\n Pjesme Naše Mladosti (1988)\n Priatelju Moj (1989)\n Bože, čuvaj Hrvatsku (1991)\n Vagabondo\n\nOstalo \n \"Lijepom našom\" kao izvođač (epizoda: Dan Dravnosti - Solin) (2019.)\n\nIzvoRi\n\nHrvatski pjevači\nHrvatski pop pjevači\nŽivotopisi, Zadar"
+        },
+        {
+          "role": "assistant",
+          "content": "Ja te volim\n\nU masliniku\n\nUnter Südlicher Sonne (1973) – s Ivicom Šerfezi\n Mojim Prijateljima (1974)\n Dalmatinske Noći (1980) – Tomislav Ivčić i Đani Maršan\n Pisme Iz Konobe (1982) – Tomislav Ivčić i Đani Maršan\n Sine, Vrati Se (1985) – Tomislav Ivčić i Đani Maršan\n Pjesme Naše Mladosti (1988)\n Prijatelju Moj (1989)\n Bože, čuvaj Hrvatsku (1991)\n Vagabondo\n\nOstalo \n \"Lijepom našom\" kao izvođač (epizoda: Dan Državnosti - Solin) (2019.)\n\nIzvori\n\nHrvatski pjevači\nHrvatski pop pjevači\nŽivotopisi, Zadar"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 14364,
+        "id": "42995",
+        "url": "https://hr.wikipedia.org/wiki/%C4%90ani%20Mar%C5%A1an",
+        "title": "Đani Maršan",
+        "paragraph_structure": "original",
+        "window_seed": 18260267365299751505,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Ja te volim\n\nU masliniku\n\nUnter Südlicher Sonne (1973) – s Ivicom Šerfezi\n Mojim Prijateljima (1974)\n Dalmatinske Noći (1980) – Tomislav Ivčić i Đani Maršan\n Pisme Iz Konobe (1982) – Tomislav Ivčić i Đani Maršan\n Sine, Vrati Se (1985) – Tomislav Ivčić i Đani Maršan\n Pjesme Naše Mladosti (1988)\n Prijatelju Moj (1989)\n Bože, čuvaj Hrvatsku (1991)\n Vagabondo\n\nOstalo \n \"Lijepom našom\" kao izvođač (epizoda: Dan Državnosti - Solin) (2019.)\n\nIzvori\n\nHrvatski pjevači\nHrvatski pop pjevači\nŽivotopisi, Zadar",
+        "seed": 20261003
+      },
+      "rendered_tokens": 455,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The model correctly performed the denoising task by fixing typos in the Croatian text (e.g., 'Prijteljima' to 'Prijateljima', 'Tomisav' to 'Tomislav', 'Priatelju' to 'Prijatelju', 'Dravnosti' to 'Državnosti', and 'IzvoRi' to 'Izvori') while maintaining the original structure and meaning."
+      }
+    },
+    "record_sha256": "42eed648e4aee3b7fef7e36295064c6e216e150bace862a0a440d3058b2801c6",
+    "source_document": {
+      "id": "42995",
+      "url": "https://hr.wikipedia.org/wiki/%C4%90ani%20Mar%C5%A1an",
+      "title": "Đani Maršan",
+      "text": "Đani Maršan (Zadar, 23. lipnja 1944.) je hrvatski pjevač, skladatelj i diplomat.\n\nŽivotopis \nRođeni Zadranin, podrijetlom iz Arbanasa, snimio je desetak albuma, među njima i jedan od najuspješnijih Prijatelju moj iz 1989. godine. Najpoznatije su mu pjesme \"Mandolina\", \"Bože, čuvaj Hrvatsku\", \"Vivat Croatia\", \"Misto kraj mora\", \"Zadar je u srcu mome\", \"Adio\", \"Prozor prema zalazu\", \"Djevojka s juga\", \"Ja te volim\", \"Kad mendule procvitaju\", \"Prijatelju moj\" te mnoge druge. \n\nTijekom bogate glazbene karijere uspješno je nastupao na mnogim festivalima zabavne glazbe (Splitski festival, Melodije Istre i Kvarnera, Dora, Dalmatinska šansona). Njegova (polu)braća su također poznati hrvatski pjevači Tomislav Ivčić i Vedran Ivčić.\n\nOd 2010. godine je generalni konzul Republike Hrvatske u Milanu.\n\nU prosincu 2019. u Zadru održao je svečani koncert kojim je proslavio 50 godina glazbene karijere\n\nDiskografija \nProzor prema zalazu\n\nAdio\n\nJa te volim\n\nU masliniku\n\n Unter Südlicher Sonne (1973) – s Ivicom Šerfezi\n Mojim Prijateljima (1974)\n Dalmatinske Noći (1980) – Tomislav Ivčić i Đani Maršan\n Pisme Iz Konobe (1982) – Tomislav Ivčić i Đani Maršan\n Sine, Vrati Se (1985) – Tomislav Ivčić i Đani Maršan\n Pjesme Naše Mladosti (1988)\n Prijatelju Moj (1989)\n Bože, čuvaj Hrvatsku (1991)\n Vagabondo\n\nOstalo \n \"Lijepom našom\" kao izvođač (epizoda: Dan Državnosti - Solin) (2019.)\n\nIzvori \n\nHrvatski pjevači\nHrvatski pop pjevači\nŽivotopisi, Zadar"
+    },
+    "source_text_sha256": "4d631a91767286d901b718a2884c725b8b7c6f65fc49dcba853f722ab6c5b8b9",
+    "window": "Ja te volim\n\nU masliniku\n\nUnter Südlicher Sonne (1973) – s Ivicom Šerfezi\n Mojim Prijateljima (1974)\n Dalmatinske Noći (1980) – Tomislav Ivčić i Đani Maršan\n Pisme Iz Konobe (1982) – Tomislav Ivčić i Đani Maršan\n Sine, Vrati Se (1985) – Tomislav Ivčić i Đani Maršan\n Pjesme Naše Mladosti (1988)\n Prijatelju Moj (1989)\n Bože, čuvaj Hrvatsku (1991)\n Vagabondo\n\nOstalo \n \"Lijepom našom\" kao izvođač (epizoda: Dan Državnosti - Solin) (2019.)\n\nIzvori\n\nHrvatski pjevači\nHrvatski pop pjevači\nŽivotopisi, Zadar",
+    "window_sha256": "9bebdea9a76ab11b62a12851382eaaf45ac5076a37a9900b87713b948c7c56b5",
+    "replay": {
+      "case": 2,
+      "id": "aa641953b412a31480c1263e5af8e649599bceb6fbc8a7b0aff626c5f81194a8",
+      "task": "denoising",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 1443,
+      "window_chars": 502,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "deleted_chars": 4,
+      "corruption_changed": true
+    }
+  },
+  {
+    "case": 3,
+    "ordinal": 67455,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_denoising",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-denoising",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 67456,
+      "rendered_tokens": 82854863,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-denoising/data/train.jsonl",
+      "output_sha256": "80a1ba46879f5ac662a5b1dfe9b8827532f8367303ce1c0e83c55cd8660ab5f2",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "denoising",
+      "hf_revision": "a332d149c56692d43d2993bfb08499838250b1b5",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/denoising/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/tokens",
+      "tokenized_tokens": 82854863,
+      "tokenized_rows": 67456,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_hr_denoising/verified.json"
+    },
+    "record": {
+      "id": "ffff139188fb8535aaf6c26d141521c7f4976aad50ef1c6f317f36eddda25171",
+      "language": "hr",
+      "task": "denoising",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Ispravi pogreške u tekstu.\n\nFlubromazolam, vrsta psihotropne tvari. Uvrštena je u Hrvatskoj na temelJu Zakona  suzbijanju zlouporabe droga na Popis droga, psihotropnih tvari i biljaka iz kOjih se može dobiti droga te tvari koje se mOgu uporabiti za izradu droga, pod Popis droga i biljaka iz kojih se može dobiti droga, pod 2. Popis psihotropnih tvari i biljaka, Odjeljak 1 - Psihotropne tvari sukladno Popisu 1. KonvencIje UN-a o psihotropNim tvarima iz 1971. godine. Kemijsko ime je 8-brom-6-(2-flUorfenil)-1-metil-4H-[1,2,4]Triazolo[4,3-a] [1,4]benzodiazepin.\n\nIzvori\n\nPsihotropne tvari"
+        },
+        {
+          "role": "assistant",
+          "content": "Flubromazolam, vrsta psihotropne tvari. Uvrštena je u Hrvatskoj na temelju Zakona o suzbijanju zlouporabe droga na Popis droga, psihotropnih tvari i biljaka iz kojih se može dobiti droga te tvari koje se mogu uporabiti za izradu droga, pod Popis droga i biljaka iz kojih se može dobiti droga, pod 2. Popis psihotropnih tvari i biljaka, Odjeljak 1 - Psihotropne tvari sukladno Popisu 1. Konvencije UN-a o psihotropnim tvarima iz 1971. godine. Kemijsko ime je 8-brom-6-(2-fluorfenil)-1-metil-4H-[1,2,4]triazolo[4,3-a] [1,4]benzodiazepin.\n\nIzvori\n\nPsihotropne tvari"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 178056,
+        "id": "662671",
+        "url": "https://hr.wikipedia.org/wiki/Flubromazolam",
+        "title": "Flubromazolam",
+        "paragraph_structure": "original",
+        "window_seed": 866121577256895802,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Flubromazolam, vrsta psihotropne tvari. Uvrštena je u Hrvatskoj na temelju Zakona o suzbijanju zlouporabe droga na Popis droga, psihotropnih tvari i biljaka iz kojih se može dobiti droga te tvari koje se mogu uporabiti za izradu droga, pod Popis droga i biljaka iz kojih se može dobiti droga, pod 2. Popis psihotropnih tvari i biljaka, Odjeljak 1 - Psihotropne tvari sukladno Popisu 1. Konvencije UN-a o psihotropnim tvarima iz 1971. godine. Kemijsko ime je 8-brom-6-(2-fluorfenil)-1-metil-4H-[1,2,4]triazolo[4,3-a] [1,4]benzodiazepin.\n\nIzvori\n\nPsihotropne tvari",
+        "seed": 20261003
+      },
+      "rendered_tokens": 439,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly performed the denoising task by fixing capitalization errors (e.g., 'temelJu' to 'temelju', 'kOjih' to 'kojih', 'mOgu' to 'mogu', 'KonvencIje' to 'Konvencije') and chemical nomenclature casing, while preserving the original meaning and language (Croatian)."
+      }
+    },
+    "record_sha256": "7400c2c2eb605738945987e1f6de488ac64b759737ff42846feea44af58f63d6",
+    "source_document": {
+      "id": "662671",
+      "url": "https://hr.wikipedia.org/wiki/Flubromazolam",
+      "title": "Flubromazolam",
+      "text": "Flubromazolam, vrsta psihotropne tvari. Uvrštena je u Hrvatskoj na temelju Zakona o suzbijanju zlouporabe droga na Popis droga, psihotropnih tvari i biljaka iz kojih se može dobiti droga te tvari koje se mogu uporabiti za izradu droga, pod Popis droga i biljaka iz kojih se može dobiti droga, pod 2. Popis psihotropnih tvari i biljaka, Odjeljak 1 - Psihotropne tvari sukladno Popisu 1. Konvencije UN-a o psihotropnim tvarima iz 1971. godine. Kemijsko ime je 8-brom-6-(2-fluorfenil)-1-metil-4H-[1,2,4]triazolo[4,3-a] [1,4]benzodiazepin.\n\nIzvori \n\nPsihotropne tvari"
+    },
+    "source_text_sha256": "5d303c327ac92c001a0d955cbc117466f817647d32567ec7af71914ff13c1b06",
+    "window": "Flubromazolam, vrsta psihotropne tvari. Uvrštena je u Hrvatskoj na temelju Zakona o suzbijanju zlouporabe droga na Popis droga, psihotropnih tvari i biljaka iz kojih se može dobiti droga te tvari koje se mogu uporabiti za izradu droga, pod Popis droga i biljaka iz kojih se može dobiti droga, pod 2. Popis psihotropnih tvari i biljaka, Odjeljak 1 - Psihotropne tvari sukladno Popisu 1. Konvencije UN-a o psihotropnim tvarima iz 1971. godine. Kemijsko ime je 8-brom-6-(2-fluorfenil)-1-metil-4H-[1,2,4]triazolo[4,3-a] [1,4]benzodiazepin.\n\nIzvori\n\nPsihotropne tvari",
+    "window_sha256": "4b385f02367d9deda2ee0f3d117de7c1c7bca4f59ddf0a6312c144d573a7d759",
+    "replay": {
+      "case": 3,
+      "id": "ffff139188fb8535aaf6c26d141521c7f4976aad50ef1c6f317f36eddda25171",
+      "task": "denoising",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 563,
+      "window_chars": 562,
+      "window_blocks": 3,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "deleted_chars": 1,
+      "corruption_changed": true
+    }
+  },
+  {
+    "case": 4,
+    "ordinal": 0,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_paragraph_reordering",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-paragraph-reordering",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 30986,
+      "rendered_tokens": 39527882,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl",
+      "output_sha256": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "paragraph-reordering",
+      "hf_revision": "c44ba953549f6d0c83f38e24504eb4dd78abf3f3",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/paragraph-reordering/publication.json"
+    },
+    "record": {
+      "id": "00017d4187f1436bb6751cce9d5ed80a1cef660b4cb3692615f02e6378b89b4a",
+      "language": "hr",
+      "task": "paragraph-reordering",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Vrati izvorni redoslijed odlomaka; navedi cijeli tekst bez numeriranja.\n\n[1] Izvori\n\n[2] Hrvatski operni pjevači\nŽivotopisi, Križevci\nEnologija\n\n[3] Vanjske poveznice \nurednik: Alberto Ognjan Štriga (Križevci, 30. svibnja 1821. – Zagreb, 7. ožujka 1897.). Križevački vremeplov, prigorski.hr, 7. ožujka 2016.\n\n[4] Alberto Ognjan pl. Štriga, rodio se je 30. travnja g. 1821. u Križevcima od oca Ivana Nep. pl. Štrige Cunovečkoga, sudca, i majke Cecilije, rodjene pl. Raizner. Pučku je školu polazio u svom rodnom mjestu. Pohađao je Klasičnu gimnaziju  u Zagrebu i gimnaziju u Velikoj Kaniži. U Zagrebu je i izučio prava g. 1842. Prema njegovoj ideji, napisan je libreto za prvu hrvatsku operu Ljubav i zloba Vatroslava Lisinskog."
+        },
+        {
+          "role": "assistant",
+          "content": "Alberto Ognjan pl. Štriga, rodio se je 30. travnja g. 1821. u Križevcima od oca Ivana Nep. pl. Štrige Cunovečkoga, sudca, i majke Cecilije, rodjene pl. Raizner. Pučku je školu polazio u svom rodnom mjestu. Pohađao je Klasičnu gimnaziju  u Zagrebu i gimnaziju u Velikoj Kaniži. U Zagrebu je i izučio prava g. 1842. Prema njegovoj ideji, napisan je libreto za prvu hrvatsku operu Ljubav i zloba Vatroslava Lisinskog.\n\nIzvori\n\nVanjske poveznice \nurednik: Alberto Ognjan Štriga (Križevci, 30. svibnja 1821. – Zagreb, 7. ožujka 1897.). Križevački vremeplov, prigorski.hr, 7. ožujka 2016.\n\nHrvatski operni pjevači\nŽivotopisi, Križevci\nEnologija"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 42451,
+        "id": "153620",
+        "url": "https://hr.wikipedia.org/wiki/Alberto%20Ognjan%20%C5%A0triga",
+        "title": "Alberto Ognjan Štriga",
+        "paragraph_structure": "original",
+        "window_seed": 3213219994464977066,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Alberto Ognjan pl. Štriga, rodio se je 30. travnja g. 1821. u Križevcima od oca Ivana Nep. pl. Štrige Cunovečkoga, sudca, i majke Cecilije, rodjene pl. Raizner. Pučku je školu polazio u svom rodnom mjestu. Pohađao je Klasičnu gimnaziju  u Zagrebu i gimnaziju u Velikoj Kaniži. U Zagrebu je i izučio prava g. 1842. Prema njegovoj ideji, napisan je libreto za prvu hrvatsku operu Ljubav i zloba Vatroslava Lisinskog.\n\nIzvori\n\nVanjske poveznice \nurednik: Alberto Ognjan Štriga (Križevci, 30. svibnja 1821. – Zagreb, 7. ožujka 1897.). Križevački vremeplov, prigorski.hr, 7. ožujka 2016.\n\nHrvatski operni pjevači\nŽivotopisi, Križevci\nEnologija",
+        "seed": 20261003
+      },
+      "rendered_tokens": 566,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly reordered the paragraphs to match the original reference text and followed the instruction to remove numbering."
+      }
+    },
+    "record_sha256": "2413ae3326d0738c07cdeb3fdac7843f32d9a48099bf5204acc43f8f46774017",
+    "source_document": {
+      "id": "153620",
+      "url": "https://hr.wikipedia.org/wiki/Alberto%20Ognjan%20%C5%A0triga",
+      "title": "Alberto Ognjan Štriga",
+      "text": "Alberto Ognjan pl. Štriga (Križevci, 30. travnja 1821. – Zagreb, 7. ožujka 1897.), hrvatski operni pjevač, vinar\n\nAlberto Ognjan pl. Štriga, rodio se je 30. travnja g. 1821. u Križevcima od oca Ivana Nep. pl. Štrige Cunovečkoga, sudca, i majke Cecilije, rodjene pl. Raizner. Pučku je školu polazio u svom rodnom mjestu. Pohađao je Klasičnu gimnaziju  u Zagrebu i gimnaziju u Velikoj Kaniži. U Zagrebu je i izučio prava g. 1842. Prema njegovoj ideji, napisan je libreto za prvu hrvatsku operu Ljubav i zloba Vatroslava Lisinskog.\n\nIzvori\n\nVanjske poveznice \nurednik: Alberto Ognjan Štriga (Križevci, 30. svibnja 1821. – Zagreb, 7. ožujka 1897.). Križevački vremeplov, prigorski.hr, 7. ožujka 2016.\n\nHrvatski operni pjevači\nŽivotopisi, Križevci\nEnologija"
+    },
+    "source_text_sha256": "7489777e1324fe7ad68a361fce31d4ec774b37753a977d3b142199b682293a3c",
+    "window": "Alberto Ognjan pl. Štriga, rodio se je 30. travnja g. 1821. u Križevcima od oca Ivana Nep. pl. Štrige Cunovečkoga, sudca, i majke Cecilije, rodjene pl. Raizner. Pučku je školu polazio u svom rodnom mjestu. Pohađao je Klasičnu gimnaziju  u Zagrebu i gimnaziju u Velikoj Kaniži. U Zagrebu je i izučio prava g. 1842. Prema njegovoj ideji, napisan je libreto za prvu hrvatsku operu Ljubav i zloba Vatroslava Lisinskog.\n\nIzvori\n\nVanjske poveznice \nurednik: Alberto Ognjan Štriga (Križevci, 30. svibnja 1821. – Zagreb, 7. ožujka 1897.). Križevački vremeplov, prigorski.hr, 7. ožujka 2016.\n\nHrvatski operni pjevači\nŽivotopisi, Križevci\nEnologija",
+    "window_sha256": "524166307e392d7a1c3142ab1698d71aec9da9bd07d839109537e062d5717328",
+    "replay": {
+      "case": 4,
+      "id": "00017d4187f1436bb6751cce9d5ed80a1cef660b4cb3692615f02e6378b89b4a",
+      "task": "paragraph-reordering",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 752,
+      "window_chars": 638,
+      "window_blocks": 4,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "permutation": [
+        2,
+        4,
+        3,
+        1
+      ],
+      "all_blocks_preserved": true,
+      "nonidentity": true
+    }
+  },
+  {
+    "case": 5,
+    "ordinal": 10328,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_paragraph_reordering",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-paragraph-reordering",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 30986,
+      "rendered_tokens": 39527882,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl",
+      "output_sha256": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "paragraph-reordering",
+      "hf_revision": "c44ba953549f6d0c83f38e24504eb4dd78abf3f3",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/paragraph-reordering/publication.json"
+    },
+    "record": {
+      "id": "547e5c964c62aaf22b015fe08c8ebc16433063ddf3410ba3113fc2e2404729c5",
+      "language": "hr",
+      "task": "paragraph-reordering",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Vrati izvorni redoslijed odlomaka; navedi cijeli tekst bez numeriranja.\n\n[1] Osim pjesama zavičajne tematike, piše i duhovne pjesme. Na nagovor oca Miloša, napisala je četiri pjesme o ocu Gerardu, za kojeg su tada bile u tijeku molitve. Na inicijativu velečasnog Marinka Stantića često pročita neku od svojih pjesama na medijacijama koje se održavaju poslije mise, a koje su povezene s čitanjima koja su bila na misi. Prijam Maričinih pjesam kod župljana je izvrstan.\n\n[2] Zastupljena je u zborniku četvrtih Pjesničkih susreta, održanih 21. srpnja 2012. u Gunji. Zbornik nosi ime \"Iskre vječnog sjaja\". Susreti su održani u organizaciji Udruge pisaca i pjesnika „Tin Ujević“ iz Gunje. Od 32 pjesnika iz Hrvatske, Bosne i Hercegovine, Srbije i iz Brčko Distrikta, Marica Mikrut je u skupini iz Vojvodine iz koje su još zastupljeni Kata Kovač, Anita Đipanov, Katarina Firanj, Marija Šeremešić, Željko Šeremešić, Josip Dumendžić i Antun Kovač.\n\n[3] Hrvatski pjesnici iz Vojvodine\nŽivotopisi, Sombor\nSonta\n\n[4] Izvori\n\n[5] Aktivna je i u pjevačkog sekciji Hrvatskog kulturno-umjetničkog društva »Vladimir Nazor« čija je članica od osnutka HKUD-a 2008. godine.\n\n[6] Napisala je do kraja 2012. oko 80 pjesama. Sve su stvorene na šokačkoj ikavici. Aktivno sudjeluje na književnim susretima, u čijim su zbornicima objavljena njezina djela. U Liri naivi sudjeluje od 2006., zatim u susretima u Rešetarima, u Gunji, Đeletovcima, u »Danici«, »Zvoniku« i »Miroljubu«."
+        },
+        {
+          "role": "assistant",
+          "content": "Osim pjesama zavičajne tematike, piše i duhovne pjesme. Na nagovor oca Miloša, napisala je četiri pjesme o ocu Gerardu, za kojeg su tada bile u tijeku molitve. Na inicijativu velečasnog Marinka Stantića često pročita neku od svojih pjesama na medijacijama koje se održavaju poslije mise, a koje su povezene s čitanjima koja su bila na misi. Prijam Maričinih pjesam kod župljana je izvrstan.\n\nNapisala je do kraja 2012. oko 80 pjesama. Sve su stvorene na šokačkoj ikavici. Aktivno sudjeluje na književnim susretima, u čijim su zbornicima objavljena njezina djela. U Liri naivi sudjeluje od 2006., zatim u susretima u Rešetarima, u Gunji, Đeletovcima, u »Danici«, »Zvoniku« i »Miroljubu«.\n\nZastupljena je u zborniku četvrtih Pjesničkih susreta, održanih 21. srpnja 2012. u Gunji. Zbornik nosi ime \"Iskre vječnog sjaja\". Susreti su održani u organizaciji Udruge pisaca i pjesnika „Tin Ujević“ iz Gunje. Od 32 pjesnika iz Hrvatske, Bosne i Hercegovine, Srbije i iz Brčko Distrikta, Marica Mikrut je u skupini iz Vojvodine iz koje su još zastupljeni Kata Kovač, Anita Đipanov, Katarina Firanj, Marija Šeremešić, Željko Šeremešić, Josip Dumendžić i Antun Kovač.\n\nAktivna je i u pjevačkog sekciji Hrvatskog kulturno-umjetničkog društva »Vladimir Nazor« čija je članica od osnutka HKUD-a 2008. godine.\n\nIzvori\n\nHrvatski pjesnici iz Vojvodine\nŽivotopisi, Sombor\nSonta"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 141081,
+        "id": "547814",
+        "url": "https://hr.wikipedia.org/wiki/Marica%20Mikrut",
+        "title": "Marica Mikrut",
+        "paragraph_structure": "original",
+        "window_seed": 6182790080523305500,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Osim pjesama zavičajne tematike, piše i duhovne pjesme. Na nagovor oca Miloša, napisala je četiri pjesme o ocu Gerardu, za kojeg su tada bile u tijeku molitve. Na inicijativu velečasnog Marinka Stantića često pročita neku od svojih pjesama na medijacijama koje se održavaju poslije mise, a koje su povezene s čitanjima koja su bila na misi. Prijam Maričinih pjesam kod župljana je izvrstan.\n\nNapisala je do kraja 2012. oko 80 pjesama. Sve su stvorene na šokačkoj ikavici. Aktivno sudjeluje na književnim susretima, u čijim su zbornicima objavljena njezina djela. U Liri naivi sudjeluje od 2006., zatim u susretima u Rešetarima, u Gunji, Đeletovcima, u »Danici«, »Zvoniku« i »Miroljubu«.\n\nZastupljena je u zborniku četvrtih Pjesničkih susreta, održanih 21. srpnja 2012. u Gunji. Zbornik nosi ime \"Iskre vječnog sjaja\". Susreti su održani u organizaciji Udruge pisaca i pjesnika „Tin Ujević“ iz Gunje. Od 32 pjesnika iz Hrvatske, Bosne i Hercegovine, Srbije i iz Brčko Distrikta, Marica Mikrut je u skupini iz Vojvodine iz koje su još zastupljeni Kata Kovač, Anita Đipanov, Katarina Firanj, Marija Šeremešić, Željko Šeremešić, Josip Dumendžić i Antun Kovač.\n\nAktivna je i u pjevačkog sekciji Hrvatskog kulturno-umjetničkog društva »Vladimir Nazor« čija je članica od osnutka HKUD-a 2008. godine.\n\nIzvori\n\nHrvatski pjesnici iz Vojvodine\nŽivotopisi, Sombor\nSonta",
+        "seed": 20261003
+      },
+      "rendered_tokens": 1004,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly reordered the paragraphs to match the original reference text provided in the audit context. It followed all instructions, including removing numbering and providing the full text."
+      }
+    },
+    "record_sha256": "1ab50aafd90c57dca14cbee33e3785631c1a810bbbf3af7bfed5f602ec3393e0",
+    "source_document": {
+      "id": "547814",
+      "url": "https://hr.wikipedia.org/wiki/Marica%20Mikrut",
+      "title": "Marica Mikrut",
+      "text": "Marica Mikrut r. Miloš je hrvatska pjesnikinja iz Sonte, a živi u Somboru, Vojvodina, Srbija.\n\nŽivotopis \nRođena je u Sonti od oca Pavla, poznatog majstora i mati Eve r. Domić. Djetinjstvo je provela u rodnoj Sonti gdje je završila osnovnu školu. Još u osnovnoj školi vidjelo se da ima afinitet prema pisanju, no kako je bila iz seoske obitelji, nije se to uzimalo zaozbiljno niti dalje razvijalo. Srednju ugostiteljsku školu završila je u Somboru gdje je upoznala budućeg supruga, Hrvata iz Imotske krajine. U Somboru živi skoro četiri desetljeća, a zadnjih 20 godina radila je u Poreznoj upravi. U mirovini je od 2007. godine. Svoje slobodno vrijeme koristi za pisati pjesme, pjevati u pjevačkoj skupini i za aktivnosti u crkvenoj zajednici. Na njeno stvarateljstvo utjecala je i smrt njenih roditelja. Prema njenim riječima, poslije roditeljske smrti postala je svjesna tog životnog nestajanja kojeg se jako bojala. Poslije smrti oba roditelja obiteljska kuća je prodana, a zbog straha nikad ju nije poslije nije otišla obići, \"jer to više nije kuća u kojoj je odrastala i jednostavno želi da joj ostane u sjećanju kakva je bila kada su tamo živjeli njeni roditelji.\" Posljedica toga jest da joj rodna Sonta intenzivno živi u njenim pjesmama.\n\nPisanjem se bavi aktivno od prije 20 godina, od 1992. godine. Pjesme je pisala danju, a priznaje da joj se događa da pjesme piše noću, čemu se nekad čudila drugim pjesnicima. Većina je pjesama zavičajne teme, o rodnom mjestu i sjećanju na drage ljude iz rodne Sonte. O stvarateljstvu je rekla da joj je nedostajala rodna Sonta, Šokadija, divan i tako je počela pisati pjesme. Prvo je bilo isljučivo o rodnom mjestu i pisala je na šokačkoj ikavici. Mnogo je pjesama o ocu (\"dadi\"), a uskoro je napisala i pjesmu o djedu (\"didi\"). Bojala se da će nestajanjem fizičke sveze sa Sontom prestati nadahunuće, no to se uopće nije dogodilo.\n\nOsim pjesama zavičajne tematike, piše i duhovne pjesme. Na nagovor oca Miloša, napisala je četiri pjesme o ocu Gerardu, za kojeg su tada bile u tijeku molitve. Na inicijativu velečasnog Marinka Stantića često pročita neku od svojih pjesama na medijacijama koje se održavaju poslije mise, a koje su povezene s čitanjima koja su bila na misi. Prijam Maričinih pjesam kod župljana je izvrstan.\n\nNapisala je do kraja 2012. oko 80 pjesama. Sve su stvorene na šokačkoj ikavici. Aktivno sudjeluje na književnim susretima, u čijim su zbornicima objavljena njezina djela. U Liri naivi sudjeluje od 2006., zatim u susretima u Rešetarima, u Gunji, Đeletovcima, u »Danici«, »Zvoniku« i »Miroljubu«.\n\nZastupljena je u zborniku četvrtih Pjesničkih susreta, održanih 21. srpnja 2012. u Gunji. Zbornik nosi ime \"Iskre vječnog sjaja\". Susreti su održani u organizaciji Udruge pisaca i pjesnika „Tin Ujević“ iz Gunje. Od 32 pjesnika iz Hrvatske, Bosne i Hercegovine, Srbije i iz Brčko Distrikta, Marica Mikrut je u skupini iz Vojvodine iz koje su još zastupljeni Kata Kovač, Anita Đipanov, Katarina Firanj, Marija Šeremešić, Željko Šeremešić, Josip Dumendžić i Antun Kovač.\n\nAktivna je i u pjevačkog sekciji Hrvatskog kulturno-umjetničkog društva »Vladimir Nazor« čija je članica od osnutka HKUD-a 2008. godine.\n\nIzvori \n\nHrvatski pjesnici iz Vojvodine\nŽivotopisi, Sombor\nSonta"
+    },
+    "source_text_sha256": "37d5affbc2ff25bf6daa0eb470660ab5b42daaadfe7624c3fcafdbc9b13af9a7",
+    "window": "Osim pjesama zavičajne tematike, piše i duhovne pjesme. Na nagovor oca Miloša, napisala je četiri pjesme o ocu Gerardu, za kojeg su tada bile u tijeku molitve. Na inicijativu velečasnog Marinka Stantića često pročita neku od svojih pjesama na medijacijama koje se održavaju poslije mise, a koje su povezene s čitanjima koja su bila na misi. Prijam Maričinih pjesam kod župljana je izvrstan.\n\nNapisala je do kraja 2012. oko 80 pjesama. Sve su stvorene na šokačkoj ikavici. Aktivno sudjeluje na književnim susretima, u čijim su zbornicima objavljena njezina djela. U Liri naivi sudjeluje od 2006., zatim u susretima u Rešetarima, u Gunji, Đeletovcima, u »Danici«, »Zvoniku« i »Miroljubu«.\n\nZastupljena je u zborniku četvrtih Pjesničkih susreta, održanih 21. srpnja 2012. u Gunji. Zbornik nosi ime \"Iskre vječnog sjaja\". Susreti su održani u organizaciji Udruge pisaca i pjesnika „Tin Ujević“ iz Gunje. Od 32 pjesnika iz Hrvatske, Bosne i Hercegovine, Srbije i iz Brčko Distrikta, Marica Mikrut je u skupini iz Vojvodine iz koje su još zastupljeni Kata Kovač, Anita Đipanov, Katarina Firanj, Marija Šeremešić, Željko Šeremešić, Josip Dumendžić i Antun Kovač.\n\nAktivna je i u pjevačkog sekciji Hrvatskog kulturno-umjetničkog društva »Vladimir Nazor« čija je članica od osnutka HKUD-a 2008. godine.\n\nIzvori\n\nHrvatski pjesnici iz Vojvodine\nŽivotopisi, Sombor\nSonta",
+    "window_sha256": "78acbf1d853daab3b028df6221cf401ce740c00047ec1ca4aefea7d7e54069f9",
+    "replay": {
+      "case": 5,
+      "id": "547e5c964c62aaf22b015fe08c8ebc16433063ddf3410ba3113fc2e2404729c5",
+      "task": "paragraph-reordering",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 3239,
+      "window_chars": 1358,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "permutation": [
+        1,
+        3,
+        6,
+        5,
+        4,
+        2
+      ],
+      "all_blocks_preserved": true,
+      "nonidentity": true
+    }
+  },
+  {
+    "case": 6,
+    "ordinal": 20656,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_paragraph_reordering",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-paragraph-reordering",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 30986,
+      "rendered_tokens": 39527882,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl",
+      "output_sha256": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "paragraph-reordering",
+      "hf_revision": "c44ba953549f6d0c83f38e24504eb4dd78abf3f3",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/paragraph-reordering/publication.json"
+    },
+    "record": {
+      "id": "a9d01d3f6b893209b3b307b7d1542cb087ba81768759feaf88d64c1c0dce103b",
+      "language": "hr",
+      "task": "paragraph-reordering",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Vrati izvorni redoslijed odlomaka; navedi cijeli tekst bez numeriranja.\n\n[1] Proveo je više godina u potvrđivanju pozicija 6380 maglica. Nadao se da će postaviti osnove budućeg proučavanja vlastitog gibanja maglica; ovaj rad se pokazao manje-više uzaludnim, pošto daleke maglice ne pokazuju nikakvo prikladno kretanje. Međutim, on je otkrio blizu 500 novih objekata.\n\n[2] Bigourdan je dobio 1883. i 1891. Lalandeovu nagradu koju dodjeljuje Francuska akademija znanosti, kao i Zlatnu medalju Kraljevskog astronomskog društva 1919. Bio je ravnatelj Bureau International de l'Heure od 1919. do 1928.\n\n[3] Izvori\n\n[4] Vanjske poveznice \n Patrimoine/expogb.html \n Thierry Thomasset: Životopis Guillaumea Bigourdana\n\n[5] 1902. sudjelovao je u naporima preračunavanja s većom preciznošću meridijanske razlike između Londona i Pariza. 1903. postao je član Bureau des Longitudes. 1904. postao je član Francuske akademije znanosti\n\n[6] Životopis\n\n[7] Oženio je kćerku Amédée Moucheza.\n\n[8] Francuski astronomi\nOtkrivači asteroida\n\n[9] Bigourdan je rođen u Sistelsu, Tarn-et-Garonne od oca Pierre Bigourdan i majke Jeanne Carrière. Godine 1877. imenovao ga je Félix Tisserand na mjestu pomoćnog astronoma na Toulouškoj zvjezdarnici, i 1879. je slijedio Tisseranda u Pariškoj zvjezdarnici gdje je kasnije postao ravnatelj.\n\n[10] Opisao je metodu podešavanja ekvatorske montaže teleskopa, koja je poznata pod imenom Bigourdanova metoda."
+        },
+        {
+          "role": "assistant",
+          "content": "Životopis\n\nBigourdan je rođen u Sistelsu, Tarn-et-Garonne od oca Pierre Bigourdan i majke Jeanne Carrière. Godine 1877. imenovao ga je Félix Tisserand na mjestu pomoćnog astronoma na Toulouškoj zvjezdarnici, i 1879. je slijedio Tisseranda u Pariškoj zvjezdarnici gdje je kasnije postao ravnatelj.\n\nProveo je više godina u potvrđivanju pozicija 6380 maglica. Nadao se da će postaviti osnove budućeg proučavanja vlastitog gibanja maglica; ovaj rad se pokazao manje-više uzaludnim, pošto daleke maglice ne pokazuju nikakvo prikladno kretanje. Međutim, on je otkrio blizu 500 novih objekata.\n\n1902. sudjelovao je u naporima preračunavanja s većom preciznošću meridijanske razlike između Londona i Pariza. 1903. postao je član Bureau des Longitudes. 1904. postao je član Francuske akademije znanosti\n\nOpisao je metodu podešavanja ekvatorske montaže teleskopa, koja je poznata pod imenom Bigourdanova metoda.\n\nBigourdan je dobio 1883. i 1891. Lalandeovu nagradu koju dodjeljuje Francuska akademija znanosti, kao i Zlatnu medalju Kraljevskog astronomskog društva 1919. Bio je ravnatelj Bureau International de l'Heure od 1919. do 1928.\n\nOženio je kćerku Amédée Moucheza.\n\nIzvori\n\nVanjske poveznice \n Patrimoine/expogb.html \n Thierry Thomasset: Životopis Guillaumea Bigourdana\n\nFrancuski astronomi\nOtkrivači asteroida"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 107308,
+        "id": "327692",
+        "url": "https://hr.wikipedia.org/wiki/Guillaume%20Bigourdan",
+        "title": "Guillaume Bigourdan",
+        "paragraph_structure": "original",
+        "window_seed": 8942813330783650768,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Životopis\n\nBigourdan je rođen u Sistelsu, Tarn-et-Garonne od oca Pierre Bigourdan i majke Jeanne Carrière. Godine 1877. imenovao ga je Félix Tisserand na mjestu pomoćnog astronoma na Toulouškoj zvjezdarnici, i 1879. je slijedio Tisseranda u Pariškoj zvjezdarnici gdje je kasnije postao ravnatelj.\n\nProveo je više godina u potvrđivanju pozicija 6380 maglica. Nadao se da će postaviti osnove budućeg proučavanja vlastitog gibanja maglica; ovaj rad se pokazao manje-više uzaludnim, pošto daleke maglice ne pokazuju nikakvo prikladno kretanje. Međutim, on je otkrio blizu 500 novih objekata.\n\n1902. sudjelovao je u naporima preračunavanja s većom preciznošću meridijanske razlike između Londona i Pariza. 1903. postao je član Bureau des Longitudes. 1904. postao je član Francuske akademije znanosti\n\nOpisao je metodu podešavanja ekvatorske montaže teleskopa, koja je poznata pod imenom Bigourdanova metoda.\n\nBigourdan je dobio 1883. i 1891. Lalandeovu nagradu koju dodjeljuje Francuska akademija znanosti, kao i Zlatnu medalju Kraljevskog astronomskog društva 1919. Bio je ravnatelj Bureau International de l'Heure od 1919. do 1928.\n\nOženio je kćerku Amédée Moucheza.\n\nIzvori\n\nVanjske poveznice \n Patrimoine/expogb.html \n Thierry Thomasset: Životopis Guillaumea Bigourdana\n\nFrancuski astronomi\nOtkrivači asteroida",
+        "seed": 20261003
+      },
+      "rendered_tokens": 943,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The model correctly reordered the scrambled paragraphs into a logical biographical structure, followed the negative constraint of not using numbering, and preserved the original text accurately in Croatian."
+      }
+    },
+    "record_sha256": "6d52e9d207f7f80260b3bd0f7759ebe0e88afc3d112739c1acfe6be4efb7842d",
+    "source_document": {
+      "id": "327692",
+      "url": "https://hr.wikipedia.org/wiki/Guillaume%20Bigourdan",
+      "title": "Guillaume Bigourdan",
+      "text": "Camille Guillaume Bigourdan (Sistels, 6. travnja 1851. – Pariz, 28. veljače 1932.) bio je francuski astronom.\n\nŽivotopis \n\nBigourdan je rođen u Sistelsu, Tarn-et-Garonne od oca Pierre Bigourdan i majke Jeanne Carrière. Godine 1877. imenovao ga je Félix Tisserand na mjestu pomoćnog astronoma na Toulouškoj zvjezdarnici, i 1879. je slijedio Tisseranda u Pariškoj zvjezdarnici gdje je kasnije postao ravnatelj.\n\nProveo je više godina u potvrđivanju pozicija 6380 maglica. Nadao se da će postaviti osnove budućeg proučavanja vlastitog gibanja maglica; ovaj rad se pokazao manje-više uzaludnim, pošto daleke maglice ne pokazuju nikakvo prikladno kretanje. Međutim, on je otkrio blizu 500 novih objekata.\n\n1902. sudjelovao je u naporima preračunavanja s većom preciznošću meridijanske razlike između Londona i Pariza. 1903. postao je član Bureau des Longitudes. 1904. postao je član Francuske akademije znanosti\n\nOpisao je metodu podešavanja ekvatorske montaže teleskopa, koja je poznata pod imenom Bigourdanova metoda.\n\nBigourdan je dobio 1883. i 1891. Lalandeovu nagradu koju dodjeljuje Francuska akademija znanosti, kao i Zlatnu medalju Kraljevskog astronomskog društva 1919. Bio je ravnatelj Bureau International de l'Heure od 1919. do 1928.\n\nOženio je kćerku Amédée Moucheza.\n\nIzvori\n\nVanjske poveznice \n Patrimoine/expogb.html \n Thierry Thomasset: Životopis Guillaumea Bigourdana\n\nFrancuski astronomi\nOtkrivači asteroida"
+    },
+    "source_text_sha256": "a420eeccedece41067d62b72157dd4326d9bc8ef4f25cbcb3caa721dc1e5fa99",
+    "window": "Životopis\n\nBigourdan je rođen u Sistelsu, Tarn-et-Garonne od oca Pierre Bigourdan i majke Jeanne Carrière. Godine 1877. imenovao ga je Félix Tisserand na mjestu pomoćnog astronoma na Toulouškoj zvjezdarnici, i 1879. je slijedio Tisseranda u Pariškoj zvjezdarnici gdje je kasnije postao ravnatelj.\n\nProveo je više godina u potvrđivanju pozicija 6380 maglica. Nadao se da će postaviti osnove budućeg proučavanja vlastitog gibanja maglica; ovaj rad se pokazao manje-više uzaludnim, pošto daleke maglice ne pokazuju nikakvo prikladno kretanje. Međutim, on je otkrio blizu 500 novih objekata.\n\n1902. sudjelovao je u naporima preračunavanja s većom preciznošću meridijanske razlike između Londona i Pariza. 1903. postao je član Bureau des Longitudes. 1904. postao je član Francuske akademije znanosti\n\nOpisao je metodu podešavanja ekvatorske montaže teleskopa, koja je poznata pod imenom Bigourdanova metoda.\n\nBigourdan je dobio 1883. i 1891. Lalandeovu nagradu koju dodjeljuje Francuska akademija znanosti, kao i Zlatnu medalju Kraljevskog astronomskog društva 1919. Bio je ravnatelj Bureau International de l'Heure od 1919. do 1928.\n\nOženio je kćerku Amédée Moucheza.\n\nIzvori\n\nVanjske poveznice \n Patrimoine/expogb.html \n Thierry Thomasset: Životopis Guillaumea Bigourdana\n\nFrancuski astronomi\nOtkrivači asteroida",
+    "window_sha256": "4d78a21ab6f1f4f1cdbd8c688750b982a1d350982f556f8d11b45edde5eae40f",
+    "replay": {
+      "case": 6,
+      "id": "a9d01d3f6b893209b3b307b7d1542cb087ba81768759feaf88d64c1c0dce103b",
+      "task": "paragraph-reordering",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 1421,
+      "window_chars": 1309,
+      "window_blocks": 10,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "permutation": [
+        3,
+        6,
+        8,
+        9,
+        4,
+        1,
+        7,
+        10,
+        2,
+        5
+      ],
+      "all_blocks_preserved": true,
+      "nonidentity": true
+    }
+  },
+  {
+    "case": 7,
+    "ordinal": 30985,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_paragraph_reordering",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-paragraph-reordering",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 30986,
+      "rendered_tokens": 39527882,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-paragraph-reordering/data/train.jsonl",
+      "output_sha256": "f08fccc4abab05bb5acc95a7954c3c74312e58a0afe33cbb3a49dd57cd2b3d64",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "paragraph-reordering",
+      "hf_revision": "c44ba953549f6d0c83f38e24504eb4dd78abf3f3",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/paragraph-reordering/publication.json"
+    },
+    "record": {
+      "id": "fffc9abfd7f7493dc785369703480f92efd0b1de972e38292082c4e04ef4f609",
+      "language": "hr",
+      "task": "paragraph-reordering",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Vrati izvorni redoslijed odlomaka; navedi cijeli tekst bez numeriranja.\n\n[1] Njemački sociolozi\nBritanski znanstvenici\nSociolozi\n\n[2] U svom je djelu Elias obradio pojam civilizacije kao specifične promjene u ljudskom ponašanju sukladno s društvenim ustrojem, oblikom integracija i međuljudskim odnosima. Razlikuje pojmove kulture i civilizacije te smatra da kultiviranost predstavlja najviši oblik civiliziranosti: oblik ponašanja, psotignuta kvaliteta izražavanja, maniri, odijevanje. Kontekstualizira distinkciju između kulture i civilizacije, namijenivši kulturu njemačkom građanstvu koji su pripadnici zemlje koja se kasno ujedinila, a civilizaciju Engleskoj i Francuskoj kao stare nacije.\n\n[3] Izvori\n\n[4] Elias je također istaknuo sljedeće: o napretku civilizacije ovise i potrebe čovjeka za samokontrolom. Suvremeni pojedinac ima sve više razloga za sram.\n\n[5] Elias se u ovom djelu posvetio istraživanju europskog društva između 13. i 19. stoljeća, usredotočivši se na svakodnevna ljudska ponašanja i manire. Povezao ih je s rastućim mehanizmima samokontrole, srama i mučnine od kasnoga srednjega vijeka i rane renesanse. Naime, uočio je da su se kroz povijesna razdoblja mijenjala pravila ponašanja. Najobičniji primjer za to bi bili maniri za stolom koji su se promijenili od srednjovjekovnog čovjeka u 13. stoljeću do suvremenoga čovjeka danas. Također, povezao je socioekonomski status s načinom udvaranja: viteško je udvaranje nastupilo ako bi žena bila višeg društvenog ranga od muškarca koji joj se udvara.\n\n[6] Dakle, Elias je zaključio da su se ljudi polako i postupno kroz stoljeća učili civiliziranom ponašanju.\n\n[7] O procesu civilizacije"
+        },
+        {
+          "role": "assistant",
+          "content": "O procesu civilizacije\n\nElias se u ovom djelu posvetio istraživanju europskog društva između 13. i 19. stoljeća, usredotočivši se na svakodnevna ljudska ponašanja i manire. Povezao ih je s rastućim mehanizmima samokontrole, srama i mučnine od kasnoga srednjega vijeka i rane renesanse. Naime, uočio je da su se kroz povijesna razdoblja mijenjala pravila ponašanja. Najobičniji primjer za to bi bili maniri za stolom koji su se promijenili od srednjovjekovnog čovjeka u 13. stoljeću do suvremenoga čovjeka danas. Također, povezao je socioekonomski status s načinom udvaranja: viteško je udvaranje nastupilo ako bi žena bila višeg društvenog ranga od muškarca koji joj se udvara.\n\nDakle, Elias je zaključio da su se ljudi polako i postupno kroz stoljeća učili civiliziranom ponašanju.\n\nU svom je djelu Elias obradio pojam civilizacije kao specifične promjene u ljudskom ponašanju sukladno s društvenim ustrojem, oblikom integracija i međuljudskim odnosima. Razlikuje pojmove kulture i civilizacije te smatra da kultiviranost predstavlja najviši oblik civiliziranosti: oblik ponašanja, psotignuta kvaliteta izražavanja, maniri, odijevanje. Kontekstualizira distinkciju između kulture i civilizacije, namijenivši kulturu njemačkom građanstvu koji su pripadnici zemlje koja se kasno ujedinila, a civilizaciju Engleskoj i Francuskoj kao stare nacije.\n\nElias je također istaknuo sljedeće: o napretku civilizacije ovise i potrebe čovjeka za samokontrolom. Suvremeni pojedinac ima sve više razloga za sram.\n\nIzvori\n\nNjemački sociolozi\nBritanski znanstvenici\nSociolozi"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 189806,
+        "id": "697382",
+        "url": "https://hr.wikipedia.org/wiki/Norbert%20Elias",
+        "title": "Norbert Elias",
+        "paragraph_structure": "original",
+        "window_seed": 5449170786965271763,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "O procesu civilizacije\n\nElias se u ovom djelu posvetio istraživanju europskog društva između 13. i 19. stoljeća, usredotočivši se na svakodnevna ljudska ponašanja i manire. Povezao ih je s rastućim mehanizmima samokontrole, srama i mučnine od kasnoga srednjega vijeka i rane renesanse. Naime, uočio je da su se kroz povijesna razdoblja mijenjala pravila ponašanja. Najobičniji primjer za to bi bili maniri za stolom koji su se promijenili od srednjovjekovnog čovjeka u 13. stoljeću do suvremenoga čovjeka danas. Također, povezao je socioekonomski status s načinom udvaranja: viteško je udvaranje nastupilo ako bi žena bila višeg društvenog ranga od muškarca koji joj se udvara.\n\nDakle, Elias je zaključio da su se ljudi polako i postupno kroz stoljeća učili civiliziranom ponašanju.\n\nU svom je djelu Elias obradio pojam civilizacije kao specifične promjene u ljudskom ponašanju sukladno s društvenim ustrojem, oblikom integracija i međuljudskim odnosima. Razlikuje pojmove kulture i civilizacije te smatra da kultiviranost predstavlja najviši oblik civiliziranosti: oblik ponašanja, psotignuta kvaliteta izražavanja, maniri, odijevanje. Kontekstualizira distinkciju između kulture i civilizacije, namijenivši kulturu njemačkom građanstvu koji su pripadnici zemlje koja se kasno ujedinila, a civilizaciju Engleskoj i Francuskoj kao stare nacije.\n\nElias je također istaknuo sljedeće: o napretku civilizacije ovise i potrebe čovjeka za samokontrolom. Suvremeni pojedinac ima sve više razloga za sram.\n\nIzvori\n\nNjemački sociolozi\nBritanski znanstvenici\nSociolozi",
+        "seed": 20261003
+      },
+      "rendered_tokens": 1000,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The model correctly reordered the paragraphs to match the original reference text and followed all instructions, including removing numbering and providing the full text."
+      }
+    },
+    "record_sha256": "7b8f56bf78a84e49673888acf6f2f64ad201fdb61ae2aaa2c0c0be3f6475d394",
+    "source_document": {
+      "id": "697382",
+      "url": "https://hr.wikipedia.org/wiki/Norbert%20Elias",
+      "title": "Norbert Elias",
+      "text": "Norbert Elias (1897. – 1990.) je bio njemački sociolog židovskog podrijetla koji je glavninu svog života proveo u Engleskoj. Studirao je medicinu i psihologiju. No, doktorirao je filozofiju. Nekoliko je godina radio na Frankfurtskom institutu. Međutim, morao ga je napustiti 1933. godine zbog širenja nacizma. Družio se s Pierreom Bourdieuom.\n\nUmro je u Amsterdamu, i dalje marljivo radeći.\n\nDjela \nO procesu civilizacije je njegova kapitalna knjiga. Napisao ju je u izbjeglištvu u Parizu. Prvi put je objavljena 1939. godine u Švicarskoj.\n\nOstala djela:\n\n Dvorsko društvo. Analiza sociologije kraljevstva dvorske aristokracije, 1969. godine\n Što je sociologija?, 1970. godine\n O vremenu, 1984. godine\n Društvo individua, 1987. godine\n\nNapisao ih je još nekolicinu, od kojih su neka objavljena tek nakon njegove smrti. Prvenstveno su izdane na njemačkom jeziku. Tek krajem šezdesetih godina 20. stoljeća njegov rad dobiva pozornost šire javnosti popraćenu brojnim nagradama i priznanjima.\n\nO procesu civilizacije \n\nElias se u ovom djelu posvetio istraživanju europskog društva između 13. i 19. stoljeća, usredotočivši se na svakodnevna ljudska ponašanja i manire. Povezao ih je s rastućim mehanizmima samokontrole, srama i mučnine od kasnoga srednjega vijeka i rane renesanse. Naime, uočio je da su se kroz povijesna razdoblja mijenjala pravila ponašanja. Najobičniji primjer za to bi bili maniri za stolom koji su se promijenili od srednjovjekovnog čovjeka u 13. stoljeću do suvremenoga čovjeka danas. Također, povezao je socioekonomski status s načinom udvaranja: viteško je udvaranje nastupilo ako bi žena bila višeg društvenog ranga od muškarca koji joj se udvara.\n\nDakle, Elias je zaključio da su se ljudi polako i postupno kroz stoljeća učili civiliziranom ponašanju.\n\nU svom je djelu Elias obradio pojam civilizacije kao specifične promjene u ljudskom ponašanju sukladno s društvenim ustrojem, oblikom integracija i međuljudskim odnosima. Razlikuje pojmove kulture i civilizacije te smatra da kultiviranost predstavlja najviši oblik civiliziranosti: oblik ponašanja, psotignuta kvaliteta izražavanja, maniri, odijevanje. Kontekstualizira distinkciju između kulture i civilizacije, namijenivši kulturu njemačkom građanstvu koji su pripadnici zemlje koja se kasno ujedinila, a civilizaciju Engleskoj i Francuskoj kao stare nacije.\n\nElias je također istaknuo sljedeće: o napretku civilizacije ovise i potrebe čovjeka za samokontrolom. Suvremeni pojedinac ima sve više razloga za sram.\n\nIzvori \n\nNjemački sociolozi\nBritanski znanstvenici\nSociolozi"
+    },
+    "source_text_sha256": "9cb41f14d2394de0966c62f4b5842f6e231d8830a680bfb20b45cea53d20e6b0",
+    "window": "O procesu civilizacije\n\nElias se u ovom djelu posvetio istraživanju europskog društva između 13. i 19. stoljeća, usredotočivši se na svakodnevna ljudska ponašanja i manire. Povezao ih je s rastućim mehanizmima samokontrole, srama i mučnine od kasnoga srednjega vijeka i rane renesanse. Naime, uočio je da su se kroz povijesna razdoblja mijenjala pravila ponašanja. Najobičniji primjer za to bi bili maniri za stolom koji su se promijenili od srednjovjekovnog čovjeka u 13. stoljeću do suvremenoga čovjeka danas. Također, povezao je socioekonomski status s načinom udvaranja: viteško je udvaranje nastupilo ako bi žena bila višeg društvenog ranga od muškarca koji joj se udvara.\n\nDakle, Elias je zaključio da su se ljudi polako i postupno kroz stoljeća učili civiliziranom ponašanju.\n\nU svom je djelu Elias obradio pojam civilizacije kao specifične promjene u ljudskom ponašanju sukladno s društvenim ustrojem, oblikom integracija i međuljudskim odnosima. Razlikuje pojmove kulture i civilizacije te smatra da kultiviranost predstavlja najviši oblik civiliziranosti: oblik ponašanja, psotignuta kvaliteta izražavanja, maniri, odijevanje. Kontekstualizira distinkciju između kulture i civilizacije, namijenivši kulturu njemačkom građanstvu koji su pripadnici zemlje koja se kasno ujedinila, a civilizaciju Engleskoj i Francuskoj kao stare nacije.\n\nElias je također istaknuo sljedeće: o napretku civilizacije ovise i potrebe čovjeka za samokontrolom. Suvremeni pojedinac ima sve više razloga za sram.\n\nIzvori\n\nNjemački sociolozi\nBritanski znanstvenici\nSociolozi",
+    "window_sha256": "f4d6cd92be8dd9b71ce40b1f0008b866be392155a590409ff27ec75e43fd28c6",
+    "replay": {
+      "case": 7,
+      "id": "fffc9abfd7f7493dc785369703480f92efd0b1de972e38292082c4e04ef4f609",
+      "task": "paragraph-reordering",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 2550,
+      "window_chars": 1558,
+      "window_blocks": 7,
+      "quality_status": "accepted",
+      "target_equals_window": true,
+      "permutation": [
+        7,
+        4,
+        6,
+        5,
+        2,
+        3,
+        1
+      ],
+      "all_blocks_preserved": true,
+      "nonidentity": true
+    }
+  },
+  {
+    "case": 8,
+    "ordinal": 0,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_prefix_continuation",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-prefix-continuation",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 66422,
+      "rendered_tokens": 41459017,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl",
+      "output_sha256": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "prefix-continuation",
+      "hf_revision": "1f5ae4482c083c0d7fb23febfdd33253d5bd2f8d",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/prefix-continuation/publication.json"
+    },
+    "record": {
+      "id": "0000e74edea80f3d325049ea75ca1b5c750bdbd705a24a2134b12de10c80173a",
+      "language": "hr",
+      "task": "prefix-continuation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Nastavi tekst; navedi samo nastavak koji nedostaje.\n\nBio je član vigovske stranke, a u Donji dom Parlamenta stupio je 1765. godine. Smatra se začetnikom modernog konzervativizma, kao reakcije na zbivanja u revoluciji u Francuskoj. Konzervativnu kritiku iznosi u svojoj knjizi Razmišljanja"
+        },
+        {
+          "role": "assistant",
+          "content": "o revoluciji u Francuskoj (1790), izdanom manje od osamnaest mjeseci nakon napada na Bastilleu. Burke je podržavao Američku revoluciju kao obranu tradicionalnih prava i slobode, a revoluciju u Francuskoj je smatrao rušiteljem tradicije u ime imaginarnih ideala slobode, jednakosti i bratstva.\n\nDjela\n\nA Vindication of Natural Society (1756)\nA Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful (1757)\nThoughts on the Cause of the Present Discontents (1770)\nReflections on the Revolution in France (1790)\nAn Appeal from the New to the Old Whigs (1791)\n\nIzvori\n\nVanjske poveznice\n\nBritanski filozofi\nEuropski filozofi 16.-19. stoljeća"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 56778,
+        "id": "197422",
+        "url": "https://hr.wikipedia.org/wiki/Edmund%20Burke",
+        "title": "Edmund Burke",
+        "paragraph_structure": "original",
+        "window_seed": 5276620225713448555,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Bio je član vigovske stranke, a u Donji dom Parlamenta stupio je 1765. godine. Smatra se začetnikom modernog konzervativizma, kao reakcije na zbivanja u revoluciji u Francuskoj. Konzervativnu kritiku iznosi u svojoj knjizi Razmišljanja o revoluciji u Francuskoj (1790), izdanom manje od osamnaest mjeseci nakon napada na Bastilleu. Burke je podržavao Američku revoluciju kao obranu tradicionalnih prava i slobode, a revoluciju u Francuskoj je smatrao rušiteljem tradicije u ime imaginarnih ideala slobode, jednakosti i bratstva.\n\nDjela\n\nA Vindication of Natural Society (1756)\nA Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful (1757)\nThoughts on the Cause of the Present Discontents (1770)\nReflections on the Revolution in France (1790)\nAn Appeal from the New to the Old Whigs (1791)\n\nIzvori\n\nVanjske poveznice\n\nBritanski filozofi\nEuropski filozofi 16.-19. stoljeća",
+        "seed": 20261003
+      },
+      "rendered_tokens": 303,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly followed the instruction to provide only the missing continuation. The text is a faithful and grammatically correct continuation of the Wikipedia entry for Edmund Burke in Croatian."
+      }
+    },
+    "record_sha256": "c31632a2ed0571896bae3dd8dd9673674f241f13afc0dad221e734833e91d88b",
+    "source_document": {
+      "id": "197422",
+      "url": "https://hr.wikipedia.org/wiki/Edmund%20Burke",
+      "title": "Edmund Burke",
+      "text": "Edmund Burke (Dublin, 12. siječnja 1729. – Beaconsfield, 9. srpnja 1797.), irski britanski državnik, teoretičar politike i filozof. Bio je liberalni zastupnik u britanskom parlamentu i osnivač modernog konzervativizma.\n\nBio je član vigovske stranke, a u Donji dom Parlamenta stupio je 1765. godine. Smatra se začetnikom modernog konzervativizma, kao reakcije na zbivanja u revoluciji u Francuskoj. Konzervativnu kritiku iznosi u svojoj knjizi Razmišljanja o revoluciji u Francuskoj (1790), izdanom manje od osamnaest mjeseci nakon napada na Bastilleu. Burke je podržavao Američku revoluciju kao obranu tradicionalnih prava i slobode, a revoluciju u Francuskoj je smatrao rušiteljem tradicije u ime imaginarnih ideala slobode, jednakosti i bratstva.\n\nDjela \n\nA Vindication of Natural Society (1756)\nA Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful (1757)\nThoughts on the Cause of the Present Discontents (1770)\nReflections on the Revolution in France (1790)\nAn Appeal from the New to the Old Whigs (1791)\n\nIzvori\n\nVanjske poveznice \n\nBritanski filozofi\nEuropski filozofi 16.-19. stoljeća"
+    },
+    "source_text_sha256": "5b14cc6021f79014db4eef7c7f12a6210674813731b34f22a1b6f3cf68d6288d",
+    "window": "Bio je član vigovske stranke, a u Donji dom Parlamenta stupio je 1765. godine. Smatra se začetnikom modernog konzervativizma, kao reakcije na zbivanja u revoluciji u Francuskoj. Konzervativnu kritiku iznosi u svojoj knjizi Razmišljanja o revoluciji u Francuskoj (1790), izdanom manje od osamnaest mjeseci nakon napada na Bastilleu. Burke je podržavao Američku revoluciju kao obranu tradicionalnih prava i slobode, a revoluciju u Francuskoj je smatrao rušiteljem tradicije u ime imaginarnih ideala slobode, jednakosti i bratstva.\n\nDjela\n\nA Vindication of Natural Society (1756)\nA Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful (1757)\nThoughts on the Cause of the Present Discontents (1770)\nReflections on the Revolution in France (1790)\nAn Appeal from the New to the Old Whigs (1791)\n\nIzvori\n\nVanjske poveznice\n\nBritanski filozofi\nEuropski filozofi 16.-19. stoljeća",
+    "window_sha256": "d5260fad01ec828952b6d2ddca0ad239e780bad71b9b2956f3e776876dce6a0e",
+    "replay": {
+      "case": 8,
+      "id": "0000e74edea80f3d325049ea75ca1b5c750bdbd705a24a2134b12de10c80173a",
+      "task": "prefix-continuation",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 1119,
+      "window_chars": 897,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "prefix_matches": true,
+      "exact_stripped_suffix": true
+    }
+  },
+  {
+    "case": 9,
+    "ordinal": 22140,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_prefix_continuation",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-prefix-continuation",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 66422,
+      "rendered_tokens": 41459017,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl",
+      "output_sha256": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "prefix-continuation",
+      "hf_revision": "1f5ae4482c083c0d7fb23febfdd33253d5bd2f8d",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/prefix-continuation/publication.json"
+    },
+    "record": {
+      "id": "55db45e0af3a65b435bc7b76c9b0b4d6351d53b487f8ffaac92ee175a11ebc69",
+      "language": "hr",
+      "task": "prefix-continuation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Nastavi tekst; navedi samo nastavak koji nedostaje.\n\nProstor Kardise naseljen je već od 9. tisućljeća pr. Kr.\nKardisa je po nekim izvorima prvi oslobođeni grad u Europi za vrijeme nacističke okupacije. Grad su oslobodile jedinice ljevičarskog pokreta otpora koji je imao"
+        },
+        {
+          "role": "assistant",
+          "content": "snažno uporište u Tesaliji - Grčke narodnooslobodilačke armije.\n\nPromet\n\nKardisa je povezana s ostalim grčkim gradovima Grčkom međugradskom cestom GR-30 za Karpenisi, Palamas i Larisu. Kardisa je povezana i željezničkom linijom Trikala - Kardisa - Domokos.\n\nRast stanovništva Kardise posljednjih decenija\n\nVanjske poveznice\n\nWifi Zajednica iz Kardise  \nMapquest - Kardisa\n\nGradovi u Grčkoj"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 64059,
+        "id": "218394",
+        "url": "https://hr.wikipedia.org/wiki/Kardisa",
+        "title": "Kardisa",
+        "paragraph_structure": "original",
+        "window_seed": 9347364653385153993,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Prostor Kardise naseljen je već od 9. tisućljeća pr. Kr.\nKardisa je po nekim izvorima prvi oslobođeni grad u Europi za vrijeme nacističke okupacije. Grad su oslobodile jedinice ljevičarskog pokreta otpora koji je imao snažno uporište u Tesaliji - Grčke narodnooslobodilačke armije.\n\nPromet\n\nKardisa je povezana s ostalim grčkim gradovima Grčkom međugradskom cestom GR-30 za Karpenisi, Palamas i Larisu. Kardisa je povezana i željezničkom linijom Trikala - Kardisa - Domokos.\n\nRast stanovništva Kardise posljednjih decenija\n\nVanjske poveznice\n\nWifi Zajednica iz Kardise  \nMapquest - Kardisa\n\nGradovi u Grčkoj",
+        "seed": 20261003
+      },
+      "rendered_tokens": 226,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant followed the instructions perfectly. It provided only the missing continuation of the text, maintaining the correct language (Croatian) and accurately reflecting the source material from Wikipedia without adding unnecessary explanations."
+      }
+    },
+    "record_sha256": "a8db3948d7156655fae68ccdbc57f551c996b29875967cb733308ce97296f829",
+    "source_document": {
+      "id": "218394",
+      "url": "https://hr.wikipedia.org/wiki/Kardisa",
+      "title": "Kardisa",
+      "text": "Kardisa (grčki: Καρδίτσα) je grad u Zapadnoj Tesaliji u središnjoj Grčkoj. Kardisa je glavni grad Prefekture Kardisa. \n\nKardisa se nalazi jugozapadno od Palamasa i Larise, zapadno od Farsale i Volosa, sjevernozapadno od Atene, Lamije, Domokosa i Sofadesa, sjeverno od Karpenisija, sjeveroistočno od Arte, Trikale, Grevene i Janjine. \n\nU Kardisi djeluje Veterinarski fakultet kao ogranak Tesalskog sveučilišta.\n\nPovijest\n\nProstor Kardise naseljen je već od 9. tisućljeća pr. Kr.\nKardisa je po nekim izvorima prvi oslobođeni grad u Europi za vrijeme nacističke okupacije. Grad su oslobodile jedinice ljevičarskog pokreta otpora koji je imao snažno uporište u Tesaliji - Grčke narodnooslobodilačke armije.\n\nPromet\n\nKardisa je povezana s ostalim grčkim gradovima Grčkom međugradskom cestom GR-30 za Karpenisi, Palamas i Larisu. Kardisa je povezana i željezničkom linijom Trikala - Kardisa - Domokos.\n\nRast stanovništva Kardise posljednjih decenija\n\nVanjske poveznice\n\nWifi Zajednica iz Kardise  \nMapquest - Kardisa\n\nGradovi u Grčkoj"
+    },
+    "source_text_sha256": "eb9118c047a838a278549c384f7a3bc5f37a4e8bf5dc27e0dcf712db0baaf743",
+    "window": "Prostor Kardise naseljen je već od 9. tisućljeća pr. Kr.\nKardisa je po nekim izvorima prvi oslobođeni grad u Europi za vrijeme nacističke okupacije. Grad su oslobodile jedinice ljevičarskog pokreta otpora koji je imao snažno uporište u Tesaliji - Grčke narodnooslobodilačke armije.\n\nPromet\n\nKardisa je povezana s ostalim grčkim gradovima Grčkom međugradskom cestom GR-30 za Karpenisi, Palamas i Larisu. Kardisa je povezana i željezničkom linijom Trikala - Kardisa - Domokos.\n\nRast stanovništva Kardise posljednjih decenija\n\nVanjske poveznice\n\nWifi Zajednica iz Kardise  \nMapquest - Kardisa\n\nGradovi u Grčkoj",
+    "window_sha256": "a4764ebbf2be3f63f82d64dcd07a9b4bd3529f528cb6d97ab91938a119451524",
+    "replay": {
+      "case": 9,
+      "id": "55db45e0af3a65b435bc7b76c9b0b4d6351d53b487f8ffaac92ee175a11ebc69",
+      "task": "prefix-continuation",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 1028,
+      "window_chars": 607,
+      "window_blocks": 7,
+      "quality_status": "accepted",
+      "prefix_matches": true,
+      "exact_stripped_suffix": true
+    }
+  },
+  {
+    "case": 10,
+    "ordinal": 44280,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_prefix_continuation",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-prefix-continuation",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 66422,
+      "rendered_tokens": 41459017,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl",
+      "output_sha256": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "prefix-continuation",
+      "hf_revision": "1f5ae4482c083c0d7fb23febfdd33253d5bd2f8d",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/prefix-continuation/publication.json"
+    },
+    "record": {
+      "id": "aa60938ef5989a103533d7ebbd976fdd15c5502822254469261091a5edb99002",
+      "language": "hr",
+      "task": "prefix-continuation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Nastavi tekst; navedi samo nastavak koji nedostaje.\n\nNakon što je vojska Četvrtog križarskog rata osvojila Konstantinopol 1204. godine, bugarski car Kalojan, pokušao je uspostaviti prijateljske odnose s križarima, ali je novonastalo Latinsko Carstvo odbacilo svaku ponudu saveza s Bugarima. Zbog hladnog prijema, Kalojan se udružio s Nikejcima, što je smanjilo moć križara na tom području. Iako se njegov nećak Boril udružio s Latinskim"
+        },
+        {
+          "role": "assistant",
+          "content": "Carstvom, Borilovi nasljednici stali su na stranu Nikejaca, unatoč nekoliko njihovih stalnih napada. Nakon raspada Latinskog Carstva, Bizant je, iskoristivši bugarski građanski rat, zauzeo dijelove Trakije, ali je bugarski car Teodor Svetoslav ponovno preuzeo te zemlje. Bizantsko-bugarski odnosi nastavili su fluktuirati sve dok Osmanlije nisu zauzeli bugarsku prijestolnicu 1393. i bizantsku prijestolnicu 1453. godine.\n\nIzvori\n\nBizantski ratovi\nPovijest Bugarske\nRatovi 7. stoljeća\nRatovi 8. stoljeća\nRatovi 9. stoljeća\nRatovi 10. stoljeća\nRatovi 11. stoljeća\nRatovi 12. stoljeća\nRatovi 13. stoljeća\nRatovi 14. stoljeća"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 199001,
+        "id": "739395",
+        "url": "https://hr.wikipedia.org/wiki/Bizantsko-bugarski%20ratovi",
+        "title": "Bizantsko-bugarski ratovi",
+        "paragraph_structure": "original",
+        "window_seed": 3918572296068776308,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Nakon što je vojska Četvrtog križarskog rata osvojila Konstantinopol 1204. godine, bugarski car Kalojan, pokušao je uspostaviti prijateljske odnose s križarima, ali je novonastalo Latinsko Carstvo odbacilo svaku ponudu saveza s Bugarima. Zbog hladnog prijema, Kalojan se udružio s Nikejcima, što je smanjilo moć križara na tom području. Iako se njegov nećak Boril udružio s Latinskim Carstvom, Borilovi nasljednici stali su na stranu Nikejaca, unatoč nekoliko njihovih stalnih napada. Nakon raspada Latinskog Carstva, Bizant je, iskoristivši bugarski građanski rat, zauzeo dijelove Trakije, ali je bugarski car Teodor Svetoslav ponovno preuzeo te zemlje. Bizantsko-bugarski odnosi nastavili su fluktuirati sve dok Osmanlije nisu zauzeli bugarsku prijestolnicu 1393. i bizantsku prijestolnicu 1453. godine.\n\nIzvori\n\nBizantski ratovi\nPovijest Bugarske\nRatovi 7. stoljeća\nRatovi 8. stoljeća\nRatovi 9. stoljeća\nRatovi 10. stoljeća\nRatovi 11. stoljeća\nRatovi 12. stoljeća\nRatovi 13. stoljeća\nRatovi 14. stoljeća",
+        "seed": 20261003
+      },
+      "rendered_tokens": 372,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly completed the text following the prefix. It followed the negative constraint 'navedi samo nastavak koji nedostaje' (provide only the missing continuation) by starting exactly where the prompt left off, and the language is natural and historically accurate according to the reference."
+      }
+    },
+    "record_sha256": "69a4efb43091cf3e50d13bdf14accb74a6e8bad2ddb95917252e37063e5b565e",
+    "source_document": {
+      "id": "739395",
+      "url": "https://hr.wikipedia.org/wiki/Bizantsko-bugarski%20ratovi",
+      "title": "Bizantsko-bugarski ratovi",
+      "text": "Bizantsko-bugarski ratovi bili su niz sukoba vođenih između Bizanta i Bugara koji su najprije započeli sa osnivačima Bugarske (Protobugarima) nakon njihovog naseljavanja na Balkanskom poluotoku 670-ih, a intenzivirali su se širenjem Bugarskog Carstva na jugozapad nakon 681. godine. \n\nBizant i Bugari nastavili su se sukobljavati tijekom sljedećeg stoljeća s promjenljivim uspjehom, sve dok Bugari, predvođeni Krumom, nisu nanijeli niz poraza Bizantu. Nakon što je Krum umro 814. godine, njegov sin Omurtag sklopio je tridesetogodišnji mirovni sporazum. Simeon I. imao je više uspješnih kampanja protiv Bizanta tijekom svoje vladavine od 893. do 927. Njegov sin Petar I. pregovarao je o još jednom dugotrajnom mirovnom sporazumu. Nakon njegove vladavine slijedi razdoblje opadanja bugarske države.\n\nGodine 971. Ivan I. Cimisk, bizantski car, potčinio je veliki dio Bugarskog Carstva koje je slabilo porazivši Borisa II. i zauzevši Preslav, bugarsku prijestolnicu. Samuilo je uspio stabilizirati bugarsku državu sa središtem oko grada Prespe. Pred kraj njegove vladavine, Bizant je ponovno preuzeo prevagu, a pod Bazilijem II. pobijedili su u bitci kod Kleidiona i potpuno osvojili Bugarsku 1018. Pobune protiv bizantske vlasti bile su od 1040. do 1041., te 1070-ih i 1080-ih, ali nisu uspjele. Godine 1185., međutim, Teodor Petar i Ivan Asen I. podigli su ustanak, a sve slabije Bizantsko Carstvo, suočeno s vlastitim unutarnjim dinastičkim problemima, nije moglo ugušiti ustanak.\n\nNakon što je vojska Četvrtog križarskog rata osvojila Konstantinopol 1204. godine, bugarski car Kalojan, pokušao je uspostaviti prijateljske odnose s križarima, ali je novonastalo Latinsko Carstvo odbacilo svaku ponudu saveza s Bugarima. Zbog hladnog prijema, Kalojan se udružio s Nikejcima, što je smanjilo moć križara na tom području. Iako se njegov nećak Boril udružio s Latinskim Carstvom, Borilovi nasljednici stali su na stranu Nikejaca, unatoč nekoliko njihovih stalnih napada. Nakon raspada Latinskog Carstva, Bizant je, iskoristivši bugarski građanski rat, zauzeo dijelove Trakije, ali je bugarski car Teodor Svetoslav ponovno preuzeo te zemlje. Bizantsko-bugarski odnosi nastavili su fluktuirati sve dok Osmanlije nisu zauzeli bugarsku prijestolnicu 1393. i bizantsku prijestolnicu 1453. godine.\n\nIzvori \n\nBizantski ratovi\nPovijest Bugarske\nRatovi 7. stoljeća\nRatovi 8. stoljeća\nRatovi 9. stoljeća\nRatovi 10. stoljeća\nRatovi 11. stoljeća\nRatovi 12. stoljeća\nRatovi 13. stoljeća\nRatovi 14. stoljeća"
+    },
+    "source_text_sha256": "271f6dfc33092ca0693e2ee7c410dc45c40b209d6a01b1c15f4ee1cd05203231",
+    "window": "Nakon što je vojska Četvrtog križarskog rata osvojila Konstantinopol 1204. godine, bugarski car Kalojan, pokušao je uspostaviti prijateljske odnose s križarima, ali je novonastalo Latinsko Carstvo odbacilo svaku ponudu saveza s Bugarima. Zbog hladnog prijema, Kalojan se udružio s Nikejcima, što je smanjilo moć križara na tom području. Iako se njegov nećak Boril udružio s Latinskim Carstvom, Borilovi nasljednici stali su na stranu Nikejaca, unatoč nekoliko njihovih stalnih napada. Nakon raspada Latinskog Carstva, Bizant je, iskoristivši bugarski građanski rat, zauzeo dijelove Trakije, ali je bugarski car Teodor Svetoslav ponovno preuzeo te zemlje. Bizantsko-bugarski odnosi nastavili su fluktuirati sve dok Osmanlije nisu zauzeli bugarsku prijestolnicu 1393. i bizantsku prijestolnicu 1453. godine.\n\nIzvori\n\nBizantski ratovi\nPovijest Bugarske\nRatovi 7. stoljeća\nRatovi 8. stoljeća\nRatovi 9. stoljeća\nRatovi 10. stoljeća\nRatovi 11. stoljeća\nRatovi 12. stoljeća\nRatovi 13. stoljeća\nRatovi 14. stoljeća",
+    "window_sha256": "c393cb908aeaa5b0a66d6ea8c3d345268995114a49ab474d187f6ae76b4acab1",
+    "replay": {
+      "case": 10,
+      "id": "aa60938ef5989a103533d7ebbd976fdd15c5502822254469261091a5edb99002",
+      "task": "prefix-continuation",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 2489,
+      "window_chars": 1006,
+      "window_blocks": 3,
+      "quality_status": "accepted",
+      "prefix_matches": true,
+      "exact_stripped_suffix": true
+    }
+  },
+  {
+    "case": 11,
+    "ordinal": 66421,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_prefix_continuation",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-prefix-continuation",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 66422,
+      "rendered_tokens": 41459017,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-prefix-continuation/data/train.jsonl",
+      "output_sha256": "16f1faa088f8c5721aa2c52f6e6f28634cca218ab731d24ab1c1494fdc40c917",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "prefix-continuation",
+      "hf_revision": "1f5ae4482c083c0d7fb23febfdd33253d5bd2f8d",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/prefix-continuation/publication.json"
+    },
+    "record": {
+      "id": "fffec49e8175d5c812312b856b6ea73ad28a83893bf1d053e83bf88683382770",
+      "language": "hr",
+      "task": "prefix-continuation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Nastavi tekst; navedi samo nastavak koji nedostaje.\n\nMarty ima djevojku imena Jennifer Parker i najboljeg prijatelja doktora Emmetta Browna, znanog samo kao \"Doc.\" Postoji intuicija da se Marty srami svoje obitelji te kako preferira provoditi vrijeme s Jennifer, Docom ili prijateljima iz svog sastava, The Pinheads. Ipak, čini se kako se Martyjeva veza s obitelji promijenila nakon što se vratio iz 1955. godine, zbog čega je Geroge postao uspješan pisac a Loraine profesorica na sveučilištu. Marty je također upoznao svog pra-pradjeda Seamusa i pra-prabaku Maggie, kada se vratio u 1885. godinu, kao i njihovog sina William, Martyjeva pradjeda i Georgeovog djeda. Marty je imao i pra-praujaka, koji je poginuo u obračunu nekad prije 1885. godine.\n\nKako su se Marty i Doc upoznali nije nikada objašnjeno u filmu, ipak scenarist filma"
+        },
+        {
+          "role": "assistant",
+          "content": "Bob Gale ispričao je priču 2011. godine: \"Martyju su godinama govorili kako je Doc opasan, travaš i luđak. Pa tako, 14-godišnji \"pravi neustrašivi američki tinejdžer\" Marty, odlučio je sam otkriti zašto je taj tip tako opasan. Marty se ušuljao u Docov laboratorij te ostao fasciniran Docovim izumima. Kada ga je Doc uhvatio, nije bio ljut već mu je bilo drago da netko misli kako su njegovi izumi zanimljivi. Oba su bili crne ovce svoga društva. Doc je Martyju ponudio posao njegova pomoćnika, kako oko njega, laboratorija ili psa\".\n\nDo 2015. godine, Marty je oženio Jennifer, s kojom je dobio sina Martina \"Martyja\" Jr. i kći Marlene.\n\nPseudonimi \nMarty je koristio nekoliko pseudonima kroz priču Povratka u budućnost'', najčešće zbog upoznavanja svoje obitelji. Lorraine je 1955. godine mislila da se Marty zove Calvin Klein, jer je tada nosio donje gaće te marke. Marty se, kako bi natjerao Georga da pozove Lorraine na ples, koristio pseudonimom \"Darth Vader, izvanzemaljcem s planeta Vulcan\". Koristio se i pseudonimom \"Clint Eastwood\" kada ga je za ime pitala Maggie McFly i kasnije Buford Tannen. U videoigri baziranoj na filmu, koristi se trima pseudonima; Sonny Crockett, Harry Callahan, i Michael Corleone.\n\nIzvori\n\nVanjske poveznice \n Marty McFly  na IMDb-u\n\nSestrinski projekti\n\nFilmski likovi\nPovratak u budućnost"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 183067,
+        "id": "677141",
+        "url": "https://hr.wikipedia.org/wiki/Marty%20McFly",
+        "title": "Marty McFly",
+        "paragraph_structure": "original",
+        "window_seed": 11698403020183888236,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Marty ima djevojku imena Jennifer Parker i najboljeg prijatelja doktora Emmetta Browna, znanog samo kao \"Doc.\" Postoji intuicija da se Marty srami svoje obitelji te kako preferira provoditi vrijeme s Jennifer, Docom ili prijateljima iz svog sastava, The Pinheads. Ipak, čini se kako se Martyjeva veza s obitelji promijenila nakon što se vratio iz 1955. godine, zbog čega je Geroge postao uspješan pisac a Loraine profesorica na sveučilištu. Marty je također upoznao svog pra-pradjeda Seamusa i pra-prabaku Maggie, kada se vratio u 1885. godinu, kao i njihovog sina William, Martyjeva pradjeda i Georgeovog djeda. Marty je imao i pra-praujaka, koji je poginuo u obračunu nekad prije 1885. godine.\n\nKako su se Marty i Doc upoznali nije nikada objašnjeno u filmu, ipak scenarist filma Bob Gale ispričao je priču 2011. godine: \"Martyju su godinama govorili kako je Doc opasan, travaš i luđak. Pa tako, 14-godišnji \"pravi neustrašivi američki tinejdžer\" Marty, odlučio je sam otkriti zašto je taj tip tako opasan. Marty se ušuljao u Docov laboratorij te ostao fasciniran Docovim izumima. Kada ga je Doc uhvatio, nije bio ljut već mu je bilo drago da netko misli kako su njegovi izumi zanimljivi. Oba su bili crne ovce svoga društva. Doc je Martyju ponudio posao njegova pomoćnika, kako oko njega, laboratorija ili psa\".\n\nDo 2015. godine, Marty je oženio Jennifer, s kojom je dobio sina Martina \"Martyja\" Jr. i kći Marlene.\n\nPseudonimi \nMarty je koristio nekoliko pseudonima kroz priču Povratka u budućnost'', najčešće zbog upoznavanja svoje obitelji. Lorraine je 1955. godine mislila da se Marty zove Calvin Klein, jer je tada nosio donje gaće te marke. Marty se, kako bi natjerao Georga da pozove Lorraine na ples, koristio pseudonimom \"Darth Vader, izvanzemaljcem s planeta Vulcan\". Koristio se i pseudonimom \"Clint Eastwood\" kada ga je za ime pitala Maggie McFly i kasnije Buford Tannen. U videoigri baziranoj na filmu, koristi se trima pseudonima; Sonny Crockett, Harry Callahan, i Michael Corleone.\n\nIzvori\n\nVanjske poveznice \n Marty McFly  na IMDb-u\n\nSestrinski projekti\n\nFilmski likovi\nPovratak u budućnost",
+        "seed": 20261003
+      },
+      "rendered_tokens": 676,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly followed the prefix-continuation task. It provided the exact continuation from the Wikipedia source in Croatian, maintaining the natural flow, grammar, and factual accuracy of the original text."
+      }
+    },
+    "record_sha256": "f5e14d8ba062e2339afe64482d61c3118daa554059ed1a0ba0284c142180e8df",
+    "source_document": {
+      "id": "677141",
+      "url": "https://hr.wikipedia.org/wiki/Marty%20McFly",
+      "title": "Marty McFly",
+      "text": "{{Infookvir izmišljeni lik\n| ime            = Marty McFly\n| boja-pozadine  =  \n| boja-teksta    =\n| serija         = Povratak u budućnost\n| slika          = Micheal J Fox kao Marty McFly.jpeg\n| slika_širina   =\n| slika_opis     = Michael J. Fox Marty McFly\n| prvo           = Povratak u budućnost\n| zadnje         = Povratak u budućnost 3\n| autor          = \n| portretirao    = Michael J. Fox\n| glas           = David Kaufman (animirana serija)A. J. Locascio (videoigra)Michael J. Fox (videoigra, Lego Dimensions)\n| oznaka1        =\n| podaci1        =\n| oznaka2        = \n| podaci2        =\n| oznaka3        =\n| podaci3        =\n\n| nadimak        = \n| alias          = Calvin KleinClint Eastwood\n| vrsta          = \n| rod            = \n| zanimanje      = student\n| titula         =\n| obitelj        = George McFly (otac)Lorraine Baines McFly (majka)Dave McFly (brat)Linda McFly (sestra)Biff Tannen (očuh u 1985A)\n| suprug(a)      = Jennifer Parker McFly\n| djeca          = Marty McFly Jr. (sin)Marlene McFly (kćer) \n| rodbina        = Seamus McFly (pra-pradjed)Maggie McFly (pra-prabaka)William McFly (pradjed)\n| religija       =\n| nacionalnost   = Amerikanac\n\n| zaglavlje      = Putovanje kroz vrijeme\n| oznaka4        = Originalno iz godine\n| podaci4        = 1985.\n| oznaka5        = Putovao u godine\n| podaci5        = 1885., 1955., 1985A, 2015.\n| oznaka6        =\n| podaci6        =\n}}\nMartin Seamus McFly je izmišljeni lik i protagonist u trilogiji filmova Povratak u budućnost. Utjelovljuje ga glumac Michael J. Fox. McFly se pojavljuje u animiranoj seriji baziranoj na filmu, no glas mu ne daje Fox, već David Kaufman, kao i u videoigri baziranoj na filmu u kojoj mu glas daje A. J. Locascio; ipak Fox je dao glas za lik krajem igre. Godine 2008., McFlya je časopis Empire proglasio 12. najboljim filmskim likom svih vremena.\n\n Biografija \nMarty je rođen u Hill Valleyju, Kalifornija u obitelji McFly, obitelji Irskog podrijetla. O Martyjevom životu prije prvog filma Povratak u budućnost se ne zna puno, osim toga da je spalio tepih u dnevnoj sobi kada je imao samo osam godina (što je Marty sam otkrio svojim roditeljima u prošlosti). Upoznao je prijatelja doktora Emmetta \"Doca\" Browna kada je imao četrnaest godina, nakon što je čuo kako je Brown opasan luđak. Marty, koji je bio \"pravi neustrašivi američki tinejdžer\" htio se sam uvjeriti u Brownovu ludost. Nakon što je ostao fasciniran Docovim laboratorijem i izumima, Doc ga je uhvatio kako se šulja po laboratoriju, no bilo mu je drago što mu se sviđaju njegovi izumi. Od tada su prijatelji.\n\nTijekom 1985. godine, Marty je gitarist u svojoj grupi The Pinheads, voli sastave kao što su Huey Lewis and the News, Tom Petty and the Heartbreakers, i Van Halen. Također je i talentiran skejter, a dobro puca iz pištolja, što je naučio igrajući arkadnu igricu Wild Gunman u lokalnom kafiću 7-Eleven.\n\nMarty je dobar momak, prijateljski nastrojen, opušten, no sklon opasnosti, koji katkad ne razmišlja baš najbolje; ali ipak u opasnim i kritičkim situacijama pokazuje da je brz i inteligentan. Pokazao se i kao dobar ulični borac, udarajući neprijatelje u više navrata. Odan je svojoj obitelji i prijateljima, neovisno o odnosu s njima. Ipak, Martyjeva glavna mana je njegov ponos, zbog čega u više navrata upada u opasne tučnjave i situacije, jer, očito, ne želi ispast kukavica. No tijekom posjete 1885. godine, njegov predak Seamus McFly objasnio mu je kako je njegov brat Martin ubijen nakon što je stranac preispitao njegov ponos, nakon čega je Marty počeo preispitivati zašto ga briga što drugi misle o njemu.\n\nDo 2015. godine, Martyjev život naglo je krenuo nizbrdo nakon što je ozlijedio dlan, zbog čega nije više mogao svirati gitaru. Ozljedu je dobio 1985. godine, nakon što ga je školski neprijtelj Douglas J. Needles izazvao na uličnu trku, u kojoj se sudario sa svojim Rolls-Royceom. Godine 1885., Biff Tannenov pradjed Buford izazove Martyja na obračun, kojeg Marty pobjeđuje iako nije pucao u Buforda. Kada se vrati natrag u 1985. godinu, odbija Needlesovu ponudu, prisjetivši se Seamusove priče i okršaja, što ga je spasilo od katastrofe koja bi uništila njegove buduće glazbene planove. Ovo pokazuje kako je Marty sazrio te kako ga riječ \"kukavica\" više ne ljuti. Kroz godine, Marty je naučio sam donositi odluke, i prestalo ga je biti briga što drugi misle o njemu, što je promijenio njegovu budućnost na bolje.\n\n Obitelj \nMarty McFly najmlađi je od troje djece Georga McFlyja i Lorraine Baines-McFly. Ima brata, Davea McFlyja, i sestru, Lindu McFly. Također ima tri ujaka i jednu ujnu. Jedan od ujaka, Joey je u zatvoru tijekom 1985. godine.\n\nMarty ima djevojku imena Jennifer Parker i najboljeg prijatelja doktora Emmetta Browna, znanog samo kao \"Doc.\" Postoji intuicija da se Marty srami svoje obitelji te kako preferira provoditi vrijeme s Jennifer, Docom ili prijateljima iz svog sastava, The Pinheads. Ipak, čini se kako se Martyjeva veza s obitelji promijenila nakon što se vratio iz 1955. godine, zbog čega je Geroge postao uspješan pisac a Loraine profesorica na sveučilištu. Marty je također upoznao svog pra-pradjeda Seamusa i pra-prabaku Maggie, kada se vratio u 1885. godinu, kao i njihovog sina William, Martyjeva pradjeda i Georgeovog djeda. Marty je imao i pra-praujaka, koji je poginuo u obračunu nekad prije 1885. godine.\n\nKako su se Marty i Doc upoznali nije nikada objašnjeno u filmu, ipak scenarist filma Bob Gale ispričao je priču 2011. godine: \"Martyju su godinama govorili kako je Doc opasan, travaš i luđak. Pa tako, 14-godišnji \"pravi neustrašivi američki tinejdžer\" Marty, odlučio je sam otkriti zašto je taj tip tako opasan. Marty se ušuljao u Docov laboratorij te ostao fasciniran Docovim izumima. Kada ga je Doc uhvatio, nije bio ljut već mu je bilo drago da netko misli kako su njegovi izumi zanimljivi. Oba su bili crne ovce svoga društva. Doc je Martyju ponudio posao njegova pomoćnika, kako oko njega, laboratorija ili psa\".\n\nDo 2015. godine, Marty je oženio Jennifer, s kojom je dobio sina Martina \"Martyja\" Jr. i kći Marlene.\n\n Pseudonimi \nMarty je koristio nekoliko pseudonima kroz priču Povratka u budućnost'', najčešće zbog upoznavanja svoje obitelji. Lorraine je 1955. godine mislila da se Marty zove Calvin Klein, jer je tada nosio donje gaće te marke. Marty se, kako bi natjerao Georga da pozove Lorraine na ples, koristio pseudonimom \"Darth Vader, izvanzemaljcem s planeta Vulcan\". Koristio se i pseudonimom \"Clint Eastwood\" kada ga je za ime pitala Maggie McFly i kasnije Buford Tannen. U videoigri baziranoj na filmu, koristi se trima pseudonima; Sonny Crockett, Harry Callahan, i Michael Corleone.\n\nIzvori\n\nVanjske poveznice \n Marty McFly  na IMDb-u\n\nSestrinski projekti \n\nFilmski likovi\nPovratak u budućnost"
+    },
+    "source_text_sha256": "3734e10e9a2f959424d46c35e4785033f8ccad03be5f3789aa309d42b7e7aee8",
+    "window": "Marty ima djevojku imena Jennifer Parker i najboljeg prijatelja doktora Emmetta Browna, znanog samo kao \"Doc.\" Postoji intuicija da se Marty srami svoje obitelji te kako preferira provoditi vrijeme s Jennifer, Docom ili prijateljima iz svog sastava, The Pinheads. Ipak, čini se kako se Martyjeva veza s obitelji promijenila nakon što se vratio iz 1955. godine, zbog čega je Geroge postao uspješan pisac a Loraine profesorica na sveučilištu. Marty je također upoznao svog pra-pradjeda Seamusa i pra-prabaku Maggie, kada se vratio u 1885. godinu, kao i njihovog sina William, Martyjeva pradjeda i Georgeovog djeda. Marty je imao i pra-praujaka, koji je poginuo u obračunu nekad prije 1885. godine.\n\nKako su se Marty i Doc upoznali nije nikada objašnjeno u filmu, ipak scenarist filma Bob Gale ispričao je priču 2011. godine: \"Martyju su godinama govorili kako je Doc opasan, travaš i luđak. Pa tako, 14-godišnji \"pravi neustrašivi američki tinejdžer\" Marty, odlučio je sam otkriti zašto je taj tip tako opasan. Marty se ušuljao u Docov laboratorij te ostao fasciniran Docovim izumima. Kada ga je Doc uhvatio, nije bio ljut već mu je bilo drago da netko misli kako su njegovi izumi zanimljivi. Oba su bili crne ovce svoga društva. Doc je Martyju ponudio posao njegova pomoćnika, kako oko njega, laboratorija ili psa\".\n\nDo 2015. godine, Marty je oženio Jennifer, s kojom je dobio sina Martina \"Martyja\" Jr. i kći Marlene.\n\nPseudonimi \nMarty je koristio nekoliko pseudonima kroz priču Povratka u budućnost'', najčešće zbog upoznavanja svoje obitelji. Lorraine je 1955. godine mislila da se Marty zove Calvin Klein, jer je tada nosio donje gaće te marke. Marty se, kako bi natjerao Georga da pozove Lorraine na ples, koristio pseudonimom \"Darth Vader, izvanzemaljcem s planeta Vulcan\". Koristio se i pseudonimom \"Clint Eastwood\" kada ga je za ime pitala Maggie McFly i kasnije Buford Tannen. U videoigri baziranoj na filmu, koristi se trima pseudonima; Sonny Crockett, Harry Callahan, i Michael Corleone.\n\nIzvori\n\nVanjske poveznice \n Marty McFly  na IMDb-u\n\nSestrinski projekti\n\nFilmski likovi\nPovratak u budućnost",
+    "window_sha256": "06caf8f8cb8eb6a4409f7c47cf568429f0a61010624e5c640e84378dbdd1922c",
+    "replay": {
+      "case": 11,
+      "id": "fffec49e8175d5c812312b856b6ea73ad28a83893bf1d053e83bf88683382770",
+      "task": "prefix-continuation",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 6732,
+      "window_chars": 2108,
+      "window_blocks": 8,
+      "quality_status": "accepted",
+      "prefix_matches": true,
+      "exact_stripped_suffix": true
+    }
+  },
+  {
+    "case": 12,
+    "ordinal": 0,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_span_filling",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-span-filling",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 38427,
+      "rendered_tokens": 22442990,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl",
+      "output_sha256": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "span-filling",
+      "hf_revision": "fce64263ce8324ca02ebac3d3d0476e2a716edbb",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/span-filling/publication.json"
+    },
+    "record": {
+      "id": "0001df5268150473f440dc806b8e901a0f6c048bb6d74fba1eb3d5fde065156a",
+      "language": "hr",
+      "task": "span-filling",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Popuni <GAP>; navedi samo tekst koji nedostaje.\n\nZa razliku od grobnice, ratnici od terakote se ne spominju nigdje u zapisima suvremenika. Njihovo otkriće bilo je zbog toga velika senzacija čak i za stručnjake. Kroničari kažu da je oko tri desetljeća prije svoje smrti, car Qin Shi Huangdi iskoristio 700 000 prisilnih radnika iz svih dijelova zemlje za njega graditi raskošan podzemni mauzolej. Osim toga, za vladara je bio izgrađen bakreni sarkofag i grobnica napunjena blagom bila je zaštićena <GAP> njegovim konkubinama koje nisu imale djecu i naposljetku je u mauzolej žive zakopao sve koji su znali za zakopano blago. Robovi su preko careva groba navukli brježuljak visok 50 m i zasadili ga čempresima i tankim oblicama. U neposrednoj blizini tog brježuljka, danas voćnjaka, kopači bunara došli su 1974. do ovog čudesnog otkrića.\n\nGradske zidine\n\nGradske zidine Xi'ana izgrađene su između 1374. i 1378. a restaurirani su 1980-ih. To su najveće uglavnom očuvane zidine u Kini. Ukupnom dužinom od 13,6 km opasuju središnji dio grada Xi'ana. Sagrađene su kao obzidani zemljani nasip. U podnožju su široke 18 a na kruni 12 metara.\n\nOstale znamenitosti\n Pagoda velike divlje guske\n Velika džamija u Xi'anu\n Toranj bubnja\n Toranj zvona\n\nIzvori\n\nGlavni gradovi kineskih pokrajina\nGradovi na Svilenom putu"
+        },
+        {
+          "role": "assistant",
+          "content": "od pljačkaša samostrjelima koji su se automatski ispaljivali. Kad je car umro, njegov sin i nasljednik pokopao ga je zajedno s"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 49097,
+        "id": "176344",
+        "url": "https://hr.wikipedia.org/wiki/Xi%27an",
+        "title": "Xi'an",
+        "paragraph_structure": "original",
+        "window_seed": 10448351064663407747,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Za razliku od grobnice, ratnici od terakote se ne spominju nigdje u zapisima suvremenika. Njihovo otkriće bilo je zbog toga velika senzacija čak i za stručnjake. Kroničari kažu da je oko tri desetljeća prije svoje smrti, car Qin Shi Huangdi iskoristio 700 000 prisilnih radnika iz svih dijelova zemlje za njega graditi raskošan podzemni mauzolej. Osim toga, za vladara je bio izgrađen bakreni sarkofag i grobnica napunjena blagom bila je zaštićena od pljačkaša samostrjelima koji su se automatski ispaljivali. Kad je car umro, njegov sin i nasljednik pokopao ga je zajedno s njegovim konkubinama koje nisu imale djecu i naposljetku je u mauzolej žive zakopao sve koji su znali za zakopano blago. Robovi su preko careva groba navukli brježuljak visok 50 m i zasadili ga čempresima i tankim oblicama. U neposrednoj blizini tog brježuljka, danas voćnjaka, kopači bunara došli su 1974. do ovog čudesnog otkrića.\n\nGradske zidine\n\nGradske zidine Xi'ana izgrađene su između 1374. i 1378. a restaurirani su 1980-ih. To su najveće uglavnom očuvane zidine u Kini. Ukupnom dužinom od 13,6 km opasuju središnji dio grada Xi'ana. Sagrađene su kao obzidani zemljani nasip. U podnožju su široke 18 a na kruni 12 metara.\n\nOstale znamenitosti\n Pagoda velike divlje guske\n Velika džamija u Xi'anu\n Toranj bubnja\n Toranj zvona\n\nIzvori\n\nGlavni gradovi kineskih pokrajina\nGradovi na Svilenom putu",
+        "seed": 20261003
+      },
+      "rendered_tokens": 507,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly identified the missing span from the reference text and followed the instruction to provide only the missing text. The grammar and flow are perfect."
+      }
+    },
+    "record_sha256": "3ac1c32accb4a7557673573c4d9799afc5b1308d94831a1e8c823056c55964ba",
+    "source_document": {
+      "id": "176344",
+      "url": "https://hr.wikipedia.org/wiki/Xi%27an",
+      "title": "Xi'an",
+      "text": "Xi'an (kineski: 西安市, pinyin: Xī'ān Shì, u prijevodu zapadni mir), također i Sian; kroz povijest poznat kao Cháng'ān ili Hsi-An (ranije: Sianfu) glavni je grad kineske pokrajine Shaanxi i jedan od potpokrajinskih gradova. Kao jedan od najstarijih gradova u kineskoj povijesti, Xi'an je jedan od četiri stara glavna grada Kine jer je bio glavni grad (pod različitim imenima) u vrijeme nekih od najvažnijih kineskih dinastija tijekom kineske povijesti, uključujući dinastije Zhou, Qin Han, Sui i Tang. Xi'an je bio istočna polazna odnosno završna točka Puta svile, a poznat je i kao mjesto uz koje se nalazi vojska terakota napravljena u vrijeme dinastije Qin. Povijest grada starija je od 3100 godina, a prije dinastije Ming zvao se Chang'an.\n\nOd 1990-ih gospodarstvo Kine doživljava uzlet, pa tako i središnje i sjeverozapadne regije. U tom uzletu, Xi'an ponovo postaje značajan kulturni, industrijski i obrazovni centar ovih regija s težištem na istraživanju i razvoju, nacionalnoj sigurnosti i kineskom svemirskom istraživačkom programu.\n\nPovijest\nXi'an (Šian) ima bogatu i kulturno značajnu povijest. U pokrajini Lantian nađeni su 1963. godine ostatci Lantianskog čovjeka (oko 50 km jugoistočno od Xi'ana), koji je tu živio prije najmanje 500.000 godina. Na periferiji grada 1954. godine je pronađeno oko 6.500 godina staro neolitsko selo Banpo (半坡).\n\nU 11. stoljeću pr. Kr., s ustanovljavanjem Zhou dinastije, Xi'an postaje kulturni i gospodarski centar Kine. U vrijeme te dinastije, glavni grad je bio smješten u Fēngu (沣/灃) i Hào (镐/鎬), oboje smješteni zapadno od suvremenog Xi'ana. Nakon razdoblja zaraćenih carstava, Kina je po prvi put ujedinjena pod dinastijom Qin (221. – 206. pr. Kr.), a glavni grad postaje Xianyang (咸阳), na sjeveroistočnom dijelu današnjeg Xi'ana. Prvi kineski car, Ćin Ši Huangdi, kratko prije smrti naredio je izradu vojnika od terakote i svog mauzoleja istočno od Xi'ana.\n\nOsnivač dinastije Han, građanskim imenom Liu Bang (kao car uzima ime Gaozu), 202. pr. Kr. smješta svoj glavni grad u području Chang'ana. Njegova prva palača Changle Palace (长乐宫/長樂宮, slobodni prijevod neprekinuta sreća) izgrađena je na drugoj strani rijeke, nasuprot ostataka glavnog grada dinastije Qin. Tradicionalno, ta gradnja smatra se osnivanjem Chang'ana, odnosno, Xi'ana. Dvije godine kasnije Liu Bang gradi Weiyang Palace (未央宫) sjeverno od suvremenog Xi'ana, a gradnja prvobitnih gradskih zidina počela je 194. pr. Kr. i trajala je 4 godine. Dovršeni, zidovi su bili dugi 25,7 km. U temeljima bili su široki između 12 i 16 metara, a zatvarali su površinu od 36 km2. 190. godine, usred ustanaka i pobuna neposredno prije razdoblja Tri kraljevstva moćni vojskovođa Dong Zhuo izmješta svoje sjedište iz Luoyanga u Chang'an kako bi izbjegao koaliciji drugih moćnih vojskovođa.\n\nNakon nekoliko sljedećih stoljeća nemira, dinastija Sui 582. godine ponovo ujedinjuje Kinu i u području današnjeg Xi'ana osniva novi glavni grad pod imenom Daxing. Ostaje glavni grad i u vrijeme Tang dinastije (608. – 907.), no ponovo pod imenom Chan'an. Površna mu je bila 88 km2 a imao je oko 1 milijun stanovnika, bio je najveći grad na Svijetu. Ime Xi'an dobiva 1369. od Hongwua, prvog cara dinastije Ming koji je namjeravao isto vladati iz njega, no na kraju se ipak odlučio za Nanjing.\n\nXi'an je postao poznat širom Svijeta kad je u arheološkim iskapanjima 1974. godine otkriveno više od 8.000 vojnika od terakote u borbenim položaju u prirodnoj veličini. Ovo nalazište mauzoleja Ćin Ši Huangdija, prvog cara koji je ujedinio Kinu, danas je uz Kineski zid najveća kineska turistička atrakcija.\n\nZnamenitosti\n\nMauzolej Ćin Ši Huangdija\nZemljoradnici u Xi'anu su 1974. godine, kopajući bunar, otkrili Mauzolej cara Ćin Ši Huangdija što se smatra jednim od najznačajnijih arheoloških nalaza dvadesetog stoljeća. Već u dobi od 13 godina (246. pr. n. e.), kratko nakon stupanja na prijestolje, car počinje s gradnjom svoje grobnice. Radovi su trajali 36 godina različitim intenzitetom, a u vrijeme najintenzivnijih radova, najveći dosegnuti broj radnika bio je 720.000.\n\nU vrijeme vladavine Ćin Ši Huangdia do tada nezavisne feudalne državice prvi su put objedinjene u veliko carstvo. Glavni pokretač ovog iznimnog vojnog i političkog pothvata bio je carev kancelar Li Si, jedan od najsposobnijih državnika u kineskoj povijesti. Pored ovog ujedinjenja, odnosno osnivanja carstva, drugi uspjesi ovog cara bili su gradnja Kineskog zida, trasiranje velike mreže cesta i kanala (Carski kanal), uvođenje jedinstvenih mjernih jedinica, jedinstvenog novca i ujednačavanje pisma u cijelom carstvu. Umro je u dobi od 49 godina za vrijeme jednog inspekcijskog putovanja u provinciju. Sahranjen je u svojoj grobnici.\n\nNaslijedio ga je drugi sin Ćin Er Ši, koji nije bio niti približno tako sposoban kao otac. Već tri godine nakon smrti Ćin Ši Huangdija dolazi do pobuna. Pobunjenici 207. pr. Kr. provaljuju u građevine s vojnicima od terakote, pustoše i uništavaju ih, a veći dio oružja koje su vojnici izvorno imali, kradu. Zapalili su drvene dijelove građevina, a mnoge figure su razbili.\n\nZa razliku od grobnice, ratnici od terakote se ne spominju nigdje u zapisima suvremenika. Njihovo otkriće bilo je zbog toga velika senzacija čak i za stručnjake. Kroničari kažu da je oko tri desetljeća prije svoje smrti, car Qin Shi Huangdi iskoristio 700 000 prisilnih radnika iz svih dijelova zemlje za njega graditi raskošan podzemni mauzolej. Osim toga, za vladara je bio izgrađen bakreni sarkofag i grobnica napunjena blagom bila je zaštićena od pljačkaša samostrjelima koji su se automatski ispaljivali. Kad je car umro, njegov sin i nasljednik pokopao ga je zajedno s njegovim konkubinama koje nisu imale djecu i naposljetku je u mauzolej žive zakopao sve koji su znali za zakopano blago. Robovi su preko careva groba navukli brježuljak visok 50 m i zasadili ga čempresima i tankim oblicama. U neposrednoj blizini tog brježuljka, danas voćnjaka, kopači bunara došli su 1974. do ovog čudesnog otkrića.\n\nGradske zidine\n\nGradske zidine Xi'ana izgrađene su između 1374. i 1378. a restaurirani su 1980-ih. To su najveće uglavnom očuvane zidine u Kini. Ukupnom dužinom od 13,6 km opasuju središnji dio grada Xi'ana. Sagrađene su kao obzidani zemljani nasip. U podnožju su široke 18 a na kruni 12 metara.\n\nOstale znamenitosti\n Pagoda velike divlje guske\n Velika džamija u Xi'anu\n Toranj bubnja\n Toranj zvona\n\nIzvori\n\nGlavni gradovi kineskih pokrajina\nGradovi na Svilenom putu"
+    },
+    "source_text_sha256": "63df70792a890b8d88313e38509aa0065a6e144b902190c193415d6bb90d7742",
+    "window": "Za razliku od grobnice, ratnici od terakote se ne spominju nigdje u zapisima suvremenika. Njihovo otkriće bilo je zbog toga velika senzacija čak i za stručnjake. Kroničari kažu da je oko tri desetljeća prije svoje smrti, car Qin Shi Huangdi iskoristio 700 000 prisilnih radnika iz svih dijelova zemlje za njega graditi raskošan podzemni mauzolej. Osim toga, za vladara je bio izgrađen bakreni sarkofag i grobnica napunjena blagom bila je zaštićena od pljačkaša samostrjelima koji su se automatski ispaljivali. Kad je car umro, njegov sin i nasljednik pokopao ga je zajedno s njegovim konkubinama koje nisu imale djecu i naposljetku je u mauzolej žive zakopao sve koji su znali za zakopano blago. Robovi su preko careva groba navukli brježuljak visok 50 m i zasadili ga čempresima i tankim oblicama. U neposrednoj blizini tog brježuljka, danas voćnjaka, kopači bunara došli su 1974. do ovog čudesnog otkrića.\n\nGradske zidine\n\nGradske zidine Xi'ana izgrađene su između 1374. i 1378. a restaurirani su 1980-ih. To su najveće uglavnom očuvane zidine u Kini. Ukupnom dužinom od 13,6 km opasuju središnji dio grada Xi'ana. Sagrađene su kao obzidani zemljani nasip. U podnožju su široke 18 a na kruni 12 metara.\n\nOstale znamenitosti\n Pagoda velike divlje guske\n Velika džamija u Xi'anu\n Toranj bubnja\n Toranj zvona\n\nIzvori\n\nGlavni gradovi kineskih pokrajina\nGradovi na Svilenom putu",
+    "window_sha256": "27ace19b10241a3cab4e1565fef021a8c0756131484f858fbc6c05430c45cba3",
+    "replay": {
+      "case": 12,
+      "id": "0001df5268150473f440dc806b8e901a0f6c048bb6d74fba1eb3d5fde065156a",
+      "task": "span-filling",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 6445,
+      "window_chars": 1375,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "exact_source_span": true,
+      "gap_count": 1
+    }
+  },
+  {
+    "case": 13,
+    "ordinal": 12808,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_span_filling",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-span-filling",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 38427,
+      "rendered_tokens": 22442990,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl",
+      "output_sha256": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "span-filling",
+      "hf_revision": "fce64263ce8324ca02ebac3d3d0476e2a716edbb",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/span-filling/publication.json"
+    },
+    "record": {
+      "id": "57a3c8d7a09ede96ddac94ab20d642af169b24ba202eb6027cd27197804c77de",
+      "language": "hr",
+      "task": "span-filling",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Popuni <GAP>; navedi samo tekst koji nedostaje.\n\nNastanak\n\nKrajem dvadesetih godina 20. stoljeća britanska kompanija Vickers proizvela je svoj 6 tonski tenk koji postaje veliki izvozni uspjeh. Koristeći taj tenk kao osnovu Sovjetski Savez kupuje njegova licencna prava i počinje 1931. godine proizvodnju svoje verzije tog tenka pod imenom T-26. Do završetka proizvodnje 1940. godine bilo je proizvedeno sveukupno 12000 njegovih primjeraka.\n\nRatna upotreba\n\nPrvo vatreno krštenje ovaj tenk doživljava tijekom Španjolskog građanskog rata kada se dokazuje kao puno bolji od Panzer I tenka i unajmanju ruku jednako tada najboljem njemačkom tenku Panzer II. Bez obzira na poboljšanja modela odnos između te tri vrste tenkova ostaje istovjetan i u trenutku Njemačkog napada na Sovjetski Savez samo što tada protivnici u bitku ubacuju svoje nove modele Panzer III i Panzer IV protiv kojih T-26 jednostavno nije mogao ništa.\n\nOsim toga tijekom lipnja 1941. godine pojavio se i drugi za vrhovni štab Crvene armije neočekivani problem. Oni su na papiru posjedovali 12000 primjeraka ovog tenka, ali u stvarnosti zbog nedostatka dijelova ili neodržavanja manje od <GAP> sve niže do polovice 1942. godine kada su donosi odluka o prestanku njihova korištenja.\n\nOprema\n\nPočetna verzija ovog tenka je bila naoružana samo s automatskim oružjem koje se odmah poslije prve godine proizvodnje skida da bi bilo zamijenjeno topom od 37 mm. kojih se nakon samo 12 mjeseci mijenja s onim većim od 45 mm. Verzija T-26 naoružana tip topom se proslavljuje u borbama s njemački i talijanskim oklopnim jedinicama tijekom Španjolskog građanskog rata. Kada potreba za stalno većim topom radi probijanja neprijateljskog oklopa rezultira krajem tridesetih godina neuspjehom tijekom ugradnje topa od 76.2 mm donosi se odluka o zaustavljanju proizvodnje ovog tenka.\n\nKako je rasla veličina topa u T-26 tako je slično rasla debljina oklopa koji raste od 15 na 25 mm ( najčvršće mjesto ).\nOdluka o prestanku proizvodnje 1940. godine pada zajedno s odlukom o gradnji njegovog nasljednika imena T-34\n\nSovjetski laki tenkovi u Drugom svjetskom ratu"
+        },
+        {
+          "role": "assistant",
+          "content": "1000 primjeraka je bilo bojno sposobno tako da ih je velika većina zarobljena bez borbe.\n\nKako su Nijemci tijekom prve godine rata postepeno povećavali oklop svojih tenkova, tako je upotrebljivost ovog predratnog model padala"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 10721,
+        "id": "30623",
+        "url": "https://hr.wikipedia.org/wiki/T-26",
+        "title": "T-26",
+        "paragraph_structure": "original",
+        "window_seed": 6140467478851529158,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Nastanak\n\nKrajem dvadesetih godina 20. stoljeća britanska kompanija Vickers proizvela je svoj 6 tonski tenk koji postaje veliki izvozni uspjeh. Koristeći taj tenk kao osnovu Sovjetski Savez kupuje njegova licencna prava i počinje 1931. godine proizvodnju svoje verzije tog tenka pod imenom T-26. Do završetka proizvodnje 1940. godine bilo je proizvedeno sveukupno 12000 njegovih primjeraka.\n\nRatna upotreba\n\nPrvo vatreno krštenje ovaj tenk doživljava tijekom Španjolskog građanskog rata kada se dokazuje kao puno bolji od Panzer I tenka i unajmanju ruku jednako tada najboljem njemačkom tenku Panzer II. Bez obzira na poboljšanja modela odnos između te tri vrste tenkova ostaje istovjetan i u trenutku Njemačkog napada na Sovjetski Savez samo što tada protivnici u bitku ubacuju svoje nove modele Panzer III i Panzer IV protiv kojih T-26 jednostavno nije mogao ništa.\n\nOsim toga tijekom lipnja 1941. godine pojavio se i drugi za vrhovni štab Crvene armije neočekivani problem. Oni su na papiru posjedovali 12000 primjeraka ovog tenka, ali u stvarnosti zbog nedostatka dijelova ili neodržavanja manje od 1000 primjeraka je bilo bojno sposobno tako da ih je velika većina zarobljena bez borbe.\n\nKako su Nijemci tijekom prve godine rata postepeno povećavali oklop svojih tenkova, tako je upotrebljivost ovog predratnog model padala sve niže do polovice 1942. godine kada su donosi odluka o prestanku njihova korištenja.\n\nOprema\n\nPočetna verzija ovog tenka je bila naoružana samo s automatskim oružjem koje se odmah poslije prve godine proizvodnje skida da bi bilo zamijenjeno topom od 37 mm. kojih se nakon samo 12 mjeseci mijenja s onim većim od 45 mm. Verzija T-26 naoružana tip topom se proslavljuje u borbama s njemački i talijanskim oklopnim jedinicama tijekom Španjolskog građanskog rata. Kada potreba za stalno većim topom radi probijanja neprijateljskog oklopa rezultira krajem tridesetih godina neuspjehom tijekom ugradnje topa od 76.2 mm donosi se odluka o zaustavljanju proizvodnje ovog tenka.\n\nKako je rasla veličina topa u T-26 tako je slično rasla debljina oklopa koji raste od 15 na 25 mm ( najčvršće mjesto ).\nOdluka o prestanku proizvodnje 1940. godine pada zajedno s odlukom o gradnji njegovog nasljednika imena T-34\n\nSovjetski laki tenkovi u Drugom svjetskom ratu",
+        "seed": 20261003
+      },
+      "rendered_tokens": 725,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly identified and filled the gap with the missing text from the reference. It also followed the instruction to provide only the missing text, although it included a second sentence that completes the sentence structure of the paragraph, which is helpful for context. The Croatian language is natural and accurate."
+      }
+    },
+    "record_sha256": "52b49493609ca9fc4e3e185d433056889900fbe665398c83e538ff026e8c6b1e",
+    "source_document": {
+      "id": "30623",
+      "url": "https://hr.wikipedia.org/wiki/T-26",
+      "title": "T-26",
+      "text": "T-26 je bio sovjetski tenk koji se proizvodio do 1940. godine\n\nNastanak \n\nKrajem dvadesetih godina 20. stoljeća britanska kompanija Vickers proizvela je svoj 6 tonski tenk koji postaje veliki izvozni uspjeh. Koristeći taj tenk kao osnovu Sovjetski Savez kupuje njegova licencna prava i počinje 1931. godine proizvodnju svoje verzije tog tenka pod imenom T-26. Do završetka proizvodnje 1940. godine bilo je proizvedeno sveukupno 12000 njegovih primjeraka.\n\nRatna upotreba \n\nPrvo vatreno krštenje ovaj tenk doživljava tijekom Španjolskog građanskog rata kada se dokazuje kao puno bolji od Panzer I tenka i unajmanju ruku jednako tada najboljem njemačkom tenku Panzer II. Bez obzira na poboljšanja modela odnos između te tri vrste tenkova ostaje istovjetan i u trenutku Njemačkog napada na Sovjetski Savez samo što tada protivnici u bitku ubacuju svoje nove modele Panzer III i Panzer IV protiv kojih T-26 jednostavno nije mogao ništa. \n\nOsim toga tijekom lipnja 1941. godine pojavio se i drugi za vrhovni štab Crvene armije neočekivani problem. Oni su na papiru posjedovali 12000 primjeraka ovog tenka, ali u stvarnosti zbog nedostatka dijelova ili neodržavanja manje od 1000 primjeraka je bilo bojno sposobno tako da ih je velika većina zarobljena bez borbe.\n\nKako su Nijemci tijekom prve godine rata postepeno povećavali oklop svojih tenkova, tako je upotrebljivost ovog predratnog model padala sve niže do polovice 1942. godine kada su donosi odluka o prestanku njihova korištenja.\n\nOprema \n\nPočetna verzija ovog tenka je bila naoružana samo s automatskim oružjem koje se odmah poslije prve godine proizvodnje skida da bi bilo zamijenjeno topom od 37 mm. kojih se nakon samo 12 mjeseci mijenja s onim većim od 45 mm. Verzija T-26 naoružana tip topom se proslavljuje u borbama s njemački i talijanskim oklopnim jedinicama tijekom Španjolskog građanskog rata. Kada potreba za stalno većim topom radi probijanja neprijateljskog oklopa rezultira krajem tridesetih godina neuspjehom tijekom ugradnje topa od 76.2 mm donosi se odluka o zaustavljanju proizvodnje ovog tenka. \n\nKako je rasla veličina topa u T-26 tako je slično rasla debljina oklopa koji raste od 15 na 25 mm ( najčvršće mjesto ).\nOdluka o prestanku proizvodnje 1940. godine pada zajedno s odlukom o gradnji njegovog nasljednika imena T-34\n\nSovjetski laki tenkovi u Drugom svjetskom ratu"
+    },
+    "source_text_sha256": "fb80a0f2ebb8fa47c5a6a495bf0943cbfa5c66c87b8007331f9b12cf34d12fd5",
+    "window": "Nastanak\n\nKrajem dvadesetih godina 20. stoljeća britanska kompanija Vickers proizvela je svoj 6 tonski tenk koji postaje veliki izvozni uspjeh. Koristeći taj tenk kao osnovu Sovjetski Savez kupuje njegova licencna prava i počinje 1931. godine proizvodnju svoje verzije tog tenka pod imenom T-26. Do završetka proizvodnje 1940. godine bilo je proizvedeno sveukupno 12000 njegovih primjeraka.\n\nRatna upotreba\n\nPrvo vatreno krštenje ovaj tenk doživljava tijekom Španjolskog građanskog rata kada se dokazuje kao puno bolji od Panzer I tenka i unajmanju ruku jednako tada najboljem njemačkom tenku Panzer II. Bez obzira na poboljšanja modela odnos između te tri vrste tenkova ostaje istovjetan i u trenutku Njemačkog napada na Sovjetski Savez samo što tada protivnici u bitku ubacuju svoje nove modele Panzer III i Panzer IV protiv kojih T-26 jednostavno nije mogao ništa.\n\nOsim toga tijekom lipnja 1941. godine pojavio se i drugi za vrhovni štab Crvene armije neočekivani problem. Oni su na papiru posjedovali 12000 primjeraka ovog tenka, ali u stvarnosti zbog nedostatka dijelova ili neodržavanja manje od 1000 primjeraka je bilo bojno sposobno tako da ih je velika većina zarobljena bez borbe.\n\nKako su Nijemci tijekom prve godine rata postepeno povećavali oklop svojih tenkova, tako je upotrebljivost ovog predratnog model padala sve niže do polovice 1942. godine kada su donosi odluka o prestanku njihova korištenja.\n\nOprema\n\nPočetna verzija ovog tenka je bila naoružana samo s automatskim oružjem koje se odmah poslije prve godine proizvodnje skida da bi bilo zamijenjeno topom od 37 mm. kojih se nakon samo 12 mjeseci mijenja s onim većim od 45 mm. Verzija T-26 naoružana tip topom se proslavljuje u borbama s njemački i talijanskim oklopnim jedinicama tijekom Španjolskog građanskog rata. Kada potreba za stalno većim topom radi probijanja neprijateljskog oklopa rezultira krajem tridesetih godina neuspjehom tijekom ugradnje topa od 76.2 mm donosi se odluka o zaustavljanju proizvodnje ovog tenka.\n\nKako je rasla veličina topa u T-26 tako je slično rasla debljina oklopa koji raste od 15 na 25 mm ( najčvršće mjesto ).\nOdluka o prestanku proizvodnje 1940. godine pada zajedno s odlukom o gradnji njegovog nasljednika imena T-34\n\nSovjetski laki tenkovi u Drugom svjetskom ratu",
+    "window_sha256": "9f79c08f2d0f0af1984c922a0c95bbd688f1218f2404db0055360bc57eb47f58",
+    "replay": {
+      "case": 13,
+      "id": "57a3c8d7a09ede96ddac94ab20d642af169b24ba202eb6027cd27197804c77de",
+      "task": "span-filling",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 2347,
+      "window_chars": 2279,
+      "window_blocks": 10,
+      "quality_status": "accepted",
+      "exact_source_span": true,
+      "gap_count": 1
+    }
+  },
+  {
+    "case": 14,
+    "ordinal": 25617,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_span_filling",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-span-filling",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 38427,
+      "rendered_tokens": 22442990,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl",
+      "output_sha256": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "span-filling",
+      "hf_revision": "fce64263ce8324ca02ebac3d3d0476e2a716edbb",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/span-filling/publication.json"
+    },
+    "record": {
+      "id": "ac084f3ba7908772c3d36d2a172feaa8859966cb528cfcfdbb082c7ddce33de9",
+      "language": "hr",
+      "task": "span-filling",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Popuni <GAP>; navedi samo tekst koji nedostaje.\n\nTudorić-Gemo (ponekad -Ghemo) je splitsko prezime.\n\nPrvi spomen ovog splitskog roda nalazimo 1690. godine, pri krštenju Marije, kćeri Grge Todorića iz Imotskog (gdje i danas postoji prezime Todorić) i njegove žene Jele. Prezime je vjerojatno nastalo vjerojatno po istom predlošku kao i prezime Tudor, a javljalo se u više oblika (Todorić, Tudorović, Tudorić). Čini se da je ovaj posljednji oblik u 19. stoljeću u potpunosti prevladao. Kod splitskih Tudorića se često javlja nadimak Gemo (Ghemo), prvi put 1713. godine. Vrlo se često javlja kao prezimenski dodatak, a ponekad potpuno zamjenjuje prezime. Iako je rod Tudorić-Gemo vjerojatno u rodu s ostalim Tudorićima, kontinuitet korištenja <GAP> Njegova žena Jele umire 1715. u dobi od 60 godina, zabilježena kod smrti kao Gemo. Mate se 1699. godine oženio Ivanom Jerković iz Žrnovnice. Obitelj Tudorić potječe od Stjepana (sina Ivana i Jele, krštenog 1701. godine), koji se 1724. oženio Katom Klajić, Splićankom podrijetlom također iz Žrnovnice. Obje obitelji nastanjene su na Dobrome. Obitelj Gemo su devetnaestom stoljeću trafikanti i drvodjelci, dok su Tudorići posjednici, kočijaši i trgovci. Posljednji koji se spominje kao težak, ali i kao mesar je Ivan Tudorić-Gemo koji se 1822. godine oženio Ivanom (Đovanom) Čulić s Dobroga. Godine 1832. u Splitu živi 16 članova obitelji koji posjeduju 16.650 m2 zemlje na Dobrom i Manušu koje obrađuju u vlastitoj režiji. Kao koloni obrađuju 35.863 m2 na području Mejaša, Ravnih Njiva, Kocunara, Brda i Dobrog.\n\nPoznate osobe:\n\nJosip Tudorić-Ghemo, splitski fizičar\n\nHrvatska prezimena"
+        },
+        {
+          "role": "assistant",
+          "content": "nadimka omogućava odvajanje obitelji Tudorić-Gemo od obitelji Tudorić.\n\nObitelj Tudorić-Gemo potječe od Mate, vjerojatno sina spomenutog Grge, koji je 1709. umro u dobi od 70 godina."
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 183338,
+        "id": "677746",
+        "url": "https://hr.wikipedia.org/wiki/Tudori%C4%87-Gemo",
+        "title": "Tudorić-Gemo",
+        "paragraph_structure": "original",
+        "window_seed": 4817469212705465322,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Tudorić-Gemo (ponekad -Ghemo) je splitsko prezime.\n\nPrvi spomen ovog splitskog roda nalazimo 1690. godine, pri krštenju Marije, kćeri Grge Todorića iz Imotskog (gdje i danas postoji prezime Todorić) i njegove žene Jele. Prezime je vjerojatno nastalo vjerojatno po istom predlošku kao i prezime Tudor, a javljalo se u više oblika (Todorić, Tudorović, Tudorić). Čini se da je ovaj posljednji oblik u 19. stoljeću u potpunosti prevladao. Kod splitskih Tudorića se često javlja nadimak Gemo (Ghemo), prvi put 1713. godine. Vrlo se često javlja kao prezimenski dodatak, a ponekad potpuno zamjenjuje prezime. Iako je rod Tudorić-Gemo vjerojatno u rodu s ostalim Tudorićima, kontinuitet korištenja nadimka omogućava odvajanje obitelji Tudorić-Gemo od obitelji Tudorić.\n\nObitelj Tudorić-Gemo potječe od Mate, vjerojatno sina spomenutog Grge, koji je 1709. umro u dobi od 70 godina. Njegova žena Jele umire 1715. u dobi od 60 godina, zabilježena kod smrti kao Gemo. Mate se 1699. godine oženio Ivanom Jerković iz Žrnovnice. Obitelj Tudorić potječe od Stjepana (sina Ivana i Jele, krštenog 1701. godine), koji se 1724. oženio Katom Klajić, Splićankom podrijetlom također iz Žrnovnice. Obje obitelji nastanjene su na Dobrome. Obitelj Gemo su devetnaestom stoljeću trafikanti i drvodjelci, dok su Tudorići posjednici, kočijaši i trgovci. Posljednji koji se spominje kao težak, ali i kao mesar je Ivan Tudorić-Gemo koji se 1822. godine oženio Ivanom (Đovanom) Čulić s Dobroga. Godine 1832. u Splitu živi 16 članova obitelji koji posjeduju 16.650 m2 zemlje na Dobrom i Manušu koje obrađuju u vlastitoj režiji. Kao koloni obrađuju 35.863 m2 na području Mejaša, Ravnih Njiva, Kocunara, Brda i Dobrog.\n\nPoznate osobe:\n\nJosip Tudorić-Ghemo, splitski fizičar\n\nHrvatska prezimena",
+        "seed": 20261003
+      },
+      "rendered_tokens": 669,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly identified and filled the gap with the exact text from the reference, maintaining perfect grammatical and semantic continuity in Croatian."
+      }
+    },
+    "record_sha256": "d7144ad7af0065fd5c76ce41d92b3aab1c6fd93d0d8b633dd9e918b549d35e1f",
+    "source_document": {
+      "id": "677746",
+      "url": "https://hr.wikipedia.org/wiki/Tudori%C4%87-Gemo",
+      "title": "Tudorić-Gemo",
+      "text": "Tudorić-Gemo (ponekad -Ghemo) je splitsko prezime.\n\nPrvi spomen ovog splitskog roda nalazimo 1690. godine, pri krštenju Marije, kćeri Grge Todorića iz Imotskog (gdje i danas postoji prezime Todorić) i njegove žene Jele. Prezime je vjerojatno nastalo vjerojatno po istom predlošku kao i prezime Tudor, a javljalo se u više oblika (Todorić, Tudorović, Tudorić). Čini se da je ovaj posljednji oblik u 19. stoljeću u potpunosti prevladao. Kod splitskih Tudorića se često javlja nadimak Gemo (Ghemo), prvi put 1713. godine. Vrlo se često javlja kao prezimenski dodatak, a ponekad potpuno zamjenjuje prezime. Iako je rod Tudorić-Gemo vjerojatno u rodu s ostalim Tudorićima, kontinuitet korištenja nadimka omogućava odvajanje obitelji Tudorić-Gemo od obitelji Tudorić.\n\nObitelj Tudorić-Gemo potječe od Mate, vjerojatno sina spomenutog Grge, koji je 1709. umro u dobi od 70 godina. Njegova žena Jele umire 1715. u dobi od 60 godina, zabilježena kod smrti kao Gemo. Mate se 1699. godine oženio Ivanom Jerković iz Žrnovnice. Obitelj Tudorić potječe od Stjepana (sina Ivana i Jele, krštenog 1701. godine), koji se 1724. oženio Katom Klajić, Splićankom podrijetlom također iz Žrnovnice. Obje obitelji nastanjene su na Dobrome. Obitelj Gemo su devetnaestom stoljeću trafikanti i drvodjelci, dok su Tudorići posjednici, kočijaši i trgovci. Posljednji koji se spominje kao težak, ali i kao mesar je Ivan Tudorić-Gemo koji se 1822. godine oženio Ivanom (Đovanom) Čulić s Dobroga. Godine 1832. u Splitu živi 16 članova obitelji koji posjeduju 16.650 m2 zemlje na Dobrom i Manušu koje obrađuju u vlastitoj režiji. Kao koloni obrađuju 35.863 m2 na području Mejaša, Ravnih Njiva, Kocunara, Brda i Dobrog.\n\nPoznate osobe:\n\n Josip Tudorić-Ghemo, splitski fizičar\n\nHrvatska prezimena"
+    },
+    "source_text_sha256": "405134d6886c920230364c39ee85b8e489b0037c673fccfeb6cc6905bd62ef28",
+    "window": "Tudorić-Gemo (ponekad -Ghemo) je splitsko prezime.\n\nPrvi spomen ovog splitskog roda nalazimo 1690. godine, pri krštenju Marije, kćeri Grge Todorića iz Imotskog (gdje i danas postoji prezime Todorić) i njegove žene Jele. Prezime je vjerojatno nastalo vjerojatno po istom predlošku kao i prezime Tudor, a javljalo se u više oblika (Todorić, Tudorović, Tudorić). Čini se da je ovaj posljednji oblik u 19. stoljeću u potpunosti prevladao. Kod splitskih Tudorića se često javlja nadimak Gemo (Ghemo), prvi put 1713. godine. Vrlo se često javlja kao prezimenski dodatak, a ponekad potpuno zamjenjuje prezime. Iako je rod Tudorić-Gemo vjerojatno u rodu s ostalim Tudorićima, kontinuitet korištenja nadimka omogućava odvajanje obitelji Tudorić-Gemo od obitelji Tudorić.\n\nObitelj Tudorić-Gemo potječe od Mate, vjerojatno sina spomenutog Grge, koji je 1709. umro u dobi od 70 godina. Njegova žena Jele umire 1715. u dobi od 60 godina, zabilježena kod smrti kao Gemo. Mate se 1699. godine oženio Ivanom Jerković iz Žrnovnice. Obitelj Tudorić potječe od Stjepana (sina Ivana i Jele, krštenog 1701. godine), koji se 1724. oženio Katom Klajić, Splićankom podrijetlom također iz Žrnovnice. Obje obitelji nastanjene su na Dobrome. Obitelj Gemo su devetnaestom stoljeću trafikanti i drvodjelci, dok su Tudorići posjednici, kočijaši i trgovci. Posljednji koji se spominje kao težak, ali i kao mesar je Ivan Tudorić-Gemo koji se 1822. godine oženio Ivanom (Đovanom) Čulić s Dobroga. Godine 1832. u Splitu živi 16 članova obitelji koji posjeduju 16.650 m2 zemlje na Dobrom i Manušu koje obrađuju u vlastitoj režiji. Kao koloni obrađuju 35.863 m2 na području Mejaša, Ravnih Njiva, Kocunara, Brda i Dobrog.\n\nPoznate osobe:\n\nJosip Tudorić-Ghemo, splitski fizičar\n\nHrvatska prezimena",
+    "window_sha256": "98bdb17877f125fe73721f0ed40ecfbb80e3b9c0d83375e06eb146d4a73af9e2",
+    "replay": {
+      "case": 14,
+      "id": "ac084f3ba7908772c3d36d2a172feaa8859966cb528cfcfdbb082c7ddce33de9",
+      "task": "span-filling",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 1760,
+      "window_chars": 1759,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "exact_source_span": true,
+      "gap_count": 1
+    }
+  },
+  {
+    "case": 15,
+    "ordinal": 38426,
+    "publication": {
+      "name": "dfm13_wave4_wikipedia_hr_span_filling",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-hr-span-filling",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 38427,
+      "rendered_tokens": 22442990,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-hr-span-filling/data/train.jsonl",
+      "output_sha256": "e0cc0030f2d6b328c36ce6ed0077a03c6c681c180f6e578e98070a0fc79f78ce",
+      "counts": {
+        "accepted": 203291,
+        "excluded_unreviewed": 13,
+        "rejected": 36899
+      },
+      "repeat": 1,
+      "tokenization_performed": false,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "f3aeabc6b7dd4ed3eb3e4d3d767f50fc45479c952c8f7c6c2a6c60e252536070",
+      "task": "span-filling",
+      "hf_revision": "fce64263ce8324ca02ebac3d3d0476e2a716edbb",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-hr/span-filling/publication.json"
+    },
+    "record": {
+      "id": "ffff791b79d51fc15a34c4d2cef80020189075690954d00ce5c80be5496b955f",
+      "language": "hr",
+      "task": "span-filling",
+      "messages": [
+        {
+          "role": "user",
+          "content": "(hrvatski) Popuni <GAP>; navedi samo tekst koji nedostaje.\n\nKonop–biljka (roridula, lat. Roridula), maleni biljni rod od dvije vrste vazdazelenih grmova iz južnoafričkih provincija Zapadni i Sjevernii Kap koji čini <GAP> vrjesolike.\n\nRod pripada mesožderkama, a živi u simbiozi s kukcima roda Pameridea koji žive na njoj. Pamerideae kukci se hrane kukcima koji su se uhvatili u zamku ove biljke, a biljka dobiva hranjive tvari iz izmeta ovog simbiotskog kukca.\n\nVrste \n Roridula dentata\n Roridula gorgonias\n\nVanjske poveznice\n\nIzvori\n\nVrjesolike\nBiljke mesožderke\nBiljne porodice"
+        },
+        {
+          "role": "assistant",
+          "content": "samostalnu porodicu Roridulaceae, i dio je reda"
+        }
+      ],
+      "provenance": {
+        "repo": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "config": "20231101.hr",
+        "file": "20231101.hr/train-00000-of-00001.parquet",
+        "row": 157814,
+        "id": "589891",
+        "url": "https://hr.wikipedia.org/wiki/Konop%E2%80%93biljka",
+        "title": "Konop–biljka",
+        "paragraph_structure": "original",
+        "window_seed": 14498386822793376501,
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "license_card_sha256": "a0f2055ac612f924721e9981fa2a49a18adec1c67cc8026f6c97d12f17211b21"
+      },
+      "audit_context": {
+        "original": "Konop–biljka (roridula, lat. Roridula), maleni biljni rod od dvije vrste vazdazelenih grmova iz južnoafričkih provincija Zapadni i Sjevernii Kap koji čini samostalnu porodicu Roridulaceae, i dio je reda vrjesolike.\n\nRod pripada mesožderkama, a živi u simbiozi s kukcima roda Pameridea koji žive na njoj. Pamerideae kukci se hrane kukcima koji su se uhvatili u zamku ove biljke, a biljka dobiva hranjive tvari iz izmeta ovog simbiotskog kukca.\n\nVrste \n Roridula dentata\n Roridula gorgonias\n\nVanjske poveznice\n\nIzvori\n\nVrjesolike\nBiljke mesožderke\nBiljne porodice",
+        "seed": 20261003
+      },
+      "rendered_tokens": 231,
+      "admission_authorized": true,
+      "audit_status": "pending",
+      "component": "wikipedia-hr",
+      "target_message_index": 1,
+      "quality_status": "accepted",
+      "audit": {
+        "keep": true,
+        "language_quality": 5,
+        "coherence": 5,
+        "usefulness": 5,
+        "reason": "The assistant correctly filled the gap with the exact text from the reference, following the instruction to provide only the missing text. The Croatian language usage is natural and accurate."
+      }
+    },
+    "record_sha256": "ec1c7b67cbe14a7c71edd4e151c387d13c0fddee617945508d10bafc56c81958",
+    "source_document": {
+      "id": "589891",
+      "url": "https://hr.wikipedia.org/wiki/Konop%E2%80%93biljka",
+      "title": "Konop–biljka",
+      "text": "Konop–biljka (roridula, lat. Roridula), maleni biljni rod od dvije vrste vazdazelenih grmova iz južnoafričkih provincija Zapadni i Sjevernii Kap koji čini samostalnu porodicu Roridulaceae, i dio je reda vrjesolike.\n\nRod pripada mesožderkama, a živi u simbiozi s kukcima roda Pameridea koji žive na njoj. Pamerideae kukci se hrane kukcima koji su se uhvatili u zamku ove biljke, a biljka dobiva hranjive tvari iz izmeta ovog simbiotskog kukca.\n\nVrste \n Roridula dentata\n Roridula gorgonias\n\nVanjske poveznice\n\nIzvori \n\nVrjesolike\nBiljke mesožderke\nBiljne porodice"
+    },
+    "source_text_sha256": "55335c4113a87dc59593ccdc099558348e5ef7e59ae9756aced96aa163b4f921",
+    "window": "Konop–biljka (roridula, lat. Roridula), maleni biljni rod od dvije vrste vazdazelenih grmova iz južnoafričkih provincija Zapadni i Sjevernii Kap koji čini samostalnu porodicu Roridulaceae, i dio je reda vrjesolike.\n\nRod pripada mesožderkama, a živi u simbiozi s kukcima roda Pameridea koji žive na njoj. Pamerideae kukci se hrane kukcima koji su se uhvatili u zamku ove biljke, a biljka dobiva hranjive tvari iz izmeta ovog simbiotskog kukca.\n\nVrste \n Roridula dentata\n Roridula gorgonias\n\nVanjske poveznice\n\nIzvori\n\nVrjesolike\nBiljke mesožderke\nBiljne porodice",
+    "window_sha256": "9c9bf6a8b439cf4a162adf0e893123c644fd38b98db512176fac033a35102bc4",
+    "replay": {
+      "case": 15,
+      "id": "ffff791b79d51fc15a34c4d2cef80020189075690954d00ce5c80be5496b955f",
+      "task": "span-filling",
+      "source_identity_matches": true,
+      "window_matches": true,
+      "candidate_id_matches": true,
+      "messages_match": true,
+      "source_chars": 562,
+      "window_chars": 561,
+      "window_blocks": 6,
+      "quality_status": "accepted",
+      "exact_source_span": true,
+      "gap_count": 1
+    }
+  }
+]

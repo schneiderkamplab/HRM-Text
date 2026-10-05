@@ -9,6 +9,16 @@ tags: [dfm13, data, provenance, audit]
 ---
 # Pending Arena Preparation
 
+## Independent Inventory Check (2026-10-04)
+
+The exact eight published source names below match the current registry.
+PRISM is not among them and is absent from the authoritative assembly registry.
+Its separate eligibility receipt still records `held / license_pending`;
+18,441 prepared inspection candidates are not approved audit or release rows.
+No superseding PRISM clearance was found. This is an intentional exclusion,
+not an omitted ninth Arena export. See the
+[completion cross-check](../../docs/reports/dfm13-independent-completion-crosscheck-20261004.md).
+
 ## Completed Publication And Integration (2026-10-01)
 
 Supersedes the in-progress checkpoints below: detached driver **2951927**

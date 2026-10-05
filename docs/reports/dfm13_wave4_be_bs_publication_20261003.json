@@ -1,0 +1,266 @@
+{
+  "wikipedia-be": {
+    "status": {
+      "component": "wikipedia-be",
+      "counts": {
+        "accepted": 211603,
+        "excluded_unreviewed": 2,
+        "rejected": 29102
+      },
+      "input_sha256": "8e0f82bbc93aedac60a58df25179c89a4680ca816323b2e1cc4d5407c8d05ba2",
+      "input_rows": 240707,
+      "terminal": true,
+      "export_ready": true
+    },
+    "publications": [
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-be/denoising/publication.json",
+        "receipt_sha256": "bac74611a5506eca63bf35ec30c82115b76ddc466056dffb5c5a278bfb0736db",
+        "name": "dfm13_wave4_wikipedia_be_denoising",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-be-denoising",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 68752,
+        "rendered_tokens": 91462091,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-be-denoising/data/train.jsonl",
+        "output_sha256": "672807cf4bf424cf16b5d92d1cd282ac99e6431a13a54bd13577a8b09dc84d7f",
+        "counts": {
+          "accepted": 211603,
+          "excluded_unreviewed": 2,
+          "rejected": 29102
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8e0f82bbc93aedac60a58df25179c89a4680ca816323b2e1cc4d5407c8d05ba2",
+        "task": "denoising",
+        "hf_revision": "3996f46ff8d5f1df22f64c075fea20d5b3bae11b",
+        "status": "accepted_uploaded"
+      },
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-be/paragraph-reordering/publication.json",
+        "receipt_sha256": "01d067b64fdae1610c2704cfe43699f4cfb9347fb207f22b45240066dcbfebe4",
+        "name": "dfm13_wave4_wikipedia_be_paragraph_reordering",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-be-paragraph-reordering",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 30543,
+        "rendered_tokens": 43761920,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-be-paragraph-reordering/data/train.jsonl",
+        "output_sha256": "bd3d32a8f84fc93a4a78f0e3531118786bb87c90985ab021990dbf5a84d7e78f",
+        "counts": {
+          "accepted": 211603,
+          "excluded_unreviewed": 2,
+          "rejected": 29102
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8e0f82bbc93aedac60a58df25179c89a4680ca816323b2e1cc4d5407c8d05ba2",
+        "task": "paragraph-reordering",
+        "hf_revision": "bb3833bc9cba9eb29c956b7aac09e837e6bfcaa7",
+        "status": "accepted_uploaded"
+      },
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-be/prefix-continuation/publication.json",
+        "receipt_sha256": "62bc787f856dcd8bd4c782d8dbe995aa97d0e10cc523824d5f6daddc5ec103d8",
+        "name": "dfm13_wave4_wikipedia_be_prefix_continuation",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-be-prefix-continuation",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 68011,
+        "rendered_tokens": 46510152,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-be-prefix-continuation/data/train.jsonl",
+        "output_sha256": "d2a3388d84eda7ae8315cd5ee4b4e1fa70317821b8fd9e408e1caa80e3fc1df1",
+        "counts": {
+          "accepted": 211603,
+          "excluded_unreviewed": 2,
+          "rejected": 29102
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8e0f82bbc93aedac60a58df25179c89a4680ca816323b2e1cc4d5407c8d05ba2",
+        "task": "prefix-continuation",
+        "hf_revision": "7f78b605a2c85730c28d01020a9fb6f6ddf08efb",
+        "status": "accepted_uploaded"
+      },
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-be/span-filling/publication.json",
+        "receipt_sha256": "a14f6ea849674eaac6dcf137686c0aa81eb3fca489c286ef6c00f1aaa05c33d1",
+        "name": "dfm13_wave4_wikipedia_be_span_filling",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-be-span-filling",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 44297,
+        "rendered_tokens": 28450616,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-be-span-filling/data/train.jsonl",
+        "output_sha256": "33009259238cd25da8b3e62bf2ab63d87969dbde2bfb68edb77869b3afb0043d",
+        "counts": {
+          "accepted": 211603,
+          "excluded_unreviewed": 2,
+          "rejected": 29102
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8e0f82bbc93aedac60a58df25179c89a4680ca816323b2e1cc4d5407c8d05ba2",
+        "task": "span-filling",
+        "hf_revision": "b5ba311413d2b700b0603c18163857c6fd150c36",
+        "status": "accepted_uploaded"
+      }
+    ]
+  },
+  "wikipedia-bs": {
+    "status": {
+      "component": "wikipedia-bs",
+      "counts": {
+        "accepted": 111348,
+        "excluded_unreviewed": 5,
+        "rejected": 20177
+      },
+      "input_sha256": "8be864a2f4ab661d8424eed9efef4755bbdf3d3ebb4288d7099cde7113fe1cb9",
+      "input_rows": 131530,
+      "terminal": true,
+      "export_ready": true
+    },
+    "publications": [
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-bs/denoising/publication.json",
+        "receipt_sha256": "3fea9b1859896a5585d2a8616a13f92efadadee7bf557bbc44d9bc129e7d016e",
+        "name": "dfm13_wave4_wikipedia_bs_denoising",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-bs-denoising",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 32054,
+        "rendered_tokens": 35262476,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-bs-denoising/data/train.jsonl",
+        "output_sha256": "c66dff657c395d5beb75aa6c03517c6e5e4a6094a0a1762dae30ae043a83c398",
+        "counts": {
+          "accepted": 111348,
+          "excluded_unreviewed": 5,
+          "rejected": 20177
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8be864a2f4ab661d8424eed9efef4755bbdf3d3ebb4288d7099cde7113fe1cb9",
+        "task": "denoising",
+        "hf_revision": "1964df56ca0662d80c65ea94f4781f9a4dfbc278",
+        "status": "accepted_uploaded"
+      },
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-bs/paragraph-reordering/publication.json",
+        "receipt_sha256": "2242dc3b488804ff4ee8a18fa4a27ea39d50f5820d826bfed12a786fc47822e6",
+        "name": "dfm13_wave4_wikipedia_bs_paragraph_reordering",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-bs-paragraph-reordering",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 28473,
+        "rendered_tokens": 33167622,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-bs-paragraph-reordering/data/train.jsonl",
+        "output_sha256": "d2d951e11624019c41872a39b3161ef9e9101e03cb1af2d5649db23a66db4242",
+        "counts": {
+          "accepted": 111348,
+          "excluded_unreviewed": 5,
+          "rejected": 20177
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8be864a2f4ab661d8424eed9efef4755bbdf3d3ebb4288d7099cde7113fe1cb9",
+        "task": "paragraph-reordering",
+        "hf_revision": "49e6f752143c918323ce71dae0895f1d7854a103",
+        "status": "accepted_uploaded"
+      },
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-bs/prefix-continuation/publication.json",
+        "receipt_sha256": "a6570c0a1e3b1939c1abcc4a1a8db176cb6290a91aa9761f7968a61a310aec3f",
+        "name": "dfm13_wave4_wikipedia_bs_prefix_continuation",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-bs-prefix-continuation",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 31284,
+        "rendered_tokens": 17422676,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-bs-prefix-continuation/data/train.jsonl",
+        "output_sha256": "0bd137fff0cf55df734d8644d2e19bbf0c7478460560eee882a74109bad34720",
+        "counts": {
+          "accepted": 111348,
+          "excluded_unreviewed": 5,
+          "rejected": 20177
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8be864a2f4ab661d8424eed9efef4755bbdf3d3ebb4288d7099cde7113fe1cb9",
+        "task": "prefix-continuation",
+        "hf_revision": "f9cb463f42ee9ca8c48c04ef550fe0e1b59892f3",
+        "status": "accepted_uploaded"
+      },
+      {
+        "receipt": "data/dfm13/wave4/release/wikipedia-bs/span-filling/publication.json",
+        "receipt_sha256": "7417fda0db034dcb4eb45829953fe914acd31495fd8138926f23a0f083fb3be1",
+        "name": "dfm13_wave4_wikipedia_bs_span_filling",
+        "repo_id": "wikimedia/wikipedia",
+        "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-bs-span-filling",
+        "license": [
+          "cc-by-sa-3.0",
+          "gfdl"
+        ],
+        "rows": 19537,
+        "rendered_tokens": 10379917,
+        "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-bs-span-filling/data/train.jsonl",
+        "output_sha256": "d5f1b29407023a958a93d80afa341046a14bf5c600465ad7b9b40bb98ab9ed26",
+        "counts": {
+          "accepted": 111348,
+          "excluded_unreviewed": 5,
+          "rejected": 20177
+        },
+        "repeat": 1,
+        "tokenization_performed": false,
+        "target_policy": "final_assistant_only_native_gemma",
+        "uploaded": true,
+        "input_sha256": "8be864a2f4ab661d8424eed9efef4755bbdf3d3ebb4288d7099cde7113fe1cb9",
+        "task": "span-filling",
+        "hf_revision": "21d293653f07923fb72e5f886f310501e6c5731e",
+        "status": "accepted_uploaded"
+      }
+    ]
+  }
+}

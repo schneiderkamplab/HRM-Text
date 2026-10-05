@@ -1,0 +1,1976 @@
+{
+  "entries": [
+    {
+      "name": "ai_arenaen_preferred",
+      "rows": 2328,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/manifest.json": {
+          "sha256": "f46756e472f34e09011a35790a0bfd0bd4d1839dc2267afec53035d0b52ccb8b",
+          "bytes": 6049,
+          "signature": [
+            3351383302,
+            6399743299822551044,
+            6049,
+            1790851991792281422,
+            1790851991793226088
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/data/train.jsonl": {
+          "sha256": "f69a025cf79c3d08932711782b1a431f8c8835bd786bce32e3d43275f16825c6",
+          "bytes": 9407495,
+          "signature": [
+            3351383302,
+            17122805651198705668,
+            9407495,
+            1790851703036693096,
+            1790851703036693096
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/provenance.jsonl": {
+          "sha256": "dd665520ad80336fc39911b5d118ef85d5f0160202e863cae820f5d04f921e7a",
+          "bytes": 3959035,
+          "signature": [
+            3351383302,
+            8906785949704781828,
+            3959035,
+            1790851991783708236,
+            1790851991783708236
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/duplicates.jsonl": {
+          "sha256": "508337a245c7d026653d644ca7481953d5cd0717ddd719b1ef5ad37c5cafebf4",
+          "bytes": 8123,
+          "signature": [
+            3351383302,
+            6499565829430050820,
+            8123,
+            1790851991783708236,
+            1790851991783708236
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "arena_human_preference_140k",
+      "rows": 88774,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-140k-preferred/manifest.json": {
+          "sha256": "febffce6a045cf9b4f21f6626478ad92af43d4e000e41fcf3157657ff5a8e4e2",
+          "bytes": 20005,
+          "signature": [
+            3351383302,
+            1294168210504089604,
+            20005,
+            1790851992374161484,
+            1790851992375339060
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-140k-preferred/data/train.jsonl": {
+          "sha256": "2ba6cbaa3b8890f1fb63de2c0b3ad170677f0df46b32ae4c7f71f86acf2ef82b",
+          "bytes": 639434915,
+          "signature": [
+            3351383302,
+            5637297873065213956,
+            639434915,
+            1790851852679694139,
+            1790851852679694139
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-140k-preferred/provenance.jsonl": {
+          "sha256": "7c0be189f78d5871194f1865b6ccacc5fc65d06fb047948ba8d57d3375133076",
+          "bytes": 163475959,
+          "signature": [
+            3351383302,
+            12267616468513259524,
+            163475959,
+            1790851991959708253,
+            1790851991959708253
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-140k-preferred/duplicates.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "signature": [
+            3351383302,
+            17538148191096143876,
+            0,
+            1790851699839606897,
+            1790851699839606897
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "arena_human_preference_100k",
+      "rows": 52652,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-100k-preferred/manifest.json": {
+          "sha256": "41b611c9862a3153cc7008b76377fbcb115442fa210713b02daae532420f81cd",
+          "bytes": 18574,
+          "signature": [
+            3351383302,
+            12693670712003723268,
+            18574,
+            1790851991958219803,
+            1790851991959366365
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-100k-preferred/data/train.jsonl": {
+          "sha256": "dbfe7e122b72a987fa6159b52289adf32cbe7beb1ee02395e9fc683859c1adad",
+          "bytes": 216176977,
+          "signature": [
+            3351383302,
+            14761381127651332,
+            216176977,
+            1790851991792708237,
+            1790851991792708237
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-100k-preferred/provenance.jsonl": {
+          "sha256": "5afb72007c8e10d8d7ebae251aa2b7cd71cb706a7ce2f2c342c6740e6cfbd52b",
+          "bytes": 94342188,
+          "signature": [
+            3351383302,
+            4051436511655165956,
+            94342188,
+            1790851991792708237,
+            1790851991792708237
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-100k-preferred/duplicates.jsonl": {
+          "sha256": "7bbaaab6f8f4cff6f3bdf791758648ef05ffd4c6f0130fd7ef3dd7d0ded51975",
+          "bytes": 8381,
+          "signature": [
+            3351383302,
+            11989065951671877636,
+            8381,
+            1790851750783693906,
+            1790851750783693906
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "arena_human_preference_55k",
+      "rows": 30446,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-55k-preferred/manifest.json": {
+          "sha256": "b2efab4ebb01dc5ec81113efe7ed7db37912455dffb7335ded214cdd16374446",
+          "bytes": 6200,
+          "signature": [
+            3351383302,
+            17839581026856992772,
+            6200,
+            1790851992442250510,
+            1790851992443025589
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-55k-preferred/data/train.jsonl": {
+          "sha256": "bff9e13f872d0d472e0d268076c1e708dee16644413ab52b4b0f914655b21bf0",
+          "bytes": 74323280,
+          "signature": [
+            3351383302,
+            16773371576504942596,
+            74323280,
+            1790851992375708294,
+            1790851992375708294
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-55k-preferred/provenance.jsonl": {
+          "sha256": "ba2e16cae2c5fe18a865c06197f196b75e1d4b7e48dbe3ee92b59a426e1e5292",
+          "bytes": 51585298,
+          "signature": [
+            3351383302,
+            455456270567342084,
+            51585298,
+            1790851992375708294,
+            1790851992375708294
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-arena-human-preference-55k-preferred/duplicates.jsonl": {
+          "sha256": "625ed2b83cfafd1cf818aded59e6924537efc2d9eba15e5cd7085632ee155519",
+          "bytes": 4399,
+          "signature": [
+            3351383302,
+            13572216778456891396,
+            4399,
+            1790851992375708294,
+            1790851992375708294
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "comparia_preferred",
+      "rows": 399,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-comparia/manifest.json": {
+          "sha256": "608577f6c5d22ee76f2b6da7d6477d76ec84fdb76da994e87e2b62914d847547",
+          "bytes": 6973,
+          "signature": [
+            3351383302,
+            1710108201230991364,
+            6973,
+            1790851673983301939,
+            1790851673984177867
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-comparia/data/train.jsonl": {
+          "sha256": "d497ab9fcb7eb2a043915a0c19494e83c048eb6882d8eae141a5613d5234eea1",
+          "bytes": 2227743,
+          "signature": [
+            3351383302,
+            8680447732746682372,
+            2227743,
+            1790851673979689086,
+            1790851673979689086
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-comparia/provenance.jsonl": {
+          "sha256": "04f81a2ad0f14914f2f2ae806d2bef44f08c47565759687983bfddcbc0b1b888",
+          "bytes": 688928,
+          "signature": [
+            3351383302,
+            1685175921597349892,
+            688928,
+            1790851673979689086,
+            1790851673979689086
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-comparia/duplicates.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "signature": [
+            3351383302,
+            8958335722680025092,
+            0,
+            1790851626847084871,
+            1790851626847084871
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "helpsteer3_edit",
+      "rows": 6321,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-edit/manifest.json": {
+          "sha256": "13b2f3e0c3bdd7e8c80dd604a4eb2fc9ee7ad2286b74c2fe76cf8dd97e3ae2b4",
+          "bytes": 6938,
+          "signature": [
+            3351383302,
+            2162504331757748228,
+            6938,
+            1790851674017689092,
+            1790851674018874747
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-edit/data/train.jsonl": {
+          "sha256": "64df42f9891d6505c1bb3a4269aa5978ba7d7065bf7f91d1c3931fc861526c65",
+          "bytes": 45116785,
+          "signature": [
+            3351383302,
+            11750619766169206788,
+            45116785,
+            1790851634380683622,
+            1790851634380683622
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-edit/provenance.jsonl": {
+          "sha256": "c0915649ef7cf84b0785ceca0fecc3925a428c96c4c51f4d9376cf5cf269e190",
+          "bytes": 11336288,
+          "signature": [
+            3351383302,
+            16898211593346285572,
+            11336288,
+            1790851634380683622,
+            1790851634380683622
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-edit/duplicates.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "signature": [
+            3351383302,
+            2086039320378540036,
+            0,
+            1790851626850209550,
+            1790851626850209550
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "helpsteer3_preference",
+      "rows": 16875,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-preference/manifest.json": {
+          "sha256": "623a68d84676274bbb475fee086c05d2204ee8f3236973d8155ab981be3997b1",
+          "bytes": 6966,
+          "signature": [
+            3351383302,
+            780166771242893316,
+            6966,
+            1790851674125244601,
+            1790851674126212602
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-preference/data/train.jsonl": {
+          "sha256": "1e324ab1ec93b8205f7f9d0b2309f42b02c478f4b6ee29ca7e61a791beaf18af",
+          "bytes": 148189729,
+          "signature": [
+            3351383302,
+            11063904031275614212,
+            148189729,
+            1790851674018689092,
+            1790851674018689092
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-preference/provenance.jsonl": {
+          "sha256": "1314071507fa57123f8807016ea68cb362d2cb1762b1b593eaafaff8cb7a3476",
+          "bytes": 29571730,
+          "signature": [
+            3351383302,
+            3622267393128464388,
+            29571730,
+            1790851674018689092,
+            1790851674018689092
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-helpsteer3-preference/duplicates.jsonl": {
+          "sha256": "32b8aa382c459b5752c3f045fa8ff8b8e961f43673a224d217a16ef841c63e03",
+          "bytes": 10760,
+          "signature": [
+            3351383302,
+            12057583406482718724,
+            10760,
+            1790851636893683968,
+            1790851636893683968
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "arena_expert5k",
+      "rows": 1883,
+      "status": "publication_verified",
+      "evidence": {
+        "shared_inventory_full_selection_check": "ai_arenaen_preferred",
+        "publication": "package hashes/receipt/revision/license verified",
+        "tokenization": "absent"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-expert5k/manifest.json": {
+          "sha256": "31440ca47e02698819b1c308843728b3d47d2a0c0386c88a27bcfb5f33602bb5",
+          "bytes": 6966,
+          "signature": [
+            3351383302,
+            10670179692592365572,
+            6966,
+            1790851674145068308,
+            1790851674145957306
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-expert5k/data/train.jsonl": {
+          "sha256": "f31fa5384b722260193e90cae8225474f8a809c85a946eee0fb9cf27a39baf79",
+          "bytes": 28976873,
+          "signature": [
+            3351383302,
+            37048150203760644,
+            28976873,
+            1790851656087686617,
+            1790851656087686617
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-expert5k/provenance.jsonl": {
+          "sha256": "9906b86e398590e14ef77c8a681c9175ced11c30b4c03a23ec2911136edc133c",
+          "bytes": 3877496,
+          "signature": [
+            3351383302,
+            4282882565660672004,
+            3877496,
+            1790851674126689107,
+            1790851674126689107
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-expert5k/duplicates.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "signature": [
+            3351383302,
+            16033436078949138436,
+            0,
+            1790851626856344822,
+            1790851626856344822
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "jjzha_skillspan",
+      "rows": 3713,
+      "status": "publication_verified",
+      "evidence": {
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-skillspan/data/train.jsonl",
+        "quality_basis": "source-specific validation; not blanket model audited",
+        "license": "cc-by-4.0",
+        "repo_id": "jjzha/skillspan",
+        "revision": "33062e6bd0e03a5e01ae299ce0518f4613ef4298"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-skillspan/data/train.jsonl": {
+          "sha256": "83df76b4882f55f569f5e3edf5a7055d9a35d53dfc433a46d6441905b74d9136",
+          "bytes": 4863597,
+          "signature": [
+            3351383302,
+            2766542591369084932,
+            4863597,
+            1791026920657401938,
+            1791026920671416004
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/jjzha_skillspan-release.json": {
+          "sha256": "19a8f97c5b56201a9dfeca6cb3acded43a788b2cb4f5d2a333c82b8a753e25a4",
+          "bytes": 739,
+          "signature": [
+            3351383302,
+            894233895815675908,
+            739,
+            1791026923175336480,
+            1791026923176231884
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-skillspan/manifest.json": {
+          "sha256": "8b91b2073e88bcf42779e3366268a7521ef6fdb7992c87f80a9ee8e54525c1fc",
+          "bytes": 679,
+          "signature": [
+            3351383302,
+            7087651168508313604,
+            679,
+            1791026920692424962,
+            1791026920693602681
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/prepared.json": {
+          "sha256": "cbfbfa412d2775118578d52a90b6c363e8c312779cd32e76f7f9d09e06f70a73",
+          "bytes": 16180,
+          "signature": [
+            3351383302,
+            6757540645991940100,
+            16180,
+            1791026228254652370,
+            1791026228257596600
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_skillspan/33062e6bd0e03a5e01ae299ce0518f4613ef4298/README.md": {
+          "sha256": "5f30719a8689118ddc6933df468d363efeae54a220b80e90661e24f9815dbd68",
+          "bytes": 1291,
+          "signature": [
+            3351383302,
+            5145395215119745028,
+            1291,
+            1790930324506806097,
+            1790930324506806097
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_skillspan/33062e6bd0e03a5e01ae299ce0518f4613ef4298/train.json": {
+          "sha256": "5e884c3426087d14fc437d328eb72132082edbfe1e776292ae0e6e9b36c1e1f6",
+          "bytes": 2207996,
+          "signature": [
+            3351383302,
+            8141108084247035908,
+            2207996,
+            1790930324640983844,
+            1790930324640983844
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_skillspan/33062e6bd0e03a5e01ae299ce0518f4613ef4298/dev.json": {
+          "sha256": "3732937c6869fe191c749b4efe7ffd597ce84eea1192f09b7fe3bd1eb459e2b4",
+          "bytes": 1036099,
+          "signature": [
+            3351383302,
+            10055749165305757700,
+            1036099,
+            1790930325118496551,
+            1790930325124088093
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_skillspan/33062e6bd0e03a5e01ae299ce0518f4613ef4298/test.json": {
+          "sha256": "8438eda34939a5877b984ea5daf9e6ff39b2d5c7e3d73cca0499d3de3784d24a",
+          "bytes": 1116219,
+          "signature": [
+            3351383302,
+            15044203054511095812,
+            1116219,
+            1790930325601496610,
+            1790930325604492568
+          ]
+        },
+        "/work/mimir/HRM-Text/data/converted_sources/dfm13_jjzha/jjzha_skillspan/train.jsonl": {
+          "sha256": "1a4d892ca1ffe09e4c3350bc5c3e3c70cc0f63d30a4f1b95a3cd151c02a904c8",
+          "bytes": 4573983,
+          "signature": [
+            3351383302,
+            1441533261768753156,
+            4573983,
+            1790930325725496693,
+            1790930325725496693
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-skillspan/README.md": {
+          "sha256": "d8026e3bae7f324b694c71b3d53bd1aca7c768b989903f7c654d6db05d1a36ed",
+          "bytes": 1152,
+          "signature": [
+            3351383302,
+            225818859808489476,
+            1152,
+            1791026920693919043,
+            1791026920693919043
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "jjzha_kompetencer",
+      "rows": 740,
+      "status": "publication_verified",
+      "evidence": {
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-kompetencer/data/train.jsonl",
+        "quality_basis": "source-specific validation; not blanket model audited",
+        "license": "cc-by-4.0",
+        "repo_id": "jjzha/kompetencer",
+        "revision": "63121e046efa9d089bce38b31c5b7911b1573672"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-kompetencer/data/train.jsonl": {
+          "sha256": "96adafe5097520af1a76f4c8881f091d2b09adf2b1c0a7b725bace62c11dc2dc",
+          "bytes": 843653,
+          "signature": [
+            3351383302,
+            14657348784869998596,
+            843653,
+            1791026923769414470,
+            1791026923772231253
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/jjzha_kompetencer-release.json": {
+          "sha256": "646621347b0a96e02e9520aab2e09c04a801741f1e430f8c5179d01cd6c59fb2",
+          "bytes": 744,
+          "signature": [
+            3351383302,
+            16776967722223403012,
+            744,
+            1791026925692909903,
+            1791026925693812946
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-kompetencer/manifest.json": {
+          "sha256": "7152a22ae6ed82df5e819a481e9343ff29f94a839310cb990d495e9b73bfe346",
+          "bytes": 684,
+          "signature": [
+            3351383302,
+            10634101498155958276,
+            684,
+            1791026923774548946,
+            1791026923775368071
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/prepared.json": {
+          "sha256": "cbfbfa412d2775118578d52a90b6c363e8c312779cd32e76f7f9d09e06f70a73",
+          "bytes": 16180,
+          "signature": [
+            3351383302,
+            6757540645991940100,
+            16180,
+            1791026228254652370,
+            1791026228257596600
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_kompetencer/63121e046efa9d089bce38b31c5b7911b1573672/README.md": {
+          "sha256": "e287b0762fa0bc59dc304e5875b175f2137fce392d2fc30b3bcf69faf0ca3c71",
+          "bytes": 1312,
+          "signature": [
+            3351383302,
+            8239736184300699652,
+            1312,
+            1790930325893921471,
+            1790930325893921471
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_kompetencer/63121e046efa9d089bce38b31c5b7911b1573672/train.json": {
+          "sha256": "772c6dc5bba6ef451bd1253efa830e21eccfe30d23dc7dd07b6cbb91751ad0fb",
+          "bytes": 276193,
+          "signature": [
+            3351383302,
+            5586197664632274948,
+            276193,
+            1790930326041006442,
+            1790930326041006442
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_kompetencer/63121e046efa9d089bce38b31c5b7911b1573672/dev.json": {
+          "sha256": "9896ec8bf6731270f0288f15a73718fd80c107ae7bea50f31e00d239035da858",
+          "bytes": 126286,
+          "signature": [
+            3351383302,
+            11078373787342536708,
+            126286,
+            1790930326444496712,
+            1790930326447568788
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_kompetencer/63121e046efa9d089bce38b31c5b7911b1573672/test.json": {
+          "sha256": "35da4844629341d3afa79df205cb0ff9e240beb2eba4a50cdd39a0e85c044756",
+          "bytes": 85464,
+          "signature": [
+            3351383302,
+            15293930929047601156,
+            85464,
+            1790930326853496761,
+            1790930326882022582
+          ]
+        },
+        "/work/mimir/HRM-Text/data/converted_sources/dfm13_jjzha/jjzha_kompetencer/train.jsonl": {
+          "sha256": "b3677d23427af522a85752f8aee05688008ae7b97b5560f3c9f638b0473f0691",
+          "bytes": 785933,
+          "signature": [
+            3351383302,
+            1546917367151329284,
+            785933,
+            1790930326905496836,
+            1790930326905496836
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-kompetencer/README.md": {
+          "sha256": "42a1de90b123b91032f7843140e35bf76f25f78515ab9a0eba2e5ecfee670507",
+          "bytes": 1158,
+          "signature": [
+            3351383302,
+            8168510711961616388,
+            1158,
+            1791026923775670762,
+            1791026923775670762
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "jjzha_green",
+      "rows": 7612,
+      "status": "publication_verified",
+      "evidence": {
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-green/data/train.jsonl",
+        "quality_basis": "source-specific validation; not blanket model audited",
+        "license": "cc-by-4.0",
+        "repo_id": "jjzha/green",
+        "revision": "a3500da00e98b04ba7af65a230586f6432755bb7"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-green/data/train.jsonl": {
+          "sha256": "78a8c2d5596db7d9fd76167a4af986dc4e7556cfe8e8dec4e340d58f0c224d45",
+          "bytes": 10420278,
+          "signature": [
+            3351383302,
+            2707947524745003012,
+            10420278,
+            1791026926407425093,
+            1791026926416346871
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/jjzha_green-release.json": {
+          "sha256": "2dfc7d441384a5c06523f0a8cbaa2d384f694059059bac22e96fa8df702892d2",
+          "bytes": 723,
+          "signature": [
+            3351383302,
+            14917102072616452100,
+            723,
+            1791026928937317169,
+            1791026928938308948
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-green/manifest.json": {
+          "sha256": "a41502d1b9ef68df922cd3accc221a0daeb48962b4b530bab70d0404733296e7",
+          "bytes": 663,
+          "signature": [
+            3351383302,
+            14313202517368897540,
+            663,
+            1791026926429993664,
+            1791026926430908101
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/prepared.json": {
+          "sha256": "cbfbfa412d2775118578d52a90b6c363e8c312779cd32e76f7f9d09e06f70a73",
+          "bytes": 16180,
+          "signature": [
+            3351383302,
+            6757540645991940100,
+            16180,
+            1791026228254652370,
+            1791026228257596600
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_green/a3500da00e98b04ba7af65a230586f6432755bb7/README.md": {
+          "sha256": "4a0a83cdbdd9046eef4a0ff5c36bf38a21a5fc0d648814c0bdc13722c077f12d",
+          "bytes": 1763,
+          "signature": [
+            3351383302,
+            8235157865444278276,
+            1763,
+            1790930327063493134,
+            1790930327063493134
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_green/a3500da00e98b04ba7af65a230586f6432755bb7/train.json": {
+          "sha256": "a2a3e708558ca68341fb81152c913a38caf0a4d91346136c3cdb12c1a82cabf7",
+          "bytes": 5013921,
+          "signature": [
+            3351383302,
+            10637768887605133316,
+            5013921,
+            1790930327278497663,
+            1790930327278497663
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_green/a3500da00e98b04ba7af65a230586f6432755bb7/dev.json": {
+          "sha256": "fdb6eff1a70c9d85a616380956030d2d7676e2098179c8204ea32dfefcd70f0f",
+          "bytes": 547373,
+          "signature": [
+            3351383302,
+            1283697599618809860,
+            547373,
+            1790930327742496869,
+            1790930327746619783
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_green/a3500da00e98b04ba7af65a230586f6432755bb7/test.json": {
+          "sha256": "9fbb0da5e6c3da2c66d76de9f3e568c2489c2ac9e233c079659b97396ea7c5fc",
+          "bytes": 190483,
+          "signature": [
+            3351383302,
+            6188242608398925828,
+            190483,
+            1790930328277496934,
+            1790930328279978802
+          ]
+        },
+        "/work/mimir/HRM-Text/data/converted_sources/dfm13_jjzha/jjzha_green/train.jsonl": {
+          "sha256": "c17f97ffbc932ce3b3060cb8946eceb6d11df56cb0fe04e4f2dafa88c98cd72e",
+          "bytes": 9826542,
+          "signature": [
+            3351383302,
+            16435990929900503044,
+            9826542,
+            1790930328468497008,
+            1790930328468497008
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-green/README.md": {
+          "sha256": "ca73353c5bf4a6464e7d0d06001c292ee0c6c710ad8c3dfd8c2b3d72b76b3885",
+          "bytes": 1136,
+          "signature": [
+            3351383302,
+            5146291990496477188,
+            1136,
+            1791026926431213513,
+            1791026926431213513
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "jjzha_imdb_dutch",
+      "rows": 22611,
+      "status": "publication_verified",
+      "evidence": {
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-imdb-dutch/data/train.jsonl",
+        "quality_basis": "automated model audit",
+        "license": "apache-2.0",
+        "repo_id": "jjzha/imdb-dutch-instruct",
+        "revision": "2697254a63e40995017891bbc484fd96a4305917"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-imdb-dutch/data/train.jsonl": {
+          "sha256": "32acfead22af2b4d02e6eb4e86c06ad72bf20a466bbd209f1f4e6d2f35c1973b",
+          "bytes": 46753505,
+          "signature": [
+            3351383302,
+            4660317905943265284,
+            46753505,
+            1791026930582441907,
+            1791026930602470578
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/jjzha_imdb_dutch-release.json": {
+          "sha256": "a6686103e77549ef5d1185076a0ac740da099e73c8d011aaee6ce2a99f757702",
+          "bytes": 837,
+          "signature": [
+            3351383302,
+            9089685065652764676,
+            837,
+            1791026937770019235,
+            1791026937790517717
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-imdb-dutch/manifest.json": {
+          "sha256": "265bed1309fdabb4a8f0e6149e9821c4fbacc21695f100f2813b8d56254a754c",
+          "bytes": 777,
+          "signature": [
+            3351383302,
+            4426420096252051460,
+            777,
+            1791026930651430065,
+            1791026930652353695
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/prepared.json": {
+          "sha256": "cbfbfa412d2775118578d52a90b6c363e8c312779cd32e76f7f9d09e06f70a73",
+          "bytes": 16180,
+          "signature": [
+            3351383302,
+            6757540645991940100,
+            16180,
+            1791026228254652370,
+            1791026228257596600
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_imdb_dutch/2697254a63e40995017891bbc484fd96a4305917/README.md": {
+          "sha256": "16a93cea49e5e2d2555446f29cb7645692076b5820d4268582d7e95605891e25",
+          "bytes": 5685,
+          "signature": [
+            3351383302,
+            17314418582976593924,
+            5685,
+            1790930328645391884,
+            1790930328645391884
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_imdb_dutch/2697254a63e40995017891bbc484fd96a4305917/train.jsonl.gz": {
+          "sha256": "22d8a96653dd24550a439d5f8ec16bd170f6e4819dd9a51a7027e80086b52548",
+          "bytes": 13628183,
+          "signature": [
+            3351383302,
+            5677958890471489540,
+            13628183,
+            1790930330474497200,
+            1790930330497895218
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_imdb_dutch/2697254a63e40995017891bbc484fd96a4305917/test.jsonl.gz": {
+          "sha256": "a911f07b426419ffcea116761765707f19b21e4a64a09a3134b12fc0afd0d5bb",
+          "bytes": 13312568,
+          "signature": [
+            3351383302,
+            3094643977527164932,
+            13312568,
+            1790930332179497406,
+            1790930332186176739
+          ]
+        },
+        "/work/mimir/HRM-Text/data/converted_sources/dfm13_jjzha/jjzha_imdb_dutch/candidates.jsonl": {
+          "sha256": "d62e0425e0953b966250df97376679f6e7563eb452707cf21f2553c2784602fc",
+          "bytes": 49759072,
+          "signature": [
+            3351383302,
+            12069391577414696964,
+            49759072,
+            1790930333456497629,
+            1790930333456497629
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-imdb-dutch/README.md": {
+          "sha256": "4759dde0651a17cf8a249ed79136f390c9c3a8de9d7da77a6edf4b2f67a087e0",
+          "bytes": 1238,
+          "signature": [
+            3351383302,
+            6261896277516615684,
+            1238,
+            1791026930652743223,
+            1791026930652743223
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "jjzha_dutch_exam",
+      "rows": 1206,
+      "status": "publication_verified",
+      "evidence": {
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-dutch-exam/data/train.jsonl",
+        "quality_basis": "source-specific validation; not blanket model audited",
+        "license": "cc-by-4.0 (source card; underlying exams retain attribution)",
+        "repo_id": "jjzha/dutch-central-exam-mcq",
+        "revision": "f0311e858bfd98ed83cda5f7b03389cdc9276576"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-dutch-exam/data/train.jsonl": {
+          "sha256": "9870ea9e8af523e628cf8d1c8d9d723467cec61d7fb19c9f161a9dc95fe8f0ff",
+          "bytes": 1249059,
+          "signature": [
+            3351383302,
+            3895163053717258244,
+            1249059,
+            1791026938428473503,
+            1791026938536694803
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/jjzha_dutch_exam-release.json": {
+          "sha256": "23905e12878b3c3d49d5537f6a7e69738ca513cae3d1dbcdc45816e5d93f0204",
+          "bytes": 806,
+          "signature": [
+            3351383302,
+            10283295472607035396,
+            806,
+            1791026940363416964,
+            1791026940369571368
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-dutch-exam/manifest.json": {
+          "sha256": "867d124d833077e145658cbbcbe46f2209ae1a7028029e636710ca0a4466e578",
+          "bytes": 746,
+          "signature": [
+            3351383302,
+            15612724907915280388,
+            746,
+            1791026938554474010,
+            1791026938555730239
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/prepared.json": {
+          "sha256": "cbfbfa412d2775118578d52a90b6c363e8c312779cd32e76f7f9d09e06f70a73",
+          "bytes": 16180,
+          "signature": [
+            3351383302,
+            6757540645991940100,
+            16180,
+            1791026228254652370,
+            1791026228257596600
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_dutch_exam/f0311e858bfd98ed83cda5f7b03389cdc9276576/README.md": {
+          "sha256": "73e3d3dde9f8df84bcc0a12f98cac1949ef616c68336187bc65718ec7334fc3b",
+          "bytes": 4347,
+          "signature": [
+            3351383302,
+            14768079244988907524,
+            4347,
+            1790930333665934932,
+            1790930333665934932
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_dutch_exam/f0311e858bfd98ed83cda5f7b03389cdc9276576/data/train-00000-of-00001.parquet": {
+          "sha256": "2b9e1cabc6411d7bbb9ef21e6fd760d40c6375f7196892a7ae4f48f0a52880ce",
+          "bytes": 200660,
+          "signature": [
+            3351383302,
+            1576509878777151492,
+            200660,
+            1790930333798636720,
+            1790930333798636720
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_dutch_exam/f0311e858bfd98ed83cda5f7b03389cdc9276576/data/dev-00000-of-00001.parquet": {
+          "sha256": "1c2bb83b57ff3a524f778f1cd9903fe2ea5388f855514f6266814253a23d0baa",
+          "bytes": 10472,
+          "signature": [
+            3351383302,
+            2350531987486015492,
+            10472,
+            1790930334964497744,
+            1790930334968604736
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_dutch_exam/f0311e858bfd98ed83cda5f7b03389cdc9276576/data/test-00000-of-00001.parquet": {
+          "sha256": "ef0fb8159aa2a25692bd1f7e39d6902e0b47e508c55e2e309d23afcad649573b",
+          "bytes": 81303,
+          "signature": [
+            3351383302,
+            16469096712453029892,
+            81303,
+            1790930336091497880,
+            1790930336096079467
+          ]
+        },
+        "/work/mimir/HRM-Text/data/converted_sources/dfm13_jjzha/jjzha_dutch_exam/train.jsonl": {
+          "sha256": "f8cc7548c5c4f503a01ce8ab1ae4e79263a018a88f38a62b5521d0f31f1392be",
+          "bytes": 1154991,
+          "signature": [
+            3351383302,
+            5820176054991781892,
+            1154991,
+            1790930336255497985,
+            1790930336255497985
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-dutch-exam/README.md": {
+          "sha256": "338350f4e81b017d524a28929dc34766012c34782aa909d6ba00bc6352f671de",
+          "bytes": 1243,
+          "signature": [
+            3351383302,
+            6753945705025896452,
+            1243,
+            1791026938556124574,
+            1791026938556124574
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    },
+    {
+      "name": "jjzha_croco",
+      "rows": 134466,
+      "status": "publication_verified",
+      "evidence": {
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-croco/data/train.jsonl",
+        "quality_basis": "automated model audit",
+        "license": "gemma",
+        "repo_id": "jjzha/croco-translated-data",
+        "revision": "b50944e43ad94cce7c78970891c044fc10e45ccf"
+      },
+      "pins": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-croco/data/train.jsonl": {
+          "sha256": "780d9919bb6100537dc36848d12c232ddecac07cc349f5bb1815d1a914985c4e",
+          "bytes": 430403074,
+          "signature": [
+            3351383302,
+            7063686341359697924,
+            430403074,
+            1791026953256533216,
+            1791026953352660389
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/jjzha_croco-release.json": {
+          "sha256": "408083bc206917630c3d701bd953d8dc6bd1b2f31a08a2553601dbb3f2102288",
+          "bytes": 1074,
+          "signature": [
+            3351383302,
+            14829989265365008388,
+            1074,
+            1791026962753576785,
+            1791026962755485000
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-croco/manifest.json": {
+          "sha256": "cb60fcc1b051760703cbf69d2959fce8c27bdb844ddce932ea175f74ca4f7b2f",
+          "bytes": 1014,
+          "signature": [
+            3351383302,
+            11939467036264562692,
+            1014,
+            1791026953765371286,
+            1791026953766331249
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/jjzha-finalize/prepared.json": {
+          "sha256": "cbfbfa412d2775118578d52a90b6c363e8c312779cd32e76f7f9d09e06f70a73",
+          "bytes": 16180,
+          "signature": [
+            3351383302,
+            6757540645991940100,
+            16180,
+            1791026228254652370,
+            1791026228257596600
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/README.md": {
+          "sha256": "b6e1c716d323159d74dda80789b00c91c6bc778ecbbf06b3abb1b1d8461fc86b",
+          "bytes": 23,
+          "signature": [
+            3351383302,
+            8441726944808992772,
+            23,
+            1790930336411994711,
+            1790930336411994711
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/danish.jsonl": {
+          "sha256": "30ebda679f3d1d6658c522bc628af3430ce9255c1f88f82b1666616b0f029fa1",
+          "bytes": 64735790,
+          "signature": [
+            3351383302,
+            15064563416413700100,
+            64735790,
+            1790930339012498234,
+            1790930339034391332
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/dutch.jsonl": {
+          "sha256": "d531350412500d39b2c45690ab51f6f81176437835d4a0786256a5377d312330",
+          "bytes": 66883890,
+          "signature": [
+            3351383302,
+            12125329183342592004,
+            66883890,
+            1790930341241498504,
+            1790930341260894579
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/english.jsonl": {
+          "sha256": "520b650850fd0b045508f83247a7139227bf54baf76755fc89a9abb2f48acf4f",
+          "bytes": 61655005,
+          "signature": [
+            3351383302,
+            17699702166999203844,
+            61655005,
+            1790930343327498757,
+            1790930343341294416
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/french.jsonl": {
+          "sha256": "88467be145219b75a1c53d91613645a76beacd8727b91081982b69ed12a0728d",
+          "bytes": 72039094,
+          "signature": [
+            3351383302,
+            157895609889128452,
+            72039094,
+            1790930345683499042,
+            1790930345698436137
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/galician.jsonl": {
+          "sha256": "c699b21e4dcc3a49d15fc25362367032d3083e91a029d85f70e5a5e8915484b4",
+          "bytes": 65826157,
+          "signature": [
+            3351383302,
+            5692795452268806148,
+            65826157,
+            1790930347946499250,
+            1790930347960027111
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/german.jsonl": {
+          "sha256": "f3a03ef5daaa21e23f46418ac0bee5d98b5642a9a026eca75031d959884fc08c",
+          "bytes": 69290743,
+          "signature": [
+            3351383302,
+            2170760742797574148,
+            69290743,
+            1790930349990499424,
+            1790930350004198457
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/irish.jsonl": {
+          "sha256": "0de98b41179a2d92c11f210a797c14469968cdf25386be2d142c47914a1c8dbb",
+          "bytes": 73802548,
+          "signature": [
+            3351383302,
+            16111582865519738884,
+            73802548,
+            1790930352225499613,
+            1790930352239146937
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/italian.jsonl": {
+          "sha256": "7a87fb573831ecf60e241a55d93baedbc802d9b529ab3895abcc79a15f3a20e9",
+          "bytes": 68060595,
+          "signature": [
+            3351383302,
+            4740467903274876932,
+            68060595,
+            1790930354318499790,
+            1790930354336088965
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/maltese.jsonl": {
+          "sha256": "a56f4a2d77321090b490c7a6b8d4bb93751333fbb5bf1b0492ade77641c7ed16",
+          "bytes": 67800631,
+          "signature": [
+            3351383302,
+            13681270714940063748,
+            67800631,
+            1790930357161500031,
+            1790930357179544006
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/spanish.jsonl": {
+          "sha256": "83f2271c7c0b72a877124864823dd19b2e37952011c449addf651353779d37c8",
+          "bytes": 68810541,
+          "signature": [
+            3351383302,
+            6561633708422791172,
+            68810541,
+            1790930359269500209,
+            1790930359287549932
+          ]
+        },
+        "/work/mimir/HRM-Text/data/downloads/datasets/jjzha_croco/b50944e43ad94cce7c78970891c044fc10e45ccf/welsh.jsonl": {
+          "sha256": "47d5c62b1f3cb534f22804e98f9cbf090078b667d17d8f94fb75ac2fdbb57d6f",
+          "bytes": 67999922,
+          "signature": [
+            3351383302,
+            15638905133177569284,
+            67999922,
+            1790930361440500393,
+            1790930361458841729
+          ]
+        },
+        "/work/mimir/HRM-Text/data/converted_sources/dfm13_jjzha/jjzha_croco/candidates.jsonl": {
+          "sha256": "b9c11ccf017e36f3266cbd53017e6f629aa35549a12f997d910fc349d8f87685",
+          "bytes": 605034117,
+          "signature": [
+            3351383302,
+            3094481857147961348,
+            605034117,
+            1790930376493501702,
+            1790930376493501702
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-jjzha-croco/README.md": {
+          "sha256": "87212cf616266e901d20ff70dc1f56eec3cd19af75752794bfdcf9792eed86de",
+          "bytes": 1230,
+          "signature": [
+            3351383302,
+            14501373070103937028,
+            1230,
+            1791026953768685370,
+            1791026953768685370
+          ]
+        }
+      },
+      "readiness": "nonwave_target_only_tokenization_not_ready"
+    }
+  ],
+  "shared_arena_verification": {
+    "name": "ai_arenaen_preferred",
+    "rows": 2328,
+    "status": "publication_verified",
+    "evidence": {
+      "source": "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/data/train.jsonl",
+      "quality_basis": "automated model audit; not certified gold",
+      "license": "cc-by-4.0",
+      "repo_id": "danish-foundation-models/ai-arenaen",
+      "revision": "bb3b6d28e4e159fb23dbf9aa4f9902696ed678be"
+    },
+    "readiness": "nonwave_target_only_tokenization_not_ready",
+    "pins": {
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/data/train.jsonl": {
+        "sha256": "f69a025cf79c3d08932711782b1a431f8c8835bd786bce32e3d43275f16825c6",
+        "bytes": 9407495,
+        "signature": [
+          3351383302,
+          17122805651198705668,
+          9407495,
+          1790851703036693096,
+          1790851703036693096
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/publication-ready.json": {
+        "sha256": "59692a968c84bc0c19376771ae257950d8598d5e3bf26194b77defeb385f280c",
+        "bytes": 476,
+        "signature": [
+          3351383302,
+          14046011347898597380,
+          476,
+          1790852765660145440,
+          1790852765661326884
+        ]
+      },
+      "/work/mimir/HRM-Text/docs/reports/dfm13_arena_user_authorized_release_20261001.json": {
+        "sha256": "aab817df99539d2177b7ae40d3b548c708f57586d8102bc81b543740d006178e",
+        "bytes": 6922,
+        "signature": [
+          3351383302,
+          11764028878194409476,
+          6922,
+          1790851423379038297,
+          1790851423379912446
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/upload-receipts.json": {
+        "sha256": "55aa0c28dc5880ab6603415cef01154f8f9bef5739f674bc90c0f23d557d7486",
+        "bytes": 3027,
+        "signature": [
+          3351383302,
+          8563440889347506180,
+          3027,
+          1790852982244345490,
+          1790852982245083881
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/manifest.json": {
+        "sha256": "f46756e472f34e09011a35790a0bfd0bd4d1839dc2267afec53035d0b52ccb8b",
+        "bytes": 6049,
+        "signature": [
+          3351383302,
+          6399743299822551044,
+          6049,
+          1790851991792281422,
+          1790851991793226088
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/provenance.jsonl": {
+        "sha256": "dd665520ad80336fc39911b5d118ef85d5f0160202e863cae820f5d04f921e7a",
+        "bytes": 3959035,
+        "signature": [
+          3351383302,
+          8906785949704781828,
+          3959035,
+          1790851991783708236,
+          1790851991783708236
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/duplicates.jsonl": {
+        "sha256": "508337a245c7d026653d644ca7481953d5cd0717ddd719b1ef5ad37c5cafebf4",
+        "bytes": 8123,
+        "signature": [
+          3351383302,
+          6499565829430050820,
+          8123,
+          1790851991783708236,
+          1790851991783708236
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/manifest.json": {
+        "sha256": "d99653ba453d0fdd0affeb639d5f3ca999de2f2a59176af6153522dc6025f09e",
+        "bytes": 28454,
+        "signature": [
+          3351383302,
+          11196262367280431108,
+          28454,
+          1790852609382305579,
+          1790852609383365670
+        ]
+      },
+      "/work/mimir/HRM-Text/docs/reports/dfm13_bulk_repair_independent_holds_20261001.json": {
+        "sha256": "fb20769231f8b61cc43ab2aba85ab85398a2f321e4f6fbf3fc9ca0514b04836b",
+        "bytes": 9846,
+        "signature": [
+          3351383302,
+          18056266889017556996,
+          9846,
+          1790847603145721660,
+          1790847603145721660
+        ]
+      },
+      "/work/mimir/HRM-Text/scripts/export_dfm13_audited_arena.py": {
+        "sha256": "b50d9fee21e860814e054b70c1dab0193f3c23a42a11fe403fbdf427f6bee40c",
+        "bytes": 27332,
+        "signature": [
+          3351383302,
+          14855569224064303108,
+          27332,
+          1790851566482674192,
+          1790851566482674192
+        ]
+      },
+      "/work/mimir/HRM-Text/scripts/dfm13_arena_export_readiness.py": {
+        "sha256": "8399d706d39f837dd96d2756a4b04e9b06e1b8322a9af2a1bae8097115dff9b4",
+        "bytes": 16582,
+        "signature": [
+          3351383302,
+          6443793548984057860,
+          16582,
+          1790847654090735895,
+          1790847654090735895
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-v1/manifest.json": {
+        "sha256": "6c51eed7b59d323d84851d15077004db0076b69630733631d31f41646285453a",
+        "bytes": 7160,
+        "signature": [
+          3351383302,
+          11797747731044892676,
+          7160,
+          1790844307900873192,
+          1790844307901725960
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-v1/seal.json": {
+        "sha256": "56e8209f8c398c0f8657df81b20822de89f6e1a5443f97dc4626edc859bb3145",
+        "bytes": 92,
+        "signature": [
+          3351383302,
+          16887837957151326212,
+          92,
+          1790844307902436040,
+          1790844307903045781
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/plan.json": {
+        "sha256": "5aa7ed2a933ad197a90b4c1d03745b4b2f1c9aaa775eaeeb8eed4d4f036b0533",
+        "bytes": 12510,
+        "signature": [
+          3351383302,
+          12680458556078030852,
+          12510,
+          1790844307930709840,
+          1790844307931447482
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/seal.json": {
+        "sha256": "797e6dc438b8bfc453114b037d88e2a8d125ba6355a9003e59288a58e24efbc5",
+        "bytes": 83,
+        "signature": [
+          3351383302,
+          10001652851799293956,
+          83,
+          1790844307932230210,
+          1790844307932768005
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/complete.json": {
+        "sha256": "e304368e4f21c0d47c4e09e31c6b01977228c7f6a8c6c603f61c321541fba160",
+        "bytes": 121,
+        "signature": [
+          3351383302,
+          3692224550861799428,
+          121,
+          1790850203283609471,
+          1790850203284444951
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-pending-next-repairs-v1/snapshot.json": {
+        "sha256": "d0d2bd2eb1e8df3b3d9f8e2d81455f2f4fd141f057b111215e92bcada51e4e6a",
+        "bytes": 112,
+        "signature": [
+          3351383302,
+          13479343841157054468,
+          112,
+          1790846457964397034,
+          1790846457966771068
+        ]
+      },
+      "/work/mimir/HRM-Text/data/dfm13/pending-arena-screened-20261001/comparia/candidates.jsonl": {
+        "sha256": "63df8a82a3c9f7c12b3577430da491571303c06f183711e0a367e8a60c8256ec",
+        "bytes": 2575087,
+        "signature": [
+          3351383302,
+          18127280489743646724,
+          2575087,
+          1790841951576762754,
+          1790841951576762754
+        ]
+      },
+      "/work/mimir/HRM-Text/data/dfm13/pending-arena-screened-20261001/helpsteer3_edit/candidates.jsonl": {
+        "sha256": "6e0b4f265eab9fcc4ae8619af76de52a5b08f093ef775583a257c2ac8d360af4",
+        "bytes": 59557199,
+        "signature": [
+          3351383302,
+          11302605124555309060,
+          59557199,
+          1790841954070763816,
+          1790841954070763816
+        ]
+      },
+      "/work/mimir/HRM-Text/data/dfm13/pending-arena-screened-20261001/helpsteer3_preference/candidates.jsonl": {
+        "sha256": "9677b4c555cd8a15ea32380a1c36fa5e8c79d5054e689444ee91077371b977d6",
+        "bytes": 194308530,
+        "signature": [
+          3351383302,
+          6082825344047382532,
+          194308530,
+          1790841960212764724,
+          1790841960212764724
+        ]
+      },
+      "/work/mimir/HRM-Text/data/dfm13/pending-arena-screened-20261001/expert5k/candidates.jsonl": {
+        "sha256": "bbfc7e07b44ebeb9cd5da527eb5c48d05081b4d1025e517a924b91b97faa1ae2",
+        "bytes": 35174334,
+        "signature": [
+          3351383302,
+          18004776955963637764,
+          35174334,
+          1790841962175765222,
+          1790841962175765222
+        ]
+      },
+      "/work/mimir/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/blobs/cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f": {
+        "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "bytes": 32169626,
+        "signature": [
+          3351383302,
+          3417065343162318852,
+          32169626,
+          1786533007983834626,
+          1787895494131266214
+        ]
+      },
+      "/work/mimir/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/blobs/6068e357379d36f823c377e30efb101fa2c67fe4": {
+        "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+        "bytes": 3082,
+        "signature": [
+          3351383302,
+          1312120956301869060,
+          3082,
+          1786533003588871978,
+          1787895490789731416
+        ]
+      },
+      "/work/mimir/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/blobs/4741bf6e4132ba23a5537f9d6e74e9a6d613d7cd": {
+        "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+        "bytes": 18683,
+        "signature": [
+          3351383302,
+          11555506023855685636,
+          18683,
+          1786533003370873830,
+          1787895490786990671
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/origins.json": {
+        "sha256": "de6e3740903b5e2f76cb77e5184317055434ba8485b30f1c0c13c34f1b5d1bd6",
+        "bytes": 169,
+        "signature": [
+          3351383302,
+          665273630445862916,
+          169,
+          1790851626501248707,
+          1790851626501986428
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/original/ledger.sqlite": {
+        "sha256": "0d3d9ee6588627814e19ce5b585ac981ac4d5b10a08459906f84e83efab13284",
+        "bytes": 56160256,
+        "signature": [
+          3351383302,
+          16232298935722246148,
+          56160256,
+          1790851626231685132,
+          1790851626231685132
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/original/manifest.json": {
+        "sha256": "6c51eed7b59d323d84851d15077004db0076b69630733631d31f41646285453a",
+        "bytes": 7160,
+        "signature": [
+          3351383302,
+          16429919431326433284,
+          7160,
+          1790851626243694148,
+          1790851626243694148
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/original/seal.json": {
+        "sha256": "56e8209f8c398c0f8657df81b20822de89f6e1a5443f97dc4626edc859bb3145",
+        "bytes": 92,
+        "signature": [
+          3351383302,
+          16353907830884073476,
+          92,
+          1790851626244163010,
+          1790851626244163010
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/seal.json": {
+        "sha256": "797e6dc438b8bfc453114b037d88e2a8d125ba6355a9003e59288a58e24efbc5",
+        "bytes": 83,
+        "signature": [
+          3351383302,
+          17000461506601615364,
+          83,
+          1790851626413233187,
+          1790851626413233187
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/snapshot.json": {
+        "sha256": "a8bd984bb0de745e92aa62ea486ab30a2963c1f5d5fbcf1322606b335e745cf0",
+        "bytes": 202,
+        "signature": [
+          3351383302,
+          10640005887488622596,
+          202,
+          1790851626500267424,
+          1790851626500982361
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/input.sqlite": {
+        "sha256": "0d3d9ee6588627814e19ce5b585ac981ac4d5b10a08459906f84e83efab13284",
+        "bytes": 56160256,
+        "signature": [
+          3351383302,
+          14054149355781816324,
+          56160256,
+          1790851626455683888,
+          1790851626455683888
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/origin-input-snapshot.json": {
+        "sha256": "d0d2bd2eb1e8df3b3d9f8e2d81455f2f4fd141f057b111215e92bcada51e4e6a",
+        "bytes": 112,
+        "signature": [
+          3351383302,
+          10067037526647963652,
+          112,
+          1790851626467342333,
+          1790851626467342333
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/plan.json": {
+        "sha256": "5aa7ed2a933ad197a90b4c1d03745b4b2f1c9aaa775eaeeb8eed4d4f036b0533",
+        "bytes": 12510,
+        "signature": [
+          3351383302,
+          7340013615668789252,
+          12510,
+          1790851626412568693,
+          1790851626412568693
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/complete.json": {
+        "sha256": "e304368e4f21c0d47c4e09e31c6b01977228c7f6a8c6c603f61c321541fba160",
+        "bytes": 121,
+        "signature": [
+          3351383302,
+          13399410028228378628,
+          121,
+          1790851626413836348,
+          1790851626413836348
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-pending-next-repairs-v1/snapshots/repair/ledger.sqlite": {
+        "sha256": "9ce4d3f85b9d5917a78cc302be6b86afa36b1d9c7e3d32da68b238983805d572",
+        "bytes": 191102976,
+        "signature": [
+          3351383302,
+          13698446821766397956,
+          191102976,
+          1790851626371683689,
+          1790851626371683689
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-bulk205242-reasonfirst-thinking-v3/manifest.json": {
+        "sha256": "6588b566a72c8e31cc2868a76dc2fa6d5c40f00f2433eee183e8cea072346335",
+        "bytes": 36419,
+        "signature": [
+          3351383302,
+          9167875064744247300,
+          36419,
+          1790840603490622526,
+          1790840603491164499
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-bulk205242-reasonfirst-thinking-v3/seal.json": {
+        "sha256": "786099ceff1ce39a0b2b99c47b9a14d9fe4e4bd0a7a19d0bf4ec10eebc0e3a4f",
+        "bytes": 92,
+        "signature": [
+          3351383302,
+          4305520940289163268,
+          92,
+          1790840603492020073,
+          1790840603492521533
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/plan.json": {
+        "sha256": "bc43f79a825715653a95aa00cae8bc2bbce5ffa96ab8cc48b720bbb30db751ae",
+        "bytes": 42248,
+        "signature": [
+          3351383302,
+          9019901468941942788,
+          42248,
+          1790840855801094699,
+          1790840855801947703
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/seal.json": {
+        "sha256": "1a5e0c6117357cf266055f375fb2d798018fb8af94650e98d662332e6e580c9e",
+        "bytes": 83,
+        "signature": [
+          3351383302,
+          13403003015111901188,
+          83,
+          1790840855802697395,
+          1790840855803316275
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/complete.json": {
+        "sha256": "bd73e6b583a7040e636ee5239f23dccde51687b8f872a31ea61f0d01bc750dea",
+        "bytes": 124,
+        "signature": [
+          3351383302,
+          16289478911918473220,
+          124,
+          1790851206408976387,
+          1790851206409926473
+        ]
+      },
+      "/work/mimir/HRM-Text/logs/arena_audit/20261001-repairs-followup-v1/snapshot.json": {
+        "sha256": "d722e154d07829156d8e737268234ef58d403dc83cbf7fcc744948a936d38749",
+        "bytes": 113,
+        "signature": [
+          3351383302,
+          742403292616261636,
+          113,
+          1790843556763074772,
+          1790843556764661548
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-ai-arenaen-preferred/data/train.jsonl": {
+        "sha256": "c943d1f75116eb51289373bd023b91a9d3064055ee0bd1b687e7ee5411b27d3b",
+        "bytes": 10623682,
+        "signature": [
+          3351383302,
+          16303622377448407044,
+          10623682,
+          1790799214198980907,
+          1790799214198980907
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-ai-arenaen-preferred/manifest.json": {
+        "sha256": "e54c4147ff02c4d7339a9658fb5bcf2d0cf9d5dba2230f2407c145a433d5ecbd",
+        "bytes": 1363,
+        "signature": [
+          3351383302,
+          13456062817525956612,
+          1363,
+          1790799214200682357,
+          1790799214200682357
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-arena-human-preference-100k-preferred/data/train.jsonl": {
+        "sha256": "96ad78e9785b7e02ddd58d610f0f4a1e4b6597b56109f3b0abceb1c8d0a76b3f",
+        "bytes": 287526045,
+        "signature": [
+          3351383302,
+          7729697543030374404,
+          287526045,
+          1790799761262179220,
+          1790799761262179220
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-arena-human-preference-100k-preferred/manifest.json": {
+        "sha256": "fb6b29523b9acdd83547b7da074004b73865f23c7892b1c8ad1c759090a931af",
+        "bytes": 2981,
+        "signature": [
+          3351383302,
+          3282537806772764676,
+          2981,
+          1790799761280179090,
+          1790799761280179090
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-arena-human-preference-140k-preferred/data/train.jsonl": {
+        "sha256": "4a3c048120d37035c850811eebea114485a66ecd74a63613cb80cabc2a34ff02",
+        "bytes": 753912708,
+        "signature": [
+          3351383302,
+          15084214609696522244,
+          753912708,
+          1790799741263174684,
+          1790799741263174684
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-arena-human-preference-140k-preferred/manifest.json": {
+        "sha256": "053ae5015165c1f7f1482e3dd819c71cfabea662853b0fd0331eb68d4f831c0e",
+        "bytes": 3466,
+        "signature": [
+          3351383302,
+          14206129490506940420,
+          3466,
+          1790799741350329882,
+          1790799741350329882
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-arena-human-preference-55k-preferred/data/train.jsonl": {
+        "sha256": "cbd5db0b4a63afd47bfba1e1470e127a421c247d088fe59fca8f105aa37780e1",
+        "bytes": 98679237,
+        "signature": [
+          3351383302,
+          15402159120426926084,
+          98679237,
+          1790799773787183457,
+          1790799773787183457
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13/dfm13-arena-human-preference-55k-preferred/manifest.json": {
+        "sha256": "6c264d75c9bcdd69b4d1da3fad3ab10c12942f02bd9c7d40956552cf5e4e192e",
+        "bytes": 1173,
+        "signature": [
+          3351383302,
+          71599351265755140,
+          1173,
+          1790799773795182609,
+          1790799773795182609
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/origins.json": {
+        "sha256": "f822d1616022809ae2fda55263725a64db7810c37dc3202e7c2522532eeb9b68",
+        "bytes": 184,
+        "signature": [
+          3351383302,
+          4283472702877728772,
+          184,
+          1790851697287912163,
+          1790851697288791596
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/original/seal.json": {
+        "sha256": "786099ceff1ce39a0b2b99c47b9a14d9fe4e4bd0a7a19d0bf4ec10eebc0e3a4f",
+        "bytes": 92,
+        "signature": [
+          3351383302,
+          7708906281469476868,
+          92,
+          1790851695919151661,
+          1790851695919151661
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/original/ledger.sqlite": {
+        "sha256": "98a71ead54f0577af432e8fef71b0e111f5d06aeb66708e47e48b90d7c44bef8",
+        "bytes": 369897472,
+        "signature": [
+          3351383302,
+          5021416483429548036,
+          369897472,
+          1790851695846695589,
+          1790851695846695589
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/original/manifest.json": {
+        "sha256": "6588b566a72c8e31cc2868a76dc2fa6d5c40f00f2433eee183e8cea072346335",
+        "bytes": 36419,
+        "signature": [
+          3351383302,
+          6500665881270747140,
+          36419,
+          1790851695918486341,
+          1790851695918486341
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/seal.json": {
+        "sha256": "1a5e0c6117357cf266055f375fb2d798018fb8af94650e98d662332e6e580c9e",
+        "bytes": 83,
+        "signature": [
+          3351383302,
+          7231755499802066948,
+          83,
+          1790851696788867663,
+          1790851696788867663
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/complete.json": {
+        "sha256": "bd73e6b583a7040e636ee5239f23dccde51687b8f872a31ea61f0d01bc750dea",
+        "bytes": 124,
+        "signature": [
+          3351383302,
+          9260721800721727492,
+          124,
+          1790851696789415646,
+          1790851696789415646
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/origin-input-snapshot.json": {
+        "sha256": "d722e154d07829156d8e737268234ef58d403dc83cbf7fcc744948a936d38749",
+        "bytes": 113,
+        "signature": [
+          3351383302,
+          9032362200422481924,
+          113,
+          1790851697100992981,
+          1790851697100992981
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/input.sqlite": {
+        "sha256": "98a71ead54f0577af432e8fef71b0e111f5d06aeb66708e47e48b90d7c44bef8",
+        "bytes": 369897472,
+        "signature": [
+          3351383302,
+          14317116436002111492,
+          369897472,
+          1790851697036699629,
+          1790851697036699629
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/snapshot.json": {
+        "sha256": "8588b074b8964aaaf1db1b53974fdd43c9945fcce189845cda2762937f512187",
+        "bytes": 198,
+        "signature": [
+          3351383302,
+          1010451548110192644,
+          198,
+          1790851697286361392,
+          1790851697287329953
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/plan.json": {
+        "sha256": "bc43f79a825715653a95aa00cae8bc2bbce5ffa96ab8cc48b720bbb30db751ae",
+        "bytes": 42248,
+        "signature": [
+          3351383302,
+          14311135876712955908,
+          42248,
+          1790851696788207374,
+          1790851696788207374
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/private/20261001-repairs-followup-v1/snapshots/repair/ledger.sqlite": {
+        "sha256": "489eb84ed40d3645ecc18f95460c686e9720a8da09836220a647d6b2de993b71",
+        "bytes": 1080274944,
+        "signature": [
+          3351383302,
+          15258786700428705796,
+          1080274944,
+          1790851696610699570,
+          1790851696610699570
+        ]
+      },
+      "/work/mimir/HRM-Text/exports_dfm13_audited/20261001-v1/dfm13-ai-arenaen-preferred/README.md": {
+        "sha256": "9648b8d61471877265ff8a09f832c24178f68aeca4d77e1a0ce788d59f5cf66c",
+        "bytes": 1808,
+        "signature": [
+          3351383302,
+          2970682661254201348,
+          1808,
+          1790851991793493135,
+          1790851991793493135
+        ]
+      }
+    }
+  },
+  "sampling_performed": false,
+  "registry_changed": false,
+  "implementation_sha256": "1b007099615c6f49bbb76c8170e9c14675f7ea429d92a4822418b7a3da3add6d"
+}

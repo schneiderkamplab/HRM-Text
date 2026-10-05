@@ -1,0 +1,131 @@
+{
+  "exclusion_proof_sha256": "ea8ef4a198d392e9dc21c28e45f44d91e1aa6d2b098aa8e031916b1b0274f0c6",
+  "excluded_four_absent": true,
+  "case45_occurrences": 1,
+  "entries": [
+    {
+      "name": "dfm13_wave4_wikipedia_sr_denoising",
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sr-denoising",
+        "revision": "0d18ee8e4cb3cabc2b2c9308b1b8a0e2211aa309",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "e3e458156d5a9f8ba5d3e051dc593a9f3d072cd3a0f272983baaee06d9c8e264",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "manual-review-decisions.json": {
+            "sha256": "11dded4fd1c92afeaeecac2bc4ebb7e3655b718ef938eb49a446b3d6d363d8a7",
+            "git_blob_sha1": "c6fd94983a8f8301c05bf150f3ef90b5e0cdb040",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "a2cbc873168944f3b1683e779c30c2c9d031cb3f9636e297006a2a4f93a492c4",
+            "git_blob_sha1": "f8c329c3f7f61f271b8d0f899d0d76dbc05e42b4",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "e6d7550cd78bf51e10d3871b7e1755d861fce9f523339639a8407e56777b87b5",
+            "git_blob_sha1": "87e50c8fdb9af72d4638592e2d2405979205ce19",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      },
+      "rows": 74887,
+      "tokens": 103510653
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sr_paragraph_reordering",
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sr-paragraph-reordering",
+        "revision": "bc330aeabaa6140ec3a0441f7b56a2dba51cf745",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "110dfed740c6a5d6eb8910844d67724bc7b19138e13280162bf3d30420d886a0",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "manual-review-decisions.json": {
+            "sha256": "11dded4fd1c92afeaeecac2bc4ebb7e3655b718ef938eb49a446b3d6d363d8a7",
+            "git_blob_sha1": "c6fd94983a8f8301c05bf150f3ef90b5e0cdb040",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "64aa8f88632431a1c1456fae42cc686f75a1fdc4c23b40099a4616d1c0bfe083",
+            "git_blob_sha1": "a1582655a15e2027df0b1481ac696fd5f671bffb",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "27f76f056904fb984267c736ca1409caacee9f8f035c6ff3ccae3acd52f0d636",
+            "git_blob_sha1": "515812de21dc610f96195db4d5b5c82169941872",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      },
+      "rows": 30910,
+      "tokens": 44882234
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sr_prefix_continuation",
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sr-prefix-continuation",
+        "revision": "9eed7a9cc1d6150fa306e907113b9be89955ab91",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "94bf0e49fd50f1b3543d78e786fe43c5f2cb5b692dde634f85237a8f118a4052",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "manual-review-decisions.json": {
+            "sha256": "11dded4fd1c92afeaeecac2bc4ebb7e3655b718ef938eb49a446b3d6d363d8a7",
+            "git_blob_sha1": "c6fd94983a8f8301c05bf150f3ef90b5e0cdb040",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "d95845eeb0c0c8b9849b42a4ea82087290c407846068080ca0ed857db4c11c03",
+            "git_blob_sha1": "0d6429589ddf534df815669e5071b1458d743e65",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "1a3ab0073f829eb8b86b1bad736641d04907ea341c2d3a57fd984acc16372126",
+            "git_blob_sha1": "c9f5fb129c9676a577dfcbc5b486bf34c6ab0c05",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      },
+      "rows": 109633,
+      "tokens": 77131679
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sr_span_filling",
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sr-span-filling",
+        "revision": "5bc2f85214941b2b22fc5daa989fbd2275ef8d50",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "af4a96a2ab18e60f215f920236a0a00966da43c9e7a2db7ef5b1ee90ec268f14",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "manual-review-decisions.json": {
+            "sha256": "11dded4fd1c92afeaeecac2bc4ebb7e3655b718ef938eb49a446b3d6d363d8a7",
+            "git_blob_sha1": "c6fd94983a8f8301c05bf150f3ef90b5e0cdb040",
+            "method": "revision_bound_git_blob"
+          },
+          "README.md": {
+            "sha256": "cce44017c3772feb693e4d11160e56d8eb3929bbb6d91ee525bd33495999bbe3",
+            "git_blob_sha1": "9ad690ca0ad79ef9dbaaee7ab1d75c5cf3aee2bc",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "836c81230577325aacb8431e2778db107224ea9614f25ea1a21fac52862d7911",
+            "git_blob_sha1": "edfe6402ea537407dcb6236c83a65bb9bd820468",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      },
+      "rows": 38858,
+      "tokens": 25768880
+    }
+  ]
+}

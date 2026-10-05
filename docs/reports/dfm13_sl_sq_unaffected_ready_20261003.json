@@ -1,0 +1,3475 @@
+{
+  "completed_at": "2026-10-03T17:53:25.150025+00:00",
+  "entries": {
+    "dfm13_wave4_wikipedia_sl_denoising": {
+      "source": {
+        "name": "dfm13_wave4_wikipedia_sl_denoising",
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-denoising/data/train.jsonl",
+        "repeat": 1,
+        "rows": 61365,
+        "tokens": 80325058,
+        "parts": [
+          {
+            "rows": 5000,
+            "tokens": 6550983,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/tokens.npy",
+                "sha256": "a2f720552214accf566692c3269f1b870f9fd5af8063b6b6ce742cdbed83f3cc"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/inst_start.npy",
+                "sha256": "6ca9a89db3297fe97608b6a95620b7050444853b591846f554b866065c7c1b6c"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/inst_len.npy",
+                "sha256": "c11676ba61872177bddf33b0d4e9ecb73d09bfbeba5247683051f7e7f6c49593"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/resp_start.npy",
+                "sha256": "61fc611a334ad358e04b4b9f167795bd81b35f9cf4220edd5b70971562c1a561"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/resp_len.npy",
+                "sha256": "1e6c835012f923ff2822f83f12610f6964a11ef15c8f4611cee5b2f9246df6d0"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000000.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6600926,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/tokens.npy",
+                "sha256": "5451f33dc4954aedd983d73c3bb43f460e90ac8a6ca95f230a6971c7151263c3"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/inst_start.npy",
+                "sha256": "d2e8ecd08de7267e9f624f39382f36bd07f9e747a06facf8d80ca36d9aa62eb9"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/inst_len.npy",
+                "sha256": "cc8f958a8584cc04b48e5906f05af902b567fa1f769a29bc855d95efa2b7b8fd"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/resp_start.npy",
+                "sha256": "5b839624c46b2b79583f1cf15136a2c8af568aa9926b0e75a69d5cb339a0e513"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/resp_len.npy",
+                "sha256": "7217b4770d877fcb92e65d87ef618d31ca53f2d66bd228da9c93ba20a17c63bc"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000001.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6546637,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/tokens.npy",
+                "sha256": "c4faed74a1ae8f8852a9708508bfd2838d907ffdc17e6b6671473532405a80c8"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/inst_start.npy",
+                "sha256": "8a83cd6ff5ddab90c46b3fdcddb27740a22e4924cfad62cbc83d0ed6c193f343"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/inst_len.npy",
+                "sha256": "91323ac9d6d864a9d346693b42b94ab5335741840246b8883314a69a098c62ac"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/resp_start.npy",
+                "sha256": "d9936e8562bf95837a86db2086c4798f946413cb4b4bf854e56d41659b922a01"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/resp_len.npy",
+                "sha256": "ce34bcbfbf3236584865d6a16908e581f30492edf0bb32a8d2d3cb405c48cd99"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000002.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6560262,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/tokens.npy",
+                "sha256": "acdea53e07efcdbe2246f09323e1e6873f3fd4e01bcdd2f432d8d10c46d8a653"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/inst_start.npy",
+                "sha256": "a838f38647ff228780f319e12708a663175b86c52dc358424e93cf70ef2b22e6"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/inst_len.npy",
+                "sha256": "c10215e3a087112f32a464dbf57260b66dce4c94c41da8096d35945cc5545d24"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/resp_start.npy",
+                "sha256": "5a6f3d1cb611fe81f63e183e94dbd71fb0e0a66603b5a8d43999aeec37446abe"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/resp_len.npy",
+                "sha256": "ef18e16d367b688999f5527af93d35fe6b0a67680713d6f65e5aa3c842d49571"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000003.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6611399,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/tokens.npy",
+                "sha256": "792ccdd5f5bcf6703324b1da51fc63f3dff3404b72ade512dee3ed3026fa36a7"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/inst_start.npy",
+                "sha256": "0b2069c68c1c26aab96a23506456d735c8ccecf9a7a6cab6a951c1da8883c71f"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/inst_len.npy",
+                "sha256": "cefc6d56adf5211ce86e1c573f8fbd481172e124596e58dd1293e634a3a54898"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/resp_start.npy",
+                "sha256": "fa419f4a8df20c0f9ded9de76321fb990b736321f5ce175d110c47fba97bfe9d"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/resp_len.npy",
+                "sha256": "5a595a811ae356e4a528ca9494dc027631e404a38b1eadcbb3c5e23a1eba68c6"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000004.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6532206,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/tokens.npy",
+                "sha256": "7dbcb4e383d534f821fe090bda89b2a26fb478118a13b2d20da8a8f169998688"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/inst_start.npy",
+                "sha256": "2fbf82b0442ee552203a089a08ed9f449598b9ce573c9b196c17494f45b5bc6c"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/inst_len.npy",
+                "sha256": "a48443cce91f96816b8505cec30eb9c1dc0b5b2633af3e3641cb6c3d8960c95b"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/resp_start.npy",
+                "sha256": "9105b93fab50f21807ebffb081c00bd24db58ff37a0a21cd8f7edcd65b4a1650"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/resp_len.npy",
+                "sha256": "d7aac993bef906b5197135fcb4b481684101330dd76af9ac1fcd2af6122c7cc9"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000005.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6575624,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/tokens.npy",
+                "sha256": "2f65916a7ee41f66eb3427a0fe440f10703f989ce8ebf9fe8ad8c1976a211c1a"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/inst_start.npy",
+                "sha256": "8d59fb8d00a1ced7b9dcf5ced171ae7c11b51525edee35e899664c277d56c9c3"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/inst_len.npy",
+                "sha256": "224d20cec93c6f5328fa536eb377b1ec8745039cc18f704228dc63e04bf17851"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/resp_start.npy",
+                "sha256": "d039c2e17da65362a044b08caf5900acd4185e544e9e921c2e3d731d8c68bc6c"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/resp_len.npy",
+                "sha256": "0dec99d2a5ec4fa425fd815bc174a88cb998e2883b305171d8dcae6c9430b4c1"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000006.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6497841,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/tokens.npy",
+                "sha256": "1fba8496d273bf57539c5ad26d787e901313fd4ba2333ccfa048de33b00e5a22"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/inst_start.npy",
+                "sha256": "14e0fd77ee466c447e2a588312fd4d382c81708f5ecfc75ee9f0849d76807366"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/inst_len.npy",
+                "sha256": "7fde7029a2b8d4bf709fab9977ddde382fe1ae28dccff4f28b130f47f33b63c0"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/resp_start.npy",
+                "sha256": "02e28da8466ccb6629ebff0c69cc15931bcf97b4fdefdb44076739ea54b4e250"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/resp_len.npy",
+                "sha256": "c6096397df15bf02295c2aa0da48178fca87ae4a58845e1485b9c8e50f42e909"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000007.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6507632,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/tokens.npy",
+                "sha256": "63b9e17b835aa520861e471e799397ca1182e4dc6a1ac3139260dc26d5459fbb"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/inst_start.npy",
+                "sha256": "38471d265e50f57b322488d1dacdaab7e7f184796f19b89bdc7b6833ff08a0c3"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/inst_len.npy",
+                "sha256": "c366f86d678d6b141d55ae72ea9bbdfe6a5468ac1c82616f39a1888391412635"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/resp_start.npy",
+                "sha256": "3a93a1e15a97f5502400fdd6503796d296d6afa49a2709deaaa43d7f947ba8df"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/resp_len.npy",
+                "sha256": "6839d23fc07d7ad024ebae5a42ffe9e49bff43d9b91577bf1e8683631d4b9568"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000008.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6556676,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/tokens.npy",
+                "sha256": "fe6e8889ff465210c5db99fca93d5e3103e34e490c0992cfa5225b58e89a06f7"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/inst_start.npy",
+                "sha256": "34ed972fd82cce6402e07f75017fdc432033fa589f79b078bc9f8c4cf86482af"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/inst_len.npy",
+                "sha256": "87740feca07d6bffa84232f310cf0435ee04c9955e45371172ec22e8007c02e5"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/resp_start.npy",
+                "sha256": "07ebe989a0d2da77b61756ce4f9bbeea7d8c8630d0cead2f1417af35da76f269"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/resp_len.npy",
+                "sha256": "6a6fd5ff2ce702092409ee9e15269b1ac62c0ce894e431bb3782e1062e84028c"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000009.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6519695,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/tokens.npy",
+                "sha256": "e4cb08853b3756e0489aed90f2b1e43a76430648f292c07debb0eabae02aeff1"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/inst_start.npy",
+                "sha256": "f9e17ca8669dfe6649ae59d088a18e3c9fa00268669dd1d48a1c147c4bd348f5"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/inst_len.npy",
+                "sha256": "15385429a48127aae37db21f994f472f501b66498ee35a8334804d1a4da20ae8"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/resp_start.npy",
+                "sha256": "4d20d8942718ccec8e0638879291be04ea91ae830d6550754db78d692f1f79d0"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/resp_len.npy",
+                "sha256": "7a25a3eff204ee2ba020efdd0b33668b45349dbd904ef9ed998b5b676188606b"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000010.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 6484116,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/tokens.npy",
+                "sha256": "019a4f1ef2af4376bfe62bb5af2f3a3cdd11e094384e2f0a1082e5c2779fa391"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/inst_start.npy",
+                "sha256": "63dc13a407efb5810c4e297896914b0dc09749837bfbcb492b328fa67d0680e7"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/inst_len.npy",
+                "sha256": "a4ddf81eccdbf91b7b24a384426b08a92d1dd6d855ad6615affc6decddd62744"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/resp_start.npy",
+                "sha256": "7b23eff5f9b2f694134412fbcfb45940efc7ad4455d0109f35667d3e02fa99a6"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/resp_len.npy",
+                "sha256": "cbccbc6905b9897dc378596ebd14caeba4a3b0dddad7bb99d1e292e8821c342f"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000011.jsonl"
+          },
+          {
+            "rows": 1365,
+            "tokens": 1781061,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/tokens.npy",
+                "sha256": "ae4f19f7c232c0b14208a5856efe3abf39839c922659d8a2ba372f39bf92c213"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/inst_start.npy",
+                "sha256": "92bfe4a9c324c478dbe3d9b23011cc04cef85e9af788cfd6c8c050809af44c38"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/inst_len.npy",
+                "sha256": "ea9a366aac725d0ad8cc9351ca7831bb6ab7782054810abf20adeef33f69192e"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/resp_start.npy",
+                "sha256": "4c94377a66502428c0935e10dd971f4e2e87df4c0ef7dfefc746a208800005dc"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/resp_len.npy",
+                "sha256": "2dc57942cccd585d039220a03418e26ca27ae2714b7c76ca98ee57a3298464ca"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_denoising__part-000012.jsonl"
+          }
+        ],
+        "token_metrics": {
+          "training": {
+            "tokens": 80325058,
+            "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+          },
+          "preflight": {
+            "tokens": 80325058,
+            "basis": "all_assistant_targets_with_repeated_prefixes",
+            "source_row_sum_verified": true,
+            "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+          }
+        },
+        "native_token_parity": {
+          "scope": "deterministic_sample_not_full_corpus",
+          "truncation": false,
+          "selection": "five spread row ordinals plus first three multi-assistant rows",
+          "rows": [
+            {
+              "ordinal": 0,
+              "part": "part-000000.jsonl",
+              "part_row": 0,
+              "row_sha256": "e8324d0cb2c9a133484570f0029e9b81293b89f6cd714ee551fe6ced26ec7745",
+              "assistant_messages": 1,
+              "inst_start": 0,
+              "resp_start": 1424,
+              "prompt_tokens": 1424,
+              "response_tokens": 1375,
+              "final_target_tokens": 2799,
+              "all_assistant_rendered_tokens": 2799,
+              "declared_preflight_tokens": 2799,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 15341,
+              "part": "part-000003.jsonl",
+              "part_row": 341,
+              "row_sha256": "f46870b344abd7a91fbbdc477ea8b4eb245ee18d09c863048bd3cecd550ca7c3",
+              "assistant_messages": 1,
+              "inst_start": 449943,
+              "resp_start": 450290,
+              "prompt_tokens": 347,
+              "response_tokens": 321,
+              "final_target_tokens": 668,
+              "all_assistant_rendered_tokens": 668,
+              "declared_preflight_tokens": 668,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 30682,
+              "part": "part-000006.jsonl",
+              "part_row": 682,
+              "row_sha256": "485e31c3d008e8ab3640982531ab9d1f780f910d3d83e679005f98464a66c288",
+              "assistant_messages": 1,
+              "inst_start": 937620,
+              "resp_start": 939138,
+              "prompt_tokens": 1518,
+              "response_tokens": 1467,
+              "final_target_tokens": 2985,
+              "all_assistant_rendered_tokens": 2985,
+              "declared_preflight_tokens": 2985,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 46023,
+              "part": "part-000009.jsonl",
+              "part_row": 1023,
+              "row_sha256": "cc0d61c2382cc9e3ab36f3879e88d93c9324ae95ec9de54451003049a7552621",
+              "assistant_messages": 1,
+              "inst_start": 1351855,
+              "resp_start": 1352202,
+              "prompt_tokens": 347,
+              "response_tokens": 321,
+              "final_target_tokens": 668,
+              "all_assistant_rendered_tokens": 668,
+              "declared_preflight_tokens": 668,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 61364,
+              "part": "part-000012.jsonl",
+              "part_row": 1364,
+              "row_sha256": "588e251fab155dc6551702829dee427b4a388338808e272f19691246b05fb0c7",
+              "assistant_messages": 1,
+              "inst_start": 1779646,
+              "resp_start": 1780368,
+              "prompt_tokens": 722,
+              "response_tokens": 693,
+              "final_target_tokens": 1415,
+              "all_assistant_rendered_tokens": 1415,
+              "declared_preflight_tokens": 1415,
+              "exact_prompt_and_response_tokens": true
+            }
+          ]
+        },
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-denoising",
+        "hf_revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+        "tokenized_root": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens"
+      },
+      "files": {
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-denoising/data/train.jsonl": {
+          "sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+          "bytes": 439636667,
+          "signature": [
+            3351383302,
+            7677688987012169732,
+            439636667,
+            1791049621440507250,
+            1791049621552862416
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sl/denoising/publication.json": {
+          "sha256": "c86f438906e0a9c453847a00fb7f4f356152c1a21beb11449562cd355992b5dc",
+          "bytes": 928,
+          "signature": [
+            3351383302,
+            8568273475399778308,
+            928,
+            1791049632983549438,
+            1791049632984649478
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-denoising/manifest.json": {
+          "sha256": "aea5b8d60b2b8e56035d544cd52d8e6988d59130260cac0c16a34017ec385e69",
+          "bytes": 835,
+          "signature": [
+            3351383302,
+            14426907755994939396,
+            835,
+            1791049621964817432,
+            1791049621965879169
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/verified.json": {
+          "sha256": "0d86501d324acc27d7a1cb6dd932b20335ca1781a4d65c4fbaa43c578cc78e00",
+          "bytes": 443,
+          "signature": [
+            3351383302,
+            4699581449690873860,
+            443,
+            1791049789778125657,
+            1791049789778794367
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            12419878753900822532,
+            261,
+            1791049772478061939,
+            1791049772478061939
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/completion.json": {
+          "sha256": "0830c4249cf4f15ffe68991d8ccd1a56ed564a530c83441589c238d3757ad9cd",
+          "bytes": 205,
+          "signature": [
+            3351383302,
+            5284863774953177092,
+            205,
+            1791049789640737738,
+            1791049789641443517
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "a2f720552214accf566692c3269f1b870f9fd5af8063b6b6ce742cdbed83f3cc",
+          "bytes": 26204060,
+          "signature": [
+            3351383302,
+            2238637265849745412,
+            26204060,
+            1791049783898104017,
+            1791049783898104017
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "6ca9a89db3297fe97608b6a95620b7050444853b591846f554b866065c7c1b6c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            18427497098164043780,
+            40128,
+            1791049783902104049,
+            1791049783902104049
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "c11676ba61872177bddf33b0d4e9ecb73d09bfbeba5247683051f7e7f6c49593",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14988421309350019076,
+            40128,
+            1791049783903166571,
+            1791049783903166571
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "61fc611a334ad358e04b4b9f167795bd81b35f9cf4220edd5b70971562c1a561",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8571619626769776644,
+            40128,
+            1791049783904502199,
+            1791049783904502199
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "1e6c835012f923ff2822f83f12610f6964a11ef15c8f4611cee5b2f9246df6d0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14676135316635975684,
+            40128,
+            1791049783905387309,
+            1791049783905387309
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/tokens.npy": {
+          "sha256": "5451f33dc4954aedd983d73c3bb43f460e90ac8a6ca95f230a6971c7151263c3",
+          "bytes": 26403832,
+          "signature": [
+            3351383302,
+            13011847584682541060,
+            26403832,
+            1791049788348120407,
+            1791049788348120407
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/inst_start.npy": {
+          "sha256": "d2e8ecd08de7267e9f624f39382f36bd07f9e747a06facf8d80ca36d9aa62eb9",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10328591723511742468,
+            40128,
+            1791049788351661812,
+            1791049788351661812
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/inst_len.npy": {
+          "sha256": "cc8f958a8584cc04b48e5906f05af902b567fa1f769a29bc855d95efa2b7b8fd",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11238653363562938372,
+            40128,
+            1791049788352831003,
+            1791049788352831003
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/resp_start.npy": {
+          "sha256": "5b839624c46b2b79583f1cf15136a2c8af568aa9926b0e75a69d5cb339a0e513",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13648474879122931716,
+            40128,
+            1791049788354120446,
+            1791049788354120446
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000001.jsonl/resp_len.npy": {
+          "sha256": "7217b4770d877fcb92e65d87ef618d31ca53f2d66bd228da9c93ba20a17c63bc",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4406520306564071428,
+            40128,
+            1791049788354828143,
+            1791049788354828143
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/tokens.npy": {
+          "sha256": "c4faed74a1ae8f8852a9708508bfd2838d907ffdc17e6b6671473532405a80c8",
+          "bytes": 26186676,
+          "signature": [
+            3351383302,
+            319211338335780868,
+            26186676,
+            1791049785179108735,
+            1791049785179108735
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/inst_start.npy": {
+          "sha256": "8a83cd6ff5ddab90c46b3fdcddb27740a22e4924cfad62cbc83d0ed6c193f343",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15095171141085233156,
+            40128,
+            1791049785182108763,
+            1791049785182108763
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/inst_len.npy": {
+          "sha256": "91323ac9d6d864a9d346693b42b94ab5335741840246b8883314a69a098c62ac",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12230684272641769476,
+            40128,
+            1791049785183108767,
+            1791049785183108767
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/resp_start.npy": {
+          "sha256": "d9936e8562bf95837a86db2086c4798f946413cb4b4bf854e56d41659b922a01",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11408471802604879876,
+            40128,
+            1791049785183705022,
+            1791049785183705022
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000002.jsonl/resp_len.npy": {
+          "sha256": "ce34bcbfbf3236584865d6a16908e581f30492edf0bb32a8d2d3cb405c48cd99",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8262823015186038788,
+            40128,
+            1791049785184429808,
+            1791049785184429808
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/tokens.npy": {
+          "sha256": "acdea53e07efcdbe2246f09323e1e6873f3fd4e01bcdd2f432d8d10c46d8a653",
+          "bytes": 26241176,
+          "signature": [
+            3351383302,
+            14429317737298657284,
+            26241176,
+            1791049788555121170,
+            1791049788555121170
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/inst_start.npy": {
+          "sha256": "a838f38647ff228780f319e12708a663175b86c52dc358424e93cf70ef2b22e6",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17185238776757485572,
+            40128,
+            1791049788558121198,
+            1791049788558121198
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/inst_len.npy": {
+          "sha256": "c10215e3a087112f32a464dbf57260b66dce4c94c41da8096d35945cc5545d24",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13021324199471087620,
+            40128,
+            1791049788559121201,
+            1791049788559121201
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/resp_start.npy": {
+          "sha256": "5a6f3d1cb611fe81f63e183e94dbd71fb0e0a66603b5a8d43999aeec37446abe",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10129782589525458948,
+            40128,
+            1791049788560121205,
+            1791049788560121205
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000003.jsonl/resp_len.npy": {
+          "sha256": "ef18e16d367b688999f5527af93d35fe6b0a67680713d6f65e5aa3c842d49571",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13489198555776417796,
+            40128,
+            1791049788561121209,
+            1791049788561121209
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/tokens.npy": {
+          "sha256": "792ccdd5f5bcf6703324b1da51fc63f3dff3404b72ade512dee3ed3026fa36a7",
+          "bytes": 26445724,
+          "signature": [
+            3351383302,
+            15698487683457155076,
+            26445724,
+            1791049786628114072,
+            1791049786628114072
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/inst_start.npy": {
+          "sha256": "0b2069c68c1c26aab96a23506456d735c8ccecf9a7a6cab6a951c1da8883c71f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17754054206198120452,
+            40128,
+            1791049786631244967,
+            1791049786631244967
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/inst_len.npy": {
+          "sha256": "cefc6d56adf5211ce86e1c573f8fbd481172e124596e58dd1293e634a3a54898",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16858185084900278276,
+            40128,
+            1791049786642114141,
+            1791049786642114141
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/resp_start.npy": {
+          "sha256": "fa419f4a8df20c0f9ded9de76321fb990b736321f5ce175d110c47fba97bfe9d",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14498167172819058692,
+            40128,
+            1791049786643141589,
+            1791049786643141589
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000004.jsonl/resp_len.npy": {
+          "sha256": "5a595a811ae356e4a528ca9494dc027631e404a38b1eadcbb3c5e23a1eba68c6",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            3336059958826237956,
+            40128,
+            1791049786644114148,
+            1791049786644114148
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/tokens.npy": {
+          "sha256": "7dbcb4e383d534f821fe090bda89b2a26fb478118a13b2d20da8a8f169998688",
+          "bytes": 26128952,
+          "signature": [
+            3351383302,
+            7779357714434752516,
+            26128952,
+            1791049786190112459,
+            1791049786190112459
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/inst_start.npy": {
+          "sha256": "2fbf82b0442ee552203a089a08ed9f449598b9ce573c9b196c17494f45b5bc6c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4599614908214411268,
+            40128,
+            1791049786193112487,
+            1791049786193112487
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/inst_len.npy": {
+          "sha256": "a48443cce91f96816b8505cec30eb9c1dc0b5b2633af3e3641cb6c3d8960c95b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2459620741402787844,
+            40128,
+            1791049786194112491,
+            1791049786194112491
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/resp_start.npy": {
+          "sha256": "9105b93fab50f21807ebffb081c00bd24db58ff37a0a21cd8f7edcd65b4a1650",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8178106416617488388,
+            40128,
+            1791049786195112494,
+            1791049786195112494
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000005.jsonl/resp_len.npy": {
+          "sha256": "d7aac993bef906b5197135fcb4b481684101330dd76af9ac1fcd2af6122c7cc9",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12097333887966904324,
+            40128,
+            1791049786196112481,
+            1791049786196112481
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/tokens.npy": {
+          "sha256": "2f65916a7ee41f66eb3427a0fe440f10703f989ce8ebf9fe8ad8c1976a211c1a",
+          "bytes": 26302624,
+          "signature": [
+            3351383302,
+            4188569833478750212,
+            26302624,
+            1791049785289109140,
+            1791049785289109140
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/inst_start.npy": {
+          "sha256": "8d59fb8d00a1ced7b9dcf5ced171ae7c11b51525edee35e899664c277d56c9c3",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15156820158904532996,
+            40128,
+            1791049785292149607,
+            1791049785292149607
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/inst_len.npy": {
+          "sha256": "224d20cec93c6f5328fa536eb377b1ec8745039cc18f704228dc63e04bf17851",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4542602307117318148,
+            40128,
+            1791049785293155444,
+            1791049785293155444
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/resp_start.npy": {
+          "sha256": "d039c2e17da65362a044b08caf5900acd4185e544e9e921c2e3d731d8c68bc6c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4472705070878949380,
+            40128,
+            1791049785294109176,
+            1791049785294109176
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000006.jsonl/resp_len.npy": {
+          "sha256": "0dec99d2a5ec4fa425fd815bc174a88cb998e2883b305171d8dcae6c9430b4c1",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15550208749865598980,
+            40128,
+            1791049785294776948,
+            1791049785294776948
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/tokens.npy": {
+          "sha256": "1fba8496d273bf57539c5ad26d787e901313fd4ba2333ccfa048de33b00e5a22",
+          "bytes": 25991492,
+          "signature": [
+            3351383302,
+            2609029228371050500,
+            25991492,
+            1791049786574113873,
+            1791049786574113873
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/inst_start.npy": {
+          "sha256": "14e0fd77ee466c447e2a588312fd4d382c81708f5ecfc75ee9f0849d76807366",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12402408552533000196,
+            40128,
+            1791049786577113901,
+            1791049786577113901
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/inst_len.npy": {
+          "sha256": "7fde7029a2b8d4bf709fab9977ddde382fe1ae28dccff4f28b130f47f33b63c0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8708046852687921156,
+            40128,
+            1791049786578338976,
+            1791049786578338976
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/resp_start.npy": {
+          "sha256": "02e28da8466ccb6629ebff0c69cc15931bcf97b4fdefdb44076739ea54b4e250",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8151861791882543108,
+            40128,
+            1791049786579642677,
+            1791049786579642677
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000007.jsonl/resp_len.npy": {
+          "sha256": "c6096397df15bf02295c2aa0da48178fca87ae4a58845e1485b9c8e50f42e909",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            612462573012647940,
+            40128,
+            1791049786580292905,
+            1791049786580292905
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/tokens.npy": {
+          "sha256": "63b9e17b835aa520861e471e799397ca1182e4dc6a1ac3139260dc26d5459fbb",
+          "bytes": 26030656,
+          "signature": [
+            3351383302,
+            5988450250078355460,
+            26030656,
+            1791049787359116764,
+            1791049787359116764
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/inst_start.npy": {
+          "sha256": "38471d265e50f57b322488d1dacdaab7e7f184796f19b89bdc7b6833ff08a0c3",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4948463173225414660,
+            40128,
+            1791049787362116793,
+            1791049787362116793
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/inst_len.npy": {
+          "sha256": "c366f86d678d6b141d55ae72ea9bbdfe6a5468ac1c82616f39a1888391412635",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13473710453128822788,
+            40128,
+            1791049787363116796,
+            1791049787363116796
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/resp_start.npy": {
+          "sha256": "3a93a1e15a97f5502400fdd6503796d296d6afa49a2709deaaa43d7f947ba8df",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14342029096049180676,
+            40128,
+            1791049787363812278,
+            1791049787363812278
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000008.jsonl/resp_len.npy": {
+          "sha256": "6839d23fc07d7ad024ebae5a42ffe9e49bff43d9b91577bf1e8683631d4b9568",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14278297051920662532,
+            40128,
+            1791049787364710686,
+            1791049787364710686
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/tokens.npy": {
+          "sha256": "fe6e8889ff465210c5db99fca93d5e3103e34e490c0992cfa5225b58e89a06f7",
+          "bytes": 26226832,
+          "signature": [
+            3351383302,
+            4309081722657570820,
+            26226832,
+            1791049786195112477,
+            1791049786195112477
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/inst_start.npy": {
+          "sha256": "34ed972fd82cce6402e07f75017fdc432033fa589f79b078bc9f8c4cf86482af",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7928644036739661828,
+            40128,
+            1791049786199606267,
+            1791049786199606267
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/inst_len.npy": {
+          "sha256": "87740feca07d6bffa84232f310cf0435ee04c9955e45371172ec22e8007c02e5",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12015615976393801732,
+            40128,
+            1791049786201112516,
+            1791049786201112516
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/resp_start.npy": {
+          "sha256": "07ebe989a0d2da77b61756ce4f9bbeea7d8c8630d0cead2f1417af35da76f269",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14982895089833017348,
+            40128,
+            1791049786202112520,
+            1791049786202112520
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000009.jsonl/resp_len.npy": {
+          "sha256": "6a6fd5ff2ce702092409ee9e15269b1ac62c0ce894e431bb3782e1062e84028c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11491060455076397060,
+            40128,
+            1791049786203121012,
+            1791049786203121012
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/tokens.npy": {
+          "sha256": "e4cb08853b3756e0489aed90f2b1e43a76430648f292c07debb0eabae02aeff1",
+          "bytes": 26078908,
+          "signature": [
+            3351383302,
+            10694084225301610500,
+            26078908,
+            1791049787214116230,
+            1791049787214116230
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/inst_start.npy": {
+          "sha256": "f9e17ca8669dfe6649ae59d088a18e3c9fa00268669dd1d48a1c147c4bd348f5",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4102830555902509060,
+            40128,
+            1791049787217536801,
+            1791049787217536801
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/inst_len.npy": {
+          "sha256": "15385429a48127aae37db21f994f472f501b66498ee35a8334804d1a4da20ae8",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13585899437288718340,
+            40128,
+            1791049787218740940,
+            1791049787218740940
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/resp_start.npy": {
+          "sha256": "4d20d8942718ccec8e0638879291be04ea91ae830d6550754db78d692f1f79d0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5371081591914102788,
+            40128,
+            1791049787219829703,
+            1791049787219829703
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000010.jsonl/resp_len.npy": {
+          "sha256": "7a25a3eff204ee2ba020efdd0b33668b45349dbd904ef9ed998b5b676188606b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8253590321227038724,
+            40128,
+            1791049787221116273,
+            1791049787221116273
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/tokens.npy": {
+          "sha256": "019a4f1ef2af4376bfe62bb5af2f3a3cdd11e094384e2f0a1082e5c2779fa391",
+          "bytes": 25936592,
+          "signature": [
+            3351383302,
+            8091841202543263748,
+            25936592,
+            1791049789522124731,
+            1791049789522124731
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/inst_start.npy": {
+          "sha256": "63dc13a407efb5810c4e297896914b0dc09749837bfbcb492b328fa67d0680e7",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16689438538831888388,
+            40128,
+            1791049789525124759,
+            1791049789525124759
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/inst_len.npy": {
+          "sha256": "a4ddf81eccdbf91b7b24a384426b08a92d1dd6d855ad6615affc6decddd62744",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10595092928334659588,
+            40128,
+            1791049789526401688,
+            1791049789526401688
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/resp_start.npy": {
+          "sha256": "7b23eff5f9b2f694134412fbcfb45940efc7ad4455d0109f35667d3e02fa99a6",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9009488612513218564,
+            40128,
+            1791049789527430178,
+            1791049789527430178
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000011.jsonl/resp_len.npy": {
+          "sha256": "cbccbc6905b9897dc378596ebd14caeba4a3b0dddad7bb99d1e292e8821c342f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12912987522882863108,
+            40128,
+            1791049789528418793,
+            1791049789528418793
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/tokens.npy": {
+          "sha256": "ae4f19f7c232c0b14208a5856efe3abf39839c922659d8a2ba372f39bf92c213",
+          "bytes": 7124372,
+          "signature": [
+            3351383302,
+            14459954191578431492,
+            7124372,
+            1791049778016082353,
+            1791049778016082353
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/inst_start.npy": {
+          "sha256": "92bfe4a9c324c478dbe3d9b23011cc04cef85e9af788cfd6c8c050809af44c38",
+          "bytes": 11048,
+          "signature": [
+            3351383302,
+            5029736083300417540,
+            11048,
+            1791049778017454689,
+            1791049778017454689
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/inst_len.npy": {
+          "sha256": "ea9a366aac725d0ad8cc9351ca7831bb6ab7782054810abf20adeef33f69192e",
+          "bytes": 11048,
+          "signature": [
+            3351383302,
+            9249484370217533444,
+            11048,
+            1791049778018201893,
+            1791049778018201893
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/resp_start.npy": {
+          "sha256": "4c94377a66502428c0935e10dd971f4e2e87df4c0ef7dfefc746a208800005dc",
+          "bytes": 11048,
+          "signature": [
+            3351383302,
+            4218527679282806788,
+            11048,
+            1791049778018756074,
+            1791049778018756074
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens/part-000012.jsonl/resp_len.npy": {
+          "sha256": "2dc57942cccd585d039220a03418e26ca27ae2714b7c76ca98ee57a3298464ca",
+          "bytes": 11048,
+          "signature": [
+            3351383302,
+            10283428920728551428,
+            11048,
+            1791049778020082384,
+            1791049778020082384
+          ]
+        }
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-denoising",
+        "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "README.md": {
+            "sha256": "f16098efc0899663937bc1082edb5cb775fe026642ccafe9e7345afedee0c494",
+            "git_blob_sha1": "89242fdfc5b40ed8b25985f8efb5e689ccb4c998",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "aea5b8d60b2b8e56035d544cd52d8e6988d59130260cac0c16a34017ec385e69",
+            "git_blob_sha1": "6910536e810cedff52aee23abb55c7a58dcef53a",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sl_span_filling": {
+      "source": {
+        "name": "dfm13_wave4_wikipedia_sl_span_filling",
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-span-filling/data/train.jsonl",
+        "repeat": 1,
+        "rows": 35091,
+        "tokens": 22211638,
+        "parts": [
+          {
+            "rows": 5000,
+            "tokens": 3145073,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/tokens.npy",
+                "sha256": "7ded4c658407d64ff624b00d55ae7c5afd707a8616b7bd89ac4d701413f41c5b"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/inst_start.npy",
+                "sha256": "69b56d962d98b39bff3a872720412946894e8fd2deb73314030b0b36b5195ea0"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/inst_len.npy",
+                "sha256": "bbe6a071d5af59ba9bee91977abb98a0e3d769267453f2719a521d5d359be920"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/resp_start.npy",
+                "sha256": "d29f2733549451ab958c96e339f0315376ba2702d0af9bb9a2c98ab79026ddc2"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/resp_len.npy",
+                "sha256": "0f6b0a8d5173fa6d94501e0964bd2e3cc629f8ac0cfdbc7f9406095008c44e34"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000000.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3125567,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/tokens.npy",
+                "sha256": "620f3de036addd4b7cccae71e9132b0c0a0ad48668f9e5844dfe32149b6e8f4f"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/inst_start.npy",
+                "sha256": "4a225ba804e263fa26e1944888bcd3bd1b5608595b7f372e89b6040f55322ecc"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/inst_len.npy",
+                "sha256": "83f1b63ead3150139f6446d2c43fd1f49478aa0541b3118fd3553c6474f7a737"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/resp_start.npy",
+                "sha256": "5489c44096a605a4e4ab74373a69200932ad4e87a6bfc96a7f401a7e78b1eef1"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/resp_len.npy",
+                "sha256": "29ccf7b72dc7ddeaf551b8952dca4e5c2e06db18e02f11f82a4b53b0d5accaf8"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000001.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3156864,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/tokens.npy",
+                "sha256": "ea123c4386de6321344701bca44525a2812a7d34a0f6cf6b3d1658bbe39f931f"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/inst_start.npy",
+                "sha256": "5904d16560c0517aede82e465898083e38dca13f1d155e0999e87b08f2dc1433"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/inst_len.npy",
+                "sha256": "46ab4e4efde1ad442264850c78a9481bd86f98a194803955a9afc904679ebd56"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/resp_start.npy",
+                "sha256": "7c19e51aa084a42a6985769ba3c1457fb333e1c1b711bbaef2e6da219f2f4c1a"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/resp_len.npy",
+                "sha256": "7b901fa320381ae007e63b83f5fa48c0832397b088d094e2bfa552a010ae8e2c"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000002.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3192057,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/tokens.npy",
+                "sha256": "29683a5eac344752a3449df789b7d4eb13b4eefe270fcb83d2174e250ec14753"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/inst_start.npy",
+                "sha256": "fcdff5d930d07f778dd8827e0942a0a590a80c4505ac071356b0087a395a0dbc"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/inst_len.npy",
+                "sha256": "2bdf7ed4268ccc61cca3ab7e2737411a5a2e92175f7ba710d44ea892027bbcac"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/resp_start.npy",
+                "sha256": "8bb28466d78cf13bb58a048d5e9f4ca40204bfadd3c2e6eb55d6e17878ece651"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/resp_len.npy",
+                "sha256": "fce2989e4b1c97118a6d365ca8c446aeb84c3551afff97d555199b124104032e"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000003.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3135544,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/tokens.npy",
+                "sha256": "6f2910e213282a0f2c2f1e6ac6a9547b6672680a79ad718b9a4a84117db5b007"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/inst_start.npy",
+                "sha256": "67250c143ea4b431c11c534b7e92c59cd5296ce4c1566558f6ee3dea08cdd863"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/inst_len.npy",
+                "sha256": "d4c992d9eff68b02f00289d6227acdeadbd5f08b6648501ee97596a926f2487e"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/resp_start.npy",
+                "sha256": "32c3de4edae00c63551e4c45e45b05d2b1dd44ba48c3ca847f486e82c7fa7b91"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/resp_len.npy",
+                "sha256": "b1b183b756129db02d1e3423bce2a4be0747b6ad25a399b375e7ea464448095c"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000004.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3240650,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/tokens.npy",
+                "sha256": "d240d31b92aa61d1def1ee22fc9d6ff91cf95d8f2740b58846a7cacd940edc10"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/inst_start.npy",
+                "sha256": "d9c55df1f27261f0843f4795a45500ab85be8967685de79b8c80e0367dfd331a"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/inst_len.npy",
+                "sha256": "b41ab4509a41626711c876575ff2df60c77202f9aa72ed4b57089750fa0a85c6"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/resp_start.npy",
+                "sha256": "d941e7feb479909894237cd99662fd7fd5adb078ec1c689a00e7c7331eb60d53"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/resp_len.npy",
+                "sha256": "d6f954ed693313a77ed9726730904d46fa3a328ddccb29ff2b6e075b97c956ad"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000005.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3156345,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/tokens.npy",
+                "sha256": "9c119c058cad92327bffcac3a25d873d7ac48ea1543e273b4fa8bfbd087a81f3"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/inst_start.npy",
+                "sha256": "aa18c2605da4db36d2397ee130446667c3824aaab9658b9fa20cf1b102f19c1b"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/inst_len.npy",
+                "sha256": "2f333c11c6540a2366ca575fc740a4311146a4cd268dd0bacbbc3b9fa532d97d"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/resp_start.npy",
+                "sha256": "233fc0873bb06575253abf7746d3bad57b16aad9ce73a6e9bdcf7de9973c46a7"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/resp_len.npy",
+                "sha256": "b76e080f913f7108a68a99c6c81ca991bf8add44d2232d9420affd78f72b6d73"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000006.jsonl"
+          },
+          {
+            "rows": 91,
+            "tokens": 59538,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/tokens.npy",
+                "sha256": "1a6ae7539135b9233b09260c8cfec7157f0caaf890eaf287b3f5f7f48e12a409"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/inst_start.npy",
+                "sha256": "98c3b5c3334080485e4e89fea33be79743a695c936c1ee13d0dbbbe40e118408"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/inst_len.npy",
+                "sha256": "e67761c3cf7b59b047b33052ab8db2fa33b39f2fca89ef9a6588601ff0f0e8e0"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/resp_start.npy",
+                "sha256": "dcf19d51791a26c89f930099d0e4992afa2feb8da2a0dbdf8107f0306a68e8e8"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/resp_len.npy",
+                "sha256": "82e884aaa1f26acbf72bc4b926149195c5c3bb40ad2e6184dfea1db9db44ff16"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sl_span_filling__part-000007.jsonl"
+          }
+        ],
+        "token_metrics": {
+          "training": {
+            "tokens": 22211638,
+            "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+          },
+          "preflight": {
+            "tokens": 22211638,
+            "basis": "all_assistant_targets_with_repeated_prefixes",
+            "source_row_sum_verified": true,
+            "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+          }
+        },
+        "native_token_parity": {
+          "scope": "deterministic_sample_not_full_corpus",
+          "truncation": false,
+          "selection": "five spread row ordinals plus first three multi-assistant rows",
+          "rows": [
+            {
+              "ordinal": 0,
+              "part": "part-000000.jsonl",
+              "part_row": 0,
+              "row_sha256": "9c369ca8d64451355269647ae9ca96a7da0e186759af0233896dc4eff64ac9aa",
+              "assistant_messages": 1,
+              "inst_start": 0,
+              "resp_start": 534,
+              "prompt_tokens": 534,
+              "response_tokens": 70,
+              "final_target_tokens": 604,
+              "all_assistant_rendered_tokens": 604,
+              "declared_preflight_tokens": 604,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 8772,
+              "part": "part-000001.jsonl",
+              "part_row": 3772,
+              "row_sha256": "65df72fbd85d427aa9ae5ce4ce8808b19accaac4d38b9bb2f5d3cb6aa00370d2",
+              "assistant_messages": 1,
+              "inst_start": 2351659,
+              "resp_start": 2352246,
+              "prompt_tokens": 587,
+              "response_tokens": 59,
+              "final_target_tokens": 646,
+              "all_assistant_rendered_tokens": 646,
+              "declared_preflight_tokens": 646,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 17545,
+              "part": "part-000003.jsonl",
+              "part_row": 2545,
+              "row_sha256": "bd2cb396ba6024485d42da8e82e8496af0f601ee1c7eda3f88752fb3ec29521e",
+              "assistant_messages": 1,
+              "inst_start": 1607968,
+              "resp_start": 1608180,
+              "prompt_tokens": 212,
+              "response_tokens": 22,
+              "final_target_tokens": 234,
+              "all_assistant_rendered_tokens": 234,
+              "declared_preflight_tokens": 234,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 26318,
+              "part": "part-000005.jsonl",
+              "part_row": 1318,
+              "row_sha256": "81ef67be2e688bc64bd424cdf7d29ec0dad9e27c9c307599e512dc47a07b90a1",
+              "assistant_messages": 1,
+              "inst_start": 838623,
+              "resp_start": 839199,
+              "prompt_tokens": 576,
+              "response_tokens": 74,
+              "final_target_tokens": 650,
+              "all_assistant_rendered_tokens": 650,
+              "declared_preflight_tokens": 650,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 35090,
+              "part": "part-000007.jsonl",
+              "part_row": 90,
+              "row_sha256": "af4ae6174ff94b9aebb90d43cf0a6b724232c6b93e63d9dbf7fb6c4b4dd6d584",
+              "assistant_messages": 1,
+              "inst_start": 59141,
+              "resp_start": 59498,
+              "prompt_tokens": 357,
+              "response_tokens": 40,
+              "final_target_tokens": 397,
+              "all_assistant_rendered_tokens": 397,
+              "declared_preflight_tokens": 397,
+              "exact_prompt_and_response_tokens": true
+            }
+          ]
+        },
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-span-filling",
+        "hf_revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd",
+        "tokenized_root": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens"
+      },
+      "files": {
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-span-filling/data/train.jsonl": {
+          "sha256": "02e47e63a2f50329573af5d0fe2ae83c2919360650c4131c004a4e290a508398",
+          "bytes": 171575459,
+          "signature": [
+            3351383302,
+            4307296746646929412,
+            171575459,
+            1791049681573727267,
+            1791049681621548488
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sl/span-filling/publication.json": {
+          "sha256": "dc74063460d92f763d77012f82a837ae621b51dfc563a6194edc914603985099",
+          "bytes": 940,
+          "signature": [
+            3351383302,
+            10599102591776849924,
+            940,
+            1791049690745391059,
+            1791049690746587468
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-span-filling/manifest.json": {
+          "sha256": "202c17d0b45596c9ba1aea7a1094d7f5c127ac1ab208c845a5bcf6bca3151cfa",
+          "bytes": 847,
+          "signature": [
+            3351383302,
+            5051887717238702084,
+            847,
+            1791049681778955270,
+            1791049681780495741
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/verified.json": {
+          "sha256": "0fc5ff1340cbc27c788e537949d4c7d5c8f0b0c1bf68fd4262b45901adccd72a",
+          "bytes": 446,
+          "signature": [
+            3351383302,
+            2553141642858463236,
+            446,
+            1791049834023653087,
+            1791049834024442893
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            502216245236662276,
+            261,
+            1791049822723247212,
+            1791049822723247212
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/completion.json": {
+          "sha256": "3aac42868243e95cd95380e5eedbdbdedf9b9cff5bd6142c6a34b94e6dda6ac2",
+          "bytes": 203,
+          "signature": [
+            3351383302,
+            16813986156902744068,
+            203,
+            1791049833878514594,
+            1791049833879048996
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "7ded4c658407d64ff624b00d55ae7c5afd707a8616b7bd89ac4d701413f41c5b",
+          "bytes": 12580420,
+          "signature": [
+            3351383302,
+            6485296297536585732,
+            12580420,
+            1791049832508283385,
+            1791049832508283385
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "69b56d962d98b39bff3a872720412946894e8fd2deb73314030b0b36b5195ea0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            6547987431675199492,
+            40128,
+            1791049832510283409,
+            1791049832510283409
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "bbe6a071d5af59ba9bee91977abb98a0e3d769267453f2719a521d5d359be920",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4369854396481536004,
+            40128,
+            1791049832511283413,
+            1791049832511283413
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "d29f2733549451ab958c96e339f0315376ba2702d0af9bb9a2c98ab79026ddc2",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            1130093044715159556,
+            40128,
+            1791049832512283416,
+            1791049832512283416
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "0f6b0a8d5173fa6d94501e0964bd2e3cc629f8ac0cfdbc7f9406095008c44e34",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17106687184974184452,
+            40128,
+            1791049832512551147,
+            1791049832512551147
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/tokens.npy": {
+          "sha256": "620f3de036addd4b7cccae71e9132b0c0a0ad48668f9e5844dfe32149b6e8f4f",
+          "bytes": 12502396,
+          "signature": [
+            3351383302,
+            6301206822091948036,
+            12502396,
+            1791049832057281718,
+            1791049832057281718
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/inst_start.npy": {
+          "sha256": "4a225ba804e263fa26e1944888bcd3bd1b5608595b7f372e89b6040f55322ecc",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14555967291972452356,
+            40128,
+            1791049832059305887,
+            1791049832059305887
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/inst_len.npy": {
+          "sha256": "83f1b63ead3150139f6446d2c43fd1f49478aa0541b3118fd3553c6474f7a737",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13459100465399595012,
+            40128,
+            1791049832060353533,
+            1791049832060353533
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/resp_start.npy": {
+          "sha256": "5489c44096a605a4e4ab74373a69200932ad4e87a6bfc96a7f401a7e78b1eef1",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14131405112335138820,
+            40128,
+            1791049832061281750,
+            1791049832061281750
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000001.jsonl/resp_len.npy": {
+          "sha256": "29ccf7b72dc7ddeaf551b8952dca4e5c2e06db18e02f11f82a4b53b0d5accaf8",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14098432041117417476,
+            40128,
+            1791049832061743024,
+            1791049832061743024
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/tokens.npy": {
+          "sha256": "ea123c4386de6321344701bca44525a2812a7d34a0f6cf6b3d1658bbe39f931f",
+          "bytes": 12627584,
+          "signature": [
+            3351383302,
+            9841200116769816580,
+            12627584,
+            1791049833076285483,
+            1791049833076285483
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/inst_start.npy": {
+          "sha256": "5904d16560c0517aede82e465898083e38dca13f1d155e0999e87b08f2dc1433",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            872812992669351940,
+            40128,
+            1791049833078666659,
+            1791049833078666659
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/inst_len.npy": {
+          "sha256": "46ab4e4efde1ad442264850c78a9481bd86f98a194803955a9afc904679ebd56",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2582892220957261828,
+            40128,
+            1791049833080285515,
+            1791049833080285515
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/resp_start.npy": {
+          "sha256": "7c19e51aa084a42a6985769ba3c1457fb333e1c1b711bbaef2e6da219f2f4c1a",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9685102037565767684,
+            40128,
+            1791049833081285519,
+            1791049833081285519
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000002.jsonl/resp_len.npy": {
+          "sha256": "7b901fa320381ae007e63b83f5fa48c0832397b088d094e2bfa552a010ae8e2c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7640571222834282500,
+            40128,
+            1791049833081637900,
+            1791049833081637900
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/tokens.npy": {
+          "sha256": "29683a5eac344752a3449df789b7d4eb13b4eefe270fcb83d2174e250ec14753",
+          "bytes": 12768356,
+          "signature": [
+            3351383302,
+            12717031179160649732,
+            12768356,
+            1791049833741287941,
+            1791049833741287941
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/inst_start.npy": {
+          "sha256": "fcdff5d930d07f778dd8827e0942a0a590a80c4505ac071356b0087a395a0dbc",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10614780556709986308,
+            40128,
+            1791049833743429736,
+            1791049833743429736
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/inst_len.npy": {
+          "sha256": "2bdf7ed4268ccc61cca3ab7e2737411a5a2e92175f7ba710d44ea892027bbcac",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8681290961150672900,
+            40128,
+            1791049833744525582,
+            1791049833744525582
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/resp_start.npy": {
+          "sha256": "8bb28466d78cf13bb58a048d5e9f4ca40204bfadd3c2e6eb55d6e17878ece651",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14748051269024612356,
+            40128,
+            1791049833745497384,
+            1791049833745497384
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000003.jsonl/resp_len.npy": {
+          "sha256": "fce2989e4b1c97118a6d365ca8c446aeb84c3551afff97d555199b124104032e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12773320685030342660,
+            40128,
+            1791049833746287976,
+            1791049833746287976
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/tokens.npy": {
+          "sha256": "6f2910e213282a0f2c2f1e6ac6a9547b6672680a79ad718b9a4a84117db5b007",
+          "bytes": 12542304,
+          "signature": [
+            3351383302,
+            16391698365626843140,
+            12542304,
+            1791049831546279830,
+            1791049831546279830
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/inst_start.npy": {
+          "sha256": "67250c143ea4b431c11c534b7e92c59cd5296ce4c1566558f6ee3dea08cdd863",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8897706779065253892,
+            40128,
+            1791049831548613214,
+            1791049831548613214
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/inst_len.npy": {
+          "sha256": "d4c992d9eff68b02f00289d6227acdeadbd5f08b6648501ee97596a926f2487e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15800122456716017668,
+            40128,
+            1791049831549628514,
+            1791049831549628514
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/resp_start.npy": {
+          "sha256": "32c3de4edae00c63551e4c45e45b05d2b1dd44ba48c3ca847f486e82c7fa7b91",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12700195542451486724,
+            40128,
+            1791049831550556996,
+            1791049831550556996
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000004.jsonl/resp_len.npy": {
+          "sha256": "b1b183b756129db02d1e3423bce2a4be0747b6ad25a399b375e7ea464448095c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2481424068093018116,
+            40128,
+            1791049831551279866,
+            1791049831551279866
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/tokens.npy": {
+          "sha256": "d240d31b92aa61d1def1ee22fc9d6ff91cf95d8f2740b58846a7cacd940edc10",
+          "bytes": 12962728,
+          "signature": [
+            3351383302,
+            16307536884291141636,
+            12962728,
+            1791049831417279353,
+            1791049831417279353
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/inst_start.npy": {
+          "sha256": "d9c55df1f27261f0843f4795a45500ab85be8967685de79b8c80e0367dfd331a",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16254253022001102852,
+            40128,
+            1791049831419279378,
+            1791049831419279378
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/inst_len.npy": {
+          "sha256": "b41ab4509a41626711c876575ff2df60c77202f9aa72ed4b57089750fa0a85c6",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12379837091093807108,
+            40128,
+            1791049831421279385,
+            1791049831421279385
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/resp_start.npy": {
+          "sha256": "d941e7feb479909894237cd99662fd7fd5adb078ec1c689a00e7c7331eb60d53",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12721762273371291652,
+            40128,
+            1791049831422279389,
+            1791049831422279389
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000005.jsonl/resp_len.npy": {
+          "sha256": "d6f954ed693313a77ed9726730904d46fa3a328ddccb29ff2b6e075b97c956ad",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13451756409808224260,
+            40128,
+            1791049831422543015,
+            1791049831422543015
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/tokens.npy": {
+          "sha256": "9c119c058cad92327bffcac3a25d873d7ac48ea1543e273b4fa8bfbd087a81f3",
+          "bytes": 12625508,
+          "signature": [
+            3351383302,
+            17468248375668965380,
+            12625508,
+            1791049832216282306,
+            1791049832216282306
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/inst_start.npy": {
+          "sha256": "aa18c2605da4db36d2397ee130446667c3824aaab9658b9fa20cf1b102f19c1b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            3648782259232964612,
+            40128,
+            1791049832220282337,
+            1791049832220282337
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/inst_len.npy": {
+          "sha256": "2f333c11c6540a2366ca575fc740a4311146a4cd268dd0bacbbc3b9fa532d97d",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9093810871651598340,
+            40128,
+            1791049832222282345,
+            1791049832222282345
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/resp_start.npy": {
+          "sha256": "233fc0873bb06575253abf7746d3bad57b16aad9ce73a6e9bdcf7de9973c46a7",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14794742987259052036,
+            40128,
+            1791049832223468928,
+            1791049832223468928
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000006.jsonl/resp_len.npy": {
+          "sha256": "b76e080f913f7108a68a99c6c81ca991bf8add44d2232d9420affd78f72b6d73",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11059651790359625732,
+            40128,
+            1791049832224470652,
+            1791049832224470652
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/tokens.npy": {
+          "sha256": "1a6ae7539135b9233b09260c8cfec7157f0caaf890eaf287b3f5f7f48e12a409",
+          "bytes": 238280,
+          "signature": [
+            3351383302,
+            5382959929481822212,
+            238280,
+            1791049824112252378,
+            1791049824112252378
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/inst_start.npy": {
+          "sha256": "98c3b5c3334080485e4e89fea33be79743a695c936c1ee13d0dbbbe40e118408",
+          "bytes": 856,
+          "signature": [
+            3351383302,
+            11083407191751917572,
+            856,
+            1791049824113252365,
+            1791049824113252365
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/inst_len.npy": {
+          "sha256": "e67761c3cf7b59b047b33052ab8db2fa33b39f2fca89ef9a6588601ff0f0e8e0",
+          "bytes": 856,
+          "signature": [
+            3351383302,
+            5280554668078792708,
+            856,
+            1791049824113609812,
+            1791049824113609812
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/resp_start.npy": {
+          "sha256": "dcf19d51791a26c89f930099d0e4992afa2feb8da2a0dbdf8107f0306a68e8e8",
+          "bytes": 856,
+          "signature": [
+            3351383302,
+            4490360950203023364,
+            856,
+            1791049824114252369,
+            1791049824114252369
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens/part-000007.jsonl/resp_len.npy": {
+          "sha256": "82e884aaa1f26acbf72bc4b926149195c5c3bb40ad2e6184dfea1db9db44ff16",
+          "bytes": 856,
+          "signature": [
+            3351383302,
+            11612629158835912708,
+            856,
+            1791049824114440299,
+            1791049824114440299
+          ]
+        }
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-span-filling",
+        "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "02e47e63a2f50329573af5d0fe2ae83c2919360650c4131c004a4e290a508398",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "README.md": {
+            "sha256": "f3817bbbf3ed6361d1ff59f7b65f283cced00bcb4e2ae4638f9e8ac3be6a62ac",
+            "git_blob_sha1": "3ecfabe050e88bba3f7aaa7f8d0ebdb6680ca308",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "202c17d0b45596c9ba1aea7a1094d7f5c127ac1ab208c845a5bcf6bca3151cfa",
+            "git_blob_sha1": "192870b43454ef1bdd8201c39e41a8e27a949210",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sq_denoising": {
+      "source": {
+        "name": "dfm13_wave4_wikipedia_sq_denoising",
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-denoising/data/train.jsonl",
+        "repeat": 1,
+        "rows": 25567,
+        "tokens": 36475777,
+        "parts": [
+          {
+            "rows": 5000,
+            "tokens": 7059786,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/tokens.npy",
+                "sha256": "f83ec1b5612f2aa1fb7cc173b8c4dbfb759b660db7729402e43481fe10631c25"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/inst_start.npy",
+                "sha256": "70d0fb6f7e67849ce0577d842697acaa1a849d0a0f549d250a9ad918adf3522a"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/inst_len.npy",
+                "sha256": "cb6a349021f79d18b87d3490a2e82110b183fe625ada215ce5d31e783dd3ed78"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/resp_start.npy",
+                "sha256": "27987f26e4f69c0b9c0e8a48ed9659284845f699579b44b91a07005ee73c57a2"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/resp_len.npy",
+                "sha256": "bbb8e96cea6b3b2c56f1bc07f10b0b9303a610df1ce78d342cf13f4401a4bed6"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_denoising__part-000000.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 7009798,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/tokens.npy",
+                "sha256": "12118329ffa93b26be0b32eed0d51f994a3f62a84df06f590274b8465e5e9eb1"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/inst_start.npy",
+                "sha256": "22d77f96af0ada5d977a7b23b547743902cfb8c27d8b29c518d170619c3b2592"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/inst_len.npy",
+                "sha256": "95ad7c6e70e1aa1af5981adca4ce103952f79020d7a7b556b6c4a620dcfe8eba"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/resp_start.npy",
+                "sha256": "73c8da7dc8e487942504eabfeb59edb37cd68883ccbba3a0cbe01d3e4512cf1a"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/resp_len.npy",
+                "sha256": "24c7da42f1db6183d1d26881f76e037b60080b95bc19fa3b8e940116743f0132"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_denoising__part-000001.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 7143741,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/tokens.npy",
+                "sha256": "8b8d7e56f748f95c79c32e829713198fd0726bfa61713dae6cfdb5e3443c0abd"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/inst_start.npy",
+                "sha256": "16fe72bce1cbd6341bb71dbbb4e73e9723c441536cb78eb3de3098e959844922"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/inst_len.npy",
+                "sha256": "0fe258fc0dee3c543148ac870a9aca282a6df3f861fe8c91b21fc7c3af693096"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/resp_start.npy",
+                "sha256": "940e8b353ac58afc8cbcac9be90cc08ef2c9c1b5bcea982eca6408a47ddaee87"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/resp_len.npy",
+                "sha256": "2a5b0ef3ded13d0e95aa34efdf5ce7634fc88e212ede0abee51f4d508fb5360e"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_denoising__part-000002.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 7236865,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/tokens.npy",
+                "sha256": "d691a74e59aca5827bb4365e8334cb8d841072f1f591489da8fc0434b24d46f0"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/inst_start.npy",
+                "sha256": "a0dfda6b64a0fad737da9515069ba797ce6b473ba81e5b1184479648e05f4b80"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/inst_len.npy",
+                "sha256": "60c1580c9b69db82fede8e2b986425e0f3dfbb1621ac809624356e89c7144b1f"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/resp_start.npy",
+                "sha256": "180e1d295952444ba06f5d51d01e4455a7b1922bce51a6c00bc8d4080db1ee61"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/resp_len.npy",
+                "sha256": "78bea083b750501d78b776571c46041e4b851c8b1c5056ab03adb56a18ed63d0"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_denoising__part-000003.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 7229499,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/tokens.npy",
+                "sha256": "174d126430c200eca8175b60e7b6a8983ac81529e2a9ea35ecbbc7455661a359"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/inst_start.npy",
+                "sha256": "b47186c0e5a41b5eb54855316a0656788fa20bb30966a2bda0221ccbb3ea7420"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/inst_len.npy",
+                "sha256": "a2a75f322248876d9930ed8dfc32cef7c0378851e56ae4c9b19bdbf712089507"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/resp_start.npy",
+                "sha256": "99139615d847a37eb774c292b8e82a612763fc2fb572fa031d571de9a489c027"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/resp_len.npy",
+                "sha256": "73d88397122eed5574fd81f14dc4195462f4582a9220a568b4d989aa89a5f6f3"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_denoising__part-000004.jsonl"
+          },
+          {
+            "rows": 567,
+            "tokens": 796088,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/tokens.npy",
+                "sha256": "987c45189520fb6e7e8b92add4190dfa5ebf672e316161ecd51cd76568da7bf8"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/inst_start.npy",
+                "sha256": "56de1661dffd1183f4a9b4d864af93b513a3c09bae9af9b71d705acf67f362a4"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/inst_len.npy",
+                "sha256": "0bd211887f65cb9f2eacecad89f71c24f13742e906c86258471459023a59dfd9"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/resp_start.npy",
+                "sha256": "8c945b2b48bf8a32e4efcd69bfe64025e3776a4cd8dd0f7326005114921c5371"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/resp_len.npy",
+                "sha256": "d7f9ebc04bb6b00ae021104e2a459133fa15b04ca11763e6dfddb98084b75bb2"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_denoising__part-000005.jsonl"
+          }
+        ],
+        "token_metrics": {
+          "training": {
+            "tokens": 36475777,
+            "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+          },
+          "preflight": {
+            "tokens": 36475777,
+            "basis": "all_assistant_targets_with_repeated_prefixes",
+            "source_row_sum_verified": true,
+            "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+          }
+        },
+        "native_token_parity": {
+          "scope": "deterministic_sample_not_full_corpus",
+          "truncation": false,
+          "selection": "five spread row ordinals plus first three multi-assistant rows",
+          "rows": [
+            {
+              "ordinal": 0,
+              "part": "part-000000.jsonl",
+              "part_row": 0,
+              "row_sha256": "5edcbd537a3b8d1bef114bad8f0ed70243a2cd34bec88a676f0a266d0cb724c4",
+              "assistant_messages": 1,
+              "inst_start": 0,
+              "resp_start": 273,
+              "prompt_tokens": 273,
+              "response_tokens": 247,
+              "final_target_tokens": 520,
+              "all_assistant_rendered_tokens": 520,
+              "declared_preflight_tokens": 520,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 6391,
+              "part": "part-000001.jsonl",
+              "part_row": 1391,
+              "row_sha256": "30ca08491a1ab2d389ae1e34fa5e61ba9ef1526f206413d4cc291f3d3d050a07",
+              "assistant_messages": 1,
+              "inst_start": 1947725,
+              "resp_start": 1949177,
+              "prompt_tokens": 1452,
+              "response_tokens": 1419,
+              "final_target_tokens": 2871,
+              "all_assistant_rendered_tokens": 2871,
+              "declared_preflight_tokens": 2871,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 12783,
+              "part": "part-000002.jsonl",
+              "part_row": 2783,
+              "row_sha256": "d95e31aca478c6d94ccc9d5b1709a181aafaf295027791b74e2defe0860223ab",
+              "assistant_messages": 1,
+              "inst_start": 3961344,
+              "resp_start": 3962147,
+              "prompt_tokens": 803,
+              "response_tokens": 768,
+              "final_target_tokens": 1571,
+              "all_assistant_rendered_tokens": 1571,
+              "declared_preflight_tokens": 1571,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 19175,
+              "part": "part-000003.jsonl",
+              "part_row": 4175,
+              "row_sha256": "73cfb69b53cf83fd838553e2fecdbb4971a9c5b5435e3b451f1c48a04c9102c0",
+              "assistant_messages": 1,
+              "inst_start": 6045167,
+              "resp_start": 6045413,
+              "prompt_tokens": 246,
+              "response_tokens": 219,
+              "final_target_tokens": 465,
+              "all_assistant_rendered_tokens": 465,
+              "declared_preflight_tokens": 465,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 25566,
+              "part": "part-000005.jsonl",
+              "part_row": 566,
+              "row_sha256": "37bbb4a54aeb8082546312c2c8849bf6a4d55d989ff4597f3d60102d006fbdd2",
+              "assistant_messages": 1,
+              "inst_start": 794826,
+              "resp_start": 795473,
+              "prompt_tokens": 647,
+              "response_tokens": 615,
+              "final_target_tokens": 1262,
+              "all_assistant_rendered_tokens": 1262,
+              "declared_preflight_tokens": 1262,
+              "exact_prompt_and_response_tokens": true
+            }
+          ]
+        },
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sq-denoising",
+        "hf_revision": "44603c556b0a30bf59fe9092a39de6091eed24da",
+        "tokenized_root": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens"
+      },
+      "files": {
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-denoising/data/train.jsonl": {
+          "sha256": "466deaa046a6ac3db39dd8e97294939548ad964601a545cf983572a963ad6a39",
+          "bytes": 192926474,
+          "signature": [
+            3351383302,
+            3221499945741516804,
+            192926474,
+            1791049720566870806,
+            1791049720613151307
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sq/denoising/publication.json": {
+          "sha256": "319fb353a2c3462a8b0a8da5a479d0c8e4c4d2fc67c5768df9bc2d4a10b6ebbf",
+          "bytes": 897,
+          "signature": [
+            3351383302,
+            854822351694856196,
+            897,
+            1791049728532900109,
+            1791049728533745107
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-denoising/manifest.json": {
+          "sha256": "0bd906e29b6b9d875a2716b54aa90e03cf0eea6297d7802e8eaf79853d28f768",
+          "bytes": 804,
+          "signature": [
+            3351383302,
+            9318208556943015940,
+            804,
+            1791049720783937212,
+            1791049720784914219
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/verified.json": {
+          "sha256": "4e855863716f37cd5a6c0ca5dbd1164b5a29d14c8759e849a00c5d8de88553d8",
+          "bytes": 443,
+          "signature": [
+            3351383302,
+            14010851277036584964,
+            443,
+            1791049851822692373,
+            1791049851823584457
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            16022536581230100484,
+            261,
+            1791049836891299563,
+            1791049836891299563
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/completion.json": {
+          "sha256": "6973dc3eeed0efa6344324ada1223be84f640c03f3c0633656af1e45455fdf53",
+          "bytes": 203,
+          "signature": [
+            3351383302,
+            107980513989296132,
+            203,
+            1791049851659766896,
+            1791049851660506580
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "f83ec1b5612f2aa1fb7cc173b8c4dbfb759b660db7729402e43481fe10631c25",
+          "bytes": 28239272,
+          "signature": [
+            3351383302,
+            9908619774382178308,
+            28239272,
+            1791049848908343983,
+            1791049848908343983
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "70d0fb6f7e67849ce0577d842697acaa1a849d0a0f549d250a9ad918adf3522a",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10837223022955659268,
+            40128,
+            1791049848911901024,
+            1791049848911901024
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "cb6a349021f79d18b87d3490a2e82110b183fe625ada215ce5d31e783dd3ed78",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14895314150198738948,
+            40128,
+            1791049848913151256,
+            1791049848913151256
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "27987f26e4f69c0b9c0e8a48ed9659284845f699579b44b91a07005ee73c57a2",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            1791182419094536196,
+            40128,
+            1791049848914232374,
+            1791049848914232374
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "bbb8e96cea6b3b2c56f1bc07f10b0b9303a610df1ce78d342cf13f4401a4bed6",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10338248094905008132,
+            40128,
+            1791049848915011128,
+            1791049848915011128
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/tokens.npy": {
+          "sha256": "12118329ffa93b26be0b32eed0d51f994a3f62a84df06f590274b8465e5e9eb1",
+          "bytes": 28039320,
+          "signature": [
+            3351383302,
+            2194596134661586948,
+            28039320,
+            1791049851494353538,
+            1791049851494353538
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/inst_start.npy": {
+          "sha256": "22d77f96af0ada5d977a7b23b547743902cfb8c27d8b29c518d170619c3b2592",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17344255929609945092,
+            40128,
+            1791049851499353573,
+            1791049851499353573
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/inst_len.npy": {
+          "sha256": "95ad7c6e70e1aa1af5981adca4ce103952f79020d7a7b556b6c4a620dcfe8eba",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            18148638699452628996,
+            40128,
+            1791049851505353596,
+            1791049851505353596
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/resp_start.npy": {
+          "sha256": "73c8da7dc8e487942504eabfeb59edb37cd68883ccbba3a0cbe01d3e4512cf1a",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13536365927213563908,
+            40128,
+            1791049851507735620,
+            1791049851507735620
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000001.jsonl/resp_len.npy": {
+          "sha256": "24c7da42f1db6183d1d26881f76e037b60080b95bc19fa3b8e940116743f0132",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            3881287425496383492,
+            40128,
+            1791049851508756065,
+            1791049851508756065
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/tokens.npy": {
+          "sha256": "8b8d7e56f748f95c79c32e829713198fd0726bfa61713dae6cfdb5e3443c0abd",
+          "bytes": 28575092,
+          "signature": [
+            3351383302,
+            15975879239378206724,
+            28575092,
+            1791049850564350102,
+            1791049850564350102
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/inst_start.npy": {
+          "sha256": "16fe72bce1cbd6341bb71dbbb4e73e9723c441536cb78eb3de3098e959844922",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13255542822354092036,
+            40128,
+            1791049850568084368,
+            1791049850568084368
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/inst_len.npy": {
+          "sha256": "0fe258fc0dee3c543148ac870a9aca282a6df3f861fe8c91b21fc7c3af693096",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9245106388850900996,
+            40128,
+            1791049850569468140,
+            1791049850569468140
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/resp_start.npy": {
+          "sha256": "940e8b353ac58afc8cbcac9be90cc08ef2c9c1b5bcea982eca6408a47ddaee87",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5721615023107211268,
+            40128,
+            1791049850570678823,
+            1791049850570678823
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000002.jsonl/resp_len.npy": {
+          "sha256": "2a5b0ef3ded13d0e95aa34efdf5ce7634fc88e212ede0abee51f4d508fb5360e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            6168107525858590724,
+            40128,
+            1791049850571667633,
+            1791049850571667633
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/tokens.npy": {
+          "sha256": "d691a74e59aca5827bb4365e8334cb8d841072f1f591489da8fc0434b24d46f0",
+          "bytes": 28947588,
+          "signature": [
+            3351383302,
+            15191591750489145348,
+            28947588,
+            1791049850137348524,
+            1791049850137348524
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/inst_start.npy": {
+          "sha256": "a0dfda6b64a0fad737da9515069ba797ce6b473ba81e5b1184479648e05f4b80",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            1023337869428523012,
+            40128,
+            1791049850141348556,
+            1791049850141348556
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/inst_len.npy": {
+          "sha256": "60c1580c9b69db82fede8e2b986425e0f3dfbb1621ac809624356e89c7144b1f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5805312105101459460,
+            40128,
+            1791049850143484020,
+            1791049850143484020
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/resp_start.npy": {
+          "sha256": "180e1d295952444ba06f5d51d01e4455a7b1922bce51a6c00bc8d4080db1ee61",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            1570042237546659844,
+            40128,
+            1791049850144398755,
+            1791049850144398755
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000003.jsonl/resp_len.npy": {
+          "sha256": "78bea083b750501d78b776571c46041e4b851c8b1c5056ab03adb56a18ed63d0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            3250326504849211396,
+            40128,
+            1791049850145302621,
+            1791049850145302621
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/tokens.npy": {
+          "sha256": "174d126430c200eca8175b60e7b6a8983ac81529e2a9ea35ecbbc7455661a359",
+          "bytes": 28918124,
+          "signature": [
+            3351383302,
+            16251606159438774276,
+            28918124,
+            1791049850287349078,
+            1791049850287349078
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/inst_start.npy": {
+          "sha256": "b47186c0e5a41b5eb54855316a0656788fa20bb30966a2bda0221ccbb3ea7420",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4638436075348951044,
+            40128,
+            1791049850291067311,
+            1791049850291067311
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/inst_len.npy": {
+          "sha256": "a2a75f322248876d9930ed8dfc32cef7c0378851e56ae4c9b19bdbf712089507",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8117275192377475076,
+            40128,
+            1791049850292574344,
+            1791049850292574344
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/resp_start.npy": {
+          "sha256": "99139615d847a37eb774c292b8e82a612763fc2fb572fa031d571de9a489c027",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4566307645800185860,
+            40128,
+            1791049850293622821,
+            1791049850293622821
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000004.jsonl/resp_len.npy": {
+          "sha256": "73d88397122eed5574fd81f14dc4195462f4582a9220a568b4d989aa89a5f6f3",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16741933266244337668,
+            40128,
+            1791049850294566086,
+            1791049850294566086
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/tokens.npy": {
+          "sha256": "987c45189520fb6e7e8b92add4190dfa5ebf672e316161ecd51cd76568da7bf8",
+          "bytes": 3184480,
+          "signature": [
+            3351383302,
+            13073748185469026308,
+            3184480,
+            1791049839563309453,
+            1791049839563309453
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/inst_start.npy": {
+          "sha256": "56de1661dffd1183f4a9b4d864af93b513a3c09bae9af9b71d705acf67f362a4",
+          "bytes": 4664,
+          "signature": [
+            3351383302,
+            14941137199946203140,
+            4664,
+            1791049839563715205,
+            1791049839563715205
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/inst_len.npy": {
+          "sha256": "0bd211887f65cb9f2eacecad89f71c24f13742e906c86258471459023a59dfd9",
+          "bytes": 4664,
+          "signature": [
+            3351383302,
+            2976384704447774724,
+            4664,
+            1791049839564311768,
+            1791049839564311768
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/resp_start.npy": {
+          "sha256": "8c945b2b48bf8a32e4efcd69bfe64025e3776a4cd8dd0f7326005114921c5371",
+          "bytes": 4664,
+          "signature": [
+            3351383302,
+            17578740997240061956,
+            4664,
+            1791049839564729097,
+            1791049839564729097
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens/part-000005.jsonl/resp_len.npy": {
+          "sha256": "d7f9ebc04bb6b00ae021104e2a459133fa15b04ca11763e6dfddb98084b75bb2",
+          "bytes": 4664,
+          "signature": [
+            3351383302,
+            17728664708338417668,
+            4664,
+            1791049839565309477,
+            1791049839565309477
+          ]
+        }
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sq-denoising",
+        "revision": "44603c556b0a30bf59fe9092a39de6091eed24da",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "466deaa046a6ac3db39dd8e97294939548ad964601a545cf983572a963ad6a39",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "README.md": {
+            "sha256": "45116ea885d71ceab4b643e00d3e16a37b26b4d1672028543d7c7982e523a0ce",
+            "git_blob_sha1": "a1343ae7041612eff25fa603e9bf7a9bba404d46",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "0bd906e29b6b9d875a2716b54aa90e03cf0eea6297d7802e8eaf79853d28f768",
+            "git_blob_sha1": "7335e52a90c73ce2898fd508e2443ec1b9f0de04",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sq_span_filling": {
+      "source": {
+        "name": "dfm13_wave4_wikipedia_sq_span_filling",
+        "source": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-span-filling/data/train.jsonl",
+        "repeat": 1,
+        "rows": 15443,
+        "tokens": 10238130,
+        "parts": [
+          {
+            "rows": 5000,
+            "tokens": 3270684,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/tokens.npy",
+                "sha256": "899f42faef65022c4dc73b4413eca3d912b63e66950861f1bb0d7d0dced0dc5d"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/inst_start.npy",
+                "sha256": "7de03ed8cfc330b5cf9345b7d0077b74ac5353cb975c4efaa42fda2b13f4c1c0"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/inst_len.npy",
+                "sha256": "bd8d6bbce5294d49366ec20d0ac75dd3253a54e343c4b041a3e1e2f7eb54009d"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/resp_start.npy",
+                "sha256": "2331bd78a7471a39cff9956b9982c841771bf4d10cc9932811a3ec04c4371c76"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/resp_len.npy",
+                "sha256": "03b605f0d12601829d5ab69ad9c1103fc0ca33aa2c3403bbc5972791125e5976"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_span_filling__part-000000.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3346687,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/tokens.npy",
+                "sha256": "218247cd32c66bfa1e4dba5671ee359f7f3f1eed9e333e2e464694fc05679530"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/inst_start.npy",
+                "sha256": "f6c27c6d6f7458c3faa745ca3d53493140c97adf53a7fc21baa44bd29f04a087"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/inst_len.npy",
+                "sha256": "70547939691d853c4054cf67e4cb39f6af99cc60957cafeee5c5110fbc2dbf77"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/resp_start.npy",
+                "sha256": "beedeccb623a977a6cb1f115d3a069a2bcd39c52d1c3e2099d0a6a640891602f"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/resp_len.npy",
+                "sha256": "0b0d7a1e301b5ba50982a2ac22f08a563e3a726a5c0e70deb323f42dd111c67b"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_span_filling__part-000001.jsonl"
+          },
+          {
+            "rows": 5000,
+            "tokens": 3324746,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/tokens.npy",
+                "sha256": "78bd7e94c0f4b65e4580b37b9ec1fe075a91ce4750385ec8a21b8f2cf5af9217"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/inst_start.npy",
+                "sha256": "5cff5a3d226d8f9d5445145e11199cba3e7fced69aba5e907a347e98c12c3c98"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/inst_len.npy",
+                "sha256": "c2f47e4a1614d5a5ebfb57eed6e38cb86f12c9e2bc1ea2cf7a8b71c9c980d29f"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/resp_start.npy",
+                "sha256": "2e49ae5a75c895060ada572de191c55fae6f320ff9746b393685577bef3a304d"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/resp_len.npy",
+                "sha256": "ec1249426d9933e96c0df11739aad16cd95261f826d46115aa617859be25c0b0"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_span_filling__part-000002.jsonl"
+          },
+          {
+            "rows": 443,
+            "tokens": 296013,
+            "arrays": {
+              "tokens": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/tokens.npy",
+                "sha256": "88aaae9b5dd8e8007a6a42c187fc3e60622874834a3e2e184db568330c6bd3b3"
+              },
+              "inst_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/inst_start.npy",
+                "sha256": "3c28314303dc183a5523762c473f1c50335dc2fa4d15da54a50d7e865e261926"
+              },
+              "inst_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/inst_len.npy",
+                "sha256": "06db37356c93f45d0c40cdc0b21bc666a4690d9e61da0ded04eb8e1254df9987"
+              },
+              "resp_start": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/resp_start.npy",
+                "sha256": "08d7057a93826c3034ac392b30a2b4d5b2e86107d8da57c418ee0909fd98b8d8"
+              },
+              "resp_len": {
+                "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/resp_len.npy",
+                "sha256": "4638c91f301a72e4f9e58be35fee2b3f6fa16264d0a067015c4a98dda9151aa6"
+              }
+            },
+            "path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl",
+            "link_name": "dfm13_wave4_wikipedia_sq_span_filling__part-000003.jsonl"
+          }
+        ],
+        "token_metrics": {
+          "training": {
+            "tokens": 10238130,
+            "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+          },
+          "preflight": {
+            "tokens": 10238130,
+            "basis": "all_assistant_targets_with_repeated_prefixes",
+            "source_row_sum_verified": true,
+            "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+          }
+        },
+        "native_token_parity": {
+          "scope": "deterministic_sample_not_full_corpus",
+          "truncation": false,
+          "selection": "five spread row ordinals plus first three multi-assistant rows",
+          "rows": [
+            {
+              "ordinal": 0,
+              "part": "part-000000.jsonl",
+              "part_row": 0,
+              "row_sha256": "65c8a4d6bcaf216f24d29ae38750cc138f4d817b3fd98dc6541373753af082a5",
+              "assistant_messages": 1,
+              "inst_start": 0,
+              "resp_start": 1285,
+              "prompt_tokens": 1285,
+              "response_tokens": 133,
+              "final_target_tokens": 1418,
+              "all_assistant_rendered_tokens": 1418,
+              "declared_preflight_tokens": 1418,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 3860,
+              "part": "part-000000.jsonl",
+              "part_row": 3860,
+              "row_sha256": "07a7511cb7aded9f6ac9bda17fd9dc7b509af5d4f8ad367af21da09a8874be1e",
+              "assistant_messages": 1,
+              "inst_start": 2518559,
+              "resp_start": 2518917,
+              "prompt_tokens": 358,
+              "response_tokens": 34,
+              "final_target_tokens": 392,
+              "all_assistant_rendered_tokens": 392,
+              "declared_preflight_tokens": 392,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 7721,
+              "part": "part-000001.jsonl",
+              "part_row": 2721,
+              "row_sha256": "cd70ec8b97b08f3dd844092c8e1bd3567f81629384cd7288504a2d6b6dd6533f",
+              "assistant_messages": 1,
+              "inst_start": 1844555,
+              "resp_start": 1844863,
+              "prompt_tokens": 308,
+              "response_tokens": 30,
+              "final_target_tokens": 338,
+              "all_assistant_rendered_tokens": 338,
+              "declared_preflight_tokens": 338,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 11582,
+              "part": "part-000002.jsonl",
+              "part_row": 1582,
+              "row_sha256": "459109a5e6a97fb0900c7db862a0d08c765aa5c9c131d65bffe7110e84d87343",
+              "assistant_messages": 1,
+              "inst_start": 1077390,
+              "resp_start": 1077925,
+              "prompt_tokens": 535,
+              "response_tokens": 56,
+              "final_target_tokens": 591,
+              "all_assistant_rendered_tokens": 591,
+              "declared_preflight_tokens": 591,
+              "exact_prompt_and_response_tokens": true
+            },
+            {
+              "ordinal": 15442,
+              "part": "part-000003.jsonl",
+              "part_row": 442,
+              "row_sha256": "157e8cd36de8c5af0bb1471def5a767c57d5ce074b1cf579d2cd705477480e01",
+              "assistant_messages": 1,
+              "inst_start": 295707,
+              "resp_start": 295987,
+              "prompt_tokens": 280,
+              "response_tokens": 26,
+              "final_target_tokens": 306,
+              "all_assistant_rendered_tokens": 306,
+              "declared_preflight_tokens": 306,
+              "exact_prompt_and_response_tokens": true
+            }
+          ]
+        },
+        "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sq-span-filling",
+        "hf_revision": "0e369353dc09acd1757b9c609ea6f30ae0c501aa",
+        "tokenized_root": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens"
+      },
+      "files": {
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-span-filling/data/train.jsonl": {
+          "sha256": "1dc3717d66989c6817a4203a805ce5c392de32e242536e655a15b1a854d63f74",
+          "bytes": 76712837,
+          "signature": [
+            3351383302,
+            553696423557464068,
+            76712837,
+            1791049758444010283,
+            1791049758467513216
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sq/span-filling/publication.json": {
+          "sha256": "7f688c0bc0ec859841129e60a3907e312b371a0e92c4e655b2b0c171b7c30d15",
+          "bytes": 909,
+          "signature": [
+            3351383302,
+            12433118833054777348,
+            909,
+            1791049766346039353,
+            1791049766346736562
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-span-filling/manifest.json": {
+          "sha256": "040d0da5bda7929ca0b25899978ecd2b6b47cdbd88fcff1a9f07f07e4d310177",
+          "bytes": 816,
+          "signature": [
+            3351383302,
+            11995019183572582404,
+            816,
+            1791049758547010629,
+            1791049758547708866
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/verified.json": {
+          "sha256": "8d6ff69f5fc9581d0573d5473ec5530c92d2ca1b938580d1baa35dc042668d98",
+          "bytes": 446,
+          "signature": [
+            3351383302,
+            18024823934603624452,
+            446,
+            1791049893561050491,
+            1791049893561992595
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            11632436290605547524,
+            261,
+            1791049883539455314,
+            1791049883539455314
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/completion.json": {
+          "sha256": "6f65abb94044b31fb2b9616396d91aae8f0828ce5f62462a72b6a6cb8fd84722",
+          "bytes": 202,
+          "signature": [
+            3351383302,
+            14033980526505820164,
+            202,
+            1791049893432397954,
+            1791049893433034865
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "899f42faef65022c4dc73b4413eca3d912b63e66950861f1bb0d7d0dced0dc5d",
+          "bytes": 13082864,
+          "signature": [
+            3351383302,
+            16839917838567866372,
+            13082864,
+            1791049890472497788,
+            1791049890472497788
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "7de03ed8cfc330b5cf9345b7d0077b74ac5353cb975c4efaa42fda2b13f4c1c0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            18150922122735910916,
+            40128,
+            1791049890475251927,
+            1791049890475251927
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "bd8d6bbce5294d49366ec20d0ac75dd3253a54e343c4b041a3e1e2f7eb54009d",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5285488830921637892,
+            40128,
+            1791049890476313536,
+            1791049890476313536
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "2331bd78a7471a39cff9956b9982c841771bf4d10cc9932811a3ec04c4371c76",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14211865541540380676,
+            40128,
+            1791049890477408912,
+            1791049890477408912
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "03b605f0d12601829d5ab69ad9c1103fc0ca33aa2c3403bbc5972791125e5976",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            3236713163111727108,
+            40128,
+            1791049890478018207,
+            1791049890478018207
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/tokens.npy": {
+          "sha256": "218247cd32c66bfa1e4dba5671ee359f7f3f1eed9e333e2e464694fc05679530",
+          "bytes": 13386876,
+          "signature": [
+            3351383302,
+            8584233949473865732,
+            13386876,
+            1791049891950503265,
+            1791049891950503265
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/inst_start.npy": {
+          "sha256": "f6c27c6d6f7458c3faa745ca3d53493140c97adf53a7fc21baa44bd29f04a087",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16680947352533139460,
+            40128,
+            1791049891953653399,
+            1791049891953653399
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/inst_len.npy": {
+          "sha256": "70547939691d853c4054cf67e4cb39f6af99cc60957cafeee5c5110fbc2dbf77",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10484962810863419396,
+            40128,
+            1791049891954752940,
+            1791049891954752940
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/resp_start.npy": {
+          "sha256": "beedeccb623a977a6cb1f115d3a069a2bcd39c52d1c3e2099d0a6a640891602f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            816872171012161540,
+            40128,
+            1791049891955664897,
+            1791049891955664897
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000001.jsonl/resp_len.npy": {
+          "sha256": "0b0d7a1e301b5ba50982a2ac22f08a563e3a726a5c0e70deb323f42dd111c67b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8990702953800466436,
+            40128,
+            1791049891956272797,
+            1791049891956272797
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/tokens.npy": {
+          "sha256": "78bd7e94c0f4b65e4580b37b9ec1fe075a91ce4750385ec8a21b8f2cf5af9217",
+          "bytes": 13299112,
+          "signature": [
+            3351383302,
+            5299983858235146244,
+            13299112,
+            1791049893281508198,
+            1791049893281508198
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/inst_start.npy": {
+          "sha256": "5cff5a3d226d8f9d5445145e11199cba3e7fced69aba5e907a347e98c12c3c98",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15165960306284232708,
+            40128,
+            1791049893284396945,
+            1791049893284396945
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/inst_len.npy": {
+          "sha256": "c2f47e4a1614d5a5ebfb57eed6e38cb86f12c9e2bc1ea2cf7a8b71c9c980d29f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9713876011156307972,
+            40128,
+            1791049893285483808,
+            1791049893285483808
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/resp_start.npy": {
+          "sha256": "2e49ae5a75c895060ada572de191c55fae6f320ff9746b393685577bef3a304d",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5522819390094770180,
+            40128,
+            1791049893286569886,
+            1791049893286569886
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000002.jsonl/resp_len.npy": {
+          "sha256": "ec1249426d9933e96c0df11739aad16cd95261f826d46115aa617859be25c0b0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8564577762813018116,
+            40128,
+            1791049893287531610,
+            1791049893287531610
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/tokens.npy": {
+          "sha256": "88aaae9b5dd8e8007a6a42c187fc3e60622874834a3e2e184db568330c6bd3b3",
+          "bytes": 1184180,
+          "signature": [
+            3351383302,
+            15821935150713536516,
+            1184180,
+            1791049885511479420,
+            1791049885511479420
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/inst_start.npy": {
+          "sha256": "3c28314303dc183a5523762c473f1c50335dc2fa4d15da54a50d7e865e261926",
+          "bytes": 3672,
+          "signature": [
+            3351383302,
+            1498148093048127492,
+            3672,
+            1791049885514479414,
+            1791049885514479414
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/inst_len.npy": {
+          "sha256": "06db37356c93f45d0c40cdc0b21bc666a4690d9e61da0ded04eb8e1254df9987",
+          "bytes": 3672,
+          "signature": [
+            3351383302,
+            1292680282140180484,
+            3672,
+            1791049885515611716,
+            1791049885515611716
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/resp_start.npy": {
+          "sha256": "08d7057a93826c3034ac392b30a2b4d5b2e86107d8da57c418ee0909fd98b8d8",
+          "bytes": 3672,
+          "signature": [
+            3351383302,
+            12190110306932883460,
+            3672,
+            1791049885516075167,
+            1791049885516075167
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens/part-000003.jsonl/resp_len.npy": {
+          "sha256": "4638c91f301a72e4f9e58be35fee2b3f6fa16264d0a067015c4a98dda9151aa6",
+          "bytes": 3672,
+          "signature": [
+            3351383302,
+            7721958896823435268,
+            3672,
+            1791049885516367210,
+            1791049885516367210
+          ]
+        }
+      },
+      "remote": {
+        "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sq-span-filling",
+        "revision": "0e369353dc09acd1757b9c609ea6f30ae0c501aa",
+        "head_matches": true,
+        "files": {
+          "data/train.jsonl": {
+            "sha256": "1dc3717d66989c6817a4203a805ce5c392de32e242536e655a15b1a854d63f74",
+            "method": "revision_bound_HF_LFS_SHA256"
+          },
+          "README.md": {
+            "sha256": "af0dc9d015330f6065ae8f1f68afb148fcd1fe032bec594d095cbacf1856bfb2",
+            "git_blob_sha1": "15d7578eb76f4319f8b2d48eb5e3e38cec0abfa5",
+            "method": "revision_bound_git_blob"
+          },
+          "manifest.json": {
+            "sha256": "040d0da5bda7929ca0b25899978ecd2b6b47cdbd88fcff1a9f07f07e4d310177",
+            "git_blob_sha1": "f4b68fc0c3ae5f30e998e190648ea5271f6aee03",
+            "method": "revision_bound_git_blob"
+          }
+        }
+      }
+    }
+  },
+  "by_language": {
+    "sl": {
+      "packages": 2,
+      "rows": 96456,
+      "tokens": 102536696
+    },
+    "sq": {
+      "packages": 2,
+      "rows": 41010,
+      "tokens": 46713907
+    }
+  },
+  "totals": {
+    "packages": 4,
+    "rows": 137466,
+    "tokens": 149250603
+  },
+  "scope": "Only SL/SQ denoising and span-filling; no prefix/reordering admission",
+  "current_registry_verified_before_after": true,
+  "assembly_rebuilt": false,
+  "gpu_actions": false
+}

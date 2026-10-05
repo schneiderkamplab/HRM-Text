@@ -1,0 +1,217 @@
+{
+  "root": "data/dfm13/held-source-compact26-20261004-v1",
+  "review_date": "2026-10-04",
+  "reviewer": "assistant manual source-relative inspection; not native gold",
+  "publication_authorized": false,
+  "source_holds_changed": false,
+  "entries": [
+    {
+      "id": "p3-12d4852981edb4ad4f3b2b31204b65ac1d476dd6d368eed2e0bdeea607420ca3",
+      "request_sha256": "0dfd0bb7d155ce1e0df4e5a48b116a1ec2661abe54eb76b805b5695426813061",
+      "outcome_sha256": "106693fc5447df2ddc76d97333a21e4681556881453977abdec7de4fa7b78f59",
+      "binding": {
+        "source_record_sha256": "9eeb88e2e10776fc771152d53ecb7b2e183dbba0ea05878d7678ed9a624cf7c1",
+        "source_id": "12d4852981edb4ad4f3b2b31204b65ac1d476dd6d368eed2e0bdeea607420ca3"
+      },
+      "assessment": "no_material_defect_found_in_supplied_evidence; sample-only, not corpus approval"
+    },
+    {
+      "id": "p3-828a76c2c6d8f6a5dbbacc2ffbd353a07a3ec86648a648d9c6fd1fa2ef5aecaa",
+      "request_sha256": "efbbccdb8d31be47a7c5497cb5afefc7221ce1ca8293c2f924ec3770826b80ae",
+      "outcome_sha256": "e41bc824aa4cb90ce074b77ef9c9691b01c54bf654733300eef8032a9796cd9b",
+      "binding": {
+        "source_record_sha256": "ad86bcf1dcdaffad5f7dd20640803732c20fd2e7ea6c1667b01b827ce3b92c61",
+        "source_id": "828a76c2c6d8f6a5dbbacc2ffbd353a07a3ec86648a648d9c6fd1fa2ef5aecaa"
+      },
+      "assessment": "no_material_defect_found_in_supplied_evidence; sample-only, not corpus approval"
+    },
+    {
+      "id": "p3-e4ad9482378a453470a814538246c9f5233cb05ead0ad60f283bd2addb1372ea",
+      "request_sha256": "a4c41fba1f885feac90e2e967442bd5197769fff80bea033a958a5b311d41086",
+      "outcome_sha256": "378412f210c6ecac02199e1280a971a90355c394f909f2186be1eca3501f2e80",
+      "binding": {
+        "source_record_sha256": "52d3fdea0e84c8870ecf4142d63d68ba7dc83703ec96d3961eb1835ecb6bb67e",
+        "source_id": "e4ad9482378a453470a814538246c9f5233cb05ead0ad60f283bd2addb1372ea"
+      },
+      "assessment": "hold: English option B do not contain DNA becomes contain DNA; correct C does not cure fidelity"
+    },
+    {
+      "id": "qa-02879ee722230a4bc53dbfd45522a9fd267c84f589dc6f57995784a49716febd",
+      "request_sha256": "40006b38fedecbee7ee3a790f3a92c83998d225b1699a5e89b0e6b0c0b65a6ec",
+      "outcome_sha256": "109ad741435a9ea8198367f240ca67ef53acf2f21b76a459045b5e8defdb7848",
+      "binding": {
+        "candidate_sha256": "37f10b780f75671776c9ed20a206128bdcc559b5a594cb6c347f84b78032601e",
+        "packet_sha256": "6e30e44b7d9b245dfd74bc4c99c1bf343d638e614f6c6350bc6fb1d5c0f520eb",
+        "binding": {
+          "component": "baltic_lv_qa",
+          "candidate_id": "02879ee722230a4bc53dbfd45522a9fd267c84f589dc6f57995784a49716febd",
+          "record_sha256": "37f10b780f75671776c9ed20a206128bdcc559b5a594cb6c347f84b78032601e",
+          "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+          "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+          "published_row": 52853,
+          "upstream": {
+            "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+            "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+            "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+            "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+            "row": 114835,
+            "repair_parent": "801cb0549ca9266f828630e64b5c99b7b4252927fb826b0ab5cfbf3a148e09df",
+            "license": "cc-by-sa-3.0",
+            "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+          },
+          "quality_status": "accepted_repair",
+          "target_message_index": 7,
+          "source_evidence": "upstream_QA_only_primary_article_missing",
+          "admission_authorized": false,
+          "source_hold_cleared": false
+        },
+        "articles": [
+          {
+            "source_document_id": "lv:477754",
+            "text_sha256": "c42ae9e906d56668e9e1d5eedab231a4fd6562333bfa204004c68fc708c23d16",
+            "source_record_sha256": "f78286ea3262e5151c302eae9e687590d4494110b03b3ef34cc8e4f513cd743a"
+          },
+          {
+            "source_document_id": "lv:477723",
+            "text_sha256": "522d346acf668519a427075f990fd4c1ee5c5e9d6dbcfe3b793c98bd9352ff4d",
+            "source_record_sha256": "d37806700e82981a3b40baae27370f480b15326e0cd94a62c12399cee81383c1"
+          }
+        ]
+      },
+      "assessment": "hold: supported final children count does not support earlier education/resources/influence claims"
+    },
+    {
+      "id": "qa-478ae9398c34384dfda2449f8338629d6db3ade36b0432f5ee3d4e4c434eae7f",
+      "request_sha256": "6e61fc8158c02944ea12398804afcf37cfc606c672bd534853e1f191b8a49030",
+      "outcome_sha256": "a7e73c20cd89907c016a72dd0a70935e307949a93d7eb79e7cde949944cbcbe0",
+      "binding": {
+        "candidate_sha256": "37fc19eebb9dba8dc48e168f1c237ba81e3b7ddccb4fe213a004ef93825d4211",
+        "packet_sha256": "49a63b593391957add902ad387d2487f24f05c4e2ffab03088c8dc675ad45c81",
+        "binding": {
+          "component": "baltic_lv_qa",
+          "candidate_id": "478ae9398c34384dfda2449f8338629d6db3ade36b0432f5ee3d4e4c434eae7f",
+          "record_sha256": "37fc19eebb9dba8dc48e168f1c237ba81e3b7ddccb4fe213a004ef93825d4211",
+          "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+          "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+          "published_row": 105948,
+          "upstream": {
+            "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+            "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+            "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+            "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+            "row": 198,
+            "repair_parent": "ffedabfd2898164253e2ef0efddf5ea2e568e8e04df84d38ae5d28f17d281072",
+            "license": "cc-by-sa-3.0",
+            "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+          },
+          "quality_status": "accepted_repair",
+          "target_message_index": 7,
+          "source_evidence": "upstream_QA_only_primary_article_missing",
+          "admission_authorized": false,
+          "source_hold_cleared": false
+        },
+        "articles": [
+          {
+            "source_document_id": "lv:13219",
+            "text_sha256": "43bdf3bf34ad7648554a55788ed07efff732bd4f77cbdbb546cabf11191f857f",
+            "source_record_sha256": "348189252a28c8bb4cbad20fd5ab1b1cec64ac4b56d45910a87f3a81d8f72175"
+          },
+          {
+            "source_document_id": "lv:5027",
+            "text_sha256": "53d14ecbcba89436ba92cc7f00b7d9258956f261ebd6314d11444c0eaea5b0de",
+            "source_record_sha256": "2792337972a079487c7e73709fa8fc302608715467f3b04aedcf778b0d6b76a1"
+          }
+        ]
+      },
+      "assessment": "hold: earlier heart-short-circuits assertion and unsafe rescue omission missed"
+    },
+    {
+      "id": "qa-7fae0c3cb91b5c5d2816f2bbf794385ab270cad01ca869006033e6163ad05ae3",
+      "request_sha256": "8e588c5ea91f4f14cb339cd5a4a1cb46e9bd94b97c2a8f3a9cba7b1cd424ff20",
+      "outcome_sha256": "dcaf290b2bc90a80cb3dc86e7b15c5edf7b8dff6719e1d8ad8552057c8b6ed4d",
+      "binding": {
+        "candidate_sha256": "a2a5e29749d4916a321f25dc1ed83e7f9d272c3fd5c3fa09a2435b36a8878564",
+        "packet_sha256": "91c3019cd283df81dbdabe560773e98478c256fde7e8696e2c0a1c06b56a0f9c",
+        "binding": {
+          "component": "baltic_lv_qa",
+          "candidate_id": "7fae0c3cb91b5c5d2816f2bbf794385ab270cad01ca869006033e6163ad05ae3",
+          "record_sha256": "a2a5e29749d4916a321f25dc1ed83e7f9d272c3fd5c3fa09a2435b36a8878564",
+          "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl",
+          "published_file_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+          "published_row": 52701,
+          "upstream": {
+            "repo": "martinsu/latvian-wikipedia-qa-gemma3",
+            "revision": "ed202b8334890985f0879eeb48fff84565d890aa",
+            "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet",
+            "file_sha256": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8",
+            "row": 62199,
+            "license": "cc-by-sa-3.0",
+            "license_card_sha256": "b7b63693f78b1ac2040d8c2bfbf05d1d2b8c7bf7ca97b6d0febb809d0490d6db"
+          },
+          "quality_status": "accepted",
+          "target_message_index": 5,
+          "source_evidence": "upstream_QA_only_primary_article_missing",
+          "admission_authorized": false,
+          "source_hold_cleared": false
+        },
+        "articles": [
+          {
+            "source_document_id": "lv:384594",
+            "text_sha256": "8b0adbba267b72e78af99647bc5c31d87900c05be6764a949b6217446b5ed919",
+            "source_record_sha256": "1e0283399dde2e0766694a71c363cfec7dbd9adbe979e9ad30c916f84c0cb7b2"
+          }
+        ]
+      },
+      "assessment": "no_material_defect_found_in_supplied_evidence; sample-only, not corpus approval"
+    },
+    {
+      "id": "qa-fff21bda8014902571bf5f4f1f1cdf9ed4589072ce7bbc158f67f7c1a8dd80fb",
+      "request_sha256": "24e323dabeffc34dda352d677a923d6231082390f0e8f4bf950f993f7459c7f9",
+      "outcome_sha256": "fd37dc72521660ea5c54613f4a48d1e5302e42f5b3d4de5b98ee5d385cbdb724",
+      "binding": {
+        "candidate_sha256": "cedecb1fe75b987d07821fb7546b114a46dc4f416a43b0fd166094a149019022",
+        "packet_sha256": "158975029e4e44453d1e88cbe9192329c0b812a461d073523a4794daa99c3564",
+        "binding": {
+          "component": "baltic_lt_qa",
+          "candidate_id": "fff21bda8014902571bf5f4f1f1cdf9ed4589072ce7bbc158f67f7c1a8dd80fb",
+          "record_sha256": "cedecb1fe75b987d07821fb7546b114a46dc4f416a43b0fd166094a149019022",
+          "published_path": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl",
+          "published_file_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+          "published_row": 12894,
+          "upstream": {
+            "repo": "neurotechnology/lithuanian-qa-v1",
+            "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6",
+            "file": "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json",
+            "file_sha256": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+            "row": 8211,
+            "license": null,
+            "license_card_sha256": "b1592d07c223f83665d59e55f51c50c84c9bbe280563cce77153dbfefd469c75"
+          },
+          "quality_status": "accepted",
+          "target_message_index": 1,
+          "source_evidence": "upstream_QA_only_primary_article_missing",
+          "admission_authorized": false,
+          "source_hold_cleared": false
+        },
+        "articles": [
+          {
+            "source_document_id": "lt:62244",
+            "text_sha256": "661ef5d3bcac9a5e1b23918c3b98d09e52e984bdb78d4dd2e1d6a56393d4458a",
+            "source_record_sha256": "c847314b4395035a670266f51d69e65188d87772dc315a3a567d80ae56c6906a"
+          },
+          {
+            "source_document_id": "lt:57344",
+            "text_sha256": "65cc25ad5f295d514cc006cb1333c7820d77767a8c45c76da5814b43888cb1c9",
+            "source_record_sha256": "7ff22fc45cd954d6b966915ccbfee84ce1499aba953837ccc36dc1c5fbba18b8"
+          },
+          {
+            "source_document_id": "lt:58355",
+            "text_sha256": "d79a2acc7d6eb43aacd9981c8e43d4e3c0c9ad1405db23095394586ea8fbbccf",
+            "source_record_sha256": "34b0e6e37f0df7dfda5879dc2bd62338f4f82034895cc893afc8699759286ce5"
+          }
+        ]
+      },
+      "assessment": "no_material_defect_found_in_supplied_evidence; sample-only, not corpus approval"
+    }
+  ]
+}

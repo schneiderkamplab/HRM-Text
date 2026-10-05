@@ -1,0 +1,98 @@
+{
+  "schema": "inherited-dala-existing-publication-handoff-v1",
+  "owner": "Tesla via parent",
+  "action": "reuse_existing_pinned_producer_repositories_no_upload",
+  "new_repositories": 0,
+  "overwrite_authorized": false,
+  "targets": [
+    {
+      "repo_id": "schneiderkamplab/dala-ca-audited",
+      "revision": "03131da8041135eaa1c0b9b2f82bcfcc69236cb0",
+      "producer_manifest_sha256": "0bc24db068d39903a84b0c1f71e795919dc19055e7acfa7b81c12882be10f66f",
+      "audited_train_pairs_sha256": "60251c46c1ef079888c08c4116e08d7433fdd2cc1c07634e007380327572ed69",
+      "train_rows_per_task": 583584
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-cs-audited",
+      "revision": "3d56d7caac362abc37bc0d047ae89e73c438ea75",
+      "producer_manifest_sha256": "e79d54dcbb5d3ebf57fff2b31b23cf1264ebbaa21ec0e63fec98f8c730971c66",
+      "audited_train_pairs_sha256": "46bfb72ca90426393a32989fd81acc3d51fb51c4304309025edbb2dd67704aa1",
+      "train_rows_per_task": 630058
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-de-audited",
+      "revision": "450562298520f06d4a09c54124362553346c9f32",
+      "producer_manifest_sha256": "38440a4969ca039a29de258d2b3de4d2421f9b80d423b48bd43fd25a651d68e8",
+      "audited_train_pairs_sha256": "4319302aa39f54020e0ab981624b7ee726c1e597df9609fab2a3ab4c57719107",
+      "train_rows_per_task": 691942
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-el-audited",
+      "revision": "44bc1d3818bfd0a552697f868f1a423e584be665",
+      "producer_manifest_sha256": "6988426e0e411ce6fbe543a53402192e0ef85a6f92f288c9e356919b1350c5fd",
+      "audited_train_pairs_sha256": "dd2987bd62d11fbe86318c8f4ccf607782199650e69839c2f46d5e2790da6a88",
+      "train_rows_per_task": 610258
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-es-audited",
+      "revision": "7cc69ca9b189dfc67a1eeadb832e061233c29f2d",
+      "producer_manifest_sha256": "a7f3650193f22dfaa904e09b1f4c9a075d9a57b76f2e78406b9c27894ea9c352",
+      "audited_train_pairs_sha256": "9f40f76b0f6d944c97e18ff47d5622e89abf3796d762c71209e2c39f414c2003",
+      "train_rows_per_task": 702898
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-et-audited",
+      "revision": "dfd36ae3a919526f6bf9f8ceaa7fd5db748faa0d",
+      "producer_manifest_sha256": "58490aebbebe9c21f599cfaa38d4262ed1e42aa933aafc0ee68ab5962045ceae",
+      "audited_train_pairs_sha256": "b9cda0533b2236456ae42ace835a690f70680533471a6ee911dfcc1c3102c3be",
+      "train_rows_per_task": 538836
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-fi-audited",
+      "revision": "ace6308fd52e0ab84b43f5ff841b277f5b25f59d",
+      "producer_manifest_sha256": "738409268067bae7cd8313eba7ffa6c20e7ebcc2218078dd59681b2edf4832ce",
+      "audited_train_pairs_sha256": "ed1e236c93dc07051bd52ac8be9c306b1ccaebb13ec00569ddbb4e7470259f0b",
+      "train_rows_per_task": 634358
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-fr-audited",
+      "revision": "5fb5fd70c21dd24dd9c0fb944d54357e4d4e7f92",
+      "producer_manifest_sha256": "a2b13b6c01d53c775d1269278a2dea0357b7b4a7f0996a9d2d941941d92bc235",
+      "audited_train_pairs_sha256": "4c45052fe3d56939cf3e30ae0560a6efd7bb916b16025c8bf5c62b9de56cabc4",
+      "train_rows_per_task": 700764
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-it-audited",
+      "revision": "5b266211615910b361386ee0d4d9dceaea708838",
+      "producer_manifest_sha256": "3b2c44c7efea00b0eb290ef4c3960a2df4b332f233e040161e7acd1ab67fecc1",
+      "audited_train_pairs_sha256": "259486764cfc13e417e36c053bdf5ecc79fc95c48427e8241960be66ab7c74da",
+      "train_rows_per_task": 693824
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-pt-pt-audited",
+      "revision": "7da307b3ab0cdf585a6fc85662686307afbdc96d",
+      "producer_manifest_sha256": "8b359a31708218a50b2dc89d7cbd7de808ebe8a7877b528099fc4f2cfa387074",
+      "audited_train_pairs_sha256": "37f34d9a81c29dd50c6f0549d2e44d10907fc07ccac19ad2085d47ac23416c00",
+      "train_rows_per_task": 667234
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-ro-audited",
+      "revision": "0926b8044edc31e64714ab3fbaba1d45badc823a",
+      "producer_manifest_sha256": "2e2b246083093c6620a9aa64ee476bdae369867e14094762624cfc5f494b9f81",
+      "audited_train_pairs_sha256": "15bc050f0981c6e6775fd93511fdc9d99675c9ae6c7c3801b4e3d594f7d3f3e2",
+      "train_rows_per_task": 482388
+    },
+    {
+      "repo_id": "schneiderkamplab/dala-uk-audited",
+      "revision": "5fb50f3f91e21a0f1d87cdf40c533e66ff1f3f51",
+      "producer_manifest_sha256": "12378569e25735eb0894677e8a57768a3b07fcc7259aa824b5ae9dab820ab287",
+      "audited_train_pairs_sha256": "44e048cbdf5f974ac6a48c3992afe9c5c0f992554010ac5d13d3dcf076401acd",
+      "train_rows_per_task": 660926
+    }
+  ],
+  "evidence": "docs/reports/dfm13_inherited_dala_collision_20261004.json",
+  "evidence_sha256": "e2c7f120fe9a96f203cd1ec4bfb70a8b053d6181398194c5d60871fad956f120",
+  "message_equivalence_scope": "German24samples12perconfig, matchedby pair_id+variant; not exhaustive all12languages",
+  "local_projection_policy": "Keep local package hashes and downstream tokenization receipts unchanged; record derived-from upstream revision, not byte-identical-upload",
+  "backlog_adjustment": "These12inheritedtargets already exist with identicalproducer releases; no12newrepo upload obligation"
+}

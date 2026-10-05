@@ -1,0 +1,71 @@
+{
+  "audit": [
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Extra data",
+      "count": 1986
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Expecting ',' delimiter",
+      "count": 70
+    },
+    {
+      "stage": "audit",
+      "error_class": "ValueError: Incomplete output",
+      "count": 4141
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Expecting value",
+      "count": 242
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Invalid \\escape",
+      "count": 28
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Expecting property name enclosed in double quotes",
+      "count": 2
+    }
+  ],
+  "repair": [
+    {
+      "stage": "audit",
+      "error_class": "ValueError: Incomplete output",
+      "count": 1395
+    },
+    {
+      "stage": "generate",
+      "error_class": "ValueError: missing_assistant_target",
+      "count": 2
+    },
+    {
+      "stage": "generate",
+      "error_class": "ValueError: invalid_role_order",
+      "count": 28
+    },
+    {
+      "stage": "generate",
+      "error_class": "ValueError: Incomplete output",
+      "count": 27
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Extra data",
+      "count": 55
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Expecting value",
+      "count": 2
+    },
+    {
+      "stage": "audit",
+      "error_class": "JSONDecodeError: Invalid \\escape",
+      "count": 1
+    }
+  ]
+}

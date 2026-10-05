@@ -1,0 +1,24 @@
+{
+  "primary_url": "https://www.europarl.europa.eu/legal-notice/en",
+  "final_url": "https://www.europarl.europa.eu/legal-notice/en",
+  "status": 200,
+  "archives": {
+    "lt": {
+      "path": "/work/mimir/DaLA/la_output/resources/lithuanian-extension-v4/Europarl-v8-lt.zip",
+      "sha256": "6838848c2d8ce94f7c33912e7f4329b9c332be68fe1871af240659400bfd3d6b"
+    },
+    "lv": {
+      "path": "/work/mimir/DaLA/la_output/resources/latvian-extension-v2/raw/europarl-lv.zip",
+      "sha256": "e3583511836dc453fd129bd4cedff47ce5c383c9f3712f4477912ddc3b1b6e78"
+    }
+  },
+  "files": {
+    "lt-README.txt": "5f09b0c1a464b7cc782309b821417283c5362b00218999ae54c3b9470232c666",
+    "lv-README.txt": "1b2b8b5ef3bbe637cea1cdcf4b6986bfdf711c2f2acc0d0286fa0ef73ebd5154",
+    "legal-notice.txt": "9ea8c3d454d8b2580b5bccc17db9103ca71d5d5d8a6d86fdcf1b961580bb078b",
+    "lv-LICENSE.txt": "275943645fea81a78726453f2803c353d7cc4c39bc7b394d2e0b3b378df7a3d8",
+    "legal-notice.html": "149542f61602aae66e3db3d47fcc0e00107406861bef197a3d19ee7077cfeea2",
+    "lt-LICENSE.txt": "275943645fea81a78726453f2803c353d7cc4c39bc7b394d2e0b3b378df7a3d8"
+  },
+  "disposition": "No publication authorized by this evidence capture; scope assessment in report.md"
+}

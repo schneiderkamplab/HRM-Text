@@ -1,0 +1,376 @@
+{
+  "ai_arenaen_preferred": {
+    "repo": "schneiderkamplab/dfm13-ai-arenaen-preferred",
+    "revision": "701e66c1afa9efb08ecdd2a78f7abd544d1995d3",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "f69a025cf79c3d08932711782b1a431f8c8835bd786bce32e3d43275f16825c6",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "dd665520ad80336fc39911b5d118ef85d5f0160202e863cae820f5d04f921e7a",
+        "git_blob_sha1": "a2d44f68f4ce7b1fd5751cd4c8a2ed68e004613c",
+        "method": "revision_bound_git_blob"
+      },
+      "duplicates.jsonl": {
+        "sha256": "508337a245c7d026653d644ca7481953d5cd0717ddd719b1ef5ad37c5cafebf4",
+        "git_blob_sha1": "875c20dff2207d03d1697b0ce3c9a4295b0e26df",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "9648b8d61471877265ff8a09f832c24178f68aeca4d77e1a0ce788d59f5cf66c",
+        "git_blob_sha1": "f7fa31b1ce835ddab59354b9fe12e03042cd3a28",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "f46756e472f34e09011a35790a0bfd0bd4d1839dc2267afec53035d0b52ccb8b",
+        "git_blob_sha1": "0e7ea021388525a8757c1ce015aef53709a70a64",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "arena_human_preference_140k": {
+    "repo": "schneiderkamplab/dfm13-arena-human-preference-140k-preferred",
+    "revision": "b1b656642c24aadfd19e447b532e2f1901935e1a",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "2ba6cbaa3b8890f1fb63de2c0b3ad170677f0df46b32ae4c7f71f86acf2ef82b",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "7c0be189f78d5871194f1865b6ccacc5fc65d06fb047948ba8d57d3375133076",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "duplicates.jsonl": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "6c34c958aa2fafc3906e2d9129094183ce1773a5d3ab42eb1b803359e4cfec11",
+        "git_blob_sha1": "ca909b507c2c7e0f18dd5ed04c5b225fc8f0bce3",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "febffce6a045cf9b4f21f6626478ad92af43d4e000e41fcf3157657ff5a8e4e2",
+        "git_blob_sha1": "4c64ff61331a6324bdf4adb1561914bb73f2c360",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "arena_human_preference_100k": {
+    "repo": "schneiderkamplab/dfm13-arena-human-preference-100k-preferred",
+    "revision": "42272f495c5181f3de3807f731e479a6d45cf31f",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "dbfe7e122b72a987fa6159b52289adf32cbe7beb1ee02395e9fc683859c1adad",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "5afb72007c8e10d8d7ebae251aa2b7cd71cb706a7ce2f2c342c6740e6cfbd52b",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "duplicates.jsonl": {
+        "sha256": "7bbaaab6f8f4cff6f3bdf791758648ef05ffd4c6f0130fd7ef3dd7d0ded51975",
+        "git_blob_sha1": "b4ef66f332e8a58456c0fce8fb0913ca4d3de622",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "3665a9597c7bb61bed3803922f32ffe6534ad3764df0b7f6e4466bb7af3556dc",
+        "git_blob_sha1": "284b3a3c080ce2d76fe67a44703febf575cdf282",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "41b611c9862a3153cc7008b76377fbcb115442fa210713b02daae532420f81cd",
+        "git_blob_sha1": "3c1279a0a4fc0187c015c1429f6c287e37100703",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "arena_human_preference_55k": {
+    "repo": "schneiderkamplab/dfm13-arena-human-preference-55k-preferred",
+    "revision": "61036054e0848c37d9a9689ade15cfaceb4ff95f",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "bff9e13f872d0d472e0d268076c1e708dee16644413ab52b4b0f914655b21bf0",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "ba2e16cae2c5fe18a865c06197f196b75e1d4b7e48dbe3ee92b59a426e1e5292",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "duplicates.jsonl": {
+        "sha256": "625ed2b83cfafd1cf818aded59e6924537efc2d9eba15e5cd7085632ee155519",
+        "git_blob_sha1": "1b3da243a524d19d4ada93117cce41bf1aca7f45",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "da57f4a3fb1a3a19f1a8a1a10a31e9a84e641e3e247b4176e93f9b5ffd7beb5e",
+        "git_blob_sha1": "b28efdb6403a33cb3229a875a99a2e9188ca41da",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "b2efab4ebb01dc5ec81113efe7ed7db37912455dffb7335ded214cdd16374446",
+        "git_blob_sha1": "749d3f908cf0a02dd688adbd392f5ca15f44288a",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "comparia_preferred": {
+    "repo": "schneiderkamplab/dfm13-comparia-preferred",
+    "revision": "1ff3d736a975168d20f9b387ccc395454fe32ed2",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "d497ab9fcb7eb2a043915a0c19494e83c048eb6882d8eae141a5613d5234eea1",
+        "git_blob_sha1": "e6d0577fb27ef22f92fe8ac6480232adab4c5479",
+        "method": "revision_bound_git_blob"
+      },
+      "provenance.jsonl": {
+        "sha256": "04f81a2ad0f14914f2f2ae806d2bef44f08c47565759687983bfddcbc0b1b888",
+        "git_blob_sha1": "e50a06edef47f542e601acf061f240d8dc81591b",
+        "method": "revision_bound_git_blob"
+      },
+      "duplicates.jsonl": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "89fab07de5c37e7fa4dfb0b6663e1ab5b40e97ff6a10d93d452785ec51377c95",
+        "git_blob_sha1": "eab8fae1d8efa0aa829ac2e4cf6cc50f2946b42a",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "608577f6c5d22ee76f2b6da7d6477d76ec84fdb76da994e87e2b62914d847547",
+        "git_blob_sha1": "15ebc07b296a22b1546da8ec721699a96b7c8659",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "helpsteer3_edit": {
+    "repo": "schneiderkamplab/dfm13-helpsteer3-edit",
+    "revision": "008ea3dbc2d2fdcff4ad953db720b4c7def21e8d",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "64df42f9891d6505c1bb3a4269aa5978ba7d7065bf7f91d1c3931fc861526c65",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "c0915649ef7cf84b0785ceca0fecc3925a428c96c4c51f4d9376cf5cf269e190",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "duplicates.jsonl": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "af7a907e522bd651bb084de42413aab5eab25b663fbefe8867602e49873b9765",
+        "git_blob_sha1": "39046fd365ab6d16e889fab965e34010e65ed659",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "13b2f3e0c3bdd7e8c80dd604a4eb2fc9ee7ad2286b74c2fe76cf8dd97e3ae2b4",
+        "git_blob_sha1": "0f4ee1078c0b6633f976dc34468e4eb4720094b9",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "helpsteer3_preference": {
+    "repo": "schneiderkamplab/dfm13-helpsteer3-preference",
+    "revision": "a208ed70de647af77228097dc6ca3254d2b61f03",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "1e324ab1ec93b8205f7f9d0b2309f42b02c478f4b6ee29ca7e61a791beaf18af",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "1314071507fa57123f8807016ea68cb362d2cb1762b1b593eaafaff8cb7a3476",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "duplicates.jsonl": {
+        "sha256": "32b8aa382c459b5752c3f045fa8ff8b8e961f43673a224d217a16ef841c63e03",
+        "git_blob_sha1": "522f79727af709c74dd0888e9d5fcf088382dacf",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "5546732117212e14281eeb5fc013ab61d21842ebf5a8597b6033b3e3c3b3a022",
+        "git_blob_sha1": "e7d53fc7b9473f323d228b57b8416711ba0d9a59",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "623a68d84676274bbb475fee086c05d2204ee8f3236973d8155ab981be3997b1",
+        "git_blob_sha1": "20172922802fdbc3389dcc66dfc3cd032ccf141b",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "arena_expert5k": {
+    "repo": "schneiderkamplab/dfm13-arena-expert5k-preferred",
+    "revision": "81ac7b461dcce616faa290b0e6b8dc6b07a81b97",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "f31fa5384b722260193e90cae8225474f8a809c85a946eee0fb9cf27a39baf79",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "provenance.jsonl": {
+        "sha256": "9906b86e398590e14ef77c8a681c9175ced11c30b4c03a23ec2911136edc133c",
+        "git_blob_sha1": "bfff9a90f7770ee736fa760b169d642adf2648cf",
+        "method": "revision_bound_git_blob"
+      },
+      "duplicates.jsonl": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "7e40d7bbc901c1ad1e1dc6ec07246b985425d2b52204d97fea3ec7516d58b2ce",
+        "git_blob_sha1": "d59a62a4d2481de9e5b9f03c2ea67ab7c8f933d9",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "31440ca47e02698819b1c308843728b3d47d2a0c0386c88a27bcfb5f33602bb5",
+        "git_blob_sha1": "3ca0e522055f91b19ddc5109a9b170bb326d55e4",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "jjzha_skillspan": {
+    "repo": "schneiderkamplab/dfm13-jjzha-skillspan",
+    "revision": "ecc729871ec192e48943e4bc4204ba4e36c5caaa",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "83df76b4882f55f569f5e3edf5a7055d9a35d53dfc433a46d6441905b74d9136",
+        "git_blob_sha1": "241a474b3e3e1b5364b26b14e3be1049cd111a17",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "d8026e3bae7f324b694c71b3d53bd1aca7c768b989903f7c654d6db05d1a36ed",
+        "git_blob_sha1": "1571c583c65cf1d22119f0a6a86a66f0838fc1db",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "8b91b2073e88bcf42779e3366268a7521ef6fdb7992c87f80a9ee8e54525c1fc",
+        "git_blob_sha1": "3d055a53996da9d6c87792b01665a38d961eeb5f",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "jjzha_kompetencer": {
+    "repo": "schneiderkamplab/dfm13-jjzha-kompetencer",
+    "revision": "3744ca607db54257136ee8ce30497ceb3122a29a",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "96adafe5097520af1a76f4c8881f091d2b09adf2b1c0a7b725bace62c11dc2dc",
+        "git_blob_sha1": "c87b4684458ab8770f9df6e87640310fa60df2ca",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "42a1de90b123b91032f7843140e35bf76f25f78515ab9a0eba2e5ecfee670507",
+        "git_blob_sha1": "e2a01d73fe9b4c2f7b1ad0ceb6a1380a8a746c3d",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "7152a22ae6ed82df5e819a481e9343ff29f94a839310cb990d495e9b73bfe346",
+        "git_blob_sha1": "ab435b1321ecd119aeb71d84262b627ca2e148e9",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "jjzha_green": {
+    "repo": "schneiderkamplab/dfm13-jjzha-green",
+    "revision": "a61f1ed6b44edea32c88ad95819d263ecbd67ca8",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "78a8c2d5596db7d9fd76167a4af986dc4e7556cfe8e8dec4e340d58f0c224d45",
+        "git_blob_sha1": "029856e154ba7f6867f19ad46513826457b23701",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "ca73353c5bf4a6464e7d0d06001c292ee0c6c710ad8c3dfd8c2b3d72b76b3885",
+        "git_blob_sha1": "c290e4b69cd4d774a8084e0f683d58371d817655",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "a41502d1b9ef68df922cd3accc221a0daeb48962b4b530bab70d0404733296e7",
+        "git_blob_sha1": "4d2318dd657d3b6e9e84351cfa71a4bfcaced8e1",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "jjzha_imdb_dutch": {
+    "repo": "schneiderkamplab/dfm13-jjzha-imdb-dutch",
+    "revision": "5c7d54be1fd481d8bb045a67e228af488ccc1ffe",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "32acfead22af2b4d02e6eb4e86c06ad72bf20a466bbd209f1f4e6d2f35c1973b",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "README.md": {
+        "sha256": "4759dde0651a17cf8a249ed79136f390c9c3a8de9d7da77a6edf4b2f67a087e0",
+        "git_blob_sha1": "5010ac26f4965161169971f094544c62d3adff0e",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "265bed1309fdabb4a8f0e6149e9821c4fbacc21695f100f2813b8d56254a754c",
+        "git_blob_sha1": "cc5f7fd8925858ff46a713316513cf39b2a7d8eb",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "jjzha_dutch_exam": {
+    "repo": "schneiderkamplab/dfm13-jjzha-dutch-exam",
+    "revision": "cff427d4c2418d6b05f32a34a509cd6fdae772dd",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "9870ea9e8af523e628cf8d1c8d9d723467cec61d7fb19c9f161a9dc95fe8f0ff",
+        "git_blob_sha1": "bf40aea71cffd94e6af0c35888d67002afcdfdb7",
+        "method": "revision_bound_git_blob"
+      },
+      "README.md": {
+        "sha256": "338350f4e81b017d524a28929dc34766012c34782aa909d6ba00bc6352f671de",
+        "git_blob_sha1": "3448d5b3631b9f55f88ddb4178c2e48a83152475",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "867d124d833077e145658cbbcbe46f2209ae1a7028029e636710ca0a4466e578",
+        "git_blob_sha1": "00ac619f90916488f5cb23dd7f564d3e9454c5b1",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  },
+  "jjzha_croco": {
+    "repo": "schneiderkamplab/dfm13-jjzha-croco",
+    "revision": "c3341d5058c723b1ff1c9ce3b600ffe9c9261f94",
+    "head_matches": true,
+    "files": {
+      "data/train.jsonl": {
+        "sha256": "780d9919bb6100537dc36848d12c232ddecac07cc349f5bb1815d1a914985c4e",
+        "method": "revision_bound_HF_LFS_SHA256"
+      },
+      "README.md": {
+        "sha256": "87212cf616266e901d20ff70dc1f56eec3cd19af75752794bfdcf9792eed86de",
+        "git_blob_sha1": "3efe4d60741c504f29d12219c6c4267ee9d0dd91",
+        "method": "revision_bound_git_blob"
+      },
+      "manifest.json": {
+        "sha256": "cb60fcc1b051760703cbf69d2959fce8c27bdb844ddce932ea175f74ca4f7b2f",
+        "git_blob_sha1": "49de9d7cd6d0ea11b2f06e5ac31f1d6762bcdc97",
+        "method": "revision_bound_git_blob"
+      }
+    }
+  }
+}

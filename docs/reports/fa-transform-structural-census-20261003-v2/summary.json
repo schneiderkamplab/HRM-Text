@@ -1,0 +1,67 @@
+{
+  "per_task": {
+    "denoising": {
+      "rows": 73802,
+      "category_only": 2223,
+      "heading_only": 0,
+      "empty_field_present": 8008,
+      "empty_field_heavy": 2074,
+      "prose_without_empty": 51416,
+      "paragraphs_0": 14396,
+      "paragraphs_1": 17476,
+      "paragraphs_2": 15002,
+      "paragraphs_3plus": 26928,
+      "proposed_exclusions": 2223,
+      "remaining": 71579
+    },
+    "paragraph-reordering": {
+      "rows": 31490,
+      "category_only": 111,
+      "heading_only": 0,
+      "empty_field_present": 4327,
+      "empty_field_heavy": 1115,
+      "prose_without_empty": 24593,
+      "paragraphs_0": 2578,
+      "paragraphs_1": 8026,
+      "paragraphs_2": 7583,
+      "paragraphs_3plus": 13303,
+      "proposed_exclusions": 1102,
+      "remaining": 30388
+    },
+    "prefix-continuation": {
+      "rows": 110813,
+      "category_only": 3281,
+      "heading_only": 0,
+      "empty_field_present": 12482,
+      "empty_field_heavy": 3328,
+      "prose_without_empty": 76969,
+      "paragraphs_0": 21396,
+      "paragraphs_1": 26782,
+      "paragraphs_2": 22842,
+      "paragraphs_3plus": 39793,
+      "proposed_exclusions": 3281,
+      "remaining": 107532
+    },
+    "span-filling": {
+      "rows": 25937,
+      "category_only": 480,
+      "heading_only": 0,
+      "empty_field_present": 2879,
+      "empty_field_heavy": 663,
+      "prose_without_empty": 19544,
+      "paragraphs_0": 3521,
+      "paragraphs_1": 6522,
+      "paragraphs_2": 5779,
+      "paragraphs_3plus": 10115,
+      "proposed_exclusions": 480,
+      "remaining": 25457
+    }
+  },
+  "overlaps": {
+    "rows": 242042,
+    "minimal": 7086,
+    "empty_heavy_in_minimal": 143,
+    "empty_heavy_outside_minimal": 7037
+  },
+  "filter_applied": false
+}

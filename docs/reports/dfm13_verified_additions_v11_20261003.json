@@ -1,0 +1,119 @@
+{
+  "checked_at": "2026-10-03T19:57:04.147941+00:00",
+  "assembly": "data/dfm13/verified-wave-additions-20261003-v11",
+  "totals": {
+    "ready_sources": 270,
+    "unready_sources": 7,
+    "rows": 10074921,
+    "tokens": 3230749804
+  },
+  "new_since_v9": {
+    "sources": 116,
+    "rows": 639179,
+    "tokens": 73004034
+  },
+  "finepdf": {
+    "sources": 6,
+    "rows": 9,
+    "tokens": 17944
+  },
+  "per_wave": {
+    "nonwave": {
+      "sources": 15,
+      "rows": 367780,
+      "tokens": 283992297
+    },
+    "wave4": {
+      "sources": 184,
+      "rows": 2757156,
+      "tokens": 2022400429
+    },
+    "wave3": {
+      "sources": 71,
+      "rows": 6949985,
+      "tokens": 924357078
+    }
+  },
+  "unready_at_freeze": [
+    {
+      "name": "dfm13_wave3_baltic_lv_qa",
+      "reason": "quality_hold_source_fidelity"
+    },
+    {
+      "name": "dfm13_wave3_baltic_lt_qa",
+      "reason": "quality_hold_source_fidelity"
+    },
+    {
+      "name": "dfm13_wave3_latvian_p3_cc_by_4_0",
+      "reason": "quality_hold_source_fidelity"
+    },
+    {
+      "name": "dfm13_wave3_latvian_p3_cc_by_sa_4_0",
+      "reason": "quality_hold_source_fidelity"
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_en",
+      "reason": "tokenization_not_ready"
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_fa",
+      "reason": "tokenization_not_ready"
+    },
+    {
+      "name": "dfm13_wave4_opus_bg_fo",
+      "reason": "tokenization_not_ready"
+    }
+  ],
+  "ready_after_freeze": [
+    "dfm13_wave4_opus_bg_en",
+    "dfm13_wave4_opus_bg_fa",
+    "dfm13_wave4_opus_bg_fo",
+    "dfm13_wave4_opus_bg_hr",
+    "dfm13_wave4_opus_bg_is",
+    "dfm13_wave4_opus_bg_it",
+    "dfm13_wave4_opus_bg_lb",
+    "dfm13_wave4_opus_bg_nb",
+    "dfm13_wave4_opus_bg_nn",
+    "dfm13_wave4_opus_bg_ro",
+    "dfm13_wave4_opus_bg_sl",
+    "dfm13_wave4_opus_bg_sq",
+    "dfm13_wave4_opus_es_sk",
+    "dfm13_wave4_opus_et_sk",
+    "dfm13_wave4_opus_fa_sk",
+    "dfm13_wave4_opus_fi_sk",
+    "dfm13_wave4_opus_fr_sk",
+    "dfm13_wave4_opus_hr_sk",
+    "dfm13_wave4_opus_hu_sk",
+    "dfm13_wave4_opus_is_sk",
+    "dfm13_wave4_opus_it_sk",
+    "dfm13_wave4_opus_lb_sk",
+    "dfm13_wave4_opus_lt_sk",
+    "dfm13_wave4_opus_lv_sk",
+    "dfm13_wave4_opus_nb_sk",
+    "dfm13_wave4_opus_bg_sr",
+    "dfm13_wave4_opus_bg_uk",
+    "dfm13_wave4_opus_bs_ca",
+    "dfm13_wave4_opus_bs_da",
+    "dfm13_wave4_opus_bs_de",
+    "dfm13_wave4_opus_bs_el",
+    "dfm13_wave4_opus_bs_en",
+    "dfm13_wave4_opus_bs_es",
+    "dfm13_wave4_opus_lb_pt_pt",
+    "dfm13_wave4_opus_pt_pt_sq"
+  ],
+  "translation_pending": [],
+  "sampling_performed": false,
+  "verification_reuse": {
+    "parent": "data/dfm13/verified-wave-additions-20261003-v10",
+    "parent_manifest_sha256": "20aef70ba4892501238bec549aa72dfa782792be47c0b28d98feaf29248e92cc",
+    "basis": "Exact unchanged inode/device/size/mtime/ctime signatures for all previously hash-verified inputs; current registry admission rechecked; only six FinePDF entries newly verified",
+    "new_names": [
+      "dfm13_wave3_finepdfs_lt_exact_ccby_v1_denoising",
+      "dfm13_wave3_finepdfs_lt_exact_ccby_v1_paragraph_reordering",
+      "dfm13_wave3_finepdfs_lt_exact_ccby_v1_prefix_continuation",
+      "dfm13_wave3_finepdfs_lt_exact_ccby_v1_span_filling",
+      "dfm13_wave3_finepdfs_lv_exact_ccby_v1_denoising",
+      "dfm13_wave3_finepdfs_lv_exact_ccby_v1_prefix_continuation"
+    ]
+  }
+}

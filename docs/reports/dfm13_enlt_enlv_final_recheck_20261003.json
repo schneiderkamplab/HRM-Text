@@ -1,0 +1,26 @@
+{
+  "sources": {
+    "enlv": {
+      "rows": 1212994,
+      "tokens": 115360618,
+      "hf_revision": "b247a04a27696aa2010e8f173a0ecad8933f7a62",
+      "local_pins": 1228,
+      "signature_changes_rehashed": [],
+      "full_verification_report": "docs/reports/dfm13_enlv_ready_verification_20261003.json",
+      "full_verification_sha256": "43cdc83b1221879dca9ade081ead3de4de8c3ebd5c3d984991d9c156ff206f03",
+      "remote_head_matches": true
+    },
+    "enlt": {
+      "rows": 1243134,
+      "tokens": 116050220,
+      "hf_revision": "aafee45fc3cf94bf7a3707128a31f2a9b3573bd9",
+      "local_pins": 1257,
+      "signature_changes_rehashed": [],
+      "full_verification_report": "docs/reports/dfm13_enlt_ready_verification_20261003.json",
+      "full_verification_sha256": "ce80b2b65bc0c768530c5193583e83ace54612ee53b6bbcb4ed5bb534a08ddbf",
+      "remote_head_matches": true
+    }
+  },
+  "method": "Reconcile current registry and remote heads; unchanged local stat signatures reuse prior full hashes/native parity, changed signatures require rehash",
+  "gpu_calls": 0
+}

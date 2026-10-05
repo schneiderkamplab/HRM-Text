@@ -1,0 +1,2834 @@
+{
+  "assembly": "data/dfm13/verified-wave-additions-20261003",
+  "registry_sha256": "f2c9097f7801a0b75f60ea0afe1367da2ec7c9c1b8053f708a07c3ea29fb7505",
+  "sources": [
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg",
+      "rows": 245,
+      "preflight_all_assistant_tokens": 169750,
+      "training_final_target_tokens": 169631,
+      "parity": {
+        "scope": "deterministic_sample_not_full_corpus",
+        "truncation": false,
+        "selection": "five spread row ordinals plus first three multi-assistant rows",
+        "rows": [
+          {
+            "ordinal": 0,
+            "part": "part-000000.jsonl",
+            "part_row": 0,
+            "row_sha256": "bf7e1d92fc07499ac618ec712f0c84466b8ce25fb4a0c691a39d4de5eccc2c6f",
+            "assistant_messages": 1,
+            "inst_start": 0,
+            "resp_start": 55,
+            "prompt_tokens": 55,
+            "response_tokens": 698,
+            "final_target_tokens": 753,
+            "all_assistant_rendered_tokens": 753,
+            "declared_preflight_tokens": 753,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 61,
+            "part": "part-000000.jsonl",
+            "part_row": 61,
+            "row_sha256": "1c6dd462d0232e5bbe26d3114ee76763334575fda4414ae95a9c35d4eab44dec",
+            "assistant_messages": 1,
+            "inst_start": 40938,
+            "resp_start": 40986,
+            "prompt_tokens": 48,
+            "response_tokens": 852,
+            "final_target_tokens": 900,
+            "all_assistant_rendered_tokens": 900,
+            "declared_preflight_tokens": 900,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 122,
+            "part": "part-000000.jsonl",
+            "part_row": 122,
+            "row_sha256": "3d41ddac2b047535bbf2b148efdeb678a02d4603af98fa7119914b2de7e96033",
+            "assistant_messages": 1,
+            "inst_start": 86928,
+            "resp_start": 86990,
+            "prompt_tokens": 62,
+            "response_tokens": 587,
+            "final_target_tokens": 649,
+            "all_assistant_rendered_tokens": 649,
+            "declared_preflight_tokens": 649,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 183,
+            "part": "part-000000.jsonl",
+            "part_row": 183,
+            "row_sha256": "bbc53405e0a538562bbf26b087248bde5eb6dffaf2ef81c3b2f0c0c4e7d62d02",
+            "assistant_messages": 1,
+            "inst_start": 129344,
+            "resp_start": 129392,
+            "prompt_tokens": 48,
+            "response_tokens": 771,
+            "final_target_tokens": 819,
+            "all_assistant_rendered_tokens": 819,
+            "declared_preflight_tokens": 819,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 223,
+            "part": "part-000000.jsonl",
+            "part_row": 223,
+            "row_sha256": "4bc5b59a634b515647e0511d1d2bec332cf32f0a96f9890f587300192060a0cb",
+            "assistant_messages": 2,
+            "inst_start": 156030,
+            "resp_start": 156167,
+            "prompt_tokens": 137,
+            "response_tokens": 91,
+            "final_target_tokens": 228,
+            "all_assistant_rendered_tokens": 347,
+            "declared_preflight_tokens": 347,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 244,
+            "part": "part-000000.jsonl",
+            "part_row": 244,
+            "row_sha256": "30d546be9dbb74312c65a267190d2990ffc5d805ffe0211f123e6cb49396117e",
+            "assistant_messages": 1,
+            "inst_start": 169542,
+            "resp_start": 169595,
+            "prompt_tokens": 53,
+            "response_tokens": 36,
+            "final_target_tokens": 89,
+            "all_assistant_rendered_tokens": 89,
+            "declared_preflight_tokens": 89,
+            "exact_prompt_and_response_tokens": true
+          }
+        ]
+      },
+      "files": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-utter-project-EuroBlocks-SFT-2512-bg/data/train.jsonl": {
+          "sha256": "d450d4da365a56c5ce4da474bc758c70253307d4c9c19ea21eb78b8d380d1c76",
+          "bytes": 1077748,
+          "signature": [
+            3351383302,
+            16121861074676744196,
+            1077748,
+            1791030799332840884,
+            1791030799335561400
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-bg/publication.json": {
+          "sha256": "cc8a82464f8e0d4f34e63e53767a50d2525501aae528fa2de1141bfe64566a40",
+          "bytes": 923,
+          "signature": [
+            3351383302,
+            8405408288460636164,
+            923,
+            1791030801791506485,
+            1791030801792374871
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-utter-project-EuroBlocks-SFT-2512-bg/manifest.json": {
+          "sha256": "ed0072ea2ee60567b8ba2a86ecd4a28f898dc362253ca25fd6b37e2808185ff4",
+          "bytes": 830,
+          "signature": [
+            3351383302,
+            15445800737442234372,
+            830,
+            1791030799337954996,
+            1791030799338703752
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/verified.json": {
+          "sha256": "14ff9153d7dada08f2813ef19258455f2e2c49bdeb1d9dfd10b4e50c2e8e6796",
+          "bytes": 453,
+          "signature": [
+            3351383302,
+            2591375081273425924,
+            453,
+            1791034252427051077,
+            1791034252428169016
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            10778661984159793156,
+            261,
+            1791034250603202578,
+            1791034250603202578
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/completion.json": {
+          "sha256": "c7fc4321dba1ad131bfd234270e4184c8ffb6c29c625c2d3c3f2ca13fcf847ea",
+          "bytes": 198,
+          "signature": [
+            3351383302,
+            11108161825475264516,
+            198,
+            1791034252273016033,
+            1791034252273743484
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "16be654451d901ad9fc857056d5bf4581df3fde6f779ac868fa126add861f48a",
+          "bytes": 678652,
+          "signature": [
+            3351383302,
+            2056682432697466884,
+            678652,
+            1791034251932433980,
+            1791034251932433980
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "16271d3cbdc9b3a192f143eedb668fc416b347c3ae62f0b558a638e18160d2f1",
+          "bytes": 2088,
+          "signature": [
+            3351383302,
+            4743191581186392068,
+            2088,
+            1791034251934268167,
+            1791034251934268167
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "25398c3a81e23d83891f4950d92b41dbc68f24c9921971f117d72b620a121e56",
+          "bytes": 2088,
+          "signature": [
+            3351383302,
+            16693676689432969220,
+            2088,
+            1791034251935095032,
+            1791034251935095032
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "8b070be9acabf9fca702e420affba18033d688de25eebcdfd2e9a5c05e0e71cb",
+          "bytes": 2088,
+          "signature": [
+            3351383302,
+            9124427446731931652,
+            2088,
+            1791034251944434006,
+            1791034251944434006
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "7953035157685db6fd818e8b6bc09d58d3a8ec1321b5428f3e796c99e08c7c7e",
+          "bytes": 2088,
+          "signature": [
+            3351383302,
+            12618490796303908868,
+            2088,
+            1791034251946341002,
+            1791034251946341002
+          ]
+        }
+      },
+      "verification": "PASS: full source/receipt/array checks plus bounded untruncated native parity",
+      "token_metrics": {
+        "training": {
+          "tokens": 169631,
+          "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+        },
+        "preflight": {
+          "tokens": 169750,
+          "basis": "all_assistant_targets_with_repeated_prefixes",
+          "source_row_sum_verified": true,
+          "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr",
+      "rows": 48,
+      "preflight_all_assistant_tokens": 43216,
+      "training_final_target_tokens": 40646,
+      "parity": {
+        "scope": "deterministic_sample_not_full_corpus",
+        "truncation": false,
+        "selection": "five spread row ordinals plus first three multi-assistant rows",
+        "rows": [
+          {
+            "ordinal": 0,
+            "part": "part-000000.jsonl",
+            "part_row": 0,
+            "row_sha256": "a0dfb2f05691aee318e65b1c1da902b116d7776618933c0ab396225210baa24d",
+            "assistant_messages": 1,
+            "inst_start": 0,
+            "resp_start": 55,
+            "prompt_tokens": 55,
+            "response_tokens": 1457,
+            "final_target_tokens": 1512,
+            "all_assistant_rendered_tokens": 1512,
+            "declared_preflight_tokens": 1512,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 3,
+            "part": "part-000000.jsonl",
+            "part_row": 3,
+            "row_sha256": "4ba8a15ead49c3fb6f403d6ee930d8511c9b266c2da5644c848f1956e08420cb",
+            "assistant_messages": 5,
+            "inst_start": 3060,
+            "resp_start": 4527,
+            "prompt_tokens": 1467,
+            "response_tokens": 862,
+            "final_target_tokens": 2329,
+            "all_assistant_rendered_tokens": 3684,
+            "declared_preflight_tokens": 3684,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 12,
+            "part": "part-000000.jsonl",
+            "part_row": 12,
+            "row_sha256": "5c0468749935842b1e96e5af0b8ad6f09be60284296d57705aa20b09f0196787",
+            "assistant_messages": 1,
+            "inst_start": 11229,
+            "resp_start": 11291,
+            "prompt_tokens": 62,
+            "response_tokens": 671,
+            "final_target_tokens": 733,
+            "all_assistant_rendered_tokens": 733,
+            "declared_preflight_tokens": 733,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 24,
+            "part": "part-000000.jsonl",
+            "part_row": 24,
+            "row_sha256": "be2d89f6fdcc5e3ff9ad7c2dce2418df9779d5b3ef92d718c53f1727bd07094e",
+            "assistant_messages": 1,
+            "inst_start": 21427,
+            "resp_start": 21445,
+            "prompt_tokens": 18,
+            "response_tokens": 142,
+            "final_target_tokens": 160,
+            "all_assistant_rendered_tokens": 160,
+            "declared_preflight_tokens": 160,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 36,
+            "part": "part-000000.jsonl",
+            "part_row": 36,
+            "row_sha256": "09620ef24f3345abd9decc365a502c908bcb5ea3715cbfbc1aeef5fba6051c4c",
+            "assistant_messages": 1,
+            "inst_start": 29475,
+            "resp_start": 29535,
+            "prompt_tokens": 60,
+            "response_tokens": 808,
+            "final_target_tokens": 868,
+            "all_assistant_rendered_tokens": 868,
+            "declared_preflight_tokens": 868,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 38,
+            "part": "part-000000.jsonl",
+            "part_row": 38,
+            "row_sha256": "380a7edc70dd5cd1061e598abfb3af48103c71c490295a730da367dc2f8f608a",
+            "assistant_messages": 2,
+            "inst_start": 31672,
+            "resp_start": 32590,
+            "prompt_tokens": 918,
+            "response_tokens": 1260,
+            "final_target_tokens": 2178,
+            "all_assistant_rendered_tokens": 3086,
+            "declared_preflight_tokens": 3086,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 45,
+            "part": "part-000000.jsonl",
+            "part_row": 45,
+            "row_sha256": "8324e8cd32c1dfd360fe69f8d48cd9341dec2b94c96b2e62cd3a1429bbb4a2b1",
+            "assistant_messages": 2,
+            "inst_start": 38309,
+            "resp_start": 38726,
+            "prompt_tokens": 417,
+            "response_tokens": 568,
+            "final_target_tokens": 985,
+            "all_assistant_rendered_tokens": 1292,
+            "declared_preflight_tokens": 1292,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 47,
+            "part": "part-000000.jsonl",
+            "part_row": 47,
+            "row_sha256": "294ececfa6a75942a991ddf3717a9c76b4391a07c59b8186583f2df6c528ca76",
+            "assistant_messages": 1,
+            "inst_start": 39890,
+            "resp_start": 39938,
+            "prompt_tokens": 48,
+            "response_tokens": 708,
+            "final_target_tokens": 756,
+            "all_assistant_rendered_tokens": 756,
+            "declared_preflight_tokens": 756,
+            "exact_prompt_and_response_tokens": true
+          }
+        ]
+      },
+      "files": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-utter-project-EuroBlocks-SFT-2512-hr/data/train.jsonl": {
+          "sha256": "98cfceb67889dfd22094d9b992289a88cfb42ef1b2afc2b8a43d70400205156b",
+          "bytes": 175155,
+          "signature": [
+            3351383302,
+            17313079931848097796,
+            175155,
+            1791030812819844239,
+            1791030812820840482
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-hr/publication.json": {
+          "sha256": "84cd37d28c5d6d2240b04278b007c092eedd0087da6d449e0086ec16799347ff",
+          "bytes": 918,
+          "signature": [
+            3351383302,
+            9870616459398479876,
+            918,
+            1791030814496069871,
+            1791030814496811997
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-utter-project-EuroBlocks-SFT-2512-hr/manifest.json": {
+          "sha256": "34f4f0bc0839c097f242110a650499d001aca7288794e8f9267f66ff79067dbd",
+          "bytes": 825,
+          "signature": [
+            3351383302,
+            12381708557323993092,
+            825,
+            1791030812821894793,
+            1791030812822746054
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/verified.json": {
+          "sha256": "ed4759b552460cf0ad799f880f3a4b6b26f49a92166d0008b8895ee4869b34c3",
+          "bytes": 451,
+          "signature": [
+            3351383302,
+            10529216085285535748,
+            451,
+            1791034255776447522,
+            1791034255777751373
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            12697758302298243076,
+            261,
+            1791034254321442383,
+            1791034254321442383
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/completion.json": {
+          "sha256": "2fa00f9c6ec9df8d928f41b009465a7b966a84b91500d8637acafe52f9f8c1b4",
+          "bytes": 196,
+          "signature": [
+            3351383302,
+            4048911332712841220,
+            196,
+            1791034255651275146,
+            1791034255651995726
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "32e67ea06627c2e7b28c412362552e7dc991b1c3def9fb9c0bd81a73197c670d",
+          "bytes": 162712,
+          "signature": [
+            3351383302,
+            15791536163167731716,
+            162712,
+            1791034255371637137,
+            1791034255371637137
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "76bca0daa819ab4f7e7c9dda343c7252f8b9242dc28daa8b9ae03abf3944ba2c",
+          "bytes": 512,
+          "signature": [
+            3351383302,
+            8026923629773455364,
+            512,
+            1791034255372766789,
+            1791034255372766789
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "60c6e445e92386eca7bf3cd914d0f5df644f7570b52149513ce71609bfb07110",
+          "bytes": 512,
+          "signature": [
+            3351383302,
+            8759155863238017028,
+            512,
+            1791034255373233243,
+            1791034255373233243
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "89a14adf9e5b5e32ec83c0764185c1a60d219b6602dfc0842dbecf2544663da1",
+          "bytes": 512,
+          "signature": [
+            3351383302,
+            17859941083093073924,
+            512,
+            1791034255373827799,
+            1791034255373827799
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "fc5606830d3dba29c116f6515cf505de92c236d9fa860131db61527d13b5e071",
+          "bytes": 512,
+          "signature": [
+            3351383302,
+            670757694397022212,
+            512,
+            1791034255374285413,
+            1791034255374285413
+          ]
+        }
+      },
+      "verification": "PASS: full source/receipt/array checks plus bounded untruncated native parity",
+      "token_metrics": {
+        "training": {
+          "tokens": 40646,
+          "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+        },
+        "preflight": {
+          "tokens": 43216,
+          "basis": "all_assistant_targets_with_repeated_prefixes",
+          "source_row_sum_verified": true,
+          "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu",
+      "rows": 3984,
+      "preflight_all_assistant_tokens": 4077715,
+      "training_final_target_tokens": 3707736,
+      "parity": {
+        "scope": "deterministic_sample_not_full_corpus",
+        "truncation": false,
+        "selection": "five spread row ordinals plus first three multi-assistant rows",
+        "rows": [
+          {
+            "ordinal": 0,
+            "part": "part-000000.jsonl",
+            "part_row": 0,
+            "row_sha256": "c3dc1e4b659a647feee1c82911873d971d56ee8f99c0bd174482f9f4a703ded3",
+            "assistant_messages": 1,
+            "inst_start": 0,
+            "resp_start": 54,
+            "prompt_tokens": 54,
+            "response_tokens": 893,
+            "final_target_tokens": 947,
+            "all_assistant_rendered_tokens": 947,
+            "declared_preflight_tokens": 947,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 3,
+            "part": "part-000000.jsonl",
+            "part_row": 3,
+            "row_sha256": "58c3d783a61615f9e91f12dfe3ca11a8ebe7f23c5bf5d929ac1cb13afeae6304",
+            "assistant_messages": 3,
+            "inst_start": 2853,
+            "resp_start": 3817,
+            "prompt_tokens": 964,
+            "response_tokens": 913,
+            "final_target_tokens": 1877,
+            "all_assistant_rendered_tokens": 3240,
+            "declared_preflight_tokens": 3240,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 18,
+            "part": "part-000000.jsonl",
+            "part_row": 18,
+            "row_sha256": "43a505d99c2ba945529b9ee4d1d04a2691fddcf6385d05416e80c261cc8fd994",
+            "assistant_messages": 3,
+            "inst_start": 16060,
+            "resp_start": 16548,
+            "prompt_tokens": 488,
+            "response_tokens": 996,
+            "final_target_tokens": 1484,
+            "all_assistant_rendered_tokens": 2080,
+            "declared_preflight_tokens": 2080,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 23,
+            "part": "part-000000.jsonl",
+            "part_row": 23,
+            "row_sha256": "19beeeb0988aac5b0f2a3b3ab82fb42fe92e50861ae5cfa21e3b5c09a36fc910",
+            "assistant_messages": 2,
+            "inst_start": 21495,
+            "resp_start": 22072,
+            "prompt_tokens": 577,
+            "response_tokens": 714,
+            "final_target_tokens": 1291,
+            "all_assistant_rendered_tokens": 1829,
+            "declared_preflight_tokens": 1829,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 996,
+            "part": "part-000000.jsonl",
+            "part_row": 996,
+            "row_sha256": "af200274fc9222dcd290f69b8082d0299cdffa2920f560df41b569c621526bf0",
+            "assistant_messages": 1,
+            "inst_start": 927329,
+            "resp_start": 927380,
+            "prompt_tokens": 51,
+            "response_tokens": 781,
+            "final_target_tokens": 832,
+            "all_assistant_rendered_tokens": 832,
+            "declared_preflight_tokens": 832,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 1992,
+            "part": "part-000000.jsonl",
+            "part_row": 1992,
+            "row_sha256": "533bbee739775184f904793e753a051c9b51cd770a4542d9d8efabe4b85c2560",
+            "assistant_messages": 1,
+            "inst_start": 1856468,
+            "resp_start": 1856516,
+            "prompt_tokens": 48,
+            "response_tokens": 871,
+            "final_target_tokens": 919,
+            "all_assistant_rendered_tokens": 919,
+            "declared_preflight_tokens": 919,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 2988,
+            "part": "part-000000.jsonl",
+            "part_row": 2988,
+            "row_sha256": "54a6ef1355b2e548b84d542903d8e54aebe89aeb9b1dd64ff36e449e250e6b95",
+            "assistant_messages": 1,
+            "inst_start": 2786724,
+            "resp_start": 2786767,
+            "prompt_tokens": 43,
+            "response_tokens": 681,
+            "final_target_tokens": 724,
+            "all_assistant_rendered_tokens": 724,
+            "declared_preflight_tokens": 724,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 3983,
+            "part": "part-000000.jsonl",
+            "part_row": 3983,
+            "row_sha256": "92e3c21ca8fdc1b2b49c87ebc3507b6ecb28d0e89fa84de8616354171999bc13",
+            "assistant_messages": 1,
+            "inst_start": 3706706,
+            "resp_start": 3706762,
+            "prompt_tokens": 56,
+            "response_tokens": 974,
+            "final_target_tokens": 1030,
+            "all_assistant_rendered_tokens": 1030,
+            "declared_preflight_tokens": 1030,
+            "exact_prompt_and_response_tokens": true
+          }
+        ]
+      },
+      "files": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-utter-project-EuroBlocks-SFT-2512-hu/data/train.jsonl": {
+          "sha256": "cdf91033072dc730bd51dbd999be6de1b0228aa99d8cd1bda224a05b556d9de5",
+          "bytes": 15753934,
+          "signature": [
+            3351383302,
+            4743945569557086212,
+            15753934,
+            1791031993765057672,
+            1791031993772061584
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-hu/publication.json": {
+          "sha256": "a599e75796d97ff3e35bf6f4a06d084a12e466a942b997ead6a7d01d400aace9",
+          "bytes": 983,
+          "signature": [
+            3351383302,
+            12040321496871731204,
+            983,
+            1791032000803369667,
+            1791032000804081348
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-utter-project-EuroBlocks-SFT-2512-hu/manifest.json": {
+          "sha256": "18f85f3413336907065efca93df31b9068fd82c677dd107f2ea8122b8e8a87f8",
+          "bytes": 890,
+          "signature": [
+            3351383302,
+            16859167177426796548,
+            890,
+            1791031993795057664,
+            1791031993798421613
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/verified.json": {
+          "sha256": "ab8a321f950d4343ddb6124a2ecedaeb6d2e9980ae326035cbc19e4a05851830",
+          "bytes": 455,
+          "signature": [
+            3351383302,
+            10326793713862246404,
+            455,
+            1791034268660493023,
+            1791034268661954598
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            18068826308853628932,
+            261,
+            1791034263479474726,
+            1791034263479474726
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/completion.json": {
+          "sha256": "53d78c941e0f59bbaa7474f4466912baf047368129b4a89896fef36e997175b8",
+          "bytes": 200,
+          "signature": [
+            3351383302,
+            1053192730472808452,
+            200,
+            1791034268517464908,
+            1791034268518164464
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "4aa7d08ee5ea62bde0cc0bf37ec94e2337961fa64b5a0c177941eed55c4d20e5",
+          "bytes": 14831072,
+          "signature": [
+            3351383302,
+            14465391439862300676,
+            14831072,
+            1791034268398492115,
+            1791034268398492115
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "2f49dd7c41eacfd1fdf539efe124c274ec59a2d6c1b573cbd2c8f110732838c4",
+          "bytes": 32000,
+          "signature": [
+            3351383302,
+            1364224637163798532,
+            32000,
+            1791034268401133738,
+            1791034268401133738
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "cd4480b53bb0574c618a463b7a91dca26c938d52f5591d6ef71b3c890d519be3",
+          "bytes": 32000,
+          "signature": [
+            3351383302,
+            5451301191541653508,
+            32000,
+            1791034268401760566,
+            1791034268401760566
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "7dffa4f2955b3ba7f4dcfd81fa2efa3d6f5b591708e525e6a55173c0a15346c6",
+          "bytes": 32000,
+          "signature": [
+            3351383302,
+            9667316313985449988,
+            32000,
+            1791034268402474411,
+            1791034268402474411
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "12a59034588e116b8726fa0d49233c684fce035c0921b77cce13a7cc0a5cd2d6",
+          "bytes": 32000,
+          "signature": [
+            3351383302,
+            14765972898557722628,
+            32000,
+            1791034268403171737,
+            1791034268403171737
+          ]
+        }
+      },
+      "verification": "PASS: full source/receipt/array checks plus bounded untruncated native parity",
+      "token_metrics": {
+        "training": {
+          "tokens": 3707736,
+          "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+        },
+        "preflight": {
+          "tokens": 4077715,
+          "basis": "all_assistant_targets_with_repeated_prefixes",
+          "source_row_sum_verified": true,
+          "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave4_alban_labs_Kapibara_sq",
+      "rows": 4124,
+      "preflight_all_assistant_tokens": 12624254,
+      "training_final_target_tokens": 6504507,
+      "parity": {
+        "scope": "deterministic_sample_not_full_corpus",
+        "truncation": false,
+        "selection": "five spread row ordinals plus first three multi-assistant rows",
+        "rows": [
+          {
+            "ordinal": 0,
+            "part": "part-000000.jsonl",
+            "part_row": 0,
+            "row_sha256": "6204e8ac58f6131254e571c82cf1b4858e8a69475dcd01280b744d70018678a7",
+            "assistant_messages": 3,
+            "inst_start": 0,
+            "resp_start": 1655,
+            "prompt_tokens": 1655,
+            "response_tokens": 636,
+            "final_target_tokens": 2291,
+            "all_assistant_rendered_tokens": 4774,
+            "declared_preflight_tokens": 4774,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 1,
+            "part": "part-000000.jsonl",
+            "part_row": 1,
+            "row_sha256": "044c6227f2e09e149ef6806ee14daa4c7da16aba5fe9442d50185b9377b34c41",
+            "assistant_messages": 4,
+            "inst_start": 2291,
+            "resp_start": 3863,
+            "prompt_tokens": 1572,
+            "response_tokens": 731,
+            "final_target_tokens": 2303,
+            "all_assistant_rendered_tokens": 4578,
+            "declared_preflight_tokens": 4578,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 2,
+            "part": "part-000000.jsonl",
+            "part_row": 2,
+            "row_sha256": "9de5c5790d91bc1c17e0911480939e483667605f68243f52686b3add8ecf7f64",
+            "assistant_messages": 4,
+            "inst_start": 4594,
+            "resp_start": 7433,
+            "prompt_tokens": 2839,
+            "response_tokens": 801,
+            "final_target_tokens": 3640,
+            "all_assistant_rendered_tokens": 9129,
+            "declared_preflight_tokens": 9129,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 1031,
+            "part": "part-000000.jsonl",
+            "part_row": 1031,
+            "row_sha256": "87f0d135ea45da1dbdd7098e4c754628d7d344dc5fa82166d459da63e10ce12c",
+            "assistant_messages": 3,
+            "inst_start": 1625369,
+            "resp_start": 1626052,
+            "prompt_tokens": 683,
+            "response_tokens": 681,
+            "final_target_tokens": 1364,
+            "all_assistant_rendered_tokens": 2194,
+            "declared_preflight_tokens": 2194,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 2062,
+            "part": "part-000000.jsonl",
+            "part_row": 2062,
+            "row_sha256": "58b636f501111165b6ab950ef76d117a214b5b656a1ea16e228b6420da98a908",
+            "assistant_messages": 1,
+            "inst_start": 3239607,
+            "resp_start": 3239730,
+            "prompt_tokens": 123,
+            "response_tokens": 470,
+            "final_target_tokens": 593,
+            "all_assistant_rendered_tokens": 593,
+            "declared_preflight_tokens": 593,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 3093,
+            "part": "part-000000.jsonl",
+            "part_row": 3093,
+            "row_sha256": "4a1445446aecfecbd29d05e9781afddfc74b3a1fbbf1235f8ba812120ac36c74",
+            "assistant_messages": 3,
+            "inst_start": 4870526,
+            "resp_start": 4872248,
+            "prompt_tokens": 1722,
+            "response_tokens": 555,
+            "final_target_tokens": 2277,
+            "all_assistant_rendered_tokens": 5123,
+            "declared_preflight_tokens": 5123,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 4123,
+            "part": "part-000000.jsonl",
+            "part_row": 4123,
+            "row_sha256": "39da5dc4852e1163f81f70bd98c2f8ae8b74ec26cc1e05aeb7513a10c7171e33",
+            "assistant_messages": 1,
+            "inst_start": 6504459,
+            "resp_start": 6504486,
+            "prompt_tokens": 27,
+            "response_tokens": 21,
+            "final_target_tokens": 48,
+            "all_assistant_rendered_tokens": 48,
+            "declared_preflight_tokens": 48,
+            "exact_prompt_and_response_tokens": true
+          }
+        ]
+      },
+      "files": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-alban-labs-Kapibara-sq/data/train.jsonl": {
+          "sha256": "e7d974406f40a5346cef49c83046b2625c9f0ee2cd5e8539cb34c31579684514",
+          "bytes": 23936482,
+          "signature": [
+            3351383302,
+            16846849532005777412,
+            23936482,
+            1791032419806628730,
+            1791032419815726705
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/wave4/release/alban-labs--Kapibara-sq/publication.json": {
+          "sha256": "b7caacd8139c83c65937c23ae347856aaa2bd60588e20320d7a933adaa4d7810",
+          "bytes": 940,
+          "signature": [
+            3351383302,
+            8664986054705938436,
+            940,
+            1791032425590306208,
+            1791032425591167358
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-alban-labs-Kapibara-sq/manifest.json": {
+          "sha256": "f7644d1e9b4da5a8cf859dbdd9e28d54452a2cf96ddf0a9e323653cbd74ce10d",
+          "bytes": 847,
+          "signature": [
+            3351383302,
+            14867873346851045380,
+            847,
+            1791032419835486562,
+            1791032419836345334
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/verified.json": {
+          "sha256": "afe6e0274732af84938246df5dc2b7f9c9fa9241aac3fb9cd1839a419e478da2",
+          "bytes": 441,
+          "signature": [
+            3351383302,
+            15412189688157765636,
+            441,
+            1791034282967419732,
+            1791034282968296419
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            3658980485775622148,
+            261,
+            1791034270107980151,
+            1791034270107980151
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/completion.json": {
+          "sha256": "729d1258f07a428ccd4e868e401276b644bce1fade60901a8b184ef46b5cc697",
+          "bytes": 201,
+          "signature": [
+            3351383302,
+            2484245530054230020,
+            201,
+            1791034282846525079,
+            1791034282847218774
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "c0f431ed0186e01088f3ef8e0c567a375993c4bd07e6a0a308a3c81ba1e7456b",
+          "bytes": 26018156,
+          "signature": [
+            3351383302,
+            14166281048828805124,
+            26018156,
+            1791034282671543448,
+            1791034282671543448
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "8bc69b28817f3a96e539776abe50e664f501bd7bd002f52b7c7b1bdb66e8f3d8",
+          "bytes": 33120,
+          "signature": [
+            3351383302,
+            5950182438260244484,
+            33120,
+            1791034282675841463,
+            1791034282675841463
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "f698c445738f588a0c4b8588ddb1c7480d6e210641d64ab8f86dfacb0244ef22",
+          "bytes": 33120,
+          "signature": [
+            3351383302,
+            4673467882962223108,
+            33120,
+            1791034282677068804,
+            1791034282677068804
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "b6b423ad3ccdccd0cde06531988419c2faae8d59879c33ace53d587c143d334d",
+          "bytes": 33120,
+          "signature": [
+            3351383302,
+            14320268324061708292,
+            33120,
+            1791034282677953254,
+            1791034282677953254
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_alban_labs_Kapibara_sq/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "6fe09bb206aa3b55b185de3500c1c892b166b3c8ab9dff32cfb23d22146e0f50",
+          "bytes": 33120,
+          "signature": [
+            3351383302,
+            8814000205782056964,
+            33120,
+            1791034282679119692,
+            1791034282679119692
+          ]
+        }
+      },
+      "verification": "PASS: full source/receipt/array checks plus bounded untruncated native parity",
+      "token_metrics": {
+        "training": {
+          "tokens": 6504507,
+          "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+        },
+        "preflight": {
+          "tokens": 12624254,
+          "basis": "all_assistant_targets_with_repeated_prefixes",
+          "source_row_sum_verified": true,
+          "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_baltic_lv_qa",
+      "rows": 105971,
+      "preflight_all_assistant_tokens": 284404437,
+      "training_final_target_tokens": 95361003,
+      "parity": {
+        "scope": "deterministic_sample_not_full_corpus",
+        "truncation": false,
+        "selection": "five spread row ordinals plus first three multi-assistant rows",
+        "rows": [
+          {
+            "ordinal": 0,
+            "part": "part-000000.jsonl",
+            "part_row": 0,
+            "row_sha256": "70e4540d0b94b8d08c6e5484042461451fc633871e8bb5c0f71ad6215bb3e1cc",
+            "assistant_messages": 4,
+            "inst_start": 0,
+            "resp_start": 522,
+            "prompt_tokens": 522,
+            "response_tokens": 31,
+            "final_target_tokens": 553,
+            "all_assistant_rendered_tokens": 1770,
+            "declared_preflight_tokens": 1770,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 1,
+            "part": "part-000000.jsonl",
+            "part_row": 1,
+            "row_sha256": "18c4077e9c08ddbe29be60ced29c34c8771c031e217210288783f71d23da9c8d",
+            "assistant_messages": 3,
+            "inst_start": 553,
+            "resp_start": 1079,
+            "prompt_tokens": 526,
+            "response_tokens": 54,
+            "final_target_tokens": 580,
+            "all_assistant_rendered_tokens": 1477,
+            "declared_preflight_tokens": 1477,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 2,
+            "part": "part-000000.jsonl",
+            "part_row": 2,
+            "row_sha256": "c8c14b6d9371cc6bb8a6977d1a2e3ac6122092e9bc95ac90db22aab58040434f",
+            "assistant_messages": 3,
+            "inst_start": 1133,
+            "resp_start": 1640,
+            "prompt_tokens": 507,
+            "response_tokens": 20,
+            "final_target_tokens": 527,
+            "all_assistant_rendered_tokens": 1379,
+            "declared_preflight_tokens": 1379,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 26492,
+            "part": "part-000005.jsonl",
+            "part_row": 1492,
+            "row_sha256": "904bab420a7481399f96d237c0e507c9a59cf9af44f9ad846c484c371f317b52",
+            "assistant_messages": 4,
+            "inst_start": 1342621,
+            "resp_start": 1343945,
+            "prompt_tokens": 1324,
+            "response_tokens": 257,
+            "final_target_tokens": 1581,
+            "all_assistant_rendered_tokens": 4519,
+            "declared_preflight_tokens": 4519,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 52985,
+            "part": "part-000010.jsonl",
+            "part_row": 2985,
+            "row_sha256": "1c4fafe4fd3f33b709046bc20aa16f204c574b689da29be15576385fba76aa69",
+            "assistant_messages": 4,
+            "inst_start": 2700602,
+            "resp_start": 2701280,
+            "prompt_tokens": 678,
+            "response_tokens": 125,
+            "final_target_tokens": 803,
+            "all_assistant_rendered_tokens": 2398,
+            "declared_preflight_tokens": 2398,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 79478,
+            "part": "part-000015.jsonl",
+            "part_row": 4478,
+            "row_sha256": "ad061e804234a1a68177259e96b8c0345990f40532217b9108c74e7b2426b226",
+            "assistant_messages": 4,
+            "inst_start": 4026305,
+            "resp_start": 4026872,
+            "prompt_tokens": 567,
+            "response_tokens": 42,
+            "final_target_tokens": 609,
+            "all_assistant_rendered_tokens": 2042,
+            "declared_preflight_tokens": 2042,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 105970,
+            "part": "part-000021.jsonl",
+            "part_row": 970,
+            "row_sha256": "79ad187034205302ce38e473d3c3cd548673e07bdfbddf9c42b9ca8d9c1fe7da",
+            "assistant_messages": 4,
+            "inst_start": 871276,
+            "resp_start": 871836,
+            "prompt_tokens": 560,
+            "response_tokens": 27,
+            "final_target_tokens": 587,
+            "all_assistant_rendered_tokens": 1819,
+            "declared_preflight_tokens": 1819,
+            "exact_prompt_and_response_tokens": true
+          }
+        ]
+      },
+      "files": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl": {
+          "sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+          "bytes": 418432711,
+          "signature": [
+            3351383302,
+            1039055276837896196,
+            418432711,
+            1791035044711399273,
+            1791035044779931932
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/baltic/release/baltic_lv_qa/publication.json": {
+          "sha256": "753b0d41aa6cdfc829d11bc0f1ea7457c6b9044b1c2e96201c398024a469d7d8",
+          "bytes": 969,
+          "signature": [
+            3351383302,
+            6623766310083624964,
+            969,
+            1791035057881448133,
+            1791035057883424555
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/manifest.json": {
+          "sha256": "a14f7119f4ed4d97fa99a02447282a3426a2213abc98ae3b7c79218d42d867e7",
+          "bytes": 876,
+          "signature": [
+            3351383302,
+            15374325247234998276,
+            876,
+            1791035045103571622,
+            1791035045104573335
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/verified.json": {
+          "sha256": "6892287b7fb9f8e8367010563d7c24db4e4a8982666b83e75f250f17439d0f74",
+          "bytes": 434,
+          "signature": [
+            3351383302,
+            11302885744864264196,
+            434,
+            1791035484036493577,
+            1791035484037403308
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            15407329096810233860,
+            261,
+            1791035464487000382,
+            1791035464487000382
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/completion.json": {
+          "sha256": "0f581d5ed05adecea4941f30c12255b27757df023c3b292d295e6f8a2b7ce2d9",
+          "bytes": 207,
+          "signature": [
+            3351383302,
+            856589105693392900,
+            207,
+            1791035483671758718,
+            1791035483672370482
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "fe30dae0f34af9f4fa31e19c707810ff35cecabbf16dbe1e5704f687d61fe7aa",
+          "bytes": 18131280,
+          "signature": [
+            3351383302,
+            15293780250807828484,
+            18131280,
+            1791035474949039673,
+            1791035474949039673
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "f004adda033fb25aef60b172f757a665397dc50b7934423e4e9929acb582a23e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9860236084165804036,
+            40128,
+            1791035474952039702,
+            1791035474952039702
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "8f16ef616189f32627a69fa1261187a6e4cbb1529a4ccdf4e2530e369680bd58",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            6117504307528925188,
+            40128,
+            1791035474953354910,
+            1791035474953354910
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "1c1da7255e2fecdcf8507d43cc95337fa5cb13c0e7b58c183a6f6a5f83224653",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11657173696862158852,
+            40128,
+            1791035474954411952,
+            1791035474954411952
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "9df74ba66dc75ecd0b7a268f28e7cc30c494f6894cfd965d34aeba2f3409f05b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17119945324456640516,
+            40128,
+            1791035474955146756,
+            1791035474955146756
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000001.jsonl/tokens.npy": {
+          "sha256": "8ff81028c40813a7cb337993e695042298f742472e485f43fb540102e96d0100",
+          "bytes": 18172328,
+          "signature": [
+            3351383302,
+            12796614593998684164,
+            18172328,
+            1791035475452041562,
+            1791035475452041562
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000001.jsonl/inst_start.npy": {
+          "sha256": "ed0fc108066e91a5979ca47c69d15d3ff6a33cda218680e17027b9be2c2a2952",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2205869328456417284,
+            40128,
+            1791035475455052190,
+            1791035475455052190
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000001.jsonl/inst_len.npy": {
+          "sha256": "de310c2646761263b2cba007e4c99fbe20450526f5e3c322d3f71d9d77026af4",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5942200162271232004,
+            40128,
+            1791035475456154452,
+            1791035475456154452
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000001.jsonl/resp_start.npy": {
+          "sha256": "89c6a7a796d11df79ac9ba39f5af2afa640e77a38dc9c3bcf0a82ee5e7f4b1c4",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5751068946232508420,
+            40128,
+            1791035475456918468,
+            1791035475456918468
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000001.jsonl/resp_len.npy": {
+          "sha256": "3c7a56e976042f4cf282c0db8c80201e21e2b073830a3cd6f8c398090086ed87",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2809202938473218052,
+            40128,
+            1791035475477041673,
+            1791035475477041673
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000002.jsonl/tokens.npy": {
+          "sha256": "aabc4d12a61005b23d97f935edb9aca60c185eadda6c9e495b899661bd3b8b40",
+          "bytes": 17982660,
+          "signature": [
+            3351383302,
+            11901100256578174980,
+            17982660,
+            1791035475540041892,
+            1791035475540041892
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000002.jsonl/inst_start.npy": {
+          "sha256": "08bd5b1f38c7dd5a2ff521d54069df521d5137d62b7a86fce9e4bb0bd2cf81ca",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            549930239428984836,
+            40128,
+            1791035475543041920,
+            1791035475543041920
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000002.jsonl/inst_len.npy": {
+          "sha256": "eba09f634fe6180b43d11f327eebae36a401b3735b7f7d9d2627c8d8973c5537",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8332590021790334980,
+            40128,
+            1791035475545041928,
+            1791035475545041928
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000002.jsonl/resp_start.npy": {
+          "sha256": "a2cca4583cccd60f2790a297625bd4fe9e76b69b6b7adba1721ba834d15ec401",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14878349106358321156,
+            40128,
+            1791035475547041935,
+            1791035475547041935
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000002.jsonl/resp_len.npy": {
+          "sha256": "d7430bf5aaf1a02ff8ee9ddbed71f68bacfc5b9b114a2847577415905efb7e5b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8616471983271510020,
+            40128,
+            1791035475548462702,
+            1791035475548462702
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000003.jsonl/tokens.npy": {
+          "sha256": "9da215e85acfe16f38cb0aa0f63c67097162242ede93657b8354cb1eae886409",
+          "bytes": 17936912,
+          "signature": [
+            3351383302,
+            16143896507155021828,
+            17936912,
+            1791035474842039272,
+            1791035474842039272
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000003.jsonl/inst_start.npy": {
+          "sha256": "74452d264c1149365cc57d5a02898a6a8f5e4dd6751b0da115fe96c06a03d733",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15008830860395347972,
+            40128,
+            1791035474844399669,
+            1791035474844399669
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000003.jsonl/inst_len.npy": {
+          "sha256": "5e322ad7ed23fe7cb9e3776a9dcca44cb766a8727e5d45edeedffd8bd418e2af",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2179421299785728004,
+            40128,
+            1791035474845523654,
+            1791035474845523654
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000003.jsonl/resp_start.npy": {
+          "sha256": "682331e6700c41ac6fb59d6764fcf423d6c823cc8ac0965cb907b46524b99e3a",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13903708448351649796,
+            40128,
+            1791035474850039319,
+            1791035474850039319
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000003.jsonl/resp_len.npy": {
+          "sha256": "363fb42d8470f7d7af93c7e7c6d5e20a70b3ac8a2b91c2cedb2d4d23af8c961d",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17004840095831556100,
+            40128,
+            1791035474851039306,
+            1791035474851039306
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000004.jsonl/tokens.npy": {
+          "sha256": "cd3f288b92fa20bf46d153551da1bfea64fc4fc8b398e9576f608392a4621976",
+          "bytes": 17956144,
+          "signature": [
+            3351383302,
+            1193066558591598596,
+            17956144,
+            1791035475656042328,
+            1791035475656042328
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000004.jsonl/inst_start.npy": {
+          "sha256": "7656cf248686b3c3cac6f95fcd5e77d2337785095124bafd3d5989e6396ed6b6",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7703582713158107140,
+            40128,
+            1791035475659388182,
+            1791035475659388182
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000004.jsonl/inst_len.npy": {
+          "sha256": "292acec39d28a88db0e3351fb3875e4a08c1f575748e097d613de664353dbffd",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            284471481981992964,
+            40128,
+            1791035475660469402,
+            1791035475660469402
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000004.jsonl/resp_start.npy": {
+          "sha256": "1040c834685393a7f3d47cf5a3d69a9cb2dcb9216d569663da1c70b01593eb7d",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17537072831545409540,
+            40128,
+            1791035475661410644,
+            1791035475661410644
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000004.jsonl/resp_len.npy": {
+          "sha256": "a2fd81bbf2b2d1ea8472eeea29eeac9ee7786d5086115e7bdba66ea8696d7015",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4039917735207567364,
+            40128,
+            1791035475673042408,
+            1791035475673042408
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000005.jsonl/tokens.npy": {
+          "sha256": "08d967ad10de6463feec956a850654b457e1db8273835c989d605ca612c386b1",
+          "bytes": 17986056,
+          "signature": [
+            3351383302,
+            5133117670267944964,
+            17986056,
+            1791035475755042699,
+            1791035475755042699
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000005.jsonl/inst_start.npy": {
+          "sha256": "0d124a43410c18ffd6f1252a54a48145a347aa2f69a60ea9fd797d450de7dbd3",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5651600924110815236,
+            40128,
+            1791035475757478511,
+            1791035475757478511
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000005.jsonl/inst_len.npy": {
+          "sha256": "79f8781e34921df22e0bf22263e6c4356000895e34921b2aeb32fb4afefe0561",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            3527486906123878404,
+            40128,
+            1791035475758492696,
+            1791035475758492696
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000005.jsonl/resp_start.npy": {
+          "sha256": "3296b65250346c212394ea14652f567a6be8d339888aef304751a533ecd5b360",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11382328104370307076,
+            40128,
+            1791035475759204669,
+            1791035475759204669
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000005.jsonl/resp_len.npy": {
+          "sha256": "c98052205f4c10166bf9c0997f49eb9c114877244ba5c1b7cda3cd9a1cd515f2",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13553876892549120004,
+            40128,
+            1791035475759767859,
+            1791035475759767859
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000006.jsonl/tokens.npy": {
+          "sha256": "169e80b4aa41534f35d502c03b4c743effe030aa00664fe36d2c99b8138f3a54",
+          "bytes": 17925204,
+          "signature": [
+            3351383302,
+            9504353671680491524,
+            17925204,
+            1791035475156040451,
+            1791035475156040451
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000006.jsonl/inst_start.npy": {
+          "sha256": "dec3a752bc207dae608cc3dcd718575dc9562281383b90f576db298482811288",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16644118117775769604,
+            40128,
+            1791035475158040475,
+            1791035475158040475
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000006.jsonl/inst_len.npy": {
+          "sha256": "0055e8d86c990013b08d7d23b4af92cc64395183ff6ffd29a344d67fa4e87a7a",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            6583984058272645124,
+            40128,
+            1791035475159040479,
+            1791035475159040479
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000006.jsonl/resp_start.npy": {
+          "sha256": "a2d528dfd43c95b6d6d3116f043ef6645a2be74030e500ad425af2c736dbb126",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14253298413250215940,
+            40128,
+            1791035475163366580,
+            1791035475163366580
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000006.jsonl/resp_len.npy": {
+          "sha256": "7378c4c5c5ae74dffe3b35fa024c9bcccffd23030a6dc8f60fe0347aa3b6c189",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13740187556850302980,
+            40128,
+            1791035475164040498,
+            1791035475164040498
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000007.jsonl/tokens.npy": {
+          "sha256": "b4b29108ecfd63f730cc15ec874fdb0fb39584112a84252e0bdf00b4e204e141",
+          "bytes": 17992040,
+          "signature": [
+            3351383302,
+            15835071782118490116,
+            17992040,
+            1791035475788042823,
+            1791035475788042823
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000007.jsonl/inst_start.npy": {
+          "sha256": "1a5dc8d148f02ce4326c47886b39f2b2cc9272a919957e863c9a4dd18e1867aa",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2966647306464722948,
+            40128,
+            1791035475790574351,
+            1791035475790574351
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000007.jsonl/inst_len.npy": {
+          "sha256": "3168ba922b12e844ca68f72130d7b974a1c77772eb37ac9331c36f4632e0514b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2999987696444112900,
+            40128,
+            1791035475791775764,
+            1791035475791775764
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000007.jsonl/resp_start.npy": {
+          "sha256": "970acf3e01da6d20d7617aab5d69472acf8609af21d7360b25c02b718d92d811",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            18341696076220727300,
+            40128,
+            1791035475792595893,
+            1791035475792595893
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000007.jsonl/resp_len.npy": {
+          "sha256": "698bb19c6bfed2b6dc8e0b2c22621b8a80532081fe15f69e38bd324e74953f7f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            1010363788520128516,
+            40128,
+            1791035475793288962,
+            1791035475793288962
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000008.jsonl/tokens.npy": {
+          "sha256": "a3b14b512b62c869fa063ab55ffa2198b60c11b9a13afa0990913f27734c072b",
+          "bytes": 18026472,
+          "signature": [
+            3351383302,
+            11062410515877986308,
+            18026472,
+            1791035474727038840,
+            1791035474727038840
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000008.jsonl/inst_start.npy": {
+          "sha256": "d21191e021ca34960d5ac0277fddb61a59e81b6fe241bba64e849c4aec7ba286",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10750574190185938948,
+            40128,
+            1791035474729641942,
+            1791035474729641942
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000008.jsonl/inst_len.npy": {
+          "sha256": "368f70280805a4a7d72af9c5c970731565f06c3280cf13a1fe3627714a76a2ad",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            1069685681342709764,
+            40128,
+            1791035474730621017,
+            1791035474730621017
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000008.jsonl/resp_start.npy": {
+          "sha256": "3d737762a26ae24b6d793f151d5fad1169bd3ea8182814ed1d577c07c5a27528",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14316076960318619652,
+            40128,
+            1791035474734408207,
+            1791035474734408207
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000008.jsonl/resp_len.npy": {
+          "sha256": "e02c739b5a0f35199bd153e923907d238219d9844bbced6f1e38d69c5c845ba0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12358413187085107204,
+            40128,
+            1791035474735119234,
+            1791035474735119234
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000009.jsonl/tokens.npy": {
+          "sha256": "e44f9ea48f873d343353832f40f5acc44a9d6dc0611c29a9a96bec5e5b695e2e",
+          "bytes": 18129188,
+          "signature": [
+            3351383302,
+            5050948313310625796,
+            18129188,
+            1791035475905043262,
+            1791035475905043262
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000009.jsonl/inst_start.npy": {
+          "sha256": "255196ce13637bb6ed31ceb7fe67ea92e4879cfb2a05732fa4bc12fb8296ffd9",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16877246740672413700,
+            40128,
+            1791035475907150711,
+            1791035475907150711
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000009.jsonl/inst_len.npy": {
+          "sha256": "6893ba4a34794bdf338a8801953dfd5fc0c9c772e4bba95c189928f058fa004e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13472054046939086852,
+            40128,
+            1791035475908043291,
+            1791035475908043291
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000009.jsonl/resp_start.npy": {
+          "sha256": "0fe474b216d97514d3c2fd4e05d4cdb8f5035b6ae55ae341d42c0c985faa6900",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17324519383886135300,
+            40128,
+            1791035475908757698,
+            1791035475908757698
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000009.jsonl/resp_len.npy": {
+          "sha256": "33c83100a15af6a656e805ac40cd00f19ca2c06946556401c6bad0451a1833ba",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15946480550334955524,
+            40128,
+            1791035475909391732,
+            1791035475909391732
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000010.jsonl/tokens.npy": {
+          "sha256": "1023428ce03bbcba4838d0a45463fb23d522e38b29bac4b0c110d9e670e957e1",
+          "bytes": 18010648,
+          "signature": [
+            3351383302,
+            645918209709768708,
+            18010648,
+            1791035476237044509,
+            1791035476237044509
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000010.jsonl/inst_start.npy": {
+          "sha256": "dceb00ff30e0c10db4abcba018717cb803843908ad2b47abf9c171c7d6c79b11",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15194769143442964484,
+            40128,
+            1791035476239050036,
+            1791035476239050036
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000010.jsonl/inst_len.npy": {
+          "sha256": "d80a714a335dd5cd1653baf45e2bb7955ffabb75571dcbee5c4679313acc6eb8",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14589176039405846532,
+            40128,
+            1791035476240056945,
+            1791035476240056945
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000010.jsonl/resp_start.npy": {
+          "sha256": "ee26fedc2b7151807f84cb93662fdbc6297a75b32ebdfb64f4d578d3e5dda963",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5128399707452604420,
+            40128,
+            1791035476240828672,
+            1791035476240828672
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000010.jsonl/resp_len.npy": {
+          "sha256": "e6b596a0110289193f630bd355aa4b404e58a092d7c288dff20d3c7ee09a447e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9801206996587577348,
+            40128,
+            1791035476241433772,
+            1791035476241433772
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000011.jsonl/tokens.npy": {
+          "sha256": "1c00d78f853f89d850c52334b344a08297604aec85395862b8e7e19c8021eda6",
+          "bytes": 18000516,
+          "signature": [
+            3351383302,
+            12955541490514984964,
+            18000516,
+            1791035475846043041,
+            1791035475846043041
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000011.jsonl/inst_start.npy": {
+          "sha256": "5d34b0a444f84b517feeb7bb391b8599cabf851f938ec948f5f6c2aea772a1d0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4293502688414400516,
+            40128,
+            1791035475854043088,
+            1791035475854043088
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000011.jsonl/inst_len.npy": {
+          "sha256": "840e2efcfd87f643bcafb6c482379f288a652a15e60421e9f2d0f04a47294749",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            4491415776047923204,
+            40128,
+            1791035475855607108,
+            1791035475855607108
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000011.jsonl/resp_start.npy": {
+          "sha256": "0c0f02a1642817dc78385cd37c021c70199a5f2186ba51b91b56df897013623b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            6847151291585200132,
+            40128,
+            1791035475856476039,
+            1791035475856476039
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000011.jsonl/resp_len.npy": {
+          "sha256": "e5a3191576f90696c2ecb8bfdd25f5e9b7f7dbaed22329f15ad0d94ac78d27c2",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17349695540818280452,
+            40128,
+            1791035475857102587,
+            1791035475857102587
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000012.jsonl/tokens.npy": {
+          "sha256": "da5991c4c948602e2760f7fd9dec696ae951fe4c73f847d3f5e6eec9c7df1d8c",
+          "bytes": 17973956,
+          "signature": [
+            3351383302,
+            13482269790292869124,
+            17973956,
+            1791035475022039948,
+            1791035475022039948
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000012.jsonl/inst_start.npy": {
+          "sha256": "02ee9315644ee76329dd01042ef2eb8b5af4699f56feca1638c45828b6fcf4f3",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            828972935075266564,
+            40128,
+            1791035475024039972,
+            1791035475024039972
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000012.jsonl/inst_len.npy": {
+          "sha256": "e6a7f49b05731d3e90d928aa46a19267aaec2c2b90b033afd82f3434a1bdcf39",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13222701400426414084,
+            40128,
+            1791035475028039987,
+            1791035475028039987
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000012.jsonl/resp_start.npy": {
+          "sha256": "d23e3e334576fda28d619fc9ac99a96ef1e789f3f02b73f9df4cfcdf31feffaf",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7102209199207677956,
+            40128,
+            1791035475029039991,
+            1791035475029039991
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000012.jsonl/resp_len.npy": {
+          "sha256": "29c880c808934d2456bd934d21c5fe592e2bac0cc374ba312d5f59b3e809c5e4",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11541575550325620740,
+            40128,
+            1791035475029776365,
+            1791035475029776365
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000013.jsonl/tokens.npy": {
+          "sha256": "418215727dcd93487c6f6ecd66731453ddf0a4df8e0dec00b94f05bb48545934",
+          "bytes": 18043092,
+          "signature": [
+            3351383302,
+            2150790822161416196,
+            18043092,
+            1791035475997043608,
+            1791035475997043608
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000013.jsonl/inst_start.npy": {
+          "sha256": "65e5484c77a7cf0908a31a8e93c0394410aac020c42dd9d6723b29d79c131d8c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9316691626330947588,
+            40128,
+            1791035476000381604,
+            1791035476000381604
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000013.jsonl/inst_len.npy": {
+          "sha256": "c9da0244e084ca9c23b12c5cec654b64fe29791a9151407fd50c0603bbc7d525",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12330293666526461956,
+            40128,
+            1791035476001443649,
+            1791035476001443649
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000013.jsonl/resp_start.npy": {
+          "sha256": "9ebd874289df879d95aaadca2138a94800650a293455a4ca60c0f50583804804",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            290226024130412548,
+            40128,
+            1791035476002229796,
+            1791035476002229796
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000013.jsonl/resp_len.npy": {
+          "sha256": "67422f636fbb102697cacca86dc80ac464e65fc720a01b9ae33ad68e9deeef1c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2842312926593744900,
+            40128,
+            1791035476002697270,
+            1791035476002697270
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000014.jsonl/tokens.npy": {
+          "sha256": "331ccdd98c042e8c8df8b65407fbfdea05dd0380b0cf4b8a8886fe1d5f2a2537",
+          "bytes": 17847104,
+          "signature": [
+            3351383302,
+            11435548642464366596,
+            17847104,
+            1791035475069040124,
+            1791035475069040124
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000014.jsonl/inst_start.npy": {
+          "sha256": "0ac7c79687f8168c40957f3c72ebde54501066ab378c3c3e5c7acda01e4da8a0",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            9716676453060050948,
+            40128,
+            1791035475071592850,
+            1791035475071592850
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000014.jsonl/inst_len.npy": {
+          "sha256": "f7150cc75e69079c44f85d172d4723b838046050720f6a2064e12eb3879471bf",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            2441580539873525764,
+            40128,
+            1791035475072603237,
+            1791035475072603237
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000014.jsonl/resp_start.npy": {
+          "sha256": "91001dfe6e743b8c796056eab60df137e4059a982fac3fb5d55e0f77687381b1",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5003280504277172228,
+            40128,
+            1791035475073522897,
+            1791035475073522897
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000014.jsonl/resp_len.npy": {
+          "sha256": "5da79176d19281fed21c0a8ae995b3ba82ed46908aaaeb879ce89ac8fde0bacc",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            8601129892025991172,
+            40128,
+            1791035475074233113,
+            1791035475074233113
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000015.jsonl/tokens.npy": {
+          "sha256": "5621bdca596415e59d8c07cbc7237701189af3f51a1ac62b2e0e397f42633a8f",
+          "bytes": 17931676,
+          "signature": [
+            3351383302,
+            2871716234763567108,
+            17931676,
+            1791035478197051866,
+            1791035478197051866
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000015.jsonl/inst_start.npy": {
+          "sha256": "02e4ba3c07578815011f1ed543f951e1f6a3ad2f2c86e9dec3952abbf7c3239f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            5642389559767400452,
+            40128,
+            1791035478199416150,
+            1791035478199416150
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000015.jsonl/inst_len.npy": {
+          "sha256": "5309ef97e5a7521ef0c979a6b2114ba5375ef194c4512d4bc993cd8b18d61f39",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17458304443942895620,
+            40128,
+            1791035478201197220,
+            1791035478201197220
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000015.jsonl/resp_start.npy": {
+          "sha256": "90619d9ae3ce6f8def8a59c715255c6486225506f93afd1667238309ddd19d9c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            6210899024585555972,
+            40128,
+            1791035478202189730,
+            1791035478202189730
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000015.jsonl/resp_len.npy": {
+          "sha256": "d43ec2c91f7bc10c33cb45cfc7b48f6d64547601c07595306b3eb7c4d8f30dcd",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12774306924908576772,
+            40128,
+            1791035478203051906,
+            1791035478203051906
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000016.jsonl/tokens.npy": {
+          "sha256": "cf52f9f2570139ebbe4fc95b7f72d8b3f0be481f2d4f67ce44a19ba3ff6ee851",
+          "bytes": 18124708,
+          "signature": [
+            3351383302,
+            12754248105145204740,
+            18124708,
+            1791035483116070332,
+            1791035483116070332
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000016.jsonl/inst_start.npy": {
+          "sha256": "070e1cc4af97adbec2c367a94df2745bcef3d75e8e7a03a708ff2b74d2a0a5ce",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12984287398565249028,
+            40128,
+            1791035483118479288,
+            1791035483118479288
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000016.jsonl/inst_len.npy": {
+          "sha256": "5f263b38b30b642770b4ae8ff5741f4f3a370423e94fb87648e592f89a776680",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13832742179529818116,
+            40128,
+            1791035483119369909,
+            1791035483119369909
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000016.jsonl/resp_start.npy": {
+          "sha256": "c770dec5680030ed01b062727cb178d358fbe2783a66feb1f202c274065b0718",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17462149713901518852,
+            40128,
+            1791035483120070364,
+            1791035483120070364
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000016.jsonl/resp_len.npy": {
+          "sha256": "3ca28626c7330368df7ec9de04356ea1e824db4d55d7ec9eafe56c5585603311",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7797361794259222532,
+            40128,
+            1791035483125070383,
+            1791035483125070383
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000017.jsonl/tokens.npy": {
+          "sha256": "88c34bcd9371eb81c3faf0973d8a4c06bee6d0139fd722be9435c06e3adb29ab",
+          "bytes": 17960404,
+          "signature": [
+            3351383302,
+            2380825240540741636,
+            17960404,
+            1791035483004069912,
+            1791035483004069912
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000017.jsonl/inst_start.npy": {
+          "sha256": "d932dba8e495da0afd7ecb393ac237a67d15cecaa85bfa705fe710b15f35d860",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13032354671484665860,
+            40128,
+            1791035483006069936,
+            1791035483006069936
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000017.jsonl/inst_len.npy": {
+          "sha256": "d5d6c19178be49ea29b540cbd92d20f89c06709c7c30a6c0af3c50769ad08f8e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            11066397173182169092,
+            40128,
+            1791035483007069923,
+            1791035483007069923
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000017.jsonl/resp_start.npy": {
+          "sha256": "439cc4e3232702cac9d74d4a31d2e2f79408e493678980563fb1702b5b0c17a7",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7245789002222272516,
+            40128,
+            1791035483007646539,
+            1791035483007646539
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000017.jsonl/resp_len.npy": {
+          "sha256": "7c3bdbb027626070d33100776e4e70637f8d43476740bec2feb7ad47887bcf4b",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17124976996628824068,
+            40128,
+            1791035483008127895,
+            1791035483008127895
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000018.jsonl/tokens.npy": {
+          "sha256": "5b9b3266a4391fd123fa37e4a5a2d3f1cd47d1c32acb864c13cb6eebe246f43e",
+          "bytes": 17936984,
+          "signature": [
+            3351383302,
+            6487628841126133764,
+            17936984,
+            1791035483335071137,
+            1791035483335071137
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000018.jsonl/inst_start.npy": {
+          "sha256": "1c5737442404746761324b2f7c055b80330f52068788dbc5f17539d914de3cdb",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17782762872912412676,
+            40128,
+            1791035483338071183,
+            1791035483338071183
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000018.jsonl/inst_len.npy": {
+          "sha256": "b53c5eddc8957eb468c998ba25a4214910c04ad483bb07f751158af4580bd92f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            15675448917079293956,
+            40128,
+            1791035483339459342,
+            1791035483339459342
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000018.jsonl/resp_start.npy": {
+          "sha256": "f3a1fbb4d193e2ac2c31497ccf64ed4e70af425055ee6e9fe00eceae4ca24555",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            12238473702805798916,
+            40128,
+            1791035483340462932,
+            1791035483340462932
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000018.jsonl/resp_len.npy": {
+          "sha256": "bd87ceb595435b6614954fd58b084a0f1d5fa1a9a8b736c6be3755f9690c87ab",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16145108431793029124,
+            40128,
+            1791035483341172824,
+            1791035483341172824
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000019.jsonl/tokens.npy": {
+          "sha256": "aa68d5e640bff23a4549f0dca34fe4809a9a0783d900eb4a50f5894896df4e71",
+          "bytes": 17824256,
+          "signature": [
+            3351383302,
+            15704511734842720260,
+            17824256,
+            1791035483284070963,
+            1791035483284070963
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000019.jsonl/inst_start.npy": {
+          "sha256": "2b288d94b068cf330cd63f1654dfddbd4b68a967cabd4d957cf00524f535c842",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            13105208876211044356,
+            40128,
+            1791035483286146794,
+            1791035483286146794
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000019.jsonl/inst_len.npy": {
+          "sha256": "f0cb868968041974b8568402ba9679d36eca2b8155e983a391cd2e26e04f0225",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            10528244492136742916,
+            40128,
+            1791035483287603391,
+            1791035483287603391
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000019.jsonl/resp_start.npy": {
+          "sha256": "3e2f83905a3570b2380499a13dc920a0cb04113c4dc435889e8bcf012507658e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            18414164335000616964,
+            40128,
+            1791035483288706164,
+            1791035483288706164
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000019.jsonl/resp_len.npy": {
+          "sha256": "2d396e91b9d81dc6f9ae7d03329b86bc63776d6a0c5ea8446c1344ac0afccf5f",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            14431799947967004676,
+            40128,
+            1791035483289357123,
+            1791035483289357123
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000020.jsonl/tokens.npy": {
+          "sha256": "ac09b5c12f3c8493f8cff6b73961f02aaf64aea76241b1e452870abde29ce973",
+          "bytes": 18067620,
+          "signature": [
+            3351383302,
+            16707715334037438468,
+            18067620,
+            1791035483486071721,
+            1791035483486071721
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000020.jsonl/inst_start.npy": {
+          "sha256": "40f4d2244c536eaed2a664447b8ccaf58422a14bc584be60f1eb95957d9cee05",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            17558313769123774468,
+            40128,
+            1791035483488554133,
+            1791035483488554133
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000020.jsonl/inst_len.npy": {
+          "sha256": "b889b3fcbbf4148ea9e3a2d16ce263fe25544fd0db03230c2e1662331d1f644c",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            7313022956555993092,
+            40128,
+            1791035483489701419,
+            1791035483489701419
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000020.jsonl/resp_start.npy": {
+          "sha256": "5df96f514845354d96ab31b8790962b399d04210470d9736be5a7b250959de40",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            16915491974046547972,
+            40128,
+            1791035483490649950,
+            1791035483490649950
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000020.jsonl/resp_len.npy": {
+          "sha256": "500ea6c03dc1fa6ac447a964c39372430820b6eff63b70dfe47c4ee54b72cd7e",
+          "bytes": 40128,
+          "signature": [
+            3351383302,
+            18324521830199001092,
+            40128,
+            1791035483491148518,
+            1791035483491148518
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000021.jsonl/tokens.npy": {
+          "sha256": "ed937a7d2a495386ba8235fd7cda86662ac32fc3396144c476471c2e330938dd",
+          "bytes": 3487580,
+          "signature": [
+            3351383302,
+            10713318860596379652,
+            3487580,
+            1791035476833046746,
+            1791035476833046746
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000021.jsonl/inst_start.npy": {
+          "sha256": "84b9f23752f059dfc958bf103ae9d119032f5bd8f9dcc5fc943b529c3f48a6c1",
+          "bytes": 7896,
+          "signature": [
+            3351383302,
+            11567492070082543620,
+            7896,
+            1791035476834046767,
+            1791035476834046767
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000021.jsonl/inst_len.npy": {
+          "sha256": "55fcf36463f1f0b7d34345dc13feec18b5892d5358d94d9ac538817921d18657",
+          "bytes": 7896,
+          "signature": [
+            3351383302,
+            14365235563506892804,
+            7896,
+            1791035476834601249,
+            1791035476834601249
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000021.jsonl/resp_start.npy": {
+          "sha256": "00a528c673760a5fb0132ea8b1a3b39b2c75f622c9714c5db36b6e2f30ff5cac",
+          "bytes": 7896,
+          "signature": [
+            3351383302,
+            15900862029459619844,
+            7896,
+            1791035476835121628,
+            1791035476835121628
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_lv_qa/tokens/part-000021.jsonl/resp_len.npy": {
+          "sha256": "ab053a4392a1548e13765826a4c32f34eea8167343a79af02f89ea0258f2cee4",
+          "bytes": 7896,
+          "signature": [
+            3351383302,
+            12727751056637952004,
+            7896,
+            1791035476835622350,
+            1791035476835622350
+          ]
+        }
+      },
+      "verification": "PASS: full source/receipt/array checks plus bounded untruncated native parity",
+      "token_metrics": {
+        "training": {
+          "tokens": 95361003,
+          "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+        },
+        "preflight": {
+          "tokens": 284404437,
+          "basis": "all_assistant_targets_with_repeated_prefixes",
+          "source_row_sum_verified": true,
+          "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+        }
+      }
+    },
+    {
+      "name": "dfm13_wave3_baltic_euroblocks",
+      "rows": 166,
+      "preflight_all_assistant_tokens": 142582,
+      "training_final_target_tokens": 141935,
+      "parity": {
+        "scope": "deterministic_sample_not_full_corpus",
+        "truncation": false,
+        "selection": "five spread row ordinals plus first three multi-assistant rows",
+        "rows": [
+          {
+            "ordinal": 0,
+            "part": "part-000000.jsonl",
+            "part_row": 0,
+            "row_sha256": "ea52f03cc06432deef834ed3f88d911cc6cea85b10fe9f20debc2b2386ca2cc6",
+            "assistant_messages": 1,
+            "inst_start": 0,
+            "resp_start": 58,
+            "prompt_tokens": 58,
+            "response_tokens": 73,
+            "final_target_tokens": 131,
+            "all_assistant_rendered_tokens": 131,
+            "declared_preflight_tokens": 131,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 3,
+            "part": "part-000000.jsonl",
+            "part_row": 3,
+            "row_sha256": "8d67961054d6251c3fee47e0ce3804d3e4ccc4fe11c621f6130a1cfc26a67534",
+            "assistant_messages": 2,
+            "inst_start": 1852,
+            "resp_start": 1955,
+            "prompt_tokens": 103,
+            "response_tokens": 6,
+            "final_target_tokens": 109,
+            "all_assistant_rendered_tokens": 190,
+            "declared_preflight_tokens": 190,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 41,
+            "part": "part-000000.jsonl",
+            "part_row": 41,
+            "row_sha256": "12ab11c53bfdcfa3f5190c32377f4b82a957f444f373a919df9a05a7cae29548",
+            "assistant_messages": 1,
+            "inst_start": 33741,
+            "resp_start": 33834,
+            "prompt_tokens": 93,
+            "response_tokens": 856,
+            "final_target_tokens": 949,
+            "all_assistant_rendered_tokens": 949,
+            "declared_preflight_tokens": 949,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 83,
+            "part": "part-000000.jsonl",
+            "part_row": 83,
+            "row_sha256": "9f5b9d118b02bb67998ffa44abdb7ef3ea63f2283b67751c417dab9153de9a3d",
+            "assistant_messages": 1,
+            "inst_start": 69631,
+            "resp_start": 69702,
+            "prompt_tokens": 71,
+            "response_tokens": 930,
+            "final_target_tokens": 1001,
+            "all_assistant_rendered_tokens": 1001,
+            "declared_preflight_tokens": 1001,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 87,
+            "part": "part-000000.jsonl",
+            "part_row": 87,
+            "row_sha256": "07f97042fc0c27ab6bab5aa53c4f4fa39456579d5ec877a792da9c1ba8def584",
+            "assistant_messages": 2,
+            "inst_start": 73445,
+            "resp_start": 74053,
+            "prompt_tokens": 608,
+            "response_tokens": 820,
+            "final_target_tokens": 1428,
+            "all_assistant_rendered_tokens": 1994,
+            "declared_preflight_tokens": 1994,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 124,
+            "part": "part-000000.jsonl",
+            "part_row": 124,
+            "row_sha256": "2825f460e20680b4b8cb4eb5df268f8f0ed6b88c4061c13dc65400fd6ae5b0ad",
+            "assistant_messages": 1,
+            "inst_start": 106465,
+            "resp_start": 106569,
+            "prompt_tokens": 104,
+            "response_tokens": 534,
+            "final_target_tokens": 638,
+            "all_assistant_rendered_tokens": 638,
+            "declared_preflight_tokens": 638,
+            "exact_prompt_and_response_tokens": true
+          },
+          {
+            "ordinal": 165,
+            "part": "part-000000.jsonl",
+            "part_row": 165,
+            "row_sha256": "50d35355af39fa623305ef742af9871cb9efd818cbfafce55a43191ac251c548",
+            "assistant_messages": 1,
+            "inst_start": 141436,
+            "resp_start": 141516,
+            "prompt_tokens": 80,
+            "response_tokens": 419,
+            "final_target_tokens": 499,
+            "all_assistant_rendered_tokens": 499,
+            "declared_preflight_tokens": 499,
+            "exact_prompt_and_response_tokens": true
+          }
+        ]
+      },
+      "files": {
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic-euroblocks/data/train.jsonl": {
+          "sha256": "1bea0d03300cb764cd125310c3fd1cf9f5928b79bcf7cb9620226d37effbe292",
+          "bytes": 581050,
+          "signature": [
+            3351383302,
+            2968205920168902660,
+            581050,
+            1791036568211237668,
+            1791036568213569229
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/baltic/release/baltic-euroblocks/publication.json": {
+          "sha256": "edd0718c800324d32fce5252bd19a09d46404da1d941d478554ca8fc00f10ad4",
+          "bytes": 890,
+          "signature": [
+            3351383302,
+            4708687369731309572,
+            890,
+            1791036570248245292,
+            1791036570248859172
+          ]
+        },
+        "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic-euroblocks/manifest.json": {
+          "sha256": "c6f7d89ba368af7429a472afced81fb845a296af14ce024ac52f650d159ad96f",
+          "bytes": 797,
+          "signature": [
+            3351383302,
+            11459052048943087620,
+            797,
+            1791036568215392210,
+            1791036568216191934
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/verified.json": {
+          "sha256": "df8e9b6710cb753a0ea798dd4a62b62a28f498033384d31fb7d8d10b1cb687e0",
+          "bytes": 434,
+          "signature": [
+            3351383302,
+            9644461965227655172,
+            434,
+            1791036819101056406,
+            1791036819101819539
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/tokenizer_info.json": {
+          "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+          "bytes": 261,
+          "signature": [
+            3351383302,
+            15898548369228038148,
+            261,
+            1791036817388051025,
+            1791036817388051025
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+          "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+          "bytes": 32170070,
+          "signature": [
+            3351383302,
+            17371316746115022852,
+            32170070,
+            1775256068552622904,
+            1789276810830631001
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+          "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+          "bytes": 16952,
+          "signature": [
+            3351383302,
+            12937893044995883012,
+            16952,
+            1787915151529759009,
+            1789276811029694370
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/completion.json": {
+          "sha256": "efb1562ed38998a13ec1f80b6ee97e2978280b19d708d2e49b139c6581eec021",
+          "bytes": 198,
+          "signature": [
+            3351383302,
+            15195584266390536196,
+            198,
+            1791036818861561486,
+            1791036818862250691
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/part-000000.jsonl/tokens.npy": {
+          "sha256": "91c699f104f0f72f70eda93ca7008524ba34e6c5cd97eaff2784be55e2960619",
+          "bytes": 567868,
+          "signature": [
+            3351383302,
+            7357453795686940676,
+            567868,
+            1791036818476054477,
+            1791036818476054477
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/part-000000.jsonl/inst_start.npy": {
+          "sha256": "a6a8d699dff36b59960388b44b1f6a3c90fd3ae8a11bc8acacbebd149d331093",
+          "bytes": 1456,
+          "signature": [
+            3351383302,
+            11541779290943389700,
+            1456,
+            1791036818476810880,
+            1791036818476810880
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/part-000000.jsonl/inst_len.npy": {
+          "sha256": "b96fe950cd255cb4b3a320382a6a70e8b3a40a99b4f095553d6b5d843d704b6a",
+          "bytes": 1456,
+          "signature": [
+            3351383302,
+            11420685193396617220,
+            1456,
+            1791036818477222632,
+            1791036818477222632
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/part-000000.jsonl/resp_start.npy": {
+          "sha256": "f40f296f71acb9e58c55a5493707199ace1496ca362e03c535a4c04966b583ac",
+          "bytes": 1456,
+          "signature": [
+            3351383302,
+            4668925228075515908,
+            1456,
+            1791036818477692253,
+            1791036818477692253
+          ]
+        },
+        "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave3_baltic_euroblocks/tokens/part-000000.jsonl/resp_len.npy": {
+          "sha256": "630c81f80b4dbd6700c9e185a77a551c37d66df7d659d56ae0ce36b20f3c921a",
+          "bytes": 1456,
+          "signature": [
+            3351383302,
+            6118024900885151748,
+            1456,
+            1791036818478174352,
+            1791036818478174352
+          ]
+        }
+      },
+      "verification": "PASS: full source/receipt/array checks plus bounded untruncated native parity",
+      "token_metrics": {
+        "training": {
+          "tokens": 141935,
+          "basis": "final_assistant_only_native_gemma_prompt_plus_response"
+        },
+        "preflight": {
+          "tokens": 142582,
+          "basis": "all_assistant_targets_with_repeated_prefixes",
+          "source_row_sum_verified": true,
+          "verification": "publisher/export agreement; native rerender sampled, not full total recomputation"
+        }
+      }
+    }
+  ],
+  "implementation_sha256": "6b1da0f6bbb991359e7c69c01f31d28955f79001f643cbf5389773bc5e38e712",
+  "method": "Frozen production registry; full array structure/hash checks, source row preflight sum; at most eight native untruncated renders per source, not full rerender."
+}

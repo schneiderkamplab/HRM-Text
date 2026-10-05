@@ -1,0 +1,494 @@
+{
+  "time": 1791098677.4702353,
+  "selection": "latest30 metadata-id-matched disconnects among5000 most recently reserved ledger rows",
+  "summary": {
+    "samples": 30,
+    "stages": {
+      "review": 28,
+      "generate": 2
+    },
+    "null_status": 30,
+    "empty_body": 30,
+    "elapsed_min": 0.0027287472039461136,
+    "elapsed_median": 0.5973351143766195,
+    "elapsed_max": 1.5817001308314502
+  },
+  "rows": [
+    {
+      "id": "944ca56a4013ee19e7829af0f80df6f6124dbc15fc34829de096137a809b6c00",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/94/4c/raw/34dd271d7edf4bd58fea4bf06f50c7b5-000002.response.json",
+      "sha256": "602896401a92c021195971585917e29a19479a06bfc1e1fabe43b70a945c8182",
+      "elapsed": 0.16378059890121222,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8803/v1",
+      "stage": "review",
+      "time": 1791098669.071766
+    },
+    {
+      "id": "d0e56af7b72913017a3d6b50b3f3694c052397106a7394fb285e84e7e21eead9",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/d0/e5/raw/f3511d9b42a240b8bfd582a60469081b-000002.response.json",
+      "sha256": "95b93677aa8497456c06426bd832aea3e9f11a48d8790cca140ffb1bbb73e016",
+      "elapsed": 0.24728765105828643,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8803/v1",
+      "stage": "review",
+      "time": 1791098668.6400225
+    },
+    {
+      "id": "8543e5523b9f8875d31ef71a1e311505f9318cf8531918f3115f8254ac191ed9",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/85/43/raw/f886f0988c474791a8770a0299986ada-000001.response.json",
+      "sha256": "60ea68acde1b73ffdbc40a152e756c40f433972ae4470c4a792d8cbf4bdae760",
+      "elapsed": 0.22994125075638294,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8801/v1",
+      "stage": "generate",
+      "time": 1791098662.1271951
+    },
+    {
+      "id": "c0f9048a0f13ca5128e8dbff47d396d3262cb4bc32097f13cafbc70d7e2aed1d",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/c0/f9/raw/b113af5ade7a42c181489b835f9eaaa0-000002.response.json",
+      "sha256": "ea0f9c9ef0804d3fc275163f010de2bb239d6df24a60c9dbaabe3283726857ec",
+      "elapsed": 0.18091013468801975,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8801/v1",
+      "stage": "review",
+      "time": 1791098661.9359941
+    },
+    {
+      "id": "f85981ac2651e5546dd7a4a4dcbfe1431d4f326190b9e671c875265524f9252b",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/f8/59/raw/15a12ecfe7ea412aa9764228143e6900-000001.response.json",
+      "sha256": "82c6202d976ca7d41cde8779da9cf1337d4ac7daa70355c04633455bc3792c03",
+      "elapsed": 0.0027287472039461136,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8802/v1",
+      "stage": "generate",
+      "time": 1791098622.208129
+    },
+    {
+      "id": "cf97acc26b382184ff04fc7d19ac727818079ad9ad49f5b904f8e39c51735d72",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/cf/97/raw/8b2c2887ac9b4befa346eb5c2594b202-000002.response.json",
+      "sha256": "3cd1ca9f68592e5e8659487c5b904201232b25388d6cf92af34e6fa30cf8dba4",
+      "elapsed": 0.020985896233469248,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098621.8331053
+    },
+    {
+      "id": "1a6fc172cb5d13cd4ff3b7518e8028ccde7b17f69a16cc4ee2962a944dc99fbd",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/1a/6f/raw/d703717ca0124e1d9eb2a94dcad3be59-000002.response.json",
+      "sha256": "57000835ef579c694d8f4d1f1c1ae5f650c9bfe316f94840dab087162742360c",
+      "elapsed": 0.14060710091143847,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8807/v1",
+      "stage": "review",
+      "time": 1791098620.2024093
+    },
+    {
+      "id": "305a95a82e7c20d71672ba507c394043c3e6642895d78d95800dcf841924f494",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/30/5a/raw/1ec8813daccb4f7cb082638349625462-000002.response.json",
+      "sha256": "6a40674a25c3be1fb8935641bab925220adf2fbe3029e772afc9a5d28d785b2f",
+      "elapsed": 0.4250432508997619,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8804/v1",
+      "stage": "review",
+      "time": 1791098620.0962424
+    },
+    {
+      "id": "52d8e4fffaa8a0d130da5b3f17f5a988559ad40d4d452e8a5bf64853f4b2dbd3",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/52/d8/raw/1082b581fef14f95a1b706708109e2fa-000002.response.json",
+      "sha256": "f3be49d974ac234cba1234179874a821865b1e12cff5d04fb0a86509cf6b2f65",
+      "elapsed": 0.4625777998007834,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098620.092003
+    },
+    {
+      "id": "f38a9a7208199412e4bbcb9a3a4783dc37e051467094e7a7a9c367d9e06a8856",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/f3/8a/raw/5c70bbf2a17e4d4db101ec2f601176a4-000002.response.json",
+      "sha256": "367e6a3e23bf21af9334f13813189b6fcb8c3695b40aa1637611e5de1619971e",
+      "elapsed": 0.17983886878937483,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8805/v1",
+      "stage": "review",
+      "time": 1791098620.0874803
+    },
+    {
+      "id": "596d700ca1f7e676bab27e0a657214a3f5a955bc6c0cd6960386aa632bdf0153",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/59/6d/raw/a1d7c633bc47408eb9b9c3b31e80cc1e-000002.response.json",
+      "sha256": "54bfff80276798faa0cd96fca53dc5b04ac84c2227fe90b2c5be6aec501ab26b",
+      "elapsed": 0.414123697206378,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8807/v1",
+      "stage": "review",
+      "time": 1791098620.0007398
+    },
+    {
+      "id": "38687e72fb52b0767f2c1715abdaf08f2fbb65ee8b15a93cc2c52f251ad062cf",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/38/68/raw/0291e1e4244841b195f8b2c2442106ca-000002.response.json",
+      "sha256": "da0826c0d15564eb2906909e364d894c6b5b45e9665eb280349449c4d7e58f6e",
+      "elapsed": 0.22336951084434986,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098619.996014
+    },
+    {
+      "id": "4aea799997b840360897baf3bfa72c8ef6496b5c0695cdb6ed2052476c397c71",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/4a/ea/raw/10b484bba1f648b4b3325dfbd04905fb-000002.response.json",
+      "sha256": "e3ce6eb1e5070a34bdffcec2fc2097f95323940099c36f202559252d55fbb11e",
+      "elapsed": 0.5767158437520266,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8805/v1",
+      "stage": "review",
+      "time": 1791098619.8388302
+    },
+    {
+      "id": "2bb68ea52326188df4db408b3ccfbee23b1c34eced98ff261188e2c1f26f8c0a",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/2b/b6/raw/5d7bbdda280e48b2a7b63c42f3e1be96-000002.response.json",
+      "sha256": "b9912f6a984b1701bc770646ac6cb68181e044490208b967d910543b939ce7b2",
+      "elapsed": 0.7079254961572587,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8804/v1",
+      "stage": "review",
+      "time": 1791098619.833375
+    },
+    {
+      "id": "b12eb4bc371057233d2f75cdeed5a199d4bb10c206e51d6003ba71d644942d07",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/b1/2e/raw/cc4556174b274010817c69420fd03317-000002.response.json",
+      "sha256": "184345bdacfa95935851b356b42361880b87e3d10fc7fb43f8cc7d90eb9d84b9",
+      "elapsed": 0.7371714431792498,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8804/v1",
+      "stage": "review",
+      "time": 1791098619.829115
+    },
+    {
+      "id": "2105aa9c7b0465d7c99250ce398af176f4c29f3259be86ed8bc1af9b3882225f",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/21/05/raw/3e97531c51c94cdc98864050ec6c70f5-000002.response.json",
+      "sha256": "fd4073dd6492bcc3a9148b96282f897a652dcee78dec13373f21039fe927caf6",
+      "elapsed": 0.8641841351054609,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098619.8247616
+    },
+    {
+      "id": "3bbc587ef46518d45446dd2c20e5b2cb28210b6567671f2aae5964061cd79866",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/3b/bc/raw/942fc41be75844bdaec519205c30f5bf-000002.response.json",
+      "sha256": "dc7804710c1090ef197b54000a20109548dcfbe0d3cd80460a20af00e0ce79a0",
+      "elapsed": 0.5603295238688588,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098619.4986155
+    },
+    {
+      "id": "7c0a08b19e68c6c84964c595adb90d48f392069e90e9daaeeeeb6e93346a9b82",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/7c/0a/raw/a620249ccc0646f9868c3108b3cba051-000002.response.json",
+      "sha256": "abecae427fd1602f38ff9b71f0a6f66f683c62d82ac760e9e031a14dccf238bc",
+      "elapsed": 0.5862701879814267,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098619.4943104
+    },
+    {
+      "id": "fd2cead026e46c0b9c3039ffdedd397a8ae0d7b54b4f2c1bf965e74fe547ecd2",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/fd/2c/raw/05fc3552eb7e4bb19b21694d4d2d25fb-000002.response.json",
+      "sha256": "4be49a36b1e3a53b7ee2a8a66821e136045767c1622fe8b179346ba598117e95",
+      "elapsed": 0.775284350849688,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8807/v1",
+      "stage": "review",
+      "time": 1791098619.49007
+    },
+    {
+      "id": "4b6e96689b7d9876b55658706d45c9f3ef9e9ef206cf640c3555acb6d2fd66cf",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/4b/6e/raw/ff446d5eea5d4f85b93986d473262fca-000002.response.json",
+      "sha256": "66b2a5e1533f2b5973e1815ff688175fcf8b1ed051adfdf99f63008887f73d0f",
+      "elapsed": 1.0928689860738814,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8805/v1",
+      "stage": "review",
+      "time": 1791098619.4856331
+    },
+    {
+      "id": "05e3cfeebb097b4d43d8e82c543084dad8308b6ffb75d359cb4d671d97f9c69a",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/05/e3/raw/bbdede6849864605b9665f6f0ca3ae70-000002.response.json",
+      "sha256": "7f9a11757cb4e9f723755da21b6722c317b03cfddce39ce73ab55580301b79cb",
+      "elapsed": 0.6084000407718122,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098619.480919
+    },
+    {
+      "id": "81c38efe1c9244fb0ba5a66162facdc85f922c0e90f13758b9856202714b702a",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/81/c3/raw/cee949c5665843c98643a406a7e16f86-000002.response.json",
+      "sha256": "19669fe3d786f82ca464131bec5766c07b7838fdb9b58c2a3c43fce9bb1d5a74",
+      "elapsed": 1.34923316212371,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098619.1942363
+    },
+    {
+      "id": "0ec3c72573e5862b6a74e41fa23d07b2a5d0b71c9395e178ea1ac587c5c26df8",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/0e/c3/raw/b6fc7607aa2445a8902a2df696a13aa9-000002.response.json",
+      "sha256": "0c363d9adc090ae03a8884c7f40c787932d2af48241cb072e2ddaeeafa6406bd",
+      "elapsed": 1.312603420112282,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098619.189501
+    },
+    {
+      "id": "0dca19df29d0ce7e191737beb593b5a8fc46960695ab36e73b2bb93ede8b484f",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/0d/ca/raw/a7b3f5e3f2d84747b883009812ec331e-000002.response.json",
+      "sha256": "055894e066af262fef51ea069c6c5f41e3ef7f3ef89fcc1538d49e76ecb47858",
+      "elapsed": 0.8639375451020896,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098618.6841528
+    },
+    {
+      "id": "62c77d17a81a0cb1a42a199ab0d9508a38bf3c92070caf6173d85a9081d9877d",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/62/c7/raw/90478aee16874295b75fecf99c2c5396-000002.response.json",
+      "sha256": "ec410675cbda6df96e6f8160448fd7b21e6ba9d2aeaf92b36c04afd869bc735c",
+      "elapsed": 1.2984829708002508,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8806/v1",
+      "stage": "review",
+      "time": 1791098618.6785965
+    },
+    {
+      "id": "9d52b997a21a35a1ca94e27ff1ae126d3a4fc96a6e5825bcc05e7b56979124d8",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/9d/52/raw/815a818e3ac14e918688257f8335902c-000002.response.json",
+      "sha256": "c40f8a5c7378328095683a3c93f5538871ad3478bc572f10bbafd81e4d6c3c34",
+      "elapsed": 1.127411344088614,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098618.6733875
+    },
+    {
+      "id": "17d20bb2f616c7fcfaef2f9a235f55485da8719e10e187634317177e75aab2dd",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/17/d2/raw/055a2b1098bd4239a50186ccd9aab263-000002.response.json",
+      "sha256": "ccf4717d9502f6da7158ce879d9d718a05a4c499a7a0d90a3cc54366196d4a9e",
+      "elapsed": 1.1372547522187233,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098618.6689513
+    },
+    {
+      "id": "8d135cf2964306940ce9847048e30ac31f75177a71bf171744e0021e7aa4afbf",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/8d/13/raw/ff671e65961e4481a3c0bd5a7f9efb9a-000002.response.json",
+      "sha256": "5f00e0b3831d93dfc547c853d865c02a7dba1e340f8a44f026f86cbd81db0e9d",
+      "elapsed": 1.179020854178816,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098618.6641393
+    },
+    {
+      "id": "afc84826433bc3be7371dc2e6bbaba33dae62459137954759f77972e5d175ffb",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/af/c8/raw/14f93cad64fd41d2a215c1e7b9feca16-000002.response.json",
+      "sha256": "288820c06d234b7345fef500e4051090aa4ca16299eb58ee38359d65ecca41ca",
+      "elapsed": 1.2061462178826332,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8800/v1",
+      "stage": "review",
+      "time": 1791098618.6597812
+    },
+    {
+      "id": "222c117fb05436ea793d6939a11cd2a35c6f17f78a784fa9da7a0b1e07cb7d22",
+      "path": "/work/mimir/HRM-Text/data/dfm13/baltic/synthetic-compact-26b-20261004-v1/work/22/2c/raw/50ed9bddd32f40aa9454fb368253b580-000002.response.json",
+      "sha256": "16069b7fb4dc45996ad520b1f5f0ff6041257bc5bd4a9105a330c7d51df3c67f",
+      "elapsed": 1.5817001308314502,
+      "status": null,
+      "bytes": 0,
+      "endpoint": "http://127.0.0.1:8805/v1",
+      "stage": "review",
+      "time": 1791098618.6551087
+    }
+  ],
+  "admission": {
+    "time": 1791098665.050045,
+    "pid": 3051744,
+    "max_kv_cache_utilization": 0.9,
+    "endpoints": {
+      "http://127.0.0.1:8800/v1": {
+        "reason": "spacing",
+        "admissions": 2220,
+        "recoveries": 9,
+        "probe_failures": 0,
+        "kv": 0.6544089303347291,
+        "waiting": 0.0,
+        "checked": 1791098664.9689095
+      },
+      "http://127.0.0.1:8801/v1": {
+        "reason": "circuit_cooldown",
+        "admissions": 2041,
+        "recoveries": 11,
+        "probe_failures": 0,
+        "kv": 0.022193825015709434,
+        "waiting": 0.0,
+        "checked": 1791098661.8847573
+      },
+      "http://127.0.0.1:8802/v1": {
+        "reason": "spacing",
+        "admissions": 1868,
+        "recoveries": 11,
+        "probe_failures": 0,
+        "kv": 0.15218321126641565,
+        "waiting": 0.0,
+        "checked": 1791098665.0034099
+      },
+      "http://127.0.0.1:8803/v1": {
+        "reason": "spacing",
+        "admissions": 2348,
+        "recoveries": 9,
+        "probe_failures": 0,
+        "kv": 0.06689302291196919,
+        "waiting": 0.0,
+        "checked": 1791098664.9134974
+      },
+      "http://127.0.0.1:8804/v1": {
+        "reason": "spacing",
+        "admissions": 1835,
+        "recoveries": 14,
+        "probe_failures": 0,
+        "kv": 0.07820907501966978,
+        "waiting": 0.0,
+        "checked": 1791098664.812475
+      },
+      "http://127.0.0.1:8805/v1": {
+        "reason": "spacing",
+        "admissions": 2137,
+        "recoveries": 10,
+        "probe_failures": 0,
+        "kv": 0.5954260549063508,
+        "waiting": 2.0,
+        "checked": 1791098664.7888045
+      },
+      "http://127.0.0.1:8806/v1": {
+        "reason": "spacing",
+        "admissions": 2015,
+        "recoveries": 11,
+        "probe_failures": 0,
+        "kv": 0.37373598694667254,
+        "waiting": 0.0,
+        "checked": 1791098664.8584528
+      },
+      "http://127.0.0.1:8807/v1": {
+        "reason": "spacing",
+        "admissions": 1919,
+        "recoveries": 10,
+        "probe_failures": 0,
+        "kv": 0.7800577683668027,
+        "waiting": 0.0,
+        "checked": 1791098664.9369543
+      }
+    }
+  },
+  "server_tails": [
+    {
+      "gpu": 0,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu0/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687881) INFO 10-04 09:24:30 [loggers.py:310] Engine 000: Avg prompt throughput: 25160.2 tokens/s, Avg generation throughput: 9445.2 tokens/s, Running: 229 reqs, Waiting: 0 reqs, GPU KV cache usage: 45.7%, Prefix cache hit rate: 17.6%"
+      ]
+    },
+    {
+      "gpu": 1,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu1/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687882) INFO 10-04 09:24:36 [loggers.py:310] Engine 000: Avg prompt throughput: 50731.1 tokens/s, Avg generation throughput: 8531.2 tokens/s, Running: 377 reqs, Waiting: 0 reqs, GPU KV cache usage: 76.3%, Prefix cache hit rate: 19.0%"
+      ]
+    },
+    {
+      "gpu": 2,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu2/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687883) INFO 10-04 09:24:35 [loggers.py:310] Engine 000: Avg prompt throughput: 14059.4 tokens/s, Avg generation throughput: 5056.6 tokens/s, Running: 68 reqs, Waiting: 0 reqs, GPU KV cache usage: 13.2%, Prefix cache hit rate: 18.5%"
+      ]
+    },
+    {
+      "gpu": 3,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu3/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687884) INFO 10-04 09:24:35 [loggers.py:310] Engine 000: Avg prompt throughput: 49660.6 tokens/s, Avg generation throughput: 3140.1 tokens/s, Running: 319 reqs, Waiting: 1 reqs, Deferred: 1 reqs, GPU KV cache usage: 65.3%, Prefix cache hit rate: 19.8%"
+      ]
+    },
+    {
+      "gpu": 4,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu4/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687885) INFO 10-04 09:24:27 [loggers.py:310] Engine 000: Avg prompt throughput: 11783.2 tokens/s, Avg generation throughput: 3674.0 tokens/s, Running: 60 reqs, Waiting: 0 reqs, GPU KV cache usage: 11.8%, Prefix cache hit rate: 18.1%"
+      ]
+    },
+    {
+      "gpu": 5,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu5/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687886) INFO 10-04 09:24:35 [loggers.py:310] Engine 000: Avg prompt throughput: 12314.4 tokens/s, Avg generation throughput: 8959.9 tokens/s, Running: 135 reqs, Waiting: 0 reqs, GPU KV cache usage: 26.7%, Prefix cache hit rate: 18.0%"
+      ]
+    },
+    {
+      "gpu": 6,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu6/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687887) INFO 10-04 09:24:35 [loggers.py:310] Engine 000: Avg prompt throughput: 20607.4 tokens/s, Avg generation throughput: 9463.5 tokens/s, Running: 309 reqs, Waiting: 0 reqs, GPU KV cache usage: 61.6%, Prefix cache hit rate: 17.9%"
+      ]
+    },
+    {
+      "gpu": 7,
+      "path": "logs/dfm13/gemma26-compiled-switchback-20261003-v1/gpu7/server.log",
+      "error_lines": [],
+      "last_engine_stats": [
+        "(APIServer pid=2687888) INFO 10-04 09:24:35 [loggers.py:310] Engine 000: Avg prompt throughput: 3817.6 tokens/s, Avg generation throughput: 12608.8 tokens/s, Running: 376 reqs, Waiting: 0 reqs, GPU KV cache usage: 75.8%, Prefix cache hit rate: 18.0%"
+      ]
+    }
+  ],
+  "limitations": "No TCP reuse trace or packet capture; server access lines cannot be joined to client raw ID"
+}

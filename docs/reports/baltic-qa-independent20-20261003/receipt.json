@@ -1,0 +1,18 @@
+{
+  "status": "independent_review_complete_no_eligibility_change",
+  "conversations": 20,
+  "assistant_turns_read": 44,
+  "counts": {
+    "no_material_issue_observed": 6,
+    "minor_or_uncertain_detail": 3,
+    "material_defect": 9,
+    "uncertain_hold_recommended": 2
+  },
+  "files": {
+    "evidence.json": "18e4c1cbc65ab078c96874210979439650db7a11bf6432abf7a48dcca1591d04",
+    "findings.json": "f44a97ba39d822b38c903174c472cb916b82cd15a195b6ab0e0ba7002ebad9ec",
+    "review.json": "a2fcdf337c8ec172ae6cc07fd7e66aee4948d1e36462721b7c35a2103f68e2f2",
+    "overview.md": "2e4f389c23d77d20b38fa9c759c4568b52240d0cd0b646186ea8138618e2e15b",
+    "report.md": "ad574315b52c217e72b90c2cd7b893947738df7d782accf5dff456276e69b616"
+  }
+}

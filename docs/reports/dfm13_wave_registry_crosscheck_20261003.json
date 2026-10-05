@@ -1,0 +1,1796 @@
+{
+  "schema": "wave-registry-crosscheck-v1",
+  "registry_sha256": "1628a796d3b470c78fd589d2f8380da8816f033f2dbc39c9e30eb422ae09d655",
+  "registry_changed_during_check": true,
+  "results": [
+    {
+      "name": "dfm13_wave4_administraktor_hrvatski_dataset_v2_hr",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 59078,
+      "rows": 448,
+      "source_sha256": "bec63ef27a12e93c9665a55e38dcd14348fe487dc731cd891e4e92f49479063b",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/administraktor--hrvatski-dataset-v2-hr/publication.json",
+      "publication_receipt_sha256": "0be99b3d8a8775411adb46d5bf01cba96c8e634e44747376b5d229153736fb9f",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_CohereLabs_aya_dataset_hu",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 13879,
+      "rows": 83,
+      "source_sha256": "964c9fbfd516da8623ee2a1f5c50548c9ec4993c8b2edb83793b9b80f38e954c",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/CohereLabs--aya_dataset-hu/publication.json",
+      "publication_receipt_sha256": "32fce01bc59e9416033855c19470b01856aace9a912f96f921de462ea544cc0f",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_CohereLabs_aya_dataset_sr",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 41435,
+      "rows": 136,
+      "source_sha256": "33a9cd31fb1fe931062234f754b76ecf9ac905681b2289f7a8b55a31a6f8a56b",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/CohereLabs--aya_dataset-sr/publication.json",
+      "publication_receipt_sha256": "5df5238bb8160fcf05ed2aadd7e54248df751c7df765475d765aeb7ac4824d3e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_CohereLabs_aya_dataset_fa",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 252970,
+      "rows": 1490,
+      "source_sha256": "c38a82fcf07c48d81b324c33642779ecd18e15897ba5745b90110cd973b9bc05",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/CohereLabs--aya_dataset-fa/publication.json",
+      "publication_receipt_sha256": "7c995e83b3b60f924db6ab7c4a689ec6732f9f4b6e96eaee6328966e0d275f13",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 169631,
+      "rows": 245,
+      "source_sha256": "d450d4da365a56c5ce4da474bc758c70253307d4c9c19ea21eb78b8d380d1c76",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-bg/publication.json",
+      "publication_receipt_sha256": "cc8a82464f8e0d4f34e63e53767a50d2525501aae528fa2de1141bfe64566a40",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 40646,
+      "rows": 48,
+      "source_sha256": "98cfceb67889dfd22094d9b992289a88cfb42ef1b2afc2b8a43d70400205156b",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-hr/publication.json",
+      "publication_receipt_sha256": "84cd37d28c5d6d2240b04278b007c092eedd0087da6d449e0086ec16799347ff",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_sk",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 668568,
+      "rows": 859,
+      "source_sha256": "8ce1cdf6d710b2d8a47d02c86a84d99d6b16e74e9d87d7fe74718fe3184bd330",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-sk/publication.json",
+      "publication_receipt_sha256": "9a5b6dd9002e0f65978b164376ed8a60fa9dd7fce3e3b36071ac00d264a36dc6",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_sl",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 142439,
+      "rows": 185,
+      "source_sha256": "ffa526938925635e6ab94b6c24df993102266341d6c544add72081f9838455bd",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-sl/publication.json",
+      "publication_receipt_sha256": "85d732cffd1f49511d9dcaea846fb8281958fa59bcfccc61434fec10922e2c0a",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 3707736,
+      "rows": 3984,
+      "source_sha256": "cdf91033072dc730bd51dbd999be6de1b0228aa99d8cd1bda224a05b556d9de5",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/utter-project--EuroBlocks-SFT-2512-hu/publication.json",
+      "publication_receipt_sha256": "a599e75796d97ff3e35bf6f4a06d084a12e466a942b997ead6a7d01d400aace9",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_alban_labs_Kapibara_sq",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 6504507,
+      "rows": 4124,
+      "source_sha256": "e7d974406f40a5346cef49c83046b2625c9f0ee2cd5e8539cb34c31579684514",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/alban-labs--Kapibara-sq/publication.json",
+      "publication_receipt_sha256": "b7caacd8139c83c65937c23ae347856aaa2bd60588e20320d7a933adaa4d7810",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_jvalline_LuxIT_wiki_subset_lb",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 17436940,
+      "rows": 42138,
+      "source_sha256": "706e430cd279954a93d4ca139cf54a05af83b94554541756facfb8bab88d99f8",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/jvalline--LuxIT_wiki_subset-lb/publication.json",
+      "publication_receipt_sha256": "84fd003a4022ce9f69ad2248447801a235e4c9584b7fd54198befb8c3059fbb8",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_fo_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 2184,
+      "rows": 48,
+      "source_sha256": "50921d38ea261e5bea27e51c42f4aa29a6df51467f4b59764021c200baa6fa69",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/fo-lv/publication.json",
+      "publication_receipt_sha256": "3b3940d030a8848759bd8a08df4a727dcdd0d6d19f69a642bff34f66b2838b3f",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_ca_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 7438,
+      "rows": 176,
+      "source_sha256": "858b6d18d2a7b50101da8a508d7d3e4cfaedda0160bb3aa9a9502145811817aa",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/ca-lt/publication.json",
+      "publication_receipt_sha256": "013607e14f6a4460d33290f2431b3b6dedc291026ade52cf289a177e4d940e98",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_ca_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 4152,
+      "rows": 94,
+      "source_sha256": "a23cbe35cd63309823bce2e24298061b9192f27f21d6c52843f7e137cd69ae71",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/ca-lv/publication.json",
+      "publication_receipt_sha256": "87849b5c7ce98edd3b9e4c1de1c026221405bc016ab2353f6053917d3b4b78e3",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_cs_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 12644,
+      "rows": 300,
+      "source_sha256": "7bff5f6d24d369ecdd5931f5330731d882e99e2b046aa44d53a403b999fa0e46",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/cs-lv/publication.json",
+      "publication_receipt_sha256": "bb1fb94a919703cda36fef9c0b48e2e73476ecb9aa406b71b9d69ab538d0134a",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_da_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 49840,
+      "rows": 1220,
+      "source_sha256": "dd03f90c8b100985ac80408dd757867697c6ae180c5cc36d29c93e434298db2f",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/da-lt/publication.json",
+      "publication_receipt_sha256": "d586cddf3573cb961a4b819225505f693580504e9f0494268f4a6f475e6b87af",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_da_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 15872,
+      "rows": 396,
+      "source_sha256": "f4c8d487cd60d759bb538c4441d284161b71b74f1603787237c9c86c597d3bba",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/da-lv/publication.json",
+      "publication_receipt_sha256": "871ec0c52c72afd60e67c61cd1e05a3b81857c6fc7f07ef935cbf81e5dd2dba1",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_de_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 147442,
+      "rows": 3392,
+      "source_sha256": "3408e97ccc2bd19e0207de5e80d157f86f5bad6279734886c9f40660464e1a46",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/de-lt/publication.json",
+      "publication_receipt_sha256": "10449fb9661ff071a745a7c38876be90e9396985938f1b6c5a9ea9b65c2e1dcd",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_de_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 91978,
+      "rows": 2052,
+      "source_sha256": "b0f09b72f21fec29af417256e21f680b43e7b83f9bf0671e3110b5ed994fe898",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/de-lv/publication.json",
+      "publication_receipt_sha256": "154e283759e225a3eec909e137a179494c1b48dd2643420bfe5bc080bf4010c5",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_el_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 42392,
+      "rows": 992,
+      "source_sha256": "5e9b32ad0836facefa47cd2f258345e04d33411d748f1a6eebd30c0cf858bb4c",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/el-lt/publication.json",
+      "publication_receipt_sha256": "e4fa57f4b394ee7abffd638ccbe5fc1451ec2532f6d062ca8e0d280854f83c50",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_el_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 16660,
+      "rows": 362,
+      "source_sha256": "b87c99265ebba3b6e3ad857c4cd481586f384b684f6d6251c883e70383fbec20",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/el-lv/publication.json",
+      "publication_receipt_sha256": "8cc0a3631dd823ce5b6977ea9dce6867b0629fe5b4f53d4864a461b85e077167",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_is_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 6244,
+      "rows": 138,
+      "source_sha256": "2243661f55975fd6f135061dc4e9ff488b3b96b022a8e0a506c7aa5986ed2d5e",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/is-lv/publication.json",
+      "publication_receipt_sha256": "804b97f0f89447423b500413f1804a8cc196e07d2de2a09c864254e71dada26b",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_es_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 305914,
+      "rows": 7268,
+      "source_sha256": "c9cd2329e6e24b0fa6ea07b41c521119eab82049b32dbb90d56fd4dc0246b11d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/es-lt/publication.json",
+      "publication_receipt_sha256": "bec7fd3592ac9a2bba4bf9e22925b6938f9e28b77a05f3fc362c6a58f51df804",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_es_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 59718,
+      "rows": 1400,
+      "source_sha256": "00d83bdb45a486bfba965d82ce1d608fb654ab2b1c911afce8f06bf050c01c1c",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/es-lv/publication.json",
+      "publication_receipt_sha256": "329c3c03d857b0b20f84234dbee26b83e61d94ead51460bedc072c3487c8bc27",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_et_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 16920,
+      "rows": 412,
+      "source_sha256": "1007f37d5283e24997046964911e1c5271df0a6c56cc4192ffc2fc98961fe7df",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/et-lt/publication.json",
+      "publication_receipt_sha256": "7c963cf642e517c1c5abc6c6e32f37fec88516528c4ada24a8f872cb2e19886d",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_et_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 10484,
+      "rows": 256,
+      "source_sha256": "b87a6e7afc270fc00c1affad582c027bc3c14075ba32110c002d66203ae71c2a",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/et-lv/publication.json",
+      "publication_receipt_sha256": "2c5d0fc5e963b0d2597eb1804b59d05b010a44ea0ce702d5e3b853f2b0714b7e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_fi_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 94842,
+      "rows": 2182,
+      "source_sha256": "2e05c7b873c675e457d17240b0250543c6dd57f18c619929a5adda31c6cbf38d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/fi-lt/publication.json",
+      "publication_receipt_sha256": "f76ade1fec04f5fb336bf7bdeae0c8a4374ea5d6a49ae1dd2babf0b15a44e07e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_fi_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 20944,
+      "rows": 462,
+      "source_sha256": "0760ee4e7c0fff23a45ff638a8014de0cbd8f57131505c59e441a6c34909c3b4",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/fi-lv/publication.json",
+      "publication_receipt_sha256": "6356a69e6c9a6fb069d1af58b9db11ef3896b6a7b92b6c896096b2594fb90842",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_fo_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 2864,
+      "rows": 64,
+      "source_sha256": "01f0d96e666ac83faa0a0b1f2c544bf3f5b17c63276d0bc1e88b549adb1de47b",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/fo-lt/publication.json",
+      "publication_receipt_sha256": "7026c4cb5662a101bf4ce8edd9ecff87e4abfbfc47fd35d5bfd8b7563d06c758",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_fr_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 228404,
+      "rows": 5276,
+      "source_sha256": "4ad21c4d1f114f005e9372caf068b6ed687e958b1b28d2af2edf3f06ed4dc53d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/fr-lt/publication.json",
+      "publication_receipt_sha256": "5bf664420bc84cc8ca2b582257898e90fce30867f1071d722b0f1cf731f6bf91",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_fr_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 60912,
+      "rows": 1368,
+      "source_sha256": "10614e3539619b6504b554453fbf492a59a4cee3a96a6a404ed05f25d3e95af8",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/fr-lv/publication.json",
+      "publication_receipt_sha256": "bf1eb6520c5505c65d2e5bf211ee54db372aa9cbb81b5665d4ec00d97457ef57",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_is_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 28060,
+      "rows": 618,
+      "source_sha256": "60446eb97f707df3824d9f2912b7af57faf4499672c864787af9a766590809ac",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/is-lt/publication.json",
+      "publication_receipt_sha256": "7474a4a138c3e426bfced32011c7079814cb2815f0c7f8f7828e9a474b269e78",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_it_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 124722,
+      "rows": 2944,
+      "source_sha256": "25db20410e30ab7310b0d8bc7a020149b40784e55df2d349e939f603e42bb79f",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/it-lt/publication.json",
+      "publication_receipt_sha256": "7634bea15e89d1df9aa4ce74e0fb0cc5cf3582b89d3059d92052cf84f58c3487",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_it_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 40014,
+      "rows": 918,
+      "source_sha256": "fcc36693cf31139e55758cd60da50e99ceb0cae767d98301ef55161e96043394",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/it-lv/publication.json",
+      "publication_receipt_sha256": "2da8e398f754b39d01721fc284ff12960adbccf52b7549cbba715eb138c4dcca",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_CohereLabs_aya_dataset_sq_tosk",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 7598,
+      "rows": 113,
+      "source_sha256": "a22d4cb820490767c69e6c8bceaf53468fe49cbcc729987e667d096fbf7bf415",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/CohereLabs--aya_dataset-sq-tosk/publication.json",
+      "publication_receipt_sha256": "7345fea4a8370c8cb6c17873ae1580b44b5f893efc7c20786cc1b1fe0866ecc5",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_lv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 80476610,
+      "rows": 721090,
+      "source_sha256": "eb6eb27adfabc5256178b00da3a2de33d4b7f415db8e3da5baa649c0f8983ef4",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-lv/publication.json",
+      "publication_receipt_sha256": "629733325f39155650a45a4d56b60612a32bd668706c718c9b1e3509214e3a7e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_nb",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 36282,
+      "rows": 846,
+      "source_sha256": "9463c756016ddfe4204938e4db947670898241fabd984b224c82ba27ebefd782",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-nb/publication.json",
+      "publication_receipt_sha256": "1aef792cab79edb7fbaffdff33a6b6deb332f339a0c9b5f702f5fc627a73b115",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_cs_lt",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 35510,
+      "rows": 844,
+      "source_sha256": "65c5b438b7765be5e9bfb13947a082b70ca195e30bf1bce10f9a43ccd20d0683",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/cs-lt/publication.json",
+      "publication_receipt_sha256": "86a61f6b12c711a2d6d5b8aca2f2beda9b8107bed8cb0fe9f7da33911d17381a",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lt_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 17346700,
+      "rows": 15022,
+      "source_sha256": "777d0ce28df0f4c9ecc5f75f381defccb41e06cccd74e7a81a0d0e092ad09abe",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lt/denoising/publication.json",
+      "publication_receipt_sha256": "d2de5f000e343667b548898b0bec4888a9ee375b82d0927be04998d7c5792083",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lt_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 7291999,
+      "rows": 5765,
+      "source_sha256": "022352ffa6fc6b6bfcfe2c5800b0ca26b97410f0526d9e62067548afbac2b7f8",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lt/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "5a464e4b2b7659d5dfad69ebaa2d9c86efacf85e8f161807784e16d2a41a3300",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lt_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 13251611,
+      "rows": 22161,
+      "source_sha256": "67d2583d9902426bdffe233b716d0ebb356f62bc180d3d537644e57d53d99b25",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lt/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "02bef668d7499dbe0072e27f9ca075fbfd86271cbde5a544a3b26ba39d28a7ef",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lt_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 5216843,
+      "rows": 9110,
+      "source_sha256": "937c11852183f79ddfdf1c0b096367f7c6f0c9f822adf19b8ffd69b38fa38671",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lt/span-filling/publication.json",
+      "publication_receipt_sha256": "a6025c61f733a4e9e03dbca8d1ca1d17b735eaa49bb9f21bdef9e9c115508473",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lv_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 24435413,
+      "rows": 18864,
+      "source_sha256": "41430e1ed98b46eda9f8fe327c784e7558039fb847008c029dbac872af90c0bc",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lv/denoising/publication.json",
+      "publication_receipt_sha256": "ef5be91ccc38d4593800de72833b3d9358b48b7e9dbe8847cc2c5eca9986ef89",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lv_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 10768210,
+      "rows": 7875,
+      "source_sha256": "61e87168a6ff9246633338a9fe2ed043d3be3f432e3f7ebb7767e3469672ea74",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lv/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "239f4920db390cd234cd368a7f08f4cc637e8f6112b99e31004cb8d7923ad373",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lv_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 18751690,
+      "rows": 27915,
+      "source_sha256": "24faec90c5d43d72e0245bcbdfad1f4d9c8f29945c6f5256f696a6cbcd69d7ac",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lv/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "aba003b60c342ded0eefed5872b0dd94f7b84cf6473191cb17cc6b45cd6c1b4f",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_Wikipedia_lv_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 6142959,
+      "rows": 10047,
+      "source_sha256": "23e56948ec272c9933a0738fd2d991e20f198fefeb7c013fd90518f4999c0de3",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-Wikipedia_lv/span-filling/publication.json",
+      "publication_receipt_sha256": "687bc6a705fb517e00c5b0f508e9e274aa6a2cedb2cb43f4e7df4b995a7bee4b",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lt_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 10537946,
+      "rows": 15045,
+      "source_sha256": "d51bc72de19e2e39ad61b9a65502bfdaec4a8b301acdc19974a33f226728869c",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lt/denoising/publication.json",
+      "publication_receipt_sha256": "94d216c33f82b9a3ae2e629e04cf5c63b8b8c3f7932086d29bd78709d01cae3f",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_baltic_lt_aya",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 143744,
+      "rows": 802,
+      "source_sha256": "47fb3e5713094036082eaee9df135edbfbdbf2faf7aa7c428964957d3d9960dd",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/baltic_lt_aya/publication.json",
+      "publication_receipt_sha256": "8abdc957a4659bd3adfa6adb6ab99d0810125924098ff73931c6c9de8e5c6171",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lt_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 7683092,
+      "rows": 6392,
+      "source_sha256": "1f76f1eefeeb11b32c21092d46717685ff499969108577a6dbed69e5d9d1e731",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lt/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "84b0b1d8a5e95826ddef33885b5d021a084fbdebd7139aaac847bbbef4c7d53c",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lt_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 8423786,
+      "rows": 22597,
+      "source_sha256": "1c5d949191a9acfdd694fa8f0712bc5dc03bc505452cc6e51e1d1bd5f5cdca0b",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lt/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "6bc2b4be83d508266fa9e55422de54b32e4607e9faf3aa74b7bb8d23d11db1ad",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lt_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 3534857,
+      "rows": 9725,
+      "source_sha256": "aad85ea3d70e3dd4290c68bcc1b40c74235e1dc74d3ae3b3f06cb8846995326d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lt/span-filling/publication.json",
+      "publication_receipt_sha256": "18fc4b28456fbe38bdd4217ac2ec91739b6b583f9602ec5bb53a0fac07343ea6",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lv_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 19078524,
+      "rows": 17200,
+      "source_sha256": "ef91baa6e9e59f43282b99e2cbd2781ac98ff83addec4da86d88686dc76d17ea",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lv/denoising/publication.json",
+      "publication_receipt_sha256": "8cbd20fe54d3ad53f70f2819c0fe97aac5d98b037a2441896e48b4d5fd5fbf76",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lv_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 10294317,
+      "rows": 8192,
+      "source_sha256": "91a1e9a8ad34f3e7253622748031f96f8a50b6f1568933992fa09bb14658dd28",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lv/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "7bdc4dac5d4d7c7e520260c00af3cfb9c4e8e9d65ff1d03e1670484a01e393ee",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lv_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 9896928,
+      "rows": 17195,
+      "source_sha256": "066db813dea55aac0cbff8540ef40e9118747b2398b210e9f910449a65ee8e42",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lv/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "759f2f6485dd8d3a58ab4724596b90d794e1f0dcaae9f2b2ad07c91683b8589b",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_parlamint_lv_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 5613306,
+      "rows": 10730,
+      "source_sha256": "47b42fededc965d9ff3383f7e8cab2b22a115a9779bc2cc1502e4bf44d6068dd",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/transform-parlamint_lv/span-filling/publication.json",
+      "publication_receipt_sha256": "e0f80d129493008a7ff0698d80090ca7736da89ccd14cd247217d3e02ef6f2c1",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_baltic_lv_qa",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 95361003,
+      "rows": 105971,
+      "source_sha256": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/baltic_lv_qa/publication.json",
+      "publication_receipt_sha256": "753b0d41aa6cdfc829d11bc0f1ea7457c6b9044b1c2e96201c398024a469d7d8",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_nl",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 81949194,
+      "rows": 797234,
+      "source_sha256": "353c03bf045696bb53feb5d4a951b044c6fda17dc254314006bff0602aaf49bf",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-nl/publication.json",
+      "publication_receipt_sha256": "245034903d6fe8c68530e284fc0d42c36370623cf494991bf363fe9dcaf81e75",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_nn",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 3482,
+      "rows": 74,
+      "source_sha256": "4c97af5cf499212c01d9500bd6e83bfb9b4beb8223eeb82b7d245f1fa7c4f288",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-nn/publication.json",
+      "publication_receipt_sha256": "09ca07a41dae03417ba2a0db42715a372824b34faf0a41dc0c8aec6a8c328840",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_pl",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 153010,
+      "rows": 3544,
+      "source_sha256": "31d18d5358dc06dbb63268da07c2e36c095f52063ed8cc0d3a42a398d850bd2d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-pl/publication.json",
+      "publication_receipt_sha256": "f4ba56625beb410e6f5ef80732d64ab54b3dbff3ffdee9ebc9a3cbbfeb437888",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_ro",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 36900,
+      "rows": 868,
+      "source_sha256": "b75f59642bcba40622713a272c09f67d7a309694cb1346601e3e0c0a52644de5",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-ro/publication.json",
+      "publication_receipt_sha256": "2f24048d241eb8f13cbf14cfe00e693bc8ab28fc0ae3d562e2829cacaaa1a914",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_ParsiAI_FarsInstruct_fa_farstail",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 1105060,
+      "rows": 7140,
+      "source_sha256": "dba69c4b1b483297ae1fea1e30f4e3015b322ec4bb205255822f00f55a430097",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/ParsiAI--FarsInstruct-fa-farstail/publication.json",
+      "publication_receipt_sha256": "d4be18989cfe138f669d0b26a08c56ba3eb2bdda8071347e7bb06e03d48d267e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_baltic_lt_qa",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 1369608,
+      "rows": 12895,
+      "source_sha256": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/baltic_lt_qa/publication.json",
+      "publication_receipt_sha256": "c5330b5418ed0b891aadb2a94a1fe4dfee0f294adca8b57b9c76a5aae09fc93b",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_sv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 82090936,
+      "rows": 812692,
+      "source_sha256": "7268becfb42517e0fab9dc1e4b0d3c7a5977491853a9b7612220113dd10d4c58",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-sv/publication.json",
+      "publication_receipt_sha256": "df38af025d53b09bcc9c3797d7db86c059372246250e6a09d8d6014475b3736c",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lt_uk",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 138854,
+      "rows": 3236,
+      "source_sha256": "948427c03e91cd35a95673b0e5140e479a4126be78ad54a6bca1326387e55d4d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-uk/publication.json",
+      "publication_receipt_sha256": "e5be6f1a5a8fc371424aaccd08b959233fc6964503c6e343b62138ba57ac73f4",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_nb",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 10528,
+      "rows": 254,
+      "source_sha256": "efab70306e1c06cabf560913b038c8027408dabe6aee7c9a53a3b5a39b230598",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-nb/publication.json",
+      "publication_receipt_sha256": "188c77c9806fa6ee709aaf62386279d2b0d5cf87a004d9b2861b14548f9761a2",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_nl",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 99199938,
+      "rows": 916724,
+      "source_sha256": "5e82d111faf44d7625b147bba6f46b0aea5d7cb3d81d24ae80cfcbfd4a6a008d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-nl/publication.json",
+      "publication_receipt_sha256": "a77c405b77ad6b4e1c5892ba0054192be11a6ee763ccbb1b529c6db92bc956e2",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_nn",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 3150,
+      "rows": 74,
+      "source_sha256": "4d8afcee9c9e3588b51d31cb8fb08e282169b08d77a898a4ef0d42484951d6f9",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-nn/publication.json",
+      "publication_receipt_sha256": "ea89b73d8db2799b8f36475a62723c43eeb23cd421c8f268878dd90c2628122c",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_baltic_euroblocks",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 141935,
+      "rows": 166,
+      "source_sha256": "1bea0d03300cb764cd125310c3fd1cf9f5928b79bcf7cb9620226d37effbe292",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/release/baltic-euroblocks/publication.json",
+      "publication_receipt_sha256": "edd0718c800324d32fce5252bd19a09d46404da1d941d478554ca8fc00f10ad4",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_pl",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 34982,
+      "rows": 820,
+      "source_sha256": "3cbef80f3e97ab9ea8a9091fadb30047081b3c5627ce7e8d39a4eaec1d07856c",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-pl/publication.json",
+      "publication_receipt_sha256": "82806e25da11fb522e4db84e33e8f5a335221fb37fc7ee3c80f80b0af07eff0b",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_ro",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 16950,
+      "rows": 366,
+      "source_sha256": "3c5bf3b0fdea903a4910be8224c98d1844a16721892c50cc205efb09532065e0",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-ro/publication.json",
+      "publication_receipt_sha256": "95803e39ec575277aaa5dd4028af112eac66f06ab7fa302f174a0327dbbac96e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_sv",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 98034606,
+      "rows": 922648,
+      "source_sha256": "4e8b148991da895eadbd14c55a43a6c42af90fef1f6c85cc3bfc6986caf8837a",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-sv/publication.json",
+      "publication_receipt_sha256": "a22e2616a87d123a17bd35706cde9380a4d88e47aff0372d45fe6a98a17f04d7",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_opus_lv_uk",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 31952,
+      "rows": 736,
+      "source_sha256": "2ab8cdf7ebb60d1d3d2e8c9939cfe4beae6b405b65e7202670a2ac6210d916a4",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-uk/publication.json",
+      "publication_receipt_sha256": "307cd275f8a42b453737d717aed893be5244aada157bd551e14034a19e95f543",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_baltic_lt_blkt_denoising_newgenltu",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 31670833,
+      "rows": 15019,
+      "source_sha256": "49daff0b425d2306dc4f191c97289c16cc10aa04862955f9c8abd0a59126c041",
+      "publication_receipt": "/work/mimir/HRM-Text/exports_dfm13/blkt-publication-v1/dfm13-wave3-transform-baltic-lt-blkt-denoising-newgenltu.verified.json",
+      "publication_receipt_sha256": "20292f2a9c4a3942182212d1d82f09a67868e8a095abdb78c35df9ef8df99beb",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_baltic_lt_blkt_prefix_continuation_newgenltu",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 24743703,
+      "rows": 22635,
+      "source_sha256": "c088cd460b6d4df9dfbb2b1b9e675eca8d8bd6185fdda58ca2dfdd425e8c47bb",
+      "publication_receipt": "/work/mimir/HRM-Text/exports_dfm13/blkt-publication-v1/dfm13-wave3-transform-baltic-lt-blkt-prefix-continuation-newgenltu.verified.json",
+      "publication_receipt_sha256": "e71a1c1710908e13da2c95dd3e98861c95f119445e90bbe29aee5587105d89ab",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_transform_baltic_lt_blkt_span_filling_newgenltu",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 11009609,
+      "rows": 10547,
+      "source_sha256": "c9b7ff192d5d4784ec59ce737831c27784cc4a596836540fdfcfdc777ad1ba7d",
+      "publication_receipt": "/work/mimir/HRM-Text/exports_dfm13/blkt-publication-v1/dfm13-wave3-transform-baltic-lt-blkt-span-filling-newgenltu.verified.json",
+      "publication_receipt_sha256": "ad57c0e7508b5f9c54ab836655570b04a97fd06a1732754f00dce92650ac1239",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bg_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 97245986,
+      "rows": 75047,
+      "source_sha256": "ec63761239b504caf8debc222a6fc03a7821d258bb3d6eb2cce224e99f9cd3f8",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bg/denoising/publication.json",
+      "publication_receipt_sha256": "48d039db4cf3a24350d3d53946dcef1c5ad3edbbeb857d548f5247becc65508a",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bg_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 42809529,
+      "rows": 31512,
+      "source_sha256": "abd76ce8ae38f99072419e93e1ea0abd66ee02c3e0bc6cbb9f53eebc98de112a",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bg/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "2f15b25aede7b17c1326ebd3442c0b1fbefbe7c29b7d7109b59f5a2432f257ed",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bg_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 73762772,
+      "rows": 111856,
+      "source_sha256": "57e5ebe6b7cea2aadb00c1ce20e0688f3d98a67170a0675e7fac4b785a84a3d4",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bg/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "08e1f96dfe0f3d9f1e0716cb1eb37cc4c3fda67a2ffeddc13ee196964ce4a232",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bg_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 25614174,
+      "rows": 41315,
+      "source_sha256": "9c77eec2500e3ef0801d470609be898af7da431f16a3600d1ec72057720ade50",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bg/span-filling/publication.json",
+      "publication_receipt_sha256": "cd424f79f1aa59da37fefa86a94ae6f96a83250ee1fc1f5838e66fd717e57587",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_latvian_p3_cc_by_4_0",
+      "status": "quality_hold_source_fidelity",
+      "readiness": "not_accepted_uploaded_with_revision",
+      "scope": "held_not_admitted"
+    },
+    {
+      "name": "dfm13_wave3_latvian_p3_cc_by_sa_4_0",
+      "status": "quality_hold_source_fidelity",
+      "readiness": "not_accepted_uploaded_with_revision",
+      "scope": "held_not_admitted"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_be_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 91462091,
+      "rows": 68752,
+      "source_sha256": "672807cf4bf424cf16b5d92d1cd282ac99e6431a13a54bd13577a8b09dc84d7f",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-be/denoising/publication.json",
+      "publication_receipt_sha256": "bac74611a5506eca63bf35ec30c82115b76ddc466056dffb5c5a278bfb0736db",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_be_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 43761920,
+      "rows": 30543,
+      "source_sha256": "bd3d32a8f84fc93a4a78f0e3531118786bb87c90985ab021990dbf5a84d7e78f",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-be/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "01d067b64fdae1610c2704cfe43699f4cfb9347fb207f22b45240066dcbfebe4",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_be_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 46510152,
+      "rows": 68011,
+      "source_sha256": "d2a3388d84eda7ae8315cd5ee4b4e1fa70317821b8fd9e408e1caa80e3fc1df1",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-be/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "62bc787f856dcd8bd4c782d8dbe995aa97d0e10cc523824d5f6daddc5ec103d8",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_be_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 28450616,
+      "rows": 44297,
+      "source_sha256": "33009259238cd25da8b3e62bf2ab63d87969dbde2bfb68edb77869b3afb0043d",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-be/span-filling/publication.json",
+      "publication_receipt_sha256": "a14f6ea849674eaac6dcf137686c0aa81eb3fca489c286ef6c00f1aaa05c33d1",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bs_denoising",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 35262476,
+      "rows": 32054,
+      "source_sha256": "c66dff657c395d5beb75aa6c03517c6e5e4a6094a0a1762dae30ae043a83c398",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bs/denoising/publication.json",
+      "publication_receipt_sha256": "3fea9b1859896a5585d2a8616a13f92efadadee7bf557bbc44d9bc129e7d016e",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bs_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 33167622,
+      "rows": 28473,
+      "source_sha256": "d2d951e11624019c41872a39b3161ef9e9101e03cb1af2d5649db23a66db4242",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bs/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "2242dc3b488804ff4ee8a18fa4a27ea39d50f5820d826bfed12a786fc47822e6",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bs_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 17422676,
+      "rows": 31284,
+      "source_sha256": "0bd137fff0cf55df734d8644d2e19bbf0c7478460560eee882a74109bad34720",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bs/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "a6570c0a1e3b1939c1abcc4a1a8db176cb6290a91aa9761f7968a61a310aec3f",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_bs_span_filling",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 10379917,
+      "rows": 19537,
+      "source_sha256": "d5f1b29407023a958a93d80afa341046a14bf5c600465ad7b9b40bb98ab9ed26",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-bs/span-filling/publication.json",
+      "publication_receipt_sha256": "7417fda0db034dcb4eb45829953fe914acd31495fd8138926f23a0f083fb3be1",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave3_baltic_lt_summary_newgenltu",
+      "status": "accepted_uploaded",
+      "readiness": null,
+      "tokenized_tokens": 3081653,
+      "rows": 1740,
+      "source_sha256": "68cbe1e854294639ecb6f72c33a070c1c40280576e09d72dad989ffb58e6ecc1",
+      "publication_receipt": "/work/mimir/HRM-Text/exports_dfm13/lt-summary-publication-v2/dfm13-wave3-baltic-lt-summary-newgenltu.verified.json",
+      "publication_receipt_sha256": "0413e3f3792b20cfb88d9c2b76eb423da54c079f045d4e54956dca70f431976c",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_fa_denoising",
+      "status": "accepted_uploaded",
+      "readiness": "tokenization_not_ready",
+      "rows": 73802,
+      "source_sha256": "1d10e7551359b4e099e5724ea504dbe7250c8cae22e00873b28ca88f6b4b36d3",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-fa/denoising/publication.json",
+      "publication_receipt_sha256": "918259f59a61c9d75313c3281ff7e907d8966b4e1225c32ae065d1f9fc1e2c29",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_fa_paragraph_reordering",
+      "status": "accepted_uploaded",
+      "readiness": "tokenization_not_ready",
+      "rows": 31490,
+      "source_sha256": "668719681660c9b76eb1d4147deabe4add37e5e59eb044fe7c53e69d33cf5767",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-fa/paragraph-reordering/publication.json",
+      "publication_receipt_sha256": "eddc57e069a5190060769ca6d717ef325aca972525867448aee6ffd9958d108b",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_fa_prefix_continuation",
+      "status": "accepted_uploaded",
+      "readiness": "tokenization_not_ready",
+      "rows": 110813,
+      "source_sha256": "218d97a51b855afc4bfac70101aff651485cf8b0efcabf8120988e307751d9ed",
+      "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-fa/prefix-continuation/publication.json",
+      "publication_receipt_sha256": "11b186937fb7f3038867cc9fcb4cd8292ece67f6ccfd14f9eb9418578f38aace",
+      "payload_verified": true,
+      "token_check": "receipts_and_array_headers_only_not_full_token_rehash"
+    }
+  ],
+  "full_token_arrays_rehashed": false,
+  "final_metadata_reconciliation": {
+    "registry_sha256": "6d63ca7b656890346fa0498a71aec07e297b2878641be2484b182cf4adfa7f2d",
+    "new_payloads_checked": [
+      {
+        "name": "dfm13_wave4_wikipedia_fa_span_filling",
+        "rows": 25937,
+        "output_sha256": "299e06fa8ea8f1487b7e9669d0697d6f3045332a954184769ddfef6c79be0c76",
+        "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-fa/span-filling/publication.json",
+        "hf_revision": "aeaa6b115e61ecda16a2df4add70b040945c16e8"
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_pt_pt",
+        "rows": 3776,
+        "output_sha256": "b975ddf1697afd1c85645e37a14fde0560f0b153a531e6895aec5c3d9ce84531",
+        "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lt-pt_pt/publication.json",
+        "hf_revision": "e2b6f73b8ae81a1ddc4a1e2456ed39bf65c22218"
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_pt_pt",
+        "rows": 940,
+        "output_sha256": "f98fb532efab8031b06ecf7a7cd745adb9670a1edcb331dcac65cbcf32fb179a",
+        "publication_receipt": "/work/mimir/HRM-Text/data/dfm13/baltic/translation-release/lv-pt_pt/publication.json",
+        "hf_revision": "27c66c5d6b9756d8235bab0aa3af62f61859b617"
+      }
+    ],
+    "provenance_errors": [],
+    "entries": [
+      {
+        "name": "dfm13_wave4_administraktor_hrvatski_dataset_v2_hr",
+        "readiness": null,
+        "rows": 448,
+        "tokenized": true,
+        "tokens": 59078
+      },
+      {
+        "name": "dfm13_wave4_CohereLabs_aya_dataset_hu",
+        "readiness": null,
+        "rows": 83,
+        "tokenized": true,
+        "tokens": 13879
+      },
+      {
+        "name": "dfm13_wave4_CohereLabs_aya_dataset_sr",
+        "readiness": null,
+        "rows": 136,
+        "tokenized": true,
+        "tokens": 41435
+      },
+      {
+        "name": "dfm13_wave4_CohereLabs_aya_dataset_fa",
+        "readiness": null,
+        "rows": 1490,
+        "tokenized": true,
+        "tokens": 252970
+      },
+      {
+        "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_bg",
+        "readiness": null,
+        "rows": 245,
+        "tokenized": true,
+        "tokens": 169631
+      },
+      {
+        "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hr",
+        "readiness": null,
+        "rows": 48,
+        "tokenized": true,
+        "tokens": 40646
+      },
+      {
+        "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_sk",
+        "readiness": null,
+        "rows": 859,
+        "tokenized": true,
+        "tokens": 668568
+      },
+      {
+        "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_sl",
+        "readiness": null,
+        "rows": 185,
+        "tokenized": true,
+        "tokens": 142439
+      },
+      {
+        "name": "dfm13_wave4_utter_project_EuroBlocks_SFT_2512_hu",
+        "readiness": null,
+        "rows": 3984,
+        "tokenized": true,
+        "tokens": 3707736
+      },
+      {
+        "name": "dfm13_wave4_alban_labs_Kapibara_sq",
+        "readiness": null,
+        "rows": 4124,
+        "tokenized": true,
+        "tokens": 6504507
+      },
+      {
+        "name": "dfm13_wave4_jvalline_LuxIT_wiki_subset_lb",
+        "readiness": null,
+        "rows": 42138,
+        "tokenized": true,
+        "tokens": 17436940
+      },
+      {
+        "name": "dfm13_wave3_opus_fo_lv",
+        "readiness": null,
+        "rows": 48,
+        "tokenized": true,
+        "tokens": 2184
+      },
+      {
+        "name": "dfm13_wave3_opus_ca_lt",
+        "readiness": null,
+        "rows": 176,
+        "tokenized": true,
+        "tokens": 7438
+      },
+      {
+        "name": "dfm13_wave3_opus_ca_lv",
+        "readiness": null,
+        "rows": 94,
+        "tokenized": true,
+        "tokens": 4152
+      },
+      {
+        "name": "dfm13_wave3_opus_cs_lv",
+        "readiness": null,
+        "rows": 300,
+        "tokenized": true,
+        "tokens": 12644
+      },
+      {
+        "name": "dfm13_wave3_opus_da_lt",
+        "readiness": null,
+        "rows": 1220,
+        "tokenized": true,
+        "tokens": 49840
+      },
+      {
+        "name": "dfm13_wave3_opus_da_lv",
+        "readiness": null,
+        "rows": 396,
+        "tokenized": true,
+        "tokens": 15872
+      },
+      {
+        "name": "dfm13_wave3_opus_de_lt",
+        "readiness": null,
+        "rows": 3392,
+        "tokenized": true,
+        "tokens": 147442
+      },
+      {
+        "name": "dfm13_wave3_opus_de_lv",
+        "readiness": null,
+        "rows": 2052,
+        "tokenized": true,
+        "tokens": 91978
+      },
+      {
+        "name": "dfm13_wave3_opus_el_lt",
+        "readiness": null,
+        "rows": 992,
+        "tokenized": true,
+        "tokens": 42392
+      },
+      {
+        "name": "dfm13_wave3_opus_el_lv",
+        "readiness": null,
+        "rows": 362,
+        "tokenized": true,
+        "tokens": 16660
+      },
+      {
+        "name": "dfm13_wave3_opus_is_lv",
+        "readiness": null,
+        "rows": 138,
+        "tokenized": true,
+        "tokens": 6244
+      },
+      {
+        "name": "dfm13_wave3_opus_es_lt",
+        "readiness": null,
+        "rows": 7268,
+        "tokenized": true,
+        "tokens": 305914
+      },
+      {
+        "name": "dfm13_wave3_opus_es_lv",
+        "readiness": null,
+        "rows": 1400,
+        "tokenized": true,
+        "tokens": 59718
+      },
+      {
+        "name": "dfm13_wave3_opus_et_lt",
+        "readiness": null,
+        "rows": 412,
+        "tokenized": true,
+        "tokens": 16920
+      },
+      {
+        "name": "dfm13_wave3_opus_et_lv",
+        "readiness": null,
+        "rows": 256,
+        "tokenized": true,
+        "tokens": 10484
+      },
+      {
+        "name": "dfm13_wave3_opus_fi_lt",
+        "readiness": null,
+        "rows": 2182,
+        "tokenized": true,
+        "tokens": 94842
+      },
+      {
+        "name": "dfm13_wave3_opus_fi_lv",
+        "readiness": null,
+        "rows": 462,
+        "tokenized": true,
+        "tokens": 20944
+      },
+      {
+        "name": "dfm13_wave3_opus_fo_lt",
+        "readiness": null,
+        "rows": 64,
+        "tokenized": true,
+        "tokens": 2864
+      },
+      {
+        "name": "dfm13_wave3_opus_fr_lt",
+        "readiness": null,
+        "rows": 5276,
+        "tokenized": true,
+        "tokens": 228404
+      },
+      {
+        "name": "dfm13_wave3_opus_fr_lv",
+        "readiness": null,
+        "rows": 1368,
+        "tokenized": true,
+        "tokens": 60912
+      },
+      {
+        "name": "dfm13_wave3_opus_is_lt",
+        "readiness": null,
+        "rows": 618,
+        "tokenized": true,
+        "tokens": 28060
+      },
+      {
+        "name": "dfm13_wave3_opus_it_lt",
+        "readiness": null,
+        "rows": 2944,
+        "tokenized": true,
+        "tokens": 124722
+      },
+      {
+        "name": "dfm13_wave3_opus_it_lv",
+        "readiness": null,
+        "rows": 918,
+        "tokenized": true,
+        "tokens": 40014
+      },
+      {
+        "name": "dfm13_wave4_CohereLabs_aya_dataset_sq_tosk",
+        "readiness": null,
+        "rows": 113,
+        "tokenized": true,
+        "tokens": 7598
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_lv",
+        "readiness": null,
+        "rows": 721090,
+        "tokenized": true,
+        "tokens": 80476610
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_nb",
+        "readiness": null,
+        "rows": 846,
+        "tokenized": true,
+        "tokens": 36282
+      },
+      {
+        "name": "dfm13_wave3_opus_cs_lt",
+        "readiness": null,
+        "rows": 844,
+        "tokenized": true,
+        "tokens": 35510
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lt_denoising",
+        "readiness": null,
+        "rows": 15022,
+        "tokenized": true,
+        "tokens": 17346700
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lt_paragraph_reordering",
+        "readiness": null,
+        "rows": 5765,
+        "tokenized": true,
+        "tokens": 7291999
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lt_prefix_continuation",
+        "readiness": null,
+        "rows": 22161,
+        "tokenized": true,
+        "tokens": 13251611
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lt_span_filling",
+        "readiness": null,
+        "rows": 9110,
+        "tokenized": true,
+        "tokens": 5216843
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lv_denoising",
+        "readiness": null,
+        "rows": 18864,
+        "tokenized": true,
+        "tokens": 24435413
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lv_paragraph_reordering",
+        "readiness": null,
+        "rows": 7875,
+        "tokenized": true,
+        "tokens": 10768210
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lv_prefix_continuation",
+        "readiness": null,
+        "rows": 27915,
+        "tokenized": true,
+        "tokens": 18751690
+      },
+      {
+        "name": "dfm13_wave3_transform_Wikipedia_lv_span_filling",
+        "readiness": null,
+        "rows": 10047,
+        "tokenized": true,
+        "tokens": 6142959
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lt_denoising",
+        "readiness": null,
+        "rows": 15045,
+        "tokenized": true,
+        "tokens": 10537946
+      },
+      {
+        "name": "dfm13_wave3_baltic_lt_aya",
+        "readiness": null,
+        "rows": 802,
+        "tokenized": true,
+        "tokens": 143744
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lt_paragraph_reordering",
+        "readiness": null,
+        "rows": 6392,
+        "tokenized": true,
+        "tokens": 7683092
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lt_prefix_continuation",
+        "readiness": null,
+        "rows": 22597,
+        "tokenized": true,
+        "tokens": 8423786
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lt_span_filling",
+        "readiness": null,
+        "rows": 9725,
+        "tokenized": true,
+        "tokens": 3534857
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lv_denoising",
+        "readiness": null,
+        "rows": 17200,
+        "tokenized": true,
+        "tokens": 19078524
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lv_paragraph_reordering",
+        "readiness": null,
+        "rows": 8192,
+        "tokenized": true,
+        "tokens": 10294317
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lv_prefix_continuation",
+        "readiness": null,
+        "rows": 17195,
+        "tokenized": true,
+        "tokens": 9896928
+      },
+      {
+        "name": "dfm13_wave3_transform_parlamint_lv_span_filling",
+        "readiness": null,
+        "rows": 10730,
+        "tokenized": true,
+        "tokens": 5613306
+      },
+      {
+        "name": "dfm13_wave3_baltic_lv_qa",
+        "readiness": null,
+        "rows": 105971,
+        "tokenized": true,
+        "tokens": 95361003
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_nl",
+        "readiness": null,
+        "rows": 797234,
+        "tokenized": true,
+        "tokens": 81949194
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_nn",
+        "readiness": null,
+        "rows": 74,
+        "tokenized": true,
+        "tokens": 3482
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_pl",
+        "readiness": null,
+        "rows": 3544,
+        "tokenized": true,
+        "tokens": 153010
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_ro",
+        "readiness": null,
+        "rows": 868,
+        "tokenized": true,
+        "tokens": 36900
+      },
+      {
+        "name": "dfm13_wave4_ParsiAI_FarsInstruct_fa_farstail",
+        "readiness": null,
+        "rows": 7140,
+        "tokenized": true,
+        "tokens": 1105060
+      },
+      {
+        "name": "dfm13_wave3_baltic_lt_qa",
+        "readiness": null,
+        "rows": 12895,
+        "tokenized": true,
+        "tokens": 1369608
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_sv",
+        "readiness": null,
+        "rows": 812692,
+        "tokenized": true,
+        "tokens": 82090936
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_uk",
+        "readiness": null,
+        "rows": 3236,
+        "tokenized": true,
+        "tokens": 138854
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_nb",
+        "readiness": null,
+        "rows": 254,
+        "tokenized": true,
+        "tokens": 10528
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_nl",
+        "readiness": null,
+        "rows": 916724,
+        "tokenized": true,
+        "tokens": 99199938
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_nn",
+        "readiness": null,
+        "rows": 74,
+        "tokenized": true,
+        "tokens": 3150
+      },
+      {
+        "name": "dfm13_wave3_baltic_euroblocks",
+        "readiness": null,
+        "rows": 166,
+        "tokenized": true,
+        "tokens": 141935
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_pl",
+        "readiness": null,
+        "rows": 820,
+        "tokenized": true,
+        "tokens": 34982
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_ro",
+        "readiness": null,
+        "rows": 366,
+        "tokenized": true,
+        "tokens": 16950
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_sv",
+        "readiness": null,
+        "rows": 922648,
+        "tokenized": true,
+        "tokens": 98034606
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_uk",
+        "readiness": null,
+        "rows": 736,
+        "tokenized": true,
+        "tokens": 31952
+      },
+      {
+        "name": "dfm13_wave3_transform_baltic_lt_blkt_denoising_newgenltu",
+        "readiness": null,
+        "rows": 15019,
+        "tokenized": true,
+        "tokens": 31670833
+      },
+      {
+        "name": "dfm13_wave3_transform_baltic_lt_blkt_prefix_continuation_newgenltu",
+        "readiness": null,
+        "rows": 22635,
+        "tokenized": true,
+        "tokens": 24743703
+      },
+      {
+        "name": "dfm13_wave3_transform_baltic_lt_blkt_span_filling_newgenltu",
+        "readiness": null,
+        "rows": 10547,
+        "tokenized": true,
+        "tokens": 11009609
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bg_denoising",
+        "readiness": null,
+        "rows": 75047,
+        "tokenized": true,
+        "tokens": 97245986
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bg_paragraph_reordering",
+        "readiness": null,
+        "rows": 31512,
+        "tokenized": true,
+        "tokens": 42809529
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bg_prefix_continuation",
+        "readiness": null,
+        "rows": 111856,
+        "tokenized": true,
+        "tokens": 73762772
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bg_span_filling",
+        "readiness": null,
+        "rows": 41315,
+        "tokenized": true,
+        "tokens": 25614174
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_be_denoising",
+        "readiness": null,
+        "rows": 68752,
+        "tokenized": true,
+        "tokens": 91462091
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_be_paragraph_reordering",
+        "readiness": null,
+        "rows": 30543,
+        "tokenized": true,
+        "tokens": 43761920
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_be_prefix_continuation",
+        "readiness": null,
+        "rows": 68011,
+        "tokenized": true,
+        "tokens": 46510152
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_be_span_filling",
+        "readiness": null,
+        "rows": 44297,
+        "tokenized": true,
+        "tokens": 28450616
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bs_denoising",
+        "readiness": null,
+        "rows": 32054,
+        "tokenized": true,
+        "tokens": 35262476
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bs_paragraph_reordering",
+        "readiness": null,
+        "rows": 28473,
+        "tokenized": true,
+        "tokens": 33167622
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bs_prefix_continuation",
+        "readiness": null,
+        "rows": 31284,
+        "tokenized": true,
+        "tokens": 17422676
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_bs_span_filling",
+        "readiness": null,
+        "rows": 19537,
+        "tokenized": true,
+        "tokens": 10379917
+      },
+      {
+        "name": "dfm13_wave3_baltic_lt_summary_newgenltu",
+        "readiness": null,
+        "rows": 1740,
+        "tokenized": true,
+        "tokens": 3081653
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_fa_denoising",
+        "readiness": null,
+        "rows": 73802,
+        "tokenized": true,
+        "tokens": 70420894
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_fa_paragraph_reordering",
+        "readiness": null,
+        "rows": 31490,
+        "tokenized": true,
+        "tokens": 32930996
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_fa_prefix_continuation",
+        "readiness": null,
+        "rows": 110813,
+        "tokenized": true,
+        "tokens": 54490836
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_fa_span_filling",
+        "readiness": null,
+        "rows": 25937,
+        "tokenized": true,
+        "tokens": 13501569
+      },
+      {
+        "name": "dfm13_wave3_opus_lt_pt_pt",
+        "readiness": "tokenization_not_ready",
+        "rows": 3776,
+        "tokenized": false,
+        "tokens": null
+      },
+      {
+        "name": "dfm13_wave3_opus_lv_pt_pt",
+        "readiness": "tokenization_not_ready",
+        "rows": 940,
+        "tokenized": false,
+        "tokens": null
+      }
+    ]
+  }
+}

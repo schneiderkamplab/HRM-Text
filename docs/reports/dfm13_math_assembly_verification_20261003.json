@@ -1,0 +1,482 @@
+{
+  "result": {
+    "name": "hendrycks_math_worked",
+    "source": "/work/mimir/HRM-Text/data/converted_sources/dfm13_math_worked/train.jsonl",
+    "repeat": 5,
+    "rows": 7496,
+    "tokens": 2431145,
+    "parts": [
+      {
+        "rows": 7496,
+        "tokens": 2431145,
+        "arrays": {
+          "tokens": {
+            "path": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/tokens.npy",
+            "sha256": "dcf5e238e547353a2d7fdff4ddb182ecbe3bc6cbaea22d0719ffe34de97f0572"
+          },
+          "inst_start": {
+            "path": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/inst_start.npy",
+            "sha256": "2ee87be52377e48e0abcb1f45c1c5368d2e8710a5689d84db3e1860b59e83a73"
+          },
+          "inst_len": {
+            "path": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/inst_len.npy",
+            "sha256": "2475ceb96a7b5d6d9d1d01250251560bf6096cdaeb1fee76d30332dca2e66e24"
+          },
+          "resp_start": {
+            "path": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/resp_start.npy",
+            "sha256": "4c982824d793134c32c0af9a1c2107db13484ad671f0a9ff188b9d2bf5beabee"
+          },
+          "resp_len": {
+            "path": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/resp_len.npy",
+            "sha256": "33dd04489d313c649a0f9f07226bc1c7f54214156aeff64628a26b152602dceb"
+          }
+        },
+        "path": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl",
+        "link_name": "hendrycks_math_worked__dfm13_math_worked__train.jsonl"
+      }
+    ],
+    "tokenized_root": "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked",
+    "native_token_parity": {
+      "scope": "deterministic_sample_not_full_corpus",
+      "truncation": false,
+      "selection": "five spread row ordinals plus first three multi-assistant rows",
+      "rows": [
+        {
+          "ordinal": 0,
+          "part": "dfm13_math_worked__train.jsonl",
+          "part_row": 0,
+          "row_sha256": "4b4f9e6c77107407bb70e68c7d7728b9d7cc364055bdb743c8d64d3c9a09a670",
+          "assistant_messages": 1,
+          "inst_start": 0,
+          "resp_start": 115,
+          "prompt_tokens": 115,
+          "response_tokens": 144,
+          "final_target_tokens": 259,
+          "all_assistant_rendered_tokens": 259,
+          "declared_preflight_tokens": null,
+          "exact_prompt_and_response_tokens": true
+        },
+        {
+          "ordinal": 1874,
+          "part": "dfm13_math_worked__train.jsonl",
+          "part_row": 1874,
+          "row_sha256": "f447eb2335d2609301b967ad6950a4bef6b104a3d351c8d77f33f16b6d5489f9",
+          "assistant_messages": 1,
+          "inst_start": 423642,
+          "resp_start": 423703,
+          "prompt_tokens": 61,
+          "response_tokens": 227,
+          "final_target_tokens": 288,
+          "all_assistant_rendered_tokens": 288,
+          "declared_preflight_tokens": null,
+          "exact_prompt_and_response_tokens": true
+        },
+        {
+          "ordinal": 3748,
+          "part": "dfm13_math_worked__train.jsonl",
+          "part_row": 3748,
+          "row_sha256": "ad309038a66d65ae74e6dfbc1b733dbfe9f502bd599cb048696391776d2b29ae",
+          "assistant_messages": 1,
+          "inst_start": 1191317,
+          "resp_start": 1191362,
+          "prompt_tokens": 45,
+          "response_tokens": 1013,
+          "final_target_tokens": 1058,
+          "all_assistant_rendered_tokens": 1058,
+          "declared_preflight_tokens": null,
+          "exact_prompt_and_response_tokens": true
+        },
+        {
+          "ordinal": 5622,
+          "part": "dfm13_math_worked__train.jsonl",
+          "part_row": 5622,
+          "row_sha256": "29a481c368cfc3810a04024a81ec1ce3001ff85936bc318828cbd3f830aeaf2d",
+          "assistant_messages": 1,
+          "inst_start": 1819777,
+          "resp_start": 1819835,
+          "prompt_tokens": 58,
+          "response_tokens": 147,
+          "final_target_tokens": 205,
+          "all_assistant_rendered_tokens": 205,
+          "declared_preflight_tokens": null,
+          "exact_prompt_and_response_tokens": true
+        },
+        {
+          "ordinal": 7495,
+          "part": "dfm13_math_worked__train.jsonl",
+          "part_row": 7495,
+          "row_sha256": "539ddbe62c2eb76d6201b9a8a8bb0b5337f251990e28c9026620ffc0781d9d95",
+          "assistant_messages": 1,
+          "inst_start": 2430894,
+          "resp_start": 2430969,
+          "prompt_tokens": 75,
+          "response_tokens": 176,
+          "final_target_tokens": 251,
+          "all_assistant_rendered_tokens": 251,
+          "declared_preflight_tokens": null,
+          "exact_prompt_and_response_tokens": true
+        }
+      ]
+    },
+    "token_metrics": {
+      "training": {
+        "tokens": 2431145,
+        "basis": "single_assistant_native_gemma_prompt_plus_response"
+      }
+    },
+    "repo_id": "EleutherAI/hendrycks_math",
+    "revision": "21a5633873b6a120296cce3e2df9d5550074f4a3",
+    "license": "mit",
+    "publication_contract": "local-worked-math-v1",
+    "quality_basis": "Original source worked solutions; not model audited",
+    "corpus_overlap": "Not whole-corpus deduplicated. Existing RLVR MATH direct answers (7,498, repeat 10) share problems intentionally; this worked-solution addition is repeat 5. Prior raw math_train prefix lookup had no match and is not absence proof.",
+    "conversion_corpus_overlap": "Not whole-corpus deduplicated. Existing RLVR MATH direct answers (7,498, repeat 10) share problems intentionally; this worked-solution addition is repeat 1. Prior raw math_train prefix lookup had no match and is not absence proof.",
+    "conversion_repeat": 1,
+    "effective_repeat": 5,
+    "repeat_policy": "Current registry repeat 5; historical conversion repeat is not resampling authorization",
+    "screening": {
+      "policy": "Exclude exact and collapsed-whitespace problem matches across all test configurations; dedup train problems in fixed config/row order.",
+      "exclusions": {
+        "train_duplicate_whitespace": 1,
+        "train_test_whitespace": 1,
+        "invalid_solution": 2
+      },
+      "test_rows_in_output": 0,
+      "whole_corpus_deduplicated": false
+    }
+  },
+  "files": {
+    "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": {
+      "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+      "bytes": 32170070,
+      "signature": [
+        3351383302,
+        17371316746115022852,
+        32170070,
+        1775256068552622904,
+        1789276810830631001
+      ]
+    },
+    "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": {
+      "sha256": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+      "bytes": 16952,
+      "signature": [
+        3351383302,
+        12937893044995883012,
+        16952,
+        1787915151529759009,
+        1789276811029694370
+      ]
+    },
+    "/work/mimir/HRM-Text/data/converted_sources/dfm13_math_worked/metadata/manifest.json": {
+      "sha256": "b26a5dbfdc4bbae88f14e8ca6036da7d6d43a77a6896c6c5d37712d8f187723e",
+      "bytes": 7211,
+      "signature": [
+        3351383302,
+        15192559904493273092,
+        7211,
+        1790884072942325057,
+        1790884072943290619
+      ]
+    },
+    "/work/mimir/HRM-Text/data/converted_sources/dfm13_math_worked/metadata/tokenization-receipt.json": {
+      "sha256": "032e4f097a38a966d96149d0e6c5fe87ae286d42cd4ba623e4f8e61e5d5c9682",
+      "bytes": 2588,
+      "signature": [
+        3351383302,
+        3162225735903477764,
+        2588,
+        1790884076040283840,
+        1790884076041191834
+      ]
+    },
+    "/work/mimir/HRM-Text/data/converted_sources/dfm13_math_worked/train.jsonl": {
+      "sha256": "06d35dcb70367fe4608994bbe861e3afff9e4714cc0198e1cc9cca62e2f37076",
+      "bytes": 13072876,
+      "signature": [
+        3351383302,
+        16184506057203384324,
+        13072876,
+        1790884072906935023,
+        1790884072906935023
+      ]
+    },
+    "/work/mimir/HRM-Text/data/converted_sources/dfm13_math_worked/metadata/screening.jsonl": {
+      "sha256": "18438bc826bddcea7da1f24960032e3fb0ab163b1de0b0ef3fc0ea90b6022c03",
+      "bytes": 1797,
+      "signature": [
+        3351383302,
+        12506861100117852164,
+        1797,
+        1790884072908934769,
+        1790884072908934769
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/README.md": {
+      "sha256": "2372e22a154ca3ed5865378e270b32d8ed5b615c4592fad42630a731a950bcc0",
+      "bytes": 3926,
+      "signature": [
+        3351383302,
+        11042386343469973508,
+        3926,
+        1790883925406977579,
+        1790883925406977579
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/algebra/train-00000-of-00001.parquet": {
+      "sha256": "73347f5b55869f21ff094361025dbd12d291e971aa4d72142eacee10438e449f",
+      "bytes": 505186,
+      "signature": [
+        3351383302,
+        15930214678617653252,
+        505186,
+        1790883925691857784,
+        1790883925691857784
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/algebra/test-00000-of-00001.parquet": {
+      "sha256": "0e04a850dac9cfc758eac0c80afd2d0cc65e29ea72f916c8ac1045b12af937f5",
+      "bytes": 353114,
+      "signature": [
+        3351383302,
+        11444146557825515524,
+        353114,
+        1790883926124857991,
+        1790883926124857991
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/counting_and_probability/train-00000-of-00001.parquet": {
+      "sha256": "d37ae017930df41678edee50dcde18c17fb06afaff9eb505c1b95f1002bfcb31",
+      "bytes": 329354,
+      "signature": [
+        3351383302,
+        5818167326336286724,
+        329354,
+        1790883926405858147,
+        1790883926405858147
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/counting_and_probability/test-00000-of-00001.parquet": {
+      "sha256": "c324818949c75a6227c0328a8499d58023cbbf6757cfc1736f5ab24cc8d87966",
+      "bytes": 175032,
+      "signature": [
+        3351383302,
+        17959454083144613892,
+        175032,
+        1790883926663858239,
+        1790883926663858239
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/geometry/train-00000-of-00001.parquet": {
+      "sha256": "9dbf5e5b55499e696e0ba72da9d85d4f0be3acbf7eaa6cb014b0fc78bb63784f",
+      "bytes": 549388,
+      "signature": [
+        3351383302,
+        9393404669378232324,
+        549388,
+        1790883926908858409,
+        1790883926908858409
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/geometry/test-00000-of-00001.parquet": {
+      "sha256": "98720f3a8134ad9784fd8951195245264495df03ffc5c9485a9a54ff5ae2431a",
+      "bytes": 263835,
+      "signature": [
+        3351383302,
+        4622330285643333636,
+        263835,
+        1790883927197858570,
+        1790883927197858570
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/intermediate_algebra/train-00000-of-00001.parquet": {
+      "sha256": "0c87f3798ebdfb915b1f9b6fc13c1a8d064c3cb91631ccbe85b83ed5d71150f6",
+      "bytes": 575154,
+      "signature": [
+        3351383302,
+        5932561362226774020,
+        575154,
+        1790883927415858691,
+        1790883927415858691
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/intermediate_algebra/test-00000-of-00001.parquet": {
+      "sha256": "e859f72486c951c2017da880541ca729940eaa986b0364eb23e238983df9bfeb",
+      "bytes": 394797,
+      "signature": [
+        3351383302,
+        9080348128354631684,
+        394797,
+        1790883927673858869,
+        1790883927673858869
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/number_theory/train-00000-of-00001.parquet": {
+      "sha256": "81c08649149b39811f2d1d7ddf5dfccf6c4c8044a2e169cfb24db09160c941f4",
+      "bytes": 308653,
+      "signature": [
+        3351383302,
+        2583150884510957572,
+        308653,
+        1790883927884858952,
+        1790883927884858952
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/number_theory/test-00000-of-00001.parquet": {
+      "sha256": "ba156c9c9fa2040836ba12135fd964e6e67d6bccd8c469ec4a3ad941f8f6fbe9",
+      "bytes": 182003,
+      "signature": [
+        3351383302,
+        13706035864900009988,
+        182003,
+        1790883928143859062,
+        1790883928143859062
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/prealgebra/train-00000-of-00001.parquet": {
+      "sha256": "765b526fb5c0b8385cb7be2c16bf4f6f28cf71f2bc15c826abfbb5fa7f8616cc",
+      "bytes": 383626,
+      "signature": [
+        3351383302,
+        105575640531075076,
+        383626,
+        1790883928407859260,
+        1790883928407859260
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/prealgebra/test-00000-of-00001.parquet": {
+      "sha256": "301e5d8ade5c7b5038032532e498bdc9dca799e7f1061a63f2e7d980803240cc",
+      "bytes": 267729,
+      "signature": [
+        3351383302,
+        8362023592211054596,
+        267729,
+        1790883928670859389,
+        1790883928670859389
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/precalculus/train-00000-of-00001.parquet": {
+      "sha256": "28bb1ff95525c8d32521509bef91de76339659f5467a381e6e8deea204538f0e",
+      "bytes": 353745,
+      "signature": [
+        3351383302,
+        5645582061144834052,
+        353745,
+        1790883928872859518,
+        1790883928872859518
+      ]
+    },
+    "/work/mimir/HRM-Text/data/downloads/datasets/hendrycks_math/21a5633873b6a120296cce3e2df9d5550074f4a3/precalculus/test-00000-of-00001.parquet": {
+      "sha256": "da37474ba3761ae5727af3844a7ba963a735bd6a14c65e6137593669a4fe3b9c",
+      "bytes": 242241,
+      "signature": [
+        3351383302,
+        13672330207284953092,
+        242241,
+        1790883929136859631,
+        1790883929136859631
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/completion.json": {
+      "sha256": "851afc231b46de6a37087ebe281777d6a8f13ccf20388635bd027b34e0e63f45",
+      "bytes": 200,
+      "signature": [
+        3351383302,
+        11503921414358827012,
+        200,
+        1790884075952381175,
+        1790884075953058553
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/processing_info.json": {
+      "sha256": "336c5216ee957ec5df18f6c0a5f5a593bba365d0708d8927ea9c171620e3102b",
+      "bytes": 57,
+      "signature": [
+        3351383302,
+        9293052926151884804,
+        57,
+        1790884073789935139,
+        1790884073789935139
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/tokenizer_info.json": {
+      "sha256": "dc9624d495d52b0ebe8af2edc56fd8444ae5e16cf4099febefeb3bd7a5db798d",
+      "bytes": 261,
+      "signature": [
+        3351383302,
+        8840519763965509636,
+        261,
+        1790884073789054637,
+        1790884073789054637
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/inst_start.npy": {
+      "sha256": "2ee87be52377e48e0abcb1f45c1c5368d2e8710a5689d84db3e1860b59e83a73",
+      "bytes": 60096,
+      "signature": [
+        3351383302,
+        18193943119049261060,
+        60096,
+        1790884075932030006,
+        1790884075932030006
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/inst_len.npy": {
+      "sha256": "2475ceb96a7b5d6d9d1d01250251560bf6096cdaeb1fee76d30332dca2e66e24",
+      "bytes": 60096,
+      "signature": [
+        3351383302,
+        5975113707987533828,
+        60096,
+        1790884075932789231,
+        1790884075932789231
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/tokens.npy": {
+      "sha256": "dcf5e238e547353a2d7fdff4ddb182ecbe3bc6cbaea22d0719ffe34de97f0572",
+      "bytes": 9724708,
+      "signature": [
+        3351383302,
+        2146018587014791172,
+        9724708,
+        1790884075929936054,
+        1790884075929936054
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/metadata.json": {
+      "sha256": "e0bff403b0464e110cfb40b0650390303226577d809be972283eb47e5e4cc1f7",
+      "bytes": 104,
+      "signature": [
+        3351383302,
+        715180658009833476,
+        104,
+        1790884075934937690,
+        1790884075934937690
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/resp_len.npy": {
+      "sha256": "33dd04489d313c649a0f9f07226bc1c7f54214156aeff64628a26b152602dceb",
+      "bytes": 60096,
+      "signature": [
+        3351383302,
+        14727673925336432644,
+        60096,
+        1790884075934164678,
+        1790884075934164678
+      ]
+    },
+    "/work/mimir/HRM-Text/data/tokenized_dfm13_additions/hendrycks_math_worked/dfm13_math_worked__train.jsonl/resp_start.npy": {
+      "sha256": "4c982824d793134c32c0af9a1c2107db13484ad671f0a9ff188b9d2bf5beabee",
+      "bytes": 60096,
+      "signature": [
+        3351383302,
+        4992505254851969028,
+        60096,
+        1790884075933525802,
+        1790884075933525802
+      ]
+    }
+  },
+  "assembly_performed": false,
+  "retokenized": false
+}

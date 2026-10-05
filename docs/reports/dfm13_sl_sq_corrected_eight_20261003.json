@@ -1,0 +1,773 @@
+{
+  "entries": [
+    {
+      "name": "dfm13_wave4_wikipedia_sl_denoising",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-denoising",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 61365,
+      "rendered_tokens": 80325058,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-denoising/data/train.jsonl",
+      "output_sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+      "counts": {
+        "accepted": 187571,
+        "excluded_unreviewed": 2,
+        "rejected": 33185
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "d5a2afa47c6b7fd638e668f67bfeba2a3ebefa68ceccccf86041023b661a5cc4",
+      "task": "denoising",
+      "hf_revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sl/denoising/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/tokens",
+      "tokenized_tokens": 80325058,
+      "tokenized_rows": 61365,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_denoising/verified.json"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-paragraph-reordering",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 31014,
+      "rendered_tokens": 42924776,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-paragraph-reordering/paragraph-reordering/data/train.jsonl",
+      "output_sha256": "7dc72d32aacb915d6330af0ba57ec57aaba3d0d44a0a1b72d9318efa8f0b7bbb",
+      "counts": {
+        "parent_accepted": 31015,
+        "excluded_manual_review": 1,
+        "accepted": 31014
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "d5a2afa47c6b7fd638e668f67bfeba2a3ebefa68ceccccf86041023b661a5cc4",
+      "task": "paragraph-reordering",
+      "hf_revision": "e8e48430ab8eadd7e3141fad477a4b06f2844690",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-paragraph-reordering/paragraph-reordering.publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sl_paragraph_reordering/7e09a0507dc4deebab11a2367571b7029f51ef8e3a1c7af161b7204ce8328d82/tokens",
+      "tokenized_tokens": 42924776,
+      "tokenized_rows": 31014,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sl_paragraph_reordering/7e09a0507dc4deebab11a2367571b7029f51ef8e3a1c7af161b7204ce8328d82/verified.json",
+      "subset_policy": "sl_sq_reviewed_exact4_v1",
+      "subset_receipt": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-paragraph-reordering/paragraph-reordering/subset-receipt.json",
+      "subset_receipt_sha256": "0f428315256e7e7c9dbb8ea85313c2a3a84f4c13c800740d165d46ecacdfcc6d",
+      "parent_hf_revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5",
+      "files": {
+        "README.md": "2f3783bdadbe1ab373a56bf6e237723c857ab25071d5354f7604e126548c502e",
+        "SOURCE_README.md": "dc5a92c04a841d761d07fd063616bdc6d939b30fbd0f1710bea108f36118fcf0",
+        "data/train.jsonl": "7dc72d32aacb915d6330af0ba57ec57aaba3d0d44a0a1b72d9318efa8f0b7bbb",
+        "exclusions.jsonl": "f68e12b6aed5a93d4827638efd6af6b79deadc0353bf38f5cabe766203e06250",
+        "parent-entry.json": "225fcb8b8055714d5825d2e8c7ad790060e7f81fc6cbe6d749cb1cbb812aef40",
+        "parent-export-manifest.json": "5fcfaa0b7e76911a21e674fc31aa17759006d382e56b191ec47c34efb9865a87",
+        "parent-publication.json": "e75a22c2a13e6f6019cc1f5c97a93eec9fb4991bbedda9e238b75d2ba6898e2d",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "0f428315256e7e7c9dbb8ea85313c2a3a84f4c13c800740d165d46ecacdfcc6d"
+      },
+      "publication_status": "verified",
+      "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-paragraph-reordering/paragraph-reordering/manifest.json",
+      "export_manifest_sha256": "5fdd85d9f39441c5e6da4152b4426229bd53fc09ab4760a5f19e661672bbc270",
+      "remote_verified_files": {
+        "README.md": "2f3783bdadbe1ab373a56bf6e237723c857ab25071d5354f7604e126548c502e",
+        "SOURCE_README.md": "dc5a92c04a841d761d07fd063616bdc6d939b30fbd0f1710bea108f36118fcf0",
+        "data/train.jsonl": "7dc72d32aacb915d6330af0ba57ec57aaba3d0d44a0a1b72d9318efa8f0b7bbb",
+        "exclusions.jsonl": "f68e12b6aed5a93d4827638efd6af6b79deadc0353bf38f5cabe766203e06250",
+        "parent-entry.json": "225fcb8b8055714d5825d2e8c7ad790060e7f81fc6cbe6d749cb1cbb812aef40",
+        "parent-export-manifest.json": "5fcfaa0b7e76911a21e674fc31aa17759006d382e56b191ec47c34efb9865a87",
+        "parent-publication.json": "e75a22c2a13e6f6019cc1f5c97a93eec9fb4991bbedda9e238b75d2ba6898e2d",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "0f428315256e7e7c9dbb8ea85313c2a3a84f4c13c800740d165d46ecacdfcc6d",
+        "manifest.json": "5fdd85d9f39441c5e6da4152b4426229bd53fc09ab4760a5f19e661672bbc270"
+      },
+      "manifest_sha256": "32d7d43423cfcf71936ff85a470c1c4b6a022cf7e6b68a9942e9ba180074283e",
+      "tokenization_receipt_sha256": "3e0d880c6fe3b7c0ccdad430463ff8bbf2055df482b54d3720714876da735ac6"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-prefix-continuation",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 60099,
+      "rendered_tokens": 40355159,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-prefix-continuation/prefix-continuation/data/train.jsonl",
+      "output_sha256": "ddc014a4f5b4b5059ae67f77de8956468b6ebd6134e8d853f4c16d5650df120b",
+      "counts": {
+        "parent_accepted": 60100,
+        "excluded_manual_review": 1,
+        "accepted": 60099
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "d5a2afa47c6b7fd638e668f67bfeba2a3ebefa68ceccccf86041023b661a5cc4",
+      "task": "prefix-continuation",
+      "hf_revision": "7b767d9ff5d5cd3144fad28edacfa188f8a1caaa",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-prefix-continuation/prefix-continuation.publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sl_prefix_continuation/8f546e9d6227726970620a15b8ba42faa603bd31a770afa5777d0ac416714f0f/tokens",
+      "tokenized_tokens": 40355159,
+      "tokenized_rows": 60099,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sl_prefix_continuation/8f546e9d6227726970620a15b8ba42faa603bd31a770afa5777d0ac416714f0f/verified.json",
+      "subset_policy": "sl_sq_reviewed_exact4_v1",
+      "subset_receipt": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-prefix-continuation/prefix-continuation/subset-receipt.json",
+      "subset_receipt_sha256": "b23de0e7f95b1d9b3a9de622310e79b95a9b27e70f6e91c6ff2b39eed3929d30",
+      "parent_hf_revision": "5964d460dd114eaaff522d395f71734eb20cc9a4",
+      "files": {
+        "README.md": "58a83c7cccf9d7088b8e100d7ace5bd962bdbfac70d4e6f3f536c6757f7a8f82",
+        "SOURCE_README.md": "e91da66eaac9a12fc177f3622d62570f4bc2866f7522d33d4a9e92642b07e6ad",
+        "data/train.jsonl": "ddc014a4f5b4b5059ae67f77de8956468b6ebd6134e8d853f4c16d5650df120b",
+        "exclusions.jsonl": "0a73600d82490c48797419cc048eec4804c4c1d036333b96621abb181322ef02",
+        "parent-entry.json": "13dab1f06acb43b9f98618a25331ed98ac52f2a5068448da5d82fe9f3c48847d",
+        "parent-export-manifest.json": "b7570c5f8c95a2dfb24d913cb13b69544191d477c84c3757e7489f5a0b54fa78",
+        "parent-publication.json": "9b57ce7261f43c026e4c113312bd28aefaa4634f37bde5a06b5ba1f9404c332d",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "b23de0e7f95b1d9b3a9de622310e79b95a9b27e70f6e91c6ff2b39eed3929d30"
+      },
+      "publication_status": "verified",
+      "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sl-prefix-continuation/prefix-continuation/manifest.json",
+      "export_manifest_sha256": "0ab4cd7898efbd82d564f54bc318ca084666fddcadc5094fe00045d6a606b911",
+      "remote_verified_files": {
+        "README.md": "58a83c7cccf9d7088b8e100d7ace5bd962bdbfac70d4e6f3f536c6757f7a8f82",
+        "SOURCE_README.md": "e91da66eaac9a12fc177f3622d62570f4bc2866f7522d33d4a9e92642b07e6ad",
+        "data/train.jsonl": "ddc014a4f5b4b5059ae67f77de8956468b6ebd6134e8d853f4c16d5650df120b",
+        "exclusions.jsonl": "0a73600d82490c48797419cc048eec4804c4c1d036333b96621abb181322ef02",
+        "parent-entry.json": "13dab1f06acb43b9f98618a25331ed98ac52f2a5068448da5d82fe9f3c48847d",
+        "parent-export-manifest.json": "b7570c5f8c95a2dfb24d913cb13b69544191d477c84c3757e7489f5a0b54fa78",
+        "parent-publication.json": "9b57ce7261f43c026e4c113312bd28aefaa4634f37bde5a06b5ba1f9404c332d",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "b23de0e7f95b1d9b3a9de622310e79b95a9b27e70f6e91c6ff2b39eed3929d30",
+        "manifest.json": "0ab4cd7898efbd82d564f54bc318ca084666fddcadc5094fe00045d6a606b911"
+      },
+      "manifest_sha256": "0dfbe7ba3abd164c5a031dbd606c74b0ec21d2f0d4ed984aca2e40b90015f230",
+      "tokenization_receipt_sha256": "6f0883531efab4e8afc0157ce8668e6c8da6921ba3f9c116efca0a1a0a04aeae"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_span_filling",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sl-span-filling",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 35091,
+      "rendered_tokens": 22211638,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sl-span-filling/data/train.jsonl",
+      "output_sha256": "02e47e63a2f50329573af5d0fe2ae83c2919360650c4131c004a4e290a508398",
+      "counts": {
+        "accepted": 187571,
+        "excluded_unreviewed": 2,
+        "rejected": 33185
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "d5a2afa47c6b7fd638e668f67bfeba2a3ebefa68ceccccf86041023b661a5cc4",
+      "task": "span-filling",
+      "hf_revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sl/span-filling/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/tokens",
+      "tokenized_tokens": 22211638,
+      "tokenized_rows": 35091,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sl_span_filling/verified.json"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_denoising",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sq-denoising",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 25567,
+      "rendered_tokens": 36475777,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-denoising/data/train.jsonl",
+      "output_sha256": "466deaa046a6ac3db39dd8e97294939548ad964601a545cf983572a963ad6a39",
+      "counts": {
+        "accepted": 88937,
+        "rejected": 16731
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "2bcf725598680638fc59b580a5b0421f53557b485b1e60169f96b450b588cd77",
+      "task": "denoising",
+      "hf_revision": "44603c556b0a30bf59fe9092a39de6091eed24da",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sq/denoising/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/tokens",
+      "tokenized_tokens": 36475777,
+      "tokenized_rows": 25567,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_denoising/verified.json"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_paragraph_reordering",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sq-paragraph-reordering",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 22929,
+      "rendered_tokens": 34476836,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-paragraph-reordering/paragraph-reordering/data/train.jsonl",
+      "output_sha256": "bdda80e7649b484a9ea90981ed3db581efc1f420bf6455496586f707f533ec28",
+      "counts": {
+        "parent_accepted": 22930,
+        "excluded_manual_review": 1,
+        "accepted": 22929
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "2bcf725598680638fc59b580a5b0421f53557b485b1e60169f96b450b588cd77",
+      "task": "paragraph-reordering",
+      "hf_revision": "858b2ceedbd89bc90a822d04a0d66eb734841a2a",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-paragraph-reordering/paragraph-reordering.publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sq_paragraph_reordering/f302842563976d690bc49fb7221fb3efc727b3caef3d445bed656c92292ddcfd/tokens",
+      "tokenized_tokens": 34476836,
+      "tokenized_rows": 22929,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sq_paragraph_reordering/f302842563976d690bc49fb7221fb3efc727b3caef3d445bed656c92292ddcfd/verified.json",
+      "subset_policy": "sl_sq_reviewed_exact4_v1",
+      "subset_receipt": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-paragraph-reordering/paragraph-reordering/subset-receipt.json",
+      "subset_receipt_sha256": "afde4b17a56ba853510ca156d41ba6e51aa5c550299577528369d6d37ded0e98",
+      "parent_hf_revision": "a2c0a718781e4f339cf63f15e8334ad3f3b098f7",
+      "files": {
+        "README.md": "97058202b1c1969a0cd9fbda42a1ef43bf4ac1767bf021ab115501ba33c13dca",
+        "SOURCE_README.md": "5364df1fdcb8fa07d1f2297aeae48f3dbbc1b5cd9556982330a86f3e9faa508c",
+        "data/train.jsonl": "bdda80e7649b484a9ea90981ed3db581efc1f420bf6455496586f707f533ec28",
+        "exclusions.jsonl": "f46e6caf13d92613acb000ae9a19d530e429d640fe53e77984bcdbeb3af219d0",
+        "parent-entry.json": "8bd6f3ba1aeb5d9626af439fa0f49f69928a60ccd7bde40d5fce672cda988d7e",
+        "parent-export-manifest.json": "8103f17877c8e091e58a546eea1193ac09af7035e6eef4210d1140ce3495ff89",
+        "parent-publication.json": "d71a6662b7dea78335bee70b81c7c272f52b976a30c66a214f81caa6b243608e",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "afde4b17a56ba853510ca156d41ba6e51aa5c550299577528369d6d37ded0e98"
+      },
+      "publication_status": "verified",
+      "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-paragraph-reordering/paragraph-reordering/manifest.json",
+      "export_manifest_sha256": "952500385abdd9a2c579ae1e979745c506fe399454c6f69a2dd0292ade8da9cc",
+      "remote_verified_files": {
+        "README.md": "97058202b1c1969a0cd9fbda42a1ef43bf4ac1767bf021ab115501ba33c13dca",
+        "SOURCE_README.md": "5364df1fdcb8fa07d1f2297aeae48f3dbbc1b5cd9556982330a86f3e9faa508c",
+        "data/train.jsonl": "bdda80e7649b484a9ea90981ed3db581efc1f420bf6455496586f707f533ec28",
+        "exclusions.jsonl": "f46e6caf13d92613acb000ae9a19d530e429d640fe53e77984bcdbeb3af219d0",
+        "parent-entry.json": "8bd6f3ba1aeb5d9626af439fa0f49f69928a60ccd7bde40d5fce672cda988d7e",
+        "parent-export-manifest.json": "8103f17877c8e091e58a546eea1193ac09af7035e6eef4210d1140ce3495ff89",
+        "parent-publication.json": "d71a6662b7dea78335bee70b81c7c272f52b976a30c66a214f81caa6b243608e",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "afde4b17a56ba853510ca156d41ba6e51aa5c550299577528369d6d37ded0e98",
+        "manifest.json": "952500385abdd9a2c579ae1e979745c506fe399454c6f69a2dd0292ade8da9cc"
+      },
+      "manifest_sha256": "89e368c3ca79b0d8246a41dc6bfb3f26ff3f75d086d63277ad26de6e7b7d8d03",
+      "tokenization_receipt_sha256": "fee962e17d3dbb61f0e198804821a4eb9ceb0f02bc537dce878daedf9af34820"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_prefix_continuation",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sq-prefix-continuation",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 24996,
+      "rendered_tokens": 18115633,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-prefix-continuation/prefix-continuation/data/train.jsonl",
+      "output_sha256": "caa951a17512d3c0881c84e83899a4807c9d0b06d9553a0f988dd53f590aa1d9",
+      "counts": {
+        "parent_accepted": 24997,
+        "excluded_manual_review": 1,
+        "accepted": 24996
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "2bcf725598680638fc59b580a5b0421f53557b485b1e60169f96b450b588cd77",
+      "task": "prefix-continuation",
+      "hf_revision": "62e7c59bcc7774e266638e87cf65bcceee3bc0e8",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-prefix-continuation/prefix-continuation.publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sq_prefix_continuation/15678e34e510ad41d53f6bf687016b169e3ca31f35e77f3806b097ce42d4f815/tokens",
+      "tokenized_tokens": 18115633,
+      "tokenized_rows": 24996,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_sl_sq_exact4_subsets/dfm13_wave4_wikipedia_sq_prefix_continuation/15678e34e510ad41d53f6bf687016b169e3ca31f35e77f3806b097ce42d4f815/verified.json",
+      "subset_policy": "sl_sq_reviewed_exact4_v1",
+      "subset_receipt": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-prefix-continuation/prefix-continuation/subset-receipt.json",
+      "subset_receipt_sha256": "e3cc0594b9f4af29845b60f559792edd25d770ce7218ba20e164457dc16f8b80",
+      "parent_hf_revision": "604c6e64b4c880a02edda0bd14e219f3fdb030e3",
+      "files": {
+        "README.md": "391680918a8a07878e96b21087a98e3416a309065a107479a94eb850f57af00a",
+        "SOURCE_README.md": "f34d243be69cfc87f2f661b23b4ec7b6a75c123866b51ebb8491b397198fdaf9",
+        "data/train.jsonl": "caa951a17512d3c0881c84e83899a4807c9d0b06d9553a0f988dd53f590aa1d9",
+        "exclusions.jsonl": "59629f9291bfe4c4dd2fe04250bd7d99acd0b575c612d749932bc87d23e2c946",
+        "parent-entry.json": "dd977e0ef72aaf0fc92d7c11b3f04b709823a2ad17cafa6e5d08390df0e2f536",
+        "parent-export-manifest.json": "9f61cbab276274453d6546dd84a1de0c5638baa3f7d0927f87e87a43f4a7b1d7",
+        "parent-publication.json": "44f1eb5c6816136dc78394a151a2d560a384c15f8a08d1662be315fba03f3f63",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "e3cc0594b9f4af29845b60f559792edd25d770ce7218ba20e164457dc16f8b80"
+      },
+      "publication_status": "verified",
+      "export_manifest": "/work/mimir/HRM-Text/exports_dfm13/sl-sq-exact4-subsets-20261003-v1/sq-prefix-continuation/prefix-continuation/manifest.json",
+      "export_manifest_sha256": "e0a9a8aef940ab76595e590d7571d3d384742f240d1fc5140c5e17cba62b7b42",
+      "remote_verified_files": {
+        "README.md": "391680918a8a07878e96b21087a98e3416a309065a107479a94eb850f57af00a",
+        "SOURCE_README.md": "f34d243be69cfc87f2f661b23b4ec7b6a75c123866b51ebb8491b397198fdaf9",
+        "data/train.jsonl": "caa951a17512d3c0881c84e83899a4807c9d0b06d9553a0f988dd53f590aa1d9",
+        "exclusions.jsonl": "59629f9291bfe4c4dd2fe04250bd7d99acd0b575c612d749932bc87d23e2c946",
+        "parent-entry.json": "dd977e0ef72aaf0fc92d7c11b3f04b709823a2ad17cafa6e5d08390df0e2f536",
+        "parent-export-manifest.json": "9f61cbab276274453d6546dd84a1de0c5638baa3f7d0927f87e87a43f4a7b1d7",
+        "parent-publication.json": "44f1eb5c6816136dc78394a151a2d560a384c15f8a08d1662be315fba03f3f63",
+        "review-receipt.json": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+        "review-report.md": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+        "review.json": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+        "subset-receipt.json": "e3cc0594b9f4af29845b60f559792edd25d770ce7218ba20e164457dc16f8b80",
+        "manifest.json": "e0a9a8aef940ab76595e590d7571d3d384742f240d1fc5140c5e17cba62b7b42"
+      },
+      "manifest_sha256": "380433be9948a0c2fe79a44fd86b2668e5f4755897cda470768cd6b6c00274b8",
+      "tokenization_receipt_sha256": "d8a31887a16bd04e2c11da2ba632ce34bd23b903607cf5110784cdfa8d423c55"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_span_filling",
+      "repo_id": "wikimedia/wikipedia",
+      "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "hf_repo_id": "schneiderkamplab/dfm13-wave4-wikipedia-sq-span-filling",
+      "license": [
+        "cc-by-sa-3.0",
+        "gfdl"
+      ],
+      "rows": 15443,
+      "rendered_tokens": 10238130,
+      "output": "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave4-wikipedia-sq-span-filling/data/train.jsonl",
+      "output_sha256": "1dc3717d66989c6817a4203a805ce5c392de32e242536e655a15b1a854d63f74",
+      "counts": {
+        "accepted": 88937,
+        "rejected": 16731
+      },
+      "repeat": 1,
+      "tokenization_performed": true,
+      "target_policy": "final_assistant_only_native_gemma",
+      "uploaded": true,
+      "input_sha256": "2bcf725598680638fc59b580a5b0421f53557b485b1e60169f96b450b588cd77",
+      "task": "span-filling",
+      "hf_revision": "0e369353dc09acd1757b9c609ea6f30ae0c501aa",
+      "status": "accepted_uploaded",
+      "manifest": "/work/mimir/HRM-Text/data/dfm13/wave4/release/wikipedia-sq/span-filling/publication.json",
+      "tokenized_path": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/tokens",
+      "tokenized_tokens": 10238130,
+      "tokenized_rows": 15443,
+      "tokenization_receipt": "/work/mimir/HRM-Text/data/dfm13/tokenized_wave_releases/dfm13_wave4_wikipedia_sq_span_filling/verified.json"
+    }
+  ],
+  "remote": {
+    "dfm13_wave4_wikipedia_sl_denoising": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-denoising",
+      "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+      "head_matches": true,
+      "files": {
+        "data/train.jsonl": {
+          "sha256": "de01c698319e36fb96e26f8e882a227e03fde81d5bfe287e835fe6667b56b2e8",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "README.md": {
+          "sha256": "f16098efc0899663937bc1082edb5cb775fe026642ccafe9e7345afedee0c494",
+          "git_blob_sha1": "89242fdfc5b40ed8b25985f8efb5e689ccb4c998",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "aea5b8d60b2b8e56035d544cd52d8e6988d59130260cac0c16a34017ec385e69",
+          "git_blob_sha1": "6910536e810cedff52aee23abb55c7a58dcef53a",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sl_paragraph_reordering": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-paragraph-reordering",
+      "revision": "e8e48430ab8eadd7e3141fad477a4b06f2844690",
+      "head_matches": true,
+      "files": {
+        "README.md": {
+          "sha256": "2f3783bdadbe1ab373a56bf6e237723c857ab25071d5354f7604e126548c502e",
+          "git_blob_sha1": "4dc1ada2f20784a60ae850799d4f741991c95a1e",
+          "method": "revision_bound_git_blob"
+        },
+        "SOURCE_README.md": {
+          "sha256": "dc5a92c04a841d761d07fd063616bdc6d939b30fbd0f1710bea108f36118fcf0",
+          "git_blob_sha1": "5be98ead878430c7ac74f20c8dd100dfc3fd154c",
+          "method": "revision_bound_git_blob"
+        },
+        "data/train.jsonl": {
+          "sha256": "7dc72d32aacb915d6330af0ba57ec57aaba3d0d44a0a1b72d9318efa8f0b7bbb",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "exclusions.jsonl": {
+          "sha256": "f68e12b6aed5a93d4827638efd6af6b79deadc0353bf38f5cabe766203e06250",
+          "git_blob_sha1": "9337148ac2e4ca4ab4355756479679a86fd7d8c8",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-entry.json": {
+          "sha256": "225fcb8b8055714d5825d2e8c7ad790060e7f81fc6cbe6d749cb1cbb812aef40",
+          "git_blob_sha1": "fcbdc2033ba720539a9ea8bbac33a433a019f40b",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-export-manifest.json": {
+          "sha256": "5fcfaa0b7e76911a21e674fc31aa17759006d382e56b191ec47c34efb9865a87",
+          "git_blob_sha1": "167664d35b6a0125d1c13887cef5d80dd8fc141f",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-publication.json": {
+          "sha256": "e75a22c2a13e6f6019cc1f5c97a93eec9fb4991bbedda9e238b75d2ba6898e2d",
+          "git_blob_sha1": "3ca1840eba2a17ad50cd4852a1c4b4dd52b46fe4",
+          "method": "revision_bound_git_blob"
+        },
+        "review-receipt.json": {
+          "sha256": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+          "git_blob_sha1": "fa4921e27f4069f4a382945268233c896c72b55b",
+          "method": "revision_bound_git_blob"
+        },
+        "review-report.md": {
+          "sha256": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+          "git_blob_sha1": "a65f2cac12d3792b4f634899ebf28d2dc591807e",
+          "method": "revision_bound_git_blob"
+        },
+        "review.json": {
+          "sha256": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+          "git_blob_sha1": "9d80e2c65084db423c1e8fab2e5c872870d2e727",
+          "method": "revision_bound_git_blob"
+        },
+        "subset-receipt.json": {
+          "sha256": "0f428315256e7e7c9dbb8ea85313c2a3a84f4c13c800740d165d46ecacdfcc6d",
+          "git_blob_sha1": "22bbc9d38d8aec37e893ae83715ccadcc520b4dc",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "5fdd85d9f39441c5e6da4152b4426229bd53fc09ab4760a5f19e661672bbc270",
+          "git_blob_sha1": "0fcd02bc91ec4954c9ec6b0cbec79ab8e8f19b80",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sl_prefix_continuation": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-prefix-continuation",
+      "revision": "7b767d9ff5d5cd3144fad28edacfa188f8a1caaa",
+      "head_matches": true,
+      "files": {
+        "README.md": {
+          "sha256": "58a83c7cccf9d7088b8e100d7ace5bd962bdbfac70d4e6f3f536c6757f7a8f82",
+          "git_blob_sha1": "a7dea02a558443500a6373956c1dda967d5b224c",
+          "method": "revision_bound_git_blob"
+        },
+        "SOURCE_README.md": {
+          "sha256": "e91da66eaac9a12fc177f3622d62570f4bc2866f7522d33d4a9e92642b07e6ad",
+          "git_blob_sha1": "4dc4c75bf34addd6d13a807011f751156f6bf092",
+          "method": "revision_bound_git_blob"
+        },
+        "data/train.jsonl": {
+          "sha256": "ddc014a4f5b4b5059ae67f77de8956468b6ebd6134e8d853f4c16d5650df120b",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "exclusions.jsonl": {
+          "sha256": "0a73600d82490c48797419cc048eec4804c4c1d036333b96621abb181322ef02",
+          "git_blob_sha1": "296b4b66fb6bd150f2175c1709d6e4b703805b6c",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-entry.json": {
+          "sha256": "13dab1f06acb43b9f98618a25331ed98ac52f2a5068448da5d82fe9f3c48847d",
+          "git_blob_sha1": "c9ec8fb952b9fc955c4dbef75cb96cdd326d9714",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-export-manifest.json": {
+          "sha256": "b7570c5f8c95a2dfb24d913cb13b69544191d477c84c3757e7489f5a0b54fa78",
+          "git_blob_sha1": "fe6bb44526290ef263ec3c7a3fa4322a9eae15b8",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-publication.json": {
+          "sha256": "9b57ce7261f43c026e4c113312bd28aefaa4634f37bde5a06b5ba1f9404c332d",
+          "git_blob_sha1": "ae46e7bb74ecd75fe48b99d72d2f5f15584b9d4e",
+          "method": "revision_bound_git_blob"
+        },
+        "review-receipt.json": {
+          "sha256": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+          "git_blob_sha1": "fa4921e27f4069f4a382945268233c896c72b55b",
+          "method": "revision_bound_git_blob"
+        },
+        "review-report.md": {
+          "sha256": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+          "git_blob_sha1": "a65f2cac12d3792b4f634899ebf28d2dc591807e",
+          "method": "revision_bound_git_blob"
+        },
+        "review.json": {
+          "sha256": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+          "git_blob_sha1": "9d80e2c65084db423c1e8fab2e5c872870d2e727",
+          "method": "revision_bound_git_blob"
+        },
+        "subset-receipt.json": {
+          "sha256": "b23de0e7f95b1d9b3a9de622310e79b95a9b27e70f6e91c6ff2b39eed3929d30",
+          "git_blob_sha1": "9e46e38a7b63c1db5d765179291d46f157498d8e",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "0ab4cd7898efbd82d564f54bc318ca084666fddcadc5094fe00045d6a606b911",
+          "git_blob_sha1": "ebc78730345d228b67db8468ee02b338f1dc18c7",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sl_span_filling": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sl-span-filling",
+      "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd",
+      "head_matches": true,
+      "files": {
+        "data/train.jsonl": {
+          "sha256": "02e47e63a2f50329573af5d0fe2ae83c2919360650c4131c004a4e290a508398",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "README.md": {
+          "sha256": "f3817bbbf3ed6361d1ff59f7b65f283cced00bcb4e2ae4638f9e8ac3be6a62ac",
+          "git_blob_sha1": "3ecfabe050e88bba3f7aaa7f8d0ebdb6680ca308",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "202c17d0b45596c9ba1aea7a1094d7f5c127ac1ab208c845a5bcf6bca3151cfa",
+          "git_blob_sha1": "192870b43454ef1bdd8201c39e41a8e27a949210",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sq_denoising": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sq-denoising",
+      "revision": "44603c556b0a30bf59fe9092a39de6091eed24da",
+      "head_matches": true,
+      "files": {
+        "data/train.jsonl": {
+          "sha256": "466deaa046a6ac3db39dd8e97294939548ad964601a545cf983572a963ad6a39",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "README.md": {
+          "sha256": "45116ea885d71ceab4b643e00d3e16a37b26b4d1672028543d7c7982e523a0ce",
+          "git_blob_sha1": "a1343ae7041612eff25fa603e9bf7a9bba404d46",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "0bd906e29b6b9d875a2716b54aa90e03cf0eea6297d7802e8eaf79853d28f768",
+          "git_blob_sha1": "7335e52a90c73ce2898fd508e2443ec1b9f0de04",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sq_paragraph_reordering": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sq-paragraph-reordering",
+      "revision": "858b2ceedbd89bc90a822d04a0d66eb734841a2a",
+      "head_matches": true,
+      "files": {
+        "README.md": {
+          "sha256": "97058202b1c1969a0cd9fbda42a1ef43bf4ac1767bf021ab115501ba33c13dca",
+          "git_blob_sha1": "03e0155867c2e8031133929b577ce0db512fd461",
+          "method": "revision_bound_git_blob"
+        },
+        "SOURCE_README.md": {
+          "sha256": "5364df1fdcb8fa07d1f2297aeae48f3dbbc1b5cd9556982330a86f3e9faa508c",
+          "git_blob_sha1": "54a0bbed44a876d64bc8bdaad11fa6555c07bf61",
+          "method": "revision_bound_git_blob"
+        },
+        "data/train.jsonl": {
+          "sha256": "bdda80e7649b484a9ea90981ed3db581efc1f420bf6455496586f707f533ec28",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "exclusions.jsonl": {
+          "sha256": "f46e6caf13d92613acb000ae9a19d530e429d640fe53e77984bcdbeb3af219d0",
+          "git_blob_sha1": "e3881787b7bb95eb3ff7a2dc5bc8fe7f829d58fc",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-entry.json": {
+          "sha256": "8bd6f3ba1aeb5d9626af439fa0f49f69928a60ccd7bde40d5fce672cda988d7e",
+          "git_blob_sha1": "e82f05e8f6c6fd2155b445b2f7a06f6a2567d830",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-export-manifest.json": {
+          "sha256": "8103f17877c8e091e58a546eea1193ac09af7035e6eef4210d1140ce3495ff89",
+          "git_blob_sha1": "4d64a3413df14b552e773cd97363afbd71cbd867",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-publication.json": {
+          "sha256": "d71a6662b7dea78335bee70b81c7c272f52b976a30c66a214f81caa6b243608e",
+          "git_blob_sha1": "6882d8374f498815172d5e8da5eae9c43b085ebb",
+          "method": "revision_bound_git_blob"
+        },
+        "review-receipt.json": {
+          "sha256": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+          "git_blob_sha1": "fa4921e27f4069f4a382945268233c896c72b55b",
+          "method": "revision_bound_git_blob"
+        },
+        "review-report.md": {
+          "sha256": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+          "git_blob_sha1": "a65f2cac12d3792b4f634899ebf28d2dc591807e",
+          "method": "revision_bound_git_blob"
+        },
+        "review.json": {
+          "sha256": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+          "git_blob_sha1": "9d80e2c65084db423c1e8fab2e5c872870d2e727",
+          "method": "revision_bound_git_blob"
+        },
+        "subset-receipt.json": {
+          "sha256": "afde4b17a56ba853510ca156d41ba6e51aa5c550299577528369d6d37ded0e98",
+          "git_blob_sha1": "5a8020aef7fc95b72e74ea66588dd66ee34ffa50",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "952500385abdd9a2c579ae1e979745c506fe399454c6f69a2dd0292ade8da9cc",
+          "git_blob_sha1": "a1e56477e89aa1cc9581f9fad291974d88442484",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sq_prefix_continuation": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sq-prefix-continuation",
+      "revision": "62e7c59bcc7774e266638e87cf65bcceee3bc0e8",
+      "head_matches": true,
+      "files": {
+        "README.md": {
+          "sha256": "391680918a8a07878e96b21087a98e3416a309065a107479a94eb850f57af00a",
+          "git_blob_sha1": "b6c697bff4dc0999b6c6eb989db654c1e78e849d",
+          "method": "revision_bound_git_blob"
+        },
+        "SOURCE_README.md": {
+          "sha256": "f34d243be69cfc87f2f661b23b4ec7b6a75c123866b51ebb8491b397198fdaf9",
+          "git_blob_sha1": "b49ed09a67429431158aa0db4229a6b3543ba3b1",
+          "method": "revision_bound_git_blob"
+        },
+        "data/train.jsonl": {
+          "sha256": "caa951a17512d3c0881c84e83899a4807c9d0b06d9553a0f988dd53f590aa1d9",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "exclusions.jsonl": {
+          "sha256": "59629f9291bfe4c4dd2fe04250bd7d99acd0b575c612d749932bc87d23e2c946",
+          "git_blob_sha1": "87dc65c3150656fb54e435dbcc647c9ca676d007",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-entry.json": {
+          "sha256": "dd977e0ef72aaf0fc92d7c11b3f04b709823a2ad17cafa6e5d08390df0e2f536",
+          "git_blob_sha1": "1179ac9c553d5c223c49b70c5d4ab7e512a98a8a",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-export-manifest.json": {
+          "sha256": "9f61cbab276274453d6546dd84a1de0c5638baa3f7d0927f87e87a43f4a7b1d7",
+          "git_blob_sha1": "b7800b73f4083d147e94544b855c556202b9a5fa",
+          "method": "revision_bound_git_blob"
+        },
+        "parent-publication.json": {
+          "sha256": "44f1eb5c6816136dc78394a151a2d560a384c15f8a08d1662be315fba03f3f63",
+          "git_blob_sha1": "92464f15704c4f20141d358a922706f9be13799f",
+          "method": "revision_bound_git_blob"
+        },
+        "review-receipt.json": {
+          "sha256": "0ec2a6afdaeb347eaedc0a3e64a22079c25ea76cb3ad0f975a4756b77e3c48e9",
+          "git_blob_sha1": "fa4921e27f4069f4a382945268233c896c72b55b",
+          "method": "revision_bound_git_blob"
+        },
+        "review-report.md": {
+          "sha256": "c9fa49b25597d755afa44a04099d4cd2360bdd01191e66f1e9f9abb0b62eba3c",
+          "git_blob_sha1": "a65f2cac12d3792b4f634899ebf28d2dc591807e",
+          "method": "revision_bound_git_blob"
+        },
+        "review.json": {
+          "sha256": "177a4065aa6fb6ba032bee195cb6160e1062998b813c1658a7fdc1705fc3a8b2",
+          "git_blob_sha1": "9d80e2c65084db423c1e8fab2e5c872870d2e727",
+          "method": "revision_bound_git_blob"
+        },
+        "subset-receipt.json": {
+          "sha256": "e3cc0594b9f4af29845b60f559792edd25d770ce7218ba20e164457dc16f8b80",
+          "git_blob_sha1": "2d39e83b201ba79f175f674d98ec6feaa4b92e81",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "e0a9a8aef940ab76595e590d7571d3d384742f240d1fc5140c5e17cba62b7b42",
+          "git_blob_sha1": "9b5ca193343c1b63f807b98ea74babce0a0b8994",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    },
+    "dfm13_wave4_wikipedia_sq_span_filling": {
+      "repo": "schneiderkamplab/dfm13-wave4-wikipedia-sq-span-filling",
+      "revision": "0e369353dc09acd1757b9c609ea6f30ae0c501aa",
+      "head_matches": true,
+      "files": {
+        "data/train.jsonl": {
+          "sha256": "1dc3717d66989c6817a4203a805ce5c392de32e242536e655a15b1a854d63f74",
+          "method": "revision_bound_HF_LFS_SHA256"
+        },
+        "README.md": {
+          "sha256": "af0dc9d015330f6065ae8f1f68afb148fcd1fe032bec594d095cbacf1856bfb2",
+          "git_blob_sha1": "15d7578eb76f4319f8b2d48eb5e3e38cec0abfa5",
+          "method": "revision_bound_git_blob"
+        },
+        "manifest.json": {
+          "sha256": "040d0da5bda7929ca0b25899978ecd2b6b47cdbd88fcff1a9f07f07e4d310177",
+          "git_blob_sha1": "f4b68fc0c3ae5f30e998e190648ea5271f6aee03",
+          "method": "revision_bound_git_blob"
+        }
+      }
+    }
+  },
+  "subset_checks": {
+    "dfm13_wave4_wikipedia_sl_denoising": "unaffected original package",
+    "dfm13_wave4_wikipedia_sl_paragraph_reordering": "full retained-byte/order replay and exact one-row exclusion verified",
+    "dfm13_wave4_wikipedia_sl_prefix_continuation": "full retained-byte/order replay and exact one-row exclusion verified",
+    "dfm13_wave4_wikipedia_sl_span_filling": "unaffected original package",
+    "dfm13_wave4_wikipedia_sq_denoising": "unaffected original package",
+    "dfm13_wave4_wikipedia_sq_paragraph_reordering": "full retained-byte/order replay and exact one-row exclusion verified",
+    "dfm13_wave4_wikipedia_sq_prefix_continuation": "full retained-byte/order replay and exact one-row exclusion verified",
+    "dfm13_wave4_wikipedia_sq_span_filling": "unaffected original package"
+  },
+  "all_four_reviewed_ids_absent": true,
+  "registry_unchanged": true,
+  "local_array_verification": {
+    "assembly": "/work/mimir/HRM-Text/data/dfm13/verified-wave-additions-20261003-v6",
+    "assembly_sha256": "00e94928331e2f329cc262c6b94a094509bd75d257e3ea9ad0721283a687240c",
+    "all_eight_included": true
+  },
+  "totals": {
+    "rows": 276504,
+    "tokens": 285123007
+  }
+}

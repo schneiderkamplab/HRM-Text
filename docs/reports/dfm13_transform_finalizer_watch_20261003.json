@@ -1,0 +1,405 @@
+{
+  "initial_identity": {
+    "pid": 2355940,
+    "start_ticks": "245791146",
+    "state": "R",
+    "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+  },
+  "latest": {
+    "time": "2026-10-03T17:49:15.823577+00:00",
+    "process": {
+      "pid": 2355940,
+      "start_ticks": "245791146",
+      "state": "R",
+      "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+    },
+    "alive": true,
+    "ledgers": {
+      "sl": {
+        "accepted": 187571,
+        "excluded_unreviewed": 2,
+        "rejected": 33185
+      },
+      "sq": {
+        "accepted": 88937,
+        "rejected": 16731
+      },
+      "sr": {}
+    },
+    "packages": [
+      {
+        "name": "dfm13_wave4_wikipedia_sl_denoising",
+        "rows": 61365,
+        "tokenized": false,
+        "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324"
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+        "rows": 31015,
+        "tokenized": false,
+        "revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5"
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+        "rows": 60100,
+        "tokenized": false,
+        "revision": "5964d460dd114eaaff522d395f71734eb20cc9a4"
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_sl_span_filling",
+        "rows": 35091,
+        "tokenized": false,
+        "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd"
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_sq_denoising",
+        "rows": 25567,
+        "tokenized": false,
+        "revision": "44603c556b0a30bf59fe9092a39de6091eed24da"
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_sq_paragraph_reordering",
+        "rows": 22930,
+        "tokenized": false,
+        "revision": "a2c0a718781e4f339cf63f15e8334ad3f3b098f7"
+      },
+      {
+        "name": "dfm13_wave4_wikipedia_sq_prefix_continuation",
+        "rows": 24997,
+        "tokenized": false,
+        "revision": "604c6e64b4c880a02edda0bd14e219f3fdb030e3"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "time": "2026-10-03T17:35:21.775802+00:00",
+      "process": {
+        "pid": 2355940,
+        "start_ticks": "245791146",
+        "state": "D",
+        "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+      },
+      "alive": true,
+      "ledgers": {
+        "sl": {
+          "accepted": 187551,
+          "audit_retry_pending": 33,
+          "rejected": 33174
+        },
+        "sq": {
+          "accepted": 88928,
+          "audit_retry_pending": 11,
+          "rejected": 16729
+        },
+        "sr": {}
+      },
+      "packages": []
+    },
+    {
+      "time": "2026-10-03T17:47:12.236188+00:00",
+      "process": {
+        "pid": 2355940,
+        "start_ticks": "245791146",
+        "state": "S",
+        "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+      },
+      "alive": true,
+      "ledgers": {
+        "sl": {
+          "accepted": 187571,
+          "excluded_unreviewed": 2,
+          "rejected": 33185
+        },
+        "sq": {
+          "accepted": 88928,
+          "audit_retry_pending": 11,
+          "rejected": 16729
+        },
+        "sr": {}
+      },
+      "packages": []
+    },
+    {
+      "time": "2026-10-03T17:47:43.142651+00:00",
+      "process": {
+        "pid": 2355940,
+        "start_ticks": "245791146",
+        "state": "R",
+        "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+      },
+      "alive": true,
+      "ledgers": {
+        "sl": {
+          "accepted": 187571,
+          "excluded_unreviewed": 2,
+          "rejected": 33185
+        },
+        "sq": {
+          "accepted": 88928,
+          "audit_retry_pending": 11,
+          "rejected": 16729
+        },
+        "sr": {}
+      },
+      "packages": [
+        {
+          "name": "dfm13_wave4_wikipedia_sl_denoising",
+          "rows": 61365,
+          "tokenized": false,
+          "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+          "rows": 31015,
+          "tokenized": false,
+          "revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-03T17:48:14.054749+00:00",
+      "process": {
+        "pid": 2355940,
+        "start_ticks": "245791146",
+        "state": "D",
+        "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+      },
+      "alive": true,
+      "ledgers": {
+        "sl": {
+          "accepted": 187571,
+          "excluded_unreviewed": 2,
+          "rejected": 33185
+        },
+        "sq": {
+          "accepted": 88928,
+          "audit_retry_pending": 11,
+          "rejected": 16729
+        },
+        "sr": {}
+      },
+      "packages": [
+        {
+          "name": "dfm13_wave4_wikipedia_sl_denoising",
+          "rows": 61365,
+          "tokenized": false,
+          "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+          "rows": 31015,
+          "tokenized": false,
+          "revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+          "rows": 60100,
+          "tokenized": false,
+          "revision": "5964d460dd114eaaff522d395f71734eb20cc9a4"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_span_filling",
+          "rows": 35091,
+          "tokenized": false,
+          "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-03T17:48:44.953034+00:00",
+      "process": {
+        "pid": 2355940,
+        "start_ticks": "245791146",
+        "state": "S",
+        "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+      },
+      "alive": true,
+      "ledgers": {
+        "sl": {
+          "accepted": 187571,
+          "excluded_unreviewed": 2,
+          "rejected": 33185
+        },
+        "sq": {
+          "accepted": 88937,
+          "rejected": 16731
+        },
+        "sr": {}
+      },
+      "packages": [
+        {
+          "name": "dfm13_wave4_wikipedia_sl_denoising",
+          "rows": 61365,
+          "tokenized": false,
+          "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+          "rows": 31015,
+          "tokenized": false,
+          "revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+          "rows": 60100,
+          "tokenized": false,
+          "revision": "5964d460dd114eaaff522d395f71734eb20cc9a4"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_span_filling",
+          "rows": 35091,
+          "tokenized": false,
+          "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd"
+        }
+      ]
+    },
+    {
+      "time": "2026-10-03T17:49:15.823577+00:00",
+      "process": {
+        "pid": 2355940,
+        "start_ticks": "245791146",
+        "state": "R",
+        "cmdline": "/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.advance_wave4_transforms "
+      },
+      "alive": true,
+      "ledgers": {
+        "sl": {
+          "accepted": 187571,
+          "excluded_unreviewed": 2,
+          "rejected": 33185
+        },
+        "sq": {
+          "accepted": 88937,
+          "rejected": 16731
+        },
+        "sr": {}
+      },
+      "packages": [
+        {
+          "name": "dfm13_wave4_wikipedia_sl_denoising",
+          "rows": 61365,
+          "tokenized": false,
+          "revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+          "rows": 31015,
+          "tokenized": false,
+          "revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+          "rows": 60100,
+          "tokenized": false,
+          "revision": "5964d460dd114eaaff522d395f71734eb20cc9a4"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sl_span_filling",
+          "rows": 35091,
+          "tokenized": false,
+          "revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sq_denoising",
+          "rows": 25567,
+          "tokenized": false,
+          "revision": "44603c556b0a30bf59fe9092a39de6091eed24da"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sq_paragraph_reordering",
+          "rows": 22930,
+          "tokenized": false,
+          "revision": "a2c0a718781e4f339cf63f15e8334ad3f3b098f7"
+        },
+        {
+          "name": "dfm13_wave4_wikipedia_sq_prefix_continuation",
+          "rows": 24997,
+          "tokenized": false,
+          "revision": "604c6e64b4c880a02edda0bd14e219f3fdb030e3"
+        }
+      ]
+    }
+  ],
+  "ownership_preserved": true,
+  "worker_actions": false,
+  "status": "bounded_watch_ended_read_lock",
+  "observation_gap": "Final read-only ledger query timed out: sqlite3.OperationalError database is locked; finalizer not stopped.",
+  "completed_at": "2026-10-03T17:50:38.957353+00:00",
+  "assembly_certified": false,
+  "final_packages": [
+    {
+      "name": "dfm13_wave4_wikipedia_sl_denoising",
+      "rows": 61365,
+      "rendered_tokens": 80325058,
+      "tokenized_tokens": 80325058,
+      "tokenization_performed": true,
+      "hf_revision": "9a6723f1fd430a87349b1defc478d0e4eb7ee324",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_paragraph_reordering",
+      "rows": 31015,
+      "rendered_tokens": 42927522,
+      "tokenized_tokens": 42927522,
+      "tokenization_performed": true,
+      "hf_revision": "b1bcb2789ac08c34fbe170469ce0a681a15641e5",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_prefix_continuation",
+      "rows": 60100,
+      "rendered_tokens": 40355742,
+      "tokenized_tokens": 40355742,
+      "tokenization_performed": true,
+      "hf_revision": "5964d460dd114eaaff522d395f71734eb20cc9a4",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sl_span_filling",
+      "rows": 35091,
+      "rendered_tokens": 22211638,
+      "tokenized_tokens": 22211638,
+      "tokenization_performed": true,
+      "hf_revision": "221e15426a346e8890cc45b51671ed1a5d03e5fd",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_denoising",
+      "rows": 25567,
+      "rendered_tokens": 36475777,
+      "tokenized_tokens": null,
+      "tokenization_performed": false,
+      "hf_revision": "44603c556b0a30bf59fe9092a39de6091eed24da",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_paragraph_reordering",
+      "rows": 22930,
+      "rendered_tokens": 34478059,
+      "tokenized_tokens": null,
+      "tokenization_performed": false,
+      "hf_revision": "a2c0a718781e4f339cf63f15e8334ad3f3b098f7",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_prefix_continuation",
+      "rows": 24997,
+      "rendered_tokens": 18115967,
+      "tokenized_tokens": null,
+      "tokenization_performed": false,
+      "hf_revision": "604c6e64b4c880a02edda0bd14e219f3fdb030e3",
+      "status": "accepted_uploaded"
+    },
+    {
+      "name": "dfm13_wave4_wikipedia_sq_span_filling",
+      "rows": 15443,
+      "rendered_tokens": 10238130,
+      "tokenized_tokens": null,
+      "tokenization_performed": false,
+      "hf_revision": "0e369353dc09acd1757b9c609ea6f30ae0c501aa",
+      "status": "accepted_uploaded"
+    }
+  ],
+  "exclusion_followup": "Jason owns exact four-ID subset successors; affected prefix/reordering entries not certified."
+}

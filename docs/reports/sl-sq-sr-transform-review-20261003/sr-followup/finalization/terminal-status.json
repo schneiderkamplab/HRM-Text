@@ -1,0 +1,13 @@
+{
+  "component": "wikipedia-sr",
+  "counts": {
+    "accepted": 254288,
+    "excluded_manual_review": 4,
+    "excluded_unreviewed": 2,
+    "rejected": 37022
+  },
+  "input_sha256": "57f955639216453b01d6f76b18604dba3a930c9f2d6c38db25475fbf5f8f8412",
+  "input_rows": 291316,
+  "terminal": true,
+  "export_ready": true
+}

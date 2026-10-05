@@ -1,0 +1,15 @@
+{
+  "repo": "schneiderkamplab/dfm13-wave3-opus-en-lv",
+  "revision": "b247a04a27696aa2010e8f173a0ecad8933f7a62",
+  "verified_attachments": {
+    "attribution/a1f5726f8cf6f0c58baeac371f31b5696337ed711bf65935242e40dd1f0efa6a.json": "a1f5726f8cf6f0c58baeac371f31b5696337ed711bf65935242e40dd1f0efa6a",
+    "attribution/58d7cd06999bd0cef58028422bc1cc70f0ad5430bfad03018339cdc7a309bd30.json": "58d7cd06999bd0cef58028422bc1cc70f0ad5430bfad03018339cdc7a309bd30",
+    "attribution/88a307db248a2f869bbe9a0690f630ee0306bd3bcf44c371881854aadde3d94f.json": "88a307db248a2f869bbe9a0690f630ee0306bd3bcf44c371881854aadde3d94f",
+    "attribution/5e2731e00dff823be2f80dc8bc706ac8238b481c7eea0adc6cbaa4108552dd0e.json": "5e2731e00dff823be2f80dc8bc706ac8238b481c7eea0adc6cbaa4108552dd0e",
+    "attribution/0b5558c40a1157f1193a3d28b9e0abee5f47395c4334c59019ec59a8c473f433.json": "0b5558c40a1157f1193a3d28b9e0abee5f47395c4334c59019ec59a8c473f433"
+  },
+  "rows": 1212994,
+  "rendered_tokens": 115360618,
+  "data_sha256": "b5c58933b84ad6b3ec0aedd73855d07c149c6f93f0a5c6555bd2d4e48f5c7f48",
+  "data_hash_basis": "publisher verified pinned remote payload before registry insertion; not redownloaded here"
+}

@@ -1,0 +1,20 @@
+{
+  "rows_reviewed": 16,
+  "source_replay_exact": 16,
+  "mechanical_checks_pass": 16,
+  "authorized_mutations": 0,
+  "defect_cases": [
+    32,
+    36,
+    37,
+    45,
+    47
+  ],
+  "population_inference": false,
+  "pins": {
+    "evidence.json": "4d9b8c575768f7bb2a2874724b06c63fafe76d137a950cc12ad7e5a165b662e2",
+    "snapshot.json": "84e5378819fac0e7d74d0be346502b0d774965b8878d870b7e0528d579dd6a68",
+    "review.json": "d7c356899a5132cce61446776eeaffcb632156ee8414ae751f8c4366b5fdfc1c",
+    "report.md": "7051ea4e4b5fb957c58227bca0a787d651def125f3f18aa0090a19b7f78669f3"
+  }
+}

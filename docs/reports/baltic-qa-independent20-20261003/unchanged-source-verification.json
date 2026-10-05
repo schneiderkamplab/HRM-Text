@@ -1,0 +1,10 @@
+{
+  "all_four_source_and_publication_files_unchanged": true,
+  "files": {
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lt_qa/data/train.jsonl": "957d7aab495bd810c57fc162741cccd63c105974dee22e4b0979d2f7431760f7",
+    "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lt_qa/lithuanian_qa.json": "e0fc9d636170bf011a9653c03675013cf9d63e12a7863e4d641c633e812dbf93",
+    "/work/mimir/HRM-Text/exports_dfm13/dfm13-wave3-baltic_lv_qa/data/train.jsonl": "5759fb132c88e76846ae079765b11f291564b1a56e4f49d651f2348cfa34ed08",
+    "/work/mimir/HRM-Text/data/dfm13/baltic/downloads/baltic_lv_qa/data/train-00000-of-00001.parquet": "a3a7ae6e0b63c677530ad19ff1c67db9edad129da789ec538c7d44f42c7720b8"
+  },
+  "review_receipt_sha256": "3fccf690d8663db253f1bb592e7f3ef9224c3a296c99cf85400e35c0c8bf2bef"
+}

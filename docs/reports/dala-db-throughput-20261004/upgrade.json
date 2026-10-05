@@ -1,0 +1,33 @@
+{
+  "status": "tested_not_deployed",
+  "runner": "scripts/audit_dala_v2_batches.py",
+  "runner_sha256": "dd9ac45d2c28edc7f8b1f600b4678ac1562044b0e6080a5589f7fff26a782579",
+  "review_adapter_sha256_unchanged": "0a60c7223ef157ada48bd0d78434032b441cda82a1681186e3d545c502c764bb",
+  "observed_config_sha256": "27f7e0dd21569c6eb88796442b835b272833f79cdf798532316326fa4ec28743",
+  "running_pid_unchanged": 2883484,
+  "test_count": 29,
+  "live_readonly_measurement_seconds": 17.243269198108464,
+  "old_recorded_status_max_seconds": 113.79451893782243,
+  "measurement_is_not_controlled_throughput_benchmark": true,
+  "sample": {
+    "done": 31175202,
+    "failed": 224044,
+    "pending": 194109,
+    "running": 84960,
+    "loaded_source_rows": 31678315,
+    "full_scope_rows": 35211311,
+    "complete_sources": 60
+  },
+  "proposed_options": {
+    "db_cache_mib": 16384,
+    "db_mmap_gib": 16,
+    "status_interval": 60,
+    "concurrency": 384
+  },
+  "memory_guard": "cache plus mmap plus32MiB reader must not exceed25% of min(MemAvailable,cgroup_limit-current)",
+  "restart_performed": false,
+  "lease_policy_changed": false,
+  "audit_policy_changed": false,
+  "database_migration_performed": false,
+  "finalizer_or_assembly_changed": false
+}
