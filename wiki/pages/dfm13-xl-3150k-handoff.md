@@ -2,8 +2,8 @@
 type: Plan
 title: DFM13 XL Handoff at 3150K
 description: Readiness-gated preparation for switching the original XL run from DFM12 to DFM13 after its 3150K evaluation.
-status: draft
-confidence: medium
+status: stable
+confidence: high
 last_updated: 2026-10-05
 tags: [dfm13, training, xl, handoff]
 ---
@@ -12,6 +12,68 @@ tags: [dfm13, training, xl, handoff]
 Following the [DFM12 progress assessment](dfm12-xl-epoch11-noidentity.md),
 the owner requested preparation conditional on verification finishing.
 This prepares the successor; it does not silently change the live campaign.
+
+## Authorized Automatic Handoff (2026-10-05)
+
+**Supersedes the preparation-only status below.** The user authorized the switch
+after all3150K evaluations and averages. `scripts/schedule_dfm13_xl_handoff.py`
+now owns the scheduler transition, without changing the running3150K segment or
+the sample validator. Under `PlanLock`, it archived the original plan at
+`data/dfm13/xl-from-dfm12-step3150000/plan-before-handoff.tsv` and retired2,660
+unattempted post3150K DFM12 rows (four training segments and their evaluations).
+All4,405 earlier/current rows, including the665-job3150K block, were retained.
+`scheduler-armed.json` binds the backup and removed IDs.
+
+The plan also has `dfm13-handoff-resume-ready`, a normal CPU `wait_checkpoint`
+row depending on every non-skipped3150K job. It waits for the **real isolated
+resume checkpoint**, not a fabricated completion marker. This keeps the existing
+persistent scheduler alive if the sample arrives after3150K evaluations finish.
+No second scheduler or GPU process is launched by the finalizer.
+
+Detached CPU finalizer PID797327 runs:
+
+```bash
+/home/ucloud/miniforge3/envs/hrm/bin/python -u -m scripts.schedule_dfm13_xl_handoff watch
+```
+
+Log: `logs/dfm13-xl-handoff-scheduler.log`. The control directory above contains
+`scheduler-launch.json`, `scheduler-progress.json`, and eventually
+`scheduler-installed.json`; installation failures produce
+`scheduler-failure.json`. The prior CPU finalizer796851 was stopped solely for
+a small lock-dispatch correction; its launch receipt is preserved. The existing
+packing watcher715684 and sampler791900 were not stopped or duplicated.
+
+Once the existing watcher publishes `prepared.json`, the installer rechecks the
+sample contract/current provenance and appends a clone of the **current expanded
+3150K evaluation block**, including multilingual extensions, semantic averages,
+judge settings and native no-Mistral-fix tokenizer configuration. It does not use
+the historical290-job template. Every non-skipped preceding evaluation, merge,
+report, teardown and average must succeed before the next training segment;
+failed work blocks progression rather than being treated as successful.
+
+The isolated resume uses unchanged hard-linked DCP payloads (weights, optimizer,
+EMA) and atomically replaced private metadata. Source3150K remains untouched.
+Global step stays3,150,000; trainer epoch1 selects dataset `epoch_0`, with exact
+batch0 and row0, carry policy `none`. Arguments select `data=dfm13`, target-only,
+one epoch, GAS2, BP8 with **BP warmup0**, FSDP fp32/bf16, original W&B run, base
+LR3e-4 with `lr_auto`, no rewarm, and final50K cosine decay to1e-5. All eight GPUs
+must satisfy the retained178000MiB headroom gate; no process is killed for space.
+
+Evaluations occur at3200K,3250K,... and natural `epoch_1` end. The exact end step
+comes only from the existing packing count. The final stop bound is end+1 so
+natural exhaustion writes `epoch_1`. Each segment updates its evaluation display
+epoch from **actual**3150K DFM12 row fraction plus actual DFM13 consumed-row
+fraction, before dependent evaluations can start. No approximate step fraction
+or assertion of a completed DFM12 epoch is used.
+
+Validation:34 combined tests passed (14 upstream Torch deprecation warnings),
+including the real expanded plan, Hydra composition, explicit stop bound,
+the actual `resolve_resume_state` loader, cursor reset, source-metadata
+preservation checks, readiness dependencies and display epoch mapping.
+Tests: `tests/test_schedule_dfm13_xl_handoff.py`,
+`tests/test_prepare_dfm13_xl_handoff.py`, `tests/test_schedule_dfm12_xl_epoch11.py`.
+At handoff setup, DFM13 training has **not** started; sample scans and exact
+packing are still prerequisites, not bypassed by this scheduler authorization.
 
 ## Verification and Sampling
 
@@ -71,5 +133,5 @@ under the plan lock. The original checkpoint must remain untouched. Fractional
 evaluation epochs must continue from the actual consumed DFM12 fraction, not
 claim the truncated DFM12 pass was a completed epoch. Internal loader epoch
 mapping and display epoch mapping must be explicit and tested before launch.
-The current active plan still contains DFM12 continuations beyond 3150K; this
-preparation is not yet an automatic scheduler handoff.
+Historical preparation-only state (superseded above): the active plan still
+contained DFM12 continuations beyond3150K and no automatic handoff.
