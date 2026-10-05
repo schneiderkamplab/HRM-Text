@@ -9,7 +9,8 @@ import shutil
 import tempfile
 
 from audit_feedback_bundle import audit
-from package_archive import compile_server, digest, package_name
+from package_archive import digest, package_name
+from apple_engine import audit_app, compile_server
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -34,6 +35,7 @@ def main():
     if digest(app / model) != args.model_sha256:
         raise ValueError('Bundled model checksum mismatch')
     run('codesign', '--verify', '--deep', '--strict', app)
+    audit_app(app, 'macos')
     output.mkdir(parents=True, exist_ok=True)
     name = package_name(info['CFBundleShortVersionString'], 'macos', arch) + '.dmg'
     destination = output / name
@@ -54,6 +56,7 @@ def main():
         run('codesign', '--force', '--sign', '-', '--entitlements',
             ROOT / 'native/app/macos/Runner/Release.entitlements', stage / app.name)
         audit(stage / app.name)
+        audit_app(stage / app.name, 'macos')
         (stage / 'Applications').symlink_to('/Applications')
         (stage / 'Read Me.txt').write_text(
             f"DFM Mimir — development preview\n\nApple Silicon; macOS {info['LSMinimumSystemVersion']} or later.\n"
@@ -67,6 +70,7 @@ def main():
             'platform': 'macos', 'architecture': arch, 'modelSHA256': args.model_sha256,
             'minimumOS': info['LSMinimumSystemVersion'], 'appVersion': info['CFBundleShortVersionString'],
             'sourceCommit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+            'workingTreeDirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT)),
             'llamaCommit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT / 'llama.cpp', text=True).strip(),
             'notarized': False,
         }
@@ -77,6 +81,7 @@ def main():
         run('hdiutil', 'attach', image, '-readonly', '-nobrowse', '-mountpoint', mount)
         try:
             run('codesign', '--verify', '--deep', '--strict', mount / app.name)
+            audit_app(mount / app.name, 'macos')
             if digest(mount / app.name / model) != args.model_sha256:
                 raise ValueError('Packaged model checksum mismatch')
             if (mount / 'Applications').readlink() != Path('/Applications'):

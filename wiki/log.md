@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-05: Resolved the pull merge by preserving both the DFM13/DFM14 work history and upstream Apple packaging history. No training, evaluation or dataset processes changed.
+
 - 2026-10-05: Preserved DFM13 integration/parallel verification, XL handoff preparation, DFM14 plans and durable review reports in scoped commits. All seven submodules were clean at recorded gitlinks. Runtime locks, build intermediates, caches and raw/downloaded audit artifacts remain local; running jobs unchanged.
 
 - 2026-10-05: Restarted final DFM13 verification with 32 spawned source workers and 32-thread hash checks, parent-only publication and reusable per-source receipts. Reloaded waiting CPU follow-ups; training/evals unchanged. Identical already-included Faroese registration is idempotent. Focused tests: 70 passed.
@@ -107,6 +109,12 @@
 - 2026-10-03: Completed [Baltic CPU preparation](pages/dfm13-baltic-language-sources.md): selective train-only Latvian P3, parsed LT/LV ParlaMint, native transformations, all 43 direct/pivot translation pairs, and 5,194,017 unique pending audit jobs. Native-template preflight and queue sealing passed; 140K synthetic target and 120 calibration requests prepared. No GPU jobs or final sampling launched.
 
 - 2026-10-03: Located [Lithuanian/Latvian DFM13 sources](pages/dfm13-baltic-language-sources.md), verified counts and revisions, and recorded transformation/SFT gates while leaving DaLA to its parallel owner.
+
+- 2026-10-03: Replied to Apple's macOS server-entitlement notice, saved local API reproduction steps in review notes, and resubmitted unchanged build 13; verified Waiting for Review. See [Apple packaging](pages/model-architecture/mimir-apple-os-tls-packaging.md).
+
+- 2026-10-03: Uploaded SDU-signed OS-TLS build 13 and submitted both iOS/macOS 0.1.5 for App Review; verified Waiting for Review with manual release. Recorded rights confirmation, OS-only encryption answers and submission IDs in [Apple packaging](pages/model-architecture/mimir-apple-os-tls-packaging.md).
+
+- 2026-10-03: Integrated [Apple OS-only TLS packaging](pages/model-architecture/mimir-apple-os-tls-packaging.md): pinned custom Flutter/Dart runtimes, pre-signing replacement, fail-closed audits and local qualification. Uploaded build 12 remains unchanged.
 
 - 2026-10-03: Reconciled upstream main with the DFM12/13 and multilingual-evaluation work; retained both XXL piecewise and XXL-Wide staged-rewarm runbooks and both knowledge histories.
 

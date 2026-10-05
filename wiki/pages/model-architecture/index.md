@@ -1,5 +1,7 @@
 # Model Architecture Concepts
 
+* [Mimir Apple OS-only TLS packaging](mimir-apple-os-tls-packaging.md) - Custom engine integration, headless-runtime packaging, audits and qualification evidence.
+
 * [Wide Model Size Presets](wide-model-size-presets.md) - XXXL-wide and XXXXL-wide presets and parameter comparison of all sizes.
 
 * [HF Export and Eval Loader Compatibility](hf-export-and-eval-loader-compatibility.md) - Part of Model Architecture: HF Export and Eval Loader Compatibility.
