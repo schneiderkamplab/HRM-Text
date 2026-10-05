@@ -49,6 +49,43 @@ Separately, XL completed epoch 10 at step 2,877,261 with a final base LR of
 
 ## DFM11 XXL-Wide Rewarm at 505K (2026-09-22)
 
+Fabric recovery and resume (2026-09-29): all GPU pairs now report NV18.
+Reset only the interrupted 700K training row to resume from verified complete
+`ephemeral_step_666500`. Initial restart failed because the recreated home
+lacked W&B credentials; after user login, scheduler PID 10093 resumed the
+existing `DFM5/dfm10-xxl-wide` run successfully. Separate tmux `hrm-0` windows:
+4 scheduler events, 5 Rich monitor (30-second refresh), 6 training log.
+Training advanced beyond 666500; early five-step intervals again take about
+14 seconds. W&B skips replayed steps below its existing 666586 history cursor;
+new logging is expected after catching up. No new W&B run was created.
+
+Immediate user-requested stop (2026-09-29): requested scheduler stop, then
+sent SIGTERM to verified training process group 3425265 (700K segment).
+No pretrain/torchrun processes remained. Last complete checkpoint verified
+with DCP payload checks: `ephemeral_step_666500`. No automatic restart;
+the interrupted segment still needs its resume tag updated before resumption.
+
+Slow-segment investigation (2026-09-29): the 650K segment ended near
+2.86 s/step, but the 650K-to-700K segment ran near 7.05 s/step from startup.
+Launch arguments differ only in resume tag, stop boundary and progress total.
+Only the eight training ranks occupy GPUs; no competing compute processes
+were reported. `nvidia-smi nvlink --status` reports every GPU's links inactive,
+and `nvidia-smi topo -m` shows NODE/SYS rather than NVLink connections.
+This strongly implicates unavailable GPU fabric and slower FSDP communication;
+the underlying host/driver cause and NCCL transport remain unverified.
+The container has no systemd access or `/dev/nvidia-nvswitch*`, so host-level
+fabric diagnosis may require the administrator. No GPU reset, service restart,
+or training interruption was performed during this investigation.
+
+Progress total correction (2026-09-27): under PlanLock, updated the four
+pending training rows targeting 700K, 750K, 800K and 850K to
+`training_total_steps=755000`, replacing 747198. The 600K-to-632K row-cursor
+rate predicts epoch exhaustion near 754160; 755000 adds a small estimate
+margin, not a guaranteed exact endpoint. Dataset exhaustion and existing
+50K stop/eval boundaries remain authoritative. Fixed BP8 and the completed
+rewarm with `lr_min_ratio=1` are unchanged. The active 650K segment was not
+modified. Backup: `plan.before-total-755000-20260927.tsv` in the existing plan.
+
 Review caveat (2026-09-26): the historical
 `scripts/handoff_xxl_wide_rewarm_505k.py` unconditionally clears the scheduler
 stop request after its handoff. It does not distinguish its own stop request

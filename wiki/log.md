@@ -282,6 +282,7 @@
   caveats in the [DFM12 plan](pages/dfm12-plan.md).
 
 - 2026-10-02: Uploaded reviewed SDU iPhone/iPad/Mac store screenshots; recorded [real-engine capture workflow and remaining listing gates](pages/model-architecture/mimir-v1.5-ggufs.md#sdu-store-screenshot-upload--2026-10-02).
+- 2026-10-02: Started [DFM13 transfer and build](pages/dfm13-local-build.md): hash-verified admitted sources, native tokenizer parity, and frozen DFM12 inheritance. Pending-audit candidates excluded; training launch remains pending dataset readiness.
 
 - 2026-09-23: Published [DFM Mimir 0.1.5 with v1.5 Q4_K_M](pages/model-architecture/mimir-v1.5-ggufs.md#015-publication-complete); verified four packages and checksums, preserved the 0.1.4 release, and prepared unsigned iOS build 7.
 

@@ -121,6 +121,8 @@
 
 ## Operations
 
+* [DFM13 Local Transfer and Build](dfm13-local-build.md) - Remote admitted additions and frozen DFM12 inheritance, tokenization and three-epoch sampling.
+
 * [Mimir v1.5 Model Card](mimir-v1-5-model-card.md) - Published comparison and training-data provenance with checkpoint identities.
 
 * [Benchmark Charts](benchmark-charts.md) - Tracked chart builders, score snapshot, and historical chart definitions.
