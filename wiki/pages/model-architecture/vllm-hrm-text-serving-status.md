@@ -9,13 +9,78 @@ tags:
 - checkpoints
 - inference
 status: stable
-last_updated: 2026-07-23
+last_updated: 2026-10-05
 confidence: high
 part_of: /pages/model-architecture.md
 ---
 # vLLM HRM-Text Serving Status
 
 Part of [Model Architecture](/pages/model-architecture.md).
+
+## Installed implementation versus local adapters (2026-10-05)
+
+The `hrm` environment now has vLLM `0.23.1rc1.dev102+ga46abb7ae`.
+The historical environment observations below are superseded for this environment.
+Direct SHA-256 comparison with upstream commit `a46abb7ae` confirmed that both
+`model_executor/models/hrm_text.py` and
+`model_executor/layers/attention/prefill_prefix_lm_attention.py` are identical
+to upstream. HRM recurrence, fused gate/Q/K/V loading, and PrefixLM attention
+are therefore not local patches in this installed version. This is a targeted
+comparison, not certification that every installed vLLM file is unmodified.
+
+Local serving adaptations are the explicit Gemma 4 chat template under
+`evaluation/chat_templates`, `scripts/native_compatible_openai_proxy.py`
+(benchmark message flattening, optional BFCL native tool conversion and response
+normalization, optional context fitting), the fast-tokenizer instance locking
+in `dfm-evals/dfm_evals/vllm_patches.py`, and scheduler launch settings such as
+the FLASH_ATTN backend and eager execution. The benchmark proxy is not a
+transparent general-purpose multi-turn chat proxy. Gemma 4 formatting does not
+change the model architecture from HRM-Text to Gemma 4.
+
+### Launch-mode smoke (2026-10-05)
+
+`scripts/smoke_vllm_launch_modes.py` tested
+`exports/dfm8_XL_step1650000_ema_hf` on GPU 7 alongside training, with
+FA4, BF16, max context 4096, max sequences 2, GPU utilization 0.07,
+greedy decoding, and nine English/Danish arithmetic, summary, JSON, code,
+multi-turn and tool prompts repeated twice. No W&B logging or production
+configuration changes. Evidence (commands, server logs, prompts, token IDs,
+responses, timings, process GPU memory samples):
+`logs/smoke/vllm_launch_modes_20261005_retry/`.
+
+| Launch | Readiness | Completion tokens / request wall second | Sampled server peak MiB | Exact outputs versus eager explicit |
+| --- | ---: | ---: | ---: | ---: |
+| Eager, explicit template | 40.0 s | 41.1 | 13,566 | 18/18 |
+| Non-eager, explicit template | 86.0 s | 64.0 | 13,166 | 16/18 |
+| Eager, checkpoint template | 44.0 s | 42.2 | 13,566 | 18/18 |
+
+Non-eager successfully compiled and captured CUDA graphs (reported graph pool
+0.04 GiB). The only differing prompt was the Danish summary, in both repeats:
+both outputs were plausible but wording differed. This small, shared-GPU smoke
+is not benchmark score parity or a dedicated throughput benchmark. Readiness
+excludes a subsequent warmup request; sampled memory is not a CUDA allocator
+peak. Production eager defaults were not changed.
+
+The old 1650K bundled template differs functionally only by missing support
+for dictionary-valued tool results: a separate CPU rendering test fails there
+with the old template and succeeds with the explicit one. Standard OpenAI
+string tool results and the other nine cases render identically. Recent
+`dfm11_XL_epoch10_step_2850000_ema_hf`,
+`dfm11_XXL_wide_epoch_2_ema_hf`, and
+`dfm13_XXL_wide_step_800000_ema_hf` exports contain a template byte-identical
+to `evaluation/chat_templates/gemma4_native_chat.jinja`; the explicit override
+is redundant for those exports. Native vLLM chat serving needs no benchmark
+proxy. Tool parsing can be enabled with `--enable-auto-tool-choice
+--tool-call-parser gemma4`.
+
+Initial diagnostic startup failed because the default FlashInfer sampler
+could not find nvcc; retained in `logs/smoke/vllm_launch_modes_20261005/`.
+Successful tests used the scheduler's `VLLM_USE_FLASHINFER_SAMPLER=0` and
+`FLASHINFER_DISABLE_VERSION_CHECK=1`, plus
+`CUDA_HOME=/home/ucloud/miniforge3/envs/hrm-cu132` and its bin directory on
+PATH. This was an environment issue, not an eager/non-eager incompatibility.
+The current vLLM build automatically disables chunked prefill and prefix
+caching for this model's non-causal attention.
 
 Added on 2026-06-16.
 
