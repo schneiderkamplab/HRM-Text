@@ -106,6 +106,44 @@ division. Segment resumes use row cursors and preserve the same packing.
 
 ## Learning Rate
 
+### 2026-10-05 Continuation Assessment (Advisory Only)
+
+Owner asked whether to complete DFM12 including cooldown or switch to the
+DFM13 successor at 3150000. No scheduled rows or LR settings were changed.
+This is training epoch 11, not epoch 12; DFM12 names the dataset.
+
+Read-only W&B history windows from the existing XL run gave:
+
+| Step window | Logged records | Mean loss | Accuracy | Exact accuracy |
+|---|---:|---:|---:|---:|
+| 3000000-3005000 | 965 | 0.90686 | 79.0356% | 35.0574% |
+| 3045000-3050000 | 1005 | 0.90498 | 79.0680% | 35.1117% |
+| 3095000-3100000 | 1005 | 0.90475 | 79.0734% | 35.1667% |
+| 3100000-3105000 | 962 | 0.90032 | 79.1621% | 35.0963% |
+| 3119500-3124500 | 1005 | 0.90226 | 79.1066% | 35.2485% |
+
+These are means over logged records, not every optimizer step or a formal
+significance test. Base LR was 3e-4 throughout. Consult the
+[fixed-population evaluation comparison](../../docs/reports/dfm12-xl-epoch10-3050k-3100k.md):
+multilingual improves 65.97 to 67.08 between 3050K and 3100K, standard is nearly
+flat (78.80 to 78.85), DFM slips (69.22 to 68.75), and HumanEval slips
+(68.90 to 67.68). Large BFCL/EuroEval rebounds warrant separate interpretation.
+
+Provisional recommendation: evaluate 3150K and, if no material regression and
+DFM13 is verified/sample-ready, switch there instead of spending another
+175079 steps on DFM12. At current approximately 1.22-1.25 seconds/step those
+steps cost 59-61 training hours, excluding evaluations. This is an efficiency
+judgment, not evidence that DFM13 will necessarily improve held-out scores.
+DFM13 inheritance does not guarantee unchanged sampling weights or replay of
+the unconsumed DFM12 suffix. Verify retained-language token allocations.
+
+For continuous pretraining, avoid an automatic cooldown to 1e-5 followed by
+rewarm solely to cross a dataset boundary. Preserve optimizer/EMA and choose
+the successor LR schedule explicitly; retain 3150K as a durable branch point.
+Finishing the cooldown is preferable if the immediate goal is a finalized
+DFM12 release or a clean curriculum comparison. Data readiness was not
+established by this assessment; expected local DFM13 sample paths were absent.
+
 Retain XL BP8, H2/L3, GBS262144/GAS2, FSDP FP32 parameters/optimizer, BF16
 compute, per-block sharding, `fsdp_reshard_after_forward=false`, no-sync
 accumulation, compilation and no activation checkpointing. `lr_auto=true`;

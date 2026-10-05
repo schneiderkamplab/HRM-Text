@@ -4,10 +4,21 @@ title: DFM12 Multilingual EuroEval Registry
 description: Official task coverage, cached-runtime support, access preflight and contamination caveats for nineteen added languages.
 tags: [dfm12, euroeval, multilingual, evaluation]
 status: draft
-last_updated: 2026-09-30
+last_updated: 2026-10-05
 confidence: high
 ---
 # DFM12 Multilingual EuroEval Registry
+
+## 3100K Comparison Snapshot
+
+The [epoch-10/3050K/3100K comparison](../../docs/reports/dfm12-xl-epoch10-3050k-3100k.md)
+records fixed-population EMA scores from merged local artifacts. Multilingual-v2
+improves from45.62 to65.97 to67.08; standard-suite scores are80.72,78.80,78.85.
+English EuroEval HellaSwag and BFCL show unusually large rebounds at3100K;
+do not interpret these as uniform capability gains without inspecting outputs.
+At the snapshot, Multi-IFEval ET/CA/EL remained active, separate from the
+completed fixed headline populations. This is a read-only comparison, not a
+new metric definition or W&B backfill.
 
 ## Scope And Artifacts
 
