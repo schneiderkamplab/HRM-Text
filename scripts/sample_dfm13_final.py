@@ -1,5 +1,6 @@
 """Wait for the final verified composition, sample one epoch, and scan bounds."""
 import os
+from collections import Counter
 from pathlib import Path
 import subprocess
 import sys
@@ -17,7 +18,21 @@ STAGING=Path('data/sampled_dfm13.building-20261005-v1')
 RECONCILIATION=Path('data/dfm13/all-source-finalization-20261004-v1/sampling-reconciliation.json')
 
 
-def validate_sample(root):
+def inherited_short_rows(root):
+    arrays={k:np.load(root/'epoch_0'/(k+'.npy'),mmap_mode='r') for k in FIELDS}
+    rows=Counter()
+    for start in range(0,len(arrays['resp_len']),1_000_000):
+        response=arrays['resp_len'][start:start+1_000_000]
+        for offset in np.flatnonzero(response<2):
+            index=start+int(offset)
+            row=tuple(int(arrays[k][index]) for k in FIELDS)
+            if int(arrays['resp_len'][index])!=1:
+                raise ValueError('Inherited empty response')
+            rows[row]+=1
+    return rows
+
+
+def validate_sample(root, allowed_short_rows=None):
     meta=load(root/'metadata.json')
     tokens=np.load(root/'tokens.npy',mmap_mode='r')
     vocab=meta['tokenizer_info']['vocab_size']
@@ -27,6 +42,7 @@ def validate_sample(root):
         if np.any(chunk<0) or np.any(chunk>=vocab):raise ValueError('Token outside vocabulary')
     arrays={k:np.load(root/'epoch_0'/(k+'.npy'),mmap_mode='r') for k in FIELDS}
     n=len(arrays['inst_len']);total=0
+    remaining=Counter(allowed_short_rows or {})
     if any(a.ndim!=1 or len(a)!=n or a.dtype.kind not in 'iu' for a in arrays.values()):
         raise ValueError('Index shape/dtype mismatch')
     for start in range(0,n,1_000_000):
@@ -35,10 +51,16 @@ def validate_sample(root):
         for prefix in ('inst','resp'):
             pos=a[prefix+'_start'];length=a[prefix+'_len']
             if np.any(pos>len(tokens)) or np.any(length>len(tokens)-pos):raise ValueError('Token bounds')
-        if np.any(a['resp_len']<2) or np.any(a['inst_len']>meta['max_seq_len']) or np.any(a['resp_len']>meta['max_seq_len']-a['inst_len']):
+        for index in np.flatnonzero(a['resp_len']<2):
+            row=tuple(int(a[k][index]) for k in FIELDS)
+            if int(a['resp_len'][index])!=1 or remaining[row]<=0:
+                raise ValueError('Unapproved short response')
+            remaining[row]-=1
+        if np.any(a['inst_len']>meta['max_seq_len']) or np.any(a['resp_len']>meta['max_seq_len']-a['inst_len']):
             raise ValueError('Context or response length')
         total+=int(a['inst_len'].sum())+int(a['resp_len'].sum())
     if total!=meta['total_length']:raise ValueError('Token total mismatch')
+    if any(remaining.values()):raise ValueError('Missing inherited short response')
     return dict(rows=n,stored_tokens=len(tokens),epoch_tokens=total,max_seq_len=meta['max_seq_len'],
                 full_token_vocabulary_scan=True,full_index_bounds_scan=True)
 
@@ -104,7 +126,7 @@ def run():
         if OUTPUT.exists():raise ValueError('Final sampled destination already exists; verify independently, never overwrite')
         if not (STAGING/'metadata.json').exists():combine(base,sampled,STAGING,1)
         write_json(ROOT/'progress.json',dict(phase='full_output_scan',time=time.time()))
-        result=validate_sample(STAGING)
+        result=validate_sample(STAGING, allowed_short_rows=inherited_short_rows(base))
         base_rows=len(np.load(base/'epoch_0/inst_len.npy',mmap_mode='r'))
         base_total=sum(int(np.load(base/'epoch_0'/(k+'.npy'),mmap_mode='r').sum()) for k in ('inst_len','resp_len'))
         if result['rows']!=base_rows+expected_rows or result['epoch_tokens']!=base_total+expected_tokens:

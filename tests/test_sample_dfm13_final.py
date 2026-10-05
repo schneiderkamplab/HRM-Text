@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 from dfm12.io import write_json
-from scripts.sample_dfm13_final import validate_sample
+from scripts.sample_dfm13_final import validate_sample, inherited_short_rows
 
 
 def fixture(root):
@@ -27,3 +27,24 @@ def test_bad_vocab(tmp_path):
     fixture(tmp_path)
     np.save(tmp_path/'tokens.npy',np.array([1,2,3,99],dtype=np.uint32))
     with pytest.raises(ValueError,match='vocabulary'):validate_sample(tmp_path)
+
+
+def test_inherited_short_response_requires_exact_approval(tmp_path):
+    fixture(tmp_path)
+    np.save(tmp_path/'epoch_0/inst_len.npy',np.array([3],dtype=np.uint64))
+    np.save(tmp_path/'epoch_0/resp_start.npy',np.array([3],dtype=np.uint64))
+    np.save(tmp_path/'epoch_0/resp_len.npy',np.array([1],dtype=np.uint64))
+    with pytest.raises(ValueError,match='Unapproved short'):validate_sample(tmp_path)
+    allowed=inherited_short_rows(tmp_path)
+    assert validate_sample(tmp_path,allowed)['epoch_tokens']==4
+    np.save(tmp_path/'epoch_0/resp_start.npy',np.array([2],dtype=np.uint64))
+    with pytest.raises(ValueError,match='Unapproved short'):validate_sample(tmp_path,allowed)
+    np.save(tmp_path/'epoch_0/resp_start.npy',np.array([3],dtype=np.uint64))
+    allowed.update(allowed)
+    with pytest.raises(ValueError,match='Missing inherited'):validate_sample(tmp_path,allowed)
+
+
+def test_empty_inherited_response_rejected(tmp_path):
+    fixture(tmp_path)
+    np.save(tmp_path/'epoch_0/resp_len.npy',np.array([0],dtype=np.uint64))
+    with pytest.raises(ValueError,match='Inherited empty'):inherited_short_rows(tmp_path)

@@ -19,6 +19,32 @@ See [assembly history](dfm13-verified-additions-assembly.md).
 
 ## Execution
 
+### Final sampled-output validation finding (2026-10-05)
+
+Source verification and token copying/merging completed, but the final sampled
+output was not published: `sample_dfm13_final.validate_sample` rejects response
+lengths below two. A complete index-length scan found exactly 407 such rows in
+both inherited DFM11 (235,520,711 rows) and merged DFM13 (365,938,673 rows),
+and none in the new additions (130,417,962 rows). Neither base nor additions
+nor merged output has an over-context prompt or combined length. Example base
+row 217472 has instruction length 4096 and response length 1, within the 4097
+storage limit. The sampler's truncation path checks the minimum response length
+before truncating and permits one remaining response token; the final validator
+uses a stricter invariant. This is an inherited-data/validator contract mismatch,
+not evidence of newly introduced overlength examples. Staging remains available
+at `data/sampled_dfm13.building-20261005-v1`; do not redo token copying or silently
+drop inherited rows. Resolve the validation contract and rerun validation before
+publication. No validator or data change was made during this diagnosis.
+
+The owner subsequently authorized finishing the handoff. The validator now
+allows only the exact inherited short-row multiset (all four token index
+fields and multiplicity), rejects empty responses and unapproved short rows,
+and requires every approved inherited occurrence to remain present. New
+additions still use the strict two-token minimum. Five focused tests passed.
+The sampler was restarted with 32 hash workers, reusing completed additions
+and merged staging rather than recopying; final publication remains gated on
+the full scans. This supersedes the earlier unresolved-validator status.
+
 Set `DFM13_VERIFY_WORKERS=32` for the final assembly, Faroese successor and
 sampling processes. `assemble_dfm13_successor.py` uses 32 spawned processes for
 independent semantic/provenance/token verification. Each worker owns its
