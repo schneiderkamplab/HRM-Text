@@ -31,6 +31,7 @@ def ready(endpoint):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
+    parser.add_argument('--client-concurrency', type=int, default=384)
     args = parser.parse_args()
     root = args.root.resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -59,6 +60,8 @@ def main():
                 directory.mkdir()
                 owner = uuid.uuid4().hex
                 command, env = command_env({'devices': [device]}, owner)
+                # Full-GPU bulk serving should use vLLM's compilation/graph defaults.
+                command.remove('--enforce-eager')
                 for option, value in {
                     '--served-model-name': MODEL, '--port': str(8800 + i),
                     '--tensor-parallel-size': '1', '--gpu-memory-utilization': '.95',
@@ -68,6 +71,8 @@ def main():
                     command[command.index(option) + 1] = value
                 command += ['--enable-auto-tool-choice', '--tool-call-parser', 'gemma4',
                             '--reasoning-parser', 'gemma4']
+                command.insert(command.index('--served-model-name') + 2,
+                               'google/gemma-4-26B-A4B-it')
                 env['VLLM_PORT'] = str(32000 + i * 100)
                 with (directory / 'server.log').open('x') as log:
                     process = subprocess.Popen(command, env=env, stdin=subprocess.DEVNULL,
@@ -83,7 +88,7 @@ def main():
                 'model': MODEL, 'source_model': 'google/gemma-4-26B-A4B-it',
                 'endpoints': [r['endpoint'] for r in records],
                 'gpu_memory_utilization': .95, 'max_num_seqs': 1024,
-                'max_model_len': 32768, 'client_concurrency_per_server': 256,
+                'max_model_len': 32768, 'client_concurrency_per_server': args.client_concurrency,
                 'supervisor': identity(os.getpid()), 'shared': True,
             })
             start = time.monotonic()

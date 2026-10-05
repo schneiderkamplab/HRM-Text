@@ -126,9 +126,13 @@ class HTTPFailure(RuntimeError):
         super().__init__(f'HTTP {status}')
 
 
-async def raw_query(session, endpoint, payload, writer, metadata):
+async def raw_query(session, endpoint, payload, writer, metadata, *, offload_writer=False):
     """Capture bytes before strict envelope parsing; leave completion text raw."""
-    rid = writer.begin(endpoint, payload, metadata)
+    async def persist(fn, *args, **kwargs):
+        if offload_writer:
+            return await asyncio.to_thread(fn, *args, **kwargs)
+        return fn(*args, **kwargs)
+    rid = await persist(writer.begin, endpoint, payload, metadata)
     status, body, truncated = None, bytearray(), False
     try:
         async with session.post(endpoint.rstrip('/') + '/chat/completions', json=payload) as response:
@@ -140,10 +144,10 @@ async def raw_query(session, endpoint, payload, writer, metadata):
                     truncated = True
                     break
     except BaseException as exc:
-        writer.finish(rid, status=status, raw_body_base64=base64.b64encode(body).decode(),
+        await persist(writer.finish, rid, status=status, raw_body_base64=base64.b64encode(body).decode(),
             raw_body_utf8=body.decode('utf-8', errors='replace'), transport_error=repr(exc), truncated=truncated)
         raise
-    writer.finish(rid, status=status, raw_body_base64=base64.b64encode(body).decode(),
+    await persist(writer.finish, rid, status=status, raw_body_base64=base64.b64encode(body).decode(),
         raw_body_utf8=body.decode('utf-8', errors='replace'), truncated=truncated)
     if status != 200:
         raise HTTPFailure(status)

@@ -92,6 +92,22 @@ def test_openhermes_target_exclusions_and_reuse(inventory, tmp_path):
     provider.close()
 
 
+def test_explicit_native_reuse_between_families_only(inventory, tmp_path):
+    root, _ = inventory
+    settings = dict(config(), source_reuse_by_family=True)
+    provider = eu.SourceProvider(root, tmp_path/'run', settings)
+    first = provider.next_spec('de', 'grounded-instruct', 0)
+    assert provider.next_spec('de', 'summary-rewrite', 0)['source'] == first['source']
+    with pytest.raises(eu.SeedUnavailable):
+        provider.next_spec('de', 'grounded-instruct', 1)
+    provider.close()
+    provider = eu.SourceProvider(root, tmp_path/'run', settings)
+    assert provider.next_spec('de', 'grounded-instruct', 0) == first
+    provider.close()
+    with pytest.raises(ValueError, match='drift'):
+        eu.SourceProvider(root, tmp_path/'run', config())
+
+
 def test_missing_inventory_only_pauses_source_families(tmp_path):
     provider = eu.SourceProvider(tmp_path/'missing', tmp_path/'run', config())
     assert provider.next_spec('uk','math-code',0)['reference']

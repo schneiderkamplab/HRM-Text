@@ -92,6 +92,19 @@ class Ledger:
           CREATE TABLE IF NOT EXISTS fingerprints (fingerprint TEXT PRIMARY KEY, owner TEXT NOT NULL);
           CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY,value TEXT NOT NULL);
         ''')
+        self.allowed_groups = None
+
+    def restrict_groups(self, groups):
+        selected = frozenset(tuple(group) for group in groups)
+        known = set(map(tuple, self.db.execute('SELECT language,family FROM groups')))
+        if not selected or not selected <= known:
+            raise ValueError('Approval must name existing language/family groups')
+        self.allowed_groups = selected
+
+    def remaining_groups(self):
+        groups = self.db.execute('SELECT * FROM groups WHERE accepted < target AND attempts < 6*target').fetchall()
+        return [g for g in groups if self.allowed_groups is None or
+                (g['language'], g['family']) in self.allowed_groups]
 
     @contextmanager
     def transaction(self):
@@ -117,6 +130,8 @@ class Ledger:
             ORDER BY CAST(attempts AS REAL)/target, language,family''', (now,)).fetchall()
         for group in groups:
             language, family, slot = group['language'], group['family'], group['next_slot']
+            if self.allowed_groups is not None and (language, family) not in self.allowed_groups:
+                continue
             try:
                 spec = provider.next_spec(language, family, slot)
             except unavailable as exc:
@@ -194,6 +209,11 @@ class Ledger:
             active=sum(g['active'] for g in groups), candidates=sum(g['attempts'] for g in groups),
             candidate_limit=sum(6*g['target'] for g in groups), groups=groups, **POLICY)
         report['remaining'] = report['target'] - report['accepted']
+        if self.allowed_groups is not None:
+            report['approved_groups'] = sorted(self.allowed_groups)
+            report['deferred_target'] = sum(g['target']-g['accepted'] for g in groups
+                if (g['language'], g['family']) not in self.allowed_groups)
+            report['approved_remaining'] = report['remaining'] - report['deferred_target']
         report['budget_exhausted_groups'] = sum(g['accepted'] < g['target'] and g['attempts'] >= 6*g['target'] and not g['active'] for g in groups)
         write_json(Path(root) / 'progress.json', report)
         return report
@@ -464,7 +484,8 @@ class AdmissionGate:
             return False
 
 
-async def execute(root, endpoints=pilot.ENDPOINTS, concurrency=32, timeout=600, max_kv_cache_utilization=.90):
+async def execute(root, endpoints=pilot.ENDPOINTS, concurrency=32, timeout=600, max_kv_cache_utilization=.90,
+                  allowed_groups=None):
     import aiohttp
     root = Path(root).resolve()
     v6.validate_endpoints(endpoints)
@@ -475,6 +496,8 @@ async def execute(root, endpoints=pilot.ENDPOINTS, concurrency=32, timeout=600, 
     with lock(root / 'controller.lock'):
         manifest = verify(root)
         ledger = Ledger(root / 'jobs.sqlite')
+        if allowed_groups is not None:
+            ledger.restrict_groups(allowed_groups)
         stop = asyncio.Event()
         loop = asyncio.get_running_loop()
         phase, tasks = 'preflight', []
@@ -514,13 +537,13 @@ async def execute(root, endpoints=pilot.ENDPOINTS, concurrency=32, timeout=600, 
 
                 async def worker(endpoint):
                     def has_remaining():
-                        return ledger.db.execute('SELECT 1 FROM groups WHERE accepted < target AND attempts < 6*target LIMIT 1').fetchone() is not None
+                        return bool(ledger.remaining_groups())
                     while not stop.is_set():
                         if not await gate.admit(endpoint,has_remaining):
                             return
                         job = ledger.reserve(provider, provider_module.SeedUnavailable, root)
                         if job is None:
-                            unfinished = ledger.db.execute('SELECT 1 FROM groups WHERE accepted < target AND attempts < 6*target LIMIT 1').fetchone()
+                            unfinished = ledger.remaining_groups()
                             if not unfinished:
                                 return
                             await stop_wait(stop,5)
@@ -558,7 +581,9 @@ async def execute(root, endpoints=pilot.ENDPOINTS, concurrency=32, timeout=600, 
                     reporting.cancel()
                     await asyncio.gather(reporting, return_exceptions=True)
                 state = ledger.report(root, phase)
-                phase = ('drained' if stop.is_set() else 'complete' if not state['remaining'] else 'blocked')
+                phase = ('drained' if stop.is_set() else 'complete' if not state['remaining']
+                         else 'approved_groups_finished' if allowed_groups is not None
+                         and state['approved_remaining'] == 0 else 'blocked')
         except BaseException:
             phase = 'interrupted_or_failed'
             raise

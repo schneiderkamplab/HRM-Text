@@ -61,6 +61,26 @@ def test_six_times_attempt_cap(tmp_path):
     db.close()
 
 
+def test_group_approval_defers_without_changing_targets(tmp_path):
+    db = ledger(tmp_path, groups=[dict(language='nl', family=f, accepted_target=1)
+                                 for f in ('grounded-instruct', 'math-code')])
+    with pytest.raises(ValueError):
+        db.restrict_groups([('nl', 'unknown')])
+    db.restrict_groups([('nl', 'math-code')])
+    job = db.reserve(Provider(), Shortage, tmp_path)
+    assert job['spec']['family'] == 'math-code'
+    quarter.Seen(db, job['id']).add('a'*64)
+    db.finish(job['id'], outcome(job, True))
+    assert not db.remaining_groups()
+    assert db.reserve(Provider(), Shortage, tmp_path) is None
+    state = db.report(tmp_path, 'approved_groups_finished')
+    assert state['target'] == 2 and state['remaining'] == state['deferred_target'] == 1
+    assert state['approved_remaining'] == 0
+    db.restrict_groups([('nl', 'grounded-instruct'), ('nl', 'math-code')])
+    assert db.reserve(Provider(), Shortage, tmp_path)['spec']['family'] == 'grounded-instruct'
+    db.close()
+
+
 def test_seed_shortage_no_attempt_no_cursor_and_rotate(tmp_path):
     class Partial(Provider):
         def next_spec(self, language, family, slot):

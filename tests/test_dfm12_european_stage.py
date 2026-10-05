@@ -1,4 +1,22 @@
 from dfm12.european_stage import StageQueue, adjust, metrics
+
+
+def test_explicit_jobs_share_leases_without_claiming_bulk(tmp_path):
+    path = tmp_path / 'jobs.sqlite'
+    bulk = StageQueue(path)
+    a = bulk.add('generate', {'name': 'bulk'})
+    b = bulk.add('generate', {'name': 'control'})
+    selected = StageQueue(path, [b])
+    assert [row[0] for row in selected.claim_batch('generate', 'control-owner', 10)] == [b]
+    assert [row[0] for row in bulk.claim_batch('generate', 'bulk-owner', 10)] == [a]
+    assert selected.status() == [dict(stage='generate', status='running', count=1)]
+    selected.finish_batch('wrong-owner', [(b, 1, {}, None)])
+    assert selected.status()[0]['status'] == 'running'
+    selected.finish_batch('control-owner', [(b, 1, {}, None)])
+    assert selected.status()[0]['status'] == 'done'
+    assert bulk.db.execute('SELECT status FROM jobs WHERE id=?', (a,)).fetchone()[0] == 'running'
+    selected.close()
+    bulk.close()
 import asyncio
 import json
 import httpx

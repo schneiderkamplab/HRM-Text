@@ -54,7 +54,13 @@ class SourceProvider(BaseProvider):
             raise ValueError('Invalid European target languages')
         super().__init__(seeds_root, root, config)
         self.languages = tuple(languages)
-        signature = digest(dict(version=VERSION, languages=self.languages, names=LANGUAGES))
+        self.source_reuse_by_family = config.get('source_reuse_by_family', False)
+        if type(self.source_reuse_by_family) is not bool:
+            raise ValueError('source_reuse_by_family must be boolean')
+        policy = dict(version=VERSION, languages=self.languages, names=LANGUAGES)
+        if self.source_reuse_by_family:
+            policy['source_reuse_by_family'] = True
+        signature = digest(policy)
         with self.db:
             row = self.db.execute("SELECT value FROM metadata WHERE key='european_adapter'").fetchone()
             if row is None and self.db.execute('SELECT 1 FROM selections LIMIT 1').fetchone():
@@ -79,6 +85,8 @@ class SourceProvider(BaseProvider):
             if 'source' in spec:
                 pool = 'openhermes' if family == 'openhermes' else language
                 scope = f'{language}/{pool}'
+                if self.source_reuse_by_family and pool != 'openhermes':
+                    scope += f'/{family}'
                 row = self.db.execute('SELECT seq FROM cursors WHERE scope=?', (scope,)).fetchone()
                 cursor = row[0] if row else 0
                 if not self.seeds_path.is_file():

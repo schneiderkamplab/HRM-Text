@@ -19,18 +19,38 @@ from .records import validate_messages
 
 
 class StageQueue(Queue):
-    def __init__(self, path):
+    def __init__(self, path, job_ids=None):
         super().__init__(path)
-        self.db.execute('CREATE INDEX IF NOT EXISTS stage_dispatch ON jobs(stage,status)')
-        self.db.execute('CREATE INDEX IF NOT EXISTS lease_dispatch ON jobs(status,lease)')
+        self.job_ids = tuple(dict.fromkeys(job_ids or ()))
+        if len(self.job_ids) > 128:
+            raise ValueError('At most 128 explicitly selected jobs')
+        self.selection = (' AND id IN (' + ','.join('?' for _ in self.job_ids) + ')') if self.job_ids else ''
+        # Prepared queues can already have equivalent indexes with other names.
+        indexed = {
+            tuple(row[2] for row in self.db.execute(
+                'SELECT * FROM pragma_index_info(?)', (index[1],)))
+            for index in self.db.execute('PRAGMA index_list(jobs)').fetchall()
+            if not index[4]
+        }
+        for name, columns in [('stage_dispatch', ('stage', 'status')),
+                              ('lease_dispatch', ('status', 'lease'))]:
+            if columns not in indexed:
+                self.db.execute(f'CREATE INDEX IF NOT EXISTS {name} ON jobs({",".join(columns)})')
 
     def claim_batch(self, stage, owner, count):
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
-            self.db.execute("UPDATE jobs SET status=CASE WHEN attempts>=4 THEN 'failed' ELSE 'pending' END,owner=NULL WHERE status='running' AND lease<?",(time.time(),))
-            result=self.db.execute("SELECT id,payload,attempts FROM jobs WHERE stage=? AND status='pending' AND attempts<4 ORDER BY rowid LIMIT ?",(stage,count)).fetchall()
+            self.db.execute("UPDATE jobs SET status=CASE WHEN attempts>=4 THEN 'failed' ELSE 'pending' END,owner=NULL WHERE status='running' AND lease<?" + self.selection,(time.time(), *self.job_ids))
+            result=self.db.execute("SELECT id,payload,attempts FROM jobs WHERE stage=? AND status='pending' AND attempts<4" + self.selection + " ORDER BY rowid LIMIT ?",(stage,*self.job_ids,count)).fetchall()
             self.db.executemany("UPDATE jobs SET status='running',owner=?,lease=?,attempts=attempts+1 WHERE id=?",[(owner,time.time()+1800,r[0]) for r in result])
         return result
+
+    def status(self):
+        if not self.job_ids:
+            return super().status()
+        return [dict(stage=a, status=b, count=c) for a,b,c in self.db.execute(
+            'SELECT stage,status,count(*) FROM jobs WHERE 1=1' + self.selection +
+            ' GROUP BY stage,status', self.job_ids)]
 
     def heartbeat(self, owner):
         self.db.execute("UPDATE jobs SET lease=? WHERE status='running' AND owner=?",(time.time()+1800,owner))
@@ -73,7 +93,7 @@ def adjust(current, sample, maximum=1024):
     return current
 
 
-async def run(path, stage, endpoints, output, initial=128, maximum=1024):
+async def run(path, stage, endpoints, output, initial=128, maximum=1024, job_ids=None):
     owner=uuid.uuid4().hex
     executor=ThreadPoolExecutor(max_workers=1)
     loop=asyncio.get_running_loop()
@@ -82,7 +102,7 @@ async def run(path, stage, endpoints, output, initial=128, maximum=1024):
         loop.add_signal_handler(sig,stopping.set)
     async def call(fn,*args):
         return await loop.run_in_executor(executor,fn,*args)
-    queue=await call(StageQueue,path)
+    queue=await call(StageQueue,path,job_ids)
     active={e:set() for e in endpoints}
     limits={e:initial for e in endpoints}
     counts={'done':0,'request_errors':0}
@@ -233,7 +253,8 @@ if __name__=='__main__':
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--concurrency',type=int,default=128)
     p.add_argument('--max-concurrency',type=int,default=1024)
+    p.add_argument('--job-id', action='append', help='Restrict this client to explicit jobs; other rows remain untouched')
     a=p.parse_args()
     if not 1<=a.concurrency<=a.max_concurrency<=1024:p.error('Require 1 <= concurrency <= maximum <= 1024')
     a.output.mkdir(parents=True,exist_ok=True)
-    asyncio.run(run(a.database,a.stage,a.endpoint,a.output,a.concurrency,a.max_concurrency))
+    asyncio.run(run(a.database,a.stage,a.endpoint,a.output,a.concurrency,a.max_concurrency,a.job_id))
