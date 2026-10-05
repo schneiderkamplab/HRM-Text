@@ -1,0 +1,47 @@
+{
+  "status": "bulk_approval_withheld",
+  "basis": "Assistant inspection of accepted production-probe-coherence examples; not native-speaker certification",
+  "required_next_comparison": "Gemma 4 31B independent review and generation comparison, preserving current candidates and raw reviews",
+  "controls": [
+    {
+      "wave": "baltic",
+      "language": "lt",
+      "family": "grounded-instruct",
+      "issue": "Generated user asks for 'punktine sarasa' with incorrect agreement/case (actual accented text retained in candidate); assistant facts otherwise follow the supplied dates.",
+      "expected_action": "repair_generated_user_grammar_or_regenerate"
+    },
+    {
+      "wave": "baltic",
+      "language": "lv",
+      "family": "grounded-instruct",
+      "issue": "Assistant reports 31 studio albums but the supplied list contains 33 entries, including The Union, Wonderful Crazy Night, and Regimental Sgt. Zippo.",
+      "expected_action": "reject_or_correct_count_to_33"
+    },
+    {
+      "wave": "wave4",
+      "language": "lb",
+      "family": "multiturn",
+      "issue": "Generated conversation contains German intrusions ('Nein', 'Ech bin') and the final answer wrongly attributes the artist's original symbolism to both sculpture and plaque rather than sculpture alone.",
+      "expected_action": "reject_or_regenerate_all_affected_turns"
+    },
+    {
+      "wave": "wave4",
+      "language": "be",
+      "family": "openhermes",
+      "issue": "Generated word choices for whale and balloon mix languages or use unnatural invented forms; repeated agreement and inflection defects remain in the story.",
+      "expected_action": "reject_or_regenerate_in_idiomatic_belarusian"
+    },
+    {
+      "wave": "wave4",
+      "language": "sl",
+      "family": "summary-rewrite",
+      "issue": "User says 'za otoka' instead of 'za otroka'; answer uses 'z podzemno' rather than 's podzemno' and adds unsupported 'zgodnji' to the Kremlin description.",
+      "expected_action": "reject_or_repair_grammar_and_unsupported_modifier"
+    }
+  ],
+  "limitations": [
+    "Small purposive sample; not an estimated corpus-wide error rate.",
+    "No passing control or language-level bulk approval inferred from absence of a listed defect.",
+    "These synthetic calibration findings do not alter already completed source-audit decisions."
+  ]
+}

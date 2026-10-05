@@ -1,0 +1,31 @@
+version: 1
+campaign: dfm13-wave4-synthetic-v1
+active_milestone: tenth
+seed: 20261003
+source_reuse_by_family: true
+generator: google/gemma-4-26B-A4B-it
+auditor: google/gemma-4-26B-A4B-it
+audit_every_candidate: true
+repeat: 1
+max_rendered_example_tokens: 4096
+milestone_divisors: {tenth: 10, quarter: 4, half: 2, full: 1}
+languages: {sq: 1, be: 1, bs: 1, bg: 1, hr: 1, hu: 1, lb: 1, sr: 1, sk: 1, sl: 1, fa: 1}
+families:
+  multiturn: {full_priority_rows: 150000, estimated_tokens_per_row: 2400}
+  grounded-instruct: {full_priority_rows: 200000, estimated_tokens_per_row: 1800}
+  openhermes: {full_priority_rows: 150000, estimated_tokens_per_row: 700}
+  summary-rewrite: {full_priority_rows: 100000, estimated_tokens_per_row: 1500}
+  math-code: {full_priority_rows: 60000, estimated_tokens_per_row: 1200}
+  tool-dialogue: {full_priority_rows: 40000, estimated_tokens_per_row: 1600}
+tier_evidence:
+  sq: Kapibara and Aya are small; broad instruction coverage remains sparse.
+  be: No broad native instruction component prepared yet.
+  bs: Parallel and text sources do not substitute for diverse instruction supervision.
+  bg: Prepared EuroBlocks slice is small and translation-focused.
+  hr: Prepared native and EuroBlocks instruction slices total fewer than 1000 candidates.
+  hu: Prepared Aya and EuroBlocks are limited in size and breadth.
+  lb: LuxIT is sizable but Wikipedia-specific, not broad conversational supervision.
+  sr: Prepared Aya instruction slice is small.
+  sk: Prepared EuroBlocks slice is small and translation-focused.
+  sl: Prepared EuroBlocks slice is small and translation-focused.
+  fa: Selected FarsInstruct provides QA, summarization and entailment but limited broad chat/tool coverage.

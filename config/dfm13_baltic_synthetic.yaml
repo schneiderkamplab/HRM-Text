@@ -1,0 +1,18 @@
+version: 1
+campaign: dfm13-baltic-synthetic-v1
+active_milestone: tenth
+seed: 20261003
+generator: google/gemma-4-26B-A4B-it
+auditor: google/gemma-4-26B-A4B-it
+audit_every_candidate: true
+repeat: 1
+max_rendered_example_tokens: 4096
+milestone_divisors: {tenth: 10, quarter: 4, half: 2, full: 1}
+languages: {lt: 1, lv: 1}
+families:
+  multiturn: {full_priority_rows: 150000, estimated_tokens_per_row: 2400}
+  grounded-instruct: {full_priority_rows: 200000, estimated_tokens_per_row: 1800}
+  openhermes: {full_priority_rows: 150000, estimated_tokens_per_row: 700}
+  summary-rewrite: {full_priority_rows: 100000, estimated_tokens_per_row: 1500}
+  math-code: {full_priority_rows: 60000, estimated_tokens_per_row: 1200}
+  tool-dialogue: {full_priority_rows: 40000, estimated_tokens_per_row: 1600}

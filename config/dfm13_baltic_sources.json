@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "languages": {"lt": "Lithuanian", "lv": "Latvian"},
+  "dala_source_holdout_policy": "include_original_articles_and_sittings_per_user_20261003; do_not_import_dala_pairs",
+  "sources": [
+    {"name": "baltic_lt_qa", "repo": "neurotechnology/lithuanian-qa-v1", "revision": "a2c5072aa6a01ed44660fafd70b59214563c73f6", "language": "lt", "kind": "qa", "patterns": ["lithuanian_qa.json", "README.md"], "license": "CC-BY-4.0 per card"},
+    {"name": "baltic_lv_qa", "repo": "martinsu/latvian-wikipedia-qa-gemma3", "revision": "ed202b8334890985f0879eeb48fff84565d890aa", "language": "lv", "kind": "chat", "patterns": ["data/train-*.parquet", "README.md"], "license": "CC-BY-SA-3.0"},
+    {"name": "baltic_lt_aya", "repo": "CohereLabs/aya_dataset", "revision": "f9ea04583f02a8f86404ff6c58bf75fe637df8a2", "language": "lt", "kind": "aya", "patterns": ["data/train-*.parquet", "README.md"], "license": "Apache-2.0"},
+    {"name": "baltic_lt_summary", "repo": "VytautoDidziojoUniversitetas/LT_Summarisation_Corpus", "revision": "42ff26844cd2b3d26880f631ab498da1568cda15", "language": "lt", "kind": "summary", "patterns": ["csv/train/*.csv", "README.md", "LICENSE.txt"], "license": "NewGenLTU OpenRAIL-D", "admission_hold": "custom_terms_and_medical_privacy_review"},
+    {"name": "baltic_lt_finepdfs", "repo": "HuggingFaceFW/finepdfs-edu", "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde", "language": "lt", "kind": "text", "patterns": ["data/lit_Latn/train/*.parquet", "README.md"], "license": "ODC-BY database; underlying document rights need screening", "admission_hold": "document_rights_ocr_language_screening"},
+    {"name": "baltic_lv_finepdfs", "repo": "HuggingFaceFW/finepdfs-edu", "revision": "9cfabe2127faca99b3d5c4dc6d1fcb397399ebde", "language": "lv", "kind": "text", "patterns": ["data/lvs_Latn/train/*.parquet", "README.md"], "license": "ODC-BY database; underlying document rights need screening", "admission_hold": "document_rights_ocr_language_screening"},
+    {"name": "baltic_lt_blkt", "repo": "VSSA-SDSA/LT_AI_BLKT", "revision": "4fa6c3894fd9f1f9f8db773ae844e126fa61f61d", "language": "lt", "kind": "text", "patterns": ["data/*.parquet", "README.md", "LICENSE.txt"], "license": "NewGenLTU OpenRAIL-D", "admission_hold": "custom_terms_and_source_stratification"}
+  ],
+  "local_source_manifests": [
+    "/work/mimir/DaLA/la_output/resources/lithuanian-extension-v7/lt/sources.json",
+    "/work/mimir/DaLA/la_output/resources/latvian-extension-v2/production/lv/sources.json"
+  ],
+  "deferred": {
+    "saillab/alpaca-lithuanian-cleaned": "CC-BY-NC, not selected",
+    "saillab/alpaca-latvian-cleaned": "CC-BY-NC, not selected",
+    "additional_OPUS_pairs": "Preparation now active in translations and institutional-translations; remaining unreviewed releases stay excluded."
+  },
+  "supplemental_cpu": {
+    "latvian_p3": {"repo": "matiss/P3-Latvian-translategemma-27b", "revision": "f8d6ecba6fa51521db139c57de9b21870eed9b33", "selection": "data/dfm13/baltic/p3/selection.json", "status": "audit_pending", "admission_hold": "constituent_rights_review_before_export"},
+    "parlamint_lt": {"version": "2.1", "record": "https://www.clarin.si/repository/xmlui/handle/11356/1432", "path": "data/dfm13/baltic/parlamint/lt/documents.jsonl", "use": "transformations_only", "license": "CC-BY-4.0"},
+    "parlamint_lv": {"version": "5.0", "record": "https://www.clarin.si/repository/xmlui/handle/11356/2004", "path": "data/dfm13/baltic/parlamint/lv/documents.jsonl", "use": "transformations_only", "license": "CC-BY-4.0"},
+    "opus": {"config": "data/dfm13/baltic/translations/config.json", "direct_preferred": true, "english_pivot_fallback": true, "english_pair_fraction": 0.25, "other_pair_fraction": 0.0625, "both_directions_combined": true}
+  }
+}
