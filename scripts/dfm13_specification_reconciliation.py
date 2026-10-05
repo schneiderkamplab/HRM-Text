@@ -8,6 +8,7 @@ import numpy as np
 
 from dfm12.io import file_hash, load, write_json, lock
 from scripts.dfm13_finalization_inventory import build
+from scripts.queue_dfm13_fo_instruct_successor import ROOT as FINAL_ASSEMBLY, require_included
 
 
 def pin(path):
@@ -127,6 +128,23 @@ def gates(specifications, publication):
             r.get('ready') is True for r in publication))
 
 
+def setur_readiness(entry):
+    if entry.get('publication_contract')!='setur-fo-instruct-native-v1':return None
+    if entry.get('repo_id')!='Setur/fo-instruct' or entry.get('repeat')!=10:
+        raise ValueError('Invalid Setur source identity/repeat')
+    receipt=Path(entry['output']).parent.parent/'completion.json'
+    proof=load(receipt)
+    if proof['entry']!=entry or proof['verification']['revision']!=entry['revision']:
+        raise ValueError('Setur completion binding mismatch')
+    pins=[pin(receipt)]
+    for path,sha in [(entry[k],entry[k+'_sha256']) for k in ('output','raw_source','source_card')]+list(entry['token_files'].items()):
+        value=dict(path=path,sha256=sha)
+        if not valid_pin(value):raise ValueError('Setur local conversion evidence drift')
+        pins.append(value)
+    return dict(ready=True,basis='pinned_upstream_source_with_verified_local_conversion',
+                repo=entry['repo_id'],revision=entry['revision'],pins=pins,new_upload_required=False)
+
+
 def reconcile(inventory):
     reference = inventory['authoritative']
     assembly_path = Path(reference['root'])/'assembly.json'
@@ -142,6 +160,8 @@ def reconcile(inventory):
         item = dict(readiness[row['name']])
         if row['name'] in grouped:
             item.update(grouped[row['name']])
+        source_ready=setur_readiness(row['registry_evidence'][-1]['entry'])
+        if source_ready:item.update(source_ready)
         publication.append(item)
     inherited_path = Path('data/dfm13/dfm12-full-inheritance-20261004-v2/inheritance.json')
     inherited = load(inherited_path)
@@ -192,7 +212,7 @@ def reconcile(inventory):
                       xxl_identity='21 distinct persona packages remain excluded repeat0',
                       dala='v2 incremental; prior clean controls and exact noisy pairs excluded'),
                   sampling=dict(epochs=1, seed=0, no_sampling_performed=True,
-                                repeat_policy='preserve sealed mapping: XL identity10, MATH5, other1'),
+                                repeat_policy='preserve sealed mapping: XL identity10, Setur FO10, MATH5, other1'),
                   unresolved_risks=['Prior pair exclusion is not semantic deduplication; inherited historical all-split TV2R remains train-contaminated for evaluation'],
                   sampling_authorized_by_this_report=False)
     if load('data/dfm13/authoritative-additions.json') != reference:
@@ -242,7 +262,7 @@ def scan_inherited_lengths(output):
 
 def watch(output):
     """Release Tesla's existing sampler once final scope and receipts agree."""
-    expected = Path('data/dfm13/verified-all-finished-additions-20261005-v1').resolve()
+    expected = FINAL_ASSEMBLY.resolve()
     canonical = Path('data/dfm13/all-source-finalization-20261004-v1')
     with lock(output.parent/'watcher.lock'):
         lengths = scan_inherited_lengths(output.parent/'inherited-length-validation.json')
@@ -253,6 +273,7 @@ def watch(output):
             comp = load('data/dfm13/authoritative-composition.json')
             if (Path(ref['root']).resolve() == expected and
                     comp.get('additions_sha256') == ref['assembly_sha256']):
+                require_included(expected)
                 result = reconcile(build())
                 result['inherited_length_validation'] = pin(output.parent/'inherited-length-validation.json')
                 write_json(output, result)

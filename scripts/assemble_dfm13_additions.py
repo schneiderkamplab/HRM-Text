@@ -1,11 +1,13 @@
 """Prepare a verified wave3/4 additions tree and explicit base reference. No sampling.
 
-Verification is sequential and reads every selected source and token array.
+Verification reads every selected source and token array.
 Symlinks are hash-pinned references, not immutable copies of their targets.
 """
 import argparse
 import hashlib
 import json
+import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import re
 import sys
@@ -159,6 +161,9 @@ def verify_lt_summary_publication(entry, source, pins):
 
 
 def unready_reason(entry):
+    if entry.get('publication_contract') == 'setur-fo-instruct-native-v1':
+        from dfm12.fo_instruct_assembly import unready
+        return unready(entry)
     if entry.get('publication_contract') == 'wave4-compact-recovered-full-history-v1':
         from dfm12.wave4_finished_assembly import unready
         return unready(entry)
@@ -294,6 +299,9 @@ def verify_native_sample(source, parts, info, rows):
 
 
 def verify_entry(entry, contract, pins):
+    if entry.get('publication_contract') == 'setur-fo-instruct-native-v1':
+        from dfm12.fo_instruct_assembly import verify
+        return verify(entry, contract, pins, sys.modules[__name__])
     if entry.get('publication_contract') == 'wave4-compact-recovered-full-history-v1':
         from dfm12.wave4_finished_assembly import verify
         return verify(entry, contract, pins, sys.modules[__name__])
@@ -454,6 +462,20 @@ def verify_current_registry(manifest, snapshot):
                 '; changed='+','.join(changed))
 
 
+def verification_workers():
+    workers = int(os.environ.get('DFM13_VERIFY_WORKERS', '1'))
+    require(1 <= workers <= 32, 'DFM13_VERIFY_WORKERS must be between 1 and 32')
+    return workers
+
+
+def verify_hash(item):
+    path, expected = item
+    path = Path(path)
+    before = signature(path)
+    require(checksum(path) == expected, f'Assembly input changed: {path}')
+    require(signature(path) == before, f'Assembly input changed during verification: {path}')
+
+
 def verify_assembly(output):
     """Recheck linked additions before later consumption; does not sample."""
     manifest = json.loads((output / 'assembly.json').read_text())
@@ -462,8 +484,16 @@ def verify_assembly(output):
             'quality_hold_source_fidelity: previously assembled source now held')
     require(checksum(output / 'registry.snapshot.json') == manifest['registry_sha256'], 'Registry snapshot changed')
     verify_current_registry(manifest, json.loads((output / 'registry.snapshot.json').read_text()))
-    for path, record in manifest['files'].items():
-        require(checksum(Path(path)) == record['sha256'], f'Assembly input changed: {path}')
+    items = [(path, record['sha256']) for path, record in manifest['files'].items()]
+    workers = verification_workers()
+    if workers == 1:
+        for item in items:
+            verify_hash(item)
+    else:
+        print(f'Verifying {len(items)} pinned files with {workers} hash workers', flush=True)
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            for _ in pool.map(verify_hash, items):
+                pass
     for relative, expected in manifest['generated_files'].items():
         require(checksum(output / relative) == expected, f'Generated assembly file changed: {relative}')
     for source in manifest['ready_additions']:

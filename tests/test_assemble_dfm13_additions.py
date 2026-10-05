@@ -52,6 +52,22 @@ def run(f):
     return m.assemble(f['registry'], f['base'], f['output'])
 
 
+def test_parallel_rehash_matches_serial_and_rejects_mutation(fixture, monkeypatch):
+    expected = run(fixture)
+    assert m.verify_assembly(fixture['output']) == expected
+    monkeypatch.setenv('DFM13_VERIFY_WORKERS', '32')
+    assert m.verify_assembly(fixture['output']) == expected
+    Path(fixture['entry']['output']).write_text('changed')
+    with pytest.raises(ValueError, match='Assembly input changed'):
+        m.verify_assembly(fixture['output'])
+
+
+def test_worker_limit(monkeypatch):
+    monkeypatch.setenv('DFM13_VERIFY_WORKERS', '0')
+    with pytest.raises(ValueError, match='between 1 and 32'):
+        m.verification_workers()
+
+
 @pytest.fixture
 def blkt_fixture(fixture, monkeypatch):
     from dfm12 import blkt_publish as bp, blkt_export as be

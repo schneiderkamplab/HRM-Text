@@ -41,3 +41,28 @@ def test_mutation_during_verification_rejected(tmp_path, monkeypatch):
     monkeypatch.setattr(subject.api, 'verify_assembly', verify)
     with pytest.raises(ValueError, match='mutated during verification'):
         subject.assemble([], Path('base'), Path('out'))
+
+
+def test_cached_source_requires_same_code_entry_contract_and_files(tmp_path):
+    p = tmp_path / 'payload'; p.write_text('original')
+    entry, contract = {'name': 'a'}, {'vocab_size': 10}
+    receipt = dict(entry=entry, contract=contract, implementation='v1',
+                   result=dict(candidate={}, pins={str(p): dict(signature=list(subject.api.signature(p)))}))
+    assert subject.receipt_valid(receipt, entry, contract, 'v1')
+    assert not subject.receipt_valid(receipt, entry, contract, 'v2')
+    assert not subject.receipt_valid(receipt, {'name': 'b'}, contract, 'v1')
+    assert not subject.receipt_valid(receipt, entry, {}, 'v1')
+    p.write_text('modified')
+    assert not subject.receipt_valid(receipt, entry, contract, 'v1')
+
+
+def test_spawn_workers_return_failed_sources_without_publishing(tmp_path):
+    entries = [dict(name=f'incomplete-{i}') for i in range(3)]
+    output = tmp_path / 'assembly'
+    results = subject.parallel_sources(entries, {}, output, 2)
+    assert set(results) == {e['name'] for e in entries}
+    assert all('error' in value for value in results.values())
+    assert not output.exists()
+    progress = json.loads((tmp_path / 'assembly-control/parallel-progress.json').read_text())
+    assert progress['completed'] == progress['failed'] == 3
+    assert progress['remaining'] == []

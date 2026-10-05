@@ -9,7 +9,7 @@ import yaml
 from dfm12.io import load, write_json, lock, file_hash
 from dfm12.build_training import combine, FIELDS
 from scripts.assemble_dfm13_additions import verify_assembly
-from scripts.assemble_dfm13_final_successor import ROOT as ASSEMBLY
+from scripts.queue_dfm13_fo_instruct_successor import ROOT as ASSEMBLY, require_included
 
 ROOT=Path('data/dfm13/sampling-20261005-v1')
 OUTPUT=Path('data/sampled_dfm13')
@@ -63,12 +63,14 @@ def run():
         root=Path(comp['root']);composition=load(root/'composition.json')
         if file_hash(root/'composition.json')!=comp['composition_sha256']:raise ValueError('Composition drift')
         verify_assembly(ASSEMBLY)
+        required_source=require_included(ASSEMBLY)
         from scripts.compose_dfm13_full_inheritance import inheritance
         inheritance(Path('data/dfm13/dfm12-full-inheritance-20261004-v2/handoff.json'))
         base=Path(composition['base']['path']).resolve()
         if base.name!='sampled_dfm11':raise ValueError('Must not duplicate historical DFM12')
         mapping=load(root/'repeat_mapping.json')
         if file_hash(root/'repeat_mapping.json')!=composition['repeat_mapping_sha256']:raise ValueError('Repeat policy drift')
+        if mapping.get(required_source['name']+'__')!=10:raise ValueError('FO repeat10 missing from composition')
         policy=ROOT/'prefix_config.yaml'
         policy.write_text(yaml.safe_dump([dict(prefix=k,repeat=v,long_context='drop') for k,v in sorted(mapping.items())]))
         sampled=ROOT/'sampled_additions'

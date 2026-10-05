@@ -37,7 +37,7 @@ def test_watch_releases_both_receipts_only_for_final_matching_composition(tmp_pa
     monkeypatch.chdir(tmp_path)
     root = tmp_path/'staged'
     root.mkdir()
-    final = tmp_path/'data/dfm13/verified-all-finished-additions-20261005-v1'
+    final = module.FINAL_ASSEMBLY.resolve()
     ref = {'root': str(final), 'assembly_sha256': 'final-sha'}
     module.write_json('data/dfm13/authoritative-additions.json', ref)
     module.write_json('data/dfm13/authoritative-composition.json', {'additions_sha256': 'final-sha'})
@@ -46,6 +46,7 @@ def test_watch_releases_both_receipts_only_for_final_matching_composition(tmp_pa
         return {'valid': True}
     monkeypatch.setattr(module, 'scan_inherited_lengths', scan)
     monkeypatch.setattr(module, 'build', lambda: {})
+    monkeypatch.setattr(module, 'require_included', lambda path: {'repeat':10})
     monkeypatch.setattr(module, 'reconcile', lambda _: dict(
         all_specifications_disposed=True, all_integrated_packages_locally_upload_ready=True,
         inherited_dfm12_coverage_verified=True, disposition_counts={'integrated': 1}, publication_unready=[]))
