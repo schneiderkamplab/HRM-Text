@@ -46,6 +46,9 @@ and [Council of Europe language guides](https://www.coe.int/en/web/european-char
 
 ## Workstreams
 
+Remote execution handoff: [DFM14 remote production](dfm14-remote-production-handoff.md).
+The generation host is independent of the live DFM13 XL training host.
+
 1. [Language priorities](dfm14-language-priorities.md): first research group
    Russian, Turkish, Chinese, Arabic and Japanese; other candidates ranked.
 2. [Language source readiness](dfm14-language-source-readiness.md): concrete

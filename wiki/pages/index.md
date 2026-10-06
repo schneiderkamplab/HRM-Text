@@ -1,10 +1,16 @@
 # Operational Knowledge and Plans
 
+* [DFM13 Multilingual Evaluation Preparation](dfm13-multilingual-evaluation.md) - Verified heldout tasks, EuroEval availability and new34-language averages.
+
+* [DFM13 Evaluation Expansion](dfm13-evaluation-expansion.md) - Talemaader rejudging, new-language baseline scheduling, and held-out DaLA coverage audit.
+
 * [New Language Expansion Recipe](new-language-expansion-playbook.md) - Six-component recipe, exact sizing bases, audit/repair gates and sharded bottleneck-resistant execution.
 
 * [DFM13 Parallel Verification](dfm13-parallel-verification.md) - Thirty-two source workers, restart receipts and single-writer publication.
+* [XL Non-Eager Evaluation Capacity](xl-non-eager-eval-capacity.md) - Bounded real-prompt eight-GPU capacity measurement, no W&B or plan changes.
 * [DFM13 XL 3150K Handoff](dfm13-xl-3150k-handoff.md) - Verified-sample gate and CPU-only exact budget preparation; not an activated training switch.
 * [DFM14 Plan](dfm14-plan.md) - Sixteen-language expansion and research scope; no changes to current DFM13 assembly.
+* [DFM14 Remote Production Handoff](dfm14-remote-production-handoff.md) - Transfer inputs, implementation order and isolation from live DFM13 training.
 * [DFM14 Production Estimate](dfm14-production-estimate.md) - Volume-dependent time budget based on previous generation and audit measurements.
 * [DFM14 Language Source Readiness](dfm14-language-source-readiness.md) - Concrete instruction/text candidates and preparation gaps for ten main and six smaller European languages.
 
@@ -244,3 +250,5 @@
 * [DFM13 Audit-First Processing](dfm13-audit-first.md) - Compact judgments, unchanged good rows and targeted repair/re-audit.
 * [DaLA v2 Multilingual Audit](dfm13-dala-v2-audit.md) - Requested 26-language scope, frozen source exports and pair/control audit semantics.
 * [TLPC Grounded Persian Campaign](dfm13-tlpc-grounded-campaign.md) - Sixteen independent QA/chat clients, pinned source preparation and accepted-only release gates.
+* [DaLA Evaluation Coverage Snapshot](dfm13-dala-eval-coverage.md) - Read-only34-language source/version/split comparison, actual completed results and prepared-vs-scheduled coverage.
+* [DFM13 Workspace Panel Readiness](dfm13-wandb-panel-readiness.md) - Exact Forge workspace backup, existing metric keys and pending multilingual/average panel changes.

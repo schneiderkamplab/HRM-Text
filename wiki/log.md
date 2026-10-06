@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-06: Added the [DFM14 remote production handoff](pages/dfm14-remote-production-handoff.md), separating remote generation ownership from live DFM13 XL training and identifying non-Git reference inputs and historical hardcoded campaign guards. Preserved evaluation expansion, Talemaader v2 and training logging continuity work; no training interruption for staging/commits.
+
 - 2026-10-05: Resolved the pull merge by preserving both the DFM13/DFM14 work history and upstream Apple packaging history. No training, evaluation or dataset processes changed.
 
 - 2026-10-05: Preserved DFM13 integration/parallel verification, XL handoff preparation, DFM14 plans and durable review reports in scoped commits. All seven submodules were clean at recorded gitlinks. Runtime locks, build intermediates, caches and raw/downloaded audit artifacts remain local; running jobs unchanged.
