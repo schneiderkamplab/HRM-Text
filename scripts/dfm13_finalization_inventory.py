@@ -19,6 +19,36 @@ REGISTRIES = [
 ]
 
 
+def resolve_grouped_publications(inventory):
+    # Reuse the reconciliation proof, not a repository-name inference. Import
+    # here because reconciliation also uses this module's inventory builder.
+    from scripts.dfm13_specification_reconciliation import dala_publications
+    grouped = dala_publications(inventory)
+    readiness = {r['name']: r for r in inventory['publication_readiness']}
+    destinations = {r['repo']: r for r in inventory['publication_destinations']}
+    for row in inventory['components']:
+        proof = grouped.get(row['name'])
+        if not proof or not row.get('integrated'):
+            continue
+        if row.get('hf_repo_id') not in (None, proof['repo']):
+            raise ValueError('Grouped publication conflicts with recorded repository')
+        if row.get('hf_revision') not in (None, proof['revision']):
+            raise ValueError('Grouped publication conflicts with recorded revision')
+        overlay = dict(hf_repo_id=proof['repo'], hf_revision=proof['revision'],
+                       status='verified_published', basis=proof['basis'],
+                       receipt=proof['receipt'], integration=proof['integration'],
+                       package_inventory=proof['package_inventory'],
+                       local_view_is_derived=True, byte_identity_claimed=False)
+        row.update(hf_repo_id=proof['repo'], hf_revision=proof['revision'],
+                   publication_overlay=overlay, publication_pending=False)
+        readiness[row['name']].update(ready=True, uploaded=True, requires_upload=False,
+            reason='verified_grouped_language_publication', publication_overlay=overlay)
+        components = destinations[proof['repo']]['components']
+        if row['name'] not in components:
+            components.append(row['name'])
+    return inventory
+
+
 def build():
     reference = load('data/dfm13/authoritative-additions.json')
     assembly = load(Path(reference['root'])/'assembly.json')
@@ -212,7 +242,7 @@ def build():
             state.update(ready=True,reason='remote_verified_external_receipt',uploaded=True,
                          publication_overlay=overlay)
     pending_repos = [d for d in destinations.values() if not d['published']]
-    return dict(version=1, time=time.time(), complete=complete, completion_checks=checks,
+    result = dict(version=1, time=time.time(), complete=complete, completion_checks=checks,
                 publication_destinations=list(destinations.values()),
                 named_pending_repositories=len(pending_repos),
                 publication_campaign=dict(expected=258, verified=len(verified_campaign_repos),
@@ -236,6 +266,7 @@ def build():
                          'Boole uncapped-LB recovered wave4 release export/tokenization/integration',
                          'HF publication receipts and source-specific attribution readiness'],
                 no_sampling=True, gpu_actions=False)
+    return resolve_grouped_publications(result)
 
 
 if __name__ == '__main__':

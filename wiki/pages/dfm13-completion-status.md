@@ -401,6 +401,20 @@ these verified overlays and all remaining DaLA batch receipts without changing
 sealed source manifests or active assembly inputs. Ten uploader/scope/seal/card
 tests passed. No GPU, training, sampling or source payload changes were made.
 
+### Resolved Publication Fields (2026-10-05)
+
+`scripts.dfm13_finalization_inventory` now exposes `hf_repo_id` and
+`hf_revision` for verified grouped DaLA components, using the same pinned
+publication/integration proof as specification reconciliation. The reporting
+overlay explicitly identifies a derived local view and makes no byte-identity
+claim. Original registry and assembly evidence remain unchanged. This corrects
+the misleading inference that a missing field meant a local-only dataset.
+The refreshed `data/dfm13/publication-resolved-inventory-20261005.json` resolves
+72 components to 34 repositories, including all four Dutch baseline/recovery
+task components to `schneiderkamplab/dfm13-dala-v2-nl-compact` at revision
+`ad00994945ce311c15a31010577cd56f116d5ca1`. Eleven focused inventory/reconciliation
+tests passed. Sealed sampling receipts and running jobs were not modified.
+
 ### Inherited Publication Correction
 
 The earlier12 inherited upload conflicts are superseded by
