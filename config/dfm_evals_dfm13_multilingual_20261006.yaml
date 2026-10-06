@@ -1,0 +1,417 @@
+sets:
+  dala_lt:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=lt
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_lt:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=lt
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_lv:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=lv
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_lv:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=lv
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_sq:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=sq
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_sq:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=sq
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_be:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=be
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_be:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=be
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_bs:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=bs
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_bs:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=bs
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_bg:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=bg
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_bg:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=bg
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_hr:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=hr
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_hr:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=hr
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_hu:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=hu
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_hu:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=hu
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_lb:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=lb
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_lb:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=lb
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_sr:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=sr
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_sr:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=sr
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_sk:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=sk
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_sk:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=sk
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_sl:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=sl
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_sl:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=sl
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_fa:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@dala_dfm13_heldout
+      args:
+      - -T
+      - language=fa
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_fa:
+    description: DFM13 accepted test-representative paired controls; no train fallback
+    tasks:
+    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py@gec_dala_dfm13_heldout
+      args:
+      - -T
+      - language=fa
+      - -T
+      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'

@@ -83,7 +83,6 @@ EUROEVAL_GROUPS = [
     "danish-citizen-tests",
     "hellaswag-da",
     "ifeval-da",
-    "valeu-da",
     "sst5",
     "scala-en",
     "conll-en",
@@ -93,7 +92,6 @@ EUROEVAL_GROUPS = [
     "hellaswag",
     "ifeval",
     "bfcl-v2",
-    "valeu-en",
 ]
 
 

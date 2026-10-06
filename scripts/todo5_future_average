@@ -1,0 +1,31 @@
+#!/home/ucloud/miniforge3/envs/hrm/bin/python
+"""Future-only strict-DaLA guard before existing versioned average dispatch."""
+import argparse
+import math
+import os
+from pathlib import Path
+import sys
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+from scripts.log_dfm5_headline_averages import EvalItem, gather_metrics, STRICT_DALA_KEY
+
+
+def validate(args):
+    if not args or args[0]!='scripts/backfill_external_eval_to_wandb.py':
+        raise ValueError('Unexpected average dispatch')
+    parser=argparse.ArgumentParser()
+    for key in ('step','epoch','standard-root','dfm-root','euroeval-root','average-prefix'):
+        parser.add_argument('--'+key,required=True)
+    a,_=parser.parse_known_args(args[1:])
+    if a.average_prefix!='headline_avg_talemaader_v2':raise ValueError('Unexpected namespace')
+    metrics=gather_metrics(EvalItem(int(a.step),float(a.epoch),Path(a.standard_root),Path(a.dfm_root),Path(a.euroeval_root)))
+    value=metrics.get(STRICT_DALA_KEY)
+    if value is None or not math.isfinite(value):
+        raise ValueError('Future successor requires finite strict DaLA; refusing reduced denominator')
+
+
+if __name__=='__main__':
+    validate(sys.argv[1:])
+    os.chdir(ROOT)
+    python='/home/ucloud/miniforge3/envs/hrm/bin/python'
+    os.execv(python,[python,*sys.argv[1:]])

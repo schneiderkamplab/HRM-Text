@@ -2051,13 +2051,17 @@ def run_euroeval_openai(
         if job.metadata.get("euroeval_generative_type"):
             euroeval_argv.extend(["--generative-type", str(job.metadata["euroeval_generative_type"])])
         argv = ["bash", "-lc", f"cd {shlex.quote(str(run_root))} && {shlex.join(euroeval_argv)}"]
+        client_env = env_with_gpu(None)
+        client_env["EUROEVAL_MAX_CONCURRENT_CALLS"] = str(
+            min(batch, int(job.metadata.get("euroeval_max_concurrent_calls") or batch))
+        )
         try:
             status = run_client_with_server_monitor(
                 argv,
                 client_log=euroeval_log,
                 server_log=server_log_path,
                 server_proc=server,
-                env=env_with_gpu(None),
+                env=client_env,
             )
         finally:
             terminate(proxy)
@@ -2232,6 +2236,31 @@ def run_merge_ifeval(job: Job) -> int:
 
 
 def run_average(job: Job) -> int:
+    if job.metadata.get("average_prefix") in ("headline_avg_dala_v2", "suite_avg_dala_v2"):
+        argv = [python_bin(job), "scripts/log_expanded_dala_v2_averages.py",
+                "--standard-root", str(job.metadata["log_root"]),
+                "--dfm-root", str(job.metadata["dfm_log_root"]),
+                "--euroeval-root", f"{job.metadata['euroeval_log_root']}/{job.metadata['ckpt_tag']}",
+                "--epoch", str(job.metadata["eval_epoch"]), "--step", eval_step(job),
+                "--report", str(Path(job.log_dir) / "expanded_dala_v2_metrics.json")]
+        extras = job.metadata.get("extra_average_prefixes", [])
+        paired = (job.metadata["average_prefix"] == "headline_avg_dala_v2"
+                  and extras == ["suite_avg_dala_v2"])
+        if not paired:
+            if extras:
+                raise ValueError("Unsupported expanded DaLA average prefix combination")
+            argv.extend(["--metric-prefix", str(job.metadata["average_prefix"])])
+        for suite in ("standard", "dfm", "euroeval"):
+            for root in job.metadata.get(f"additional_{suite}_roots", []):
+                argv.extend([f"--additional-{suite}-root", str(root)])
+        if job.metadata.get("log_wandb", True):
+            argv.extend(["--project", str(job.metadata["wandb_project"]),
+                         "--run-id", str(job.metadata["wandb_run_id"]),
+                         "--run-name", str(job.metadata["wandb_run_name"]),
+                         "--entity", str(job.metadata.get("wandb_entity") or "peter-sk-sdu")])
+        else:
+            argv.append("--dry-run")
+        return run_command(argv, log_path=Path(job.log_dir) / "expanded_dala_v2_average.log")
     if job.metadata.get("multilingual_manifest"):
         argv = [python_bin(job), "scripts/log_multilingual_headline_averages.py",
                 "--manifest", str(job.metadata["multilingual_manifest"]),
@@ -2400,32 +2429,39 @@ def run_job(
     raise SchedulerError(f"Unsupported action: {job.action}")
 
 
+def _nonblocking_eval(job: Job) -> bool:
+    return job.action == Action.EVAL_EUROEVAL and job.name.startswith("valeu-")
+
+
 def _cannot_succeed(job_id: str, jobs_by_id: dict[str, Job], visiting: set[str] | None = None) -> bool:
-    job = jobs_by_id.get(job_id)
-    if job is None:
-        return False
-    if job.status in {JobStatus.FAILED, JobStatus.SKIPPED}:
-        return True
-    if job.status in {JobStatus.DONE, JobStatus.RUNNING}:
-        return False
-    if job.deps_mode == "terminal":
-        return False
-    visiting = set() if visiting is None else visiting
-    if job_id in visiting:
-        return False
-    visiting.add(job_id)
-    try:
-        return any(_cannot_succeed(dep, jobs_by_id, visiting) for dep in job.deps)
-    finally:
-        visiting.remove(job_id)
+    # Shared ancestors in a campaign DAG must not be revisited per path.
+    seen = set(visiting or ())
+    pending = [job_id]
+    while pending:
+        current = pending.pop()
+        if current in seen:
+            continue
+        seen.add(current)
+        job = jobs_by_id.get(current)
+        if job is None or _nonblocking_eval(job):
+            continue
+        if job.status in {JobStatus.FAILED, JobStatus.SKIPPED}:
+            return True
+        if job.status in {JobStatus.DONE, JobStatus.RUNNING} or job.deps_mode == "terminal":
+            continue
+        pending.extend(job.deps)
+    return False
 
 
 def dependencies_satisfied(job: Job, jobs: list[Job]) -> bool:
     jobs_by_id = {candidate.job_id: candidate for candidate in jobs}
+    # Optional VALEU results must never gate averages or training continuation.
+    deps = tuple(dep for dep in job.deps
+                 if dep not in jobs_by_id or not _nonblocking_eval(jobs_by_id[dep]))
     if job.deps_mode == "success":
         return all(
             dep in jobs_by_id and jobs_by_id[dep].status == JobStatus.DONE
-            for dep in job.deps
+            for dep in deps
         )
     if job.deps_mode != "terminal":
         raise SchedulerError(f"Unsupported dependency mode for {job.job_id}: {job.deps_mode}")
@@ -2436,7 +2472,7 @@ def dependencies_satisfied(job: Job, jobs: list[Job]) -> bool:
             jobs_by_id[dep].status in terminal
             or _cannot_succeed(dep, jobs_by_id)
         )
-        for dep in job.deps
+        for dep in deps
     )
 
 

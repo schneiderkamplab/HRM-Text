@@ -1,0 +1,627 @@
+{
+  "valid": true,
+  "tasks": [
+    {
+      "language": "lt",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "lt",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "lv",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "lv",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "sq",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "sq",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "be",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "be",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "bs",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "bs",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "bg",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "bg",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "hr",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "hr",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "hu",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "hu",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "lb",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "lb",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "sr",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "sr",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "sk",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "sk",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "sl",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "sl",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    },
+    {
+      "language": "fa",
+      "task": "acceptability",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 32,
+      "simulated_output_merge": {
+        "english": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 1.0,
+          "linguistic-acceptability/dfm_evals_mcc": 1.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "targets": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        },
+        "native": {
+          "linguistic-acceptability/dfm_evals_macro_f1": 0.0,
+          "linguistic-acceptability/dfm_evals_mcc": 0.0,
+          "linguistic-acceptability/n": 2000.0,
+          "semantic_v1/macro_f1": 1.0,
+          "semantic_v1/mcc": 1.0,
+          "semantic_v1/accuracy": 1.0,
+          "semantic_v1/invalid_rate": 0.0,
+          "semantic_v1/n": 2000.0
+        }
+      }
+    },
+    {
+      "language": "fa",
+      "task": "correction",
+      "samples": 2000,
+      "pair_count": 1000,
+      "max_gen_toks": 512,
+      "simulated_output_merge": null
+    }
+  ],
+  "no_generation": true,
+  "gpu_calls": false,
+  "files": {
+    "/work/mimir/HRM-Text/config/dfm13_dala_heldout_20261006.json": "1018f81f9d572ffbe546cb8067a0f646f86de6f640abb96181d93c0e806b9908",
+    "/work/mimir/HRM-Text/config/multilingual_headline_populations_dfm13_20261006.json": "6c850783becb6d568953ed5648a7a3494f6ad0057c8f7d6e0a94ee70b6041493",
+    "/work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_dfm13_heldout.py": "48b1d67eeefecc3370abe9786505c68e55a0c46af6db2c6f821615996b0e6f7f",
+    "/work/mimir/HRM-Text/scripts/check_dfm13_multilingual_evals.py": "6d46e6b90f205d6fb78cfbdd37af65ade7f0ff3561de0906e2710d3ca26c5c0b",
+    "/work/mimir/HRM-Text/scripts/dala_semantic.py": "591d247cf52c6e1620b086d08c8a9903cea3f39712ea7a6af04582f089183f82",
+    "/work/mimir/HRM-Text/scripts/merge_dfm_eval_shards.py": "937e87617e82e731c28b7a0a1c2e0ca2957839adbdfe13bbbcd4186b5079a0df",
+    "/work/mimir/HRM-Text/scripts/headline_population_registry.py": "2ee2eaa07b143f9ba1ab3ba2981eb84569e40ebbc36d5c2b605988eca5318df8"
+  }
+}

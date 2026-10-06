@@ -28,6 +28,55 @@ def job(
     )
 
 
+def test_valeu_never_blocks_dependencies():
+    for status in JobStatus:
+        optional = job('valeu-no', action=Action.EVAL_EUROEVAL, status=status)
+        required = job('required', status=JobStatus.DONE)
+        for mode in ('success', 'terminal'):
+            gate = job('gate', deps=('valeu-no', 'required'), deps_mode=mode)
+            assert runtime.dependencies_satisfied(gate, [optional, required, gate])
+        gate = job('gate', deps=('valeu-no',))
+        assert not runtime._cannot_succeed('gate', {'gate': gate, 'valeu-no': optional})
+        required = required.with_updates(status=JobStatus.FAILED)
+        gate = job('gate', deps=('valeu-no', 'required'))
+        assert not runtime.dependencies_satisfied(gate, [optional, required, gate])
+        assert not runtime.dependencies_satisfied(job('missing', deps=('unknown',)), [optional])
+
+
+def test_default_catalog_has_no_valeu():
+    from eval_scheduler.catalog import EUROEVAL_GROUPS
+    assert not any(name.startswith('valeu-') for name in EUROEVAL_GROUPS)
+
+
+def test_shared_dependency_graph_is_visited_once():
+    class CountingDict(dict):
+        reads = 0
+
+        def get(self, key, default=None):
+            self.reads += 1
+            return super().get(key, default)
+
+    jobs = CountingDict(root=job('root', status=JobStatus.RUNNING))
+    previous = ('root',)
+    for level in range(25):
+        current = (f'a{level}', f'b{level}')
+        for name in current:
+            jobs[name] = job(name, deps=previous)
+        previous = current
+    assert not runtime._cannot_succeed(previous[0], jobs)
+    assert jobs.reads <= len(jobs)
+    jobs['root'] = job('root', status=JobStatus.FAILED)
+    assert runtime._cannot_succeed(previous[0], jobs)
+
+
+def test_dependency_cycle_and_terminal_boundary():
+    jobs = {'a': job('a', deps=('b',)), 'b': job('b', deps=('a', 'bad')),
+            'bad': job('bad', status=JobStatus.FAILED)}
+    assert runtime._cannot_succeed('a', jobs)
+    jobs['b'] = job('b', deps=('a', 'bad'), deps_mode='terminal')
+    assert not runtime._cannot_succeed('a', jobs)
+
+
 def plan_config(tmp_path: Path, model_dir: Path) -> plan.PlanConfig:
     return plan.PlanConfig(
         plan_dir=tmp_path / "plan",

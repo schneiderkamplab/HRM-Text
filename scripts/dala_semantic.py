@@ -3,6 +3,20 @@ import unicodedata
 
 ENGLISH = ({'yes', 'correct', 'right'}, {'no', 'incorrect', 'wrong'})
 NATIVE = {
+    # Conservative standalone yes/no labels for the DFM13 expansion.
+    'lt': ({'taip'}, {'ne'}),
+    'lv': ({'jā'}, {'nē'}),
+    'sq': ({'po'}, {'jo'}),
+    'be': ({'так'}, {'не'}),
+    'bs': ({'da'}, {'ne'}),
+    'bg': ({'да'}, {'не'}),
+    'hr': ({'da'}, {'ne'}),
+    'hu': ({'igen'}, {'nem'}),
+    'lb': ({'jo'}, {'nee'}),
+    'sr': ({'да', 'da'}, {'не', 'ne'}),
+    'sk': ({'áno'}, {'nie'}),
+    'sl': ({'da'}, {'ne'}),
+    'fa': ({'بله'}, {'نه', 'خیر'}),
     'en': (set(), set()),
     'da': ({'ja', 'korrekt', 'rigtig', 'rigtigt'}, {'nej', 'ukorrekt', 'forkert', 'ikke korrekt'}),
     'nb': ({'ja', 'korrekt', 'riktig', 'rett'}, {'nei', 'ukorrekt', 'feil', 'galt', 'ikke korrekt'}),

@@ -1,0 +1,3317 @@
+schema: dfm13-euroeval-multilingual-v1
+languages:
+- lt
+- lv
+- sq
+- be
+- bs
+- bg
+- hr
+- hu
+- lb
+- sr
+- sk
+- sl
+- fa
+categories:
+- sentiment-classification
+- linguistic-acceptability
+- named-entity-recognition
+- reading-comprehension
+- summarization
+- knowledge
+- common-sense-reasoning
+- instruction-following
+- tool-calling
+- european-values
+entries:
+- language: lt
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: atsiliepimai
+  metric_key: euroeval/lt/sentiment-classification/atsiliepimai/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - atsiliepimai
+  deduplication_key: atsiliepimai
+  group_id: lt__atsiliepimai
+  source_dataset: EuroEval/atsiliepimai
+  source_url: https://huggingface.co/datasets/EuroEval/atsiliepimai
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L19
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: d19902d48f102db6a7219dd1b5fcd8b00d358a53
+  remote_probe:
+    status: accessible
+    revision: d19902d48f102db6a7219dd1b5fcd8b00d358a53
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-lt
+  metric_key: euroeval/lt/linguistic-acceptability/scala-lt/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-lt
+  deduplication_key: scala-lt
+  group_id: lt__scala-lt
+  source_dataset: EuroEval/scala-lt
+  source_url: https://huggingface.co/datasets/EuroEval/scala-lt
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L27
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 580103f697144f3d95aa7a934e6ff2ae63a40be0
+  remote_probe:
+    status: accessible
+    revision: 580103f697144f3d95aa7a934e6ff2ae63a40be0
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: wikiann-lt
+  metric_key: euroeval/lt/named-entity-recognition/wikiann-lt/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - wikiann-lt
+  deduplication_key: wikiann-lt
+  group_id: lt__wikiann-lt
+  source_dataset: EuroEval/wikiann-lt-mini
+  source_url: https://huggingface.co/datasets/EuroEval/wikiann-lt-mini
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L35
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 4a4a69de20d4bd7671f62a1eafb23aa4648af9c3
+  remote_probe:
+    status: accessible
+    revision: 4a4a69de20d4bd7671f62a1eafb23aa4648af9c3
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-lt
+  metric_key: euroeval/lt/reading-comprehension/multi-wiki-qa-lt/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-lt
+  deduplication_key: multi-wiki-qa-lt
+  group_id: lt__multi-wiki-qa-lt
+  source_dataset: EuroEval/multi-wiki-qa-lt-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-lt-mini
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L43
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: f957457c6bd91e38bf9036a13401cdd92c699635
+  remote_probe:
+    status: accessible
+    revision: f957457c6bd91e38bf9036a13401cdd92c699635
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: summarization
+  category: summarization
+  dataset: lrytas
+  metric_key: euroeval/lt/summarization/lrytas/chr_f3pp
+  status: supported
+  include_in_average: true
+  metric_name: chr_f3pp
+  datasets:
+  - lrytas
+  deduplication_key: lrytas
+  group_id: lt__lrytas
+  source_dataset: EuroEval/lrytas-mini
+  source_url: https://huggingface.co/datasets/EuroEval/lrytas-mini
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L51
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 27d113ec030fdcf8da56fc4fcdb473204bc5f48b
+  remote_probe:
+    status: accessible
+    revision: 27d113ec030fdcf8da56fc4fcdb473204bc5f48b
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: knowledge
+  category: knowledge
+  dataset: lt-history
+  metric_key: euroeval/lt/knowledge/lt-history/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - lt-history
+  deduplication_key: lt-history
+  group_id: lt__lt-history
+  source_dataset: EuroEval/lt-history
+  source_url: https://huggingface.co/datasets/EuroEval/lt-history
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives:
+  - include-lt
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L59
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: f8f4d4fd38f872d4beb3d9082e696130bf3a219d
+  remote_probe:
+    status: accessible
+    revision: f8f4d4fd38f872d4beb3d9082e696130bf3a219d
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-lt
+  metric_key: euroeval/lt/common-sense-reasoning/winogrande-lt/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-lt
+  deduplication_key: winogrande-lt
+  group_id: lt__winogrande-lt
+  source_dataset: EuroEval/winogrande-lt
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-lt
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L67
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 197e366ff2968d4faff214c713fef8457c7efcac
+  remote_probe:
+    status: accessible
+    revision: 197e366ff2968d4faff214c713fef8457c7efcac
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-lt
+  metric_key: euroeval/lt/instruction-following/multi-ifeval-lt/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-lt
+  deduplication_key: multi-ifeval-lt
+  group_id: lt__multi-ifeval-lt
+  source_dataset: EuroEval/multi-ifeval-lt
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-lt
+  euroeval_result_languages:
+  - lt
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/lithuanian.py#L76
+  catalog_code_sha256: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: cb31305b8a19f2b7df844917246d03ae23d4ebb3
+  remote_probe:
+    status: accessible
+    revision: cb31305b8a19f2b7df844917246d03ae23d4ebb3
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lt
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lt
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lv
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: latvian-twitter-sentiment
+  metric_key: euroeval/lv/sentiment-classification/latvian-twitter-sentiment/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - latvian-twitter-sentiment
+  deduplication_key: latvian-twitter-sentiment
+  group_id: lv__latvian-twitter-sentiment
+  source_dataset: EuroEval/latvian-twitter-sentiment-mini
+  source_url: https://huggingface.co/datasets/EuroEval/latvian-twitter-sentiment-mini
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L19
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: a2047746b7847777fdd50f7c9a08048dd0ed8237
+  remote_probe:
+    status: accessible
+    revision: a2047746b7847777fdd50f7c9a08048dd0ed8237
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-lv
+  metric_key: euroeval/lv/linguistic-acceptability/scala-lv/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-lv
+  deduplication_key: scala-lv
+  group_id: lv__scala-lv
+  source_dataset: EuroEval/scala-lv
+  source_url: https://huggingface.co/datasets/EuroEval/scala-lv
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L27
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: f7bb2acedd39515de9cb1686f5d1fca381893d3f
+  remote_probe:
+    status: accessible
+    revision: f7bb2acedd39515de9cb1686f5d1fca381893d3f
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: fullstack-ner-lv
+  metric_key: euroeval/lv/named-entity-recognition/fullstack-ner-lv/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - fullstack-ner-lv
+  deduplication_key: fullstack-ner-lv
+  group_id: lv__fullstack-ner-lv
+  source_dataset: EuroEval/fullstack-ner-lv-mini
+  source_url: https://huggingface.co/datasets/EuroEval/fullstack-ner-lv-mini
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L35
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 210b1342d6f9a733d284325f7c28ba54bd07ac56
+  remote_probe:
+    status: accessible
+    revision: 210b1342d6f9a733d284325f7c28ba54bd07ac56
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-lv
+  metric_key: euroeval/lv/reading-comprehension/multi-wiki-qa-lv/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-lv
+  deduplication_key: multi-wiki-qa-lv
+  group_id: lv__multi-wiki-qa-lv
+  source_dataset: EuroEval/multi-wiki-qa-lv-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-lv-mini
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L43
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 3c8c53a1294e4d15a2857b724c751c9956b34901
+  remote_probe:
+    status: accessible
+    revision: 3c8c53a1294e4d15a2857b724c751c9956b34901
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: summarization
+  category: summarization
+  dataset: lsm
+  metric_key: euroeval/lv/summarization/lsm/chr_f3pp
+  status: supported
+  include_in_average: true
+  metric_name: chr_f3pp
+  datasets:
+  - lsm
+  deduplication_key: lsm
+  group_id: lv__lsm
+  source_dataset: EuroEval/lsm-mini
+  source_url: https://huggingface.co/datasets/EuroEval/lsm-mini
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L51
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 3dcb4f438003e41a2837edaa541de0422f2267f3
+  remote_probe:
+    status: accessible
+    revision: 3dcb4f438003e41a2837edaa541de0422f2267f3
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: knowledge
+  category: knowledge
+  dataset: mmlu-lv
+  metric_key: euroeval/lv/knowledge/mmlu-lv/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - mmlu-lv
+  deduplication_key: mmlu-lv
+  group_id: lv__mmlu-lv
+  source_dataset: EuroEval/mmlu-lv-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mmlu-lv-mini
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L60
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 90c12b0f8efffd8439effa504ae54c5ac96f0fa4
+  remote_probe:
+    status: accessible
+    revision: 90c12b0f8efffd8439effa504ae54c5ac96f0fa4
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: copa-lv
+  metric_key: euroeval/lv/common-sense-reasoning/copa-lv/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - copa-lv
+  deduplication_key: copa-lv
+  group_id: lv__copa-lv
+  source_dataset: EuroEval/copa-lv
+  source_url: https://huggingface.co/datasets/EuroEval/copa-lv
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L68
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 42ad1433a7b060eb534ebb31900df4b37fd6360d
+  remote_probe:
+    status: accessible
+    revision: 42ad1433a7b060eb534ebb31900df4b37fd6360d
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-lv
+  metric_key: euroeval/lv/instruction-following/multi-ifeval-lv/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-lv
+  deduplication_key: multi-ifeval-lv
+  group_id: lv__multi-ifeval-lv
+  source_dataset: EuroEval/multi-ifeval-lv
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-lv
+  euroeval_result_languages:
+  - lv
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/latvian.py#L77
+  catalog_code_sha256: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: dc8471b265b09d7146e068d069b66f0b00003b6e
+  remote_probe:
+    status: accessible
+    revision: dc8471b265b09d7146e068d069b66f0b00003b6e
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lv
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lv
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sq
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: mms-sq
+  metric_key: euroeval/sq/sentiment-classification/mms-sq/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - mms-sq
+  deduplication_key: mms-sq
+  group_id: sq__mms-sq
+  source_dataset: EuroEval/mms-sq-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mms-sq-mini
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L19
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 41f66824b0877b8205387e09239a66ded96a60a7
+  remote_probe:
+    status: accessible
+    revision: 41f66824b0877b8205387e09239a66ded96a60a7
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-sq
+  metric_key: euroeval/sq/linguistic-acceptability/scala-sq/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-sq
+  deduplication_key: scala-sq
+  group_id: sq__scala-sq
+  source_dataset: EuroEval/scala-sq
+  source_url: https://huggingface.co/datasets/EuroEval/scala-sq
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L27
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 762bfc05c2cbe3cc5242a9e317f353e7f40f1408
+  remote_probe:
+    status: accessible
+    revision: 762bfc05c2cbe3cc5242a9e317f353e7f40f1408
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: wikiann-sq
+  metric_key: euroeval/sq/named-entity-recognition/wikiann-sq/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - wikiann-sq
+  deduplication_key: wikiann-sq
+  group_id: sq__wikiann-sq
+  source_dataset: EuroEval/wikiann-sq-mini
+  source_url: https://huggingface.co/datasets/EuroEval/wikiann-sq-mini
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L35
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: fc37d1aaef58e649b2aeb31319a47cb40d0f3443
+  remote_probe:
+    status: accessible
+    revision: fc37d1aaef58e649b2aeb31319a47cb40d0f3443
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-sq
+  metric_key: euroeval/sq/reading-comprehension/multi-wiki-qa-sq/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-sq
+  deduplication_key: multi-wiki-qa-sq
+  group_id: sq__multi-wiki-qa-sq
+  source_dataset: EuroEval/multi-wiki-qa-sq-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-sq-mini
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L43
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 2335fe982a8723b3f14df1653b1dbab18c6b071a
+  remote_probe:
+    status: accessible
+    revision: 2335fe982a8723b3f14df1653b1dbab18c6b071a
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: summarization
+  category: summarization
+  dataset: lr-sum-sq
+  metric_key: euroeval/sq/summarization/lr-sum-sq/chr_f3pp
+  status: supported
+  include_in_average: true
+  metric_name: chr_f3pp
+  datasets:
+  - lr-sum-sq
+  deduplication_key: lr-sum-sq
+  group_id: sq__lr-sum-sq
+  source_dataset: EuroEval/lr-sum-sq-mini
+  source_url: https://huggingface.co/datasets/EuroEval/lr-sum-sq-mini
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L51
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 5c54fbbac1b10191ad72c6b7b6399facdc07f880
+  remote_probe:
+    status: accessible
+    revision: 5c54fbbac1b10191ad72c6b7b6399facdc07f880
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: knowledge
+  category: knowledge
+  dataset: include-sq
+  metric_key: euroeval/sq/knowledge/include-sq/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - include-sq
+  deduplication_key: include-sq
+  group_id: sq__include-sq
+  source_dataset: EuroEval/include-sq-mini
+  source_url: https://huggingface.co/datasets/EuroEval/include-sq-mini
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L78
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: d62d8d46ce5e42063401deb3c7f729866873d760
+  remote_probe:
+    status: accessible
+    revision: d62d8d46ce5e42063401deb3c7f729866873d760
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-sq
+  metric_key: euroeval/sq/common-sense-reasoning/winogrande-sq/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-sq
+  deduplication_key: winogrande-sq
+  group_id: sq__winogrande-sq
+  source_dataset: EuroEval/winogrande-sq
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-sq
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L59
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: daad5e8df31ce4ef44ec11a2eef761258e45e9c1
+  remote_probe:
+    status: accessible
+    revision: daad5e8df31ce4ef44ec11a2eef761258e45e9c1
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-sq
+  metric_key: euroeval/sq/instruction-following/multi-ifeval-sq/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-sq
+  deduplication_key: multi-ifeval-sq
+  group_id: sq__multi-ifeval-sq
+  source_dataset: EuroEval/multi-ifeval-sq
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-sq
+  euroeval_result_languages:
+  - sq
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/albanian.py#L68
+  catalog_code_sha256: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 4d5663e88a5f1fa0490978a0a013625ce5065fd7
+  remote_probe:
+    status: accessible
+    revision: 4d5663e88a5f1fa0490978a0a013625ce5065fd7
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sq
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sq
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: be
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: besls
+  metric_key: euroeval/be/sentiment-classification/besls/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - besls
+  deduplication_key: besls
+  group_id: be__besls
+  source_dataset: EuroEval/besls
+  source_url: https://huggingface.co/datasets/EuroEval/besls
+  euroeval_result_languages:
+  - be
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/belarusian.py#L19
+  catalog_code_sha256: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 8f0535d8cb3cbc0c558d8a5d61a876b120ccee05
+  remote_probe:
+    status: accessible
+    revision: 8f0535d8cb3cbc0c558d8a5d61a876b120ccee05
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: be
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: belacola
+  metric_key: euroeval/be/linguistic-acceptability/belacola/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - belacola
+  deduplication_key: belacola
+  group_id: be__belacola
+  source_dataset: EuroEval/belacola-mini
+  source_url: https://huggingface.co/datasets/EuroEval/belacola-mini
+  euroeval_result_languages:
+  - be
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/belarusian.py#L84
+  catalog_code_sha256: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 5437400f01c540d27d2f3966e800b010467417c2
+  remote_probe:
+    status: accessible
+    revision: 5437400f01c540d27d2f3966e800b010467417c2
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: be
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: wikiann-be
+  metric_key: euroeval/be/named-entity-recognition/wikiann-be/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - wikiann-be
+  deduplication_key: wikiann-be
+  group_id: be__wikiann-be
+  source_dataset: EuroEval/wikiann-be-mini
+  source_url: https://huggingface.co/datasets/EuroEval/wikiann-be-mini
+  euroeval_result_languages:
+  - be
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/belarusian.py#L27
+  catalog_code_sha256: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: a2309460910cfed13ff99af6ec3addc0e459ff87
+  remote_probe:
+    status: accessible
+    revision: a2309460910cfed13ff99af6ec3addc0e459ff87
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: be
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-be
+  metric_key: euroeval/be/reading-comprehension/multi-wiki-qa-be/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-be
+  deduplication_key: multi-wiki-qa-be
+  group_id: be__multi-wiki-qa-be
+  source_dataset: EuroEval/multi-wiki-qa-be-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-be-mini
+  euroeval_result_languages:
+  - be
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/belarusian.py#L35
+  catalog_code_sha256: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: c90f35f5d68811f9061209dca7e5355310058f14
+  remote_probe:
+    status: accessible
+    revision: c90f35f5d68811f9061209dca7e5355310058f14
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: be
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: be
+  task: knowledge
+  category: knowledge
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: be
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: be-wsc
+  metric_key: euroeval/be/common-sense-reasoning/be-wsc/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - be-wsc
+  deduplication_key: be-wsc
+  group_id: be__be-wsc
+  source_dataset: EuroEval/be-wsc
+  source_url: https://huggingface.co/datasets/EuroEval/be-wsc
+  euroeval_result_languages:
+  - be
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/belarusian.py#L43
+  catalog_code_sha256: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: aa21acc8f6546b909a92fe4d36b37ccaa69c781f
+  remote_probe:
+    status: accessible
+    revision: aa21acc8f6546b909a92fe4d36b37ccaa69c781f
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: be
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-be
+  metric_key: euroeval/be/instruction-following/multi-ifeval-be/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-be
+  deduplication_key: multi-ifeval-be
+  group_id: be__multi-ifeval-be
+  source_dataset: EuroEval/multi-ifeval-be
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-be
+  euroeval_result_languages:
+  - be
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/belarusian.py#L51
+  catalog_code_sha256: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 76d1554e03d2b9e0cfad28917088cce264dadfbc
+  remote_probe:
+    status: accessible
+    revision: 76d1554e03d2b9e0cfad28917088cce264dadfbc
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: be
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: be
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bs
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: mms-bs
+  metric_key: euroeval/bs/sentiment-classification/mms-bs/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - mms-bs
+  deduplication_key: mms-bs
+  group_id: bs__mms-bs
+  source_dataset: EuroEval/mms-bs-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mms-bs-mini
+  euroeval_result_languages:
+  - bs
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bosnian.py#L9
+  catalog_code_sha256: b4949d0c52f136cdef6760753fee8c7b128f05dc38fda0b5242b599464c51d6d
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: e6c181c64c7f51e69f2e7b1768a235a11eb35d5b
+  remote_probe:
+    status: accessible
+    revision: e6c181c64c7f51e69f2e7b1768a235a11eb35d5b
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bs
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: macro_f1
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bs
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: wikiann-bs
+  metric_key: euroeval/bs/named-entity-recognition/wikiann-bs/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - wikiann-bs
+  deduplication_key: wikiann-bs
+  group_id: bs__wikiann-bs
+  source_dataset: EuroEval/wikiann-bs-mini
+  source_url: https://huggingface.co/datasets/EuroEval/wikiann-bs-mini
+  euroeval_result_languages:
+  - bs
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bosnian.py#L17
+  catalog_code_sha256: b4949d0c52f136cdef6760753fee8c7b128f05dc38fda0b5242b599464c51d6d
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: d7b87068fdaabe5945db97314610f15d674f53d3
+  remote_probe:
+    status: accessible
+    revision: d7b87068fdaabe5945db97314610f15d674f53d3
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bs
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-bs
+  metric_key: euroeval/bs/reading-comprehension/multi-wiki-qa-bs/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-bs
+  deduplication_key: multi-wiki-qa-bs
+  group_id: bs__multi-wiki-qa-bs
+  source_dataset: EuroEval/multi-wiki-qa-bs-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-bs-mini
+  euroeval_result_languages:
+  - bs
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bosnian.py#L25
+  catalog_code_sha256: b4949d0c52f136cdef6760753fee8c7b128f05dc38fda0b5242b599464c51d6d
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: c24bc03a9d5a3a543469ec425f748bdc966b5da5
+  remote_probe:
+    status: accessible
+    revision: c24bc03a9d5a3a543469ec425f748bdc966b5da5
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bs
+  task: summarization
+  category: summarization
+  dataset: lr-sum-bs
+  metric_key: euroeval/bs/summarization/lr-sum-bs/chr_f3pp
+  status: supported
+  include_in_average: true
+  metric_name: chr_f3pp
+  datasets:
+  - lr-sum-bs
+  deduplication_key: lr-sum-bs
+  group_id: bs__lr-sum-bs
+  source_dataset: EuroEval/lr-sum-bs-mini
+  source_url: https://huggingface.co/datasets/EuroEval/lr-sum-bs-mini
+  euroeval_result_languages:
+  - bs
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bosnian.py#L33
+  catalog_code_sha256: b4949d0c52f136cdef6760753fee8c7b128f05dc38fda0b5242b599464c51d6d
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 4d58181f3b6b249b6943fb1044480a7a9c7703d2
+  remote_probe:
+    status: accessible
+    revision: 4d58181f3b6b249b6943fb1044480a7a9c7703d2
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bs
+  task: knowledge
+  category: knowledge
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bs
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bs
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-bs
+  metric_key: euroeval/bs/instruction-following/multi-ifeval-bs/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-bs
+  deduplication_key: multi-ifeval-bs
+  group_id: bs__multi-ifeval-bs
+  source_dataset: EuroEval/multi-ifeval-bs
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-bs
+  euroeval_result_languages:
+  - bs
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bosnian.py#L41
+  catalog_code_sha256: b4949d0c52f136cdef6760753fee8c7b128f05dc38fda0b5242b599464c51d6d
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 835cedc296b844c2632c63753ce80c0bb6547518
+  remote_probe:
+    status: accessible
+    revision: 835cedc296b844c2632c63753ce80c0bb6547518
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bs
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bs
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bg
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: cinexio
+  metric_key: euroeval/bg/sentiment-classification/cinexio/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - cinexio
+  deduplication_key: cinexio
+  group_id: bg__cinexio
+  source_dataset: EuroEval/cinexio-mini
+  source_url: https://huggingface.co/datasets/EuroEval/cinexio-mini
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L9
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: bf886245c3eacf081563cc29da9b2d3cf602b6ec
+  remote_probe:
+    status: accessible
+    revision: bf886245c3eacf081563cc29da9b2d3cf602b6ec
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-bg
+  metric_key: euroeval/bg/linguistic-acceptability/scala-bg/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-bg
+  deduplication_key: scala-bg
+  group_id: bg__scala-bg
+  source_dataset: EuroEval/scala-bg
+  source_url: https://huggingface.co/datasets/EuroEval/scala-bg
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L17
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: bb4bc39ebb68e11da1efdc1936c941ff7ec7d53c
+  remote_probe:
+    status: accessible
+    revision: bb4bc39ebb68e11da1efdc1936c941ff7ec7d53c
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: bg-ner-bsnlp
+  metric_key: euroeval/bg/named-entity-recognition/bg-ner-bsnlp/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - bg-ner-bsnlp
+  deduplication_key: bg-ner-bsnlp
+  group_id: bg__bg-ner-bsnlp
+  source_dataset: EuroEval/bg-ner-bsnlp-mini
+  source_url: https://huggingface.co/datasets/EuroEval/bg-ner-bsnlp-mini
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L25
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 4d59400e8422ef75d376aae425fe6106d3895633
+  remote_probe:
+    status: accessible
+    revision: 4d59400e8422ef75d376aae425fe6106d3895633
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-bg
+  metric_key: euroeval/bg/reading-comprehension/multi-wiki-qa-bg/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-bg
+  deduplication_key: multi-wiki-qa-bg
+  group_id: bg__multi-wiki-qa-bg
+  source_dataset: EuroEval/multi-wiki-qa-bg-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-bg-mini
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L33
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 12868c70f50620b81bfc6df2337bfb8041cf7bf5
+  remote_probe:
+    status: accessible
+    revision: 12868c70f50620b81bfc6df2337bfb8041cf7bf5
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bg
+  task: knowledge
+  category: knowledge
+  dataset: exams-bg
+  metric_key: euroeval/bg/knowledge/exams-bg/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - exams-bg
+  deduplication_key: exams-bg
+  group_id: bg__exams-bg
+  source_dataset: EuroEval/exams-bg-mini
+  source_url: https://huggingface.co/datasets/EuroEval/exams-bg-mini
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L41
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: b9c08d316777f273321c2bee756aca2c5cf1a516
+  remote_probe:
+    status: accessible
+    revision: b9c08d316777f273321c2bee756aca2c5cf1a516
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-bg
+  metric_key: euroeval/bg/common-sense-reasoning/winogrande-bg/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-bg
+  deduplication_key: winogrande-bg
+  group_id: bg__winogrande-bg
+  source_dataset: EuroEval/winogrande-bg
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-bg
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L49
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: efb6d62210e58294ccb49bbd88c61f3c42b6c487
+  remote_probe:
+    status: accessible
+    revision: efb6d62210e58294ccb49bbd88c61f3c42b6c487
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-bg
+  metric_key: euroeval/bg/instruction-following/multi-ifeval-bg/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-bg
+  deduplication_key: multi-ifeval-bg
+  group_id: bg__multi-ifeval-bg
+  source_dataset: EuroEval/multi-ifeval-bg
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-bg
+  euroeval_result_languages:
+  - bg
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/bulgarian.py#L58
+  catalog_code_sha256: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: bbca89003160727dcd925542ce5049909966c35e
+  remote_probe:
+    status: accessible
+    revision: bbca89003160727dcd925542ce5049909966c35e
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: bg
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: bg
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: hr
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: mms-hr
+  metric_key: euroeval/hr/sentiment-classification/mms-hr/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - mms-hr
+  deduplication_key: mms-hr
+  group_id: hr__mms-hr
+  source_dataset: EuroEval/mms-hr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mms-hr-mini
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L9
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: b5062b95128ec6d0a2aa132287142806e6356b68
+  remote_probe:
+    status: accessible
+    revision: b5062b95128ec6d0a2aa132287142806e6356b68
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-hr
+  metric_key: euroeval/hr/linguistic-acceptability/scala-hr/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-hr
+  deduplication_key: scala-hr
+  group_id: hr__scala-hr
+  source_dataset: EuroEval/scala-hr
+  source_url: https://huggingface.co/datasets/EuroEval/scala-hr
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L17
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: f4253598b4b559de42dc589d7a52b3d17b69bc93
+  remote_probe:
+    status: accessible
+    revision: f4253598b4b559de42dc589d7a52b3d17b69bc93
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: wikiann-hr
+  metric_key: euroeval/hr/named-entity-recognition/wikiann-hr/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - wikiann-hr
+  deduplication_key: wikiann-hr
+  group_id: hr__wikiann-hr
+  source_dataset: EuroEval/wikiann-hr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/wikiann-hr-mini
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L25
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 141c07309ac7f4305d8513d866ef4aa2c1560abf
+  remote_probe:
+    status: accessible
+    revision: 141c07309ac7f4305d8513d866ef4aa2c1560abf
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-hr
+  metric_key: euroeval/hr/reading-comprehension/multi-wiki-qa-hr/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-hr
+  deduplication_key: multi-wiki-qa-hr
+  group_id: hr__multi-wiki-qa-hr
+  source_dataset: EuroEval/multi-wiki-qa-hr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-hr-mini
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L33
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 05ddffe357f7daa7b1955f4dc27c871f6c064f94
+  remote_probe:
+    status: accessible
+    revision: 05ddffe357f7daa7b1955f4dc27c871f6c064f94
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: hr
+  task: knowledge
+  category: knowledge
+  dataset: include-hr
+  metric_key: euroeval/hr/knowledge/include-hr/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - include-hr
+  deduplication_key: include-hr
+  group_id: hr__include-hr
+  source_dataset: EuroEval/include-hr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/include-hr-mini
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L70
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 3adafb91867d14369dea6ba9f71f799d2f86107f
+  remote_probe:
+    status: accessible
+    revision: 3adafb91867d14369dea6ba9f71f799d2f86107f
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-hr
+  metric_key: euroeval/hr/common-sense-reasoning/winogrande-hr/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-hr
+  deduplication_key: winogrande-hr
+  group_id: hr__winogrande-hr
+  source_dataset: EuroEval/winogrande-hr
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-hr
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L41
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: c0715ac7ea6abff641b2283a2650ca2a417c95e5
+  remote_probe:
+    status: accessible
+    revision: c0715ac7ea6abff641b2283a2650ca2a417c95e5
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-hr
+  metric_key: euroeval/hr/instruction-following/multi-ifeval-hr/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-hr
+  deduplication_key: multi-ifeval-hr
+  group_id: hr__multi-ifeval-hr
+  source_dataset: EuroEval/multi-ifeval-hr
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-hr
+  euroeval_result_languages:
+  - hr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/croatian.py#L50
+  catalog_code_sha256: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 45db5844205e03c683c82e4a4f76b9cd1ba067ef
+  remote_probe:
+    status: accessible
+    revision: 45db5844205e03c683c82e4a4f76b9cd1ba067ef
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hr
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: hr
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: hu
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: husst
+  metric_key: euroeval/hu/sentiment-classification/husst/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - husst
+  deduplication_key: husst
+  group_id: hu__husst
+  source_dataset: EuroEval/husst-mini
+  source_url: https://huggingface.co/datasets/EuroEval/husst-mini
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L19
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 42ea10979c3e99497a358fc0a3ced9d53635e052
+  remote_probe:
+    status: accessible
+    revision: 42ea10979c3e99497a358fc0a3ced9d53635e052
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-hu
+  metric_key: euroeval/hu/linguistic-acceptability/scala-hu/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-hu
+  deduplication_key: scala-hu
+  group_id: hu__scala-hu
+  source_dataset: EuroEval/scala-hu
+  source_url: https://huggingface.co/datasets/EuroEval/scala-hu
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L27
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 9a0a7532b2786e87c6f91fd639f6d4aabc360a08
+  remote_probe:
+    status: accessible
+    revision: 9a0a7532b2786e87c6f91fd639f6d4aabc360a08
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: szeged-ner
+  metric_key: euroeval/hu/named-entity-recognition/szeged-ner/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - szeged-ner
+  deduplication_key: szeged-ner
+  group_id: hu__szeged-ner
+  source_dataset: EuroEval/szeged-ner
+  source_url: https://huggingface.co/datasets/EuroEval/szeged-ner
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L35
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 6c81e41b0aeec5b07071707b1b9bc78916d1da3d
+  remote_probe:
+    status: accessible
+    revision: 6c81e41b0aeec5b07071707b1b9bc78916d1da3d
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-hu
+  metric_key: euroeval/hu/reading-comprehension/multi-wiki-qa-hu/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-hu
+  deduplication_key: multi-wiki-qa-hu
+  group_id: hu__multi-wiki-qa-hu
+  source_dataset: EuroEval/multi-wiki-qa-hu-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-hu-mini
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L43
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 5b268f6d5a32851d0b702898c1e87cda9a823682
+  remote_probe:
+    status: accessible
+    revision: 5b268f6d5a32851d0b702898c1e87cda9a823682
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: summarization
+  category: summarization
+  dataset: hunsum
+  metric_key: euroeval/hu/summarization/hunsum/chr_f3pp
+  status: supported
+  include_in_average: true
+  metric_name: chr_f3pp
+  datasets:
+  - hunsum
+  deduplication_key: hunsum
+  group_id: hu__hunsum
+  source_dataset: EuroEval/hun-sum-mini
+  source_url: https://huggingface.co/datasets/EuroEval/hun-sum-mini
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L51
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 4eee98a3e7c140d6015eef930b9879be5436b311
+  remote_probe:
+    status: accessible
+    revision: 4eee98a3e7c140d6015eef930b9879be5436b311
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: knowledge
+  category: knowledge
+  dataset: include-hu
+  metric_key: euroeval/hu/knowledge/include-hu/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - include-hu
+  deduplication_key: include-hu
+  group_id: hu__include-hu
+  source_dataset: EuroEval/include-hu-mini
+  source_url: https://huggingface.co/datasets/EuroEval/include-hu-mini
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L88
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 1fd12a4b7b8dfda17fba9cdb38ab10824703b28c
+  remote_probe:
+    status: accessible
+    revision: 1fd12a4b7b8dfda17fba9cdb38ab10824703b28c
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-hu
+  metric_key: euroeval/hu/common-sense-reasoning/winogrande-hu/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-hu
+  deduplication_key: winogrande-hu
+  group_id: hu__winogrande-hu
+  source_dataset: EuroEval/winogrande-hu
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-hu
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L59
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 333f75dcc917b8c76c98418d8c594181b89bb040
+  remote_probe:
+    status: accessible
+    revision: 333f75dcc917b8c76c98418d8c594181b89bb040
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-hu
+  metric_key: euroeval/hu/instruction-following/multi-ifeval-hu/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-hu
+  deduplication_key: multi-ifeval-hu
+  group_id: hu__multi-ifeval-hu
+  source_dataset: EuroEval/multi-ifeval-hu
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-hu
+  euroeval_result_languages:
+  - hu
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/hungarian.py#L68
+  catalog_code_sha256: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 1e8328a4a27b274e6949151271aba4e0ed44196f
+  remote_probe:
+    status: accessible
+    revision: 1e8328a4a27b274e6949151271aba4e0ed44196f
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: hu
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: hu
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lb
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: ltzglue-sa
+  metric_key: euroeval/lb/sentiment-classification/ltzglue-sa/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - ltzglue-sa
+  deduplication_key: ltzglue-sa
+  group_id: lb__ltzglue-sa
+  source_dataset: EuroEval/ltzglue-sa-mini
+  source_url: https://huggingface.co/datasets/EuroEval/ltzglue-sa-mini
+  euroeval_result_languages:
+  - lb
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/luxembourgish.py#L20
+  catalog_code_sha256: bdc2e688cc2e88a499697157a9d82c0c00214f2730d238393bb9a083044772cb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 396431493270b151111cb2856746923a12d02db9
+  remote_probe:
+    status: accessible
+    revision: 396431493270b151111cb2856746923a12d02db9
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lb
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: ltzglue-la-binary
+  metric_key: euroeval/lb/linguistic-acceptability/ltzglue-la-binary/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - ltzglue-la-binary
+  deduplication_key: ltzglue-la-binary
+  group_id: lb__ltzglue-la-binary
+  source_dataset: EuroEval/ltzglue-la-mini
+  source_url: https://huggingface.co/datasets/EuroEval/ltzglue-la-mini
+  euroeval_result_languages:
+  - lb
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/luxembourgish.py#L28
+  catalog_code_sha256: bdc2e688cc2e88a499697157a9d82c0c00214f2730d238393bb9a083044772cb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: c6926dc0904b5d5626c5a02be743f94e5b21972f
+  remote_probe:
+    status: accessible
+    revision: c6926dc0904b5d5626c5a02be743f94e5b21972f
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lb
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: ltzglue-ner
+  metric_key: euroeval/lb/named-entity-recognition/ltzglue-ner/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - ltzglue-ner
+  deduplication_key: ltzglue-ner
+  group_id: lb__ltzglue-ner
+  source_dataset: EuroEval/ltzglue-ner-mini
+  source_url: https://huggingface.co/datasets/EuroEval/ltzglue-ner-mini
+  euroeval_result_languages:
+  - lb
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/luxembourgish.py#L36
+  catalog_code_sha256: bdc2e688cc2e88a499697157a9d82c0c00214f2730d238393bb9a083044772cb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 0177e267e512317167c5bdce94b32373b6d28f8e
+  remote_probe:
+    status: accessible
+    revision: 0177e267e512317167c5bdce94b32373b6d28f8e
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lb
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-lb
+  metric_key: euroeval/lb/reading-comprehension/multi-wiki-qa-lb/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-lb
+  deduplication_key: multi-wiki-qa-lb
+  group_id: lb__multi-wiki-qa-lb
+  source_dataset: EuroEval/multi-wiki-qa-lb-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-lb-mini
+  euroeval_result_languages:
+  - lb
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/luxembourgish.py#L44
+  catalog_code_sha256: bdc2e688cc2e88a499697157a9d82c0c00214f2730d238393bb9a083044772cb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 63f25ecad174744a858c1799c88e37156c2935d1
+  remote_probe:
+    status: accessible
+    revision: 63f25ecad174744a858c1799c88e37156c2935d1
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lb
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lb
+  task: knowledge
+  category: knowledge
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lb
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lb
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-lb
+  metric_key: euroeval/lb/instruction-following/multi-ifeval-lb/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-lb
+  deduplication_key: multi-ifeval-lb
+  group_id: lb__multi-ifeval-lb
+  source_dataset: EuroEval/multi-ifeval-lb
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-lb
+  euroeval_result_languages:
+  - lb
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/luxembourgish.py#L88
+  catalog_code_sha256: bdc2e688cc2e88a499697157a9d82c0c00214f2730d238393bb9a083044772cb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: d170ee17246429dcfec8829e2761b099525395b9
+  remote_probe:
+    status: accessible
+    revision: d170ee17246429dcfec8829e2761b099525395b9
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: lb
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: lb
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sr
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: mms-sr
+  metric_key: euroeval/sr/sentiment-classification/mms-sr/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - mms-sr
+  deduplication_key: mms-sr
+  group_id: sr__mms-sr
+  source_dataset: EuroEval/mms-sr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mms-sr-mini
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L19
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 308d050ff87020499c142ecc541dc8fd4307fcb4
+  remote_probe:
+    status: accessible
+    revision: 308d050ff87020499c142ecc541dc8fd4307fcb4
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-sr
+  metric_key: euroeval/sr/linguistic-acceptability/scala-sr/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-sr
+  deduplication_key: scala-sr
+  group_id: sr__scala-sr
+  source_dataset: EuroEval/scala-sr
+  source_url: https://huggingface.co/datasets/EuroEval/scala-sr
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L27
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: bdd7c94e9ce18dbb24fe220c288b7d6a2eb954f8
+  remote_probe:
+    status: accessible
+    revision: bdd7c94e9ce18dbb24fe220c288b7d6a2eb954f8
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: uner-sr
+  metric_key: euroeval/sr/named-entity-recognition/uner-sr/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - uner-sr
+  deduplication_key: uner-sr
+  group_id: sr__uner-sr
+  source_dataset: EuroEval/uner-sr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/uner-sr-mini
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L35
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: cb568a992fdd700e6924fa1d2a5f20caf3231aad
+  remote_probe:
+    status: accessible
+    revision: cb568a992fdd700e6924fa1d2a5f20caf3231aad
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-sr
+  metric_key: euroeval/sr/reading-comprehension/multi-wiki-qa-sr/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-sr
+  deduplication_key: multi-wiki-qa-sr
+  group_id: sr__multi-wiki-qa-sr
+  source_dataset: EuroEval/multi-wiki-qa-sr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-sr-mini
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L43
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 3ba450d4948f14b1159f7768749321fae311493b
+  remote_probe:
+    status: accessible
+    revision: 3ba450d4948f14b1159f7768749321fae311493b
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: summarization
+  category: summarization
+  dataset: lr-sum-sr
+  metric_key: euroeval/sr/summarization/lr-sum-sr/chr_f3pp
+  status: supported
+  include_in_average: true
+  metric_name: chr_f3pp
+  datasets:
+  - lr-sum-sr
+  deduplication_key: lr-sum-sr
+  group_id: sr__lr-sum-sr
+  source_dataset: EuroEval/lr-sum-sr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/lr-sum-sr-mini
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L51
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: efea9947e2c621509a6a2e88049d4730806ac97c
+  remote_probe:
+    status: accessible
+    revision: efea9947e2c621509a6a2e88049d4730806ac97c
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: knowledge
+  category: knowledge
+  dataset: include-sr
+  metric_key: euroeval/sr/knowledge/include-sr/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - include-sr
+  deduplication_key: include-sr
+  group_id: sr__include-sr
+  source_dataset: EuroEval/include-sr-mini
+  source_url: https://huggingface.co/datasets/EuroEval/include-sr-mini
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L88
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 4439f16ef895f9e0f5988304f2ca9809f9bfa2f8
+  remote_probe:
+    status: accessible
+    revision: 4439f16ef895f9e0f5988304f2ca9809f9bfa2f8
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-sr
+  metric_key: euroeval/sr/common-sense-reasoning/winogrande-sr/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-sr
+  deduplication_key: winogrande-sr
+  group_id: sr__winogrande-sr
+  source_dataset: EuroEval/winogrande-sr
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-sr
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L59
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: bd218bad5daeedbc3b99b18c55837db001c59cbb
+  remote_probe:
+    status: accessible
+    revision: bd218bad5daeedbc3b99b18c55837db001c59cbb
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-sr
+  metric_key: euroeval/sr/instruction-following/multi-ifeval-sr/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-sr
+  deduplication_key: multi-ifeval-sr
+  group_id: sr__multi-ifeval-sr
+  source_dataset: EuroEval/multi-ifeval-sr
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-sr
+  euroeval_result_languages:
+  - sr
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/serbian.py#L68
+  catalog_code_sha256: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 8e66239baaa04a7bb9b9d7476bdb1d130bdca293
+  remote_probe:
+    status: accessible
+    revision: 8e66239baaa04a7bb9b9d7476bdb1d130bdca293
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sr
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sr
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sk
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: csfd-sentiment-sk
+  metric_key: euroeval/sk/sentiment-classification/csfd-sentiment-sk/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - csfd-sentiment-sk
+  deduplication_key: csfd-sentiment-sk
+  group_id: sk__csfd-sentiment-sk
+  source_dataset: EuroEval/csfd-sentiment-sk-mini
+  source_url: https://huggingface.co/datasets/EuroEval/csfd-sentiment-sk-mini
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L19
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 3f47e7cd06d2b3bebfb251f9576bdf2b00e775d7
+  remote_probe:
+    status: accessible
+    revision: 3f47e7cd06d2b3bebfb251f9576bdf2b00e775d7
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-sk
+  metric_key: euroeval/sk/linguistic-acceptability/scala-sk/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-sk
+  deduplication_key: scala-sk
+  group_id: sk__scala-sk
+  source_dataset: EuroEval/scala-sk
+  source_url: https://huggingface.co/datasets/EuroEval/scala-sk
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L27
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 1a611c8bd3e546a0b8796a8400e76b6e3abbb84f
+  remote_probe:
+    status: accessible
+    revision: 1a611c8bd3e546a0b8796a8400e76b6e3abbb84f
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: uner-sk
+  metric_key: euroeval/sk/named-entity-recognition/uner-sk/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - uner-sk
+  deduplication_key: uner-sk
+  group_id: sk__uner-sk
+  source_dataset: EuroEval/uner-sk-mini
+  source_url: https://huggingface.co/datasets/EuroEval/uner-sk-mini
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L35
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 032ad01bf71425656cd217a45dfe03ef3c4a80e5
+  remote_probe:
+    status: accessible
+    revision: 032ad01bf71425656cd217a45dfe03ef3c4a80e5
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-sk
+  metric_key: euroeval/sk/reading-comprehension/multi-wiki-qa-sk/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-sk
+  deduplication_key: multi-wiki-qa-sk
+  group_id: sk__multi-wiki-qa-sk
+  source_dataset: EuroEval/multi-wiki-qa-sk-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-sk-mini
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L43
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 2b7372da634324434e08ee0cb407631aa733023c
+  remote_probe:
+    status: accessible
+    revision: 2b7372da634324434e08ee0cb407631aa733023c
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sk
+  task: knowledge
+  category: knowledge
+  dataset: mmlu-sk
+  metric_key: euroeval/sk/knowledge/mmlu-sk/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - mmlu-sk
+  deduplication_key: mmlu-sk
+  group_id: sk__mmlu-sk
+  source_dataset: EuroEval/mmlu-sk-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mmlu-sk-mini
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L51
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: cb4a6548de11fc24f4486fd53faf6e44987d0cd3
+  remote_probe:
+    status: accessible
+    revision: cb4a6548de11fc24f4486fd53faf6e44987d0cd3
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-sk
+  metric_key: euroeval/sk/common-sense-reasoning/winogrande-sk/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-sk
+  deduplication_key: winogrande-sk
+  group_id: sk__winogrande-sk
+  source_dataset: EuroEval/winogrande-sk
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-sk
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L59
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 33f8f2deca38fe1dffc7c8ec257712842f65d1b2
+  remote_probe:
+    status: accessible
+    revision: 33f8f2deca38fe1dffc7c8ec257712842f65d1b2
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-sk
+  metric_key: euroeval/sk/instruction-following/multi-ifeval-sk/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-sk
+  deduplication_key: multi-ifeval-sk
+  group_id: sk__multi-ifeval-sk
+  source_dataset: EuroEval/multi-ifeval-sk
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-sk
+  euroeval_result_languages:
+  - sk
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovak.py#L67
+  catalog_code_sha256: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 6d3be34c70769885072c5111219c73ddbe81956b
+  remote_probe:
+    status: accessible
+    revision: 6d3be34c70769885072c5111219c73ddbe81956b
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sk
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sk
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sl
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: sentinews
+  metric_key: euroeval/sl/sentiment-classification/sentinews/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - sentinews
+  deduplication_key: sentinews
+  group_id: sl__sentinews
+  source_dataset: EuroEval/sentinews-mini
+  source_url: https://huggingface.co/datasets/EuroEval/sentinews-mini
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L9
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 2520b444bfc498f000d85a3467a5c419cfb9937a
+  remote_probe:
+    status: accessible
+    revision: 2520b444bfc498f000d85a3467a5c419cfb9937a
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: scala-sl
+  metric_key: euroeval/sl/linguistic-acceptability/scala-sl/macro_f1
+  status: supported
+  include_in_average: true
+  metric_name: macro_f1
+  datasets:
+  - scala-sl
+  deduplication_key: scala-sl
+  group_id: sl__scala-sl
+  source_dataset: EuroEval/scala-sl
+  source_url: https://huggingface.co/datasets/EuroEval/scala-sl
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L17
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: d39c89f635a17267e552f94390c3a7eaf4616e46
+  remote_probe:
+    status: accessible
+    revision: d39c89f635a17267e552f94390c3a7eaf4616e46
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: ssj500k-ner
+  metric_key: euroeval/sl/named-entity-recognition/ssj500k-ner/micro_f1
+  status: supported
+  include_in_average: true
+  metric_name: micro_f1
+  datasets:
+  - ssj500k-ner
+  deduplication_key: ssj500k-ner
+  group_id: sl__ssj500k-ner
+  source_dataset: EuroEval/ssj500k-ner-mini
+  source_url: https://huggingface.co/datasets/EuroEval/ssj500k-ner-mini
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L25
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 2b6a32dd2c80e4739307c47f91e65e933958b8a6
+  remote_probe:
+    status: accessible
+    revision: 2b6a32dd2c80e4739307c47f91e65e933958b8a6
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: multi-wiki-qa-sl
+  metric_key: euroeval/sl/reading-comprehension/multi-wiki-qa-sl/f1
+  status: supported
+  include_in_average: true
+  metric_name: f1
+  datasets:
+  - multi-wiki-qa-sl
+  deduplication_key: multi-wiki-qa-sl
+  group_id: sl__multi-wiki-qa-sl
+  source_dataset: EuroEval/multi-wiki-qa-sl-mini
+  source_url: https://huggingface.co/datasets/EuroEval/multi-wiki-qa-sl-mini
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L33
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 62a1049b0c5f7bb9de046f93f4af5e8c00f739fe
+  remote_probe:
+    status: accessible
+    revision: 62a1049b0c5f7bb9de046f93f4af5e8c00f739fe
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sl
+  task: knowledge
+  category: knowledge
+  dataset: mmlu-sl
+  metric_key: euroeval/sl/knowledge/mmlu-sl/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - mmlu-sl
+  deduplication_key: mmlu-sl
+  group_id: sl__mmlu-sl
+  source_dataset: EuroEval/mmlu-sl-mini
+  source_url: https://huggingface.co/datasets/EuroEval/mmlu-sl-mini
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L41
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: 8f1f202e8f129c3198836c469d19d5e1ed03c904
+  remote_probe:
+    status: accessible
+    revision: 8f1f202e8f129c3198836c469d19d5e1ed03c904
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: winogrande-sl
+  metric_key: euroeval/sl/common-sense-reasoning/winogrande-sl/accuracy
+  status: supported
+  include_in_average: true
+  metric_name: accuracy
+  datasets:
+  - winogrande-sl
+  deduplication_key: winogrande-sl
+  group_id: sl__winogrande-sl
+  source_dataset: EuroEval/winogrande-sl
+  source_url: https://huggingface.co/datasets/EuroEval/winogrande-sl
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L49
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: d3c85421c7b10cc5cd94f11a23cde33166e1cb4d
+  remote_probe:
+    status: accessible
+    revision: d3c85421c7b10cc5cd94f11a23cde33166e1cb4d
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: instruction-following
+  category: instruction-following
+  dataset: multi-ifeval-sl
+  metric_key: euroeval/sl/instruction-following/multi-ifeval-sl/instruction_accuracy
+  status: supported
+  include_in_average: true
+  metric_name: instruction_accuracy
+  datasets:
+  - multi-ifeval-sl
+  deduplication_key: multi-ifeval-sl
+  group_id: sl__multi-ifeval-sl
+  source_dataset: EuroEval/multi-ifeval-sl
+  source_url: https://huggingface.co/datasets/EuroEval/multi-ifeval-sl
+  euroeval_result_languages:
+  - sl
+  installed_18_1_supported: true
+  candidate_alternatives: []
+  code_ref: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval/dataset_configs/slovene.py#L58
+  catalog_code_sha256: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+  contamination_flags:
+  - full_training_overlap_not_audited
+  remote_access_status: accessible
+  catalog_status: supported
+  catalog_include_in_average: true
+  dataset_revision: b86dbe7ac71a1608efdb0ff485718ce8ee29f97e
+  remote_probe:
+    status: accessible
+    revision: b86dbe7ac71a1608efdb0ff485718ce8ee29f97e
+    error_type: null
+    http_status: null
+    classification: accessible
+- language: sl
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: sl
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: sentiment-classification
+  category: sentiment-classification
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: macro_f1
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: linguistic-acceptability
+  category: linguistic-acceptability
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: macro_f1
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: named-entity-recognition
+  category: named-entity-recognition
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: micro_f1
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: reading-comprehension
+  category: reading-comprehension
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: f1
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: summarization
+  category: summarization
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: chr_f3pp
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: knowledge
+  category: knowledge
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: common-sense-reasoning
+  category: common-sense-reasoning
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: instruction-following
+  category: instruction-following
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: instruction_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: tool-calling
+  category: tool-calling
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: tool_calling_accuracy
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+- language: fa
+  task: european-values
+  category: european-values
+  dataset: null
+  metric_key: null
+  status: coverage_gap
+  include_in_average: false
+  metric_name: european_values
+  reason: No official registered native counterpart in pinned EuroEval18.1 catalog
+execution:
+  python: /work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python
+  euroeval_bin: /work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python
+    /work/mimir/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py
+  version: 18.1.0
+  help_smoke_passed: true
+  no_environment_changes: true
+  dataset_arguments:
+  - --dataset
+  - '{dataset}'
+  do_not_combine_dataset_with:
+  - --language
+  - --task
+  deduplicate_by: deduplication_key
+  run_statuses:
+  - supported
+  - contamination_flagged
+  - variant_unverified
+  contamination_policy: Run flagged diagnostics if scheduled, never label them clean
+    or include in clean averages.
+  data_access_preflight: config/euroeval_dfm12_multilingual_access.json
+  requested_checkpoints:
+  - step_3200000_and_future
+  checkpoint_launch_authorized_here: false
+  comparisons: Keep tokenizer/chat-template/EMA choice, bootstrap iterations, dataset
+    revisions and scorer version matched across checkpoints.
+  revision_policy: Metadata revisions pinned in entries; runtime must check/reuse
+    these revisions. A named --dataset alone does not enforce the pin.
+  dataset_authentication: Installed EuroEval loader uses its framework credential
+    first, then user-token fallback; no credentials are stored in this registry.
+source_evidence:
+  cached_18_1:
+    path: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval
+    file_sha256:
+      tasks.py: 2c10ee33274f244de1efd736fb6ac2c4695a37bbb196288a68f9fe9d28bbfff9
+      dataset_configs/lithuanian.py: e7fdddef82015eb6e02d2638608899561f0be40210fc83738a0283665ca27766
+      dataset_configs/latvian.py: 61a2b93db659bc0bdfe9e6cecb4d74ea4713747d9e7d555a50b36b3550e7f2a9
+      dataset_configs/albanian.py: 23d9ac2135a7ddda24070f6daf1f526be821e0e42826d542282590f85fd0517b
+      dataset_configs/belarusian.py: 0e5a8f727db9cf2f5759a03d3fb89b911d372a4353683e107675d8d768462394
+      dataset_configs/bosnian.py: b4949d0c52f136cdef6760753fee8c7b128f05dc38fda0b5242b599464c51d6d
+      dataset_configs/bulgarian.py: 532f3c863afe1e3fb960879c85c2c08d2f2a42fb34cc9ea2b8a000d7a4db6d50
+      dataset_configs/croatian.py: d9e37ca2c15688666c9d12347d0be012036d2e5f3f7f5f574bdb12825ae030f7
+      dataset_configs/hungarian.py: 9eb2878dfabccf842aa5ee5717da621b439d3dcc9aae732f4b19a86237cdfb1a
+      dataset_configs/luxembourgish.py: bdc2e688cc2e88a499697157a9d82c0c00214f2730d238393bb9a083044772cb
+      dataset_configs/serbian.py: 6af8d75144c78f961f0226213563947fc7cfc27acf28ad61408139a300ad553f
+      dataset_configs/slovak.py: 296c7e12a0f8bb1865cb9ffbd182aa8e6218d806b80da0c49b43996e98ac59f7
+      dataset_configs/slovene.py: 78e304a8b057dc7abaf2414d59e3fc669f12e0bc37b0f0af88ed0746be0407fb
+coverage:
+  lt:
+    supported: 8
+    gaps:
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 8
+    average_eligible: 8
+    remote_accessible: 8
+    remote_blocked: 0
+  lv:
+    supported: 8
+    gaps:
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 8
+    average_eligible: 8
+    remote_accessible: 8
+    remote_blocked: 0
+  sq:
+    supported: 8
+    gaps:
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 8
+    average_eligible: 8
+    remote_accessible: 8
+    remote_blocked: 0
+  be:
+    supported: 6
+    gaps:
+    - summarization
+    - knowledge
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 6
+    average_eligible: 6
+    remote_accessible: 6
+    remote_blocked: 0
+  bs:
+    supported: 5
+    gaps:
+    - linguistic-acceptability
+    - knowledge
+    - common-sense-reasoning
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 5
+    average_eligible: 5
+    remote_accessible: 5
+    remote_blocked: 0
+  bg:
+    supported: 7
+    gaps:
+    - summarization
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 7
+    average_eligible: 7
+    remote_accessible: 7
+    remote_blocked: 0
+  hr:
+    supported: 7
+    gaps:
+    - summarization
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 7
+    average_eligible: 7
+    remote_accessible: 7
+    remote_blocked: 0
+  hu:
+    supported: 8
+    gaps:
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 8
+    average_eligible: 8
+    remote_accessible: 8
+    remote_blocked: 0
+  lb:
+    supported: 5
+    gaps:
+    - summarization
+    - knowledge
+    - common-sense-reasoning
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 5
+    average_eligible: 5
+    remote_accessible: 5
+    remote_blocked: 0
+  sr:
+    supported: 8
+    gaps:
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 8
+    average_eligible: 8
+    remote_accessible: 8
+    remote_blocked: 0
+  sk:
+    supported: 7
+    gaps:
+    - summarization
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 7
+    average_eligible: 7
+    remote_accessible: 7
+    remote_blocked: 0
+  sl:
+    supported: 7
+    gaps:
+    - summarization
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 7
+    average_eligible: 7
+    remote_accessible: 7
+    remote_blocked: 0
+  fa:
+    supported: 0
+    gaps:
+    - sentiment-classification
+    - linguistic-acceptability
+    - named-entity-recognition
+    - reading-comprehension
+    - summarization
+    - knowledge
+    - common-sense-reasoning
+    - instruction-following
+    - tool-calling
+    - european-values
+    catalog_average_eligible: 0
+    average_eligible: 0
+    remote_accessible: 0
+    remote_blocked: 0
+policy: Pinned runtime category parity; gaps explicit; no active plan or W&B edits;
+  no benchmark-clean certification

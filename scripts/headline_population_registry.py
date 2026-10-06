@@ -48,6 +48,9 @@ def validate_registry(registry: dict) -> dict:
             raise ValueError('Invalid population fields')
         kind, identifier = population['kind'], population['id']
         pattern = {'multilingual': r'multilingual_v[1-9][0-9]*',
+                   'dfm13_new_languages': r'dfm13_new_languages_v[1-9][0-9]*',
+                   'dfm13_multilingual': r'dfm13_multilingual_v[1-9][0-9]*',
+                   'dfm13_all_languages': r'dfm13_all_languages_v[1-9][0-9]*',
                    'cross_language': r'cross_language_v[1-9][0-9]*',
                    'english': r'english_v(?:[2-9]|[1-9][0-9]+)',
                    'english_dfm': r'english_dfm_v[1-9][0-9]*'}.get(kind, '')
@@ -66,6 +69,12 @@ def validate_registry(registry: dict) -> dict:
             raise ValueError('Per-language required_tasks must cover every language')
         if kind == 'multilingual' and (len(languages) != 19 or set(languages) & {'en', 'da'}):
             raise ValueError('Multilingual population requires exactly 19 non-da/en languages')
+        if kind in ('dfm13_new_languages','dfm13_multilingual','dfm13_all_languages'):
+            expected=set('lt lv sq be bs bg hr hu lb sr sk sl fa'.split())
+            if kind in ('dfm13_multilingual','dfm13_all_languages'):
+                expected.update('nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk'.split())
+            if kind=='dfm13_all_languages':expected.update(('da','en'))
+            if set(languages)!=expected:raise ValueError('DFM13 language population mismatch')
         if kind == 'cross_language':
             expected = set('da en nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk'.split())
             if set(languages) != expected:
@@ -185,6 +194,8 @@ class Artifacts:
         if not roots:
             return None, {'status': 'missing_root'}
         paths = self.paths[suite]
+        if key=='dfm_eval/generative-talemaader/model_graded_fact_v2/accuracy':
+            paths=sorted(set(paths)|{p for root in roots for p in root.glob('**/merged_metrics_v2.json')})
         if 'artifact' in binding:
             paths = set()
             for root in roots:

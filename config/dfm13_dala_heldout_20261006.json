@@ -1,0 +1,746 @@
+{
+  "schema": "dfm13-accepted-dala-heldout-v1",
+  "languages": {
+    "lt": {
+      "status": "ready",
+      "language": "lt",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Lithuanian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Lithuanian sentence. Return correct input unchanged. Preserve Lithuanian, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/lt/pairs.json",
+        "sha256": "2787b38dbf43a90bc8906c95c9e21e50df8c88d6c4e43274873a8650627689f2"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lt-compact/ready.json",
+          "sha256": "0b2ea4807bc7d283bdf46151e4b3f6e22c93e8dd786371db4ce59a302c8e33b6"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lt-baseline/integration.json",
+          "sha256": "4d53e053edbbd4e36de617ea0e7dee97463200cd74a9edc15596a01be1087609"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lt-baseline/export.json",
+          "sha256": "67d4f04f62faf71f7b49270ad89fc1f294df94cc854ebfbf5c5cfd1eb51e0e21"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lt-baseline/export.json",
+          "sha256": "67d4f04f62faf71f7b49270ad89fc1f294df94cc854ebfbf5c5cfd1eb51e0e21"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lt-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "26901b39380d146874fecc267c0b60a57fd202c4ddef9479c4c6e520d70741e0"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lt-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "86004568ccf25a484472f031bdf6ae019643574fa130b83b9ee191b8f9c54d90"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 50546,
+          "eligible_pairs": 46184
+        },
+        "correction": {
+          "total": 50546,
+          "eligible_pairs": 46184
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "lv": {
+      "status": "ready",
+      "language": "lv",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Latvian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Latvian sentence. Return correct input unchanged. Preserve Latvian, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/lv/pairs.json",
+        "sha256": "0822139eaa23d55dbe962443559f78bd84cd19471d95115396f33dd404df3a5e"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lv-compact/ready.json",
+          "sha256": "db02c45ca7375134e4475f333deed734e77f5cca80c6529db87960207e281859"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lv-baseline/integration.json",
+          "sha256": "d6f6540ba4131f326308fd20f2a9248e8a625116d65fb4ec8c158c009fbf5a7d"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lv-baseline/export.json",
+          "sha256": "ee19f1647c8dad082d6dc75d39ff6a97a659b00bdcf03086dc9765082a1a8cb5"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lv-baseline/export.json",
+          "sha256": "ee19f1647c8dad082d6dc75d39ff6a97a659b00bdcf03086dc9765082a1a8cb5"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lv-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "75a9ba278eda3bcd4b0ad2039c8701ddaaae73dc67f9f794db31c9462030dc8a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lv-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "cac2b4b6e60b13c7c82538eb7b15000ba8c2a8b1db37b1342c13a558d686ff63"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 52878,
+          "eligible_pairs": 46608
+        },
+        "correction": {
+          "total": 52878,
+          "eligible_pairs": 46608
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "sq": {
+      "status": "ready",
+      "language": "sq",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Albanian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Albanian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/sq/pairs.json",
+        "sha256": "1eafe60edd99891654493f7acc52b193f00f91926add1944cb38e72bd3dcd0d2"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sq-compact/ready.json",
+          "sha256": "d2e6b7c78995aa7a6729e915d0f5987c47d6adb5acf4b009cae5c005716aba4d"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sq-baseline/integration.json",
+          "sha256": "6c80c07283fbc89a03ff06d14798c301e062a5ac1901e5f625bbfb93f4e72ebb"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sq-baseline/export.json",
+          "sha256": "25f60b23e5af198935317e5db252f68b71fc0a8bb7847da95748bbc55b314550"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sq-baseline/export.json",
+          "sha256": "25f60b23e5af198935317e5db252f68b71fc0a8bb7847da95748bbc55b314550"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sq-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "f8d8f9f49f5732783f03708d1de228b0eedf57fd801ed7e0d117a73a2326c7aa"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sq-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "6dffcd11d10198acd3bb7ab58b9089ce3cd723eb5fbe53c403c8e8a4791a3c50"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 47637,
+          "eligible_pairs": 43097
+        },
+        "correction": {
+          "total": 47637,
+          "eligible_pairs": 43097
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "be": {
+      "status": "ready",
+      "language": "be",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Belarusian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Belarusian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/be/pairs.json",
+        "sha256": "6de1caa2f8837394dc3ef3f096feebc91c0c64e6d1b3a7ce83d8150fe6bcb740"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-be-compact/ready.json",
+          "sha256": "7f0e8c23d3b66fc47da6d19d21a704dda0f2b938c33fd9991dd30238a5c32b0a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/be-baseline/integration.json",
+          "sha256": "6b78a5906be6deb5fcf90ce68c287dfe5adc9f1b6ea69be928843a0292ebfe7e"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/be-baseline/export.json",
+          "sha256": "63c61e119bd699455cb0f9f22f912d4a7413632efbbc6bea19322beeedd380d6"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/be-baseline/export.json",
+          "sha256": "63c61e119bd699455cb0f9f22f912d4a7413632efbbc6bea19322beeedd380d6"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-be-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "ad9273a0dbb0ad0d8330c96aa48560f9aa6f4a2201466ebc9d4b5b397fc75f3b"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-be-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "17156e869d6f2185897802184eb9b62090cedf60485c89f6fba85b3bd0ce7701"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 55556,
+          "eligible_pairs": 46773
+        },
+        "correction": {
+          "total": 55556,
+          "eligible_pairs": 46773
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "bs": {
+      "status": "ready",
+      "language": "bs",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Bosnian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Bosnian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/bs/pairs.json",
+        "sha256": "3027ec9dab16b066df222e99957c4f9547cae0ffd3e1193b9daa3dffbf0221e2"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-bs-compact/ready.json",
+          "sha256": "aa17dab67239b26445d9c11a5d501403f1819b34475d6e19b3dd2c626ce50564"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/bs-baseline/integration.json",
+          "sha256": "bfc48dc373080646f5796d8b0041b15e1aff7e08dfbb58dd05a3a4c030cc2a58"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/bs-baseline/export.json",
+          "sha256": "9db37bfdfcccddfc6f8828182cb4bf8ef25530337f6574993b1a0bbe38eb797c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/bs-baseline/export.json",
+          "sha256": "9db37bfdfcccddfc6f8828182cb4bf8ef25530337f6574993b1a0bbe38eb797c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-bs-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "898e41c9e1c6e44984a5f2c612269d95f69560ac615f350d28fc6cc6986d8f8f"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-bs-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "75199fafeaff337e6d2e3783e86beec7e37566ca14aec4f936846d6e5f629b32"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 4419,
+          "eligible_pairs": 3779
+        },
+        "correction": {
+          "total": 4419,
+          "eligible_pairs": 3779
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "bg": {
+      "status": "ready",
+      "language": "bg",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Bulgarian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Bulgarian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/bg/pairs.json",
+        "sha256": "4e15a3d247d9527fb1c03a389463a599a1d6564f5a65ee9a89ea3ef220ba2697"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-bg-compact/ready.json",
+          "sha256": "a6d4ad1290e83320164276f45f0843f620430ce61d2caaddd99e915240e89de3"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/bg-baseline/integration.json",
+          "sha256": "d02d51741fc13cdffc4c2a11a3c6e9b054226ab1868f8fb2471b13881758361f"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/bg-baseline/export.json",
+          "sha256": "d4d0a13e7c0c36e26351f602dbfd17518b318dfdbb97e6fb4e410a45aebf1164"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/bg-baseline/export.json",
+          "sha256": "d4d0a13e7c0c36e26351f602dbfd17518b318dfdbb97e6fb4e410a45aebf1164"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-bg-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "1e8bdf576671fbe4b93303c26dde6d49d37dbed16680c9d16f1b9b316c4a10a7"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-bg-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "787f33858ea8a68a1dfe950cf62edf3f26edc5a22d4cea1317269246009fdeba"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 57627,
+          "eligible_pairs": 47279
+        },
+        "correction": {
+          "total": 57627,
+          "eligible_pairs": 47279
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "hr": {
+      "status": "ready",
+      "language": "hr",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Croatian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Croatian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/hr/pairs.json",
+        "sha256": "c858d7817fbd5173dd16f520b33016e28706c15ff9ae51b75cbaf930e150bfec"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-hr-compact/ready.json",
+          "sha256": "4eb350579cf5bfc1b71b7571435a2df8e79f6a828bb95112e074abcbd7e5ab8e"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/hr-baseline/integration.json",
+          "sha256": "9955f20e6ebef99bcf037d5ba8cd14fa45965e5df0d7f5e66b5f7406f7ccdaa3"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/hr-baseline/export.json",
+          "sha256": "5fb8cb536314f796b1905f45194007e71f5761e4d139220c50f33757a59e1242"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/hr-baseline/export.json",
+          "sha256": "5fb8cb536314f796b1905f45194007e71f5761e4d139220c50f33757a59e1242"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-hr-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "373f0ffe7b2c01e04d334b5d253307fa3153aff75bc68e0c33cb67671a459f7c"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-hr-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "636fe4cf049bb4fd294325e1a19a0b5184562d88cbef7cd9bc75398898c032aa"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 56682,
+          "eligible_pairs": 46715
+        },
+        "correction": {
+          "total": 56682,
+          "eligible_pairs": 46715
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "hu": {
+      "status": "ready",
+      "language": "hu",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Hungarian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Hungarian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/hu/pairs.json",
+        "sha256": "2dab9ce3ac423cbc4e9f881dba99358853dbf8034cb298fcf2bca8fb32c644a9"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-hu-compact/ready.json",
+          "sha256": "4db3c897857c301057c3176b1b1a88b72082a485c99e12df9705a703647194f7"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/hu-baseline/integration.json",
+          "sha256": "24e8c484e306e4bf14287fd7672f88af07758685c8d285bc92a87e7bd4a8a2a2"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/hu-baseline/export.json",
+          "sha256": "bcfbf142a29539830daf36ec01a6f0e0faa7e5323f06f8ae320c474abe49ff19"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/hu-baseline/export.json",
+          "sha256": "bcfbf142a29539830daf36ec01a6f0e0faa7e5323f06f8ae320c474abe49ff19"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-hu-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "e8b3885b70cad31cb6c6e4e7ebc7abcec08f1722cde6750e0ff0538a648dbd78"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-hu-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "f7efca19e3bbe78981737a02b8934d6499f404a2381a4e577c94a81784f638d8"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 55829,
+          "eligible_pairs": 46656
+        },
+        "correction": {
+          "total": 55829,
+          "eligible_pairs": 46656
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "lb": {
+      "status": "ready",
+      "language": "lb",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Luxembourgish? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Luxembourgish sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/lb/pairs.json",
+        "sha256": "a2829e3629539be3d10a5dc0c54a223ba21f540bc3dfefcdcad0b9cfb5d81177"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lb-compact/ready.json",
+          "sha256": "55bc2ad8b3a372a5e715557a5b2dd048c74f2a3f7086999a3733a68da861b15d"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lb-baseline/integration.json",
+          "sha256": "51116396ca4dd3f31241edb874a9748a55351fec3023fa2b8f487e5a810221b7"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lb-baseline/export.json",
+          "sha256": "179be452e18361b2670ec791792442e15451c8770f4044d0c7a02cc98f5460bc"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/lb-baseline/export.json",
+          "sha256": "179be452e18361b2670ec791792442e15451c8770f4044d0c7a02cc98f5460bc"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lb-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "7e327f7da831289f2e27dc21a685ccd597720c5741d6214d78d76e72e0ce3ac3"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-lb-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "b97004dfe8cfc0f538a84ef8b542975f2458f005a1af37c2a737d633fdbd684d"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 2173,
+          "eligible_pairs": 1886
+        },
+        "correction": {
+          "total": 2173,
+          "eligible_pairs": 1886
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "sr": {
+      "status": "ready",
+      "language": "sr",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Serbian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Serbian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/sr/pairs.json",
+        "sha256": "85fdfdaf6ddd7b573b10ea03c8230d26974a0b66a1c7f5d3dc42acece1853b5e"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sr-compact/ready.json",
+          "sha256": "9d868bae379f49dafd2a9cd016566a90622ed2702c782c24c8420f80a49280a5"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sr-baseline/integration.json",
+          "sha256": "9cf992f4a1ac2bce1f3d4a98eb9dc22b91d48a8852520faea1baec3008fb8c90"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sr-baseline/export.json",
+          "sha256": "43da5b50cbe1d5d3ebd9e7e28d0820dee81817e4e7be3d331cc064de4eb5f1da"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sr-baseline/export.json",
+          "sha256": "43da5b50cbe1d5d3ebd9e7e28d0820dee81817e4e7be3d331cc064de4eb5f1da"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sr-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "0a9668b24628b441f811d94aae2fab4e1403399f2c83aa8560bcff2f409fab55"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sr-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "a212fb8e42321eacb43901d287a3c970fb2694b3ae268c6dec9154cd9683839c"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 66495,
+          "eligible_pairs": 46810
+        },
+        "correction": {
+          "total": 66495,
+          "eligible_pairs": 46810
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "sk": {
+      "status": "ready",
+      "language": "sk",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Slovak? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Slovak sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/sk/pairs.json",
+        "sha256": "76a804b4b99eafd8c0f4126e385d774aa908a696df4dc7c6349b2130b2726204"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sk-compact/ready.json",
+          "sha256": "aec7e51b784df4125f36ae6bf3b64daf83577edf2bc17affe37148b452b8f172"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/sk-baseline/integration.json",
+          "sha256": "e1c1cac48adadb70f8f7416e538308cfd15dff886b4f920c275e9a44fcf01a96"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/sk-baseline/export.json",
+          "sha256": "9a4f4f0c9d8dbbbef9c4fa3cc4c63a624e0792451108163461fa69cd5f0fb31e"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/sk-baseline/export.json",
+          "sha256": "9a4f4f0c9d8dbbbef9c4fa3cc4c63a624e0792451108163461fa69cd5f0fb31e"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sk-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "bdbe03b99da9d88871cea4dba8cf565fab63004774632c315bc23e7670ac1895"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sk-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "ae2d613851d45ee21af941f158a56970eaf4dd7f1d19c83783bfb23ac244fa42"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 52613,
+          "eligible_pairs": 46838
+        },
+        "correction": {
+          "total": 52613,
+          "eligible_pairs": 46838
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "sl": {
+      "status": "ready",
+      "language": "sl",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Slovenian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Slovenian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/sl/pairs.json",
+        "sha256": "bfebcdf281f875fdb1f879097db9661cf4889a49633bdbef34c0699fba353ee9"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sl-compact/ready.json",
+          "sha256": "d8a2d14098394c3564eb4f0fde7acf3f375995cddd60ec5a7fbdfce3204c6f33"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sl-baseline/integration.json",
+          "sha256": "8fb792a8cb7be8128e2aa94a46a62605542924cfbf1584d5aca6ac87dc0f01b1"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sl-baseline/export.json",
+          "sha256": "c2b44fb0251597d2ef5b23e69723f99a34e22abe5c8db5f9c432c649ce6d24a8"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-remaining21-finalized-20261004-v1/groups/sl-baseline/export.json",
+          "sha256": "c2b44fb0251597d2ef5b23e69723f99a34e22abe5c8db5f9c432c649ce6d24a8"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sl-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "b83e5c9f6b16ef7da1f6be84671e897658f5014190c867550bd5dff61f531c83"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-sl-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "3888d376f4e28ccb55cf3b6c9752dafe17557d490cff8458f305e81879e90542"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 55902,
+          "eligible_pairs": 46942
+        },
+        "correction": {
+          "total": 55902,
+          "eligible_pairs": 46942
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    },
+    "fa": {
+      "status": "ready",
+      "language": "fa",
+      "split": "test",
+      "view": "representative",
+      "pairs": 1000,
+      "samples_per_task": 2000,
+      "selection": "seed4242 hash-ranked passing noisy pairs plus their audited clean controls",
+      "prompts": {
+        "acceptability": "Is this sentence grammatically correct and correctly spelled in Persian? Reply only yes or no.",
+        "correction": "Correct grammatical and spelling errors in this Persian sentence. Return correct input unchanged. Preserve language, meaning and style. Return only the sentence."
+      },
+      "prompt_policy": "Unchanged producer task prompts; English instructions where provided, native sentence targets",
+      "selected": {
+        "path": "/work/mimir/HRM-Text/data/dfm13/multilingual-evals-20261006-v1/fa/pairs.json",
+        "sha256": "bd6868120f3905789340566ab72cd9c38050474d40a79928ea11a7bc49b135f4"
+      },
+      "input_pins": [
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-fa-compact/ready.json",
+          "sha256": "960c30aaaccbf7d3d84d9f207fb0db865ade96bba06fc4661b462ba84b96f94a"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/fa-recovery/integration.json",
+          "sha256": "1d13a6e1e021fc1a67f45598147a06e9cbebfcef0dca674e56793ea707c87c93"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/fa-recovery/export.json",
+          "sha256": "f33ae7d883c91d9292171b2837c65977742c7d9b538e04f6398b1fdffb379a68"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-v2-compact-finalized-20261004-v1/groups/fa-recovery/export.json",
+          "sha256": "f33ae7d883c91d9292171b2837c65977742c7d9b538e04f6398b1fdffb379a68"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-baseline-delta-finalized-20261004-v1/groups/fa-baseline/integration.json",
+          "sha256": "9c4f6e46698c3d1e756d6870e5e23383f1e00988e37aade5ca76f6ecc008a7f0"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-baseline-delta-finalized-20261004-v1/groups/fa-baseline/export.json",
+          "sha256": "31113b97663307ea9ea9fcc1c00bb076a756da0f97dee723ca4fd6b6deb07da9"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/data/dfm13/dala-baseline-delta-finalized-20261004-v1/groups/fa-baseline/export.json",
+          "sha256": "31113b97663307ea9ea9fcc1c00bb076a756da0f97dee723ca4fd6b6deb07da9"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-fa-compact/data/acceptability/test_representative.jsonl.gz",
+          "sha256": "8a3899297b076d9d4f665c1b8cd9593a558e77a65b052ee6e0a202e3e7148442"
+        },
+        {
+          "path": "/work/mimir/HRM-Text/exports_dfm13_dala_languages/dfm13-dala-v2-fa-compact/data/correction/test_representative.jsonl.gz",
+          "sha256": "c540300d90df1ff35f6857134307787ec5f34acbbffc4129b0549a736f26a467"
+        }
+      ],
+      "counts": {
+        "acceptability": {
+          "total": 62800,
+          "eligible_pairs": 50380
+        },
+        "correction": {
+          "total": 62800,
+          "eligible_pairs": 50380
+        }
+      },
+      "quality": "compact model-audited pairs; not native-speaker certification",
+      "overlap_scope": "finalizer exact text/document heldout exclusion against its train pool and historical prior; not whole DFM13 semantic decontamination"
+    }
+  },
+  "seed": 4242
+}

@@ -15,6 +15,7 @@ from eval_scheduler.runtime import (
     local_service_port,
     managed_judge_port,
     run_standard_openai,
+    run_euroeval_openai,
     run_with_vllm_server,
 )
 
@@ -41,6 +42,22 @@ def make_job(*, utilization: float = 0.9, checkpoint: str = "step_100000") -> Jo
 
 
 class VLLMServerPoolTest(unittest.TestCase):
+    def test_euroeval_persistent_client_receives_retry_concurrency(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            job = make_job().with_updates(
+                log_dir=directory,
+                metadata={**make_job().metadata, "model_prefix": "test", "euroeval_bin": "python guard.py",
+                          "euroeval_max_concurrent_calls": 128},
+            )
+            def invoke(*args, **kwargs):
+                return kwargs["callback"]("http://localhost:8000/v1", Path(directory) / "server.log",
+                                          MagicMock(), "test-model")
+            with patch("eval_scheduler.runtime.run_with_vllm_server", side_effect=invoke), \
+                 patch("eval_scheduler.runtime.run_client_with_server_monitor", return_value=1) as client:
+                for batch, expected in [(64, "64"), (256, "128")]:
+                    self.assertEqual(run_euroeval_openai(job, 0, batch, None), 1)
+                    self.assertEqual(client.call_args.kwargs["env"]["EUROEVAL_MAX_CONCURRENT_CALLS"], expected)
+
     def setUp(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()
         self.events: list[str] = []

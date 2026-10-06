@@ -59,8 +59,22 @@ def _trim_stops(text: str, stop: str | list[str] | None) -> str:
     return text[:cut]
 
 
+class CPUEmbedding(torch.nn.Module):
+    """Keep a large lookup table on CPU; transfer only selected embedding rows."""
+
+    def __init__(self, embedding: torch.nn.Module):
+        super().__init__()
+        self.embedding = embedding.cpu()
+
+    def forward(self, input_ids: torch.Tensor) -> torch.Tensor:
+        return self.embedding(input_ids.cpu()).to(input_ids.device)
+
+
 def build_app(args: argparse.Namespace) -> FastAPI:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if getattr(args, "cuda_memory_limit_gib", None) and device.type == "cuda":
+        total = torch.cuda.get_device_properties(device).total_memory
+        torch.cuda.set_per_process_memory_fraction(args.cuda_memory_limit_gib * 2**30 / total)
     dtype = getattr(torch, args.dtype)
     processor = AutoProcessor.from_pretrained(args.model, trust_remote_code=True)
     model = AutoModelForImageTextToText.from_pretrained(
@@ -68,7 +82,15 @@ def build_app(args: argparse.Namespace) -> FastAPI:
         torch_dtype=dtype,
         trust_remote_code=True,
         attn_implementation=args.attn_implementation,
-    ).to(device)
+    )
+    if getattr(args, "cpu_per_layer_embeddings", False):
+        language_model = model.model.language_model
+        embedding = language_model.embed_tokens_per_layer
+        language_model.embed_tokens_per_layer = None
+        model.to(device)
+        language_model.embed_tokens_per_layer = CPUEmbedding(embedding)
+    else:
+        model.to(device)
     model.eval()
     tokenizer = processor.tokenizer
     lock = asyncio.Lock()
@@ -140,7 +162,7 @@ def build_app(args: argparse.Namespace) -> FastAPI:
                 {
                     "index": 0,
                     "message": {"role": "assistant", "content": text},
-                    "finish_reason": "stop",
+                    "finish_reason": "length" if generated.numel() >= max_new_tokens else "stop",
                 }
             ],
             "usage": {
@@ -162,6 +184,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dtype", default="bfloat16", choices=["bfloat16", "float16", "float32"])
     parser.add_argument("--attn-implementation", default="sdpa", choices=["sdpa", "eager"])
     parser.add_argument("--max-new-tokens", type=int, default=512)
+    parser.add_argument("--cpu-per-layer-embeddings", action="store_true")
+    parser.add_argument("--cuda-memory-limit-gib", type=float)
     args = parser.parse_args()
     args.served_model_name = args.served_model_name or args.model
     return args

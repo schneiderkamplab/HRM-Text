@@ -1,0 +1,31 @@
+#!/home/ucloud/miniforge3/envs/hrm/bin/python
+"""Scoped REPORT executable bridge; never run the legacy comparison report."""
+import os
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / 'eval_scheduler'))
+from eval_scheduler.locking import PlanLock
+from eval_scheduler.model import Action, JobStatus, read_plan
+
+
+def validate(jobs, args):
+    if args != ['scripts/generate_dfm5_l_eval_comparison_report.py']:
+        raise ValueError('Unexpected REPORT dispatch')
+    train = [j for j in jobs if j.action == Action.TRAIN_UNTIL_STEP
+             and int(j.metadata.get('xl_boundary', 0)) == 3200000]
+    if len(train) != 1 or train[0].status != JobStatus.DONE:
+        raise ValueError('train3200 is not complete')
+    if any(j.action == Action.TRAIN_UNTIL_STEP and j.status == JobStatus.RUNNING for j in jobs):
+        raise ValueError('Concurrent training writer prohibited')
+
+
+if __name__ == '__main__':
+    plan = ROOT / 'logs/scheduler/dfm12_XL_epoch11_noidentity'
+    with PlanLock(plan):
+        validate(read_plan(plan / 'plan.tsv'), sys.argv[1:])
+    python = '/home/ucloud/miniforge3/envs/hrm/bin/python'
+    os.execv(python, [python, str(ROOT / 'scripts/rejudge_talemaader_v2.py'),
+                     'sync', '--wait', '--output', str(ROOT / 'logs/rejudge_talemaader_v2')])

@@ -1,0 +1,6 @@
+#!/home/ucloud/miniforge3/envs/hrm/bin/python
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from scripts.schedule_todo5_average_sync import workspace_dispatch
+workspace_dispatch('populations')

@@ -187,6 +187,8 @@ def mcc(pairs: list[tuple[str, str | None]], labels: list[str]) -> float:
 
 
 def task_metrics(task: str, samples: list[dict[str, Any]]) -> dict[str, float]:
+    if re.fullmatch(r'(?:dala|gec_dala)_v2_[a-z]{2}(?:_[a-z]{2})?', task):
+        return task_metrics(task.replace('_v2_', '_', 1), samples)
     # Multilingual tasks retain their language-specific output namespace while
     # using the same sample-level aggregation as the Danish benchmark.
     if re.fullmatch(r"dala_[a-z]{2}(?:_[a-z]{2})?", task):
@@ -262,6 +264,15 @@ def task_metrics(task: str, samples: list[dict[str, Any]]) -> dict[str, float]:
                 **semantic_dala_metrics(samples, 'da'),
             }
         case "generative_talemaader":
+            versioned = "model_graded_fact_v2"
+            if any(versioned in sample.get("scores", {}) for sample in samples):
+                values = [sample.get("scores", {}).get(versioned, {}).get("value") for sample in samples]
+                if any(type(value) not in (int, float) or value not in (0, 0.5, 1) for value in values):
+                    raise ValueError("Incomplete or mixed-version Talemaader judgments")
+                mean, se = mean_stderr(values)
+                return {f"{versioned}/accuracy": mean,
+                        f"{versioned}/accuracy_stderr": se,
+                        f"{versioned}/n": float(len(values))}
             return accuracy_from_values(samples, "model_graded_fact", partial_credit=True)
         case "humaneval":
             # inspect-evals HumanEval uses a verify scorer.

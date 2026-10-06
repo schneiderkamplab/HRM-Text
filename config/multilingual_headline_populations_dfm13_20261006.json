@@ -1,0 +1,5022 @@
+{
+  "schema_version": 1,
+  "populations": [
+    {
+      "id": "dfm13_new_languages_v1",
+      "kind": "dfm13_new_languages",
+      "languages": [
+        "lt",
+        "lv",
+        "sq",
+        "be",
+        "bs",
+        "bg",
+        "hr",
+        "hu",
+        "lb",
+        "sr",
+        "sk",
+        "sl",
+        "fa"
+      ],
+      "required_tasks": {
+        "lt": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lv": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sq": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "be": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "bs": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_instruction-following"
+        ],
+        "bg": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "hr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "hu": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lb": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_instruction-following"
+        ],
+        "sr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sk": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fa": [
+          "dfm_la",
+          "dfm_gec"
+        ]
+      },
+      "metrics": {
+        "lt": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lt/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lt/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/sentiment-classification/atsiliepimai/macro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/linguistic-acceptability/scala-lt/macro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/named-entity-recognition/wikiann-lt/micro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/reading-comprehension/multi-wiki-qa-lt/f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/summarization/lrytas/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/knowledge/lt-history/accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/common-sense-reasoning/winogrande-lt/accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/instruction-following/multi-ifeval-lt/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          }
+        },
+        "lv": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lv/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lv/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/sentiment-classification/latvian-twitter-sentiment/macro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/linguistic-acceptability/scala-lv/macro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/named-entity-recognition/fullstack-ner-lv/micro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/reading-comprehension/multi-wiki-qa-lv/f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/summarization/lsm/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/knowledge/mmlu-lv/accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/common-sense-reasoning/copa-lv/accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/instruction-following/multi-ifeval-lv/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          }
+        },
+        "sq": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sq/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sq/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/sentiment-classification/mms-sq/macro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/linguistic-acceptability/scala-sq/macro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/named-entity-recognition/wikiann-sq/micro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/reading-comprehension/multi-wiki-qa-sq/f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/summarization/lr-sum-sq/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/knowledge/include-sq/accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/common-sense-reasoning/winogrande-sq/accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/instruction-following/multi-ifeval-sq/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          }
+        },
+        "be": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_be/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_be/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/be/sentiment-classification/besls/macro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/be/linguistic-acceptability/belacola/macro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/be/named-entity-recognition/wikiann-be/micro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/be/reading-comprehension/multi-wiki-qa-be/f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/be/common-sense-reasoning/be-wsc/accuracy",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/be/instruction-following/multi-ifeval-be/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "be"
+          }
+        },
+        "bs": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_bs/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_bs/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/sentiment-classification/mms-bs/macro_f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/named-entity-recognition/wikiann-bs/micro_f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/reading-comprehension/multi-wiki-qa-bs/f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/summarization/lr-sum-bs/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/instruction-following/multi-ifeval-bs/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "bs"
+          }
+        },
+        "bg": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_bg/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_bg/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/sentiment-classification/cinexio/macro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/linguistic-acceptability/scala-bg/macro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/named-entity-recognition/bg-ner-bsnlp/micro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/reading-comprehension/multi-wiki-qa-bg/f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/knowledge/exams-bg/accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/common-sense-reasoning/winogrande-bg/accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/instruction-following/multi-ifeval-bg/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          }
+        },
+        "hr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_hr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_hr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/sentiment-classification/mms-hr/macro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/linguistic-acceptability/scala-hr/macro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/named-entity-recognition/wikiann-hr/micro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/reading-comprehension/multi-wiki-qa-hr/f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/knowledge/include-hr/accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/common-sense-reasoning/winogrande-hr/accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/instruction-following/multi-ifeval-hr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          }
+        },
+        "hu": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_hu/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_hu/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/sentiment-classification/husst/macro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/linguistic-acceptability/scala-hu/macro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/named-entity-recognition/szeged-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/reading-comprehension/multi-wiki-qa-hu/f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/summarization/hunsum/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/knowledge/include-hu/accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/common-sense-reasoning/winogrande-hu/accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/instruction-following/multi-ifeval-hu/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          }
+        },
+        "lb": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lb/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lb/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/sentiment-classification/ltzglue-sa/macro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/linguistic-acceptability/ltzglue-la-binary/macro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/named-entity-recognition/ltzglue-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/reading-comprehension/multi-wiki-qa-lb/f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/instruction-following/multi-ifeval-lb/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lb"
+          }
+        },
+        "sr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/sentiment-classification/mms-sr/macro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/linguistic-acceptability/scala-sr/macro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/named-entity-recognition/uner-sr/micro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/reading-comprehension/multi-wiki-qa-sr/f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/summarization/lr-sum-sr/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/knowledge/include-sr/accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/common-sense-reasoning/winogrande-sr/accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/instruction-following/multi-ifeval-sr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          }
+        },
+        "sk": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sk/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sk/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/sentiment-classification/csfd-sentiment-sk/macro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/linguistic-acceptability/scala-sk/macro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/named-entity-recognition/uner-sk/micro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/reading-comprehension/multi-wiki-qa-sk/f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/knowledge/mmlu-sk/accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/common-sense-reasoning/winogrande-sk/accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/instruction-following/multi-ifeval-sk/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          }
+        },
+        "sl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/sentiment-classification/sentinews/macro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/linguistic-acceptability/scala-sl/macro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/named-entity-recognition/ssj500k-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/reading-comprehension/multi-wiki-qa-sl/f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/knowledge/mmlu-sl/accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/common-sense-reasoning/winogrande-sl/accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/instruction-following/multi-ifeval-sl/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          }
+        },
+        "fa": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fa/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fa/exact_match/mean",
+            "scale": "fraction"
+          }
+        }
+      }
+    },
+    {
+      "id": "dfm13_multilingual_v1",
+      "kind": "dfm13_multilingual",
+      "languages": [
+        "nb",
+        "nn",
+        "sv",
+        "is",
+        "fo",
+        "nl",
+        "pl",
+        "de",
+        "fr",
+        "es",
+        "it",
+        "cs",
+        "pt_pt",
+        "fi",
+        "et",
+        "ca",
+        "el",
+        "ro",
+        "uk",
+        "lt",
+        "lv",
+        "sq",
+        "be",
+        "bs",
+        "bg",
+        "hr",
+        "hu",
+        "lb",
+        "sr",
+        "sk",
+        "sl",
+        "fa"
+      ],
+      "required_tasks": {
+        "nb": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_instruction-following"
+        ],
+        "nn": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_instruction-following"
+        ],
+        "sv": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "is": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fo": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_instruction-following"
+        ],
+        "nl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "pl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "de": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "es": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "it": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "cs": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "pt_pt": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning"
+        ],
+        "fi": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "et": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "ca": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "el": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "ro": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "uk": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lt": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lv": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sq": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "be": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "bs": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_instruction-following"
+        ],
+        "bg": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "hr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "hu": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lb": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_instruction-following"
+        ],
+        "sr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sk": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fa": [
+          "dfm_la",
+          "dfm_gec"
+        ]
+      },
+      "metrics": {
+        "nb": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nb/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nb/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/linguistic-acceptability/scala-nb/macro_f1",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/named-entity-recognition/norne-nb/micro_f1",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/instruction-following/multi-ifeval-nb/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          }
+        },
+        "nn": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nn/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nn/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/linguistic-acceptability/scala-nn/macro_f1",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/named-entity-recognition/norne-nn/micro_f1",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/instruction-following/multi-ifeval-nn/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          }
+        },
+        "sv": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sv/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sv/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/sentiment-classification/swerec/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/linguistic-acceptability/scala-sv/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/named-entity-recognition/suc3/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/reading-comprehension/multi-wiki-qa-sv/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/summarization/swedn/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/knowledge/skolprov/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/common-sense-reasoning/winogrande-sv/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/instruction-following/multi-ifeval-sv/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "is": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_is/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_is/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/is/sentiment-classification/hotter-and-colder-sentiment/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/is/linguistic-acceptability/ice-ec/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/is/named-entity-recognition/mim-gold-ner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/is/reading-comprehension/nqii/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/is/summarization/rrn/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/is/knowledge/icelandic-knowledge/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/is/common-sense-reasoning/winogrande-is/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/is/instruction-following/multi-ifeval-is/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "fo": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fo/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fo/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/sentiment-classification/fosent/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/linguistic-acceptability/scala-fo/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/named-entity-recognition/fone/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/reading-comprehension/foqa/f1",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/knowledge/faroese-semantic-relations/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/instruction-following/multi-ifeval-fo/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "nl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/sentiment-classification/dbrd/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/linguistic-acceptability/dutch-cola/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/named-entity-recognition/conll-nl/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/reading-comprehension/squad-nl/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/summarization/wiki-lingua-nl/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/knowledge/include-nl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/common-sense-reasoning/winogrande-nl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/instruction-following/multi-ifeval-nl/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "pl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_pl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_pl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/sentiment-classification/polemo2/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/linguistic-acceptability/scala-pl/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/named-entity-recognition/kpwr-ner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/reading-comprehension/poquad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/summarization/psc/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/knowledge/llmzszl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/common-sense-reasoning/winogrande-pl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/instruction-following/multi-ifeval-pl/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "de": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_de/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_de/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/de/sentiment-classification/sb10k/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/de/linguistic-acceptability/scala-de/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/de/named-entity-recognition/germeval/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/de/reading-comprehension/germanquad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/de/summarization/mlsum-de/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/de/knowledge/include-de/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/de/common-sense-reasoning/winogrande-de/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/de/instruction-following/multi-ifeval-de/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "fr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/sentiment-classification/allocine/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/linguistic-acceptability/scala-fr/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/named-entity-recognition/eltec/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/reading-comprehension/fquad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/summarization/orange-sum/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/knowledge/include-fr/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/common-sense-reasoning/hellaswag-fr/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/instruction-following/ifeval-fr/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "es": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_es/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_es/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/es/sentiment-classification/sentiment-headlines-es/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/es/linguistic-acceptability/scala-es/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/es/named-entity-recognition/conll-es/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/es/reading-comprehension/mlqa-es/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/es/summarization/mlsum-es/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/es/knowledge/include-es/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/es/common-sense-reasoning/winogrande-es/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/es/instruction-following/ifeval-es/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "it": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_it/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_it/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/it/sentiment-classification/sentipolc16/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/it/linguistic-acceptability/scala-it/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/it/named-entity-recognition/multinerd-it/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/it/reading-comprehension/squad-it/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/it/summarization/ilpost-sum/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/it/knowledge/include-it/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/it/common-sense-reasoning/winogrande-it/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/it/instruction-following/multi-ifeval-it/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "cs": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_cs/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_cs/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/sentiment-classification/csfd-sentiment/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/linguistic-acceptability/cs-gec/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/named-entity-recognition/poner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/reading-comprehension/sqad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/summarization/czech-news/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/knowledge/umimeto-qa/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/common-sense-reasoning/hellaswag-cs/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/instruction-following/multi-ifeval-cs/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "pt_pt": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_pt_pt/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_pt_pt/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/sentiment-classification/sst2-pt/macro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/linguistic-acceptability/scala-pt/macro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/named-entity-recognition/harem/micro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/reading-comprehension/multi-wiki-qa-pt/f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/summarization/publico/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/knowledge/alba-mcq-pt/accuracy",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/common-sense-reasoning/winogrande-pt/accuracy",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          }
+        },
+        "fi": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fi/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fi/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/sentiment-classification/scandisent-fi/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/linguistic-acceptability/scala-fi/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/named-entity-recognition/turku-ner-fi/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/reading-comprehension/tydiqa-fi/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/summarization/xlsum-fi/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/knowledge/include-fi/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/common-sense-reasoning/winogrande-fi/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/instruction-following/multi-ifeval-fi/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "et": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_et/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_et/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/et/sentiment-classification/estonian-valence/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/et/linguistic-acceptability/grammar-et/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/et/named-entity-recognition/estner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/et/reading-comprehension/multi-wiki-qa-et/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/et/summarization/err-news/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/et/knowledge/trivia-et/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/et/common-sense-reasoning/winogrande-et/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/et/instruction-following/ifeval-et/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "ca": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_ca/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_ca/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/sentiment-classification/guia-cat/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/linguistic-acceptability/scala-ca/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/named-entity-recognition/wikiann-ca/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/reading-comprehension/multi-wiki-qa-ca/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/summarization/dacsa-ca/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/knowledge/mmlu-ca/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/common-sense-reasoning/winogrande-ca/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/instruction-following/ifeval-ca/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "el": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_el/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_el/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/el/sentiment-classification/greek-sa/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/el/linguistic-acceptability/scala-el/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/el/named-entity-recognition/elner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/el/reading-comprehension/multi-wiki-qa-el/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/el/summarization/greek-wikipedia/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/el/knowledge/greek-mmlu/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/el/common-sense-reasoning/winogrande-el/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/el/instruction-following/ifeval-el/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "ro": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_ro/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_ro/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/sentiment-classification/ro-sent/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/linguistic-acceptability/scala-ro/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/named-entity-recognition/ronec/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/reading-comprehension/multi-wiki-qa-ro/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/summarization/sumo-ro/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/knowledge/global-mmlu-ro/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/common-sense-reasoning/winogrande-ro/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/instruction-following/multi-ifeval-ro/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "uk": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_uk/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_uk/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/sentiment-classification/cross-domain-uk-reviews/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/linguistic-acceptability/scala-uk/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/named-entity-recognition/ner-uk/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/reading-comprehension/multi-wiki-qa-uk/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/summarization/lr-sum-uk/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/knowledge/include-uk/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/common-sense-reasoning/winogrande-uk/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/instruction-following/multi-ifeval-uk/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "lt": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lt/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lt/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/sentiment-classification/atsiliepimai/macro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/linguistic-acceptability/scala-lt/macro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/named-entity-recognition/wikiann-lt/micro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/reading-comprehension/multi-wiki-qa-lt/f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/summarization/lrytas/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/knowledge/lt-history/accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/common-sense-reasoning/winogrande-lt/accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/instruction-following/multi-ifeval-lt/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          }
+        },
+        "lv": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lv/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lv/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/sentiment-classification/latvian-twitter-sentiment/macro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/linguistic-acceptability/scala-lv/macro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/named-entity-recognition/fullstack-ner-lv/micro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/reading-comprehension/multi-wiki-qa-lv/f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/summarization/lsm/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/knowledge/mmlu-lv/accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/common-sense-reasoning/copa-lv/accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/instruction-following/multi-ifeval-lv/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          }
+        },
+        "sq": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sq/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sq/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/sentiment-classification/mms-sq/macro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/linguistic-acceptability/scala-sq/macro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/named-entity-recognition/wikiann-sq/micro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/reading-comprehension/multi-wiki-qa-sq/f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/summarization/lr-sum-sq/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/knowledge/include-sq/accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/common-sense-reasoning/winogrande-sq/accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/instruction-following/multi-ifeval-sq/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          }
+        },
+        "be": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_be/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_be/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/be/sentiment-classification/besls/macro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/be/linguistic-acceptability/belacola/macro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/be/named-entity-recognition/wikiann-be/micro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/be/reading-comprehension/multi-wiki-qa-be/f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/be/common-sense-reasoning/be-wsc/accuracy",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/be/instruction-following/multi-ifeval-be/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "be"
+          }
+        },
+        "bs": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_bs/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_bs/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/sentiment-classification/mms-bs/macro_f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/named-entity-recognition/wikiann-bs/micro_f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/reading-comprehension/multi-wiki-qa-bs/f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/summarization/lr-sum-bs/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/instruction-following/multi-ifeval-bs/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "bs"
+          }
+        },
+        "bg": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_bg/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_bg/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/sentiment-classification/cinexio/macro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/linguistic-acceptability/scala-bg/macro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/named-entity-recognition/bg-ner-bsnlp/micro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/reading-comprehension/multi-wiki-qa-bg/f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/knowledge/exams-bg/accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/common-sense-reasoning/winogrande-bg/accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/instruction-following/multi-ifeval-bg/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          }
+        },
+        "hr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_hr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_hr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/sentiment-classification/mms-hr/macro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/linguistic-acceptability/scala-hr/macro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/named-entity-recognition/wikiann-hr/micro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/reading-comprehension/multi-wiki-qa-hr/f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/knowledge/include-hr/accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/common-sense-reasoning/winogrande-hr/accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/instruction-following/multi-ifeval-hr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          }
+        },
+        "hu": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_hu/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_hu/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/sentiment-classification/husst/macro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/linguistic-acceptability/scala-hu/macro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/named-entity-recognition/szeged-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/reading-comprehension/multi-wiki-qa-hu/f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/summarization/hunsum/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/knowledge/include-hu/accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/common-sense-reasoning/winogrande-hu/accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/instruction-following/multi-ifeval-hu/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          }
+        },
+        "lb": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lb/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lb/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/sentiment-classification/ltzglue-sa/macro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/linguistic-acceptability/ltzglue-la-binary/macro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/named-entity-recognition/ltzglue-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/reading-comprehension/multi-wiki-qa-lb/f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/instruction-following/multi-ifeval-lb/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lb"
+          }
+        },
+        "sr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/sentiment-classification/mms-sr/macro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/linguistic-acceptability/scala-sr/macro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/named-entity-recognition/uner-sr/micro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/reading-comprehension/multi-wiki-qa-sr/f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/summarization/lr-sum-sr/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/knowledge/include-sr/accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/common-sense-reasoning/winogrande-sr/accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/instruction-following/multi-ifeval-sr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          }
+        },
+        "sk": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sk/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sk/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/sentiment-classification/csfd-sentiment-sk/macro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/linguistic-acceptability/scala-sk/macro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/named-entity-recognition/uner-sk/micro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/reading-comprehension/multi-wiki-qa-sk/f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/knowledge/mmlu-sk/accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/common-sense-reasoning/winogrande-sk/accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/instruction-following/multi-ifeval-sk/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          }
+        },
+        "sl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/sentiment-classification/sentinews/macro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/linguistic-acceptability/scala-sl/macro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/named-entity-recognition/ssj500k-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/reading-comprehension/multi-wiki-qa-sl/f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/knowledge/mmlu-sl/accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/common-sense-reasoning/winogrande-sl/accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/instruction-following/multi-ifeval-sl/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          }
+        },
+        "fa": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fa/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fa/exact_match/mean",
+            "scale": "fraction"
+          }
+        }
+      }
+    },
+    {
+      "id": "dfm13_all_languages_v1",
+      "kind": "dfm13_all_languages",
+      "languages": [
+        "nb",
+        "nn",
+        "sv",
+        "is",
+        "fo",
+        "nl",
+        "pl",
+        "de",
+        "fr",
+        "es",
+        "it",
+        "cs",
+        "pt_pt",
+        "fi",
+        "et",
+        "ca",
+        "el",
+        "ro",
+        "uk",
+        "lt",
+        "lv",
+        "sq",
+        "be",
+        "bs",
+        "bg",
+        "hr",
+        "hu",
+        "lb",
+        "sr",
+        "sk",
+        "sl",
+        "fa",
+        "da",
+        "en"
+      ],
+      "required_tasks": {
+        "nb": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_instruction-following"
+        ],
+        "nn": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_instruction-following"
+        ],
+        "sv": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "is": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fo": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_instruction-following"
+        ],
+        "nl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "pl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "de": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "es": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "it": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "cs": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "pt_pt": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning"
+        ],
+        "fi": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "et": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "ca": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "el": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "ro": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "uk": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lt": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lv": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sq": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "be": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "bs": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_instruction-following"
+        ],
+        "bg": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "hr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "hu": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "lb": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_instruction-following"
+        ],
+        "sr": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_summarization",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sk": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "sl": [
+          "dfm_la",
+          "dfm_gec",
+          "euroeval_sentiment-classification",
+          "euroeval_linguistic-acceptability",
+          "euroeval_named-entity-recognition",
+          "euroeval_reading-comprehension",
+          "euroeval_knowledge",
+          "euroeval_common-sense-reasoning",
+          "euroeval_instruction-following"
+        ],
+        "fa": [
+          "dfm_la",
+          "dfm_gec"
+        ],
+        "da": [
+          "legacy_1",
+          "legacy_2",
+          "legacy_3",
+          "legacy_4",
+          "legacy_5",
+          "legacy_6",
+          "legacy_7",
+          "legacy_8",
+          "legacy_9",
+          "legacy_10",
+          "legacy_11",
+          "legacy_12",
+          "legacy_13",
+          "legacy_14",
+          "legacy_15",
+          "legacy_16",
+          "legacy_17",
+          "legacy_18"
+        ],
+        "en": [
+          "legacy_1",
+          "legacy_2",
+          "legacy_3",
+          "legacy_4",
+          "legacy_5",
+          "legacy_6",
+          "legacy_7",
+          "legacy_8",
+          "legacy_9",
+          "legacy_10",
+          "legacy_11",
+          "legacy_12",
+          "legacy_13",
+          "legacy_14",
+          "legacy_15",
+          "la",
+          "gec"
+        ]
+      },
+      "metrics": {
+        "nb": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nb/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nb/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/linguistic-acceptability/scala-nb/macro_f1",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/named-entity-recognition/norne-nb/micro_f1",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/nb_no/instruction-following/multi-ifeval-nb/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nb_no"
+          }
+        },
+        "nn": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nn/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nn/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/linguistic-acceptability/scala-nn/macro_f1",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/named-entity-recognition/norne-nn/micro_f1",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/nn_no/instruction-following/multi-ifeval-nn/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "nn_no"
+          }
+        },
+        "sv": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sv/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sv/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/sentiment-classification/swerec/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/linguistic-acceptability/scala-sv/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/named-entity-recognition/suc3/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/reading-comprehension/multi-wiki-qa-sv/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/summarization/swedn/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/knowledge/skolprov/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/common-sense-reasoning/winogrande-sv/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sv/instruction-following/multi-ifeval-sv/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "is": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_is/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_is/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/is/sentiment-classification/hotter-and-colder-sentiment/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/is/linguistic-acceptability/ice-ec/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/is/named-entity-recognition/mim-gold-ner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/is/reading-comprehension/nqii/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/is/summarization/rrn/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/is/knowledge/icelandic-knowledge/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/is/common-sense-reasoning/winogrande-is/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/is/instruction-following/multi-ifeval-is/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "fo": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fo/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fo/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/sentiment-classification/fosent/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/linguistic-acceptability/scala-fo/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/named-entity-recognition/fone/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/reading-comprehension/foqa/f1",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/knowledge/faroese-semantic-relations/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/fo/instruction-following/multi-ifeval-fo/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "nl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_nl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_nl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/sentiment-classification/dbrd/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/linguistic-acceptability/dutch-cola/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/named-entity-recognition/conll-nl/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/reading-comprehension/squad-nl/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/summarization/wiki-lingua-nl/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/knowledge/include-nl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/common-sense-reasoning/winogrande-nl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/nl/instruction-following/multi-ifeval-nl/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "pl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_pl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_pl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/sentiment-classification/polemo2/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/linguistic-acceptability/scala-pl/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/named-entity-recognition/kpwr-ner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/reading-comprehension/poquad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/summarization/psc/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/knowledge/llmzszl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/common-sense-reasoning/winogrande-pl/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/pl/instruction-following/multi-ifeval-pl/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "de": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_de/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_de/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/de/sentiment-classification/sb10k/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/de/linguistic-acceptability/scala-de/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/de/named-entity-recognition/germeval/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/de/reading-comprehension/germanquad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/de/summarization/mlsum-de/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/de/knowledge/include-de/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/de/common-sense-reasoning/winogrande-de/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/de/instruction-following/multi-ifeval-de/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "fr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/sentiment-classification/allocine/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/linguistic-acceptability/scala-fr/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/named-entity-recognition/eltec/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/reading-comprehension/fquad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/summarization/orange-sum/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/knowledge/include-fr/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/common-sense-reasoning/hellaswag-fr/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/fr/instruction-following/ifeval-fr/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "es": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_es/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_es/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/es/sentiment-classification/sentiment-headlines-es/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/es/linguistic-acceptability/scala-es/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/es/named-entity-recognition/conll-es/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/es/reading-comprehension/mlqa-es/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/es/summarization/mlsum-es/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/es/knowledge/include-es/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/es/common-sense-reasoning/winogrande-es/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/es/instruction-following/ifeval-es/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "it": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_it/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_it/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/it/sentiment-classification/sentipolc16/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/it/linguistic-acceptability/scala-it/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/it/named-entity-recognition/multinerd-it/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/it/reading-comprehension/squad-it/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/it/summarization/ilpost-sum/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/it/knowledge/include-it/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/it/common-sense-reasoning/winogrande-it/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/it/instruction-following/multi-ifeval-it/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "cs": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_cs/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_cs/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/sentiment-classification/csfd-sentiment/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/linguistic-acceptability/cs-gec/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/named-entity-recognition/poner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/reading-comprehension/sqad/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/summarization/czech-news/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/knowledge/umimeto-qa/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/common-sense-reasoning/hellaswag-cs/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/cs/instruction-following/multi-ifeval-cs/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "pt_pt": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_pt_pt/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_pt_pt/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/sentiment-classification/sst2-pt/macro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/linguistic-acceptability/scala-pt/macro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/named-entity-recognition/harem/micro_f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/reading-comprehension/multi-wiki-qa-pt/f1",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/summarization/publico/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/knowledge/alba-mcq-pt/accuracy",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/pt_pt-pt/common-sense-reasoning/winogrande-pt/accuracy",
+            "scale": "percent",
+            "metric_language": "pt_pt-pt"
+          }
+        },
+        "fi": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fi/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fi/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/sentiment-classification/scandisent-fi/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/linguistic-acceptability/scala-fi/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/named-entity-recognition/turku-ner-fi/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/reading-comprehension/tydiqa-fi/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/summarization/xlsum-fi/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/knowledge/include-fi/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/common-sense-reasoning/winogrande-fi/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/fi/instruction-following/multi-ifeval-fi/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "et": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_et/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_et/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/et/sentiment-classification/estonian-valence/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/et/linguistic-acceptability/grammar-et/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/et/named-entity-recognition/estner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/et/reading-comprehension/multi-wiki-qa-et/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/et/summarization/err-news/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/et/knowledge/trivia-et/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/et/common-sense-reasoning/winogrande-et/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/et/instruction-following/ifeval-et/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "ca": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_ca/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_ca/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/sentiment-classification/guia-cat/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/linguistic-acceptability/scala-ca/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/named-entity-recognition/wikiann-ca/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/reading-comprehension/multi-wiki-qa-ca/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/summarization/dacsa-ca/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/knowledge/mmlu-ca/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/common-sense-reasoning/winogrande-ca/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/ca/instruction-following/ifeval-ca/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "el": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_el/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_el/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/el/sentiment-classification/greek-sa/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/el/linguistic-acceptability/scala-el/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/el/named-entity-recognition/elner/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/el/reading-comprehension/multi-wiki-qa-el/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/el/summarization/greek-wikipedia/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/el/knowledge/greek-mmlu/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/el/common-sense-reasoning/winogrande-el/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/el/instruction-following/ifeval-el/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "ro": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_ro/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_ro/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/sentiment-classification/ro-sent/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/linguistic-acceptability/scala-ro/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/named-entity-recognition/ronec/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/reading-comprehension/multi-wiki-qa-ro/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/summarization/sumo-ro/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/knowledge/global-mmlu-ro/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/common-sense-reasoning/winogrande-ro/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/ro/instruction-following/multi-ifeval-ro/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "uk": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_uk/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_uk/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/sentiment-classification/cross-domain-uk-reviews/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/linguistic-acceptability/scala-uk/macro_f1",
+            "scale": "percent"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/named-entity-recognition/ner-uk/micro_f1",
+            "scale": "percent"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/reading-comprehension/multi-wiki-qa-uk/f1",
+            "scale": "percent"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/summarization/lr-sum-uk/chr_f3pp",
+            "scale": "percent"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/knowledge/include-uk/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/common-sense-reasoning/winogrande-uk/accuracy",
+            "scale": "percent"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/uk/instruction-following/multi-ifeval-uk/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "lt": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lt/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lt/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/sentiment-classification/atsiliepimai/macro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/linguistic-acceptability/scala-lt/macro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/named-entity-recognition/wikiann-lt/micro_f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/reading-comprehension/multi-wiki-qa-lt/f1",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/summarization/lrytas/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/knowledge/lt-history/accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/common-sense-reasoning/winogrande-lt/accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lt/instruction-following/multi-ifeval-lt/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lt"
+          }
+        },
+        "lv": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lv/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lv/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/sentiment-classification/latvian-twitter-sentiment/macro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/linguistic-acceptability/scala-lv/macro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/named-entity-recognition/fullstack-ner-lv/micro_f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/reading-comprehension/multi-wiki-qa-lv/f1",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/summarization/lsm/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/knowledge/mmlu-lv/accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/common-sense-reasoning/copa-lv/accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lv/instruction-following/multi-ifeval-lv/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lv"
+          }
+        },
+        "sq": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sq/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sq/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/sentiment-classification/mms-sq/macro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/linguistic-acceptability/scala-sq/macro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/named-entity-recognition/wikiann-sq/micro_f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/reading-comprehension/multi-wiki-qa-sq/f1",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/summarization/lr-sum-sq/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/knowledge/include-sq/accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/common-sense-reasoning/winogrande-sq/accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sq/instruction-following/multi-ifeval-sq/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sq"
+          }
+        },
+        "be": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_be/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_be/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/be/sentiment-classification/besls/macro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/be/linguistic-acceptability/belacola/macro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/be/named-entity-recognition/wikiann-be/micro_f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/be/reading-comprehension/multi-wiki-qa-be/f1",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/be/common-sense-reasoning/be-wsc/accuracy",
+            "scale": "percent",
+            "metric_language": "be"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/be/instruction-following/multi-ifeval-be/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "be"
+          }
+        },
+        "bs": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_bs/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_bs/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/sentiment-classification/mms-bs/macro_f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/named-entity-recognition/wikiann-bs/micro_f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/reading-comprehension/multi-wiki-qa-bs/f1",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/summarization/lr-sum-bs/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "bs"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/bs/instruction-following/multi-ifeval-bs/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "bs"
+          }
+        },
+        "bg": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_bg/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_bg/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/sentiment-classification/cinexio/macro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/linguistic-acceptability/scala-bg/macro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/named-entity-recognition/bg-ner-bsnlp/micro_f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/reading-comprehension/multi-wiki-qa-bg/f1",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/knowledge/exams-bg/accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/common-sense-reasoning/winogrande-bg/accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/bg/instruction-following/multi-ifeval-bg/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "bg"
+          }
+        },
+        "hr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_hr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_hr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/sentiment-classification/mms-hr/macro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/linguistic-acceptability/scala-hr/macro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/named-entity-recognition/wikiann-hr/micro_f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/reading-comprehension/multi-wiki-qa-hr/f1",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/knowledge/include-hr/accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/common-sense-reasoning/winogrande-hr/accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/hr/instruction-following/multi-ifeval-hr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "hr"
+          }
+        },
+        "hu": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_hu/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_hu/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/sentiment-classification/husst/macro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/linguistic-acceptability/scala-hu/macro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/named-entity-recognition/szeged-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/reading-comprehension/multi-wiki-qa-hu/f1",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/summarization/hunsum/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/knowledge/include-hu/accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/common-sense-reasoning/winogrande-hu/accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/hu/instruction-following/multi-ifeval-hu/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "hu"
+          }
+        },
+        "lb": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_lb/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_lb/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/sentiment-classification/ltzglue-sa/macro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/linguistic-acceptability/ltzglue-la-binary/macro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/named-entity-recognition/ltzglue-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/reading-comprehension/multi-wiki-qa-lb/f1",
+            "scale": "percent",
+            "metric_language": "lb"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/lb/instruction-following/multi-ifeval-lb/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "lb"
+          }
+        },
+        "sr": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sr/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sr/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/sentiment-classification/mms-sr/macro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/linguistic-acceptability/scala-sr/macro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/named-entity-recognition/uner-sr/micro_f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/reading-comprehension/multi-wiki-qa-sr/f1",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_summarization": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/summarization/lr-sum-sr/chr_f3pp",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/knowledge/include-sr/accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/common-sense-reasoning/winogrande-sr/accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sr/instruction-following/multi-ifeval-sr/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sr"
+          }
+        },
+        "sk": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sk/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sk/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/sentiment-classification/csfd-sentiment-sk/macro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/linguistic-acceptability/scala-sk/macro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/named-entity-recognition/uner-sk/micro_f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/reading-comprehension/multi-wiki-qa-sk/f1",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/knowledge/mmlu-sk/accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/common-sense-reasoning/winogrande-sk/accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sk/instruction-following/multi-ifeval-sk/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sk"
+          }
+        },
+        "sl": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_sl/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_sl/exact_match/mean",
+            "scale": "fraction"
+          },
+          "euroeval_sentiment-classification": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/sentiment-classification/sentinews/macro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_linguistic-acceptability": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/linguistic-acceptability/scala-sl/macro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_named-entity-recognition": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/named-entity-recognition/ssj500k-ner/micro_f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_reading-comprehension": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/reading-comprehension/multi-wiki-qa-sl/f1",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_knowledge": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/knowledge/mmlu-sl/accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_common-sense-reasoning": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/common-sense-reasoning/winogrande-sl/accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          },
+          "euroeval_instruction-following": {
+            "suite": "euroeval",
+            "key": "euroeval/sl/instruction-following/multi-ifeval-sl/instruction_accuracy",
+            "scale": "percent",
+            "metric_language": "sl"
+          }
+        },
+        "fa": {
+          "dfm_la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_fa/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "dfm_gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_fa/exact_match/mean",
+            "scale": "fraction"
+          }
+        },
+        "da": {
+          "legacy_1": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "legacy_2": {
+            "suite": "dfm",
+            "key": "dfm_eval/danish-citizen-tests/knowledge/accuracy",
+            "scale": "fraction"
+          },
+          "legacy_3": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala/exact_match/mean",
+            "scale": "fraction"
+          },
+          "legacy_4": {
+            "suite": "dfm",
+            "key": "dfm_eval/generative-talemaader/model_graded_fact_v2/accuracy",
+            "scale": "fraction"
+          },
+          "legacy_5": {
+            "suite": "dfm",
+            "key": "dfm_eval/ifeval-da/instruction_following/final_acc",
+            "scale": "fraction"
+          },
+          "legacy_6": {
+            "suite": "dfm",
+            "key": "dfm_eval/multi_wiki_qa/exact_match/mean",
+            "scale": "fraction"
+          },
+          "legacy_7": {
+            "suite": "dfm",
+            "key": "dfm_eval/nordjyllandnews/bertscore_f1/mean",
+            "scale": "fraction"
+          },
+          "legacy_8": {
+            "suite": "dfm",
+            "key": "dfm_eval/piqa/piqa_scorer/accuracy",
+            "scale": "fraction"
+          },
+          "legacy_9": {
+            "suite": "dfm",
+            "key": "dfm_eval/wmt24pp-en-da/chrf3pp/mean",
+            "scale": "fraction"
+          },
+          "legacy_10": {
+            "suite": "euroeval",
+            "key": "euroeval/da/sentiment-classification/angry-tweets/macro_f1",
+            "scale": "percent"
+          },
+          "legacy_11": {
+            "suite": "euroeval",
+            "key": "euroeval/da/linguistic-acceptability/scala-da/macro_f1",
+            "scale": "percent"
+          },
+          "legacy_12": {
+            "suite": "euroeval",
+            "key": "euroeval/da/named-entity-recognition/dansk/micro_f1",
+            "scale": "percent"
+          },
+          "legacy_13": {
+            "suite": "euroeval",
+            "key": "euroeval/da/reading-comprehension/multi-wiki-qa-da/f1",
+            "scale": "percent"
+          },
+          "legacy_14": {
+            "suite": "euroeval",
+            "key": "euroeval/da/summarization/nordjylland-news/chr_f3pp",
+            "scale": "percent"
+          },
+          "legacy_15": {
+            "suite": "euroeval",
+            "key": "euroeval/da/knowledge/danske-talemaader/accuracy",
+            "scale": "percent"
+          },
+          "legacy_16": {
+            "suite": "euroeval",
+            "key": "euroeval/da/knowledge/danish-citizen-tests/accuracy",
+            "scale": "percent"
+          },
+          "legacy_17": {
+            "suite": "euroeval",
+            "key": "euroeval/da/common-sense-reasoning/hellaswag-da/accuracy",
+            "scale": "percent"
+          },
+          "legacy_18": {
+            "suite": "euroeval",
+            "key": "euroeval/da/instruction-following/ifeval-da/instruction_accuracy",
+            "scale": "percent"
+          }
+        },
+        "en": {
+          "legacy_1": {
+            "suite": "standard",
+            "key": "eval/ARC/acc",
+            "scale": "fraction"
+          },
+          "legacy_2": {
+            "suite": "standard",
+            "key": "eval/BoolQ/acc",
+            "scale": "fraction"
+          },
+          "legacy_3": {
+            "suite": "standard",
+            "key": "eval/DROP/f1",
+            "scale": "fraction"
+          },
+          "legacy_4": {
+            "suite": "standard",
+            "key": "eval/HellaSwag/acc",
+            "scale": "fraction"
+          },
+          "legacy_5": {
+            "suite": "standard",
+            "key": "eval/MMLU/acc",
+            "scale": "fraction"
+          },
+          "legacy_6": {
+            "suite": "standard",
+            "key": "eval/Winogrande/acc",
+            "scale": "fraction"
+          },
+          "legacy_7": {
+            "suite": "dfm",
+            "key": "dfm_eval/govreport/bertscore_f1/mean",
+            "scale": "fraction"
+          },
+          "legacy_8": {
+            "suite": "euroeval",
+            "key": "euroeval/en/sentiment-classification/sst5/macro_f1",
+            "scale": "percent"
+          },
+          "legacy_9": {
+            "suite": "euroeval",
+            "key": "euroeval/en/linguistic-acceptability/scala-en/macro_f1",
+            "scale": "percent"
+          },
+          "legacy_10": {
+            "suite": "euroeval",
+            "key": "euroeval/en/named-entity-recognition/conll-en/micro_f1",
+            "scale": "percent"
+          },
+          "legacy_11": {
+            "suite": "euroeval",
+            "key": "euroeval/en/reading-comprehension/squad/f1",
+            "scale": "percent"
+          },
+          "legacy_12": {
+            "suite": "euroeval",
+            "key": "euroeval/en/summarization/cnn-dailymail/chr_f3pp",
+            "scale": "percent"
+          },
+          "legacy_13": {
+            "suite": "euroeval",
+            "key": "euroeval/en/knowledge/life-in-the-uk/accuracy",
+            "scale": "percent"
+          },
+          "legacy_14": {
+            "suite": "euroeval",
+            "key": "euroeval/en/common-sense-reasoning/hellaswag/accuracy",
+            "scale": "percent"
+          },
+          "legacy_15": {
+            "suite": "euroeval",
+            "key": "euroeval/en/instruction-following/ifeval/instruction_accuracy",
+            "scale": "percent"
+          },
+          "la": {
+            "suite": "dfm",
+            "key": "dfm_eval/dala_en/semantic_v1/macro_f1",
+            "scale": "fraction"
+          },
+          "gec": {
+            "suite": "dfm",
+            "key": "dfm_eval/gec_dala_en/exact_match/mean",
+            "scale": "fraction"
+          }
+        }
+      }
+    }
+  ]
+}

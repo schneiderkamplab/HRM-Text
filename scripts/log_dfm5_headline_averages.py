@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -35,6 +37,7 @@ DANISH_KEYS = [
 STRICT_DALA_KEY = "dfm_eval/dala/linguistic-acceptability/dfm_evals_macro_f1"
 SEMANTIC_DALA_KEY = "dfm_eval/dala/semantic_v1/macro_f1"
 SEMANTIC_PREFIXES = frozenset({"headline_avg_semantic_v1", "suite_avg_semantic_v1"})
+TALEMAADER_PREFIXES = frozenset({"headline_avg_talemaader_v2", "suite_avg_talemaader_v2"})
 
 ENGLISH_KEYS = [
     "eval/ARC/acc",
@@ -232,6 +235,55 @@ def build_row(
     suites: set[str] | None = None,
 ) -> dict[str, Any]:
     metrics = gather_metrics(item)
+    if metric_prefix in TALEMAADER_PREFIXES:
+        if __package__ in (None, '') and str(Path(__file__).resolve().parents[1]) not in sys.path:
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from scripts.prepare_talemaader_v2_averages import NEW, talemaader_only
+        hits = []
+        paths = sorted(set(item.dfm_root.glob('**/merged_metrics_v2.json')) |
+                       set(item.dfm_root.glob('**/merged_metrics.json')))
+        for path in paths:
+            document = json.loads(path.read_text())
+            values = document.get('metrics', {})
+            if NEW not in values:
+                continue
+            step = document.get('step', values.get('dfm_eval/train_step'))
+            if step is None:
+                tags = {int(tag) for name in document.get('inputs', [])
+                        for tag in re.findall(r'/step_(\d+)/', name)}
+                if tags == {item.step}:
+                    step = item.step
+                elif not tags and document.get('inputs') and float(item.epoch).is_integer() and all(
+                        f'/epoch_{int(item.epoch)}/' in name for name in document['inputs']):
+                    step = item.step  # Exact epoch-end inputs bound to the requested checkpoint.
+            if document.get('epoch') != item.epoch or step != item.step:
+                raise ValueError('Talemaader v2 sidecar checkpoint mismatch: '+str(path))
+            value = values[NEW]
+            if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 1:
+                raise ValueError('Invalid Talemaader v2 accuracy')
+            n = values.get(NEW.rsplit('/', 1)[0]+'/n')
+            if type(n) not in (int,float) or not math.isfinite(n) or n <= 0 or not float(n).is_integer() or n != document.get('num_samples'):
+                raise ValueError('Incomplete Talemaader v2 sidecar')
+            hits.append((value,n))
+        if not hits or len(set(hits)) != 1:
+            raise ValueError('Unambiguous checkpoint-bound Talemaader v2 merge required')
+        metrics[NEW] = hits[0][0]
+        row, _ = talemaader_only(metrics, {'epoch': item.epoch, 'train_step': item.step})
+        selected = {}
+        for key, value in row.items():
+            if not key.startswith(metric_prefix+'/'):
+                continue
+            tail = key[len(metric_prefix)+1:]
+            label = tail.split('/')[0]
+            keep = label in ('epoch', 'train_step', 'definition_sha256')
+            if metric_prefix.startswith('headline'):
+                keep |= label == 'danish' and include_sections and not overall_only and (sections is None or 'danish' in sections)
+                keep |= label == 'overall' and (overall_only or (include_sections and include_overall and not sections))
+            else:
+                keep |= label == 'dfm' and include_suites and (suites is None or 'dfm' in suites)
+            if keep:
+                selected[key] = value
+        return selected
     # Exact opt-in namespaces only: never mutate legacy memberships or substitute
     # strict DALA when semantic evidence is absent.
     semantic = metric_prefix in SEMANTIC_PREFIXES
@@ -343,6 +395,10 @@ def main() -> None:
     )
     wandb.define_metric(f"{metric_prefix}/epoch")
     wandb.define_metric(f"{metric_prefix}/*", step_metric=f"{metric_prefix}/epoch")
+    if metric_prefix in TALEMAADER_PREFIXES:
+        for key in sorted({key for row in rows for key in row}):
+            if key != f'{metric_prefix}/epoch':
+                wandb.define_metric(key, step_metric=f'{metric_prefix}/epoch', summary='last')
     for row in rows:
         wandb.log(row, commit=True)
     run.finish()

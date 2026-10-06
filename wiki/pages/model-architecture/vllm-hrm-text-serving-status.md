@@ -9,15 +9,144 @@ tags:
 - checkpoints
 - inference
 status: stable
-last_updated: 2026-10-05
+last_updated: 2026-10-06
 confidence: high
 part_of: /pages/model-architecture.md
 ---
 # vLLM HRM-Text Serving Status
 
+## Talemaader Judge Truncation (2026-10-06)
+
+Read-only inspection after DFM13 training resumed found the near-zero generative
+Talemaader score is not a valid model-quality measurement. Saved Inspect logs in
+`logs/dfm_evals/dfm12_XL_epoch11/step_3150000/generative_talemaader/` contain
+808 samples: 798 have `Grade not found in model output`, all scored incorrect.
+801 judge completions use exactly 64 tokens. The judge launch explicitly sets
+`--max-new-tokens 64`; the scorer requests an explanation followed by a final
+`GRADE: C/P/I` line. The Transformers server reports `stop` even when truncated,
+concealing the limit. At 3100K, 800/808 grades are missing; at 3050K, 794/808.
+
+Example: for `laegge et godt ord ind for nogen`, the model correctly answers
+`At tale positivt om nogen eller goere noget for at fremme deres sag.` The judge
+begins agreeing but runs out before its grade, producing an incorrect score.
+There are also genuine model errors and source-reference issues: the saved
+reference for `der er loebet meget vand gennem aaen siden ..` describes something
+matching someone's wishes, whereas the model correctly says much has happened.
+
+Recommended next work: give the judge a separate sufficient output budget,
+validate a small saved-answer replay, treat missing grades as scoring failures
+rather than wrong model answers, and rejudge cached generations without rerunning
+the evaluated model. Review suspect source references before claiming benchmark
+validity. No scorer, judge, dataset, or historical W&B values were changed during
+this investigation.
+
 Part of [Model Architecture](/pages/model-architecture.md).
 
 ## Installed implementation versus local adapters (2026-10-05)
+
+### All-task follow-up at3143000 (2026-10-05)
+
+The user requested coverage of every scheduled task, then clarified that
+identical translated tasks should share a calibration and that upcoming evals
+should use the **best tested throughput**, rather than maximizing KV occupancy.
+This supersedes the occupancy-first selection in the3142000 experiment below.
+
+Training was safely stopped after preserving `ephemeral_step_3143000` under
+`checkpoints/preserved/xl-eval-calibration-3143000`. The existing3150K scheduler
+row is prepared to resume that checkpoint with the same training policy/W&B run.
+
+`scripts/prepare_all_eval_capacity.py` extracted actual3100K request evidence
+for all266 pending3150K eval action/task variants. EuroEval uses recorded native
+proxy outgoing payloads; DFM uses Inspect model events; standard evals use saved
+prompts with their sampling contracts. A maximum64 representative requests per
+task are selected across lengths. No benchmark scores are logged or changed.
+
+`scripts/group_eval_capacity_tasks.py` reduces these to162 groups: translated
+DaLA/GEC, ScaLA, Multi-IFEval, Multi-WikiQA, Winogrande and HellaSwag variants
+share tests only within the same suite/template family and generation contract.
+Each language contributes short/median/long requests. Distinct datasets are not
+collapsed merely because they belong to the same task category.
+
+`scripts/calibrate_all_eval_tasks.py` measures per-group candidates using server
+KV token capacity, prompt lengths and observed output lengths/generation limits.
+It records requests/s, tokens/s, steady/peak KV occupancy, failures and preemptions.
+Safe selection requires no errors/preemptions and peak KV below90%. The judged
+task additionally starts the production judge and replays its recorded requests;
+this tests capacity, not the correctness of new answers against old judge inputs.
+HTTP keepalive is shorter than the server timeout and transient disconnects get
+bounded retries. The first ungrouped partial run is retained as evidence; its
+successful nonduplicated task results are reused, its failures are not accepted.
+
+Evidence root: `data/dfm13/xl3143-all-task-calibration/`.
+Client log: `logs/xl3143-grouped-calibration.log`.
+Detached finisher `scripts/finish_xl_eval_calibration.py` waits for cleanup,
+applies tested choices under the plan lock to all pending matching tasks,
+updates both client/server settings, and starts the original persistent scheduler.
+It writes `applied.json` and `resumed.json`. Unmeasured failures are explicitly
+listed and retain their existing settings, never mislabeled as calibrated.
+The finisher has a90-minute guard so a stuck experiment cannot hold training
+indefinitely; it signals only its verified calibration owner and requires cleanup
+before launching training. Finisher log: `logs/finish-xl3143-calibration.log`.
+
+**Completed:** all162 groups succeeded, covering all266 original action/task
+variants; no unmeasured tasks remained. The finisher updated6,270 pending eval
+rows, including the3150K and DFM13 blocks, and restarted scheduler PID879040 at
+22:15 local time. Selected client concurrencies across the266 variants:
+32 for21,64 for107,128 for61,256 for38,512 for38,1024 for1.
+Examples: MATH/GSM8k256; ARC32; GovReport32; DaLA512; GEC256;
+EuroEval ScaLA/Multi-IFEval64; batched English IFEval128/Danish64;
+judge-backed Talemaader32. These are best among the tested candidates, not a
+claim of a globally optimal batch size. Ten-second request-feeding windows
+include completion draining; short-run timing noise remains possible.
+
+Every pending eval has a per-task/group provenance field. Server capacity is
+1024 sequences,16384 batched tokens and graph capture up to512; client concurrency
+is independently tuned. Fixed `max_connections` overrides were removed so retry
+halving affects DFM clients too. Original judge model, memory utilization, sampling,
+prompt/tokenizer/scoring and W&B destinations remain unchanged. Best choices can
+be below50% KV occupancy: the updated user instruction preferred throughput.
+
+### Full-GPU capacity calibration at training step 3142000
+
+The user requested a checkpointed pause, non-eager batch calibration targeting
+greater than50% KV occupancy, then resume to3150000. Training stopped after
+`ephemeral_step_3142000` was verified complete and preserved under
+`checkpoints/preserved/xl-eval-calibration-3142000`. Scheduler training was reset
+to resume that exact checkpoint with unchanged optimizer/EMA/data cursor/LR/run.
+
+`scripts/calibrate_xl_eval_capacity.py` replayed saved3100K eval prompts against
+the existing3100K EMA export on all8 GPUs, without W&B. Evidence:
+`data/dfm13/xl3100-eval-capacity-20261005-v2` and `...-v3`; an additional short1024
+check is in `data/dfm13/xl3100-eval-short1024-20261005-v1`.
+These are capacity replays, not scored benchmark reruns or parity guarantees.
+
+| Prompt family | Selected concurrency | Steady KV at0.95 utilization | Scope |
+| --- | ---: | ---: | --- |
+| DFM acceptability/correction |1024|58%|Applied to DaLA/GEC variants; translated variants extrapolate the measured family.|
+| GovReport/Nordjylland summaries |64|56.5%|128 reached94-96% peak, rejected for insufficient margin.|
+| DFM and batched EuroEval IFEval |512|63.3%|Measured512-token generation settings; longer production responses can exert more pressure.|
+| Mixed standard tasks |1024|45.6%|Peak70%; **sustained50% target not met** at0.95. Applied to ARC/HellaSwag/DROP/GSM8k/MATH, not untested MMLU/BoolQ/Winogrande.|
+
+Measured stages had no preemptions or request errors. Short-answer256 was faster
+than1024 (~6.4K versus5.0K output tokens/s); the selected setting follows the
+requested occupancy target, not peak throughput. IFEval256 was also slightly
+faster than512. Small shards cannot realize these concurrent request counts.
+Judge concurrency16 and other untested client settings remain unchanged.
+The0.85 tests reserved judge space but did not run an actual judge concurrently.
+
+All pending nonjudged eval server configurations now consistently use
+`--max-num-seqs 1024 --max-num-batched-tokens 16384
+--max-cudagraph-capture-size 512` for persistent reuse; eager remains disabled.
+Changed client batches permit halving on retry. The persistent EuroEval OpenAI
+runner now passes `EUROEVAL_MAX_CONCURRENT_CALLS` to its guard process, capped
+by the retry batch; previously this path ignored the metadata setting.
+Nine server-pool tests and44 combined capacity/pool/campaign tests pass.
+
+Plan backup: `plan.before-calibrated-batches-3142k.tsv`; change receipt:
+`calibration-3142k-applied.json`, both under the active DFM12 scheduler directory.
+All calibration-owned servers were shut down before scheduler PID855375 resumed
+the3150K training row at21:31 local time. Log:
+`logs/scheduler/dfm12_XL_epoch11_noidentity/runner-after-3142k-calibration.log`.
 
 The `hrm` environment now has vLLM `0.23.1rc1.dev102+ga46abb7ae`.
 The historical environment observations below are superseded for this environment.
@@ -44,7 +173,7 @@ change the model architecture from HRM-Text to Gemma 4.
 FA4, BF16, max context 4096, max sequences 2, GPU utilization 0.07,
 greedy decoding, and nine English/Danish arithmetic, summary, JSON, code,
 multi-turn and tool prompts repeated twice. No W&B logging or production
-configuration changes. Evidence (commands, server logs, prompts, token IDs,
+configuration changes during the smoke. Evidence (commands, server logs, prompts, token IDs,
 responses, timings, process GPU memory samples):
 `logs/smoke/vllm_launch_modes_20261005_retry/`.
 
@@ -59,7 +188,22 @@ Non-eager successfully compiled and captured CUDA graphs (reported graph pool
 both outputs were plausible but wording differed. This small, shared-GPU smoke
 is not benchmark score parity or a dedicated throughput benchmark. Readiness
 excludes a subsequent warmup request; sampled memory is not a CUDA allocator
-peak. Production eager defaults were not changed.
+peak. Production eager defaults were not changed during the smoke.
+
+### Scheduled non-eager evaluations (2026-10-05)
+
+At the user's request, removed `--enforce-eager` from all 7,222 pending/failed
+rows carrying that setting in `logs/scheduler/dfm12_XL_epoch11_noidentity/plan.tsv`,
+including the 3150K evaluation and installed DFM13 evaluation blocks. The edit
+used the scheduler's exclusive `PlanLock` and atomic plan writer. Backup:
+`plan.before-non-eager-20261005.tsv` in the same directory. This supersedes
+eager execution for this campaign, not historical launch scripts elsewhere.
+
+Only the training row was running; no servers or training processes needed
+restarting. Persistent server launches now permit compilation/CUDA graphs;
+FA4, templates, tokenization, EMA, batch sizes, utilization limits and judge
+settings are unchanged. Full-batch memory and benchmark parity remain to be
+observed on these evaluations; the smoke above is not proof of either.
 
 The old 1650K bundled template differs functionally only by missing support
 for dictionary-valued tool results: a separate CPU rendering test fails there

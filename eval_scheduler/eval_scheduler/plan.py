@@ -332,17 +332,6 @@ def make_plan(config: PlanConfig) -> list[Job]:
                 log_dir=f"{config.euroeval_log_root}/{config.ckpt_tag}/{group}",
                 metadata=metadata,
             )
-            if group == "valeu-da":
-                job = job.with_updates(
-                    status=JobStatus.SKIPPED,
-                    metadata=job.metadata
-                    | {
-                        "skip_reason": (
-                            "EuroEval ValEU-da aborts the whole task on invalid labels; "
-                            "skipped for failure-free DFM6 checkpoint sweeps."
-                        )
-                    },
-                )
             add(job)
             euroeval_job_ids.append(job.job_id)
             euroeval_job_by_group[group] = job.job_id
