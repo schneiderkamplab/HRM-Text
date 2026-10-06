@@ -150,6 +150,8 @@ class HierarchicalReasoningModel(nn.Module):
         return None, z_H
 
     def compute_train_extra_args(self, train_state: Any) -> dict[str, Any]:
+        if self.bp_warmup_ratio == 0:
+            return dict(bp_steps=self.bp_max_steps)
         return dict(bp_steps=self.bp_min_steps + int(min(1, train_state.step / (train_state.total_steps * self.bp_warmup_ratio)) * (self.bp_max_steps - self.bp_min_steps)))
 
     def initial_carry(self, batch_size: int, dtype: torch.dtype) -> None:

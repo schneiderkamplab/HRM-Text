@@ -52,6 +52,7 @@ from models.module_learning_rates import configured_module_rates, module_lr_scal
 from models.lr_rewarm import resolve_rewarm, rewarm_lr, rewarm_metadata
 from models.lr_piecewise import piecewise_lr, validate_lr_points
 from utils.functions import load_model_class, get_model_source_path
+from utils.training_wandb import TrainingWandbLogger
 from dataset_new import V1Dataset, V1DatasetConfig, V1DatasetMeta
 
 
@@ -1488,9 +1489,10 @@ def launch(hydra_config: DictConfig):
             config=config.model_dump() | {"train_metadata": train_metadata.model_dump()},
             settings=wandb.Settings(_disable_stats=True),
         )  # type: ignore
+        training_wandb = TrainingWandbLogger(wandb)
         num_params = sum(x.numel() for x in train_state.model.parameters())
         if resume_state is None:
-            wandb.log({"num_params": num_params}, step=0)
+            training_wandb.log({"num_params": num_params}, train_state.step)
         else:
             wandb.run.summary["num_params"] = num_params  # type: ignore[union-attr]
         save_code_and_config(config, train_metadata)
@@ -1621,10 +1623,10 @@ def launch(hydra_config: DictConfig):
                 synchronize_device(device)
                 experiment_train_end = time.perf_counter()
             if stability_diagnostics is not None and RANK == 0:
-                wandb.log(
+                training_wandb.log(
                     stability_diagnostics.wandb_summary
                     | stability_diagnostics.wandb_detailed,
-                    step=train_state.step,
+                    optimizer_step=train_state.step,
                 )
             if config.gradient_skip_norm is not None:
                 if optimizer_step_skipped:
@@ -1692,7 +1694,7 @@ def launch(hydra_config: DictConfig):
                         bench_metric_history.append({"step": train_state.step, **metrics})
                     progress_bar.update(train_state.step - progress_bar.n)  # type: ignore
                     trace_print(config, RANK, f"wandb_log_begin step={train_state.step}")
-                    wandb.log(metrics | train_extra_args | {"train/lr": lr}, step=train_state.step)
+                    training_wandb.log(metrics | train_extra_args | {"train/lr": lr}, train_state.step)
                     trace_print(config, RANK, f"wandb_log_end step={train_state.step}")
 
             if (
@@ -1725,7 +1727,7 @@ def launch(hydra_config: DictConfig):
                 if val_metrics is not None:
                     val_metrics = reduce_metrics(val_metrics, prefix="val/")
                     if RANK == 0:
-                        wandb.log(val_metrics, step=train_state.step)
+                        training_wandb.log(val_metrics, train_state.step)
 
             del metrics
 
