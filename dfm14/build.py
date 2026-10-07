@@ -172,7 +172,7 @@ def deduplicate(entries):
     return result
 
 
-def selection_policy(entries):
+def selection_policy(entries, *, keep_all=False):
     """Recover retained ordinals without rescanning tokens or modifying originals."""
     original_tree=ROOT/'tokenized_original'
     original_tree.mkdir(parents=True,exist_ok=True)
@@ -181,26 +181,28 @@ def selection_policy(entries):
         for number,value in enumerate(entry['parts']):
             path=Path(value).resolve()
             name=entry['name']+f'__part-{number:06d}'
-            kept=arrays(TREE/name)
-            original=arrays(path)
-            starts=original['inst_start']
-            if np.any(starts[1:]<=starts[:-1]):
-                raise ValueError('Non-unique/non-monotonic original starts: '+str(path))
-            indices=np.searchsorted(starts,kept['inst_start'])
-            if np.any(indices>=len(starts)) or any(
-                not np.array_equal(original[k][indices],kept[k]) for k in FIELDS):
-                raise ValueError('Selection does not reproduce retained rows: '+name)
-            selection=TREE/name/'selection.npy'
-            temporary=selection.with_suffix('.tmp.npy')
-            np.save(temporary,indices)
-            temporary.replace(selection)
+            rule=dict(prefix=name,repeat=entry['repeat'],long_context='drop')
+            if not keep_all:
+                kept=arrays(TREE/name)
+                original=arrays(path)
+                starts=original['inst_start']
+                if np.any(starts[1:]<=starts[:-1]):
+                    raise ValueError('Non-unique/non-monotonic original starts: '+str(path))
+                indices=np.searchsorted(starts,kept['inst_start'])
+                if np.any(indices>=len(starts)) or any(
+                    not np.array_equal(original[k][indices],kept[k]) for k in FIELDS):
+                    raise ValueError('Selection does not reproduce retained rows: '+name)
+                selection=TREE/name/'selection.npy'
+                temporary=selection.with_suffix('.tmp.npy')
+                np.save(temporary,indices)
+                temporary.replace(selection)
+                rule['selection_indices_path']=str(selection.resolve())
             link=original_tree/name
             if not link.exists():
                 link.symlink_to(path,target_is_directory=True)
             elif link.resolve()!=path:
                 raise ValueError('Original source link changed: '+name)
-            policy.append(dict(prefix=name,repeat=entry['repeat'],long_context='drop',
-                selection_indices_path=str(selection.resolve())))
+            policy.append(rule)
     write_json(original_tree/'tokenizer_info.json',load(BASE/'metadata.json')['tokenizer_info'])
     return original_tree,policy
 
@@ -208,7 +210,8 @@ def selection_policy(entries):
 def sample(entries,selected):
     sampled=ROOT/'sampled_additions'
     policy=ROOT/'prefix_config.yaml'
-    original_tree,policies=selection_policy(entries)
+    original_tree,policies=selection_policy(entries,
+        keep_all=selected.get('inherited_overlap_policy')=='keep_all')
     policy.write_text(yaml.safe_dump(policies))
     if not (sampled/'metadata.json').exists():
         subprocess.run([sys.executable,'data_io/sample_tokenized.py',f'tokenized_path={original_tree.resolve()}',

@@ -1,0 +1,481 @@
+sets:
+  dala_ga:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=ga
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_ga:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=ga
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_mt:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=mt
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_mt:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=mt
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_mk:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=mk
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_mk:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=mk
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_eu:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=eu
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_eu:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=eu
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_gl:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=gl
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_gl:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=gl
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_cy:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=cy
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_cy:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=cy
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_ru:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=ru
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_ru:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=ru
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_tr:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=tr
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_tr:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=tr
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_zh:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=zh
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_zh:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=zh
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_ar:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=ar
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_ar:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=ar
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_ja:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=ja
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_ja:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=ja
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_id:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=id
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_id:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=id
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_ko:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=ko
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_ko:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=ko
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_hi:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=hi
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_hi:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=hi
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_vi:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=vi
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_vi:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=vi
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  dala_he:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@dala_dfm14
+      args:
+      - -T
+      - language=he
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=32
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+  gec_dala_he:
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/dfm14_tasks.py@gec_dala_dfm14
+      args:
+      - -T
+      - language=he
+      - -T
+      - manifest=/work/dfm/HRM-Text/config/dfm14_dala_heldout.json
+      - -T
+      - max_gen_toks=512
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'

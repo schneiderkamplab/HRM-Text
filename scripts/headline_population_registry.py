@@ -50,6 +50,8 @@ def validate_registry(registry: dict) -> dict:
             raise ValueError('Available policy is restricted to explicit DFM13 populations')
         kind, identifier = population['kind'], population['id']
         pattern = {'multilingual': r'multilingual_v[1-9][0-9]*',
+                   'dfm14_new_languages': r'dfm14_new_languages_v[1-9][0-9]*',
+                   'dfm14_all_languages': r'dfm14_all_languages_v[1-9][0-9]*',
                    'dfm13_new_languages': r'dfm13_new_languages_v[1-9][0-9]*',
                    'dfm13_multilingual': r'dfm13_multilingual_v[1-9][0-9]*',
                    'dfm13_all_languages': r'dfm13_all_languages_v[1-9][0-9]*',
@@ -71,6 +73,10 @@ def validate_registry(registry: dict) -> dict:
             raise ValueError('Per-language required_tasks must cover every language')
         if kind == 'multilingual' and (len(languages) != 19 or set(languages) & {'en', 'da'}):
             raise ValueError('Multilingual population requires exactly 19 non-da/en languages')
+        if kind == 'dfm14_new_languages' and set(languages)!=set('ga mt mk eu gl cy ru tr zh ar ja id ko hi vi he'.split()):
+            raise ValueError('DFM14 language population mismatch')
+        if kind == 'dfm14_all_languages' and set(languages)!=set('da en nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk lt lv sq be bs bg hr hu lb sr sk sl fa ga mt mk eu gl cy ru tr zh ar ja id ko hi vi he'.split()):
+            raise ValueError('DFM14 all-language population mismatch')
         if kind in ('dfm13_new_languages','dfm13_multilingual','dfm13_all_languages'):
             expected=set('lt lv sq be bs bg hr hu lb sr sk sl fa'.split())
             if kind in ('dfm13_multilingual','dfm13_all_languages'):
@@ -240,7 +246,7 @@ class Artifacts:
 
 
 def available_population(population):
-    return (population['id'].startswith('dfm13_') and
+    return (population['id'].startswith(('dfm13_', 'dfm14_')) and
             population.get('aggregation_policy') == 'available_tasks_then_available_languages_v1')
 
 

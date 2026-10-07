@@ -131,3 +131,115 @@ not a missing converter/export. Jobs finished with answer-contract errors.
 Do not claim that all planned generation targets were achieved or admit failed
 rows without a separate repair/review. Other English knowledge families and
 all six families for each of the sixteen new languages have eligible data.
+
+## Inheritance Discrepancy Discovered (2026-10-07)
+
+The size comparison exposed an unresolved snapshot mismatch. The local XXL-wide
+DFM13 was built from `data/dfm13_build/remote/sampled_dfm12`: 106,799,766,039
+tokens/epoch, comprising DFM11 plus only 3,585,161,337 addition tokens. Its frozen
+`data/dfm13_build/sources.json` has 13 additions, while the current checked-in
+DFM13 registry has 312. The final remote authoritative composition files are
+not present locally. The documented later XL DFM12 no-identity sample has
+117,000,690,762 tokens, including 13,785,598,511 addition tokens.
+
+Thus the apparent DFM12-to-DFM13 reduction is NOT established as an intentional
+sampling reduction. It compares different release snapshots. The local DFM14
+113,880,339,621-token sample inherits this older DFM13 snapshot. Earlier
+mechanical readiness claims do not establish complete planned inheritance.
+Keep the 900K handoff gated until authoritative membership is reconciled;
+valid new package publication can proceed independently. Do not overwrite
+the running DFM13 sample or claim all later DFM12/13 sources are included.
+
+## Authorized Rebuild And Resume (2026-10-07)
+
+The user stopped training and authorized rebuilding DFM12, DFM13 and DFM14,
+then immediately resuming on DFM14. This supersedes the earlier 900K-only
+handoff: the last complete checkpoint is `step_870000` in
+`checkpoints/dfm13/XXL-wide-from-dfm11-epoch2`. Training and the scheduler were
+stopped; unrelated package publication was allowed to finish.
+
+The authoritative remote is reachable at `ucloud@ssh.cloud.sdu.dk:2850`, root
+`/work/mimir/HRM-Text`. Its final composition pins **381 DFM12 components plus
+603 approved DFM13 components**, with four explicit source-fidelity holds.
+All thirteen additions in the frozen local DFM13 are covered. Importing the
+remote sampled XL corpus directly would incorrectly enable XL identity repeats.
+Instead, `python -m dfm14.reconcile_inheritance` rebuilds from local DFM11 and
+the pinned tokenized composition, keeping all model identity components at
+repeat 0. MATH repeat 5 and Setur/fo-instruct repeat 10 are retained.
+
+Transferred 104,022,540,713 bytes, covering 1325 DFM12 and 7692 DFM13 tokenized
+parts. Verified weighted additions: DFM12 48,859,993 rows / 13,785,598,511 tokens;
+DFM13 80,662,659 rows / 11,170,372,396 tokens per epoch. Three index sets are
+built at every level. DFM14 reuses accepted tokenized additions but recomputes
+exact overlap against the corrected inheritance. No retokenization is required.
+
+Build workspace: `data/dfm14/inheritance-reconciliation`; log:
+`logs/dfm14/inheritance-rebuild.log`. Outputs stay isolated until full bounded
+index scans, token totals, source counts and publication checks pass. Earlier
+release readiness is marked `superseded_incomplete_inheritance`, not erased.
+
+`python -m dfm14.continue_training watch` waits for validation, retains old
+samples as recovery copies, and promotes the new samples using symlinks. It
+uses a private hardlinked checkpoint copy with independent sidecar, resetting
+only the dataset cursor to zero at dataset epoch index 2, preserving step
+870000, optimizer/EMA, historical rewarm and current hyperparameters. The new
+checkpoint directory is `checkpoints/dfm14/XXL-wide-from-dfm13-step870000`.
+W&B remains `peter-sk-sdu/DFM5/dfm10-xxl-wide`; BP8, GAS4, GBS262144 and base
+LR3e-4 with auto recurrence dividers remain unchanged.
+
+Resume log: `logs/dfm14/rebuild-resume.log`. The watcher modifies the existing
+`dfm10_XL_epoch9_20260831` plan under lock, replacing only obsolete pending
+DFM13 continuation rows. It retains 50K evaluations, adds 32 new-language
+DaLA/GEC tasks (four shards each), and keeps old suite averages separate from
+new multilingual averages. CPU preflight verified 2000 unique samples per
+task and 500 per shard. Epoch axes continue from the actual pre-switch row
+fraction, not from a fabricated integer boundary. Exact remaining steps are
+counted using the same multipack/GAS settings before launch.
+
+Create `data/dfm14/inheritance-reconciliation/training/cancel` to cancel the
+automatic continuation before launch. A failed rebuild never authorizes resume.
+At documentation time rebuilding is active, not yet promoted or training.
+
+### Duplicate Attribution From The First Build
+
+The completed scan against the OLD 107B DFM13 sample removed 360,098 added
+targets. Joining excluded token-index ordinals back to package row provenance
+attributes 347,078 to `HuggingFaceTB/smoltalk`, 11,687 to
+`CohereLabs/aya_dataset`, 545 to `IlyaGusev/saiga_scored`, and 788 to eleven
+other upstream repositories. These are incoming-source attributions, not
+identification of which inherited dataset contains the matching target.
+Exact details: `data/dfm14/release-v1/duplicate-provenance.json`.
+These counts must NOT be presented as the completed corrected-inheritance scan,
+which was still running when this attribution was produced on 2026-10-07.
+
+### Superseded: Inherited Duplicate Scan Disabled
+
+Later on 2026-10-07 the user explicitly disabled the inherited-example scan.
+The scan and resume watcher were stopped, and the rebuild restarted using the
+already validated DFM12/DFM13 corpora. All accepted DFM14 additions are now
+sampled with their configured repeats, without subtracting inherited matches.
+`dfm14/selection.json` records `inherited_overlap_policy: keep_all`; sampler
+rules use the original arrays without `selection_indices_path`. The earlier
+completed duplicate counts remain historical evidence, not the new selection.
+Existing package-level quality filters and prior cross-addition deduplication
+are unchanged. Full index/token accounting validation and guarded automatic
+training resume remain enabled. This supersedes the overlap-filtering steps
+described above, not the source-level inheritance reconciliation.
+
+The user additionally requires training to wait for free GPUs. The existing
+all-GPU scheduler reservation requires at least178000MiB free per GPU. The
+DFM14 segment wrapper now rechecks GPUs0-7 immediately before torchrun: all
+eight must meet that threshold AND have no compute clients. It polls every120s,
+fails closed on GPU-query errors, honors stop/cancel requests, and never kills
+unrelated GPU processes. This covers external processes not tracked by the
+scheduler, including small clients that would pass the memory-only threshold.
+
+The corrected keep-all build subsequently passed validation and was promoted:
+DFM14 has406830651rows/epoch,135548235716mean tokens/epoch, and three index sets.
+Exact packing gives521204optimizer steps for one full pass with GBS262144/GAS4;
+the resumed total is1391204from step870000. After a user-requested stop during
+the initial launch (before any new checkpoint), the user authorized resume again.
+The existing scheduler was restarted with the cancellation cleared and the
+interrupted attempt reset. GPUs were occupied by unrelated clients at restart;
+training waits for availability rather than terminating them. W&B/run settings
+and the private step870000 resume checkpoint remain unchanged.
