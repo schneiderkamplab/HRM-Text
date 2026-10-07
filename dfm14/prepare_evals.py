@@ -1,5 +1,6 @@
 """Prepare pinned DFM14 heldouts without GPU calls or training-split fallback."""
 from concurrent.futures import ProcessPoolExecutor
+import copy
 import gzip
 import hashlib
 import heapq
@@ -66,34 +67,45 @@ def main():
     with ProcessPoolExecutor(max_workers=8) as pool:held=dict(pool.map(heldout,LANGUAGES))
     # Reuse the existing validated paired-heldout reader/schema and scorers.
     write_json(MANIFEST,dict(schema='dfm13-accepted-dala-heldout-v1',release='dfm14',languages=held,seed=4242))
-    sets={};tasks=[];metrics={}
-    for language in LANGUAGES:
-        metrics[language]={}
-        for prefix,budget,batch in [('dala',32,512),('gec_dala',512,256)]:
-            name=prefix+'_'+language
-            sets[name]=dict(tasks=[dict(name=str(ROOT/'evaluation/dfm14_tasks.py')+'@'+prefix+'_dfm14',
-                args=['-T','language='+language,'-T','manifest='+str(MANIFEST),'-T','max_gen_toks='+str(budget)])],
-                args=['--model','{{target_model}}','--temperature','0'])
-            tasks.append(dict(name=name,config=str(SUITE),language=language,shards=4,samples=2000,
-                              max_tokens=budget,batch_size=batch))
-            metrics[language][prefix]=dict(suite='dfm',scale='fraction',
-                key=f'dfm_eval/{name}/'+('semantic_v1/macro_f1' if prefix=='dala' else 'exact_match/mean'))
-    SUITE.write_text(yaml.safe_dump(dict(sets=sets),sort_keys=False))
-    registry=dict(schema_version=1,populations=[dict(id='dfm14_new_languages_v1',kind='dfm14_new_languages',
-        languages=LANGUAGES,required_tasks={l:list(metrics[l]) for l in LANGUAGES},metrics=metrics)])
-    previous=next(p for p in load(ROOT/'config/multilingual_headline_populations_dfm13_dala_v2_20261006.json')['populations']
-                  if p['kind']=='dfm13_all_languages')
-    all_metrics={**previous['metrics'],**metrics}
-    registry['populations'].append(dict(id='dfm14_all_languages_v1',kind='dfm14_all_languages',
-        aggregation_policy='available_tasks_then_available_languages_v1',languages=list(all_metrics),
-        required_tasks={l:list(v) for l,v in all_metrics.items()},metrics=all_metrics))
-    from scripts.headline_population_registry import validate_registry
-    validate_registry(registry)
+    previous=load(ROOT/'config/multilingual_headline_populations_dfm13_dala_v2_20261006.json')
+    suite,tasks,registry=build_eval_definitions(ROOT,MANIFEST,SUITE,previous)
+    SUITE.write_text(yaml.safe_dump(suite,sort_keys=False))
     pop=ROOT/'config/multilingual_headline_populations_dfm14.json';write_json(pop,registry)
     write_json(OUT/'registry.json',dict(tasks=tasks,multilingual_manifest=str(pop),
         euroeval_gaps=LANGUAGES,reason='No native counterparts in installed EuroEval catalog',
         pins={str(p):file_hash(p) for p in (MANIFEST,SUITE,pop,ROOT/'evaluation/dfm14_tasks.py')}))
     print('Prepared 32 tasks, 128 shards per checkpoint',flush=True)
+
+
+def build_eval_definitions(root, manifest, suite_path, previous):
+    """Pure local-path definitions shared by heldout preparation and import."""
+    root=Path(root)
+    sets={};tasks=[];metrics={}
+    for language in LANGUAGES:
+        metrics[language]={}
+        for prefix,budget in [('dala',32),('gec_dala',512)]:
+            name=prefix+'_'+language
+            sets[name]=dict(tasks=[dict(name=str(root/'evaluation/dfm14_tasks.py')+'@'+prefix+'_dfm14',
+                args=['-T','language='+language,'-T','manifest='+str(manifest),'-T','max_gen_toks='+str(budget)])],
+                args=['--model','{{target_model}}','--temperature','0'])
+            tasks.append(dict(name=name,suite=name,config=str(suite_path),language=language,
+                              max_tokens=budget,shards=4,samples=2000))
+            metrics[language][prefix]=dict(suite='dfm',scale='fraction',
+                key=f'dfm_eval/{name}/'+('semantic_v1/macro_f1' if prefix=='dala' else 'exact_match/mean'))
+    populations=[]
+    for kind in ('dfm14_new_languages','dfm14_multilingual','dfm14_all_languages'):
+        bindings={}
+        if kind!='dfm14_new_languages':
+            bindings=copy.deepcopy(next(p['metrics'] for p in previous['populations']
+                if p['kind']==kind.replace('dfm14','dfm13')))
+        bindings.update(copy.deepcopy(metrics))
+        populations.append(dict(id=kind+'_v1',kind=kind,languages=list(bindings),metrics=bindings,
+            required_tasks={l:list(v) for l,v in bindings.items()},
+            aggregation_policy='available_tasks_then_available_languages_v1'))
+    registry=dict(schema_version=1,populations=populations)
+    from scripts.headline_population_registry import validate_registry
+    validate_registry(registry)
+    return dict(sets=sets),tasks,registry
 
 
 if __name__=='__main__':main()
