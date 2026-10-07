@@ -165,8 +165,10 @@ def test_actual_loader_resume_epoch_zero_cursor(tmp_path):
 
 
 def test_real3150_template_graph():
-    path=h.PLAN/'plan.tsv'
-    if not path.exists():pytest.skip('Local production template unavailable')
+    # The live plan now includes later campaigns; test the actual3150 input,
+    # not unrelated future rows added after this historical handoff.
+    path=h.CONTROL/'plan-before-handoff.tsv'
+    if not path.exists():pytest.skip('Archived3150 production template unavailable')
     rows,_=h.retire_future(h.read_plan(path))
     rows=[j for j in rows if not j.job_id.startswith(h.PREFIX)]
     new=h.build(rows,dict(end_step=3300123))
