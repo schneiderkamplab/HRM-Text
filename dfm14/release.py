@@ -201,7 +201,7 @@ def package(root, export):
             files=files[name],origins=sorted(origins[name]),target_policy='final_assistant_complete_untruncated_4k')
         write_json(folder/'metadata/manifest.json',record)
         card = ('---\nlanguage:\n- '+name.split('-')[1]+'\nlicense: other\n'
-            'license_name: source-and-teacher-conditions\nlicense_link: README.md#terms\n'
+            'license_name: source-and-teacher-conditions\nlicense_link: https://huggingface.co/datasets/schneiderkamplab/'+name+'/blob/main/README.md#terms\n'
             'configs:\n- config_name: default\n  data_files:\n  - split: train\n    path: data/*.parquet\n---\n'
             '# '+name+'\n\nAccepted-only DFM14 data, automatically reviewed with Gemma 4 26B-A4B. '
             'This is not human quality certification. Rejections, repair requests and failed reviews are excluded. '
@@ -236,6 +236,12 @@ def upload(export):
     done=load(receipts) if receipts.exists() else {}
     for package in load(export/'manifest.json')['packages']:
         name=package['name']; repo=package['hf_repo_id']; folder=export/name
+        card=folder/'README.md'
+        text=card.read_text()
+        if 'license_link: README.md#terms' in text:
+            with atomic(card) as handle:
+                handle.write(text.replace('license_link: README.md#terms',
+                    'license_link: https://huggingface.co/datasets/'+repo+'/blob/main/README.md#terms'))
         attribution=attach(folder,ROOT/'training'/name)
         sha=file_hash(folder/'metadata/manifest.json')
         if repo in done:
