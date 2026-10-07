@@ -1,5 +1,11 @@
 # Operational Knowledge and Plans
 
+* [Shared Audit Pipeline](shared-audit-pipeline.md) - Reusable continuous scheduling and minimal non-thinking accept/reject reviews.
+
+* [DFM14 Additional Instructions](dfm14-additional-instruction-candidates.md) - New language-specific leads versus already registered multilingual sources.
+
+* [DFM14 BAAI Access](dfm14-baai-access.md) - Verified gated-source access, candidate counts and source-selection boundaries.
+
 * [DFM13 Multilingual Evaluation Preparation](dfm13-multilingual-evaluation.md) - Verified heldout tasks, EuroEval availability and new34-language averages.
 
 * [DFM13 Evaluation Expansion](dfm13-evaluation-expansion.md) - Talemaader rejudging, new-language baseline scheduling, and held-out DaLA coverage audit.
@@ -10,7 +16,11 @@
 * [XL Non-Eager Evaluation Capacity](xl-non-eager-eval-capacity.md) - Bounded real-prompt eight-GPU capacity measurement, no W&B or plan changes.
 * [DFM13 XL 3150K Handoff](dfm13-xl-3150k-handoff.md) - Verified-sample gate and CPU-only exact budget preparation; not an activated training switch.
 * [DFM14 Plan](dfm14-plan.md) - Sixteen-language expansion and research scope; no changes to current DFM13 assembly.
+* [DFM14 CPU Release](dfm14-cpu-release.md) - Accepted-only exports, publication, sampling and the 900K XXL-wide handoff gate.
 * [DFM14 Remote Production Handoff](dfm14-remote-production-handoff.md) - Transfer inputs, implementation order and isolation from live DFM13 training.
+* [DFM14 Non-DaLA Startup](dfm14-non-dala-startup.md) - Local readiness, code hazards and staged implementation without waiting on DaLA.
+* [DFM14 Curated CPU Audit Handoff](dfm14-curated-cpu-audit.md) - Final instruction/grounding inventory, calibration requests and GPU admission gates.
+* [DFM14 Additions and Translation Expansion](dfm14-additions-audit-expansion.md) - Audit submissions, translation gaps, knowledge preparation and calibration blockers.
 * [DFM14 Production Estimate](dfm14-production-estimate.md) - Volume-dependent time budget based on previous generation and audit measurements.
 * [DFM14 Language Source Readiness](dfm14-language-source-readiness.md) - Concrete instruction/text candidates and preparation gaps for ten main and six smaller European languages.
 
@@ -252,3 +262,6 @@
 * [TLPC Grounded Persian Campaign](dfm13-tlpc-grounded-campaign.md) - Sixteen independent QA/chat clients, pinned source preparation and accepted-only release gates.
 * [DaLA Evaluation Coverage Snapshot](dfm13-dala-eval-coverage.md) - Read-only34-language source/version/split comparison, actual completed results and prepared-vs-scheduled coverage.
 * [DFM13 Workspace Panel Readiness](dfm13-wandb-panel-readiness.md) - Exact Forge workspace backup, existing metric keys and pending multilingual/average panel changes.
+* [XXL-wide 859500 Shared Gemma Handoff](dfm13-xxlw-859500-shared-gemma.md) - Checkpoint-safe local training pause and eight owned generation/audit servers.
+
+* [DFM14 DaLA release](dfm14-dala-release.md) — authorized audited language export, train-only integration and verified HF publication.

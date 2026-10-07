@@ -1,5 +1,29 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-07: Fast-forwarded main to `8932540` without conflicts and preserved active training/CPU release processes. Reviewed and versioned DFM14 preparation, shared auditing, accepted release/selection integration, source inventories and wiki evidence. Local audit/DFM14 tests: 61 passed; incoming evaluation/average tests: 65 passed. Dataset publication/readiness remains governed by release receipts, not by this source commit.
+
+- 2026-10-07: Resumed XXL-wide DFM13 at 866500 and gated the 900K DFM14 handoff. Started the accepted-only CPU release, native tokenization, verified HF publication and three-epoch sampling pipeline. See [DFM14 CPU release](pages/dfm14-cpu-release.md); completion remains gated by its receipts.
+
+- 2026-10-07: Prepared 1.12M English instruction candidates, submitted the 1.21M-row Asian additions audit and chained English/enrichment audits on existing shared servers. Recovered Mandarin OPUS coverage and exact-English pivots, reducing empty pairings from 259 to 41. Repaired knowledge-source adapters and measured unused OpenStax/ATOMIC reservoirs. V6 calibration improved contract completion but failed negative controls; bulk remains held. See [the operational update](pages/dfm14-additions-audit-expansion.md).
+
+- 2026-10-06: Finished curated DFM14 CPU audit-input merging: 4,080,616 candidates in 8,216 chunks, plus 9,600 six-family calibration requests. Added Wikisource and Irish/Maltese institutional grounding without broad web corpora. Training remains untouched. See [handoff](pages/dfm14-curated-cpu-audit.md) for verification artifacts and remaining admission gates.
+
+- 2026-10-06: Owner approved Wikipedia and requested deletion of DFM14 web corpora. Removed seven broad-web source families from the registry and 144 source/download/candidate directories across all preparation passes; preserved instruction/chat and curated sources. Updated status to report surviving receipts separately from historical counters. Ten focused tests pass. See [non-DaLA preparation](pages/dfm14-non-dala-startup.md).
+
+- 2026-10-06: Recorded the owner's curated-grounding preference and broad-web admission hold in [DFM14 non-DaLA preparation](pages/dfm14-non-dala-startup.md), including web-PDF derivatives. CPU pass finished: 247 prepared files, 1,010,915 instruction candidates, 1,993,255 document seeds and 5,563,763 transformation candidates; none admitted. No further jobs launched; existing artifacts retained for inspection.
+
+- 2026-10-06: Completed all sixteen DFM14 DaLA exports, native train integrations and verified public HF uploads. Retained 17,973,493 source records across both tasks and all heldouts; registered 32 train components with 28,749,258 rows and 2,653,005,386 tokens, zero drops. Remote hashes, both configurations/all five splits and final registry bindings pass. The release concept lists all sixteen dataset URLs and immutable revision prefixes. No native-human validation or changes to live DFM13 training are claimed.
+
+- 2026-10-06: Corrected DFM14 export prior-index handling before publication: additive producer indexes include this campaign’s base candidates, while the actual first-release baseline is empty. Added a regression fixture, retained measured index counts/pins, archived the unpublished initial attempt, and restarted export. Both release tests, the native tokenizer smoke check and HF card validation pass. Evidence: `data/dfm14/dala-audited-20261006-v1/implementation-checks.json` in HRM-Text.
+
+- 2026-10-06: Started [non-DaLA DFM14 CPU preparation](pages/dfm14-non-dala-startup.md) with a 320-worker ceiling and eight download threads. Expanded to 117 source components/53 repositories, implemented bounded pinned candidate preparation and four Unicode-aware transformation families; native training-template smoke and seven focused tests passed. No GPU generation, training-data mutation or DaLA changes.
+
+- 2026-10-06: Started [DFM14 DaLA release](pages/dfm14-dala-release.md) after explicit export/integration/upload authorization. Added pass-only release and publisher pipelines, separate native train-only registry, source/heldout protection and immutable HF verification. Two focused tests pass; final receipts remain pending.
+
+- 2026-10-06: Completed [XXL-wide 859500 handoff](pages/dfm13-xxlw-859500-shared-gemma.md): verified/preserved checkpoint, stopped training, prepared pending resume row and left scheduler paused. Eight shared Gemma4 26B-A4B replicas (1024 slots, ports 8800-8807) passed individual chat smoke tests after cold kernel compilation. No automatic training resume.
+
+- 2026-10-06: Pulled main to `cc0c023` without textual conflicts and recovered the pinned `dfm-evals` commit `1789d64` from the source host after the initial recursive fetch failed (a subsequent direct GitHub fetch also succeeded). Added [non-DaLA DFM14 startup assessment](pages/dfm14-non-dala-startup.md), including corrected per-epoch OPUS budgets, script-aware transformations and isolated sharded production. No training interruption or DFM14 jobs launched.
+
 - 2026-10-06: Added the [DFM14 remote production handoff](pages/dfm14-remote-production-handoff.md), separating remote generation ownership from live DFM13 XL training and identifying non-Git reference inputs and historical hardcoded campaign guards. Preserved evaluation expansion, Talemaader v2 and training logging continuity work; no training interruption for staging/commits.
 
 - 2026-10-05: Resolved the pull merge by preserving both the DFM13/DFM14 work history and upstream Apple packaging history. No training, evaluation or dataset processes changed.
@@ -2810,3 +2834,12 @@ checksum-verified following explicit user authorization. Portuguese HF card
 metadata corrected to pt + BCP47 pt-PT; corresponding local integration manifest
 pins updated, with training data/tokens unchanged. See
 [audited European DaLA](pages/dfm12-audited-european-dala.md).
+## 2026-10-07 BAAI access and expansion
+
+Recorded verified COIG-PC/IndustryCorpus2 payload access and completed bounded
+Infinity/IndustryInstruction preparation in [BAAI access](pages/dfm14-baai-access.md).
+# 2026-10-07: Shared audit pipeline
+
+Added the [shared audit runbook](pages/shared-audit-pipeline.md): compact
+non-thinking decisions, bounded continuous refill and dedicated CPU/disk owners.
+Historical journals and accepted rows are preserved during client migration.

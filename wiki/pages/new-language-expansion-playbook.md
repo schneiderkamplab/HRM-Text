@@ -4,7 +4,7 @@ title: New Language Expansion Recipe
 description: Reusable language-addition recipe with quotas, native formatting, audit gates and sharded throughput-safe generation through publication.
 status: draft
 confidence: high
-last_updated: 2026-10-05
+last_updated: 2026-10-06
 tags: [data, multilingual, generation, audit, performance, dfm14]
 ---
 # New Language Expansion Recipe
@@ -43,6 +43,13 @@ per Danish transformation task and rounds the configured fraction upward.
 directions**, from the reference report. It deliberately refuses raw/stored
 token totals. Pin that report and its hash; do not silently rebase budgets.
 Translation fractions are caps, not minimums to fill with poor data.
+
+**Correction (2026-10-06):** the reference to `opus_budget()` above is
+superseded as implementation guidance. It sums cumulative report coverage and
+can overstate per-epoch caps tenfold on the ten-epoch report. Use
+`dfm12.token_accounting.inherited_budget()` and its verified receipt, as already
+documented in [token accounting](dfm12-token-accounting.md). The intended
+fractions and per-epoch basis are unchanged.
 
 ### Synthetic Family Quotas
 

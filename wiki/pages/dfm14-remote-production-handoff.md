@@ -71,6 +71,11 @@ can start before all sizing references arrive, but quotas must not be guessed.
 
 ## Implementation Order on the Receiving Machine
 
+The [October 6 non-DaLA assessment](dfm14-non-dala-startup.md) refines the
+reuse guidance below. In particular, reuse `token_accounting.inherited_budget`
+instead of the unnormalized `budgets.opus_budget` helper, and replace
+whitespace-only transformation boundaries before admitting Chinese/Japanese.
+
 1. Create a separate DFM14 configuration and workspace (`data/dfm14`,
    `logs/dfm14`, `exports_dfm14`). Pin sources, inspect actual rows, record
    language/script, split, provenance, access and inherited-overlap decisions.

@@ -1,0 +1,1305 @@
+{
+  "original_entries": 161,
+  "counts": {
+    "same_repository": 127,
+    "successor_package": 28,
+    "deliberately_excluded": 4,
+    "agreement_source_retained": 2
+  },
+  "rows": [
+    {
+      "original": "allenai/big-reasoning-traces",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/big-reasoning-traces"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/Dolci-Instruct-SFT",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/Dolci-Instruct-SFT"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/Dolci-Instruct-SFT-No-Tools",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/Dolci-Instruct-SFT-No-Tools"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/Dolci-Instruct-SFT-Tool-Use",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dolci-tool-use-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "allenai/Dolci-Instruct-SFT-Tool-Use-SA",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dolci-tool-use-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "allenai/IF_sft_data_verified",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/IF_sft_data_verified"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/open_math_2_50k_r1-original",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/open_math_2_50k_r1-original"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/RLVR-GSM",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/RLVR-GSM"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/RLVR-MATH",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/RLVR-MATH"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/SciRIFF-train-mix",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/SciRIFF-train-mix"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-3-sft-mixture",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-3-sft-mixture"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-3-sft-personas-algebra",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-3-sft-personas-algebra"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-3-sft-personas-code",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-3-sft-personas-code"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-3-sft-personas-instruction-following",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-3-sft-personas-instruction-following"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-3-sft-personas-math",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-3-sft-personas-math"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-v2-sft-long-mixture",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-v2-sft-long-mixture"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/tulu-v2-sft-mixture",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/tulu-v2-sft-mixture"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/verifiable-reasoning-filtered-gpt-41",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/verifiable-reasoning-filtered-gpt-41"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "allenai/verifiable-reasoning-filtered-o4-mini",
+      "status": "same_repository",
+      "current_repositories": [
+        "allenai/verifiable-reasoning-filtered-o4-mini"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "ccdv/govreport-summarization",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-govreport-summarization-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "common-pile/arxiv_papers_filtered",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-arxiv-paper-summarization-sft"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "danish-foundation-models/ai_arena_udtraek",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-ai-arena-udtraek-sft"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "danish-foundation-models/dfm-dyna-instruct",
+      "status": "same_repository",
+      "current_repositories": [
+        "danish-foundation-models/dfm-dyna-instruct"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "danish-foundation-models/kaenguruen",
+      "status": "same_repository",
+      "current_repositories": [
+        "danish-foundation-models/kaenguruen"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "danish-foundation-models/laerebogen",
+      "status": "same_repository",
+      "current_repositories": [
+        "danish-foundation-models/laerebogen"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "GEM/wiki_cat_sum",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-wiki-cat-sum-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "giannor/dala_tv2r_it",
+      "status": "same_repository",
+      "current_repositories": [
+        "giannor/dala_tv2r_it"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "giannor/gec_dala_tv2r_it",
+      "status": "same_repository",
+      "current_repositories": [
+        "giannor/gec_dala_tv2r_it"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "glaiveai/glaive-function-calling-v2",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm11-glaive-native-tool-use-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "HuggingFaceH4/no_robots",
+      "status": "same_repository",
+      "current_repositories": [
+        "HuggingFaceH4/no_robots"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "kobprof/skolegpt-instruct",
+      "status": "same_repository",
+      "current_repositories": [
+        "kobprof/skolegpt-instruct"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "laion/Scientific-Summaries",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-scientific-summaries-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "MegaScience/TextbookReasoning",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-textbook-reasoning-filtered-sft"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "nvidia/AceReason-1.1-SFT",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-acereason-filtered-sft"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "nvidia/Nemotron-SFT-Agentic-v2",
+      "status": "same_repository",
+      "current_repositories": [
+        "nvidia/Nemotron-SFT-Agentic-v2"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "nvidia/Nemotron-SFT-Instruction-Following-Chat-v2",
+      "status": "same_repository",
+      "current_repositories": [
+        "nvidia/Nemotron-SFT-Instruction-Following-Chat-v2"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "nvidia/Nemotron-SFT-Multilingual-v1",
+      "status": "same_repository",
+      "current_repositories": [
+        "nvidia/Nemotron-SFT-Multilingual-v1"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "nvidia/OpenMathInstruct-2",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-openmathinstruct2-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/autodata-da-sft",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/autodata-da-sft"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/da-instruct-dynaword",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dynaword-instruct-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/da-instruct-dynaword-contemporary",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dynaword-instruct-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/da-instruct-dynaword-contemporary-hq",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dynaword-instruct-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/da-instruct-dynaword-hq",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dynaword-instruct-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/danish-qa",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/danish-qa"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/danish-summarization",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/danish-summarization"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/danish-university-portals-bt",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-danish-university-portals-bt-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/danmarks-statistik-bt",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-danmarks-statistik-bt-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/doab-da-bt",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/doab-da-bt"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/dst-table-prompts-bt",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-dst-table-prompts-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/dynaword-bt",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/dynaword-bt"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/eur-lex-bt",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/eur-lex-bt"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/eur-lex-sum-instruct",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/eur-lex-sum-instruct"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/instruct-bt",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/instruct-bt"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/machine-translation-da-ar",
+      "status": "deliberately_excluded",
+      "current_repositories": [],
+      "evidence": "Explicit quality exclusion; source audit found 7% usable."
+    },
+    {
+      "original": "oliverkinch/machine-translation-da-en",
+      "status": "deliberately_excluded",
+      "current_repositories": [],
+      "evidence": "Explicit quality/redundancy exclusion in favor of filtered OPUS DA-EN."
+    },
+    {
+      "original": "oliverkinch/machine-translation-da-uk",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-machine-translation-da-uk-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "oliverkinch/multi-wiki-qa-high-quality-subset",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/multi-wiki-qa-high-quality-subset"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "oliverkinch/tidsskrift-dk-bt",
+      "status": "same_repository",
+      "current_repositories": [
+        "oliverkinch/tidsskrift-dk-bt"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "open-thoughts/OpenThoughts2-1M",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-openthoughts2-filtered-sft"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "Salesforce/xlam-function-calling-60k",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-xlam-native-tool-use"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "sapientinc/HRM-Text-data-io-cleaned-20260515",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-acereason-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-amps-mathematica-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-dmmath-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-flan-cot-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-flan-dialog-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-flan-flan-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-flan-niv2-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-flan-t0-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-openthoughts2-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-platypus-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-sudoku-extreme-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-synth-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-tasksource-filtered-sft",
+        "schneiderkamplab/dfm10-sapient-textbook-reasoning-filtered-sft"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "schneiderkamplab/common-pile-denoising",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/common-pile-denoising"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/common-pile-paragraph-reordering",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/common-pile-paragraph-reordering"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/common-pile-prefix-continuation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/common-pile-prefix-continuation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/common-pile-span-filling",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/common-pile-span-filling"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/danish-dynaword-denoising",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/danish-dynaword-denoising"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/danish-dynaword-paragraph-reordering",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/danish-dynaword-paragraph-reordering"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/danish-dynaword-prefix-continuation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/danish-dynaword-prefix-continuation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/danish-dynaword-span-filling",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/danish-dynaword-span-filling"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-openhermes-da",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-openhermes-da"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-openhermes-en",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-openhermes-en"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-synthetic-code-debugging",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-synthetic-code-debugging"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-synthetic-constrained-format-following",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-synthetic-constrained-format-following"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-synthetic-danish-summarization-rewrite-controls",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-synthetic-danish-summarization-rewrite-controls"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-synthetic-multiturn-danish-english-chat",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-synthetic-multiturn-danish-english-chat"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-synthetic-native-tool-calling",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "schneiderkamplab/dfm8-synthetic-strict-math-answer-contract",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/dfm8-synthetic-strict-math-answer-contract"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/opus-da-en-permissive",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-opus-da-en-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-dialog-fsopt-data-qrecc",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-dialog-fsopt-data-qrecc"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-dialog-fsopt-data-qrecc-ii",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-qrecc-ii-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-dialog-zsopt-data-qrecc",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-dialog-zsopt-data-qrecc"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-dialog-zsopt-data-qrecc-ii",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-qrecc-ii-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-aeslc-1.0.0",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-aeslc-1.0.0"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-opinion-abstracts-idebate",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-opinion-abstracts-idebate"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-opinion-abstracts-rotten-tomatoes",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-opinion-abstracts-rotten-tomatoes"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-aeslc-1.0.0",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-aeslc-1.0.0"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-opinion-abstracts-idebate",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-opinion-abstracts-idebate"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-opinion-abstracts-rotten-tomatoes",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-opinion-abstracts-rotten-tomatoes"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-aeslc-1.0.0",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-aeslc-1.0.0"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-opinion-abstracts-idebate",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-opinion-abstracts-idebate"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-opinion-abstracts-rotten-tomatoes",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-opinion-abstracts-rotten-tomatoes"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-aeslc-1.0.0",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-aeslc-1.0.0"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-opinion-abstracts-idebate",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-opinion-abstracts-idebate"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-opinion-abstracts-rotten-tomatoes",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-opinion-abstracts-rotten-tomatoes"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1309-amazonreview-summary-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1309-amazonreview-summary-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1370-newscomm-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1370-newscomm-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1371-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1371-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1373-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1373-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1374-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1374-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1375-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1375-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1376-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1376-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1377-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1377-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task264-paper-reviews-accept-reject",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task264-paper-reviews-accept-reject"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task265-paper-reviews-language-identification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task265-paper-reviews-language-identification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task266-paper-reviews-reviewer-perspective",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task266-paper-reviews-reviewer-perspective"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task589-amazonfood-summary-text-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task589-amazonfood-summary-text-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task590-amazonfood-summary-correction-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task590-amazonfood-summary-correction-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task618-amazonreview-summary-text-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task618-amazonreview-summary-text-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task634-allegro-reviews-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task634-allegro-reviews-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task635-allegro-reviews-answer-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task635-allegro-reviews-answer-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task672-amazon-yelp-summarization",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task672-amazon-yelp-summarization"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task870-msmarco-answer-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task870-msmarco-answer-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task871-msmarco-question-generation",
+      "status": "deliberately_excluded",
+      "current_repositories": [],
+      "evidence": "Explicit quality exclusion: negligible low-quality source."
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task902-deceptive-opinion-spam-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task902-deceptive-opinion-spam-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task903-deceptive-opinion-spam-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task903-deceptive-opinion-spam-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task906-dialogre-identify-names",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task906-dialogre-identify-names"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task907-dialogre-identify-relationships",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task907-dialogre-identify-relationships"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task908-dialogre-identify-familial-relationships",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task908-dialogre-identify-familial-relationships"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task909-dialogre-prevalent-speakers",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task909-dialogre-prevalent-speakers"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1309-amazonreview-summary-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1309-amazonreview-summary-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1370-newscomm-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1370-newscomm-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1371-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1371-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1373-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1373-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1374-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1374-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1375-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1375-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1376-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1376-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1377-newscomm-translation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1377-newscomm-translation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task264-paper-reviews-accept-reject",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task264-paper-reviews-accept-reject"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task265-paper-reviews-language-identification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task265-paper-reviews-language-identification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task266-paper-reviews-reviewer-perspective",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task266-paper-reviews-reviewer-perspective"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task589-amazonfood-summary-text-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task589-amazonfood-summary-text-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task590-amazonfood-summary-correction-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task590-amazonfood-summary-correction-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task618-amazonreview-summary-text-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task618-amazonreview-summary-text-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task634-allegro-reviews-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task634-allegro-reviews-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task635-allegro-reviews-answer-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task635-allegro-reviews-answer-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task672-amazon-yelp-summarization",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task672-amazon-yelp-summarization"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task870-msmarco-answer-generation",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task870-msmarco-answer-generation"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task871-msmarco-question-generation",
+      "status": "deliberately_excluded",
+      "current_repositories": [],
+      "evidence": "Explicit quality exclusion: negligible low-quality source."
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task902-deceptive-opinion-spam-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task902-deceptive-opinion-spam-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task903-deceptive-opinion-spam-classification",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task903-deceptive-opinion-spam-classification"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task906-dialogre-identify-names",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task906-dialogre-identify-names"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task907-dialogre-identify-relationships",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task907-dialogre-identify-relationships"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task908-dialogre-identify-familial-relationships",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task908-dialogre-identify-familial-relationships"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task909-dialogre-prevalent-speakers",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task909-dialogre-prevalent-speakers"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-platypus-reclor",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-platypus-reclor"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-platypus-scibench",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm10-sapient-scibench-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-tasksource-pragmeval-sarcasm",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-tasksource-pragmeval-sarcasm"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/sapient-synth-tasksource-reclor",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/sapient-synth-tasksource-reclor"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/transformations-danish-danish",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/transformations-danish-danish"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/transformations-danish-english",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/transformations-danish-english"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/transformations-english-danish",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/transformations-english-danish"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "schneiderkamplab/transformations-english-english",
+      "status": "same_repository",
+      "current_repositories": [
+        "schneiderkamplab/transformations-english-english"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "synquid/danish-verifiable-reasoning",
+      "status": "same_repository",
+      "current_repositories": [
+        "synquid/danish-verifiable-reasoning"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "synquid/ifbench-train",
+      "status": "same_repository",
+      "current_repositories": [
+        "synquid/ifbench-train"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "synquid/mt-da-deepseek",
+      "status": "same_repository",
+      "current_repositories": [
+        "synquid/mt-da-deepseek"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "synquid/translation-100k",
+      "status": "same_repository",
+      "current_repositories": [
+        "synquid/translation-100k"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "synquid/wiki-instruct-da",
+      "status": "same_repository",
+      "current_repositories": [
+        "synquid/wiki-instruct-da"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "synquid/wildchat-100k-qwen-messages",
+      "status": "same_repository",
+      "current_repositories": [
+        "synquid/wildchat-100k-qwen-messages"
+      ],
+      "evidence": "DFM13 reconciled included-repository inventory"
+    },
+    {
+      "original": "Team-ACE/ToolACE",
+      "status": "successor_package",
+      "current_repositories": [
+        "schneiderkamplab/dfm11-toolace-native-tool-use-repaired"
+      ],
+      "evidence": "DFM10 export manifest; DFM11 tool replacements; DFM10 final source reconciliation"
+    },
+    {
+      "original": "Lex.dk",
+      "status": "agreement_source_retained",
+      "current_repositories": [],
+      "evidence": "Positive sampled DFM11 rows inherited by DFM13; original/repaired views"
+    },
+    {
+      "original": "DBC",
+      "status": "agreement_source_retained",
+      "current_repositories": [],
+      "evidence": "Positive sampled DFM11 rows inherited by DFM13; original/repaired views"
+    }
+  ],
+  "limitations": [
+    "Source lineage, not row-for-row retention or unchanged sampling weight.",
+    "Same repository does not imply identical revision or selection.",
+    "Uses finalized expanded DFM13 scope, not the local October 2 sample."
+  ]
+}

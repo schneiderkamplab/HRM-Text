@@ -1,0 +1,330 @@
+{
+  "prepared": {
+    "mk": {
+      "instruction": 60687,
+      "wikipedia": 33871,
+      "supplement": 1922
+    },
+    "ja": {
+      "instruction": 41261,
+      "wikipedia": 143806,
+      "supplement": 9400
+    },
+    "hi": {
+      "wikipedia": 28030,
+      "instruction": 45307,
+      "supplement": 2
+    },
+    "ru": {
+      "instruction": 80048,
+      "wikipedia": 150439,
+      "supplement": 124272
+    },
+    "ar": {
+      "wikipedia": 109952,
+      "instruction": 34914,
+      "supplement": 35851
+    },
+    "id": {
+      "wikipedia": 50694,
+      "instruction": 20778,
+      "supplement": 1966
+    },
+    "cy": {
+      "instruction": 46968,
+      "wikipedia": 17771,
+      "supplement": 646
+    },
+    "mt": {
+      "instruction": 46867,
+      "wikipedia": 5359,
+      "supplement": 43333
+    },
+    "ko": {
+      "wikipedia": 39288,
+      "instruction": 97288,
+      "supplement": 22746
+    },
+    "gl": {
+      "instruction": 90218,
+      "wikipedia": 18099,
+      "supplement": 700
+    },
+    "tr": {
+      "instruction": 47486,
+      "wikipedia": 30507,
+      "supplement": 6427
+    },
+    "he": {
+      "wikipedia": 76833,
+      "instruction": 43316,
+      "supplement": 52872
+    },
+    "zh": {
+      "instruction": 30634,
+      "wikipedia": 59874,
+      "supplement": 115510
+    },
+    "eu": {
+      "instruction": 81904,
+      "wikipedia": 27322,
+      "supplement": 742
+    },
+    "vi": {
+      "instruction": 168637,
+      "wikipedia": 26019,
+      "supplement": 4702
+    },
+    "ga": {
+      "instruction": 54730,
+      "wikipedia": 11358,
+      "supplement": 18684
+    }
+  },
+  "sources": {
+    "mk": {
+      "CohereLabs/aya_collection_language_split": 39987,
+      "wikimedia/wikipedia": 33871,
+      "MartinV/clement-mk-handwritten": 700,
+      "CohereLabs/aya_dataset": 0,
+      "saillab/alpaca_macedonian_taco": 20000,
+      "wikimedia/wikisource": 1922
+    },
+    "ja": {
+      "kunishou/databricks-dolly-15k-ja": 15002,
+      "CohereLabs/aya_dataset": 6259,
+      "tokyotech-llm/Swallow-Instruct-v0.1": 20000,
+      "wikimedia/wikipedia": 143806,
+      "wikimedia/wikisource": 9400
+    },
+    "hi": {
+      "wikimedia/wikipedia": 28030,
+      "CohereLabs/aya_dataset": 1139,
+      "FreedomIntelligence/evol-instruct-hindi": 20000,
+      "ai4bharat/indic-align": 24168,
+      "wikimedia/wikisource": 2
+    },
+    "ru": {
+      "IlyaGusev/saiga_scored": 19628,
+      "IlyaGusev/ru_turbo_alpaca": 20000,
+      "Vikhrmodels/GrandMaster-PRO-MAX": 39999,
+      "CohereLabs/aya_dataset": 421,
+      "wikimedia/wikipedia": 150439,
+      "wikimedia/wikisource": 124272
+    },
+    "ar": {
+      "wikimedia/wikipedia": 109952,
+      "arbml/CIDAR": 9967,
+      "CohereLabs/aya_dataset": 4947,
+      "FreedomIntelligence/evol-instruct-arabic": 20000,
+      "wikimedia/wikisource": 35851
+    },
+    "id": {
+      "wikimedia/wikipedia": 50694,
+      "CohereLabs/aya_dataset": 778,
+      "indonlp/cendol_collection_v2": 0,
+      "FreedomIntelligence/evol-instruct-indonesian": 20000,
+      "wikimedia/wikisource": 1966
+    },
+    "cy": {
+      "CohereLabs/aya_collection_language_split": 19997,
+      "saillab/alpaca_welsh_taco": 20000,
+      "wikimedia/wikipedia": 17771,
+      "ptrdvn/kakugo-cym": 6971,
+      "CohereLabs/aya_dataset": 0,
+      "wikimedia/wikisource": 646
+    },
+    "mt": {
+      "CohereLabs/aya_collection_language_split": 19997,
+      "ptrdvn/kakugo-mlt": 6870,
+      "saillab/alpaca_maltese_taco": 20000,
+      "CohereLabs/aya_dataset": 0,
+      "wikimedia/wikipedia": 5359,
+      "dennlinger/eur-lex-sum": 936,
+      "OPUS/EUbookshop": 42397
+    },
+    "ko": {
+      "wikimedia/wikipedia": 39288,
+      "HAERAE-HUB/HR-Instruct-Math-v0.1": 19997,
+      "CohereLabs/aya_dataset": 361,
+      "heegyu/open-korean-instructions": 56930,
+      "FreedomIntelligence/evol-instruct-korean": 20000,
+      "wikimedia/wikisource": 22746
+    },
+    "gl": {
+      "CohereLabs/aya_dataset": 0,
+      "BSC-LT/ALIA-2606-SFT": 39011,
+      "proxectonos/galician-gec-corpora": 51207,
+      "wikimedia/wikipedia": 18099,
+      "proxectonos/cpt_instruction_datasets": 0,
+      "wikimedia/wikisource": 700
+    },
+    "tr": {
+      "merve/turkish_instructions": 20000,
+      "CohereLabs/aya_dataset": 4031,
+      "wikimedia/wikipedia": 30507,
+      "halilibr/collected-turkish-instructions-v0.1": 19955,
+      "bysismo/Turkish-Python-instruction": 3500,
+      "wikimedia/wikisource": 6427
+    },
+    "he": {
+      "wikimedia/wikipedia": 76833,
+      "CohereLabs/aya_dataset": 0,
+      "BrainboxAI/medical-training-il": 3334,
+      "CohereLabs/aya_collection_language_split": 39982,
+      "wikimedia/wikisource": 52872
+    },
+    "zh": {
+      "m-a-p/COIG-CQIA": 5890,
+      "wikimedia/wikipedia": 59874,
+      "FreedomIntelligence/evol-instruct-chinese": 20000,
+      "CohereLabs/aya_dataset": 4744,
+      "wikimedia/wikisource": 115510
+    },
+    "eu": {
+      "BSC-LT/ALIA-2606-SFT": 40973,
+      "HiTZ/magpie-en-eu-reasoning-instructions-qwen3": 0,
+      "wikimedia/wikipedia": 27322,
+      "orai-nlp/MagpieEU": 40000,
+      "CohereLabs/aya_dataset": 931,
+      "wikimedia/wikisource": 742
+    },
+    "vi": {
+      "BlossomsAI/merged_vietnamese_instruction_dataset": 159993,
+      "CohereLabs/aya_dataset": 8644,
+      "wikimedia/wikipedia": 26019,
+      "wikimedia/wikisource": 4702
+    },
+    "ga": {
+      "CohereLabs/aya_collection_language_split": 39987,
+      "CohereLabs/aya_dataset": 1237,
+      "wikimedia/wikipedia": 11358,
+      "jmcinern/Dolly-V2-gle": 13506,
+      "dennlinger/eur-lex-sum": 15,
+      "OPUS/EUbookshop": 18669
+    }
+  },
+  "audit_rows": 4080616,
+  "audit_chunks": 8216,
+  "audit_counts": {
+    "ar": {
+      "denoising": 98622,
+      "instruction": 34907,
+      "paragraph-reordering": 77719,
+      "prefix-continuation": 98622,
+      "span-filling": 98622
+    },
+    "cy": {
+      "denoising": 11695,
+      "instruction": 46968,
+      "paragraph-reordering": 10400,
+      "prefix-continuation": 11695,
+      "span-filling": 11695
+    },
+    "eu": {
+      "denoising": 14725,
+      "instruction": 81407,
+      "paragraph-reordering": 13737,
+      "prefix-continuation": 14721,
+      "span-filling": 14721
+    },
+    "ga": {
+      "denoising": 21462,
+      "instruction": 54693,
+      "paragraph-reordering": 8698,
+      "prefix-continuation": 21463,
+      "span-filling": 21463
+    },
+    "gl": {
+      "denoising": 10859,
+      "instruction": 90211,
+      "paragraph-reordering": 9791,
+      "prefix-continuation": 10859,
+      "span-filling": 10859
+    },
+    "he": {
+      "denoising": 98149,
+      "instruction": 43316,
+      "paragraph-reordering": 77535,
+      "prefix-continuation": 98149,
+      "span-filling": 98150
+    },
+    "hi": {
+      "denoising": 14573,
+      "instruction": 45288,
+      "paragraph-reordering": 12428,
+      "prefix-continuation": 14573,
+      "span-filling": 14573
+    },
+    "id": {
+      "denoising": 25957,
+      "instruction": 20778,
+      "paragraph-reordering": 23426,
+      "prefix-continuation": 25957,
+      "span-filling": 25957
+    },
+    "ja": {
+      "denoising": 91454,
+      "instruction": 41261,
+      "paragraph-reordering": 86900,
+      "prefix-continuation": 72948,
+      "span-filling": 72948
+    },
+    "ko": {
+      "denoising": 40357,
+      "instruction": 97285,
+      "paragraph-reordering": 36073,
+      "prefix-continuation": 40341,
+      "span-filling": 40341
+    },
+    "mk": {
+      "denoising": 22169,
+      "instruction": 60687,
+      "paragraph-reordering": 19775,
+      "prefix-continuation": 22170,
+      "span-filling": 22170
+    },
+    "mt": {
+      "denoising": 41234,
+      "instruction": 46867,
+      "paragraph-reordering": 13893,
+      "prefix-continuation": 41236,
+      "span-filling": 41235
+    },
+    "ru": {
+      "denoising": 183387,
+      "instruction": 80043,
+      "paragraph-reordering": 124936,
+      "prefix-continuation": 183386,
+      "span-filling": 183386
+    },
+    "tr": {
+      "denoising": 22627,
+      "instruction": 47484,
+      "paragraph-reordering": 18076,
+      "prefix-continuation": 22627,
+      "span-filling": 22627
+    },
+    "vi": {
+      "denoising": 17195,
+      "instruction": 168606,
+      "paragraph-reordering": 14748,
+      "prefix-continuation": 17196,
+      "span-filling": 17196
+    },
+    "zh": {
+      "denoising": 127308,
+      "instruction": 30591,
+      "paragraph-reordering": 99482,
+      "prefix-continuation": 104474,
+      "span-filling": 104474
+    }
+  },
+  "cpu_holds": {
+    "unresolved_wikimedia_markup": 5492,
+    "embedded_native_control_token": 5
+  },
+  "cross_campaign_duplicates": 0,
+  "generation_requests": 9600,
+  "readiness": "cpu_complete_ready_for_gpu"
+}

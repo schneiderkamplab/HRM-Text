@@ -213,8 +213,11 @@ def main():
     args,command=parser.parse_known_args()
     if args.mode=='segment':
         if command and command[0]=='--':command.pop(0)
+        target = int(next(a.split('=',1)[1] for a in command if a.startswith('stop_after_step=')))
+        if target > 900000:
+            raise RuntimeError('DFM13 continuation past 900K is superseded: prepare and validate the DFM14 handoff first')
         subprocess.run(command,check=True)
-        finalize(int(next(a.split('=',1)[1] for a in command if a.startswith('stop_after_step='))))
+        finalize(target)
     elif args.mode=='preview':
         with PlanLock(PLAN):
             jobs=build(read_plan(PLAN/'plan.tsv'),1200000)

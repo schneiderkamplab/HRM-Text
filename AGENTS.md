@@ -53,6 +53,10 @@ setsid /home/ucloud/miniforge3/envs/hrm/bin/python -m eval_scheduler run \
 - Monitor: `python -m eval_scheduler monitor --plan-dir <PLAN_DIR>`.
 - For multi-node scheduling, use [`wiki/pages/model-architecture/multinode-eval-scheduler-plan.md`](wiki/pages/model-architecture/multinode-eval-scheduler-plan.md); never start unrestricted legacy runners on multiple nodes.
 
+## Data Audit Defaults
+
+- Reuse `audit_pipeline` for generation/review and source audits: no request spacing, chunk-tail barriers, or blocking CPU/I/O in the event loop. Reviews return plain `accept` or `reject`, non-thinking, with no JSON/grammar constraints and at most one retry. See [the shared audit runbook](wiki/pages/shared-audit-pipeline.md).
+
 ## W&B Metric Logging Safety
 
 - Log checkpoint averages atomically and explicitly register each metric; do not rely only on W&B prefix wildcards.

@@ -4,12 +4,22 @@ title: DFM14 Plan
 description: Research scope for language expansion, knowledge and commonsense enrichment, and additions deferred beyond DFM13.
 status: draft
 confidence: medium
-last_updated: 2026-10-05
+last_updated: 2026-10-06
 tags: [data, dfm14, multilingual, planning]
 ---
 # DFM14 Plan
 
 ## Naming and Boundary
+
+### Authorized completion and XXL-wide handoff (2026-10-07)
+
+The owner now authorizes accepted-only DFM14 integration, CPU preparation,
+publication and sampling. This supersedes the research-only scope below, not
+the recorded calibration limitations or source exclusions. Resume XXL-wide on
+DFM13 at `ephemeral_step_866500`; **switch to DFM14 at 900,000**, not sooner.
+Keep the existing W&B run and optimizer/EMA settings.
+
+Execution details and release gates: [DFM14 CPU release](dfm14-cpu-release.md).
 
 On 2026-10-05 the owner renamed the work previously called post-DFM13 to
 **DFM14**. This supersedes the provisional name, not existing DFM13 decisions.
@@ -45,6 +55,9 @@ Reference lists: [EU official languages](https://european-union.europa.eu/princi
 and [Council of Europe language guides](https://www.coe.int/en/web/european-charter-regional-or-minority-languages/language-guides).
 
 ## Workstreams
+
+Implementation assessment: [non-DaLA startup](dfm14-non-dala-startup.md)
+records local readiness and verified code hazards. It does not launch a campaign.
 
 Remote execution handoff: [DFM14 remote production](dfm14-remote-production-handoff.md).
 The generation host is independent of the live DFM13 XL training host.
