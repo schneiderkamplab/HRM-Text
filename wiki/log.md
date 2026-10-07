@@ -1,5 +1,7 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-07: Consolidated incoming main through `4a51a45` with the local XL DFM14 transfer and 50-language evaluation extension. Shared heldout configuration generation, retained verified local source paths, and added the transfer/packing-gated XL 3250K handoff at constant base LR `3e-4`. Existing training was not interrupted; dataset readiness is still receipt-gated. See [the XL handoff](pages/dfm14-xl-3250k-handoff.md) and [CPU release reconciliation](pages/dfm14-cpu-release.md).
+
 - 2026-10-07: Fast-forwarded main to `8932540` without conflicts and preserved active training/CPU release processes. Reviewed and versioned DFM14 preparation, shared auditing, accepted release/selection integration, source inventories and wiki evidence. Local audit/DFM14 tests: 61 passed; incoming evaluation/average tests: 65 passed. Dataset publication/readiness remains governed by release receipts, not by this source commit.
 
 - 2026-10-07: Resumed XXL-wide DFM13 at 866500 and gated the 900K DFM14 handoff. Started the accepted-only CPU release, native tokenization, verified HF publication and three-epoch sampling pipeline. See [DFM14 CPU release](pages/dfm14-cpu-release.md); completion remains gated by its receipts.

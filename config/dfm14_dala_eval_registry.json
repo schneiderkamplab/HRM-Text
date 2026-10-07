@@ -1,0 +1,290 @@
+[
+  {
+    "name": "dala_ga",
+    "suite": "dala_ga",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ga",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_ga",
+    "suite": "gec_dala_ga",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ga",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_mt",
+    "suite": "dala_mt",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "mt",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_mt",
+    "suite": "gec_dala_mt",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "mt",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_mk",
+    "suite": "dala_mk",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "mk",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_mk",
+    "suite": "gec_dala_mk",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "mk",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_eu",
+    "suite": "dala_eu",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "eu",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_eu",
+    "suite": "gec_dala_eu",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "eu",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_gl",
+    "suite": "dala_gl",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "gl",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_gl",
+    "suite": "gec_dala_gl",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "gl",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_cy",
+    "suite": "dala_cy",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "cy",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_cy",
+    "suite": "gec_dala_cy",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "cy",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_ru",
+    "suite": "dala_ru",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ru",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_ru",
+    "suite": "gec_dala_ru",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ru",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_tr",
+    "suite": "dala_tr",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "tr",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_tr",
+    "suite": "gec_dala_tr",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "tr",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_zh",
+    "suite": "dala_zh",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "zh",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_zh",
+    "suite": "gec_dala_zh",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "zh",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_ar",
+    "suite": "dala_ar",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ar",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_ar",
+    "suite": "gec_dala_ar",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ar",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_ja",
+    "suite": "dala_ja",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ja",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_ja",
+    "suite": "gec_dala_ja",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ja",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_id",
+    "suite": "dala_id",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "id",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_id",
+    "suite": "gec_dala_id",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "id",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_ko",
+    "suite": "dala_ko",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ko",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_ko",
+    "suite": "gec_dala_ko",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "ko",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_hi",
+    "suite": "dala_hi",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "hi",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_hi",
+    "suite": "gec_dala_hi",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "hi",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_vi",
+    "suite": "dala_vi",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "vi",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_vi",
+    "suite": "gec_dala_vi",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "vi",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "dala_he",
+    "suite": "dala_he",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "he",
+    "max_tokens": 32,
+    "shards": 4,
+    "samples": 2000
+  },
+  {
+    "name": "gec_dala_he",
+    "suite": "gec_dala_he",
+    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm14.yaml",
+    "language": "he",
+    "max_tokens": 512,
+    "shards": 4,
+    "samples": 2000
+  }
+]

@@ -16,6 +16,7 @@
 * [XL Non-Eager Evaluation Capacity](xl-non-eager-eval-capacity.md) - Bounded real-prompt eight-GPU capacity measurement, no W&B or plan changes.
 * [DFM13 XL 3150K Handoff](dfm13-xl-3150k-handoff.md) - Verified-sample gate and CPU-only exact budget preparation; not an activated training switch.
 * [DFM14 Plan](dfm14-plan.md) - Sixteen-language expansion and research scope; no changes to current DFM13 assembly.
+* [DFM14 XL 3250K Handoff](dfm14-xl-3250k-handoff.md) - Verified-transfer gate, exact one-pass packing and steady-LR continuation on the original XL run.
 * [DFM14 CPU Release](dfm14-cpu-release.md) - Accepted-only exports, publication, sampling and the 900K XXL-wide handoff gate.
 * [DFM14 Remote Production Handoff](dfm14-remote-production-handoff.md) - Transfer inputs, implementation order and isolation from live DFM13 training.
 * [DFM14 Non-DaLA Startup](dfm14-non-dala-startup.md) - Local readiness, code hazards and staged implementation without waiting on DaLA.

@@ -21,6 +21,20 @@ This is a workspace-only change, not a history rewrite.
 
 ## Final deferred mapping
 
+2026-10-07 DFM14 extension: the registry accepts exact versioned kinds
+`dfm14_new_languages` (16), `dfm14_multilingual` (48 excluding da/en), and
+`dfm14_all_languages` (50). New languages: ga mt mk eu gl cy ru tr zh ar ja id ko hi vi he.
+Explicit `aggregation_policy=available_tasks_then_available_languages_v1`
+or pure `enable_available_dfm14(registry)` enables available-task/language means;
+default remains complete-only and DFM13/legacy definitions are not modified.
+The prepared manifest loads with all three populations. The initial unsupported
+language-code blocker is superseded: semantic scoring now registers all 16 and
+English yes/no probes pass. Native labels have unit tests, not independent
+native-speaker certification. These code/config changes do not themselves edit
+workspace panels. See the [DFM14 XL handoff](dfm14-xl-3250k-handoff.md) for
+scheduled baseline/future evaluations. Existing pending source pins were checked
+after consolidation and had no mismatches.
+
 2026-10-07 USER OVERRIDE supersedes complete-only scoring for explicitly opted-in
 new DFM13 populations: average available valid tasks per language, then available
 languages; no zero imputation. Legacy populations remain complete-only.

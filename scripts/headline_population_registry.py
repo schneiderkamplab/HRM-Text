@@ -47,14 +47,15 @@ def validate_registry(registry: dict) -> dict:
         if not isinstance(population, dict) or set(population) - {'aggregation_policy'} != {'id', 'kind', 'languages', 'required_tasks', 'metrics'}:
             raise ValueError('Invalid population fields')
         if 'aggregation_policy' in population and not available_population(population):
-            raise ValueError('Available policy is restricted to explicit DFM13 populations')
+            raise ValueError('Available policy is restricted to explicit DFM13/DFM14 populations')
         kind, identifier = population['kind'], population['id']
         pattern = {'multilingual': r'multilingual_v[1-9][0-9]*',
-                   'dfm14_new_languages': r'dfm14_new_languages_v[1-9][0-9]*',
-                   'dfm14_all_languages': r'dfm14_all_languages_v[1-9][0-9]*',
                    'dfm13_new_languages': r'dfm13_new_languages_v[1-9][0-9]*',
                    'dfm13_multilingual': r'dfm13_multilingual_v[1-9][0-9]*',
                    'dfm13_all_languages': r'dfm13_all_languages_v[1-9][0-9]*',
+                   'dfm14_new_languages': r'dfm14_new_languages_v[1-9][0-9]*',
+                   'dfm14_multilingual': r'dfm14_multilingual_v[1-9][0-9]*',
+                   'dfm14_all_languages': r'dfm14_all_languages_v[1-9][0-9]*',
                    'cross_language': r'cross_language_v[1-9][0-9]*',
                    'english': r'english_v(?:[2-9]|[1-9][0-9]+)',
                    'english_dfm': r'english_dfm_v[1-9][0-9]*'}.get(kind, '')
@@ -73,16 +74,20 @@ def validate_registry(registry: dict) -> dict:
             raise ValueError('Per-language required_tasks must cover every language')
         if kind == 'multilingual' and (len(languages) != 19 or set(languages) & {'en', 'da'}):
             raise ValueError('Multilingual population requires exactly 19 non-da/en languages')
-        if kind == 'dfm14_new_languages' and set(languages)!=set('ga mt mk eu gl cy ru tr zh ar ja id ko hi vi he'.split()):
-            raise ValueError('DFM14 language population mismatch')
-        if kind == 'dfm14_all_languages' and set(languages)!=set('da en nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk lt lv sq be bs bg hr hu lb sr sk sl fa ga mt mk eu gl cy ru tr zh ar ja id ko hi vi he'.split()):
-            raise ValueError('DFM14 all-language population mismatch')
         if kind in ('dfm13_new_languages','dfm13_multilingual','dfm13_all_languages'):
             expected=set('lt lv sq be bs bg hr hu lb sr sk sl fa'.split())
             if kind in ('dfm13_multilingual','dfm13_all_languages'):
                 expected.update('nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk'.split())
             if kind=='dfm13_all_languages':expected.update(('da','en'))
             if set(languages)!=expected:raise ValueError('DFM13 language population mismatch')
+        if kind in ('dfm14_new_languages', 'dfm14_multilingual', 'dfm14_all_languages'):
+            expected = set('ga mt mk eu gl cy ru tr zh ar ja id ko hi vi he'.split())
+            if kind != 'dfm14_new_languages':
+                expected.update('lt lv sq be bs bg hr hu lb sr sk sl fa nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk'.split())
+            if kind == 'dfm14_all_languages':
+                expected.update(('da', 'en'))
+            if set(languages) != expected:
+                raise ValueError('DFM14 language population mismatch')
         if kind == 'cross_language':
             expected = set('da en nb nn sv is fo nl pl de fr es it cs pt_pt fi et ca el ro uk'.split())
             if set(languages) != expected:
@@ -262,6 +267,16 @@ def enable_available_dfm13(registry):
     result = copy.deepcopy(registry)
     for population in result['populations']:
         if population['id'].startswith('dfm13_'):
+            population['aggregation_policy'] = 'available_tasks_then_available_languages_v1'
+    return result
+
+
+def enable_available_dfm14(registry):
+    """Explicit DFM14-only opt-in; existing populations remain untouched."""
+    import copy
+    result = copy.deepcopy(registry)
+    for population in result['populations']:
+        if population['id'].startswith('dfm14_'):
             population['aggregation_policy'] = 'available_tasks_then_available_languages_v1'
     return result
 

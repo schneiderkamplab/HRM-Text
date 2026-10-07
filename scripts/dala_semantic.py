@@ -3,6 +3,23 @@ import unicodedata
 
 ENGLISH = ({'yes', 'correct', 'right'}, {'no', 'incorrect', 'wrong'})
 NATIVE = {
+    # DFM14 prompts request English yes/no; accept unambiguous native labels too.
+    'ga': ({'ceart'}, {'mícheart'}),
+    'mt': ({'iva'}, {'le'}),
+    'mk': ({'да'}, {'не'}),
+    'eu': ({'bai'}, {'ez'}),
+    'gl': ({'si'}, {'non'}),
+    'cy': ({'cywir'}, {'anghywir'}),
+    'ru': ({'да', 'правильно', 'верно'}, {'нет', 'неправильно', 'неверно'}),
+    'tr': ({'evet', 'doğru'}, {'hayır', 'yanlış'}),
+    'zh': ({'是', '对', '對', '正确', '正確'}, {'否', '不', '错误', '錯誤', '不正确', '不正確'}),
+    'ar': ({'نعم', 'صحيح'}, {'لا', 'خطأ', 'غير صحيح'}),
+    'ja': ({'はい', '正しい'}, {'いいえ', '正しくない', '誤り'}),
+    'id': ({'ya', 'benar'}, {'tidak', 'salah'}),
+    'ko': ({'네', '예'}, {'아니요'}),
+    'hi': ({'हाँ', 'हां', 'सही'}, {'नहीं', 'गलत'}),
+    'vi': ({'đúng', 'có'}, {'sai', 'không'}),
+    'he': ({'כן', 'נכון'}, {'לא', 'לא נכון'}),
     # Conservative standalone yes/no labels for the DFM13 expansion.
     'lt': ({'taip'}, {'ne'}),
     'lv': ({'jā'}, {'nē'}),

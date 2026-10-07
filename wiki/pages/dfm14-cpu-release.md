@@ -9,6 +9,37 @@ tags: [dfm14, release, sampling, training]
 ---
 # DFM14 CPU Release
 
+## Cross-machine inheritance mismatch (2026-10-07)
+
+The initial remote DFM14 release inherited a smaller DFM13 population:
+107,001,314,620 tokens rather than the active XL machine's 128,379,257,908.
+Its 113.88B-token DFM14 sample was therefore not a complete successor.
+**Superseded on 2026-10-07:** the reconciled release below replaces that sample.
+Use `completion.json` with `inheritance_reconciled=true` and its authoritative
+`inheritance-reconciliation/published.json`, not the old `release-v1/sampling.json`.
+
+Local epoch-0 pointer-array totals (prompt plus target, including repeats):
+DFM11=103215092251; DFM12=106800253588; DFM13=128379257908.
+These are summed from `inst_len.npy` and `resp_len.npy`, not inferred from
+token-store size or metadata `total_length`.
+
+## Cross-machine XL Integration (2026-10-07)
+
+The incoming main-branch DFM14 task registrations and local registrations use
+the same paired-heldout reader and scorers; keep one implementation. Local
+eval manifests relocate the pinned remote files to this machine without
+changing their contents or selection. Population validation supports the
+16 new, 48 non-Danish/non-English, and all 50 languages. The available-metric
+policy is explicit; existing population metric bindings remain unchanged.
+
+`dfm14.prepare_evals` prepares source heldouts on their owning machine;
+`scripts/prepare_dfm14_eval_extension.py` imports those verified selections.
+The local XL continuation is separate from `dfm14.continue_training`, which
+targets the other machine's XXL-wide checkpoint and plan. Do not run that
+XXL-wide publisher to continue XL. See the
+[XL 3250K handoff](dfm14-xl-3250k-handoff.md) for the transfer-ready gate and
+constant base LR of `3e-4`.
+
 The owner authorized completion of the CPU-side release on 2026-10-07. All
 source audits, the broad translation audit and synthetic generation/review
 have finished. The eight owned shared Gemma servers were stopped via their
