@@ -3,12 +3,49 @@ type: Report
 title: DFM13 Workspace Panel Readiness
 description: Read-only exact Forge workspace backup and pending multilingual average and panel changes.
 status: draft
-last_updated: 2026-10-06
+last_updated: 2026-10-07
 confidence: high
 ---
 # DFM13 Workspace Panel Readiness
 
+## Live headline correction (2026-10-07)
+
+The owner requested replacing the stale Multilingual headline panel in
+workspace `3fvncok3gjh`, section `Headline Averages`. Its old
+`avg_population/multilingual_v1/score` covered only the original19 languages.
+It now uses `avg_population/dfm13_multilingual_v2/score`, covering32 non-Danish,
+non-English languages including DaLA v2, with axis `avg_population/epoch`.
+Other panels, ordering and run selections are preserved. Before/after receipts:
+`logs/wandb_workspace_specs/3fvncok3gjh-multilingual-v2-20261007/`.
+This is a workspace-only change, not a history rewrite.
+
 ## Final deferred mapping
+
+2026-10-07 USER OVERRIDE supersedes complete-only scoring for explicitly opted-in
+new DFM13 populations: average available valid tasks per language, then available
+languages; no zero imputation. Legacy populations remain complete-only.
+Policy attribute `aggregation_policy=available_tasks_then_available_languages_v1`
+is restricted to DFM13 IDs, participates in definition hashes, and is enabled
+only via explicit copied registry or logger `--available-dfm13`. Original
+installed definitions/plans are untouched. Pure historical API and source-pin
+coordination are in the [available-policy handoff](../../logs/diagnostics/dfm13_available_population_handoff_20261007.md).
+Workspace `population_available` gate verifies positive observed coverage and
+exact new definition hash; it does not require complete=1 or3150-only history.
+Prepared successor mapping/registry are under the deferred root as
+`population-available-v2-{mapping,registry}.json`; already-existing panels must
+not be appended again. Titles still need a coordinated update after backfill.
+51 focused tests pass. No W&B or live scheduler writes performed.
+
+2026-10-07 read-only audit confirms the coordinated scheduler applied the34
+population and4expanded-traditional panels:460total panels,8sections. All new
+XL keys have an observed3150000 baseline; four historical successor keys retain
+67points. Five initially absent raw-key history-index entries were stale: direct
+history scans found their baseline rows. XXL-wide is `dfm10-xxl-wide`; its index
+contains no84new visible keys, while legacy headline/suite keys retain19records
+each (not asserted unique checkpoints). Preserve legacy comparison panels rather
+than fabricate expanded historical scores. Detailed evidence and Poincare handoff:
+[history coverage report](../../logs/diagnostics/workspace-history-coverage-20261007/report.md).
+No workspace or history writes were made during this audit.
 
 Expanded traditional keys are now confirmed:
 `headline_avg_dala_v2/{danish,english,overall}` and `suite_avg_dala_v2/dfm`.

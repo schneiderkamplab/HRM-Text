@@ -1,4 +1,4 @@
-"""Opt-in complete-input traditional headlines plus the expanded DFM suite."""
+"""Opt-in available-input traditional headlines and DFM suite, with coverage."""
 from __future__ import annotations
 
 import argparse
@@ -59,9 +59,9 @@ def definition():
     if len(set(suite)) != len(suite):
         raise ValueError('Double-counted DFM suite metric')
     return dict(sections=sections, dfm=suite, added=added,
-                weighting='equal tasks within each of eight traditional sections; equal sections overall; no multilingual addition; equal unique DFM suite tasks',
+                weighting='equal available tasks within each traditional section; equal available sections overall; no multilingual addition; equal unique available DFM suite tasks',
                 normalization='legacy normalize_metric_0_1 for historical tasks; new DaLA and Talemaader strict fraction',
-                completeness='all required inputs across both namespaces before any scores',
+                completeness='available valid inputs only; no zero imputation; empty populations omit score; explicit coverage',
                 inputs={str(p): hashlib.sha256(p.read_bytes()).hexdigest()
                         for p in (*REGISTRIES, POPULATIONS)})
 
@@ -84,20 +84,47 @@ def compute(metrics, item, recipe=None):
             values[key] = value
     report = dict(complete=not invalid, missing_or_invalid=invalid, definition=recipe,
                   definition_sha256=definition_hash(recipe), required_count=len(required))
-    if invalid:
-        return {}, report
-    averages = {name: math.fsum(values[k] for k in keys)/len(keys)
-                for name, keys in recipe['sections'].items()}
+    report['excluded_inputs'] = {
+        key: ('missing' if key not in metrics else
+              'non_numeric' if type(metrics[key]) not in (int, float) else
+              'nonfinite' if not math.isfinite(metrics[key]) else 'out_of_range')
+        for key in invalid
+    }
     row = {f'{p}/{axis}': value for p in (HEADLINE, SUITE)
            for axis, value in [('epoch', item.epoch), ('train_step', item.step),
                                ('definition_sha256', report['definition_sha256'])]}
-    for name in ('danish', 'english'):
-        row.update({f'{HEADLINE}/{name}': averages[name],
-                    f'{HEADLINE}/{name}/count': len(recipe['sections'][name])})
-    row.update({f'{HEADLINE}/overall': math.fsum(averages.values())/len(averages),
+    averages = {}
+    report['sections'] = {}
+    for name, keys in recipe['sections'].items():
+        available = [values[k] for k in keys if k in values]
+        detail = dict(count=len(available), expected=len(keys),
+                      coverage=len(available)/len(keys), complete=len(available) == len(keys),
+                      missing_or_invalid=[k for k in keys if k not in values])
+        report['sections'][name] = detail
+        if available:
+            averages[name] = math.fsum(available)/len(available)
+        if name in ('danish', 'english'):
+            for field in ('count', 'expected', 'coverage', 'complete'):
+                row[f'{HEADLINE}/{name}/{field}'] = detail[field]
+            if available:
+                row[f'{HEADLINE}/{name}'] = averages[name]
+    headline_keys = set().union(*(set(k) for k in recipe['sections'].values()))
+    overall_count = len(headline_keys & values.keys())
+    row.update({f'{HEADLINE}/overall/count': overall_count,
+                f'{HEADLINE}/overall/expected': len(headline_keys),
+                f'{HEADLINE}/overall/coverage': overall_count/len(headline_keys),
+                f'{HEADLINE}/overall/complete': overall_count == len(headline_keys),
                 f'{HEADLINE}/overall/section_count': len(averages),
-                f'{SUITE}/dfm': math.fsum(values[k] for k in recipe['dfm'])/len(recipe['dfm']),
-                f'{SUITE}/dfm/count': len(recipe['dfm'])})
+                f'{HEADLINE}/overall/expected_section_count': len(recipe['sections'])})
+    if averages:
+        row[f'{HEADLINE}/overall'] = math.fsum(averages.values())/len(averages)
+    suite_values = [values[k] for k in recipe['dfm'] if k in values]
+    row.update({f'{SUITE}/dfm/count': len(suite_values),
+                f'{SUITE}/dfm/expected': len(recipe['dfm']),
+                f'{SUITE}/dfm/coverage': len(suite_values)/len(recipe['dfm']),
+                f'{SUITE}/dfm/complete': len(suite_values) == len(recipe['dfm'])})
+    if suite_values:
+        row[f'{SUITE}/dfm'] = math.fsum(suite_values)/len(suite_values)
     report['section_means'] = averages
     return row, report
 
@@ -171,8 +198,6 @@ def main(argv=None):
         row = {k: v for k, v in row.items() if k.startswith(args.metric_prefix+'/')}
     report['artifacts'] = evidence
     write_json(args.report, dict(row=row, coverage=report))
-    if not report['complete']:
-        raise ValueError('Expanded averages incomplete; no metrics emitted. See '+str(args.report))
     print(json.dumps(row, sort_keys=True, allow_nan=False))
     if not args.dry_run:
         import wandb

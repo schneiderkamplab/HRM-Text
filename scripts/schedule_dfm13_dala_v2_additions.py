@@ -51,6 +51,7 @@ def build(jobs,registry,populations):
             gpu.extend(ids);merges.append(j.job_id)
         successor=avg.with_updates(job_id=prefix+'average',name='dala-v2-populations',
             deps=tuple([avg.job_id,*merges]),metadata={**avg.metadata,FLAG:True,
+                'python_bin':str(avg.metadata.get('vllm_python') or sys.executable),
                 'multilingual_manifest':str(populations)},log_dir=str(PLAN/'dala-v2'/f'step_{step}'/'average'))
         additions.append(successor);gates[step]=successor.job_id;gpu_by_step[step]=gpu
     out=[]

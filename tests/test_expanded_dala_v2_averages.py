@@ -34,12 +34,20 @@ def test_exact_membership_and_old_policy_unchanged():
 
 
 @pytest.mark.parametrize('bad', [None, float('nan'), float('inf'), True, -1, 1.01])
-def test_any_invalid_new_input_suppresses_every_score(bad):
+def test_invalid_new_input_excluded_with_coverage(bad):
     recipe, metrics = full()
     metrics[recipe['added'][-1]] = bad
     metrics[module.OLD_TALEMAADER] = 1
     row, report = module.compute(metrics, SimpleNamespace(epoch=10, step=300), recipe)
-    assert row == {} and not report['complete']
+    assert not report['complete']
+    assert row[module.SUITE+'/dfm'] == .5
+    assert row[module.SUITE+'/dfm/count'] == 98
+    assert row[module.SUITE+'/dfm/expected'] == 99
+    assert row[module.SUITE+'/dfm/coverage'] == pytest.approx(98/99)
+    assert row[module.SUITE+'/dfm/complete'] is False
+    assert recipe['added'][-1] in report['missing_or_invalid']
+    if type(bad) is float and not module.math.isfinite(bad):
+        assert report['excluded_inputs'][recipe['added'][-1]] == 'nonfinite'
 
 
 def test_missing_old_input_or_v2_has_no_fallback():
@@ -48,7 +56,31 @@ def test_missing_old_input_or_v2_has_no_fallback():
         metrics.pop(missing)
         metrics[module.OLD_TALEMAADER] = 1
         metrics[module.legacy.SEMANTIC_DALA_KEY] = 1
-        assert module.compute(metrics, SimpleNamespace(epoch=10, step=300), recipe)[0] == {}
+        row, report = module.compute(metrics, SimpleNamespace(epoch=10, step=300), recipe)
+        assert row[module.HEADLINE+'/danish'] == .5
+        assert row[module.HEADLINE+'/danish/count'] == 19
+        assert missing in report['missing_or_invalid']
+
+
+def test_empty_has_coverage_but_no_scores():
+    row, report = module.compute({}, SimpleNamespace(epoch=10, step=300))
+    for key in (module.HEADLINE+'/danish', module.HEADLINE+'/english',
+                module.HEADLINE+'/overall', module.SUITE+'/dfm'):
+        assert key not in row
+        assert row[key+'/count'] == 0
+        assert row[key+'/coverage'] == 0
+        assert row[key+'/complete'] is False
+    assert not report['complete']
+
+
+def test_sparse_means_available_sections_without_zero_fill():
+    metrics = {'eval/ARC/acc': .8, 'dfm_eval/dala_v2_da/semantic_v1/macro_f1': .4}
+    row, _ = module.compute(metrics, SimpleNamespace(epoch=10, step=300))
+    assert row[module.HEADLINE+'/english'] == .8
+    assert row[module.HEADLINE+'/danish'] == .4
+    assert row[module.HEADLINE+'/overall'] == pytest.approx(.6)
+    assert row[module.HEADLINE+'/overall/section_count'] == 2
+    assert row[module.SUITE+'/dfm'] == .4
 
 
 def test_overall_equal_sections_not_all_languages_or_all_tasks():

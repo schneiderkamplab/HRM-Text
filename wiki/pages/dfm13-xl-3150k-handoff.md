@@ -9,6 +9,88 @@ tags: [dfm13, training, xl, handoff]
 ---
 # DFM13 XL Handoff at 3150K
 
+## Available-Metric Policy Override (2026-10-07)
+
+Explicit policy installed without scheduler restart: two isolated successor
+manifests under `data/dfm13/available-population-manifests-20261007/` carry
+`aggregation_policy=available_tasks_then_available_languages_v1`. Twenty pending
+population rows now reference them, not shared configs. Original registry files
+and Harvey's definition inputs remain hash-identical. Ten pending expanded
+average rows had only approved logger/population-module source pins refreshed;
+expanded logger matches `2afe921e991637db5915cb016c17fddd8b9f2716a20e4656264c853e1363b391`.
+Actual20 runtime argv verified without `--require-complete`, and all referenced
+populations opt in explicitly. Training pins intact; all dependencies/statuses
+and running3200 work preserved. No W&B backfill was run. Backup, row deltas,
+source hashes and verification are in that directory's installed/verified JSON.
+
+Deferred historical XL write window prepared (not installed): REPORT
+`dfm13-xl-step_3200000-historical-available-average-sync`, success dependencies
+on all non-skipped3200 eval/merge writers, all eight averages, existing report
+and teardown;3250 training gains a dependency on this row. No terminal-success
+shortcut for failed evals. Proposed graph is acyclic; exact IDs are in
+`data/dfm13/historical-available-sync-schedule-20261007/handoff.json`.
+Await Poincare's finalized XL-only payload/CLI/pins before installing a scoped
+bridge; no historical writer launched and3200 GPU evaluations untouched.
+XXL-wide explicitly excluded from this row: separately establish its actual
+remote training/writer pause before any backfill, not merely local PID absence.
+Executable installer/bridge now exists: `scripts/schedule_historical_available_sync.py`
+with `--payload <final-xl.json>`. It snapshots only payload-touched new summary
+keys after all3200 writers, runs idempotent owner sync, restores existing latest
+summary values and verifies readback; no reaverage history or dependency cycle.
+Two focused tests pass. Installation currently blocked: `xl-v1.json` has stale
+backfill-script pin; await Poincare's XL successor (do not repin payload manually).
+XXL-wide19 sync is confirmed by `xxl-v1.synced.json` and remote-verification
+receipt under `logs/historical_available_averages_20261007/`; do not replay it.
+
+User supersedes complete-only average publication for historical XL/XXL-wide:
+new averages use available valid metrics with honest coverage. Under PlanLock
+removed `population_require_complete` only from20 PENDING new DFM13 population
+average rows (wave34 plus added-v2). Legacy population definitions, DONE rows,
+running3200 evaluations, all dependencies/statuses/attempts are unchanged.
+Missing historical tasks do not authorize skipping failed scheduled evaluations.
+Expanded-traditional logger changes remain Harvey-owned; population/workspace
+changes Boole-owned; historical backfill Poincare-owned. Refresh only approved
+script pins after owners freeze. No historical writer launched by this action;
+do not race scheduler metric writers or advance optimizer steps for logging.
+Receipt/backup: `data/dfm13/available-population-policy-20261007/`.
+
+## Average Wrapper Recovery (2026-10-07)
+
+Workspace speed-fix recovery: parent stopped only the read-only verification
+child; population workspace row then FAILED. Under PlanLock reset ONLY
+`dfm13-xl-v2-population-workspace` to PENDING/attempt0 and updated only the
+`patch_dfm13_workspace.py` source pin in it and the pending expanded workspace
+row to `a7b5e34b7b97906af3cc813f82c6bfc1af14e5644bf7e1d8c7c6fac2ab9bffbd`.
+All other pins validated, all other jobs preserved, full readback verified.
+Receipt/backup: `data/dfm13/workspace-speed-recovery-20261007/`. No scheduler
+launch performed; parent owns restart.
+
+Export preflight is distinct from the faulty average dispatch: the retained
+`resume_xl_dfm12_epoch11.sh` explicitly recognizes `conversion/convert_to_hf.py`
+and calls the export branch, which forwards supplied DFM13 checkpoint/tag/EMA
+arguments unchanged. It does not read the DFM12 run manifest. Captured actual
+3200 scheduler argv and mocked export forwarding verify this; tokenizer parity
+uses the intentional shared `data/dfm11_tokenizer` and regex fix false.
+No export/plan edit or GPU process was needed. Receipt:
+`data/dfm13/average-python-recovery-20261007/export3200-preflight.json`.
+
+Training reached3200; scheduler exited BLOCKED when the3150 wave34 average
+ran the inherited training shell wrapper and rejected evaluation arguments.
+Under PlanLock corrected22 unfinished AVERAGE rows (11 wave34,11 added-v2)
+to direct hrm Python; reset ONLY `dfm13-xl-wave34-step_3150000-average` from
+FAILED/attempt4 to PENDING/attempt0. Every DONE job and training row preserved.
+The ten intentional `todo5_future_average` validation wrappers remain intact.
+Actual runtime argv captured for all22 corrected rows: direct Python and
+`log_multilingual_headline_averages.py`, without executing W&B. Checkpoint3200,
+3250 resume parameters, complete dependency ancestry and source pins verified.
+The3250 continuation correctly waits for its still-pending evaluation/average
+work; no blocking failed ancestors remain when traversal stops at completed
+prerequisites. Seven historical VALEU failures exist deeper behind completed
+jobs and are intentionally not reopened. No scheduler launch performed.
+Reproducible one-shot repair: `scripts/recover_dfm13_average_python_20261007.py`.
+Backup, failed log, row-level changes, hashes and full dependency/argv evidence:
+`data/dfm13/average-python-recovery-20261007/{recovery,verified}.json`.
+
 ## Authorized Pause at3154500 (2026-10-06)
 
 **Resumed 2026-10-06 10:35 CEST; supersedes the paused prelaunch state below.**
@@ -399,5 +481,36 @@ under the plan lock. The original checkpoint must remain untouched. Fractional
 evaluation epochs must continue from the actual consumed DFM12 fraction, not
 claim the truncated DFM12 pass was a completed epoch. Internal loader epoch
 mapping and display epoch mapping must be explicit and tested before launch.
+### 2026-10-07: Historical Available Backfill Installed
+
+Installed `dfm13-xl-step_3200000-historical-available-average-sync` under
+PlanLock without interrupting live evaluations. Its 1,065 dependencies cover
+3200 raw evaluation writers, merges and teardown. All eight pending 3200
+AVERAGE rows now depend on this backfill; normal averaging therefore restores
+latest-checkpoint summaries naturally. The legacy report already downstream
+of averages remains downstream, avoiding a dependency cycle. This supersedes
+the proposed after-average summary-restoration design.
+
+The job prepares a fresh XL payload at execution, after raw writers finish,
+checks final step3200000 and its epoch, then performs the exclusive history
+append. `xl-v4.json` supplied the verified implementation dependency closure,
+not a frozen partial3200 history payload. XXL history is not replayed.
+Training parameters and running/done jobs were preserved;3250 additionally
+waits for this row. No scheduler or GPU process was restarted.
+
+Receipts: `data/dfm13/historical-available-sync-schedule-20261007/installed.json`
+and `verified.json`, with `plan-before-install.tsv` backup. Readback verified
+the DAG, eight average dependencies, source pins and unchanged training
+parameters. Focused scheduler/backfill tests:14 passed. Implementation:
+`scripts/schedule_historical_available_sync.py`.
+
+Invocation correction: direct execution of the backfill file failed with
+`ModuleNotFoundError: dfm12`. Both prepare and sync now use
+`python -m scripts.backfill_available_eval_averages` from the repository root.
+The pending row's wrapper pin was refreshed under PlanLock; recovery evidence
+is `module-invocation-recovery.json` in the same receipt directory. Actual
+subprocess CLI import tests and focused tests passed (15 tests). XL v4 contains
+68 checkpoints: the previous67 plus3200. No sync was launched during this fix.
+
 Historical preparation-only state (superseded above): the active plan still
 contained DFM12 continuations beyond3150K and no automatic handoff.

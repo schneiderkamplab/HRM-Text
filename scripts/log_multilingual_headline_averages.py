@@ -12,9 +12,9 @@ import tempfile
 from typing import Any
 
 try:
-    from scripts.headline_population_registry import build_population_row, load_registry
+    from scripts.headline_population_registry import build_population_row, load_registry, enable_available_dfm13
 except ModuleNotFoundError:
-    from headline_population_registry import build_population_row, load_registry
+    from headline_population_registry import build_population_row, load_registry, enable_available_dfm13
 
 
 @dataclass(frozen=True)
@@ -60,6 +60,7 @@ def parse_args(argv=None):
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--include-raw-metrics', action='store_true', help='Also log unambiguous valid source metrics in their native units')
     parser.add_argument('--require-complete', action='store_true', help='Fail rather than log an incomplete population')
+    parser.add_argument('--available-dfm13', action='store_true', help='Explicit available-task/language policy for DFM13 populations only')
     args = parser.parse_args(argv)
     if not math.isfinite(args.epoch) or args.epoch < 0 or args.step < 0:
         parser.error('Nonnegative finite epoch and step required')
@@ -71,6 +72,8 @@ def parse_args(argv=None):
 def main(argv=None):
     args = parse_args(argv)
     registry = load_registry(args.manifest)
+    if args.available_dfm13:
+        registry = enable_available_dfm13(registry)
     item = PopulationItem(args.step, args.epoch, args.standard_root, args.dfm_root, args.euroeval_root)
     row, report = build_population_row(item, registry)
     if args.include_raw_metrics:
@@ -104,7 +107,8 @@ def main(argv=None):
         return result
     require_complete = args.require_complete or any(
         p['kind'] == 'cross_language' for p in registry['populations'])
-    if require_complete and not all(p['complete'] for p in report['populations'].values()):
+    if require_complete and not all(p['complete'] or p.get('available_metrics', False)
+                                    for p in report['populations'].values()):
         raise ValueError('Required average population incomplete; see coverage report')
     import wandb
     log_atomic(wandb, row, project=args.project, run_id=args.run_id, run_name=args.run_name, entity=args.entity)

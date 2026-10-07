@@ -44,8 +44,10 @@ def validate_registry(registry: dict) -> dict:
         raise ValueError('Nonempty populations required')
     identifiers = set()
     for population in registry['populations']:
-        if not isinstance(population, dict) or set(population) != {'id', 'kind', 'languages', 'required_tasks', 'metrics'}:
+        if not isinstance(population, dict) or set(population) - {'aggregation_policy'} != {'id', 'kind', 'languages', 'required_tasks', 'metrics'}:
             raise ValueError('Invalid population fields')
+        if 'aggregation_policy' in population and not available_population(population):
+            raise ValueError('Available policy is restricted to explicit DFM13 populations')
         kind, identifier = population['kind'], population['id']
         pattern = {'multilingual': r'multilingual_v[1-9][0-9]*',
                    'dfm13_new_languages': r'dfm13_new_languages_v[1-9][0-9]*',
@@ -237,18 +239,57 @@ class Artifacts:
         return value, detail
 
 
+def available_population(population):
+    return (population['id'].startswith('dfm13_') and
+            population.get('aggregation_policy') == 'available_tasks_then_available_languages_v1')
+
+
+def population_score_definition(population):
+    if available_population(population):
+        return dict(population, aggregation_policy='available_tasks_then_available_languages_v1')
+    return population
+
+
+def enable_available_dfm13(registry):
+    """Explicit opt-in copy; never modify historical/legacy definitions."""
+    import copy
+    result = copy.deepcopy(registry)
+    for population in result['populations']:
+        if population['id'].startswith('dfm13_'):
+            population['aggregation_policy'] = 'available_tasks_then_available_languages_v1'
+    return result
+
+
 def build_population_row(item, registry: dict, prefix: str = 'avg_population') -> tuple[dict, dict]:
     validate_registry(registry)
     if prefix.rstrip('/') != 'avg_population':
         raise ValueError('Population namespace is reserved as avg_population; legacy prefixes cannot be overwritten')
     artifacts = Artifacts(item)
+    return _population_row(item, registry, artifacts)
+
+
+def build_population_row_from_metrics(metrics, item, registry):
+    """Historical API: caller supplies checkpoint-aligned raw metric values."""
+    validate_registry(registry)
+    class RawMetrics:
+        root_recoveries = []
+        def resolve(self, binding):
+            if not binding: return None, {'status': 'unavailable'}
+            value = normalize(metrics.get(binding['key']), binding['scale'])
+            return value, {'status': 'valid' if value is not None else 'missing_or_invalid',
+                           'key': binding['key'], 'normalized': value}
+    return _population_row(item, registry, RawMetrics())
+
+
+def _population_row(item, registry, artifacts):
     row = {'avg_population/epoch': item.epoch, 'avg_population/train_step': item.step}
     report = dict(schema_version=1, registry_sha256=definition_hash(registry), step=item.step,
-                  weighting='equal tasks within language, equal languages; complete coverage only', populations={},
+                  weighting='equal tasks within language, equal languages; DFM13 available-only, legacy complete-only', populations={},
                   root_recoveries=artifacts.root_recoveries)
     for population in registry['populations']:
         base = f"avg_population/{population['id']}"
-        means, valid_count, details = [], 0, {}
+        means, valid_count, details, complete_languages = [], 0, {}, 0
+        available = available_population(population)
         for language in population['languages']:
             values, details[language] = [], {}
             required = population['required_tasks']
@@ -264,17 +305,21 @@ def build_population_row(item, registry: dict, prefix: str = 'avg_population') -
             row[language_base + '/expected_tasks'] = len(required)
             complete = len(values) == len(required)
             row[language_base + '/complete'] = int(complete)
-            if complete:
+            row[language_base + '/coverage'] = len(values) / len(required)
+            complete_languages += int(complete)
+            if complete or (available and values):
                 mean = math.fsum(values) / len(values)
                 means.append(mean)
                 row[language_base + '/score'] = mean
         expected = sum(len(population['metrics'][lang]) for lang in population['languages'])
         row.update({base + '/valid_metrics': valid_count, base + '/expected_metrics': expected,
-                    base + '/complete_languages': len(means), base + '/expected_languages': len(population['languages']),
+                    base + '/complete_languages': complete_languages, base + '/available_languages': len(means), base + '/expected_languages': len(population['languages']),
                     base + '/coverage': valid_count / expected, base + '/complete': int(valid_count == expected),
-                    base + '/definition_sha256': definition_hash(population)})
-        if valid_count == expected:
+                    base + '/definition_sha256': definition_hash(population_score_definition(population))})
+        if valid_count == expected or (available and means):
             row[base + '/score'] = math.fsum(means) / len(means)
         report['populations'][population['id']] = dict(complete=valid_count == expected,
-            definition_sha256=definition_hash(population), languages=details)
+            definition_sha256=definition_hash(population_score_definition(population)), languages=details,
+            available_metrics=available, score_available=bool(means), valid_metrics=valid_count,
+            expected_metrics=expected, available_languages=len(means), complete_languages=complete_languages)
     return row, report

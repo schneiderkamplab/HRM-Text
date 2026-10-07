@@ -195,7 +195,8 @@ def build(jobs,registry,plan=PLAN):
             if registry.get('euroeval_bin'):taskmeta['euroeval_bin']=registry['euroeval_bin']
             j=clone(euro,'euro-'+name,name,taskmeta,deps,shard=None,shards=None)
             additions.append(j);gpu.append(j.job_id);writers.append(j.job_id)
-        avgmeta={**meta}
+        # Export python_bin can be a training/export dispatcher, not Python.
+        avgmeta={**meta,'python_bin':str(meta.get('vllm_python') or sys.executable)}
         for suite,key in [('dfm','dfm_log_root'),('euroeval','euroeval_log_root'),('standard','log_root')]:
             roots=list(avg.metadata.get('additional_'+suite+'_roots',[]))
             roots.extend((str(j.metadata[key])+('/'+tag if suite=='euroeval' else ''))

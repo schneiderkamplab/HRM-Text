@@ -22,6 +22,23 @@ def test_existing_dispatch_uses_bridge(monkeypatch,tmp_path):
     assert calls==[[str(s.SYNC_BRIDGE),'scripts/generate_dfm5_l_eval_comparison_report.py']]
 
 
+def test_average_does_not_inherit_export_training_wrapper(monkeypatch,tmp_path):
+    from eval_scheduler import runtime
+    jobs,registry=fixture()
+    jobs=[j.with_updates(metadata={**j.metadata,
+        'python_bin':'/scripts/resume_training.sh',
+        'vllm_python':'/env/bin/python','wandb_run_name':'test'}) for j in jobs]
+    calls=[]
+    monkeypatch.setattr(runtime,'run_command',lambda argv,**kwargs:calls.append(argv) or 0)
+    averages=[j for j in s.build(jobs,registry,tmp_path)
+              if j.metadata.get(s.MARK) and j.action==s.Action.AVERAGE]
+    assert len(averages)==3
+    for job in averages:
+        assert runtime.run_average(job)==0
+    assert all(argv[:2]==['/env/bin/python','scripts/log_multilingual_headline_averages.py']
+               for argv in calls)
+
+
 def fixture():
     jobs=[]
     for step in (3150000,3200000,3250000):

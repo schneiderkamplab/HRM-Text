@@ -104,3 +104,33 @@ def test_expanded_baseline_requires_definition_counts_and_exact_step():
         saved=row[field];row[field]=value
         with pytest.raises(ValueError):verify_remote(mapping,None,api)
         row[field]=saved
+
+
+def test_baseline_single_bounded_atomic_scan():
+    keys=['avg_population/test/languages/da/score','avg_population/test/score']
+    mapping={'replacements':[],'append_panels':[{'key':k} for k in keys],
+             'evidence_policy':{'kind':'population_baseline'}}
+    row={'avg_population/train_step':3150000}
+    for key in keys:row.update({key:.5,key.rsplit('/',1)[0]+'/complete':1})
+    calls=[]
+    def scan(**kwargs):calls.append(kwargs);return iter([row])
+    api=SimpleNamespace(run=lambda p:SimpleNamespace(lastHistoryStep=3200100,scan_history=scan))
+    result=verify_remote(mapping,None,api)
+    assert len(calls)==1 and calls[0]['min_step']==3198100 and calls[0]['max_step']==3200101
+    assert set(calls[0]['keys'])==set(row)
+    assert all(result['complete'].values())
+    row.pop(keys[1])
+    with pytest.raises(ValueError):verify_remote(mapping,None,api)
+
+
+def test_available_population_positive_coverage_and_definition():
+    key='avg_population/dfm13_all_languages_v2/score';base=key.rsplit('/',1)[0]
+    mapping={'replacements':[],'append_panels':[{'key':key}], 'evidence_policy':{
+        'kind':'population_available','definitions':{key:{'key':base+'/definition_sha256','sha256':'new'}}}}
+    row={key:.4,'avg_population/train_step':100,base+'/coverage':.01,base+'/definition_sha256':'new'}
+    api=SimpleNamespace(run=lambda p:SimpleNamespace(scan_history=lambda **kw:iter([row])))
+    assert verify_remote(mapping,None,api)['positive_coverage'][key]
+    for k,v in [(base+'/coverage',0),(base+'/definition_sha256','old')]:
+        old=row[k];row[k]=v
+        with pytest.raises(ValueError):verify_remote(mapping,None,api)
+        row[k]=old

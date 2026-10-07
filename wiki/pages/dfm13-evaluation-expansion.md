@@ -4,10 +4,74 @@ title: DFM13 Evaluation Expansion and Talemaader Repair
 description: Five authorized evaluation tasks while XL trains from 3150K to 3200K.
 status: draft
 confidence: high
-last_updated: 2026-10-06
+last_updated: 2026-10-07
 tags: [evaluation, multilingual, dfm13, talemaader]
 ---
 # DFM13 Evaluation Expansion
+
+## Historical Available-Metric Policy (2026-10-07)
+
+Owner explicitly superseded the complete-only emission policy for the new
+averages: backfill the XL and XXL-wide historical checkpoints using the valid
+metrics available at each checkpoint. Missing metrics are omitted, never zero
+filled. Retain task membership, metric normalization and weighting; language
+averages use their available tasks, and multilingual aggregates use available
+language means. Emit counts, expected counts, coverage and completeness so
+changing historical coverage is visible. All-missing groups have no score.
+Do not substitute old Talemaader judgments for v2 or mix checkpoints/epochs.
+
+This changes average emission, not evaluation scheduling: all scheduled tasks
+are still required to run and merges/finalization precede training. Historical
+backfills must serialize W&B writes with the scheduler and preserve actual
+fractional evaluation epochs. The earlier complete-only claims below describe
+the superseded policy, not the new requested historical behavior.
+
+## Averaging Interpreter Recovery (2026-10-07)
+
+At05:05-05:07, apparent GPU idleness during3200 multilingual DaLA was
+inter-shard overhead, not a stopped runner: ten jobs completed between status
+snapshots, with no new failures. Czech acceptability shard2 evaluated500samples
+in5seconds but occupied its lane for about30seconds. Persistent servers were
+reused; client startup and CPU EEE export retain the GPU slot. Scheduler job
+claims/status updates also serialize full reads/writes of the roughly52MB plan.
+Two-second GPU samples showed brief94-100percent bursts separated by zeroes.
+Do not restart healthy servers to address this; investigate CPU finalization
+and plan-update overhead before changing inference batch sizes.
+
+Training reached3200000 normally at02:20. The3150wave34 baseline then ran,
+but averaging inherited `python_bin=resume_xl_dfm12_epoch11.sh` from the export
+template. That wrapper routes non-export arguments to training and rejected
+the averaging CLI. This blocked later jobs; scheduler exited03:13 after cleanup.
+
+Under the plan lock, corrected22 wave34/v2 average rows to the concrete hrm
+Python, resetting only the failed3150wave34 average. Preserved all4828completed
+jobs and the intentional Talemaader-specific averaging wrapper. Recovery and
+actual dispatch validation: `data/dfm13/average-python-recovery-20261007/`.
+Both installers now select the actual interpreter, with regression tests that
+call `runtime.run_average` using poisoned export-template interpreter metadata.
+Validate generated argv for each action, not just dependency graphs or row counts.
+
+Scheduler resumed03:29; the previously failed average completed and synced at
+03:29:55. The3250training command was verified to resume `step_3200000` using
+the existing DFM13 directory and W&B run. Training/source pins remain valid;
+baseline finalization gates3200evals and3200finalization/cleanup gates3250training.
+Historical seven VALEU failures are nonblocking and were not reset.
+
+Workspace verification also scanned history separately for34 panels. For
+atomic population/expanded baseline rows it now verifies all required keys in
+one scan bounded to the latest2000internal history steps (explicit lower-bound
+override supported); checkpoint identity, coverage and exact-definition checks
+remain mandatory. Historical67-point verification is unchanged. Restarted only
+the read-only workspace child, refreshed its two workspace-row source pins,
+and reset that report under lock. The population workspace then completed in
+12seconds at03:33:50 without rewriting history. Tests cover the bounded atomic
+scan and both average installers (31focused tests pass).
+
+Both workspace jobs succeeded. The3200EMA export completed03:35:04 and all
+eight GPU lanes started EuroEval jobs03:35:12-20, with calibrated task batches,
+non-eager persistent vLLM, training-compatible tokenizer and0.95utilization.
+The3250continuation remains queued after3200finalization and teardown; no
+training optimizer step was changed by this recovery.
 
 ## Expanded Traditional Averages
 
@@ -169,6 +233,38 @@ Historical preparation found semantic Danish DaLA only at seven of67 points.
 Do not silently replace the other60 with strict scores under a semantic key,
 or switch panels to a series that discards their history. Keep the Talemaader
 replacement definition distinct from any semantic-scoring migration.
+
+## Historical Available-Metric Backfill, 2026-10-07
+
+The available-input policy is implemented by
+`scripts/backfill_available_eval_averages.py`, reusing the expanded and population
+loggers. Payloads retain actual checkpoint axes, raw inputs, observed/expected
+counts, completeness and source hashes; missing scores are not imputed.
+XXL-wide `DFM5/dfm10-xxl-wide` now has nineteen remotely verified historical
+points for the new Danish/English/overall/DFM and all-language v1/v2 averages.
+Its all-language values use available Danish/English inputs, not fabricated
+34-language coverage. No non-DA/EN population inputs existed there, so those
+population scores were omitted. Raw Talemaader v2 is also absent; the final user
+clarification requires the Talemaader-only average prefixes to average their
+other available tasks, omitting that scorer without aliasing the old scorer.
+That supersedes the initial whole-prefix omission and is a separate nineteen-row
+delta (`xxl-talemaader-delta-v4.json`). Original six-series verification receipt:
+`logs/historical_available_averages_20261007/xxl-v1.remote-verified.json`.
+The additional three Talemaader-only series are also synced and independently
+verified at all nineteen checkpoints in
+`xxl-talemaader-delta-v4.remote-verified.json` in the same directory.
+
+XL's initial 67-point preparation is separate from publication; all-suite union
+discovery subsequently found the current3200K checkpoint as point68. Its writer must run
+after all3200K sync/average jobs and before3250K training. Fresh preparation at
+that boundary must include3200K as the final point to avoid regressing summaries.
+All-suite discovery supersedes initial Talemaader-only checkpoint discovery.
+W&B event-count discrepancies trigger exhaustive sparse scans and are recorded,
+not silently treated as complete metadata. The Ukrainian Winogrande key had
+seven advertised versus six actual history events in both retrieval methods.
+See `docs/reports/historical-available-averages-handoff-20261007.md` for commands,
+serialization requirements, receipts and exact omissions. No XL write is claimed
+by this handoff; scheduler ownership and completion must be reported separately.
 
 ## Held-out Coverage Finding
 

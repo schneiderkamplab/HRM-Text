@@ -21,3 +21,21 @@ def test_additive_coverage_and_cleanup(tmp_path):
     from eval_scheduler.runtime import dependencies_satisfied
     terminal=[j.with_updates(status=s.JobStatus.FAILED) if j.job_id in barrier.deps else j for j in out]
     assert dependencies_satisfied(barrier,terminal)
+
+
+def test_successor_replaces_legacy_training_dispatcher(tmp_path,monkeypatch):
+    from eval_scheduler import runtime
+    jobs,r=fixture();r['dfm'][0]['name']='dala_lt'
+    jobs=base.build(jobs,r)
+    jobs=[j.with_updates(metadata={**j.metadata,'python_bin':'/resume_training.sh',
+        'vllm_python':'/env/bin/python','wandb_run_name':'test'}) for j in jobs]
+    tasks=[dict(name='dala_v2_da',suite='dala_v2_da',config='/new',language='da',max_tokens=32,shards=4)]
+    out=s.build(jobs,tasks,tmp_path/'populations.json')
+    calls=[]
+    monkeypatch.setattr(runtime,'run_command',lambda argv,**kwargs:calls.append(argv) or 0)
+    for job in out:
+        if job.metadata.get(s.FLAG) and job.action==s.Action.AVERAGE:
+            runtime.run_average(job)
+    assert len(calls)==3
+    assert all(argv[:2]==['/env/bin/python','scripts/log_multilingual_headline_averages.py']
+               for argv in calls)
