@@ -16,84 +16,100 @@ def finite(value):
     return isinstance(value, (int, float)) and math.isfinite(value)
 
 
-def prepare(directory):
+def add_observation(rows, step, metric, value):
+    record = rows.setdefault(step, {'train/step': step})
+    if metric in record and record[metric] != value:
+        raise RuntimeError(f'Conflicting historical values: {step} {metric}')
+    record[metric] = value
+
+
+def prepare(directory, run_path=RUN, cutoff=3200000):
     import wandb
-    run = wandb.Api(timeout=180).run(RUN)
+    run = wandb.Api(timeout=180).run(run_path)
     limit = int(run.summary['_step']) + 1
-    axes = {}
-    for row in run.scan_history(keys=['_step', 'train/step'], page_size=100000, max_step=limit):
-        if finite(row.get('train/step')):
-            axes[int(row['_step'])] = row['train/step']
-    print(f'Explicit axes: {len(axes)}', flush=True)
     rows = {}
     counts = {}
-    for metric in METRICS:
-        count = 0
-        for row in run.scan_history(keys=['_step', metric], page_size=100000, max_step=limit):
-            step = int(row['_step'])
-            if step in axes or not finite(row.get(metric)):
+    # Passing keys selects W&B's sampledHistory API, which can omit observations.
+    for row in run.scan_history(page_size=1000, max_step=limit):
+        if finite(row.get('train/step')):
+            continue
+        step = int(row['_step'])
+        for metric in METRICS:
+            if not finite(row.get(metric)):
                 continue
             # The old logger wrote step=train_state.step. Once offset logging
             # was introduced it always supplied train/step; never infer new gaps.
-            if step >= 3200000:
+            if step >= cutoff:
                 raise RuntimeError(f'Unexpected missing explicit axis after logger migration: {step}')
-            rows.setdefault(step, {'train/step': step})[metric] = row[metric]
-            count += 1
-        counts[metric] = count
-        print(metric, count, flush=True)
+            add_observation(rows, step, metric, row[metric])
+    for metric in METRICS:
+        counts[metric] = sum(metric in row for row in rows.values())
+        print(metric, counts[metric], 'unique observations', flush=True)
     path = directory / 'payload.jsonl'
     with path.open('w') as out:
         for _, row in sorted(rows.items()):
             out.write(json.dumps(row, allow_nan=False) + '\n')
-    manifest = dict(source=RUN, snapshot_history_limit=limit, rows=len(rows), counts=counts,
+    manifest = dict(source=run_path, snapshot_history_limit=limit, rows=len(rows), counts=counts,
                     min_step=min(rows), max_step=max(rows),
                     provenance='pre-offset pretrain.py logged step=train_state.step')
     (directory / 'prepared.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print(json.dumps(manifest), flush=True)
 
 
-def publish(directory):
+def publish(directory, run_path=RUN, patch_workspace=True):
     import psutil
     import wandb
     for process in psutil.process_iter(['cmdline']):
         command = process.info['cmdline'] or []
-        if 'pretrain.py' in command and any(RUN.split('/')[-1] in arg for arg in command):
+        if 'pretrain.py' in command and any(run_path.split('/')[-1] in arg for arg in command):
             raise RuntimeError('Production writer is still active')
     api = wandb.Api(timeout=180)
-    source = api.run(RUN)
+    manifest = json.loads((directory / 'prepared.json').read_text())
+    if manifest['source'] != run_path:
+        raise RuntimeError('Prepared source does not match publication target')
+    source = api.run(run_path)
     latest = dict(source.summary)
     if not finite(latest.get('train/step')):
         raise RuntimeError('Missing latest optimizer step')
     (directory / 'summary-before.json').write_text(json.dumps(latest, indent=2) + '\n')
     if (directory / 'published.json').exists():
         raise RuntimeError('Already published; inspect receipt rather than replaying')
-    run = wandb.init(entity='peter-sk-sdu', project='DFM5', id=RUN.split('/')[-1],
+    entity, project, run_id = run_path.split('/')
+    run = wandb.init(entity=entity, project=project, id=run_id,
                      resume='must', settings=wandb.Settings(init_timeout=180))
-    first = run.step
+    first = max(run.step, int(source.lastHistoryStep) + 1)
+    cursor = first
     try:
         run.define_metric('train/step')
         for key in METRICS:
             run.define_metric(key, step_metric='train/step')
         with (directory / 'payload.jsonl').open() as stream:
             for line in stream:
-                run.log(json.loads(line))
+                run.log(json.loads(line), step=cursor)
+                cursor += 1
         # Restore latest training values as the final observation and summary.
-        run.log({k: latest[k] for k in [*METRICS, 'train/step'] if finite(latest.get(k))})
+        run.log({k: latest[k] for k in [*METRICS, 'train/step'] if finite(latest.get(k))},
+                step=cursor)
     finally:
         run.finish()
-    verified = wandb.Api(timeout=180).run(RUN)
+    verified = wandb.Api(timeout=180).run(run_path)
     manifest = json.loads((directory / 'prepared.json').read_text())
     counts = {}
-    for key in METRICS:
-        counts[key] = sum(1 for row in verified.scan_history(
-            keys=['_step', 'train/step', key], min_step=first, page_size=100000)
-            if int(row['train/step']) <= manifest['max_step'])
+    seen = {key: set() for key in METRICS}
+    for row in verified.scan_history(min_step=first, page_size=1000):
+        step = row.get('train/step')
+        if finite(step) and step <= manifest['max_step']:
+            for key in METRICS:
+                if finite(row.get(key)):
+                    seen[key].add(int(step))
+    counts = {key: len(values) for key, values in seen.items()}
     if counts != manifest['counts']:
         raise RuntimeError(f'Uploaded coverage mismatch: {counts} != {manifest["counts"]}')
     (directory / 'published.json').write_text(json.dumps(dict(
         first_history_step=first, counts=counts, time=time.time()), indent=2) + '\n')
-    from scripts.patch_workspace_optimizer_axes import main as patch_axes
-    patch_axes()
+    if patch_workspace:
+        from scripts.patch_workspace_optimizer_axes import main as patch_axes
+        patch_axes()
 
 
 def watch(directory, plan, runner_pid):
@@ -147,16 +163,24 @@ def main():
     parser.add_argument('--directory', type=Path, required=True)
     parser.add_argument('--plan-dir', type=Path)
     parser.add_argument('--runner-pid', type=int)
+    parser.add_argument('--run', default=RUN)
+    parser.add_argument('--cutoff', type=int, default=3200000)
+    parser.add_argument('--no-workspace-patch', action='store_true')
     args = parser.parse_args()
     args.directory.mkdir(parents=True, exist_ok=True)
     if args.mode == 'watch':
+        if args.run != RUN:
+            parser.error('watch is specific to the original XL campaign')
         if not args.plan_dir or not args.runner_pid:
             parser.error('watch requires --plan-dir and --runner-pid')
         if not (args.directory / 'prepared.json').exists():
             raise RuntimeError('Prepare and inspect payload before scheduling publication')
         watch(args.directory.resolve(), args.plan_dir.resolve(), args.runner_pid)
     else:
-        (prepare if args.mode == 'prepare' else publish)(args.directory)
+        if args.mode == 'prepare':
+            prepare(args.directory, args.run, args.cutoff)
+        else:
+            publish(args.directory, args.run, not args.no_workspace_patch)
 
 
 if __name__ == '__main__':
