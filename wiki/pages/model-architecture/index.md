@@ -1,5 +1,12 @@
 # Model Architecture Concepts
 
+* [HRM v2 Implementation](hrm-text-v2-implementation.md) - Opt-in sparse experts, optimizer/EMA-preserving upcycling, metadata routing, recurrent memory, n-grams and Muon.
+
+* [HRM-Text-v2 Architecture Candidates](hrm-text-v2-plan.md) - Gated H/L communication, branched recurrent states, DeltaNet hybrids and controlled architecture experiments.
+* [HRM-Text-v2 Gated XL Pilot](hrm-text-v2-gated-pilot.md) - Independent invocation gates, low-BP update sharing, migration and the prepared 3.8M XL experiment.
+* [HRM-Text-v2 Expert Mixtures](hrm-text-v2-experts.md) - Reference k-of-n MLP/L-stack routing, shared or separate states, frozen references and qualification limits.
+* [HRM-Text-v2 Residual Branches](hrm-text-v2-residual-branches.md) - Optional m-stream residuals inside stacks and exact v1-equivalent defaults.
+
 * [Portable App Packaging History](mimir-app-packaging-history.md) - Platform integration, feedback and compaction history.
 * [App Model Catalog and Release History](mimir-app-model-catalog-history.md) - Model discovery, tokenizer fixes and releases.
 * [App UI and Generation Defaults](mimir-app-ui-defaults.md) - Sampling, branding and presentation defaults.
@@ -62,5 +69,8 @@
 * [PrefixLM and MixedLM upstream integration](prefixlm-upstream-integration.md) - Scoped upstream port, extended batch API, regression evidence and release gates.
 
 * [Mimir native binary distribution](mimir-native-binaries.md) - Packaging matrix and native wrapper/llama.cpp release history.
+* [Mimir2 Transformers implementation](mimir2-transformers.md) - Full upstream clone, modular v2 architecture/configuration, strict conversion and CPU parity qualification.
+* [Mimir2 vLLM integration](mimir2-vllm.md) - Fresh mimir2 conda environment, recurrent-cache serving, loading contracts and qualification limits.
+* [Full XL control serving parity](mimir2-control-serving-parity.md) - Independent 3.82M exports, tokenizer corrections and full-weight compiled vLLM comparison.
 
 * [Mimir app appearance and settings](mimir-app-appearance.md) - Text scaling and settings organization.

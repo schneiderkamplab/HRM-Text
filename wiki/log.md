@@ -1,5 +1,29 @@
 # Knowledge Bundle Update Log
 
+- 2026-10-19: Compared full 3.82M control production HRM-Text versus Mimir2 exports and compiled vLLM paths. Fixed missing special-token assignments and version-dependent regex materialization in both queued Mimir2 exports. All 131 tensors and 176 generated tokens match; remaining logprob differences are documented, including a same-environment control. See [full-weight parity evidence](pages/model-architecture/mimir2-control-serving-parity.md).
+
+- 2026-10-19: Documented eager/sparse MoS and dense-reference MoE serving limits. Tiny compiled/CUDA-graph BF16 parity passed. Exported both 3.82M EMA checkpoints as Mimir2 and installed 346 vLLM inference shards plus publication/merges in the existing SQLite plan, without eager, preserving production claims and failure-tolerant XL continuation. See [comparison schedule](pages/model-architecture/hrm-text-v2-gated-pilot.md#reauthorized-vllm-comparison-2026-10-19).
+
+- 2026-10-19: Extended sparse MoS to native cached inference, Transformers cached/beam generation, and eager vLLM serving. Prompt-owned routes preserve whole attention contexts and request isolation. Tiny GPU FP32 top-1/separate and BF16 prefix-mean top-2/shared parity passed; vLLM retains full-batch attention/KV allocation. See [serving limits](pages/model-architecture/mimir2-vllm.md).
+
+- 2026-10-19: Created fresh `mimir2` conda environment with editable Transformers/vLLM clones and conda CUDA 13.2. Added vLLM Mimir2 recurrent-cache serving and strict weight loading, qualified with CPU contracts and tiny GPU HF parity checks; production jobs/environments unchanged. See [integration and limits](pages/model-architecture/mimir2-vllm.md).
+
+- 2026-10-19: Added Mimir2 in a full sibling Transformers clone using upstream modular inheritance, AutoModel registration, strict native-weight conversion and CPU parity tests. Production environments and exports untouched. See [implementation and limits](pages/model-architecture/mimir2-transformers.md).
+
+- 2026-10-19: User cancelled the prepared 3.82M pilot/control downstream evaluations before plan installation. Stopped their activation watcher, archived the unlaunched child plan and cleared only our temporary drain request. Full 1.15M/3.85M evaluations and training handoffs remain unchanged.
+
+- 2026-10-19: Matched 20K gated/control training shows no meaningful final-10K advantage; final native probe confirms substantial gate modulation and increased token-dependent variation. Prepared an EMA native downstream comparison with unchanged 1.15M/3.85M production campaigns and failure-tolerant continuation. See [pilot evidence](pages/model-architecture/hrm-text-v2-gated-pilot.md).
+
+- 2026-10-18: Added opt-in v2 sparse dispatch, optimizer/EMA-preserving upcycling, homogeneous metadata routing, specialist composition, recurrent memories, input-dependent residuals, n-gram tables and Muon. Recorded deferred MTP/sparse-attention/DeltaNet/export and outsourced multimodal/long-context work. Live training untouched. See [implementation and qualification](pages/model-architecture/hrm-text-v2-implementation.md).
+
+- 2026-10-18: Added optional m-stream residuals inside v2 stacks, keeping one attention/MLP call per layer. Changed v2 defaults to exact v1 equivalence; gates now require explicit opt-in, with DCP safeguards against silently dropping checkpoint features. Live pilot unchanged. See [residual branches](pages/model-architecture/hrm-text-v2-residual-branches.md).
+
+- 2026-10-18: Added opt-in k-of-n MLP and L-stack expert mixtures to HRM v2, including separate L states, frozen reference/router rows and strict weight upcycling. Dense-execution reference only; current gate pilot untouched. See [implementation and limits](pages/model-architecture/hrm-text-v2-experts.md).
+
+- 2026-10-18: After user authorization, safely checkpointed/offloaded/stopped XXL-wide at 1,147,600. Full-size v2 CUDA/FA4 smoke passed (about 157 GiB peak allocated, all eight gates learned); installed the 20K pilot/control and failure-tolerant XXL resumption in the existing SQLite scheduler. See [operational evidence](pages/model-architecture/hrm-text-v2-gated-pilot.md#authorized-launch-2026-10-18).
+
+- 2026-10-18: Implemented opt-in independent HRM v2 invocation gates, low-BP donor-delta sharing and strict v1 checkpoint migration. Prepared a separate 20K-step XL 3.8M pilot with 2K alpha warmup and matched control. CPU/FSDP tests pass; GPU qualification and HF/vLLM serving remain release gates. Live training untouched. See [the pilot runbook](pages/model-architecture/hrm-text-v2-gated-pilot.md).
+
 - 2026-10-17: Split the oversized [Mimir app reference](pages/model-architecture/mimir-app.md) into packaging, model catalog, UI defaults and native CLI concepts; retained historical heading links. The previously unavailable dfm-evals pin is now published and installed.
 
 - 2026-10-13: Merged upstream main through `137ce1f`, preserving local broker removal, environment sync-once and backfill changes. Resolved documentation conflicts by retaining both histories. Retained verified `/work/mimir` DFM14 evaluation paths because upstream `/work/dfm` paths do not exist on this node; data hashes and task definitions are unchanged. All seven submodules match their intended upstream tips (including `llama.cpp`'s `codex/mixedlm`). No live training or scheduler restart.
@@ -2898,3 +2922,8 @@ Historical journals and accepted rows are preserved during client migration.
 - 2026-10-17: Split native distribution and appearance/settings from the oversized Mimir app page; retained historical content and links.
 
 - 2026-10-17: Merged origin/main into the llama.cpp integration branch; resolved the parallel Mimir wiki splits by preserving both history links and the current integration report.
+# 2026-10-18: HRM-Text-v2 architecture research plan
+
+Recorded gated H/L communication, multiple recurrent-state branches and
+DeltaNet hybrids, plus other Qwen3.8-Next candidates and parity/ablation gates.
+See [the research plan](pages/model-architecture/hrm-text-v2-plan.md).
