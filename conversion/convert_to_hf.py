@@ -71,6 +71,8 @@ def convert_state_dict(
     *,
     weight_layout: str = "vllm_packed",
 ) -> tuple[dict[str, torch.Tensor], list[str]]:
+    if any("invocation_gates" in key.split(".") for key in state_dict):
+        raise ValueError("HRM v2 gates require a gate-aware HF/vLLM architecture; use native inference until supported")
     out, skipped = {}, []
     for key, value in state_dict.items():
         new_key = remap_key(key, weight_layout=weight_layout)
@@ -184,6 +186,8 @@ def _build_rope_parameters(cfg: dict, rope_theta: float) -> dict:
 
 
 def build_hf_config(cfg: dict, tokenizer) -> dict:
+    if cfg.get("name") == "baselines.hrm_v2@HierarchicalReasoningModel":
+        raise ValueError("HRM v2 HF/vLLM export is not yet supported; native inference preserves gates")
     hidden_size = cfg["hidden_size"]
     rope_theta = cfg.get("rope_theta", 10000.0)
     init_type, init_std = cfg.get("init_type", "fixed_normal"), cfg.get("init_std")

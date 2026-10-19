@@ -69,6 +69,7 @@ class DataConfig(pydantic.BaseModel):
     path: str
     validation_path: Optional[str] = None
     target_only: bool = True  # Only supervise Answer.
+    homogeneous_categories: bool = False
 
 
 class PretrainConfig(pydantic.BaseModel):
@@ -105,6 +106,10 @@ class PretrainConfig(pydantic.BaseModel):
     weight_decay: float
     beta1: float
     beta2: float
+    optimizer: Literal['adam_atan2', 'muon'] = 'adam_atan2'
+    muon_momentum: float = pydantic.Field(default=0.95, ge=0, lt=1)
+    muon_ns_steps: int = pydantic.Field(default=5, ge=1)
+    muon_lr_scale: float = pydantic.Field(default=1.0, gt=0)
     ema: Optional[float] = None
     fwd_bwd_dtype: str = "bfloat16"
     activation_checkpointing: Literal["none", "full", "l_only", "h_only"] = "none"
@@ -246,6 +251,7 @@ def create_dataloader(
         batch_max_length=local_batch_size,
         rank=rank,
         num_replicas=world_size,
+        homogeneous_categories=config.data.homogeneous_categories if dataset_path is None else False,
     ))
     num_workers = 0 if config.accelerator_type in ("mps", "cpu", "none") else 1
     dataloader_kwargs = {
@@ -393,6 +399,14 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
         }
     )
     fwd_bwd_dtype = getattr(torch, config.fwd_bwd_dtype)
+    is_v2 = config.arch.name == 'baselines.hrm_v2@HierarchicalReasoningModel'
+    if config.data.homogeneous_categories and not is_v2:
+        raise ValueError('Metadata-guided homogeneous batches currently require HRM v2')
+    if is_v2 and config.fsdp_wrap_policy == 'recurrent_level' and (
+        model_cfg.get('gates_enabled', False) or model_cfg.get('mos_num_experts', 1) > 1
+        or model_cfg.get('h_memory_branches', 1) > 1 or model_cfg.get('l_memory_branches', 1) > 1
+    ):
+        raise ValueError('V2 direct level parameter access requires fsdp_wrap_policy=transformer_block')
 
     # Instantiate model with head
     model_cls = load_model_class(config.arch.name)
@@ -465,7 +479,13 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
         raise RuntimeError(f"distributed_strategy={config.distributed_strategy} requires torchrun/distributed training")
 
     # ----Create optimizer----
-    optim = AdamATan2(model.parameters(),
+    optimizer_cls, optimizer_params, optimizer_options = AdamATan2, model.parameters(), {}
+    if config.optimizer == 'muon':
+        from models.muon import MuonAdamW
+        optimizer_cls, optimizer_params = MuonAdamW, model.named_parameters()
+        optimizer_options = dict(momentum=config.muon_momentum, ns_steps=config.muon_ns_steps,
+                                 muon_lr_scale=config.muon_lr_scale)
+    optim = optimizer_cls(optimizer_params, **optimizer_options,
                       lr=0.0,
                       betas=(config.beta1, config.beta2),
                       weight_decay=config.weight_decay,
@@ -672,6 +692,22 @@ def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank:
 
     assert config.resume_checkpoint_path is not None
     metadata = load_checkpoint_metadata(config.resume_checkpoint_path, resume_state.tag)
+    previous_config = os.path.join(config.resume_checkpoint_path, 'all_config.yaml')
+    previous = {}
+    if os.path.isfile(previous_config):
+        with open(previous_config) as handle:
+            previous = yaml.safe_load(handle)
+    if metadata.get('optimizer', previous.get('optimizer', 'adam_atan2')) != getattr(config, 'optimizer', 'adam_atan2'):
+        raise ValueError('Optimizer changes require an explicit offline state conversion')
+    old_homogeneous = metadata.get('homogeneous_categories', previous.get('data', {}).get('homogeneous_categories', False))
+    mode_changed = old_homogeneous != getattr(config.data, 'homogeneous_categories', False)
+    layout_changed = old_homogeneous and (
+        infer_checkpoint_world_size(config.resume_checkpoint_path, resume_state.tag, metadata)
+        not in (None, dist.get_world_size() if dist.is_initialized() else 1)
+        or metadata.get('local_batch_size', local_batch_size) != local_batch_size
+        or metadata.get('seed', previous.get('seed', 0)) != config.seed)
+    if not resume_state.tag.startswith('epoch_') and (mode_changed or layout_changed):
+        raise ValueError('Homogeneous sampler changes require an epoch-boundary resume')
     carry_policy = checkpoint_carry_policy(
         config.resume_checkpoint_path, resume_state.tag, metadata
     )
@@ -762,7 +798,47 @@ def load_sharded_train_state(config: PretrainConfig, train_state: TrainState, ta
     if not os.path.isdir(checkpoint_id):
         raise ValueError(f"Checkpoint directory not found: {checkpoint_id}")
 
+    source_config_path = os.path.join(config.resume_checkpoint_path, 'all_config.yaml')
+    if os.path.isfile(source_config_path):
+        with open(source_config_path) as handle:
+            source_config = yaml.safe_load(handle)
+        if source_config.get('optimizer', 'adam_atan2') != getattr(config, 'optimizer', 'adam_atan2'):
+            raise ValueError('Optimizer changes require an explicit offline state conversion')
+    if config.arch.model_dump().get('upcycle_from_dense', False):
+        if config.arch.name != 'baselines.hrm_v2@HierarchicalReasoningModel':
+            raise ValueError('upcycle_from_dense requires HRM v2')
+        from models.v2_checkpoint import load_upcycled_checkpoint
+        load_upcycled_checkpoint(train_state.model, train_state.optim, checkpoint_id)
+        return
+
+    if config.arch.model_dump().get("gate_initialize_from_v1", False):
+        if config.arch.name != "baselines.hrm_v2@HierarchicalReasoningModel":
+            raise ValueError("gate_initialize_from_v1 requires the HRM v2 architecture")
+        with open(os.path.join(config.resume_checkpoint_path, "all_config.yaml")) as handle:
+            source_arch = yaml.safe_load(handle)["arch"]
+        if source_arch["name"] == "baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel":
+            for field in ("H_cycles", "L_cycles"):
+                if source_arch[field] != config.arch.model_dump()[field]:
+                    raise ValueError(f"v1 -> v2 migration must preserve {field}")
+            from models.v2_checkpoint import load_v1_checkpoint
+            if not load_v1_checkpoint(train_state.model, train_state.optim, checkpoint_id):
+                raise ValueError("Source claims v1 but contains v2 gate state")
+            return
+        if source_arch["name"] != config.arch.name:
+            raise ValueError("Only the original HRM baseline can initialize v2 gates")
+
     model_state = train_state.model.state_dict()
+    if config.arch.name == "baselines.hrm_v2@HierarchicalReasoningModel":
+        # DCP loads a requested subset; it must not silently discard opt-in v2
+        # modules after a default change (notably early gate-pilot checkpoints).
+        metadata = dcp.FileSystemReader(checkpoint_id).read_metadata()
+        source_keys = {key.removeprefix("model.") for key in metadata.state_dict_metadata
+                       if key.startswith("model.")}
+        unexpected = source_keys - set(model_state)
+        if unexpected:
+            raise ValueError("Checkpoint contains disabled or mismatched v2 features; "
+                             "enable the original gates/experts/residual branches explicitly. "
+                             f"Unexpected model keys: {sorted(unexpected)}")
     optim_state = get_optimizer_state_dict(train_state.model, train_state.optim)  # pyright: ignore[reportPrivateImportUsage]
     dcp.load({"model": model_state, "optim": optim_state}, checkpoint_id=checkpoint_id)
     if config.distributed_strategy == "ddp":
@@ -778,10 +854,28 @@ def load_sharded_train_state(config: PretrainConfig, train_state: TrainState, ta
 
 
 def load_unsharded_train_state(config: PretrainConfig, train_state: TrainState, tag: str, rank: int):
+    if config.arch.model_dump().get("gate_initialize_from_v1", False):
+        with open(os.path.join(config.resume_checkpoint_path, "all_config.yaml")) as handle:
+            source_arch = yaml.safe_load(handle)["arch"]["name"]
+        if source_arch != "baselines.hrm_v2@HierarchicalReasoningModel":
+            raise ValueError("v1 -> v2 initialization currently requires a sharded DCP checkpoint")
     assert config.resume_checkpoint_path is not None
     checkpoint_path = unsharded_checkpoint_path(config.resume_checkpoint_path, tag)
     if not os.path.isfile(checkpoint_path):
         raise ValueError(f"Checkpoint file not found: {checkpoint_path}")
+
+    if config.arch.model_dump().get('upcycle_from_dense', False):
+        from models.v2_checkpoint import expand_unsharded_state
+        distributed = dist.is_available() and dist.is_initialized()
+        options = StateDictOptions(full_state_dict=True, cpu_offload=True)
+        target = get_model_state_dict(train_state.model, options=options)
+        optim = get_optimizer_state_dict(train_state.model, train_state.optim, options=options)
+        if not distributed or rank == 0:
+            checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
+            target, optim = expand_unsharded_state(target, optim, checkpoint)
+        set_state_dict(train_state.model, train_state.optim, model_state_dict=target, optim_state_dict=optim,
+                       options=StateDictOptions(full_state_dict=True, broadcast_from_rank0=distributed))
+        return
 
     if dist.is_available() and dist.is_initialized():
         trace_print(config, rank, f"unsharded_load_begin path={checkpoint_path}")
@@ -1172,6 +1266,8 @@ def save_checkpoint_metadata(
         "global_batch_size": config.global_batch_size,
         "local_batch_size": local_batch_size,
         "data_path": config.data.path,
+        "homogeneous_categories": getattr(config.data, 'homogeneous_categories', False),
+        "optimizer": getattr(config, 'optimizer', 'adam_atan2'),
         "seed": config.seed,
         "world_size": dist.get_world_size() if dist.is_available() and dist.is_initialized() else 1,
         "local_world_size": int(os.environ.get("LOCAL_WORLD_SIZE", 1)),
@@ -1562,6 +1658,9 @@ def launch(hydra_config: DictConfig):
             # Extra train arguments (such as BP warmup etc.)
             train_extra_args = compute_train_extra_args(train_state.model, train_state)
             update_auto_module_rates(config, train_state.model, train_state.optim, train_extra_args.get('bp_steps'))
+            backbone = getattr(unwrap_model(train_state.model), "model", None)
+            if hasattr(backbone, "configure_gate_updates"):
+                backbone.configure_gate_updates(train_state.optim, train_extra_args['bp_steps'])
             trace_print(config, RANK, f"train_extra_args step={train_state.step} {train_extra_args}")
             stability_diagnostics = None
             if (
@@ -1697,6 +1796,9 @@ def launch(hydra_config: DictConfig):
                 trace_print(config, RANK, f"reduce_metrics_end step={train_state.step}")
                 if RANK == 0:
                     metrics.update(module_lr_metrics(config, lr, train_extra_args.get('bp_steps')))
+                    if hasattr(backbone, "gate_alpha"):
+                        metrics["train/gate_alpha"] = float(backbone.gate_alpha.item())
+                        metrics["train/lr_gates"] = lr
                     if config.experiment_metrics_output is not None:
                         from models.experiment_diagnostics import append_jsonl
                         append_jsonl(config.experiment_metrics_output, {

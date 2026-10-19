@@ -20,8 +20,12 @@ def module_lr_scales(model, base_lr, rates):
     seen = set()
     for name, param in model.named_parameters():
         parts = name.split('.')
+        if 'invocation_gates' in parts:
+            # Each gate is used once, unlike the recurrent backbone matrices.
+            scales[param] = 1.0
+            continue
         matches = [label for component, label in (
-            ('embed_tokens', 'embeddings'), ('lm_head', 'head'),
+            ('embed_tokens', 'embeddings'), ('ngram', 'embeddings'), ('lm_head', 'head'),
             ('H_level', 'h'), ('L_level', 'l'),
         ) if component in parts]
         if len(matches) != 1:
@@ -48,7 +52,8 @@ def configured_module_rates(config, bp_steps=None):
     if not getattr(config, 'lr_auto', False):
         return rates
     arch = config.arch.model_dump() if hasattr(config.arch, 'model_dump') else config.arch
-    if arch['name'] != 'baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel':
+    if arch['name'] not in ('baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel',
+                            'baselines.hrm_v2@HierarchicalReasoningModel'):
         raise ValueError('lr_auto only supports hrm_nocarry_bp_warmup backward semantics')
     h, l = backward_call_counts(arch['H_cycles'], arch['L_cycles'],
                                arch.get('bp_min_steps', 2) if bp_steps is None else bp_steps)

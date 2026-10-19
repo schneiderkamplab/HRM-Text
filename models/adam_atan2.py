@@ -84,8 +84,15 @@ class AdamATan2(Optimizer):
         """Perform a single optimization step."""
         assert closure is None, "Closure is not supported"
 
+        shared_updates = getattr(self, "shared_parameter_updates", None)
+        if shared_updates:
+            from models.gate_updates import snapshot_donors
+            donor_snapshots = snapshot_donors(self)
+
         for group in self.param_groups:
             for param in group["params"]:
+                if shared_updates and param in shared_updates:
+                    continue
                 if param.grad is None:
                     continue
                 
@@ -124,6 +131,10 @@ class AdamATan2(Optimizer):
                         ema_param = ema_param.to(dtype=state["param_ema"].dtype)
                     state["param_ema"].lerp_(ema_param, 1 - group["ema"])
 
+        if shared_updates:
+            from models.gate_updates import apply_shared_updates
+            apply_shared_updates(self, donor_snapshots)
+
     @torch.no_grad()
     def swap_ema(self):
         """Swap param buffer and EMA buffer for evaluation. Remember to swap back after evaluation."""
@@ -134,3 +145,22 @@ class AdamATan2(Optimizer):
                     temp = torch.empty_like(param).copy_(param)
                     param.copy_(state["param_ema"])
                     state["param_ema"].copy_(temp)
+
+    def load_state_dict(self, state_dict):
+        # Optimizer.load_state_dict casts floating slots to parameter dtype.
+        # EMA may intentionally be FP32 with BF16 parameters: preserve it before
+        # that cast, including DTensor layout supplied by the DCP loader.
+        preserved = []
+        configured_dtypes = [group.get('ema_dtype') for group in self.param_groups]
+        for group, incoming, dtype in zip(self.param_groups, state_dict['param_groups'], configured_dtypes, strict=True):
+            for parameter, identifier in zip(group['params'], incoming['params'], strict=True):
+                value = state_dict['state'].get(identifier, {}).get('param_ema')
+                if value is not None:
+                    preserved.append((parameter, value.detach().clone(), _resolve_dtype(dtype)))
+        result = super().load_state_dict(state_dict)
+        for group, dtype in zip(self.param_groups, configured_dtypes, strict=True):
+            if dtype is not None:
+                group['ema_dtype'] = dtype
+        for parameter, value, dtype in preserved:
+            self.state[parameter]['param_ema'] = value.to(device=parameter.device, dtype=dtype or value.dtype)
+        return result

@@ -25,6 +25,7 @@ class V1DatasetConfig(pydantic.BaseModel):
 
     rank: int
     num_replicas: int
+    homogeneous_categories: bool = False
 
 
 class V1DatasetMeta(pydantic.BaseModel):
@@ -96,6 +97,9 @@ class V1Dataset(IterableDataset):
         # Load indices
         self._data_indices = V1DatasetIndices(**{f.name: np.load(os.path.join(self.config.dataset_path, f"epoch_{self._epoch}", f"{f.name}.npy"), mmap_mode="r")
                                                  for f in fields(V1DatasetIndices)})
+        if self.config.homogeneous_categories:
+            self._categories = np.load(os.path.join(self.config.dataset_path, f'epoch_{self._epoch}',
+                                                    'category_id.npy'), mmap_mode='r')
         self._epoch += 1
 
         # Re-create sampler
@@ -107,6 +111,14 @@ class V1Dataset(IterableDataset):
             rank=self.config.rank,
             num_replicas=self.config.num_replicas
         )
+        if self.config.homogeneous_categories:
+            from homogeneous_sampler import HomogeneousSampler
+            self._sampler = HomogeneousSampler(
+                categories=self._categories, seed=self.config.seed + self._epoch - 1,
+                lengths=self._data_indices.inst_len + self._data_indices.resp_len - 1,
+                batch_max_length=self.config.batch_max_length,
+                drop_last_batch=self.config.drop_last_batch,
+                rank=self.config.rank, num_replicas=self.config.num_replicas)
 
     def _load_batch(self, indices: np.ndarray):
         # Load instructions and responses
@@ -154,7 +166,13 @@ class V1Dataset(IterableDataset):
         tensors, scalars = compute_aux_seq_tensors_scalars(seqlen_i, seqlen_o, self.config.batch_max_length)
 
         # to tensor
-        return {k: torch.from_numpy(v) for k, v in (batch | tensors).items()}, scalars
+        result = {k: torch.from_numpy(v) for k, v in (batch | tensors).items()}
+        if self.config.homogeneous_categories:
+            categories = self._categories[indices]
+            if len(categories) == 0 or np.any(categories != categories[0]):
+                raise ValueError('Expected a nonempty homogeneous microbatch')
+            result['routing_category'] = torch.tensor(int(categories[0]))
+        return result, scalars
 
     def __iter__(self):
         worker_info = get_worker_info()

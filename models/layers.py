@@ -131,17 +131,18 @@ class Attention(nn.Module):
         self.o_proj = LinearInit(head_dim * num_heads, hidden_size,
                                  bias=False, init_std=init_std_out, **kwargs)
 
-    def _attention_with_cache(self, query: Tensor, key: Tensor, value: Tensor, cache: Cache, cache_lengths: Tensor, causal: bool) -> Tensor:
+    def _attention_with_cache(self, query: Tensor, key: Tensor, value: Tensor, cache: Cache, cache_lengths: Tensor, causal: bool, cache_batch_indices=None) -> Tensor:
         batch_size, seqlen = query.shape[:2]
         positions = cache_lengths[:, None] + torch.arange(seqlen, device=query.device, dtype=cache_lengths.dtype)
-        batch_idx = torch.arange(batch_size, device=query.device)[:, None]
+        rows = torch.arange(batch_size, device=query.device) if cache_batch_indices is None else cache_batch_indices
+        batch_idx = rows[:, None]
         cache.keys[batch_idx, positions] = key
         cache.values[batch_idx, positions] = value
 
         kv_len = cache_lengths + seqlen
         max_kv_len = kv_len.max().item()
-        keys = cache.keys[:batch_size, :max_kv_len]
-        values = cache.values[:batch_size, :max_kv_len]
+        keys = cache.keys[:batch_size, :max_kv_len] if cache_batch_indices is None else cache.keys[rows, :max_kv_len]
+        values = cache.values[:batch_size, :max_kv_len] if cache_batch_indices is None else cache.values[rows, :max_kv_len]
 
         if self.num_heads != self.num_key_value_heads:
             repeat = self.num_heads // self.num_key_value_heads
@@ -231,7 +232,8 @@ class Attention(nn.Module):
             )
         else:
             # Regardless of auto / non-autoregressive, apply attention based on current concatenated with cache.
-            attn_output = self._attention_with_cache(query, key, value, cache, cache_lengths, is_causal)
+            attn_output = self._attention_with_cache(query, key, value, cache, cache_lengths, is_causal,
+                                                   seq_info.get('cache_batch_indices'))
 
         # attn_output: [..., seq_len, num_heads, head_dim]
         attn_output = rearrange(torch.sigmoid(gate) * attn_output, "... h hd -> ... (h hd)")  # type: ignore

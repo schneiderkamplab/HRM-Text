@@ -60,6 +60,10 @@ lr_cooldown_checkpoint: null  # Optional metadata sidecar: cosine from its row c
 
 weight_decay: 0.1
 beta1: 0.9
+optimizer: adam_atan2
+muon_momentum: 0.95
+muon_ns_steps: 5
+muon_lr_scale: 1.0
 beta2: 0.95
 
 ema: 0.9999

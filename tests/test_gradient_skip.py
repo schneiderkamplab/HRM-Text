@@ -29,6 +29,7 @@ def config(*, skip_norm: float | None):
         fsdp_shard_degree=None,
         gradient_clip_norm=None,
         gradient_skip_norm=skip_norm,
+        experiment_update_probe_interval=0,
         resume_trace=False,
     )
 

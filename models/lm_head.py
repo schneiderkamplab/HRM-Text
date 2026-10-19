@@ -42,10 +42,15 @@ class LMHead(nn.Module):
         # LMHead input and output
         self.embed_tokens = ScaledEmbeddingInit(config.vocab_size, head_hint["in"]["dim"], init_std=head_hint["in"]["init_std"])  # pyright: ignore[reportArgumentType]
         self.lm_head = LinearInit(head_hint["out"]["dim"], config.vocab_size, bias=False, init_std=head_hint["out"]["init_std"])  # pyright: ignore[reportArgumentType]
+        if config_dict.get('specialist_training', False) or config_dict.get('specialist_router_calibration', False):
+            from models.specialists import configure_specialist
+            configure_specialist(self, router_only=config_dict.get('specialist_router_calibration', False))
 
     def forward(self, carry: Carry, batch: dict[str, Tensor], **kwargs) -> Tuple[Carry, Tensor] | Tuple[Carry, Tensor, dict[str, Tuple[Tensor, Tensor]]]:
         # Token embedding
         input_embedding = self.embed_tokens(batch["inputs"])
+        if getattr(self.model, 'ngram_enabled', False):
+            kwargs['token_ids'] = batch['inputs']
         stability_diagnostics = kwargs.get("stability_diagnostics")
         if stability_diagnostics is not None:
             stability_diagnostics.record_tensor(
