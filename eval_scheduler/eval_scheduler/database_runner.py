@@ -22,7 +22,8 @@ from .shared_pool import ServerCapacityTimeout
 from . import runtime
 
 
-EXCLUSIVE = frozenset((Action.TRAIN_UNTIL_STEP, Action.EXPORT_HF, Action.TEARDOWN_EVAL))
+ALL_GPU = frozenset((Action.TRAIN_UNTIL_STEP, Action.EVAL_NATIVE_PLAN))
+EXCLUSIVE = ALL_GPU | frozenset((Action.EXPORT_HF, Action.TEARDOWN_EVAL))
 CLIENTS = frozenset((Action.EVAL_STANDARD, Action.EVAL_DFM, Action.EVAL_DFM_IFEVAL,
                     Action.EVAL_EUROEVAL, Action.EVAL_EUROEVAL_BATCHED_IFEVAL))
 
@@ -104,7 +105,7 @@ class DatabaseRunner:
         self._active[job.job_id] = dict(phase=kind, token=claim.token, started_at=time.time(),
             log_dir=job.log_dir, action=str(job.action), attempt=job.attempt+1,
             cpu_core_ids=list(lease.core_ids) if lease else [],
-            gpus=list(self.gpus) if job.action == Action.TRAIN_UNTIL_STEP else
+            gpus=list(self.gpus) if job.action in ALL_GPU else
                  list(self.gpus[:1]) if job.action == Action.EXPORT_HF else [])
 
     def request_stop(self):
@@ -136,6 +137,9 @@ class DatabaseRunner:
         return cores
 
     def _validate(self, job):
+        if job.action == Action.EVAL_NATIVE_PLAN:
+            from .native_plan import validate_native_plan
+            validate_native_plan(job, self.plan_dir)
         if job.action in CLIENTS:
             job = self.shared_pool.configured_job(job)
             if job.action == Action.EVAL_STANDARD:
@@ -153,7 +157,7 @@ class DatabaseRunner:
     def _execute(self, claim, lease):
         job = self.shared_pool.configured_job(claim.job) if claim.job.action in CLIENTS else claim.job
         gpu = self.gpus[0] if job.action in CLIENTS | EXCLUSIVE and job.requires_gpu else None
-        allocated = self.gpus if job.action == Action.TRAIN_UNTIL_STEP else ((gpu,) if gpu is not None else ())
+        allocated = self.gpus if job.action in ALL_GPU else ((gpu,) if gpu is not None else ())
         self.event(f'START {job.job_id} token_{claim.token} attempt_{job.attempt + 1}')
         try:
             with process_owner(self.plan_dir/'owners'/'jobs'/claim.token,
@@ -315,7 +319,7 @@ class DatabaseRunner:
                                         self._snapshot('draining', force=True)
                                         self.shared_pool.close_all()
                                         pool_drained = True
-                                    allocated = self.gpus if exclusive.action == Action.TRAIN_UNTIL_STEP else self.gpus[:1]
+                                    allocated = self.gpus if exclusive.action in ALL_GPU else self.gpus[:1]
                                     if self.headroom(exclusive, allocated) and not self.stopping():
                                         claim = self._claim(exclusive)
                                         if claim:

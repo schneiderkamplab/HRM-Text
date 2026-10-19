@@ -18,6 +18,7 @@ class JobStatus(StrEnum):
 
 class Action(StrEnum):
     TRAIN_UNTIL_STEP = "train_until_step"
+    EVAL_NATIVE_PLAN = "eval_native_plan"
     TERMINAL_BARRIER = "terminal_barrier"
     TEARDOWN_EVAL = "teardown_eval"
     WAIT_CHECKPOINT = "wait_checkpoint"
@@ -55,6 +56,7 @@ class Capability(StrEnum):
 
 
 ACTION_PROFILES: dict[Action, tuple[ExecutionScope, Capability, int]] = {
+    Action.EVAL_NATIVE_PLAN: (ExecutionScope.NODE, Capability.EVAL, 0),
     Action.TRAIN_UNTIL_STEP: (ExecutionScope.CLUSTER, Capability.TRAIN, 0),
     Action.TERMINAL_BARRIER: (ExecutionScope.CONTROL, Capability.CONTROL, 0),
     Action.TEARDOWN_EVAL: (ExecutionScope.NODE, Capability.TEARDOWN, 0),
@@ -126,6 +128,7 @@ class Job:
     @property
     def requires_gpu(self) -> bool:
         return self.action in {
+            Action.EVAL_NATIVE_PLAN,
             Action.TRAIN_UNTIL_STEP,
             Action.EXPORT_HF,
             Action.EVAL_STANDARD,

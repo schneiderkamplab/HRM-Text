@@ -1139,6 +1139,8 @@ def run_standard(
     ]
     if ckpt_tag:
         argv.append(f"ckpt_tag={ckpt_tag}")
+    if job.metadata.get("save_native_generations"):
+        argv.append(f"save_generations_dir={Path(job.log_dir) / 'generations' / f'shard_{shard}_of_{shards}'}")
     if standard_backend == "vllm":
         argv.extend(
             [
@@ -2415,6 +2417,9 @@ def run_job(
     gpus: tuple[int, ...] = (),
 ) -> int:
     batch = job.retry_batch() or 1
+    if job.action == Action.EVAL_NATIVE_PLAN:
+        from .native_plan import run_native_plan
+        return run_native_plan(job, gpus)
     if job.action == Action.TRAIN_UNTIL_STEP:
         if not gpus:
             raise SchedulerError("train_until_step requires an all-GPU allocation")

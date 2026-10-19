@@ -36,6 +36,18 @@ on clean exit. Real-model paired/suite canaries remain required before rollout.
 
 ## Overview
 
+Architectures without a qualified HF/vLLM export may opt into
+`eval_native_plan`: an **exclusive all-GPU** SQLite action with
+`metadata.native_plan_dir` pointing to a separate TSV plan of native standard
+and DFM jobs plus their merges. The shared servers drain first, then the
+existing per-GPU executor runs that subplan. Nested training, exports, vLLM,
+EuroEval and recursive subplans are rejected. Failed/incomplete subplans do not
+report success; use a terminal barrier before subsequent training. Child rows
+retain individual retries and results. Inspect child progress with the ordinary
+monitor against its plan directory. This is an opt-in compatibility path, not
+a replacement for persistent vLLM. Restart a drained runner before installing
+plans containing a newly introduced action.
+
 This is a plan-first scheduler for HRM-Text evaluations.
 
 It is intentionally separate from `scripts/schedule_checkpoint_evals.sh`.  It
