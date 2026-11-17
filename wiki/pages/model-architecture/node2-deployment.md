@@ -74,3 +74,14 @@ scheduler-page error; extra clean-worktree warnings reference excluded artifacts
 Detailed receipts remain in `logs/deployment/node2-20261117/` on the source node.
 The user's next action is push; transfers and execution remain disabled until
 pushed revisions can be verified from the destination.
+
+### Final main integration
+
+Remote main had diverged with app/release commits; those were merged, preserving
+both histories. The prepared history is now on local main, and the dfm-evals
+change is on that submodule's main. A source-layout shim additionally supports
+`eval_scheduler.model` and `python -m eval_scheduler` from a fresh repository
+root without relying on editable installs; its subprocess regression passes.
+Push dry-runs reached GitHub authentication but this shell has no credentials.
+The user must push dfm-evals main first, then parent main. No force push is
+required. Tokenizer assets remain intentionally untracked in data_io.
