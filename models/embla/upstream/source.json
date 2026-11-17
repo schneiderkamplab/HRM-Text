@@ -1,0 +1,9 @@
+{
+  "revision": "347209cc1a7414f597be80ff9bab7e454d1d030a",
+  "sha256": {
+    "modeling_embla.py": "3a76031e52133fd06b02cd5660d78c89c76f1b25f0a6f4bfe49f88003cbb4cf1",
+    "configuration_embla.py": "2112ba331a9a54c5de1b716549471c7773fc268ff83f47fbbb2771cef1883194",
+    "config.json": "1b24686c8d558a8dcde244fadeca3bca56db1505f0312fc0ba1ac9220be9a265",
+    "README.md": "bcb2ca8a4b18a595d1e0fb7c290e853dc14533c3b3fb309687bff7496986dfe0"
+  }
+}

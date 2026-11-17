@@ -1,0 +1,12 @@
+name: baselines.embla@Embla
+head: baselines.embla@EmblaLMHead
+decoder_loops: 1
+embla_attention_backend: tiled
+# Opt in only with full-recipe qualification; reference paths remain available.
+embla_fa4_window: false
+embla_fused_relu: false
+embla_fused_sparse: false
+embla_single_topk: false
+embla_compile_attention: false
+# Must be filled by the calibrated experiment preparation; no implicit full-size launch.
+embla_config: {}
