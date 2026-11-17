@@ -205,3 +205,18 @@ legal/reports/*.out
 .wrangler/
 /dfm67_1150k/
 /dfm67_1150k.zip
+
+# Local source mirrors, diagnostic caches and generated evaluation outputs.
+/incoming/
+/.tmp_vocab_probe/
+/cache/
+/generations/
+/inspect/
+/evaluation/data/danish_semantic_reasoning_upstream/
+/dfm-export-context.json
+/euroeval_benchmark_results.jsonl
+/predictions.jsonl
+/proxy_payloads.jsonl
+/scored_predictions.jsonl
+/wandb_metrics.json
+/docs/reports/decision_dataset_volumes_20261021.json

@@ -1,0 +1,122 @@
+arch:
+  name: baselines.hrm_nocarry_bp_warmup@HierarchicalReasoningModel
+  head: lm_head@LMHead
+  half_layers: true
+  H_cycles: 2
+  L_cycles: 3
+  H_override: {}
+  bp_warmup_ratio: 0.12698993223817215
+  bp_max_steps: 16
+  goldfish_strategy: null
+  goldfish_k: 50
+  goldfish_context_width: 50
+  goldfish_seed: 0
+  n_layers: 12
+  hidden_size: 1024
+  num_heads: 8
+  expansion: 4
+  norm_type: pre
+  norm_eps: 1.0e-06
+  rope_theta: 10000.0
+  pos_emb_type: rope
+  init_type: lecun_normal
+  attn_type: prefixlm
+  bp_min_steps: 2
+  cycle_variants: full_budget
+  cycle_sampler_version: 1
+data:
+  path: ${oc.env:HRM_REPO_ROOT}/data/sampled_dfm11
+  validation_path: null
+  target_only: true
+  homogeneous_categories: false
+  routing_categories: false
+global_batch_size: 262144
+epochs: 1
+gradient_accumulation_steps: 1
+gradient_clip_norm: null
+gradient_skip_norm: null
+gradient_skip_max_consecutive: 3
+training_total_steps: null
+lr: 0.0003
+lr_auto: true
+lr_piecewise_points: null
+lr_rewarm_steps: 0
+lr_rewarm_stages: 1
+lr_rewarm_start_ratio: 0.5
+lr_rewarm_start_step: null
+lr_decay_start_step: null
+lr_decay_end_step: null
+lr_embeddings: null
+lr_head: null
+lr_h: null
+lr_l: null
+lr_min_ratio: 1.0
+lr_warmup_steps: 5000
+lr_cooldown_checkpoint: null
+weight_decay: 0.1
+beta1: 0.9
+beta2: 0.95
+optimizer: adam_atan2
+muon_momentum: 0.95
+muon_ns_steps: 5
+muon_lr_scale: 1.0
+ema: 0.9999
+fwd_bwd_dtype: bfloat16
+activation_checkpointing: none
+accelerator_type: sm100
+distributed_strategy: fsdp
+fsdp_params_precision: fp32
+fsdp_wrap_policy: single_unit
+fsdp_shard_degree: null
+fsdp_reshard_after_forward: false
+fsdp_accumulation_sync_mode: no_sync
+ddp_params_precision: fp32
+ddp_find_unused_parameters: true
+compile_train_batch: true
+compile_train_batch_mode: default
+cycle_variants_prewarm: true
+cycle_variants_allow_resume_change: false
+memory_log_interval: 100
+empty_cache_interval: 0
+resume_trace: false
+stability_diagnostics_interval: 0
+stability_diagnostics_max_tokens_per_microbatch: 4096
+stability_diagnostics_output: null
+stability_diagnostics_wandb_detailed: false
+experiment_metrics_output: null
+experiment_update_probe_interval: 0
+project_name: DFM5
+run_name: B-cycle-prefix-target-dfm11-epoch1
+wandb_run_id: B-cycle-prefix-target-dfm11-epoch1
+wandb_resume: allow
+checkpoint_path: ${oc.env:HRM_REPO_ROOT}/checkpoints/cycle-prefix-target
+checkpoint_format: sharded
+resume_checkpoint_path: null
+resume_checkpoint_tag: null
+resume_epoch: null
+resume_step: null
+resume_batch_in_epoch: null
+upcast_optimizer_state_on_resume: false
+reset_ema_on_resume: false
+seed: 0
+checkpoint_interval: 1
+checkpoint_step_interval: 50000
+ephemeral_checkpoint_step_interval: 500
+max_steps: null
+benchmark_state_fingerprint: false
+stop_after_step: null
+suspend_after_steps:
+- 50000
+- 100000
+- 150000
+- 200000
+- 250000
+- 300000
+- 350000
+suspend_control_dir: ${oc.env:HRM_REPO_ROOT}/logs/training/B_cycle_prefix_target_dfm11/control
+suspend_poll_interval_steps: 10
+suspend_wait_poll_seconds: 2.0
+dataloader_prefetch_factor: 8
+log_interval: 5
+validation_interval: 0
+validation_batches: 0

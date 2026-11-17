@@ -1,0 +1,238 @@
+arch:
+  name: baselines.embla@Embla
+  head: baselines.embla@EmblaLMHead
+  decoder_loops: 4
+  attn_type: prefixlm
+  embla_attention_backend: tiled
+  embla_config:
+    transformers_version: 5.12.1
+    architectures: null
+    output_hidden_states: false
+    return_dict: true
+    dtype: null
+    chunk_size_feed_forward: 0
+    is_encoder_decoder: false
+    id2label:
+      0: LABEL_0
+      1: LABEL_1
+    label2id:
+      LABEL_0: 0
+      LABEL_1: 1
+    problem_type: null
+    vocab_size: 262144
+    hidden_size: 1024
+    num_hidden_layers: 32
+    num_prefill_layers: 16
+    layer_types:
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - full_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - sliding_attention
+    - full_attention
+    - sparse_attention
+    - sparse_attention
+    - sparse_attention
+    - full_attention
+    - sparse_attention
+    - sparse_attention
+    - sparse_attention
+    - full_attention
+    - sparse_attention
+    - sparse_attention
+    - sparse_attention
+    - full_attention
+    - sparse_attention
+    - sparse_attention
+    - sparse_attention
+    mlp_layer_types:
+    - dense
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    - sparse
+    kv_sources:
+      7: 7
+      16: 16
+      20: 16
+      24: 7
+      28: 7
+    rms_norm_eps: 0.0078125
+    max_position_embeddings: 262144
+    initializer_range: 0.02
+    tie_word_embeddings: false
+    use_cache: false
+    pad_token_id: null
+    bos_token_id: null
+    eos_token_id: null
+    head_dim: 64
+    use_qk_norm: true
+    num_attention_heads: 16
+    num_key_value_heads: 2
+    sparse_topk: 1024
+    sparse_recent: 128
+    sliding_num_attention_heads: 16
+    sliding_num_key_value_heads: 4
+    sliding_window: 128
+    rope_parameters:
+      rope_type: default
+      rope_theta: 10000.0
+      partial_rotary_factor: 0.5
+    intermediate_size: 1024
+    num_experts: 96
+    num_experts_per_tok: 8
+    moe_intermediate_size: 256
+    shared_expert_intermediate_size: 320
+    engram_layer: 0
+    engram_orders:
+    - 2
+    - 3
+    engram_heads: 8
+    engram_head_dim: 128
+    engram_conv: 4
+    engram_pages: 52429
+    engram_page_heads: 4
+    engram_page_bytes: 4096
+    engram_table: sparse
+    engram_init_std: 1.0
+    attn_res_block: 4
+    final_logit_softcapping: 15.0
+    _name_or_path: ''
+    model_type: embla
+    output_attentions: false
+  embla_fa4_window: true
+  embla_fused_relu: true
+  embla_fused_sparse: true
+  embla_single_topk: true
+  embla_compile_attention: false
+  embla_batched_windows: true
+  embla_relu_tile_m: 32
+  embla_target_head_only: true
+  embla_fused_residual: false
+data:
+  path: ${oc.env:HRM_REPO_ROOT}/data/sampled_dfm11
+  target_only: true
+global_batch_size: 262144
+gradient_accumulation_steps: 2
+gradient_clip_norm: null
+gradient_skip_norm: null
+gradient_skip_max_consecutive: 3
+epochs: 1
+training_total_steps: null
+checkpoint_interval: 1
+checkpoint_step_interval: 50000
+max_steps: null
+benchmark_state_fingerprint: false
+stop_after_step: null
+suspend_control_dir: ${oc.env:HRM_REPO_ROOT}/logs/training/embla-loop-prefix-target_dfm11/control
+suspend_after_steps:
+- 50000
+- 100000
+- 150000
+- 200000
+- 250000
+- 300000
+- 350000
+suspend_poll_interval_steps: 10
+suspend_wait_poll_seconds: 2
+dataloader_prefetch_factor: 8
+ephemeral_checkpoint_step_interval: 500
+checkpoint_format: sharded
+wandb_run_id: embla-loop-prefix-target-dfm11-epoch1
+wandb_resume: allow
+resume_checkpoint_path: null
+resume_checkpoint_tag: null
+resume_epoch: null
+resume_step: null
+resume_batch_in_epoch: null
+upcast_optimizer_state_on_resume: false
+reset_ema_on_resume: false
+project_name: DFM5
+run_name: embla-loop-prefix-target-dfm11-epoch1
+checkpoint_path: ${oc.env:HRM_REPO_ROOT}/checkpoints/embla/embla-loop-prefix-target
+seed: 0
+log_interval: 5
+lr: 0.0003
+lr_auto: false
+lr_piecewise_points: null
+lr_rewarm_steps: 0
+lr_rewarm_stages: 1
+lr_rewarm_start_ratio: 0.5
+lr_rewarm_start_step: null
+lr_decay_start_step: null
+lr_decay_end_step: null
+lr_embeddings: null
+lr_head: null
+lr_h: null
+lr_l: null
+lr_min_ratio: 1
+lr_warmup_steps: 5000
+lr_cooldown_checkpoint: null
+weight_decay: 0.1
+beta1: 0.9
+optimizer: adam_atan2
+muon_momentum: 0.95
+muon_ns_steps: 5
+muon_lr_scale: 1.0
+beta2: 0.95
+ema: 0.9999
+fwd_bwd_dtype: bfloat16
+activation_checkpointing: none
+accelerator_type: sm100
+distributed_strategy: fsdp
+fsdp_params_precision: fp32
+fsdp_wrap_policy: single_unit
+fsdp_shard_degree: null
+fsdp_reshard_after_forward: false
+fsdp_accumulation_sync_mode: no_sync
+ddp_params_precision: fp32
+ddp_find_unused_parameters: true
+cycle_variants_prewarm: true
+cycle_variants_allow_resume_change: false
+compile_train_batch: false
+compile_train_batch_mode: default
+memory_log_interval: 100
+empty_cache_interval: 0
+resume_trace: false
+stability_diagnostics_interval: 0
+stability_diagnostics_max_tokens_per_microbatch: 4096
+stability_diagnostics_output: null
+stability_diagnostics_wandb_detailed: false

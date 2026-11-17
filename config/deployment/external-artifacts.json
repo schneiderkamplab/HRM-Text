@@ -1,0 +1,25 @@
+{
+  "external_files": [
+    {
+      "path": "docs/reports/decision_dataset_volumes_20261021.json",
+      "size": 44896895,
+      "sha256": "83e54fd51e3774abd4e40ec85e5d37c883d56b114ca5f72e9da95e2415e36143",
+      "disposition": "external-report"
+    }
+  ],
+  "excluded_groups": {
+    "incoming": "Imported repository mirrors; original inventory preserved outside Git",
+    "cache, .tmp_vocab_probe": "Generated caches and vocabulary probes",
+    "generations, inspect, root prediction JSONL": "Generated inference/evaluation artifacts",
+    "evaluation/data/danish_semantic_reasoning_upstream": "Pinned upstream checkout; prepared records and manifest are versioned",
+    "data_io/trained_tokenizers/mimir_mini": "Tokenizer artifact for transfer, not source"
+  },
+  "artifact_roots": [
+    "data/sampled_dfm11",
+    "data_io/trained_tokenizers/mimir_mini",
+    "checkpoints/hrm",
+    "data/dfm16/expansion-v1/verifiers",
+    "data/nltk_data"
+  ],
+  "note": "This is the source-review exclusion ledger, not a transfer-ready dependency closure. Transfer manifests and GPU qualification follow user push."
+}

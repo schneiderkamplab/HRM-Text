@@ -1,0 +1,29 @@
+{
+  "node_id": "node2",
+  "ssh": {
+    "host": "ssh.cloud.sdu.dk",
+    "port": 2426,
+    "user": "ucloud",
+    "ed25519_fingerprint": "SHA256:XbZvj6OCPyJRByMzQYuRazuqGYzQQvMGI3WVSPam2tw"
+  },
+  "repo_root": "/work/mimir/HRM-Text",
+  "env_root": "/home/ucloud/miniforge3/envs/hrm-node2",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "launch_enabled": false,
+  "initial_runs": [
+    "B-dfm11-causal-lrauto-bpwarmup-targetonly-epoch1",
+    "B-dfm11-causal-lrauto-bpwarmup-alltokens-epoch1",
+    "transformer48-dfm11-causal-targetonly-epoch1",
+    "B-dfm11-mixedlm-lrauto-bpwarmup-targetonly-epoch1",
+    "transformer48-dfm11-mixedlm-targetonly-epoch1"
+  ]
+}
