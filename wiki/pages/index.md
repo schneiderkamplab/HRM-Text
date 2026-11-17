@@ -1,5 +1,21 @@
 # Operational Knowledge and Plans
 
+* [GLM GPU Handoff](dfm16-glm-handoff.md) - Automatic eight-GPU GLM deployment alongside Odin when GPUs are free.
+* [Full-scale English SimpleStories](dfm16-english-fullscale.md) - Running 502K-source campaign; approximate 300K accepted aim and combined GPU audit.
+* [English SimpleStories Production](dfm16-english-production.md) - Authorized English rollout, running batch and outstanding audit configuration.
+* [SimpleStories Staged Generation](dfm16-staged-stories.md) - Controlled stages, matched generators, and independent language qualification.
+
+* [Historical SimpleStories Judge Studies](dfm16-story-calibration-history.md) - Preserved prose and multiview comparisons.
+* [SimpleStories Role and Source Pilot](dfm16-role-source-pilot.md) - Matched judge controls and original/cleaned seed generation.
+* [SimpleStories Context Calibration](dfm16-story-calibration.md) - Completed failed development policies and diagnostic repairs; production held.
+
+* [DFM16 Additional Source Review](dfm16-additional-source-review.md) - Public model recipes, new candidate datasets, and multilingual SimpleStories SFT options.
+
+* [DFM1-15 Decision Dataset Assessment](decision-datasets.md) - Systematic source inventory, bounded-choice conversion opportunities, label reliability and safeguards.
+* [Decision Dataset Source Tables](decision-datasets/) - Detailed historical and multilingual source coverage, conversion recipes and source ledger.
+
+* [DFM15 Metadata Routing Sidecar](dfm15-metadata-routing-sidecar.md) - CPU-only exact-provenance category builder and epoch-zero census; publication blocked by incomplete source ownership.
+
 * [XL Andersen Evaluation Backfill](andersen-xl-evaluation-backfill.md) - Main-line checkpoint inventory and missing validation-split prerequisites.
 * [Cooperative CUDA Suspension](cooperative-cuda-suspension.md) - Isolated prototype, atomic-file handshake, recovery controller and parity evidence.
 
@@ -24,7 +40,7 @@
 * [XL Non-Eager Evaluation Capacity](xl-non-eager-eval-capacity.md) - Bounded real-prompt eight-GPU capacity measurement, no W&B or plan changes.
 * [DFM13 XL 3150K Handoff](dfm13-xl-3150k-handoff.md) - Verified-sample gate and CPU-only exact budget preparation; not an activated training switch.
 * [DFM14 Plan](dfm14-plan.md) - Sixteen-language expansion and research scope; no changes to current DFM13 assembly.
-* [DFM15 Plan](dfm15-plan.md) - Native reasoning and direct-answer supervision; DFM14 remains unchanged.
+* [DFM15 Plan](dfm15-plan.md) - Native reasoning and direct-answer supervision; serial HF-only DFM1-15 rebuild statuses; DFM14 remains unchanged.
 * [DFM14 XL 3250K Handoff](dfm14-xl-3250k-handoff.md) - Verified-transfer gate, exact one-pass packing and steady-LR continuation on the original XL run.
 * [DFM14 CPU Release](dfm14-cpu-release.md) - Accepted-only exports, publication, sampling and the 900K XXL-wide handoff gate.
 * [DFM14 Remote Production Handoff](dfm14-remote-production-handoff.md) - Transfer inputs, implementation order and isolation from live DFM13 training.
@@ -41,6 +57,7 @@
 * [Potential DFM14 Additions](dfm14-potential-additions.md) - Prioritized Dyna source candidates, replacement policies and resolved Faroese generation shortfall.
 
 * [DynaWord and DynaInstruct Update Scan](dyna-source-updates-20261005.md) - Pinned inventory comparison and prioritized new-source recommendations.
+* [October 27 Dyna Refresh](dyna-source-updates-20261027.md) - New Nordic grounding sources, unchanged instruction collections and Polish replacement warnings.
 
 * [DaLA Audit SQLite Throughput](dfm13-dala-db-throughput.md) - Tested opt-in batching and memory/reporting improvements, parent-owned deployment.
 
@@ -242,11 +259,16 @@
 
 ## Detailed Collections
 
+* [DFM16 Plan](dfm16-plan.md) - Hetionet source addition and natural grounded QA/chat synthesis.
+* [DFM16 Decision Source Review](dfm16-decision-source-review.md) - Mimir-Decide sources worth converting to messages, with overlap and evaluation safeguards.
+* [DFM16 Decision Preparation](dfm16-decision-preparation.md) - Native message conversion and safe 64-worker tokenization, without epoch sampling.
+
 * [Current-State Records](current-state/) - Individually retrievable operational records.
 * [Data-Mix Policy Records](data-mix-policy/) - Individual policy decisions and analyses.
 * [DFM6 Plan Records](dfm6-plan/) - Focused DFM6 planning and execution concepts.
 * [DFM7 Plan Records](dfm7-plan/) - Focused DFM7 planning and execution concepts.
 * [DFM8 Plan Records](dfm8-plan/) - Focused DFM8 planning and execution concepts.
+* [DFM15 Plan Records](dfm15-plan/) - Focused DFM15 planning and reconstruction concepts.
 * [FlashAttention B200 Records](flashattention-b200/) - Focused platform and build findings.
 * [Model-Architecture Records](model-architecture/) - Focused architecture and runtime concepts.
 * [Original-L Reproduction Records](original-l-reproduction/) - Focused reproduction procedures and observations.
@@ -275,3 +297,9 @@
 * [XXL-wide 859500 Shared Gemma Handoff](dfm13-xxlw-859500-shared-gemma.md) - Checkpoint-safe local training pause and eight owned generation/audit servers.
 
 * [DFM14 DaLA release](dfm14-dala-release.md) — authorized audited language export, train-only integration and verified HF publication.
+* [DFM10 HF-only rebuild recipe](dfm10-hf-rebuild-recipe.md) - Frozen local source inputs, dual-mode tokenization and committed-builder assembly for the DFM10 serial rebuild.
+* [DFM11 HF-only rebuild recipe](dfm11-hf-rebuild-recipe.md) - Pinned eleven-package additions pipeline, derived FineInstructions families and committed-builder assembly for the DFM11 serial rebuild.
+* [DFM12 HF-only rebuild recipe](dfm12-hf-rebuild-recipe.md) - Pinned 369-package, 381-component additive reconstruction with provenance-ordered DaLA and exact DFM11 gating.
+* [DFM13–15 HF-only rebuild recipes](dfm13-15-hf-rebuild-recipes.md) - Pinned additions and native-reasoning reconstruction, serial exact gates and run evidence.
+
+* [Danish semantic reasoning evaluation](danish-semantic-reasoning-evaluation.md) - Pinned seven-family local adapter, source audit, deterministic scoring and separate DanWiC control.

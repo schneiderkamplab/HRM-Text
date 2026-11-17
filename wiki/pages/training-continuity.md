@@ -4,10 +4,56 @@ title: Training Continuity Across Evaluations
 description: Evaluation and administrative failures must not strand the next training segment.
 status: stable
 confidence: high
-last_updated: 2026-10-17
+last_updated: 2026-11-10
 tags: [training, scheduler, operations, recovery]
 ---
 # Training Continuity Across Evaluations
+
+## Evaluation Memory and Stall Prevention (2026-11-10)
+
+The DFM11 B run lost roughly 3½ hours at its first 50K evaluation because a
+blanket utilization increase reserved 95% of GPU memory for the generator
+while judged tasks additionally required 16,384 MiB. On a 183,359 MiB GPU,
+that combination cannot fit. Repeated transient-capacity deferrals hid the
+configuration error, left GPUs idle, and held training at its checkpoint.
+The earlier ETA assumed a normal evaluation pause and was invalidated.
+See the [incident and verified recovery](current-state/2026-11-10-dfm11-architecture-comparison.md#50k-evaluation-stall-incompatible-target-plus-judge-budget).
+
+Mandatory operating rules:
+
+- Budget all co-resident models before dispatch. Check
+  `ceil(total_MiB * generator_utilization) + judge_reserve_MiB` against total
+  capacity, then check available memory including other resident allocations
+  and safety headroom. Recalculate when hardware or judge models change.
+- On this B200 setup, use 0.95 for generator-only evaluation and 0.85 for the
+  generator when a local judge reserves 16 GiB. Preserve calibrated task
+  batches. Temporary co-tenancy overrides must not become plan defaults.
+- Reject impossible total budgets as configuration errors. Reserve transient
+  retries for genuinely temporary occupancy; repeated deferrals with idle GPUs
+  require investigation, not another indefinite wait. Keep failure evidence
+  and use bounded failure/recovery paths so evaluation errors do not strand
+  training. Never classify missing evaluation results as successful.
+- After a handoff or resource change, verify actual inference requests or
+  completed-example progress and live GPU activity. A healthy HTTP endpoint,
+  running job status, or launched PID alone does not establish useful progress.
+- Five minutes without useful progress while runnable work exists is an
+  operational investigation threshold. Check startup logs, memory accounting,
+  repeated deferrals, administrative locks and dependency failures immediately.
+  An explicit user pause is not a stall. A documented long compilation still
+  requires inspection and a truthful status update.
+- Update the ETA when a pause exceeds its allowance; do not carry forward an
+  estimate based on normal evaluation duration after observing a stall.
+- Drain affected requests before replacing persistent servers, edit only
+  unclaimed definitions, release administrative fences, and verify work starts
+  again. Resume training only after GPU/checkpoint safety checks and in
+  accordance with the user's requested schedule.
+
+Implementation status: `shared_pool.py` now raises a configuration error when
+the required combined allocation exceeds total capacity; the regression test
+and ten existing shared-pool tests pass. The running scheduler received repaired
+job metadata; the new code guard loads on its next launch. The five-minute
+threshold is an agent operating rule, not a claim that an automated watchdog
+has been installed.
 
 ## DFM14 Final Evaluation and Archive Check (2026-10-17)
 
@@ -402,3 +448,62 @@ Verified `cuda-checkpoint --help`, `criu --version`, and dynamic dependencies
 for CRIU and its CUDA plugin (no missing libraries). This verifies installation,
 not kernel/container permissions or actual process restore. No CRIU kernel
 probe, process dump, GPU suspension or NCCL round-trip was attempted.
+
+## Plan-Store Backup Policy (2026-11-04)
+
+- **Cadence**: the database runner backups the authoritative SQLite store every
+  ≤60 s (`DatabaseRunner._backup`, rate-limited; forced at clean drain) to
+  `plan_dir/state.backup.sqlite`. The plan directory lives on `/work`
+  (persistent wekafs), so even though the live store sits under `/tmp`
+  (ephemeral overlay, see `database.json`), a container death loses at most
+  ~60 s of state.
+- **TSV mirror**: since 2026-11-04 `_backup` also atomically exports
+  `plan.snapshot.tsv` on the same cadence (`store.export_tsv`; failure is
+  logged as `TSV_EXPORT_FAILED`, never fatal). Before this, the TSV was only
+  refreshed on idle runner cycles and drifted during training legs. Applies
+  from the next runner start; refresh manually with
+  `python -m eval_scheduler database export --database <db> --output <path>`.
+- **Manual backups belong on /work**: pre-surgery backups (e.g. the epoch-2
+  flip's `jobs_flip_*`) and historical snapshots live under
+  `logs/scheduler/<PLAN>/backups/`. `/tmp` copies are scratch only.
+- `plan.tsv` is the frozen import source, not a backup; never regenerate it.
+
+### GPU-only training gates (2026-11-10)
+
+Supersedes the older requirement to wait on terminal publication aggregates:
+training depends only on completion/terminal failure of the preceding block's
+GPU inference and HF-export work (plus its checkpoint wait). CPU result
+exports, merges, averages, report generation and W&B sync must proceed
+concurrently with the next training interval. They keep their own correctness
+dependencies; removing them from the training gate does not mark them done or
+waive publication verification. The runner drains persistent GPU servers before
+claiming training, and can dispatch CPU publication while the training lease is
+active. Never use teardown/barrier rows as gate anchors.
+
+The DFM11 comparison originally gated training on almost the entire prior
+block. After all 1,045 B50K inference jobs completed, that unnecessarily held
+GPUs idle during publication. Repaired all 12 pending continuation gates in
+the live database and both plan builders; preserved the active CPU claims and
+publication dependencies. A durable SQLite backup precedes the edit.
+
+A second dispatch issue surfaced during that repair: the first ready exclusive
+row was a redundant teardown, so the runner waited for CPU publication rather
+than selecting ready training. Ready training now takes priority over teardown;
+its existing `shared_pool.close_all()` drains/releases persistent GPU servers
+before the training claim. The live plan's pending train positions were moved
+ahead of teardown rows without changing active claims. Verified `VLLM_STOP`
+events followed by the B100K training start. The cooperative regression test now
+includes an earlier ready teardown while publication waits for training;
+all four tests pass. GPU-idle utilization alone does not mean memory is free:
+verify server exit and memory release at handoff.
+
+### Teardown must wait for all block inference
+
+At B100K, an inherited campaign teardown became ready after only one subset of
+the block: 868/1,045 inference jobs were done while 177 remained pending. As an
+exclusive action it prevented more inference dispatch while waiting for CPU
+publication, leaving loaded GPU servers idle. Repaired all 24 pending teardown
+rows in the combined DB to depend on every inference row in their own block,
+in terminal mode, and made both builders enforce that invariant. Teardown
+must never preempt still-runnable inference from another suite in the block.
+Ready training continues to take priority once all GPU work is terminal.

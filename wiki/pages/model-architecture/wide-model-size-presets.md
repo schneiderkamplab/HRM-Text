@@ -4,7 +4,7 @@ title: Wide Model Size Presets
 description: Owner-selected width-4096 model with 24 L and 24 H layers, targeting the deep XXXXL parameter scale.
 tags: [architecture, hrm, parameters]
 status: stable
-last_updated: 2026-09-30
+last_updated: 2026-11-02
 confidence: high
 ---
 # Wide Model Size Presets
@@ -71,3 +71,37 @@ Embeddings + head includes separate input and output matrices of equal size.
 | XXXL_wide | 20 + 20 | 3072 | 24 | 4 | 4.907 | 1.611 | 6.518 |
 | XXXXL | 64 + 64 | 2560 | 20 | 4 | 10.989 | 1.342 | 12.331 |
 | XXXXL_wide | 24 + 24 | 4096 | 32 | 4 | 10.519 | 2.147 | 12.667 |
+
+## Exact Component Counts (verified 2026-11-02)
+
+Meta-device construction of all 13 presets (hrm net, `half_layers: true`,
+262144-token Gemma vocabulary) confirms the table above and separates the two
+vocabulary projections. H and L stacks always hold equal parameter counts;
+recurrent cycles share weights and do not multiply stored parameters.
+
+| Preset | L + H layers | Hidden | Vocab | Transformer blocks | Embeddings | LM head | Total |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| XXS | 3 + 3 | 256 | 262144 | 5,505,024 | 67,108,864 | 67,108,864 | 139,722,752 |
+| XXS_wide | 2 + 2 | 384 | 262144 | 7,667,712 | 100,663,296 | 100,663,296 | 208,994,304 |
+| XS | 3 + 3 | 512 | 262144 | 22,020,096 | 134,217,728 | 134,217,728 | 290,455,552 |
+| S | 4 + 4 | 768 | 262144 | 61,341,696 | 201,326,592 | 201,326,592 | 463,994,880 |
+| B | 6 + 6 | 1024 | 262144 | 166,723,584 | 268,435,456 | 268,435,456 | 703,594,496 |
+| L | 12 + 12 | 1280 | 262144 | 526,909,440 | 335,544,320 | 335,544,320 | 1,197,998,080 |
+| XL | 16 + 16 | 1536 | 262144 | 981,467,136 | 402,653,184 | 402,653,184 | 1,786,773,504 |
+| XXL | 36 + 36 | 1792 | 262144 | 3,038,773,248 | 469,762,048 | 469,762,048 | 3,978,297,344 |
+| XXL_wide | 16 + 16 | 2560 | 262144 | 2,747,269,120 | 671,088,640 | 671,088,640 | 4,089,446,400 |
+| XXXL | 48 + 48 | 2048 | 262144 | 5,335,154,688 | 536,870,912 | 536,870,912 | 6,408,896,512 |
+| XXXL_wide | 20 + 20 | 3072 | 262144 | 4,907,335,680 | 805,306,368 | 805,306,368 | 6,517,948,416 |
+| XXXXL | 64 + 64 | 2560 | 262144 | 10,989,076,480 | 671,088,640 | 671,088,640 | 12,331,253,760 |
+| XXXXL_wide | 24 + 24 | 4096 | 262144 | 10,519,314,432 | 1,073,741,824 | 1,073,741,824 | 12,666,798,080 |
+
+Counts are parameters only: RMSNorm and RoPE carry no parameters (RoPE cos/sin
+are non-persistent buffers), and the persistent `zL_init` buffer of
+`hidden_size` elements is excluded. Checkpoint-side counts that include
+buffers are therefore larger by exactly `hidden_size`; for example, the
+earlier XXL figure of `3,978,299,136` recorded in
+[dfm8-xxl-epoch1-resume-2026-08-26](../dfm8-plan/dfm8-xxl-epoch1-resume-2026-08-26.md)
+equals the parameter total `3,978,297,344` plus the 1,792-element `zL_init`
+buffer. Per block: fused gated QKVO projection (`4h^2`), output projection
+(`h^2`), SwiGLU gate+up (`2*h*i`) and down (`i*h`) with
+`i = find_multiple(round(8h/3), 256)`.

@@ -12,6 +12,7 @@
 * [Candidate Dataset Scan](candidate-dataset-scan.md) - Part of DFM7 Plan: Candidate Dataset Scan.
 * [Candidate DFM Evals](candidate-dfm-evals.md) - Part of DFM7 Plan: Candidate DFM Evals.
 * [Prep And Tokenization Notes](prep-and-tokenization-notes.md) - Part of DFM7 Plan: Prep And Tokenization Notes.
+* [DFM7 HF-Only Rebuild Recipe](hf-rebuild-recipe.md) - Part of DFM7 Plan: DFM7 HF-Only Rebuild Recipe.
 * [Build Artifacts](build-artifacts.md) - Part of DFM7 Plan: Build Artifacts.
 * [DFM6-DFM7 840K Format Smoke](dfm6-dfm7-840k-format-smoke.md) - Part of DFM7 Plan: DFM6-DFM7 840K Format Smoke.
 * [DFM6-DFM7 Progress Assessment](dfm6-dfm7-progress-assessment.md) - Part of DFM7 Plan: DFM6-DFM7 Progress Assessment.

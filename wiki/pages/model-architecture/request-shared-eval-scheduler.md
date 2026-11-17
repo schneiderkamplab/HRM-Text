@@ -4,12 +4,35 @@ title: SQLite and Request-Shared Evaluation Scheduler
 description: Opt-in durable job state, CPU-bounded clients, and demand-driven shared inference without changing live TSV campaigns.
 tags: [evaluation, scheduler, sqlite, vllm, performance]
 status: draft
-last_updated: 2026-10-13
+last_updated: 2026-10-19
 confidence: high
 ---
 # SQLite and Request-Shared Evaluation Scheduler
 
 ## Scope and Rollout
+
+### 2026-10-19: Bound startup client imbalance
+
+The gated Mimir2 campaign accumulated 57 clients on GPU5 while other replicas
+were starting, leaving a single-GPU tail after the other devices drained.
+Least-held placement alone did not help because it excluded loading replicas.
+`SharedServerPool` now allows at most two residency holders per ready replica
+while a compatible replica is provisioning (the loading replica has one
+prospective holder). Additional clients wait on the condition; once startup
+finishes, ordinary least-held assignment resumes. Unrelated model/judge startup
+does not throttle compatible ready servers. Idle devices are still provisioned
+on demand. This applies on the next scheduler launch, not to already pinned
+clients; the live gated evaluation was not interrupted.
+
+Regression tests cover delayed startup, bounded placement, balanced assignment
+after startup, unrelated compatibility groups, failure fencing and safe drains.
+This fixes startup pile-ups, not duration imbalance among already-running
+direct clients. Per-request migration/load balancing is **not implemented**:
+the broker was deliberately removed on October 10. Any future request-routing
+replacement needs compatibility/judge isolation, response/model-name handling,
+in-flight drain safety and scoring parity tests before production use. Actual
+request queue telemetry remains unknown in the direct pool snapshot; client
+counts must not be mislabeled as queued requests.
 
 XXL-wide migration, suspension and retries are documented in
 [XXL-wide handoffs](xxl-wide-scheduler-handoffs.md).

@@ -1,5 +1,8 @@
 # Model Architecture Concepts
 
+* [Engram preparation](engram-preparation-20261020.md) - Contextual n-gram export/serving, CPU state/parity tests, actual-token collisions and pending GPU qualification.
+* [Biased expert pilots](biased-expert-pilots-20261020.md) - Source-biased dense 2/2 MoE and MoS continuations, unchanged data order and memory qualification.
+
 * [HRM v2 Implementation](hrm-text-v2-implementation.md) - Opt-in sparse experts, optimizer/EMA-preserving upcycling, metadata routing, recurrent memory, n-grams and Muon.
 
 * [HRM-Text-v2 Architecture Candidates](hrm-text-v2-plan.md) - Gated H/L communication, branched recurrent states, DeltaNet hybrids and controlled architecture experiments.
@@ -13,11 +16,14 @@
 * [Native CLI Distribution](mimir-native-cli-distribution.md) - Native and llama.cpp packaging and qualification.
 
 * [SQLite and Request-Shared Evaluation Scheduler](request-shared-eval-scheduler.md) - Opt-in durable job storage, CPU-limited clients, async inference sharing, and migration safety.
+* [B DFM15 Gemma-4 Epoch-1 Launch](b-dfm15-gemma4-epoch1-launch.md) - Managed B-size Gemma-4 training plan: step-count derivation under GAS, fresh-start cooperative rows, reset/import cycle.
+* [Eval-Block Dependency Structure](eval-block-dependency-structure.md) - One-training/many-suspensions model, the eval-block dependency shape between suspensions, and the pre-launch row audit.
 * [Local XXL-wide Scheduler Handoffs](xxl-wide-scheduler-handoffs.md) - Local migration, evaluation repairs, verified suspension and restore history.
 
 * [Mimir Apple OS-only TLS packaging](mimir-apple-os-tls-packaging.md) - Custom engine integration, headless-runtime packaging, audits and qualification evidence.
 
 * [Wide Model Size Presets](wide-model-size-presets.md) - XXXL-wide and XXXXL-wide presets and parameter comparison of all sizes.
+* [Vocabulary Pruning for English, Danish and Chinese](vocab-pruning-en-da-zh.md) - Measured 262k-to-65k pruning frontier, compression costs and per-size parameter impact.
 
 * [HF Export and Eval Loader Compatibility](hf-export-and-eval-loader-compatibility.md) - Part of Model Architecture: HF Export and Eval Loader Compatibility.
 * [Current Two-Level Relation](current-two-level-relation.md) - Part of Model Architecture: Current Two-Level Relation.
@@ -74,3 +80,19 @@
 * [Full XL control serving parity](mimir2-control-serving-parity.md) - Independent 3.82M exports, tokenizer corrections and full-weight compiled vLLM comparison.
 
 * [Mimir app appearance and settings](mimir-app-appearance.md) - Text scaling and settings organization.
+
+* [Budget-bounded mixed recurrence](cycle-variant-recursion.md) - Default-off per-microbatch H/L sampling, LR accounting, resume contracts and memory qualification.
+
+- [Single-state sandwich recurrent architecture](sandwich-looped-model.md) — paper-derived alternative, validation and DFM11 queue.
+
+- [Fixed-loop Ouro-style Transformer](ouro-fixed-loop.md) — four-loop matched-objective DFM11 experiment after Sandwich B.
+
+* [Embla experiments](embla-experiments.md) — Agreed variants and implementation status.
+* [Supervised-position output heads](supervised-output-head.md) — Avoid ignored vocabulary projections; Transformer/B and Embla benchmarks.
+* [Embla optimized kernels](embla-optimized-kernels.md) — FA4, fused ReLU²/sparse attention and qualification evidence.
+
+* [Embla mechanisms for HRM](embla-hrm-efficiency.md) — Cache accounting and architecture tradeoffs.
+
+- [Dedicated232K validation](validation-232k-20261116.md) — full-size capacity checks, sampled BP16 selection, Embla repairs and restoration status.
+
+- [Additional B200 node deployment](node2-deployment.md) — source review, transfers and experiment ownership.

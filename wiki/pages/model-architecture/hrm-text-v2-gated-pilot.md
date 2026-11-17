@@ -4,12 +4,103 @@ title: HRM-Text-v2 Gated XL Pilot
 description: Independent invocation gates, low-BP delta sharing, strict checkpoint migration and a prepared 3.8M XL continuation.
 status: draft
 confidence: medium
-last_updated: 2026-10-19
+last_updated: 2026-10-20
 tags: [architecture, recurrence, training, gates, experiment]
 ---
 # HRM-Text-v2 Gated XL Pilot
 
+## Completed downstream comparison (October 20)
+
+All three 3.82M EMA arms completed 1047 inference jobs each, with all 2196
+scheduled inference/postprocessing rows done per arm. Compare gated Mimir2
+against ungated Mimir2 to minimize export/backend confounding. Source results:
+`logs/scheduler/mimir2_control_3820000_vllm/{control_hrm_export,control,v2}/`,
+merged standard/DFM metrics, not W&B last-value summaries.
+
+Selected percent-scale results (control Mimir2 -> gated Mimir2):
+GSM8k 88.2465 -> 87.2602; MATH 51.0400 -> 50.5794;
+HumanEval sanitized 79.2683 -> 76.8293; MMLU 69.8745 -> 69.7062;
+DaLA F1 96.9722 -> 97.2655; GEC exact 87.2070 -> 86.8164;
+IFEval-DA prompt strict 66.5434 -> 65.9889;
+GovReport BERTScore F1 86.9025 -> 86.9363;
+NordjyllandNews BERTScore F1 90.4277 -> 90.5016.
+
+Interpretation: no convincing broad downstream benefit after this 20K gated
+pilot; small mixed differences and some math/code regressions. This is not a
+paired statistical-significance result. HumanEval's 2.44-point difference is
+four of 164 problems. The two ungated export arms differ slightly in aggregate,
+so their measured metrics are not identical despite earlier smoke parity.
+The combined branching GAS4 pilot is still training; Engram/MoE/MoS are queued
+and have no downstream results yet.
+
+## Stop after gated evaluation (2026-10-19)
+
+Superseded later the same day by the user's request to continue evaluations
+and training when GPUs become free. Restored all 5,559 saved dependency
+definitions, removed the manual gate, and retained all gated results. A detached
+`resume_when_free.py` under the existing plan directory waits for two consecutive
+30-second observations of all eight GPUs at 0% utilization, below 1 GiB allocated
+each, and no compute processes, then execs the same SQLite/persistent scheduler.
+It does not kill the unrelated EuroEval servers currently occupying the GPUs.
+Log: `resume-when-free-20261019.log`. A normal `stop.request` cancels the waiter.
+The next work is the remaining Mimir2/HRM control evaluations, followed by the
+existing branch pilot and XL training continuation. Tokenizers remain stopped.
+
+The user explicitly paused further work after the gated Mimir2 arm completes,
+superseding the continuation described below. In the authoritative SQLite plan,
+5,559 pending non-gated rows now depend in success mode on the skipped manual
+gate `user-hold-after-gated-mimir2-20261019`. Gated inference, merges, publication
+and averages remain runnable; there were no other running jobs when installed.
+The administration lock was released. Once gated work drains, the runner exits
+as `blocked` and its normal cleanup closes persistent vLLM servers. A gated
+failure can also produce that exit; check completion before calling it successful.
+Tokenizers remain stopped.
+
+Verified completion later on October 19: all 1,047 gated inference rows and
+1,149 postprocessing rows are done. Runner 71980 exited as `blocked` on the
+intentional hold and shut down its servers. All eight GPUs reported 0 MiB used
+and 0% utilization. No training or control evaluation was started.
+
+Recovery artifacts in `logs/scheduler/dfm10_XL_epoch9_20260831`:
+`before-gated-stop-20261019.sqlite` and `hold-after-gated-20261019.json`.
+On explicit user resume, restore the recorded original `deps` and `deps_mode`
+under the database administration lock, remove the manual gate, unlock, and
+restart the existing runner. Do not restore the old database wholesale: that
+would discard gated progress. Clearing the normal stop request alone does not
+release this deliberate hold.
+
+## Recovery on the replacement job (2026-10-19)
+
+Restored `/tmp/dfm14-xxl-wide-production/jobs.sqlite` from the existing plan's
+`state.backup.sqlite` after `quick_check=ok`; preserved completed work.
+No training/eval/server processes survived on the replacement job. Fenced the
+interrupted XL continuation claim under the administration/lifetime locks.
+Requeued that continuation and the branch pilot (previous failure: port 29500
+already in use), plus 729 failed 3.82M evaluation jobs across the three arms.
+
+The expanded EuroEval definitions had inherited the nonexistent
+`exports/dfm14_XXL_wide_step_3820000_ema_hf` as `hf_export_dir`. Corrected
+1,458 inference/postprocessing definitions to use their arm's existing
+`hrm_hf_export_dir`, without changing models, prompts or scoring. Older unrelated
+failed rows were not reset. This is a live-plan correction; future plan generators
+must avoid inheriting another campaign's generic export path.
+
+Resumed the same SQLite plan with persistent vLLM, 64 clients, 1024 server
+concurrency, and all eight GPUs. Log: `runner-restart-20261019.log` under
+`logs/scheduler/dfm10_XL_epoch9_20260831`. Monitor: `hrm-0:5`, 30-second updates.
+Tokenizers remain stopped at the user's request.
+
 ## Completed Matched Control (2026-10-19)
+
+Later scheduler check: the combined residual/memory branch pilot
+`hrm-branches-memory-XL-from-3800000` was attempted after the control evaluations
+but failed with CUDA OOM on all eight GPUs (approximately 178.3 GiB allocated
+including non-PyTorch memory). Its configuration used GAS2, no activation
+checkpointing, two internal residual branches and two H/L memory branches.
+This is not a completed pilot or a quality result. Its terminal barrier released
+the ordinary XL continuation toward 3.85M, whose row is now running. A future
+branch retry needs a lower microbatch or activation checkpointing; no retry or
+change to the ongoing training was made during this status inspection.
 
 Both runs completed step 3,820,000. This supersedes the initial warmup
 observation below that the matched control had not run. Read local W&B

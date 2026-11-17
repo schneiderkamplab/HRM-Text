@@ -385,3 +385,28 @@ A changed stop request cancels the reload. Watch log:
 
 This is a controlled production trial with a tested disk escape path, not a
 claim that full-size multi-hour in-memory parity has been proven.
+
+## Transformer PrefixLM355K idle resume (2026-11-16)
+
+User requested suspension at355000 and automatic in-memory resume after all
+eight GPUs are idle for five continuous minutes. Armed
+`scripts/watch_transformer_prefix_355k_idle_resume.py`; receipts are under
+`logs/training/transformer48_dfm11_prefixlm_targetonly_20261114/control/idle-resume-355000/`.
+The watcher submits355000 immediately but creates its hold only at that exact
+ready boundary, preserving the350K eval handoff. It offloads using the existing
+controller and delegates restoration to the existing supervisor. Idle requires
+zero utilization, at most128MiB used per GPU, and no compute processes; any busy
+observation resets the300-second timer. It never stops competing jobs. Status
+is armed, not yet suspended.
+
+## Sandwich B29K idle resume (2026-11-17)
+
+Armed user-requested suspension at29000 for the current Sandwich B DFM11
+PrefixLM/target-only trainer (observed at28400). Detached watcher:
+`scripts/watch_sandwich_29k_idle_resume.py`; receipts under
+`logs/training/sandwichB_dfm11_prefixlm_targetonly_20261115/control/idle-resume-29000/`.
+It offloads at the exact boundary, then requests the existing supervisor to
+resume from memory after all eight GPUs show zero utilization, at most128MiB
+used each, and no compute processes for more than300 continuous seconds. Busy
+observations reset the timer. Handles the first suspension without requiring
+prior ready/resume receipts. Status: armed, not yet suspended.

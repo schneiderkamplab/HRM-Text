@@ -11,3 +11,4 @@
 * [DFM8 XL Epoch-7 To DFM9 Continuation Command](dfm8-xl-epoch-7-to-dfm9-continuation-command.md) - Part of DFM9 Plan: DFM8 XL Epoch-7 To DFM9 Continuation Command.
 * [Open Questions](open-questions.md) - Part of DFM9 Plan: Open Questions.
 * [4K Epoch-8 Baseline in the 8K Run](4k-epoch-8-baseline-in-the-8k-run.md) - Part of DFM9 Plan: 4K Epoch-8 Baseline in the 8K Run.
+* [DFM9 HF-only Rebuild Recipe](hf-rebuild-recipe.md) - Part of DFM9 Plan: DFM9 HF-only Rebuild Recipe.

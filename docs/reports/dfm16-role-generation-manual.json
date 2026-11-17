@@ -1,0 +1,236 @@
+{
+  "H001-qa-clean": [
+    "bad",
+    [
+      "generated_user",
+      "assistant"
+    ],
+    "User text en smuk tapet has wrong gender; skyggede en silhuet is malformed; answer invents a discussion and overstates explicit causality."
+  ],
+  "H001-qa-original": [
+    "unresolved",
+    [
+      "input",
+      "serialization"
+    ],
+    "First completion was invalid JSON; original seed also has unexplained map references. No candidate reconstructed."
+  ],
+  "H001-revision-clean": [
+    "unresolved",
+    [
+      "serialization"
+    ],
+    "First completion contains an invalid JSON control character. No candidate reconstructed."
+  ],
+  "H001-revision-original": [
+    "bad",
+    [
+      "input",
+      "generated_user",
+      "assistant",
+      "constraint"
+    ],
+    "Original map defect; fargede, holde hende med selskab and mens du beholdt are malformed; 248/259 words exceed 240, only two story paragraphs; changed opening places Emma in loft while continuation assumes shore."
+  ],
+  "H001-rewrite-clean": [
+    "bad",
+    [
+      "generated_user",
+      "assistant",
+      "constraint"
+    ],
+    "Introduces Norwegian frykten and malformed hans udtryk blødgjorde; answer 285 words exceeds 180."
+  ],
+  "H001-rewrite-original": [
+    "bad",
+    [
+      "input",
+      "generated_user",
+      "assistant",
+      "constraint"
+    ],
+    "Unexplained map retained; user længelsen, loomed en dystre and frykten corrupt Danish; answer repeats grammar defects and 307 words exceeds 180."
+  ],
+  "H001-summary-clean": [
+    "bad",
+    [
+      "generated_user",
+      "assistant"
+    ],
+    "User hans udtryk blødgjorde and en smuk tapet; answer en skyggefulde skikkelse incorrect agreement."
+  ],
+  "H001-summary-original": [
+    "bad",
+    [
+      "input",
+      "generated_user"
+    ],
+    "Unexplained map retained; generated source adds frykten, hans udtryk blødgjorde and skjult og tavse. Summary broadly faithful."
+  ],
+  "H051-qa-clean": [
+    "bad",
+    [
+      "assistant"
+    ],
+    "Answer explicitly says before departure while its own supporting chronology and source place the statement after departure."
+  ],
+  "H051-qa-original": [
+    "clear",
+    [],
+    "Correct grounded chronology and cause."
+  ],
+  "H051-revision-clean": [
+    "bad",
+    [
+      "generated_user",
+      "constraint"
+    ],
+    "Single-paragraph story makes distinct opening/ending paragraph edits ill-defined, violating required three-paragraph generation contract; later lengths exceed initial range."
+  ],
+  "H051-revision-original": [
+    "bad",
+    [
+      "constraint"
+    ],
+    "Initial 124 words exceeds 120; all later answers also exceed explicitly retained 120 maximum. Local preservation and undo are otherwise faithful."
+  ],
+  "H051-rewrite-clean": [
+    "bad",
+    [
+      "generated_user",
+      "assistant",
+      "constraint"
+    ],
+    "Generator changes last source paragraph into present tense before presenting it as past; output adds unsupported descriptions/events and is 335 words above 240."
+  ],
+  "H051-rewrite-original": [
+    "bad",
+    [
+      "constraint"
+    ],
+    "Faithful tense change but 159 words below requested 180 minimum."
+  ],
+  "H051-summary-clean": [
+    "clear",
+    [],
+    "Faithful one-sentence summary with clean source."
+  ],
+  "H051-summary-original": [
+    "clear",
+    [],
+    "Faithful one-sentence summary with clean source."
+  ],
+  "H101-qa-clean": [
+    "bad",
+    [
+      "generated_user"
+    ],
+    "New user grammar error दिए गए कहानी; answer chronology is correct."
+  ],
+  "H101-qa-original": [
+    "bad",
+    [
+      "input",
+      "generated_user"
+    ],
+    "Original corrupted source copied; new कहानी की घटनाक्रम has gender error."
+  ],
+  "H101-revision-clean": [
+    "bad",
+    [
+      "generated_user",
+      "assistant",
+      "constraint"
+    ],
+    "User बंद लाइब्रेरी agreement; assistant की सन्नाटे भरी गलियारे, पुराने अलमारी, अपनी मोबाइल, यह वाक्य ... याद दिलाया and मैंने ... बढ़ा malformed. Only one paragraph undermines local edit contract."
+  ],
+  "H101-revision-original": [
+    "bad",
+    [
+      "input",
+      "generated_user",
+      "assistant",
+      "constraint"
+    ],
+    "Original seed corrupt; user explicitly mixes realism and literal magic; assistant गहरा खींच and पूरी समुदाय malformed, initial 268 words above 240; revised opening removes touch causing transition gap."
+  ],
+  "H101-rewrite-clean": [
+    "clear",
+    [],
+    "Faithful present-tense rewrite, grammatical and within 120-180 words."
+  ],
+  "H101-rewrite-original": [
+    "bad",
+    [
+      "input",
+      "generated_user",
+      "assistant"
+    ],
+    "Original seed copied; new user दिए गए कहानी and assistant मीठे सुगंध have agreement errors."
+  ],
+  "H101-summary-clean": [
+    "bad",
+    [
+      "generated_user"
+    ],
+    "New user दिए गए कहानी wrong agreement despite clean source and faithful summary."
+  ],
+  "H101-summary-original": [
+    "bad",
+    [
+      "input",
+      "generated_user"
+    ],
+    "Malformed original source copied into user; one-sentence summary itself broadly faithful."
+  ],
+  "H151-qa-clean": [
+    "clear",
+    [],
+    "Correct chronology, source preserved and grammatical."
+  ],
+  "H151-qa-original": [
+    "clear",
+    [],
+    "Correct after-prayer answer grounded in source."
+  ],
+  "H151-revision-clean": [
+    "bad",
+    [
+      "constraint"
+    ],
+    "Opening and ending edits and undo preserve appropriate paragraphs, but intermediate 840/849 characters exceed the initial 800 maximum with no explicit length relaxation."
+  ],
+  "H151-revision-original": [
+    "unresolved",
+    [
+      "format"
+    ],
+    "Wrong number of turns in first completion; no accepted candidate or semantic reconstruction."
+  ],
+  "H151-rewrite-clean": [
+    "bad",
+    [
+      "assistant",
+      "constraint"
+    ],
+    "908 characters exceeds 800; adds new actions and future commitments despite unchanged facts, and retains past-tense narration."
+  ],
+  "H151-rewrite-original": [
+    "bad",
+    [
+      "assistant",
+      "constraint"
+    ],
+    "1013 characters exceeds 800; changes spoken wish to unspoken prayer and adds events/history despite fact preservation."
+  ],
+  "H151-summary-clean": [
+    "clear",
+    [],
+    "Faithful single-sentence summary."
+  ],
+  "H151-summary-original": [
+    "clear",
+    [],
+    "Faithful single-sentence paraphrase."
+  ]
+}

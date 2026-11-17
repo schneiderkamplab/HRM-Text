@@ -1,0 +1,4 @@
+
+# Preserve captured source evidence and TSV field whitespace byte-for-byte.
+docs/reports/** -whitespace
+wiki/pages/decision-datasets/*.tsv -whitespace

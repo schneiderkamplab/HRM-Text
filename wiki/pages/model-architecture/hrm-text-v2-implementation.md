@@ -4,7 +4,7 @@ title: HRM v2 Opt-in Implementation and Qualification
 description: Architecture switches, state-preserving upcycling, metadata routing, specialist composition and Muon boundaries.
 status: draft
 confidence: high
-last_updated: 2026-10-19
+last_updated: 2026-10-20
 tags: [architecture, recurrence, experts, optimizer, testing]
 ---
 # HRM v2 Opt-in Implementation and Qualification
@@ -136,6 +136,12 @@ performance on large or multi-node mixtures.
 
 ## Metadata and Specialists
 
+October 20 addition: `+data.routing_categories=true` passes per-token source
+labels in otherwise unchanged packed batches. Unlike homogeneous sampling,
+this does not reorder data or change the resume cursor. It is used by the
+[biased MoE/MoS pilots](biased-expert-pilots-20261020.md), with a pinned sidecar.
+The default remains off; the homogeneous sampler protections below remain.
+
 Enable `+data.homogeneous_categories=true` only on v2. Each sampled `epoch_N`
 must contain an aligned integer `category_id.npy`. The deterministic sampler
 round-robins category-homogeneous global microbatches while preserving sampled
@@ -174,6 +180,48 @@ expert usage and quality after composition. No calibration data or GPU run was
 created by this implementation.
 
 ## Memory and N-grams
+
+### Contextual multi-head memory (October 20)
+
+Opt in with `ngram_heads=4 ngram_contextual_gate=true` alongside
+`ngram_orders=[2,3]`. Defaults remain one head and no gate, preserving the
+previous implementation and its state layout. Each order concatenates
+independently polynomial-hashed, split-width heads, so increasing heads does
+not multiply table parameters. Hidden size must be divisible by head count.
+The gate is per-channel sigmoid of learned projections of RMS-normalized
+token context and retrieved memory. This is a Qwen/Engram-inspired variant,
+not an exact reproduction of either architecture. Injection remains before
+recurrence, not Qwen's second-layer placement.
+
+Zero tables preserve the initial function even with alpha enabled. Tables
+receive gradients once alpha is positive; gate learning begins as tables
+become nonzero. Native cached decoding retains the existing explicit
+position-reset semantics. CPU tests cover identity, table/gate gradients,
+multi-head budget, packed isolation, causality and cached/full parity.
+
+**Qualification update (2026-10-20):** the serving-deferral statements in the
+checklist below are superseded by [Engram preparation](engram-preparation-20261020.md):
+HF and vLLM implementations and CPU tests now exist. GPU engine parity, CUDA
+graph replay and XL memory/time remain unmeasured because all GPUs were busy.
+The historical checklist remains the pilot acceptance criteria.
+
+Before scheduling an Engram pilot:
+
+- Extend Transformers config/conversion/model and vLLM cached decoding:
+  current serving does not support this variant, and vLLM rejects n-grams.
+- Verify checkpoint/optimizer/EMA upcycling, native/HF/vLLM logit parity,
+  packed prefill and independent-request decoding.
+- Benchmark XL FSDP compiled memory and step time with the proposed tables;
+  test checkpoint save/resume before a 20K run.
+- Measure per-order/head occupancy and collisions on actual pilot tokens,
+  and gate/contribution statistics after warm-in.
+- Use the same 3.80M starting state and data as control, absolute 2K warm-in,
+  separate outputs, all other experimental features disabled.
+
+At XL width 1536, two orders with 65536 buckets have 201,326,592 table
+parameters regardless of head count; contextual query/key projections add
+4,718,592. Tables remain GPU-resident. CPU offload is deferred.
+No pilot or production configuration was changed.
 
 Recurrent H/L memory branches persist across depth invocations within one model
 forward. They are separate from per-expert L states and from within-stack residual

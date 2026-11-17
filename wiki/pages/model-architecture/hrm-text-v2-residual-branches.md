@@ -11,6 +11,47 @@ tags: [architecture, residuals, recurrence, branches]
 
 ## Combined pilot scheduled October 19
 
+### GAS4 retry after 3.85M evaluation
+
+The original GAS2 attempt failed with CUDA OOM. At the user's request,
+`scripts/schedule_hrm_branch_pilot.py --gas 4 --after-3850k --install`
+queued `hrm-branches-memory-XL-from-3800000-gas4` after the ordinary XL
+3.85M training and its evaluation/postprocessing reach terminal states, before
+ordinary XL resumes to 3.90M. The current training was not interrupted.
+The evaluation barrier permits exhausted failures, preserving training continuity.
+
+This is still the matched 3.80M -> 3.82M experiment, not a 3.85M upcycle.
+GAS4 halves per-GPU microbatch tokens to 8,192, retaining 262,144 global tokens,
+BP8, LR 1e-5 with automatic division, the same 2K warmups and branch settings.
+The retry has its own same-named DFM5 W&B run, checkpoint directory under
+`checkpoints/hrm_v2/`, and log directory under `logs/training/hrm_v2/`.
+CPU preflight passed configuration, global batch/GAS, carry-free source resume,
+and full-size checkpoint mapping checks. GPU fit remains to be verified.
+Its terminal barrier releases the ordinary continuation even on pilot failure.
+The failed GAS2 row and artifacts are preserved; no downstream branch evaluation
+has been added by this retry scheduling.
+
+Subsequent user instruction supersedes that last statement: a full **1,047-job
+EMA evaluation** at 3.82M is now queued by
+`scripts/schedule_branch_3820k_evals.py --install`. It clones the completed
+gated arm's full standard/DFM/50-language EuroEval inventory, merges, publication
+and nine averages, with all output roots, HF paths and W&B identities isolated.
+Results go to `DFM5/hrm-branches-memory-XL-from-3800000-gas4` at the matched
+fractional epoch 11.913198350886034. Serving uses the companion Mimir2 vLLM,
+no forced eager, unchanged prompt/template and judge settings.
+
+The pilot command is wrapped by `scripts/train_then_export_mimir2.py`: successful
+training is followed by CPU-only strict EMA export using the companion Mimir2
+Transformers, before evaluation dependencies release. HF output:
+`exports/mimir2_branches_gas4_step3820000_ema_hf`. It uses the qualified control
+export as tokenizer reference. Evaluation artifacts/preview TSV are under
+`logs/scheduler/mimir2_branches_gas4_3820000`. A terminal barrier over the full
+evaluation/publication inventory delays ordinary XL continuation until this
+comparison completes or failures are exhausted. Current training is unchanged.
+If export fails after training succeeds, repair/run the export separately before
+resetting inference: the training scheduler skips commands for complete target
+checkpoints, so resetting the training row alone would not rerun this wrapper.
+
 User selected two internal residual streams in both stacks plus two H and two
 L recurrent memory branches, rather than testing them individually first.
 `scripts/schedule_hrm_branch_pilot.py --install` added

@@ -15,6 +15,7 @@
 * [Build Requirements](build-requirements.md) - Part of DFM8 Plan: Build Requirements.
 * [Additional Synthetic Data Candidates](additional-synthetic-data-candidates.md) - Part of DFM8 Plan: Additional Synthetic Data Candidates.
 * [Active Post-Audit Operational Plan](active-post-audit-operational-plan.md) - Part of DFM8 Plan: Active Post-Audit Operational Plan.
+* [DFM8 HF-Only Rebuild Recipe](hf-rebuild-recipe.md) - Part of DFM8 Plan: DFM8 HF-Only Rebuild Recipe.
 * [DFM8 Targeted Synthetic Upload](dfm8-targeted-synthetic-upload.md) - Part of DFM8 Plan: DFM8 Targeted Synthetic Upload.
 * [Danish OpenHermes Synthetic Run](danish-openhermes-synthetic-run.md) - Part of DFM8 Plan: Danish OpenHermes Synthetic Run.
 * [OpenHermes English Repair Evidence](openhermes-english-repair-evidence.md) - Reconstructed audit/repair links and proposed publication evidence.

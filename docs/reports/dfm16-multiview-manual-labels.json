@@ -1,0 +1,418 @@
+{
+  "method": "Assistant manually reads each complete seed and conversation blind to new model votes, checks all messages and windows, and records explicit exceptions. Clear defaults apply only to listed, actually reviewed parents. No model verdicts are labels.",
+  "parents": {
+    "H081": {"overrides": {}},
+    "H082": {"overrides": {"conversation/0/consistency": ["borderline", "Frog merely croaks in source; rewrite makes it confirmation."], "message_pair/0/consistency": ["borderline", "Croak interpreted as confirmation rather than neutral sound."]}},
+    "H083": {"overrides": {
+      "conversation/0/consistency": ["bad", "Source Mia felt scared; rewrite explicitly says she was not scared."],
+      "conversation/0/compliance": ["bad", "Changed fear fact despite preservation request."],
+      "message_pair/0/consistency": ["bad", "Scared becomes not scared."],
+      "message_pair/0/compliance": ["bad", "Requested key-fact preservation violated by reversed emotion."]
+    }},
+    "H084": {"overrides": {}},
+    "H085": {"overrides": {}},
+    "H086": {"overrides": {"conversation/0/compliance": ["borderline", "Name Alice not supplied in rewritten first-person source, though it exists in original seed."]}},
+    "H087": {"overrides": {}},
+    "H088": {"overrides": {}},
+    "H089": {"overrides": {}},
+    "H090": {"overrides": {"message/0/consistency": ["bad", "Prompt says source is present tense but it is already past tense."]}},
+    "H066": {"overrides": {}},
+    "H067": {"overrides": {}},
+    "H068": {"overrides": {}},
+    "H069": {"overrides": {}},
+    "H070": {"overrides": {}},
+    "H071": {"overrides": {}},
+    "H072": {"overrides": {}},
+    "H073": {"overrides": {"conversation/0/compliance": ["borderline", "First revision 183 words slightly exceeds inherited 180-word cap."]}},
+    "H074": {"overrides": {
+      "conversation/0/compliance": ["bad", "Final shortening rewrites opening explicitly requested to be kept."],
+      "exchange_pair/2/consistency": ["bad", "Final opening paragraph is not kept as requested."],
+      "message/3/consistency": ["borderline", "Platform opening moves to across-aisle train scene without boarding."]
+    }},
+    "H075": {"overrides": {
+      "conversation/0/consistency": ["bad", "First-person change transfers Principal Higgins's reflection to Henderson, altering actor."],
+      "conversation/0/compliance": ["bad", "Preserve-events instruction not met: actor of staring/reflection changed."],
+      "exchange_pair/0/consistency": ["bad", "Higgins's action attributed to Henderson rather than observed from his viewpoint."]
+    }},
+    "H076": {"overrides": {}},
+    "H077": {"overrides": {"conversation/0/compliance": ["borderline", "Omniscient viewpoint mostly confined to Elara; Ledger Race mechanism unexplained."]}},
+    "H078": {"overrides": {"conversation/0/compliance": ["bad", "Ending revision reaches 253 words, beyond inherited 240 cap; restored version 245."]}},
+    "H079": {"overrides": {
+      "conversation/0/compliance": ["bad", "Final request says keep ending and condense middle, but ending rewritten too."],
+      "exchange_pair/2/consistency": ["bad", "Final assistant changes ending the user asked to keep."]
+    }},
+    "H080": {"overrides": {}},
+    "H051": {"overrides": {}},
+    "H052": {"overrides": {"seed/0/consistency": ["borderline", "Tiny leaf-and-stick boat appears to carry both children without explanation."]}},
+    "H053": {"overrides": {}},
+    "H054": {"overrides": {"message/1/consistency": ["borderline", "Biography section becomes row of Victorian novels."]}},
+    "H055": {"overrides": {}},
+    "H056": {"overrides": {}},
+    "H057": {"overrides": {}},
+    "H058": {"overrides": {"message/1/consistency": ["borderline", "Goose interruption supplies no reason to know ship docked; historical setting thin."]}},
+    "H059": {"overrides": {}},
+    "H060": {"overrides": {"message/1/consistency": ["borderline", "Diamond ownership contradictory; departs Paddington then travels to London."]}},
+    "H061": {"overrides": {}},
+    "H062": {"overrides": {}},
+    "H063": {"overrides": {}},
+    "H064": {"overrides": {}},
+    "H065": {"overrides": {
+      "seed/0/consistency": ["borderline", "Deck scene abruptly gains sand for burial."],
+      "message/0/consistency": ["borderline", "Source jumps from deck to sand without transition."]
+    }},
+    "H041": {"overrides": {
+      "message/0/grammar": ["borderline", "cirler and skatetboardet spelling."],
+      "conversation/0/consistency": ["borderline", "Motorized skateboard described as magical; unsupported mechanism."],
+      "message_pair/0/consistency": ["borderline", "Mechanical skateboard becomes magical in summary."]
+    }},
+    "H042": {"overrides": {
+      "seed/0/grammar": ["bad", "Repeated stative progressives was believing, were wanting, was realizing."],
+      "message/0/grammar": ["bad", "Kapteinen non-Danish spelling repeated; en af besaetningsmedlemmerne."],
+      "message/1/grammar": ["bad", "kaptein repeated instead of kaptajn."],
+      "conversation/0/consistency": ["borderline", "Young woman becomes young girl in summary."],
+      "message_pair/0/consistency": ["borderline", "Age description shifts from woman to girl."]
+    }},
+    "H043": {"overrides": {"message/0/grammar": ["bad", "Lys farver and hun foelte sig vildfarne wrong inflection."]}},
+    "H044": {"overrides": {"message/0/grammar": ["bad", "de kappede used incorrectly for cloaked people."]}},
+    "H045": {"overrides": {
+      "seed/0/grammar": ["borderline", "a small rain is an unnatural collocation."],
+      "message/0/grammar": ["borderline", "en lille regn and repeated literal passive phrasing."]
+    }},
+    "H046": {"overrides": {
+      "message/0/grammar": ["bad", "bokens instead of bogens."],
+      "message/1/grammar": ["borderline", "en forsvundet droemmenes by is awkward."]
+    }},
+    "H047": {"overrides": {
+      "seed/0/consistency": ["borderline", "Motive for trust/food reframed as seeking friends."],
+      "message/0/grammar": ["bad", "Med ny mod wrong gender; traadte paa skuldrene mistranslates shrugged."],
+      "message/0/clarity": ["borderline", "Fox stepping on shoulders obscures intended gesture."]
+    }},
+    "H048": {"overrides": {}},
+    "H049": {"overrides": {"message/0/grammar": ["bad", "De alle jublende fulgte, blinkeede malformed."]}},
+    "H050": {"overrides": {
+      "message/0/grammar": ["bad", "til at vajede and en kort afsnit."],
+      "message/1/grammar": ["borderline", "spring af tro literal translated expression."]
+    }},
+    "H026": {"overrides": {
+      "message/[1357]/grammar": ["bad", "en gammel messingur, tickede, ingen ur, stormen foelte sig; repeated agreement/verb defects."],
+      "conversation/0/compliance": ["borderline", "Requested science fiction becomes unexplained dream fantasy; later lengths exceed initial range."],
+      "message_pair/0/compliance": ["borderline", "Dream magic rather than identifiable science-fiction premise."]
+    }},
+    "H027": {"overrides": {
+      "message/[57]/grammar": ["bad", "venskab var evig wrong neuter agreement."],
+      "message/3/consistency": ["borderline", "Rewrite moves Leo outside kitchen and drops introduction of living dough."],
+      "message/5/consistency": ["borderline", "Retains abrupt outside-kitchen to dough transition."],
+      "exchange_pair/0/consistency": ["borderline", "Opening revision weakens connection to retained dough scene."]
+    }},
+    "H028": {"overrides": {
+      "message/0/grammar": ["borderline", "bitre-soed malformed adjective."],
+      "message/1/grammar": ["bad", "den gamle bybiblioteks, nogen katalog, en tung hjerte agreement."],
+      "message/3/grammar": ["bad", "en tung hjerte retained."],
+      "conversation/0/compliance": ["bad", "Last request says retain new opening, compress rest; assistant rewrites opening too."],
+      "exchange_pair/2/consistency": ["bad", "Requested preserved opening is shortened and rewritten."]
+    }},
+    "H029": {"overrides": {
+      "message/0/grammar": ["bad", "et haabefuld afslutning wrong agreement."],
+      "message/[1357]/grammar": ["bad", "et gammelt laesepult, gammel papir, Jeg forsigtigt lagde; repeated grammar errors."],
+      "conversation/0/compliance": ["borderline", "Setting is modern retrospective cataloguing rather than clearly historical fiction."]
+    }},
+    "H030": {"overrides": {
+      "message/0/grammar": ["bad", "en generel voksenpublikum, et haabefuld slutning."],
+      "message/2/grammar": ["bad", "den foerste afsnit."],
+      "message/3/grammar": ["bad", "et tidsmaskine."],
+      "message/5/grammar": ["borderline", "guld-hjerte unnatural compound."],
+      "conversation/0/compliance": ["borderline", "Unrequested English Kindness remains in initial Danish versions."]
+    }},
+    "H031": {"overrides": {
+      "message/[13]/grammar": ["bad", "en lille smile malformed noun."],
+      "message/3/clarity": ["borderline", "Repeated han ambiguously switches boy/shopkeeper in final paragraph."],
+      "message/4/grammar": ["bad", "slutningsafsnit ... haabefuld wrong agreement."],
+      "message/5/consistency": ["borderline", "Shop filled with objects suddenly has empty shelves."]
+    }},
+    "H032": {"overrides": {
+      "message/0/grammar": ["bad", "en gylden skaer wrong gender; altting typo."],
+      "conversation/0/compliance": ["borderline", "Just before arrival becomes previous evening; pool becomes puddle."],
+      "message_pair/0/compliance": ["borderline", "Simplification changes temporal specificity and pool scale."]
+    }},
+    "H033": {"overrides": {
+      "message/1/grammar": ["bad", "Et uforklarligt lysmanifestation wrong gender."],
+      "conversation/0/compliance": ["borderline", "Looking at sky becomes horizon; holding breath becomes stiff posture despite preserve-events request."],
+      "message_pair/0/compliance": ["borderline", "Minor event details changed rather than only register."]
+    }},
+    "H034": {"overrides": {
+      "message/0/grammar": ["bad", "English source contains Danish og in giggles og excitement."],
+      "message/1/grammar": ["bad", "sad alene paa gynge lacks article; inconsistent narration tense."]
+    }},
+    "H035": {"overrides": {"message/0/grammar": ["bad", "et skat wrong gender."]}},
+    "H036": {"overrides": {
+      "message/0/grammar": ["bad", "Moerke skyer haenge wrong finite verb."],
+      "message/0/consistency": ["bad", "Claims first person but source alternates pigen and jeg for same protagonist."],
+      "conversation/0/compliance": ["borderline", "Adds name Anna absent in source; conversion otherwise succeeds."]
+    }},
+    "H037": {"overrides": {
+      "message/0/grammar": ["borderline", "dansen foelte sig kedelig awkward subject."],
+      "message/1/grammar": ["bad", "hvor godt hun var should be god."]
+    }},
+    "H038": {"overrides": {
+      "message/1/grammar": ["borderline", "kaempe stor compound; vildledte means misled rather than lost."],
+      "conversation/0/compliance": ["borderline", "Lost becomes misled, changing emotional meaning."],
+      "message_pair/0/compliance": ["borderline", "vildledte mistranslates lost."]
+    }},
+    "H039": {"overrides": {
+      "message/0/grammar": ["bad", "traenedehaardt, sit helte-dragt, glaede er svagt."],
+      "message/1/grammar": ["bad", "Tro du should be Tror du; blinde lyse malformed."]
+    }},
+    "H040": {"overrides": {
+      "conversation/0/compliance": ["bad", "Adds flying-car crash and screw-barking dog despite preserving all facts."],
+      "conversation/0/consistency": ["bad", "Invented outcomes asserted for remembered car and dog project."],
+      "message_pair/0/compliance": ["bad", "Humour adds unsupported car crash and dog behavior."],
+      "message_pair/0/consistency": ["bad", "Source has no car crash or screw-barking dog."]
+    }},
+    "H021": {"overrides": {"message/0/grammar": ["bad", "Varmen ... foeles switches tense incorrectly."]}},
+    "H022": {"overrides": {
+      "message/0/grammar": ["bad", "til teenager missing plural/article."],
+      "message/1/grammar": ["bad", "lille stoevet butik, hoert rygte, det gyldne ramme wrong inflection."],
+      "message/3/grammar": ["bad", "det gyldne ramme and hoert rygte."],
+      "message/4/grammar": ["bad", "den sidste afsnit; bliver mere fokus malformed."],
+      "message/5/grammar": ["bad", "det gyldne ramme and hoert rygte retained."],
+      "conversation/0/consistency": ["bad", "Viewpoint rewrite moves Clara to counter before door opens and omits Elias closing his eyes."],
+      "conversation/0/compliance": ["bad", "Request to preserve all events precisely was not followed in first rewrite."],
+      "exchange_pair/0/consistency": ["bad", "Rewrite changes entrance event and omits final Elias action rather than just viewpoint."]
+    }},
+    "H023": {"overrides": {
+      "message/0/grammar": ["borderline", "teenage laesere compound spelling."],
+      "message/1/grammar": ["bad", "gangare and den anker malformed."],
+      "message/2/grammar": ["bad", "den indledende afsnit wrong gender."],
+      "message/3/grammar": ["bad", "gangare and den anker retained."],
+      "message/5/grammar": ["bad", "gangare and den anker retained."],
+      "message/6/grammar": ["bad", "den indledende afsnit wrong gender."],
+      "message/7/grammar": ["bad", "gangare and den anker retained."]
+    }},
+    "H024": {"overrides": {
+      "message/0/grammar": ["bad", "stjerneballet and publikum jublende malformed source."],
+      "message/1/grammar": ["borderline", "togene plural for single train."],
+      "message/3/grammar": ["borderline", "togene plural retained."],
+      "message/5/grammar": ["bad", "Danse du should be Danser du."]
+    }},
+    "H025": {"overrides": {
+      "message/1/grammar": ["borderline", "biblioteket foelte sig personification awkward in context."],
+      "message/3/grammar": ["borderline", "biblioteket foelte sig retained."],
+      "message/5/grammar": ["bad", "sidde ked ud af det malformed."],
+      "conversation/0/compliance": ["borderline", "Historical fiction request becomes magical fantasy with little historical grounding."],
+      "message_pair/0/compliance": ["borderline", "Historical fiction request met mainly with magical fantasy."]
+    }},
+    "H001": {"overrides": {
+      "seed/0/consistency": ["borderline", "Map and treasure enter abruptly without prior introduction."],
+      "message/1/grammar": ["bad", "lettelsen oversvoemmende mig is malformed; slog mine nakkehaar ud is unnatural."]
+    }},
+    "H002": {"overrides": {
+      "message/0/grammar": ["borderline", "skrevet i jeg-fortaeller is awkward."],
+      "message/1/grammar": ["borderline", "Heavy translated phrasing and afterladende construction."],
+      "message/1/consistency": ["borderline", "Asserted daughter relationship is withdrawn; motives remain unclear."],
+      "conversation/0/compliance": ["borderline", "Ending resolves watch, not the contradictory inheritance revelation."],
+      "message_pair/0/compliance": ["borderline", "Requested resolved ending leaves inheritance motives unexplained."]
+    }},
+    "H003": {"overrides": {
+      "message/1/grammar": ["bad", "Spoegelsen should be spoegelset."]
+    }},
+    "H004": {"overrides": {
+      "message/1/grammar": ["borderline", "fusionreaktor compound spelling."]
+    }},
+    "H006": {"overrides": {
+      "message/0/grammar": ["bad", "et togrejse has wrong noun gender."],
+      "conversation/0/compliance": ["borderline", "Narration remains confined to Leo rather than clearly omniscient."],
+      "message_pair/0/compliance": ["borderline", "Requested omniscient viewpoint not clearly demonstrated."]
+    }},
+    "H007": {"overrides": {
+      "message/1/grammar": ["bad", "lyset begyndte at daempe lacks passive/reflexive form."]
+    }},
+    "H008": {"overrides": {
+      "message/1/grammar": ["borderline", "Odd togvugge and plural opening for one train."]
+    }},
+    "H009": {"overrides": {
+      "message/1/grammar": ["borderline", "sirusen typo; otherwise intelligible."],
+      "conversation/0/compliance": ["borderline", "Final access to neighbour's liking of syrup stretches limited viewpoint."],
+      "message_pair/0/compliance": ["borderline", "Limited viewpoint mildly violated."]
+    }},
+    "H010": {"overrides": {
+      "message/1/grammar": ["bad", "en lasere and et loes gulvbraet."]
+    }},
+    "H011": {"overrides": {
+      "seed/0/consistency": ["borderline", "Winner takes the other's ship, but pirates simply leave; ship handover omitted."],
+      "message/1/consistency": ["bad", "Book falls to boy then he fetches it down from shelf."],
+      "conversation/0/compliance": ["bad", "Realistic complete story contains impossible book custody transition."],
+      "message_pair/0/compliance": ["bad", "Requested realism undermined by book being fetched twice."]
+    }},
+    "H012": {"overrides": {
+      "message/0/grammar": ["bad", "dette blide kaempe and en spor have wrong agreement."],
+      "message/1/grammar": ["borderline", "Dette moedte hans nysgerrighed is awkward."]
+    }},
+    "H013": {"overrides": {
+      "seed/0/consistency": ["borderline", "Answer validated although no question is actually asked."],
+      "message/0/grammar": ["borderline", "urgamal spelling."],
+      "message/0/consistency": ["borderline", "Source validates answer to unspecified question."]
+    }},
+    "H014": {"overrides": {
+      "message/0/grammar": ["bad", "hans fortidens fejl, sine egne frygt, svaerdhed are malformed."]
+    }},
+    "H015": {"overrides": {
+      "message/0/grammar": ["bad", "sit udgangsposition has wrong gender."]
+    }},
+    "H016": {"overrides": {
+      "seed/0/grammar": ["borderline", "Pebble skipped lacks article unless an unexplained proper name."],
+      "message/0/grammar": ["bad", "I anden afsnit wrong agreement; untranslated Pebble skippede."]
+    }},
+    "H017": {"overrides": {
+      "message/0/grammar": ["bad", "Landsbyboerne stoles is malformed verb; anden afsnit wrong agreement."]
+    }},
+    "H018": {"overrides": {
+      "message/0/grammar": ["bad", "Mia stod udkanten missing preposition; farverige toej wrong agreement; tense shift foeles."],
+      "message/1/grammar": ["borderline", "langevarige typo."]
+    }},
+    "H019": {"overrides": {
+      "message/0/grammar": ["bad", "Nysgeligt is malformed; i sin bedstemors loft and satte ud are mistranslated."]
+    }},
+    "H020": {"overrides": {
+      "message/0/grammar": ["bad", "De lo ... og gyser switches tense incorrectly."]
+    }},
+    "H091": {"overrides": {}},
+    "H092": {"overrides": {}},
+    "H093": {"overrides": {}},
+    "H094": {"overrides": {
+      "seed/0/consistency": ["borderline", "Alice wishes for a toy immediately after recovering her own."],
+      "message/0/consistency": ["borderline", "Alice wishes for a toy immediately after recovering her own."]
+    }},
+    "H095": {"overrides": {}},
+    "H096": {"overrides": {}},
+    "H097": {"overrides": {}},
+    "H098": {"overrides": {
+      "seed/0/consistency": ["borderline", "Leaving class to catch a bus then returning to class is an unexplained transition."],
+      "message/0/consistency": ["borderline", "Leaving class to catch a bus then returning to class is an unexplained transition."]
+    }},
+    "H099": {"overrides": {}},
+    "H100": {"overrides": {}},
+    "H101": {"overrides": {
+      "seed/0/grammar": ["bad", "Dangling opening and tense shift; dreams inside him described unidiomatically."],
+      "message/0/grammar": ["bad", "kahani ka shaili has incorrect gender agreement."],
+      "message/1/grammar": ["bad", "meri akelapan and nakhra raha are malformed or misused."],
+      "message/1/consistency": ["borderline", "Kitten jumps in but immediately is too fat to move."]
+    }},
+    "H102": {"overrides": {
+      "seed/0/grammar": ["borderline", "mere pyare addresses Anne with masculine agreement."],
+      "message/1/consistency": ["borderline", "Future handwriting, older reflection and death revelation are not causally connected."],
+      "conversation/0/compliance": ["bad", "The requested logically resolved mystery ends with an unsupported death revelation."],
+      "message_pair/0/compliance": ["bad", "The death twist does not logically resolve the future-dated handwriting."]
+    }},
+    "H103": {"overrides": {
+      "seed/0/grammar": ["bad", "Final sentence has malformed self-inspiration and story-sharing clauses."],
+      "seed/0/clarity": ["borderline", "Final sentence obscures the relation between inspiration, writing and sharing."],
+      "message/0/grammar": ["borderline", "khel-mood and pehli vyakti are awkward translations."]
+    }},
+    "H104": {"overrides": {
+      "seed/0/grammar": ["bad", "kadi paddle chala is malformed; all shapes and shapes repeats a mistranslation."],
+      "seed/0/clarity": ["borderline", "The paddling clause is unclear Hindi."]
+    }},
+    "H105": {"overrides": {
+      "seed/0/grammar": ["bad", "Eagle gender and small bird gender vary inconsistently."],
+      "seed/0/clarity": ["bad", "Spreading wings then taking them off mistranslates flight mechanics."]
+    }},
+    "H106": {"overrides":{"seed/0/clarity":["bad","Turns back to a girl is translated as returning beside a girl; final flight is similarly garbled."],"seed/0/consistency":["bad","Shapeshifting switches from the butterfly girl to Mia without an intelligible transition."],"message/0/grammar":["bad","ek nai srijanatmak likho lacks a noun."],"message/1/grammar":["bad","meri nashte ki machhli and meri gupt mission have incorrect agreement."]}},
+    "H107": {"overrides":{"seed/0/grammar":["bad","Running clause lacks a finite verb; ve sir hilakar clause malformed."],"message/1/consistency":["borderline","Moving a box and trying to dig suddenly amounts to cleaning the entire shop."]}},
+    "H108": {"overrides":{"seed/0/grammar":["bad","Singh ko bahut der ho gai ki lacks realized; awkward falling-on-statue translation."],"seed/0/clarity":["borderline","Final realization clause is malformed."],"message/0/grammar":["bad","kisi kishor pathakon and school ke setting have incorrect agreement."],"message/1/clarity":["borderline","Narrator explicitly announces what the narrator knows instead of narrating naturally."]}},
+    "H109": {"overrides":{"seed/0/grammar":["borderline","dosti sabhi crystal ka sabse bada khazana is awkward comparison."],"message/0/grammar":["bad","ek samanya vayask pathakon mixes singular and plural."],"message/1/grammar":["bad","sir khonchte is a malformed expression for scratching his head."]}},
+    "H110": {"overrides":{"seed/0/grammar":["bad","vah pustakalay mein gaya aur ... kitab mili has mismatched subject construction."],"message/0/grammar":["borderline","pehli purush and journey setting constructions awkward."],"message/1/grammar":["bad","advishth is malformed here; ek chupchap muskan and ek sa santvana have agreement/usage problems."]}},
+    "H111": {"overrides":{"seed/0/grammar":["borderline","neend wale shahar and careless growth are literal/unidiomatic."],"message/1/consistency":["borderline","Sister says mother caught him although mother never appears; teasing could explain it."],"conversation/0/compliance":["borderline","Moving pot is not explicitly tied to hidden brother, weakening requested resolution."],"message_pair/0/compliance":["borderline","Mystery of moving pot only implicitly resolved."]}},
+    "H112": {"overrides":{"seed/0/grammar":["bad","Tense switches and valley gender mismatch."],"seed/0/clarity":["bad","Transforms into a brave fast race; sings a different-colored tune; unclear referents."],"seed/0/consistency":["bad","Transformation into a race is not coherent even within the fantasy."]}},
+    "H113": {"overrides":{"seed/0/grammar":["bad","wave crashes and washes it away rendered as accident; hand tickling and made smile constructions malformed."],"seed/0/clarity":["bad","The mistranslation of made her smile creates a false question about a smiling starfish."],"message/0/grammar":["bad","Embedded seed contains the malformed wave and smiling constructions."],"message/0/clarity":["bad","Question rests on ambiguous mistranslation of made her smile."],"message/1/grammar":["bad","uski apni manavikaran wrong gender."],"conversation/0/consistency":["bad","Treats made her smile as imagined starfish smile rather than correcting the mistranslation."],"message_pair/0/consistency":["bad","Misreads causing a smile as anthropomorphic imagined smiling."]}},
+    "H114": {"overrides":{"seed/0/grammar":["bad","paheli nakkashidar thi and kuch bhi fit nahin hai have malformed construction/tense."],"seed/0/clarity":["borderline","Untranslated red herring suggests a trick without explaining why the valid riddle is misleading."],"message/0/grammar":["bad","diye gaye kahani wrong gender; repeats seed grammar defects."]}},
+    "H115": {"overrides":{"seed/0/grammar":["bad","Broken quotations, car subject omitted and malformed engine-turning clauses."],"seed/0/clarity":["bad","Duck dialogue, reversal/overturning and speaker identities are garbled."],"message/0/grammar":["bad","Source reproduces malformed clauses about straightening car and duck."],"message/0/clarity":["bad","Source has ambiguous duck dialogue and unexplained overturned car."],"conversation/0/consistency":["borderline","Answer calls an unknown girl his own little girl."],"message_pair/0/consistency":["borderline","Answer adds possessive relationship to the little girl."]}},
+    "H116": {"overrides":{"seed/0/grammar":["bad","Repeated tense and pronoun shifts; blue places mistranslates spacecraft."],"seed/0/clarity":["bad","Unclear whose spacecraft creatures board; frog/star comparison and blue places are garbled."],"message/0/grammar":["bad","Embedded story repeats tense, pronoun and translation defects."],"message/0/clarity":["bad","Whose spacecraft the creatures return to is unclear."],"message/1/clarity":["borderline","Faithfully repeats ambiguous own spacecraft without clarifying whose."]}},
+    "H117": {"overrides":{"seed/0/grammar":["bad","use himmanavon ka parivar banane and yadein ... pata nahin tha are malformed."],"seed/0/clarity":["borderline","Memories we never knew is an unclear moral."],"message/0/grammar":["bad","Embedded seed repeats malformed family-making and memory constructions."]}},
+    "H118": {"overrides":{}},
+    "H119": {"overrides":{"seed/0/grammar":["bad","usne ... dikhai din and reflection clauses are malformed."],"seed/0/clarity":["bad","He was real for his dreams and dreams is incoherent."],"message/0/grammar":["bad","Embedded source repeats malformed seeing and reflection clauses."],"message/0/clarity":["bad","Reflection/dreams sentence is incoherent."],"message/1/grammar":["bad","koi chabi ka upyog should be kisi chabi ka upyog."]}},
+    "H120": {"overrides":{"seed/0/grammar":["bad","Final sentence lacks coherent subject; tense and number shifts."],"seed/0/clarity":["bad","Final clause about love carrying someone at night is garbled."],"message/0/grammar":["bad","diye gaye kahani and embedded source grammar defects."],"message/0/clarity":["bad","Embedded story ends in an unclear sentence."]}},
+    "H121": {"overrides":{"seed/0/grammar":["borderline","stumbled upon rendered fell on; laughed like never happened is awkward."],"message/0/grammar":["borderline","Embedded source contains literal stumbled-upon and laughter translations."]}},
+    "H122": {"overrides":{"seed/0/grammar":["bad","Broken trust clause and tense/agreement errors."],"seed/0/clarity":["bad","Football shot rendered firing a bullet; thick tension and slipping team/trust obscure events."],"message/0/grammar":["bad","Source repeats malformed trust clauses."],"message/0/clarity":["bad","Embedded source mistranslates football shot as firing a bullet."]}},
+    "H123": {"overrides":{"seed/0/grammar":["bad","Double negative temporal clause and dangling curious subject; purani oak ke ped wrong agreement."],"seed/0/clarity":["bad","Temporal clause makes losing track of time and boy arrival unclear."],"message/0/grammar":["bad","jise ... likhi and embedded source agreement/clause errors."],"message/0/clarity":["bad","Embedded source contains unclear temporal double-negative clause."]}},
+    "H124": {"overrides":{"seed/0/grammar":["bad","roshni chamak raha and offered alien people and water malformed."],"seed/0/clarity":["bad","Aliens forget families/homes and offer wording incoherent."],"seed/0/consistency":["bad","Departing spaceship lands instead of taking off."],"message/3/grammar":["borderline","Opening topical construction awkward."],"message/3/consistency":["borderline","Curiosity failing to prevent progress reverses intended motivation."],"message/5/grammar":["bad","ghane jhadiyon wrong agreement."],"conversation/0/compliance":["bad","Last story is 170 words below explicit 180 minimum; viewpoint also drifts across characters."],"message_pair/0/compliance":["borderline","Third-person limited viewpoint not consistently anchored; surprise ending weak."],"message_pair/4/compliance":["bad","170 words below explicitly retained 180 minimum."],"exchange_pair/2/consistency":["bad","Final reply violates latest explicit 180-240 length constraint."]}},
+    "H125": {"overrides":{"seed/0/grammar":["bad","Rabbit gender shifts; ek rasile gajar wrong gender; labor hurt clause malformed."],"message/0/grammar":["bad","ek kishoron mixes singular/plural."],"message/[13]/grammar":["bad","lagta hai tumne ... ban gaye ho has incorrect ergative subject."],"message/3/consistency":["borderline","First-person narrator changes to third person at ending, explicitly requested."],"conversation/0/compliance":["bad","Final response 252 words exceeds explicit 240 maximum."],"message_pair/0/compliance":["borderline","Narration accesses both rabbit and gardener rather than consistent limited viewpoint."],"message_pair/4/compliance":["bad","Final reply exceeds 240-word maximum."],"exchange_pair/2/consistency":["bad","Latest explicit length limit violated."]}},
+    "H126": {"overrides":{"seed/0/grammar":["bad","Final waiting universe clause has wrong subject/gender attachment."],"message/0/grammar":["bad","iska shaili wrong gender."],"conversation/0/compliance":["bad","Remote settlement never established; final revision 252 words exceeds retained 240 limit."],"message_pair/0/compliance":["bad","Requested remote settlement is absent."],"message_pair/4/compliance":["borderline","More detail requested but inherited 240-word limit exceeded."],"exchange_pair/2/consistency":["borderline","Revision exceeds preceding explicit length constraint."]}},
+    "H127": {"overrides":{"seed/0/grammar":["bad","Incomplete moving clause, vah upar dekhi, repeated cold and tense errors."],"seed/0/clarity":["bad","Sees her own smile when looking up at others; sliding inside clause garbled."],"message/0/grammar":["bad","ek samanya vayask pathakon singular/plural mismatch."],"message/[1357]/grammar":["bad","kya maine vah galti ki thi jo main dar raha tha lacks required relative construction."]}},
+    "H128": {"overrides":{"seed/0/grammar":["bad","pani mein chhant rahe mistranslates splashing; inconsistent final tense."],"message/[35]/grammar":["bad","rasoi ki counter has wrong gender."],"conversation/0/compliance":["bad","Last version 115 words below explicit 120 minimum; bittersweet ending only weakly realized."],"message_pair/0/compliance":["borderline","Bittersweet mood asserted rather than meaningfully shown."],"message_pair/4/compliance":["bad","115 words below explicit 120 minimum."],"exchange_pair/2/consistency":["bad","Latest explicit length constraint violated."]}},
+    "H129": {"overrides":{"seed/0/grammar":["bad","chuha ne wrong oblique; fox gender changes."],"message/[135]/consistency":["bad","Narration asserts coin stored in bag, then reveals it was in pocket."],"message_pair/4/compliance":["borderline","Ending becomes absurd rather than understated; 182 vs inherited 180 maximum."],"conversation/0/compliance":["borderline","Final ending phones a dog without explanation; barely exceeds inherited length limit."]}},
+    "H130": {"overrides":{"seed/0/clarity":["borderline","Everyone cared for her sentence duplicated verbatim."],"message/0/clarity":["borderline","Source repeats sentence; asks to change viewpoint already third person."],"message/1/clarity":["borderline","Calling Kim an administrator is an awkward replacement for orderly."],"conversation/0/consistency":["borderline","Adds every leaf shining and calls her administrator, not explicit in source."],"message_pair/0/consistency":["borderline","Minor unsupported additions in otherwise faithful rewrite."]}},
+    "H131": {"overrides":{"seed/0/grammar":["bad","kitna garmjoshi wrong agreement; quotation incorporates narration."],"seed/0/clarity":["bad","Note says stones share, then Mia smiled within quote."],"message/0/grammar":["bad","Embedded story repeats warmth agreement and broken quotation."],"message/0/clarity":["bad","Broken note quotation obscures source meaning."]}},
+    "H132": {"overrides":{"seed/0/grammar":["bad","Person filled with rainclouds and tense changes are mistranslated constructions."],"seed/0/clarity":["bad","Power translated electricity; boy filled with rainclouds; spirit says I found it instead of you found me."],"message/0/grammar":["bad","Embedded source retains malformed raincloud clauses."],"message/0/clarity":["bad","Embedded source electricity/power and raincloud mistranslations."],"message/1/grammar":["bad","atma prakat hui aur poochha mismatches grammatical subject."]}},
+    "H133": {"overrides":{"seed/0/grammar":["bad","Fragment pulling him back; bubble-in-bubble clause lacks coherent subject."],"seed/0/clarity":["bad","Wave/bubble/pearl acquisition passage garbled."],"message/0/grammar":["bad","Source repeats broken wave and bubble clauses."],"message/0/clarity":["bad","Embedded bubble/pearl passage unclear."],"conversation/0/compliance":["borderline","Requested dialogue-based retelling remains almost entirely narration."],"message_pair/0/compliance":["borderline","Only one spoken line plus thought in supposedly dialogue-based rewrite."]}},
+    "H134": {"overrides":{}},
+    "H135": {"overrides":{"seed/0/grammar":["borderline","aamantrit chamak is literal rather than inviting glow."],"message/0/grammar":["borderline","Source repeats literal inviting glow construction."],"message/1/grammar":["bad","maine aur mere dost ... ne mismatched coordination; challenge ... tha agreement."],"conversation/0/consistency":["borderline","Glow becomes strange instead of inviting, but core events preserved."],"message_pair/0/consistency":["borderline","Changes inviting glow into strange glow despite facts-preservation instruction."]}},
+    "H136": {"overrides":{"seed/0/grammar":["bad","aadmi ne muskuraya incorrect ergative; asked without question."],"seed/0/clarity":["borderline","Man in clothes and unspoken question obscure exchange."],"message/0/grammar":["bad","Embedded source has incorrect ergative and missing question."]}},
+    "H137": {"overrides":{"seed/0/grammar":["bad","ghadi ka minar agreement and woman appeared/whispered construction."],"seed/0/consistency":["bad","Says people are busy looking at beauty, reversing the intended lesson that they miss it."],"message/0/grammar":["bad","Embedded source repeats minar and whispered agreement errors."],"message/0/consistency":["bad","Embedded source reverses intended too-busy-to-see meaning."],"message/1/grammar":["bad","ghadi ka minar and khali haan chhod sakti are malformed."],"message/1/clarity":["bad","Leaving us empty yes is a corrupt expression for empty-handed."]}},
+    "H138": {"overrides":{"seed/0/grammar":["bad","Fish agreement, tezi se haath lekar and singular/plural changes."],"message/0/grammar":["bad","Embedded source fish agreement and tezi se haath construction."],"message_pair/0/compliance":["borderline","Past progressive remains despite simple-past instruction, though natural Hindi retelling."],"conversation/0/compliance":["borderline","Not strictly simple past throughout."]}},
+    "H139": {"overrides":{"seed/0/grammar":["bad","camera ne oblique error; kicking back to surface and ending-up mistranslations."],"seed/0/clarity":["bad","Shutting imagination and taking closed pictures in every story is incoherent."],"message/0/grammar":["bad","diye gaye kahani and embedded source defects."],"message/0/clarity":["bad","Embedded imagination/picture sentences incoherent."],"message/1/grammar":["bad","maine camera uthaya aur tat par vapas aa gai mismatched subject marker."]}},
+    "H140": {"overrides":{"seed/0/grammar":["bad","Repeated malformed whisper clauses, main bahar kadam rakha, final tense shifts."],"seed/0/clarity":["bad","Rose/slingshot smell, own eyes watching self, heartbeat thumping garden, trapped feet are garbled."],"message/0/grammar":["bad","Embedded source repeats extensive malformed clauses."],"message/0/clarity":["bad","Embedded source contains multiple unintelligible sensory/action clauses."]}},
+    "H141": {"overrides":{"seed/0/grammar":["bad","Multiple incomplete/incorrect crystal, fear and final sky-shining clauses."],"seed/0/clarity":["bad","Crystal loses souls and turns house souls; final boy/starlight referents incoherent."],"message/0/grammar":["bad","Embedded source contains malformed crystal and final clauses."],"message/0/clarity":["bad","Embedded crystal/soul and sky-shining passages incoherent."],"message/1/grammar":["bad","andhere dharaon wrong feminine plural agreement."]}},
+    "H142": {"overrides":{"seed/0/grammar":["bad","Stranger masculine then feminine; embraced-memory clause malformed."],"seed/0/clarity":["borderline","With each memory he hugged obscures emotional connection."],"message/0/grammar":["bad","diye gaye kahani; source stranger agreement and memory clause errors."],"message/0/clarity":["borderline","Embedded embraced-memory clause unclear."]}},
+    "H143": {"overrides":{"seed/0/grammar":["bad","Strawberries treated as masculine; broad smile rendered vyapak roop se."],"message/0/grammar":["bad","Embedded strawberry gender errors."],"message/1/grammar":["bad","tode gaye strawberry ... saajha kiye has wrong gender agreement."]}},
+    "H144": {"overrides":{"conversation/0/consistency":["borderline","Source says note led to treasure more precious than gold; summary calls note itself more precious."],"message_pair/0/consistency":["borderline","Minor shift of what was more precious than gold."]}},
+    "H145": {"overrides":{"seed/0/grammar":["bad","Garden feminine agreement, girl akela, malformed final filling-place clause."],"message/0/grammar":["bad","Embedded source garden/girl agreement and final clause errors."]}},
+    "H146": {"overrides":{"seed/0/clarity":["bad","Nerves literally become veins in air; last-minute entry wording unclear."],"message/0/clarity":["bad","Source says veins mingle in air."],"message/1/grammar":["bad","apne kala pradarshani wrong agreement."],"message/1/clarity":["bad","Facing last-minute courage is not a meaningful rendering of confronting a challenge."]}},
+    "H147": {"overrides":{"seed/0/grammar":["bad","Friends comma fragment and tense shifts."],"seed/0/clarity":["borderline","Thrilled by fear of hope is unclear."],"seed/0/consistency":["borderline","Village explicitly not lost city but ending calls it city fading again."],"message/0/grammar":["bad","Embedded friends fragment and tense shifts."],"message/0/clarity":["borderline","Embedded hope-fear phrase unclear."],"message/0/consistency":["borderline","Village shifts to city at sunset without explanation."]}},
+    "H148": {"overrides":{"seed/0/grammar":["bad","barfali misspelling and ve kitna maza layengi wrong agreement."],"message/0/grammar":["bad","Repeats source spelling and agreement errors."]}},
+    "H149": {"overrides":{"seed/0/grammar":["bad","Leo ne bhonka incorrect ergative; dangling reach-outside clause."],"seed/0/clarity":["bad","Children/dog rather than leaf appear to spin in air out of reach."],"message/0/grammar":["bad","diye gaye kahani and embedded dangling clauses."],"message/0/clarity":["bad","Embedded out-of-reach spinning sentence obscures subject."]}},
+    "H150": {"overrides":{"seed/0/grammar":["bad","Girl smiled inflection, cart pulling and friends hands clauses malformed."],"seed/0/clarity":["bad","Punching cart, washed by warmth, alone winning and pride dust literal translations obscure meaning."],"message/0/grammar":["bad","Embedded source contains repeated malformed constructions."],"message/0/clarity":["bad","Embedded source contains unintelligible cart/warmth/pride clauses."]}},
+    "H151": {"overrides":{"message/1/consistency":["borderline","Scroll disclosure instantly ends entrenched coercion without showing elders' response."],"conversation/0/compliance":["borderline","Resolution is asserted rather than demonstrated."]}},
+    "H152": {"overrides":{}},
+    "H153": {"overrides":{"message/1/consistency":["borderline","Ingredients unavailable in modern times found in ordinary local market; magical rarity could explain."]}},
+    "H154": {"overrides":{"message/1/consistency":["bad","Photo does not establish escape, failed rescue or reason silence protects her; conclusions unsupported."],"conversation/0/compliance":["bad","Requested logically resolved mystery has no evidenced resolution."],"message_pair/0/compliance":["bad","Ending infers an entire hidden history from a photo without logical support."]}},
+    "H155": {"overrides":{"message/1/clarity":["bad","His hands are polished with cloth instead of window; dripping second hand is awkward."],"message/1/consistency":["borderline","Clock-repair succession unexplained after father's dry-goods store; ageing timescale compressed."]}},
+    "H156": {"overrides":{"conversation/0/compliance":["bad","Entirely melancholy farewell lacks requested playful tone."],"message_pair/0/compliance":["bad","No playful tone in otherwise coherent bittersweet story."]}},
+    "H157": {"overrides":{"message/1/consistency":["borderline","Forgotten Halloween charm already harvested and carried leaves timing vague; Tokaido line/Hikari nomenclature loose."]}},
+    "H158": {"overrides":{"message/1/consistency":["borderline","Forbidden room suddenly congratulated for reading, without explaining librarian's reversal."]}},
+    "H159": {"overrides":{"message/1/clarity":["borderline","Dry cloth offered for taking shelter is awkward, but understandable as rain protection."]}},
+    "H160": {"overrides":{"message/1/clarity":["borderline","Return it next time despite immediate return is an awkward instruction."]}},
+    "H161": {"overrides":{"seed/0/grammar":["bad","kenkyoku-na is not a meaningful standard adjective here."],"seed/0/clarity":["borderline","Opening adjective unintelligible though plot clear."],"message/0/grammar":["bad","Title and source repeat malformed kenkyoku adjective."],"message/0/clarity":["borderline","Malformed adjective in title and source."]}},
+    "H162": {"overrides":{}},
+    "H163": {"overrides":{}},
+    "H164": {"overrides":{"seed/0/grammar":["borderline","kekkyoku opening has no preceding event to conclude."],"message/0/grammar":["borderline","Embedded story opens with dangling eventually."]}},
+    "H165": {"overrides":{"seed/0/grammar":["borderline","ookina ame is unnatural rather than ooame."],"message/0/grammar":["borderline","Large rain is unnatural phrasing."]}},
+    "H166": {"overrides":{}},
+    "H167": {"overrides":{"seed/0/grammar":["borderline","hayakumo opening has no timeline; stone conveyed to village is awkward."],"message/0/grammar":["borderline","Source repeats unsupported already opening and conveyed stone phrase."]}},
+    "H168": {"overrides":{}},
+    "H169": {"overrides":{}},
+    "H170": {"overrides":{"message/1/grammar":["bad","yosei ni jibun no basho o okashite ... has broken case relations."],"message/1/clarity":["borderline","Final paraphrase blurs whose place was intruded upon."]}},
+    "H171": {"overrides":{"message/2/grammar":["bad","Turkish degistir inserted into Japanese instruction."],"message/2/clarity":["borderline","Foreign verb may be unintelligible to monolingual Japanese reader."],"conversation/0/compliance":["bad","No identifiable historical setting and abstract language poorly matched to children."],"message_pair/0/compliance":["bad","Requested historical children's fiction lacks historical anchoring and uses abstract adult diction."]}},
+    "H172": {"overrides":{"message/[1357]/consistency":["bad","Cat dumping cans in sea is called cleaning sea; ownership/location of supposedly stolen can inconsistent."],"conversation/0/consistency":["bad","Contradictory can logistics and sea-cleaning explanation persist across replies."],"conversation/0/compliance":["bad","Final revisions exceed retained 600-character maximum (687 and 642)."],"message_pair/4/compliance":["borderline","Ending-only edit pushes total above inherited 600 maximum."],"message_pair/6/compliance":["borderline","Undo correct but output remains over inherited length limit."]}},
+    "H173": {"overrides":{"message/[135]/clarity":["borderline","Light-years used as elapsed time rather than distance; intended meaning understandable."],"message_pair/4/compliance":["borderline","New final paragraph references Saeki's dream-ticket words which were deleted from that version."],"message/5/consistency":["borderline","Earlier-seen evening star and dream-ticket speech no longer occur earlier in revised story."],"conversation/0/compliance":["borderline","Local edit leaves dangling earlier-seen star and removed speech references."]}},
+    "H174": {"overrides":{"message/0/clarity":["bad","First-person limited third-person viewpoint is a contradictory specification."],"message/[1357]/consistency":["borderline","Door already open then opened again."],"message/[35]/clarity":["borderline","Cobblestones shatter under running shoes without establishing superhuman force."],"conversation/0/compliance":["bad","Later revisions exceed inherited 800-character maximum (879 and 836)."],"message_pair/2/compliance":["bad","Requested fear before entering garden instead starts on its paving."],"message_pair/4/compliance":["borderline","Final edit exceeds inherited length limit."],"message_pair/6/compliance":["borderline","Undo correct but total still exceeds inherited length limit."]}},
+    "H175": {"overrides":{}},
+    "H176": {"overrides":{"message/[1357]/consistency":["bad","Invokes sweetness comparison but argues expiry/digestive risk, not sweetness."],"message/[35]/grammar":["borderline","Chinese-like humming expression onari is unnatural Japanese."],"message/[17]/clarity":["borderline","Leftovers floating in kitchen instead of their smell."]}},
+    "H177": {"overrides":{"seed/0/consistency":["borderline","Past-world girl knows flying future; return to book-world vs home is ambiguous."],"message/[1357]/consistency":["bad","Bottle creates ice cream then is explained as rewinding time, then only shows footage; claimed resolution does not reconcile rules."],"conversation/0/compliance":["borderline","Surprising ending resolves emotions but not contradictory bottle mechanism."],"message_pair/0/compliance":["borderline","Mechanism of time bottle not coherently resolved."]}},
+    "H178": {"overrides":{"message/0/clarity":["borderline","A slice requested without life, though intended genre inferable."],"conversation/0/compliance":["bad","Narration accesses group perceptions and feelings rather than one limited viewpoint."],"message_pair/0/compliance":["bad","Omniscient group interiority contradicts third-person limited request."]}},
+    "H179": {"overrides":{"message/[57]/consistency":["bad","Narrator inexplicably back on ground while everyone was floating; old man's opposite pad effects unexplained."],"conversation/0/compliance":["bad","Later versions exceed inherited 600 maximum (619,668,644)."],"message_pair/2/compliance":["borderline","Opening-only edit preserves text but exceeds inherited length bound."],"message_pair/4/compliance":["borderline","Ending-only edit exceeds inherited length bound."],"message_pair/6/compliance":["borderline","Undo preserves edits but total still exceeds inherited length bound."]}},
+    "H180": {"overrides":{"seed/0/consistency":["borderline","Children shout future but arrive in past; group becomes two at ending."],"message/0/consistency":["borderline","Embedded source future/past mismatch and changing group size."],"message/3/consistency":["borderline","Settlers arriving now alongside cardboard toys and older established village creates weak chronology."],"message/5/consistency":["borderline","Same newly founded settlement vs old village chronology unclear."],"conversation/0/compliance":["borderline","Final shortening 310 characters versus originally 400 minimum, though later request asks shorter."],"message_pair/2/consistency":["borderline","Requested first-paragraph change creates chronological tension with preserved story."]}},
+    "H181": {"overrides":{"message/1/grammar":["borderline","Double naranu construction in opening is clumsy."],"conversation/0/consistency":["borderline","Moss and blowing bubbles added under strict unchanged-facts instruction; main plot preserved."],"message_pair/0/consistency":["borderline","Adds small actions/details beyond stylistic rewrite."]}},
+    "H182": {"overrides":{"seed/0/clarity":["borderline","Opening omits who heard whom while swimming."],"message/0/clarity":["borderline","Source opening lacks clear listener."]}},
+    "H183": {"overrides":{"conversation/0/consistency":["borderline","Separate catches collapse into cooperatively catching one fish."],"message_pair/0/consistency":["borderline","Catch sequence condensed ambiguously despite unchanged-facts constraint."]}},
+    "H184": {"overrides":{}},
+    "H185": {"overrides":{"conversation/0/consistency":["bad","Invents gateball chase, signs and prior quarrels not in source."],"conversation/0/compliance":["bad","Explicit unchanged-events instruction violated with invented incidents."],"message_pair/0/consistency":["bad","New chase/sign incidents and old quarrels absent from source."],"message_pair/0/compliance":["bad","Rewrite changes events rather than only comic style."]}},
+    "H186": {"overrides":{"seed/0/grammar":["bad","nakama o yobikake uses wrong particle."],"message/0/grammar":["bad","Embedded source wrong particle."],"message/0/clarity":["bad","Claims source first person though it is already third person; directly connect prose ambiguous."]}},
+    "H187": {"overrides":{}},
+    "H188": {"overrides":{"message/0/clarity":["bad","Says text is first person despite third-person Satoshi narration."],"message/0/grammar":["borderline","jikan wasurete missing particle in source."]}},
+    "H189": {"overrides":{}},
+    "H190": {"overrides":{"seed/0/grammar":["borderline","Realistic city is an odd adjective."],"message/0/grammar":["borderline","Source realistic city collocation awkward."],"message/1/grammar":["bad","aite ga baketsu o uchufuku da to shitemo is malformed."],"message/1/clarity":["bad","Partner/bucket/spacesuit moral clause incoherent."],"conversation/0/consistency":["bad","Actual space travel replaced with pretend play and explicitly no takeoff."],"conversation/0/compliance":["bad","Changes core event despite unchanged-facts instruction."],"message_pair/0/consistency":["bad","Source actual space voyage becomes imaginary."],"message_pair/0/compliance":["bad","Core plot changed."]}},
+    "H191": {"overrides":{}},
+    "H192": {"overrides":{}},
+    "H193": {"overrides":{}},
+    "H194": {"overrides":{"message/0/grammar":["borderline","tanhpen koji is Chinese-like usage for short story."]}},
+    "H195": {"overrides":{"message/1/grammar":["bad","hoka no gakki no oto o kikoenaku suru incorrect causative construction."],"message/1/clarity":["borderline","Large trumpet rather than loud trumpet sound."]}},
+    "H196": {"overrides":{}},
+    "H197": {"overrides":{"conversation/0/consistency":["bad","Summary says wishes on shooting star; source wishes before shooting star appears."],"message_pair/0/consistency":["bad","Reverses wish/shooting-star temporal relation."]}},
+    "H198": {"overrides":{}},
+    "H199": {"overrides":{"seed/0/grammar":["borderline","hitobito ni awaseru omits who is introduced; intended mutual meeting inferable."],"message/0/grammar":["borderline","Source mutual-meeting case marking awkward."]}},
+    "H200": {"overrides":{"seed/0/grammar":["bad","shikkari to and hayaku orphaned opening adverbs are unnatural."],"message/0/grammar":["bad","Embedded source contains dangling initial adverbs."]}},
+    "H005": {"overrides": {
+      "message/1/grammar": ["bad", "var kold og vejet tungt has incorrect verb form."]
+    }}
+  }
+}

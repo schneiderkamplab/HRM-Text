@@ -1,0 +1,167 @@
+{
+  "assessment": "Favor delaying decay and entering epoch 2, with moderate confidence; no live plan changed.",
+  "steps": {
+    "250000": {
+      "multilingual_v1": {
+        "score": 0.4525750729575308,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "43e8c0f99131f3af2f5ba8055166e1c351ff86a80616e389c6dd1dd938803630"
+      },
+      "english_v2": {
+        "score": 0.5507501451394515,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "e22443c1d6a59d0dceaa91f092657e70e5bab5424404ec838687c6e09ec10d85"
+      },
+      "dfm13_new_languages_v1": {
+        "score": 0.46355461819724797,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "f1f4653c1aa30c0c8552b8bb5180e616880e36f6ce5cfc116c0d21fb15c1cf53"
+      },
+      "dfm14_new_languages_v2": {
+        "score": 0.7142604207359875,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "c81349b5ca32a7f62e0ed7ac6a1f37e4f4736f918785e8d20d4cabf17a72e934"
+      }
+    },
+    "300000": {
+      "multilingual_v1": {
+        "score": 0.46655827208522976,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "43e8c0f99131f3af2f5ba8055166e1c351ff86a80616e389c6dd1dd938803630"
+      },
+      "english_v2": {
+        "score": 0.5512421863667123,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "e22443c1d6a59d0dceaa91f092657e70e5bab5424404ec838687c6e09ec10d85"
+      },
+      "dfm13_new_languages_v1": {
+        "score": 0.46933338662532254,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "f1f4653c1aa30c0c8552b8bb5180e616880e36f6ce5cfc116c0d21fb15c1cf53"
+      },
+      "dfm14_new_languages_v2": {
+        "score": 0.7210581103602607,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "c81349b5ca32a7f62e0ed7ac6a1f37e4f4736f918785e8d20d4cabf17a72e934"
+      }
+    },
+    "350000": {
+      "multilingual_v1": {
+        "score": 0.4686142738917391,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "43e8c0f99131f3af2f5ba8055166e1c351ff86a80616e389c6dd1dd938803630"
+      },
+      "english_v2": {
+        "score": 0.5640008822015563,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "e22443c1d6a59d0dceaa91f092657e70e5bab5424404ec838687c6e09ec10d85"
+      },
+      "dfm13_new_languages_v1": {
+        "score": 0.46729757939950783,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "f1f4653c1aa30c0c8552b8bb5180e616880e36f6ce5cfc116c0d21fb15c1cf53"
+      },
+      "dfm14_new_languages_v2": {
+        "score": 0.7267179595436544,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "c81349b5ca32a7f62e0ed7ac6a1f37e4f4736f918785e8d20d4cabf17a72e934"
+      }
+    },
+    "400000": {
+      "multilingual_v1": {
+        "score": 0.4794791456485184,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "43e8c0f99131f3af2f5ba8055166e1c351ff86a80616e389c6dd1dd938803630"
+      },
+      "english_v2": {
+        "score": 0.5749494640971989,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "e22443c1d6a59d0dceaa91f092657e70e5bab5424404ec838687c6e09ec10d85"
+      },
+      "dfm13_new_languages_v1": {
+        "score": 0.473027907755626,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "f1f4653c1aa30c0c8552b8bb5180e616880e36f6ce5cfc116c0d21fb15c1cf53"
+      },
+      "dfm14_new_languages_v2": {
+        "score": 0.7306324594643375,
+        "coverage": 1.0,
+        "complete": 1,
+        "definition_sha256": "c81349b5ca32a7f62e0ed7ac6a1f37e4f4736f918785e8d20d4cabf17a72e934"
+      }
+    }
+  },
+  "sampled_training_loss": [
+    {
+      "start": 200000,
+      "end": 250000,
+      "n": 357,
+      "mean": 1.2226
+    },
+    {
+      "start": 250000,
+      "end": 300000,
+      "n": 352,
+      "mean": 1.1987
+    },
+    {
+      "start": 300000,
+      "end": 350000,
+      "n": 368,
+      "mean": 1.1814
+    },
+    {
+      "start": 350000,
+      "end": 400000,
+      "n": 321,
+      "mean": 1.1796
+    },
+    {
+      "start": 400000,
+      "end": 450000,
+      "n": 217,
+      "mean": 1.177
+    }
+  ],
+  "loss_caveat": "W&B sampled history, not all updates; last interval partial to approximately 432K; training loss, not held-out loss.",
+  "source": "logs/scheduler/B_dfm15_gemma4_epoch1_20261103/rows/b-dfm15-STEP-*/population_metrics.json; W&B peter-sk-sdu/DFM5/B-dfm15-gemma4-epoch1",
+  "schedule": {
+    "current_decay": [
+      450000,
+      512923
+    ],
+    "staged_decay": [
+      962923,
+      1025846
+    ],
+    "literal_last_full_50k_plus_remainder": [
+      950000,
+      1025846
+    ]
+  },
+  "limitations": [
+    "No cooled checkpoint counterfactual",
+    "No epoch-2 observations yet",
+    "No held-out loss curve inspected",
+    "Historical aggregate multilingual metrics have incomplete coverage; comparison uses four complete subpopulations"
+  ],
+  "references": [
+    "https://arxiv.org/abs/2410.05192",
+    "https://arxiv.org/abs/2305.16264"
+  ]
+}

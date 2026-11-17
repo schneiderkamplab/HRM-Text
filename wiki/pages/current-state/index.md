@@ -1,5 +1,9 @@
 # Current State Concepts
 
+* [DFM11 MixedLM experiments](2026-11-15-dfm11-mixedlm.md) - Fork-style target-only B/Transformer preparations, attention contract and verification.
+
+* [DFM11 B/Transformer alternating training](2026-11-10-dfm11-architecture-comparison.md) - Full-backprop causal B, 150K disk stop, and alternating 50K eval intervals.
+
 * [DFM8 XXL 200K Eval Recovery](2026-08-29-dfm8-xxl-200k-eval-recovery.md) - Verified 201K pause, 200K export/eval, worker-race fix, and training continuation.
 * [Mimir HF Export Tokenizer Path](2026-08-29-mimir-hf-export-tokenizer-path.md) - Explicit tokenizer override for exports after the `/work/dfm` to `/work/mimir` migration.
 * [DFM9 XXL-32 20K EuroEval](2026-08-26-dfm9-xxl32-20k-euroeval.md) - Completed and synced task metrics, failed VaLEU boundary, and early-checkpoint interpretation.
@@ -65,3 +69,9 @@
 * [DFM5 XXS and Later Evaluation Records](dfm5-xxs-step-50k-full-eval/) - Recovered focused records from the historical aggregate section.
 * [DFM9 8K Resume From Step 2137000](2026-08-25-dfm9-8k-resume.md) - Verified scheduler resume and separate Rich monitor.
 * [vLLM FlashInfer Version Mismatch](2026-08-25-vllm-flashinfer-mismatch.md) - Root cause of persistent vLLM startup status 71.
+
+* [B DFM15 second-epoch schedule and assessment](2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md) - Staged delayed cooldown and progress evidence through 400K.
+
+* [Transformer48 DFM11 causal baseline](2026-11-09-transformer48-dfm11-causal.md) - Prepared baseline, smoke status, and B final publication repair.
+
+* [DFM11 attention and loss ablations](2026-11-14-dfm11-objective-ablation.md) — three-run rotation followed by Transformer causal/target-only.

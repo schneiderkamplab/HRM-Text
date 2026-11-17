@@ -8,7 +8,7 @@ tags:
 - training
 - evaluation
 status: stable
-last_updated: 2026-06-28
+last_updated: 2026-10-22
 confidence: high
 part_of: /pages/dfm6-plan.md
 ---
@@ -229,6 +229,37 @@ nice -n 10 ionice -c2 -n7 \
 Confidence: high from local failure log and restarted worker process.
 
 SWE sharding update later on 2026-06-19:
+
+**Reconstruction update (2026-10-21):** reuse this split/join design for the
+HF-only DFM6 rebuild, too. The monolithic reconstruction was stopped after
+10,522 other tasks completed; SWE was only about 12% through its source.
+`scripts/rebuild_dfm6.py tokenize` now reuses completed non-SWE receipts,
+splits the pinned HF SWE input into 32 complete-conversation shards using
+`scripts/split_jsonl_objects.py`, and runs 32 bounded-memory HF tokenizer
+workers. It uses the frozen historical adapter/template, not current chat
+conversion semantics. The split must contain exactly 46,278 objects; source
+and shard SHA-256 hashes are checked. `scripts/join_tokenized_shards.py`
+restores source order and adjusts token offsets. All five joined arrays must
+match historical SWE before linking into the reconstructed union. Sampling
+still waits for verification of every source task.
+
+Working directories under `data/rebuild_hf_dfm/serial-queue/dfm6`:
+`swe_split`, `swe_sources`, and `swe_tokenized`. The existing filesystem
+watchdog still guards the entire process group. Do not reuse the interrupted
+monolithic `.chat-*` partial output. The streaming tokenizer itself was not
+edited during this transition, preserving the 10,522 completed cache receipts.
+A multi-turn, multi-line JSON split/tokenize/join test confirms equality with
+monolithic tokenization, including all four index arrays; 11 focused tests pass.
+
+**October 22 recovery:** all SWE shards and their merge completed; all five
+merged arrays matched historical SWE. The later full-source comparison
+stopped with its last progress line at 5,150/10,523, while `plan.json` still
+said `running`. No reconstruction process or lock holder remained. The logs
+do not establish why the processes disappeared; there was no recorded slow-FS
+watchdog stop. Restarted the existing guarded runner from `verify` at 06:19
+CEST, without resetting completed tokenization. Verification restarts its scan
+because it has no per-task durable comparison receipts. Always corroborate
+queue status with live PIDs and fresh log activity before reporting it running.
 
 - `nemotron_swe/data/swe.jsonl` was split into 32 complete-JSON-object shards
   under `data/dfm6_swe_jsonl_shards` with `scripts/split_jsonl_objects.py`.

@@ -8,7 +8,7 @@ tags:
 - provenance
 - privacy
 status: stable
-last_updated: 2026-08-29
+last_updated: 2026-10-27
 confidence: high
 part_of: /pages/data-mix-policy.md
 ---
@@ -44,7 +44,9 @@ Exclude by default:
 - Raw Oliver Kinch document corpora such as `danish_wikipedia`, `eur-lex`, `tidsskrift-dk`, `tidsskrift-dk-en`, `danmarks-statistik`, `danish-university-portals`, `doab-da`, and `dst-table-prompts`; the current plan allows only Danish DynaWord as raw continuation data.
 - `oliverkinch/dsk-bt`; the card says it is derived from non-public internal DSK material and is not intended for public redistribution.
 - `oliverkinch/da-bird`; useful as an evaluation/text-to-SQL benchmark, but its Harbor task layout and CC-BY-SA inherited BIRD tasks make it a poor fit for the current mixed training corpus.
-- `oliverkinch/dynaword-no-bt`; Norwegian rather than Danish.
+- `oliverkinch/dynaword-no-bt`; Norwegian rather than Danish. **Superseded
+  2026-10-27 for DFM16:** owner approved this multilingual addition at repeat
+  1. Native conversion/tokenization completed; see [DFM16](../dfm16-plan.md).
 - Small/no-license synthetic/demo datasets (`life-in-the-uk-multiple-choice`, `synthetic-qa`, `synthetic-qa-context-qa`, `mt_da_uk`) unless separately justified.
 
 Confidence: medium for source-card safety; high for local manifest/converter support after `py_compile` and downloader dry-run.

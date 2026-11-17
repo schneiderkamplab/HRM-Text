@@ -1,0 +1,706 @@
+{
+  "schema": "decision-source-inventory-v1",
+  "scope": "Exact identifier union over enumerated local metadata inputs; not unique underlying datasets or row census",
+  "regenerate": "python scripts/build_decision_dataset_inventory.py",
+  "artifacts": {
+    "full_evidence": "source-inventory.json.gz",
+    "index": "source-inventory.tsv",
+    "overview": "source-inventory-summary.json"
+  },
+  "rubric": {
+    "A": "existing label/options candidate",
+    "B": "mechanical target candidate; corruption-validity filtering required",
+    "C": "validated negatives/new adjudication needed",
+    "D": "unmapped/deferred; not a quality verdict"
+  },
+  "limitations": [
+    "All recipe assignments are inferred from identifiers, not verified source schemas or checked rows.",
+    "No accepted/generated reference is assumed uniquely best; eligibility requires recipe safeguards.",
+    "Repositories, export packages, sampling prefixes and source keys overlap; their counts must not be summed as unique datasets.",
+    "not_observed_same_identifier_in_dfm15_metadata does not imply removal; renames/replacements may retain lineage.",
+    "Sampling report totals can span multiple epochs and are not unique rows or per-epoch counts.",
+    "Stored ranges can contain zero-selected or superseded rows; registry and downloader declarations do not prove training exposure.",
+    "DFM9 union_manifest is known stale and deliberately unused; no implicit inheritance or name-based repository alias merging.",
+    "Only enumerated metadata inputs are exhaustive; unregistered/deleted historical inputs and original label availability remain unknown."
+  ],
+  "summary": {
+    "records": 8810,
+    "by_kind": {
+      "export_package": 83,
+      "local_collection": 7,
+      "repository": 1593,
+      "sampling_prefix": 363,
+      "source_key": 6764
+    },
+    "by_assessment_family": {
+      "grounded_or_open_response": 5199,
+      "existing_label_candidate": 456,
+      "unmapped_unknown": 1220,
+      "math_code_reasoning": 639,
+      "tool_agentic": 868,
+      "text_reconstruction": 199,
+      "continuation_needs_validated_negatives": 90,
+      "raw_or_transform_unresolved": 31,
+      "preference": 20,
+      "paragraph_order": 88
+    },
+    "exact_task_names": 48429,
+    "per_dfm_evidence_observations": {
+      "1": {
+        "declared_sampling_rule": 61,
+        "reported_sampled_positive": 1377
+      },
+      "2": {
+        "declared_sampling_rule": 71,
+        "reported_sampled_positive": 1827
+      },
+      "3": {
+        "declared_sampling_rule": 84,
+        "reported_sampled_positive": 4689
+      },
+      "4": {
+        "declared_sampling_rule": 223,
+        "reported_sampled_positive": 9158
+      },
+      "5": {
+        "declared_sampling_rule": 85,
+        "reported_sampled_positive": 10530,
+        "reported_sampled_zero": 2830
+      },
+      "6": {
+        "declared_sampling_rule": 88,
+        "tokenized_directory_not_sample_proof": 10524
+      },
+      "7": {
+        "declared_sampling_rule": 104,
+        "reported_sampled_positive": 10641,
+        "reported_sampled_zero": 10
+      },
+      "8": {
+        "historical_lineage_report": 161,
+        "declared_sampling_rule": 108,
+        "reported_sampled_positive": 10710,
+        "reported_sampled_zero": 10
+      },
+      "9": {
+        "declared_sampling_rule": 116,
+        "reported_sampled_positive": 10710,
+        "reported_sampled_zero": 10
+      },
+      "10": {
+        "export_manifest_not_sample_proof": 144,
+        "upstream_attribution_not_direct_membership": 184,
+        "declared_sampling_rule": 181,
+        "reported_sampled_positive": 11651,
+        "reported_sampled_zero": 4095
+      },
+      "11": {
+        "export_manifest_not_sample_proof": 11,
+        "upstream_attribution_not_direct_membership": 78,
+        "declared_sampling_rule": 193,
+        "tokenized_directory_not_sample_proof": 16024
+      },
+      "12": {
+        "reconciled_component_inventory": 1325
+      },
+      "13": {
+        "declared_registry": 651,
+        "successor_lineage_report": 168,
+        "reported_included_repository": 1203,
+        "reported_included_source": 1198,
+        "reconciled_component_inventory": 7692
+      },
+      "14": {
+        "declared_registry": 554
+      },
+      "15": {
+        "declared_registry": 8,
+        "stored_token_range_not_positive_sample_proof": 38877
+      }
+    },
+    "per_dfm_identifier_counts": {
+      "1": 1246,
+      "2": 1266,
+      "3": 1285,
+      "4": 1430,
+      "5": 4235,
+      "6": 4309,
+      "7": 4337,
+      "8": 4512,
+      "9": 4094,
+      "10": 4365,
+      "11": 4292,
+      "12": 381,
+      "13": 2384,
+      "14": 538,
+      "15": 5319
+    }
+  },
+  "inputs": {
+    "config/data/dfm.yaml": {
+      "bytes": 41,
+      "sha256": "24f155a6d354d90a8a2c6b4719da77f3e36665268fcf66c4d49b70ef032a7bd2"
+    },
+    "data_io/prefix_config_dfm.yaml": {
+      "bytes": 4577,
+      "sha256": "779e5ef1a1de23cbbc85be4a1c9766086ecdffa457d28a6cd0a1330cc55287a7"
+    },
+    "data/show_analytics_dfm.md": {
+      "bytes": 272583,
+      "sha256": "b3a5aeb0cad7cab04930e072d6e4eb785f6143eed7def76adf4ba410ae28ae26"
+    },
+    "config/data/dfm2.yaml": {
+      "bytes": 42,
+      "sha256": "14249308076de9b3f8a54a16b7304a46ccb50155e5556ca75fd60c5233b5eea6"
+    },
+    "data_io/prefix_config_dfm2.yaml": {
+      "bytes": 5437,
+      "sha256": "570ed1ceda16a217a65c268435cbc55742751bf1d08a59f7b0efe5f41832fec0"
+    },
+    "data/show_analytics_dfm2.md": {
+      "bytes": 358574,
+      "sha256": "f77b132b25c10b1acdedbee476a3fdfb3baa00aa2ac92a6a7e73974137eb7608"
+    },
+    "config/data/dfm3.yaml": {
+      "bytes": 42,
+      "sha256": "92d26614c1c695b8b90166f2a70b7ee9610e52d726742e945a593ae559647e66"
+    },
+    "data_io/prefix_config_dfm3.yaml": {
+      "bytes": 6464,
+      "sha256": "1af34e6683b5843da3cfe729a65c7c7cba5210617e5e54becf43a82f678507e4"
+    },
+    "data/show_analytics_dfm3.md": {
+      "bytes": 957318,
+      "sha256": "33f5845c2054e2de3a98c07aa5d6f0f4932028fd2135ea540dc0dfb7441a223d"
+    },
+    "config/data/dfm4.yaml": {
+      "bytes": 42,
+      "sha256": "bf4bb837464c929afe41b105874dea8363ad9ccf8b6d658ccb9b880e789930cf"
+    },
+    "data_io/prefix_config_dfm4.yaml": {
+      "bytes": 20996,
+      "sha256": "a05e2c050ee8a7c6fbd6f971b05599101a52297d7a4b96ef7e8415479546f2ba"
+    },
+    "data/show_analytics_dfm4.md": {
+      "bytes": 1731023,
+      "sha256": "c8170b5f232f2bf0084e7f2b7f769ae636e512ba7e7a7f1b1c0ef1a1406ad0aa"
+    },
+    "config/data/dfm5.yaml": {
+      "bytes": 42,
+      "sha256": "dd4a612c15adbb87bb951df1a82e6f601f28654a9274d98519b31635da3e8fdc"
+    },
+    "data_io/prefix_config_dfm5.yaml": {
+      "bytes": 6641,
+      "sha256": "fe5258e74173a17cc7b6e00a543280c400388e37c58c8ef426c05f7b89194f64"
+    },
+    "data/show_analytics_dfm5.md": {
+      "bytes": 2166594,
+      "sha256": "fc867da7024bc7e0961974a648fdd0b7a434ba7fb53c614c3857e96dd184bed0"
+    },
+    "config/data/dfm6.yaml": {
+      "bytes": 202,
+      "sha256": "a7ab3fa120ca42f6aa043ba2c1173daf23225d648211636b9215d607eec43894"
+    },
+    "data_io/prefix_config_dfm6.yaml": {
+      "bytes": 5350,
+      "sha256": "dbd99975fd5d2c8083a2fafeb9f433cb65d5c1b3be408547d02fe30a0fecd936"
+    },
+    "config/data/dfm7.yaml": {
+      "bytes": 385,
+      "sha256": "0cd91ecacebeebe55ba06d6b42f191a3cabbe749894385802eaf69c231381405"
+    },
+    "data_io/prefix_config_dfm7.yaml": {
+      "bytes": 5948,
+      "sha256": "6cf2c65ad58f6f5f1d2094eaec0d4c6ee85bbe815bbdf347946182af1b5c104c"
+    },
+    "data/show_analytics_dfm7.md": {
+      "bytes": 1867054,
+      "sha256": "4688c3cf4d1beb50adb1a4d28f126f8c282ac7917d129d5e6d5810219e4b41c4"
+    },
+    "config/data/dfm8.yaml": {
+      "bytes": 283,
+      "sha256": "224f6df95140aa782bb59189b5a53e7f380dc58ebee2b5c07ae0525fe01acc10"
+    },
+    "data_io/prefix_config_dfm8.yaml": {
+      "bytes": 6096,
+      "sha256": "5d9469ce993fbe46729692a1f8b4c43a28cae4d08a028ecd7b0d4a9e1917636b"
+    },
+    "data/show_analytics_dfm8.md": {
+      "bytes": 1885625,
+      "sha256": "4cd9dcb4c6e1e533ef015928a37b9dc00ddccdcdef8ffa6a7cda5e81a4ff0893"
+    },
+    "config/data/dfm9.yaml": {
+      "bytes": 192,
+      "sha256": "686070bbfb6e05ed80c6137e0b85b7fbd4ff27f1ede637e2f8e12f5944c4f272"
+    },
+    "data_io/prefix_config_dfm9.yaml": {
+      "bytes": 7045,
+      "sha256": "0da7ab9e5415edd47ceea312015fd38c8832ce9733911adf1349ae106b7afefc"
+    },
+    "data/show_analytics_dfm9.md": {
+      "bytes": 1884977,
+      "sha256": "63bec04fdbc546796e3d9aa20f8ed8b984054e961a1133e4db8e72a33f8ddde6"
+    },
+    "config/data/dfm10.yaml": {
+      "bytes": 297,
+      "sha256": "c690c94f05521f1fcf3c7ff9462fb295d3efe0394d4005874a59dbe1460da6f1"
+    },
+    "data_io/prefix_config_dfm10.yaml": {
+      "bytes": 13666,
+      "sha256": "99f4427c6ac52c7e7494184da59a6680f0abfe34213cfe5f425cbd5d0cf648b9"
+    },
+    "data/show_analytics_dfm10.md": {
+      "bytes": 2651726,
+      "sha256": "45535be5f1413468d1f6e267505951fa9163b9f6df9050d90e20e909b8822bf3"
+    },
+    "config/data/dfm11.yaml": {
+      "bytes": 345,
+      "sha256": "97c09ad67f659a064c4d91b3447e3735929805f698d0a1a968fcd918b967b338"
+    },
+    "data_io/prefix_config_dfm11.yaml": {
+      "bytes": 15497,
+      "sha256": "4b5820c52addd7be06c508ed970771b431734d48f8eeb313d9c3b5c273d6108b"
+    },
+    "config/data/dfm12.yaml": {
+      "bytes": 416,
+      "sha256": "9a2982390a2ad27e4b3623f39274c62c15c92fbe3df5641c0edda289412d4317"
+    },
+    "config/data/dfm13.yaml": {
+      "bytes": 43,
+      "sha256": "6bf1e9f4bd907ef7269a274ae6cb05a0aa2112f10bbc13ce9983c737529c405e"
+    },
+    "config/data/dfm14.yaml": {
+      "bytes": 43,
+      "sha256": "717dcc053c85388fd758feff36e4152e4198f0d7b2a23233fca9391a5f5078c8"
+    },
+    "config/data/dfm15.yaml": {
+      "bytes": 43,
+      "sha256": "e69b15b897f277ae9c2d2be72778a81821428c7df1a3134259851943c7baf2a5"
+    },
+    "data/tokenized_dfm6": {
+      "kind": "immediate_directory_name_snapshot",
+      "entries": 10524,
+      "sha256": "51bb6e2e67a11a5a2918e45238504d5ed3b1a6864a709ee0ea84fb049d9e7cd3"
+    },
+    "data/tokenized_dfm11": {
+      "kind": "immediate_directory_name_snapshot",
+      "entries": 16024,
+      "sha256": "3369572a01b79cab50e0d1b45ec7ceed8b62c6d5bf965d7470d521e7b4252781"
+    },
+    "scripts/download_training_datasets.py": {
+      "bytes": 54592,
+      "sha256": "edcd5847314564eac2f46278042c3248f9a6e24c798475d0c3bf872cb9af4372"
+    },
+    "config/dfm13_baltic_sources.json": {
+      "bytes": 3773,
+      "sha256": "06c78c533cd56685a572bb5776d389559c312150e62c2706d2f0d36432b2dd94"
+    },
+    "config/dfm13_jjzha_sources.json": {
+      "bytes": 3449,
+      "sha256": "399217daab2a3ab6b30b0d4192c3d7551d9b7cc76f69ac00d0f673fb08f97d21"
+    },
+    "config/dfm13_sources.json": {
+      "bytes": 602570,
+      "sha256": "ffc27161aff4b5e35aa6c12836c1c5be85d22b2d29393d7b04ba5fdb417eff19"
+    },
+    "config/dfm14_sources.json": {
+      "bytes": 3902757,
+      "sha256": "e15a4eeeb320d0100056d0ed894dac082d6a10af46a469a58a38f9e18870cd11"
+    },
+    "config/dfm15_sources.json": {
+      "bytes": 44750,
+      "sha256": "5426503fc97409122f6789e1c9d76aff51f15cb1dc590059283f447e2ff85abb"
+    },
+    "exports_dfm10/dfm10-ai-arena-udtraek-sft/metadata/manifest.json": {
+      "bytes": 934,
+      "sha256": "7ad470b41608aa7f761f83edca7964c4cdaba1b23bab024d0d2aee7d3d8acaf0"
+    },
+    "exports_dfm10/dfm10-alexandra-dane/metadata/manifest.json": {
+      "bytes": 728,
+      "sha256": "4bf2598dda2af7265f0958f3447a0b8614b8f905329e888476b867d41c7fc0c6"
+    },
+    "exports_dfm10/dfm10-alexandra-multi-zebra-logic/metadata/manifest.json": {
+      "bytes": 778,
+      "sha256": "918ff90efe065ae7cff827d207d8da627958d9ca6dc8e318988fa17918ab5d49"
+    },
+    "exports_dfm10/dfm10-alexandra-scandi-qa-da/metadata/manifest.json": {
+      "bytes": 729,
+      "sha256": "c044cf0e3c7b4c67069b8c3afb2df94d9878187c9d7e3f14654943df97c2fb45"
+    },
+    "exports_dfm10/dfm10-andersen-modernization/metadata/manifest.json": {
+      "bytes": 795,
+      "sha256": "a830a1a918cccea7cb65569e45ad45a59a1e4782f1af33509a12cbc17e68c588"
+    },
+    "exports_dfm10/dfm10-arxiv-paper-summarization-sft/metadata/manifest.json": {
+      "bytes": 996,
+      "sha256": "d5b21d31f7efcd59a8573b6e0dffc0d022540898c69b930a18b9d4b648369598"
+    },
+    "exports_dfm10/dfm10-bornholmsk-parallel/metadata/manifest.json": {
+      "bytes": 1102,
+      "sha256": "d5639fbc6226574bf14d16206a63b3dc2e3dd789e38998b6d05fcb822ca991ae"
+    },
+    "exports_dfm10/dfm10-code-meta-reasoning-repaired/metadata/manifest.json": {
+      "bytes": 972,
+      "sha256": "4d0a4c04c16af82d27adf731308f2a887cf6e03690840864a5edf2bf0b4db813"
+    },
+    "exports_dfm10/dfm10-cor-sem-sft/metadata/manifest.json": {
+      "bytes": 972,
+      "sha256": "8e910c57b097e0f47300787e053e9eee2323bf451eb4e51b1d1cd744d8c92822"
+    },
+    "exports_dfm10/dfm10-croco-munin-chosen-sft/metadata/manifest.json": {
+      "bytes": 944,
+      "sha256": "29426f5e0d6a7101d6e3215e631afb78e59d9b9834f376c4d74410a7c0f26dab"
+    },
+    "exports_dfm10/dfm10-danish-book-ads-sft/metadata/manifest.json": {
+      "bytes": 1043,
+      "sha256": "f0c182b53b2bd1d3aecb01c7847fefa7437a1ec1513287c09833b63424f67cb2"
+    },
+    "exports_dfm10/dfm10-danish-framenet-sft/metadata/manifest.json": {
+      "bytes": 1024,
+      "sha256": "0197b3bf7da677e18d061c536003325e457db436fd62d7f73c2457e8dfd6029a"
+    },
+    "exports_dfm10/dfm10-danish-lexical-sentiment-sft/metadata/manifest.json": {
+      "bytes": 1035,
+      "sha256": "d015629c529e88b8232f395f1e0e1b83c106442aefe9c4d5185909c7409bf808"
+    },
+    "exports_dfm10/dfm10-danish-persona-chats/metadata/manifest.json": {
+      "bytes": 1049,
+      "sha256": "87fc183fdd8a81e0bf7c3e05e0b0fd882a1309ba4cfbea2959032b8b269350b1"
+    },
+    "exports_dfm10/dfm10-danish-university-portals-bt-repaired/metadata/manifest.json": {
+      "bytes": 841,
+      "sha256": "cf4bc1153f8fd0a2bdff6831a1cf17ee44b27f20010048e28b04aeb60897144f"
+    },
+    "exports_dfm10/dfm10-danish-wikipedia-open-chats/metadata/manifest.json": {
+      "bytes": 945,
+      "sha256": "ee71b62792a692427ad1f2efedb509e6c94f1e1df23a6ae2e19a48ab8e65550a"
+    },
+    "exports_dfm10/dfm10-danmarks-statistik-bt-repaired/metadata/manifest.json": {
+      "bytes": 833,
+      "sha256": "11f4324d5b2634e93744519267eac47511c030ff948aaaab37a1a203b1b64a84"
+    },
+    "exports_dfm10/dfm10-deepdive-gemma4-tool-use/metadata/manifest.json": {
+      "bytes": 781,
+      "sha256": "45f0e7c50c755012fd456e59c6b5bd67acd164ad83ed61c39e91b3af6cab6860"
+    },
+    "exports_dfm10/dfm10-diem-historical-modernization/metadata/manifest.json": {
+      "bytes": 1047,
+      "sha256": "cf8ec1dc4365dac03030fbea4084b85f5da40835dacf01392d01aab528c590b0"
+    },
+    "exports_dfm10/dfm10-dolci-tool-use-repaired/metadata/manifest.json": {
+      "bytes": 835,
+      "sha256": "e575871644e11666ffbb8946c9d1133f2a759c8bf93788171acad60759588383"
+    },
+    "exports_dfm10/dfm10-domsdatabasen-grounded-chats/metadata/manifest.json": {
+      "bytes": 1200,
+      "sha256": "d453d752662197f81068748967b3196cfc568b4c80003349018ab1a5027df581"
+    },
+    "exports_dfm10/dfm10-dst-table-prompts-repaired/metadata/manifest.json": {
+      "bytes": 819,
+      "sha256": "0cccae4d1025ed47f2b0b8e30eb1b95b543442640b4e56a3443e0f24a0c34d9f"
+    },
+    "exports_dfm10/dfm10-dynaword-instruct-repaired/metadata/manifest.json": {
+      "bytes": 952,
+      "sha256": "d3577ea07b7df5ac89eea927db437c8d306802aaa70c655df0bbc7acdf7cd1b0"
+    },
+    "exports_dfm10/dfm10-folketingets-dokumenter-denoising/metadata/manifest.json": {
+      "bytes": 3162,
+      "sha256": "5a6cf04694745e7f58042620cb729fabbbefac7aeb5f55f80adba230ba628f0a"
+    },
+    "exports_dfm10/dfm10-folketingets-dokumenter-error-correction/metadata/manifest.json": {
+      "bytes": 2845,
+      "sha256": "9489c6d3dfad7d489f2769bcc2e678da43ffbe5fff39b9b1e25699538c334edb"
+    },
+    "exports_dfm10/dfm10-folketingets-dokumenter-prefix-continuation/metadata/manifest.json": {
+      "bytes": 3181,
+      "sha256": "11fdd3914c822d1eff076708ebf8eb2172d7299c2f9777f194b4c8c1dc24a16b"
+    },
+    "exports_dfm10/dfm10-folketingets-dokumenter-span-filling/metadata/manifest.json": {
+      "bytes": 2673,
+      "sha256": "e2920bbb74522f974e66cecc0a53f95a90b4809afe0c1ace969717509c17c411"
+    },
+    "exports_dfm10/dfm10-glaive-native-tool-use/metadata/manifest.json": {
+      "bytes": 904,
+      "sha256": "b6b59f55577effc1dbef253ecdffed774178ac3a33876fe182dc0d641a3a76f8"
+    },
+    "exports_dfm10/dfm10-govreport-summarization-repaired/metadata/manifest.json": {
+      "bytes": 802,
+      "sha256": "a7347ba9b93b870053a79b128fd389dac68336e188ecb2aeb3713ef0e6a2dc9e"
+    },
+    "exports_dfm10/dfm10-machine-translation-da-uk-repaired/metadata/manifest.json": {
+      "bytes": 1329,
+      "sha256": "c3e6fe89874efc20ce562656276dc39b10531fbce57db6bf4c8df22a9d39d3db"
+    },
+    "exports_dfm10/dfm10-medquad-danish-sft/metadata/manifest.json": {
+      "bytes": 1261,
+      "sha256": "f5102bb1aab9ae000ad8670356c77eab7773f2d62077dcc99a93d78db22c27e9"
+    },
+    "exports_dfm10/dfm10-medquad-english-sft/metadata/manifest.json": {
+      "bytes": 1238,
+      "sha256": "3f304af8bcac092c4613fb114d87447d23cd5c4a9418c3fc0ccace23ffca9ce5"
+    },
+    "exports_dfm10/dfm10-mimir-answer-contract-calibration/metadata/manifest.json": {
+      "bytes": 1150,
+      "sha256": "2479e38623c807b7943d06e8dd8a5c8d3510a2281164145ae3aa3a489c239fdf"
+    },
+    "exports_dfm10/dfm10-mimir-boolq-entailment-sft/metadata/manifest.json": {
+      "bytes": 1055,
+      "sha256": "f376aeec5b114bdb8c3f82afb0d25634c83958beb888455feb9e54ca49d8bdc0"
+    },
+    "exports_dfm10/dfm10-mimir-drop-reasoning-sft/metadata/manifest.json": {
+      "bytes": 1070,
+      "sha256": "37920677c9c45c9da4d61b9047fc3f028be52d0c8af75c257bd1009802f7e357"
+    },
+    "exports_dfm10/dfm10-mimir-event-coreference-sft/metadata/manifest.json": {
+      "bytes": 1239,
+      "sha256": "4718c523e6a42268302edfde3079d8876514af649df1019f12655298a3c9fb32"
+    },
+    "exports_dfm10/dfm10-mimir-grounded-expanded-sft/metadata/manifest.json": {
+      "bytes": 1335,
+      "sha256": "fcaf2643b1ecf46e95feaf66459f499371c6a5901ed389fa6058567a5e6b3e5f"
+    },
+    "exports_dfm10/dfm10-mimir-ifeval-verifier-sft/metadata/manifest.json": {
+      "bytes": 1054,
+      "sha256": "b3fd53b222c43a79099d6e8f80de6951fb8924bdfd5bbb28313ca6a744c8d638"
+    },
+    "exports_dfm10/dfm10-natural-instructions-filtered-sft/metadata/manifest.json": {
+      "bytes": 46834,
+      "sha256": "29ae8d7edc3ff58e3ccbb02caeafc08928a8b69753c84522399ec88948331f32"
+    },
+    "exports_dfm10/dfm10-nemotron-swe-repaired/metadata/manifest.json": {
+      "bytes": 2295,
+      "sha256": "9150b38768a0161355d94a24661e762b342f29228f4ce959cc77abe60beef05e"
+    },
+    "exports_dfm10/dfm10-nemotron-terminal-sft/metadata/manifest.json": {
+      "bytes": 4252,
+      "sha256": "5ea4fd1c90cc0de58d5705307114631362c1ea850a5c4a358603ac4e557ab92e"
+    },
+    "exports_dfm10/dfm10-nordjylland-news-repaired/metadata/manifest.json": {
+      "bytes": 813,
+      "sha256": "4f627fe1105d750b3e5fbf73749712219a1ec1482dc2c5b0059f968205dfabde"
+    },
+    "exports_dfm10/dfm10-numinamath-valid-sft/metadata/manifest.json": {
+      "bytes": 1523,
+      "sha256": "9f1d096f1d44a09042c088bd0408100775551ac943644066c9766130f13e230b"
+    },
+    "exports_dfm10/dfm10-openmathinstruct2-repaired/metadata/manifest.json": {
+      "bytes": 5542,
+      "sha256": "08f19ddc19ff5a518338b4ee29ce6be47abeeac48de1cf8a4b366ddcb3df886e"
+    },
+    "exports_dfm10/dfm10-openstax-mimir-sft/metadata/manifest.json": {
+      "bytes": 878,
+      "sha256": "baa9ce9427e89877baeb552bd0bb4f23325395df862f268c6e7687cd7a3bbf97"
+    },
+    "exports_dfm10/dfm10-openstax-open-chats/metadata/manifest.json": {
+      "bytes": 1066,
+      "sha256": "96d37951bc89d7976eb0277d318ad926b0ea4625f0f39205bbe978917c04a4c2"
+    },
+    "exports_dfm10/dfm10-opus-da-en-repaired/metadata/manifest.json": {
+      "bytes": 27703,
+      "sha256": "bb4438d65432d159da33d79032674fa01b4495cf450f127a59f3a3bfbbebdd4b"
+    },
+    "exports_dfm10/dfm10-sapient-acereason-filtered-sft/metadata/manifest.json": {
+      "bytes": 2942,
+      "sha256": "ac4a19c93d58f1e7b825f03a786a8daf9e21cf9591165109c1863756ff69937a"
+    },
+    "exports_dfm10/dfm10-sapient-amps-mathematica-filtered-sft/metadata/manifest.json": {
+      "bytes": 14655,
+      "sha256": "bfd7c7439d47e6efdd19f20774aa2e2a3c081124ddef1d26d5cf6714852b85e1"
+    },
+    "exports_dfm10/dfm10-sapient-dmmath-filtered-sft/metadata/manifest.json": {
+      "bytes": 86599,
+      "sha256": "d3b3f5839bda336727ca61b0654627d90d0c429e9a3ca9f909dae16659282dcc"
+    },
+    "exports_dfm10/dfm10-sapient-flan-cot-filtered-sft/metadata/manifest.json": {
+      "bytes": 3635,
+      "sha256": "3ae6e640aa3271c7c558dc64ec63d0c64dd8ffa8eac108fa9c5f4fc72f5ed068"
+    },
+    "exports_dfm10/dfm10-sapient-flan-dialog-filtered-sft/metadata/manifest.json": {
+      "bytes": 6715,
+      "sha256": "b25c12def8538301f85b0688ba3dcfd16eb6f42c3a52eaa2c6e624bd85c1c73e"
+    },
+    "exports_dfm10/dfm10-sapient-flan-flan-filtered-sft/metadata/manifest.json": {
+      "bytes": 46858,
+      "sha256": "51c7d2c55e347517c4892e5a0d8b5a07da5a93a554a3cddf7223b773ed75fc52"
+    },
+    "exports_dfm10/dfm10-sapient-flan-niv2-filtered-sft/metadata/manifest.json": {
+      "bytes": 275728,
+      "sha256": "d83c348e7e1eca7a5514fea46803e71104fc27636b2d455a4b73d5a17e7d4521"
+    },
+    "exports_dfm10/dfm10-sapient-flan-t0-filtered-sft/metadata/manifest.json": {
+      "bytes": 89283,
+      "sha256": "68212a86a20f3efaf85d512933bc10e70b2d5a8aac0a0e655c3aaa1120592440"
+    },
+    "exports_dfm10/dfm10-sapient-openmathinstruct2-filtered-sft/metadata/manifest.json": {
+      "bytes": 17778,
+      "sha256": "2ea12ac6cbdf5bac704c529d9ed9e6a3ce0494868a99285d0b768fbecadab841"
+    },
+    "exports_dfm10/dfm10-sapient-openthoughts2-filtered-sft/metadata/manifest.json": {
+      "bytes": 1793,
+      "sha256": "918c49b6d6712781a8aaed44b3a25d36da57b67aa18d7cc0aece9d84c3c72273"
+    },
+    "exports_dfm10/dfm10-sapient-platypus-filtered-sft/metadata/manifest.json": {
+      "bytes": 1449,
+      "sha256": "9fbfca657c2ec1f8a6150a2d6adf09da65f610e8a9c0e9e4c5a226d1206676bb"
+    },
+    "exports_dfm10/dfm10-sapient-qrecc-ii-repaired/metadata/manifest.json": {
+      "bytes": 815,
+      "sha256": "6f04921a8f59c303a4bf49884b84e4d59d053013a0175bdcc24a36f6ee9e50bc"
+    },
+    "exports_dfm10/dfm10-sapient-scibench-repaired/metadata/manifest.json": {
+      "bytes": 800,
+      "sha256": "93cc8847ed9af623ecdd406cb112502e42db4d9494962a9c536188ad05f2aba9"
+    },
+    "exports_dfm10/dfm10-sapient-sudoku-extreme-filtered-sft/metadata/manifest.json": {
+      "bytes": 3669,
+      "sha256": "58a2d7cec3b429318d1e052a8845342bd8d804d65b73f22b48582ad1b43c6a4f"
+    },
+    "exports_dfm10/dfm10-sapient-synth-filtered-sft/metadata/manifest.json": {
+      "bytes": 64387,
+      "sha256": "255bff7d91336bc2828bdf37de555a0451b58bc535c664b313487ff3964c419e"
+    },
+    "exports_dfm10/dfm10-sapient-tasksource-filtered-sft/metadata/manifest.json": {
+      "bytes": 11936,
+      "sha256": "23300b1538fb84bad559df2b7cf93eb2e152bf6c0192dd8d084b2443465e054e"
+    },
+    "exports_dfm10/dfm10-sapient-textbook-reasoning-filtered-sft/metadata/manifest.json": {
+      "bytes": 2034,
+      "sha256": "5859e417ad676b201b6c2e4653491132152f2cd10131c4caf1cfc92f527b1329"
+    },
+    "exports_dfm10/dfm10-scientific-summaries-repaired/metadata/manifest.json": {
+      "bytes": 2967,
+      "sha256": "060bf4e6ece9f14dff6496de1ea937e9d144e5d2423f3f51c2117b6c183d96df"
+    },
+    "exports_dfm10/dfm10-sks-tei-sft/metadata/manifest.json": {
+      "bytes": 968,
+      "sha256": "9c1c516cd25bafbac105182b8aae821885ec49a4ad847250a11cc3e766671a23"
+    },
+    "exports_dfm10/dfm10-synthetic-values-model-charter-da/metadata/manifest.json": {
+      "bytes": 1361,
+      "sha256": "f16bc5e6c7d4490ff332127a64b3e32c42ae46cf49123941ecb74f987de3f306"
+    },
+    "exports_dfm10/dfm10-tidsskrift-open-chats/metadata/manifest.json": {
+      "bytes": 1052,
+      "sha256": "0d016e0264762af18de472419d9a64c913f9e91b8e310a67182965c9c037fb03"
+    },
+    "exports_dfm10/dfm10-tidsskrift-open-sft/metadata/manifest.json": {
+      "bytes": 1032,
+      "sha256": "a7789aa56c493d66776f7d0fa7abb1b5cec1a25db52b502f56538dee654ebc0f"
+    },
+    "exports_dfm10/dfm10-toolace-native-tool-use/metadata/manifest.json": {
+      "bytes": 888,
+      "sha256": "5d766a7b5a17094fc0a532517d1da9c82dd455b9b6167e4fa62c13862d337676"
+    },
+    "exports_dfm10/dfm10-wiki-cat-sum-repaired/metadata/manifest.json": {
+      "bytes": 769,
+      "sha256": "a700de4fe6aa666403a22d931497defc6d5a799315fe63d3915375f0aa59ca96"
+    },
+    "exports_dfm10/dfm10-xlam-native-tool-use/metadata/manifest.json": {
+      "bytes": 901,
+      "sha256": "d8928a4a1d16f14a8cba868cfa0594dd5248f7d6637c6d7bc549315d539d5878"
+    },
+    "exports_dfm10/manifest.json": {
+      "bytes": 861105,
+      "sha256": "310d3a9ed78718170eb298930e638e687b1882b83cdb13b505f3ec80c1e5dcd1"
+    },
+    "exports_dfm11/dfm11-fineinstructions-da/metadata/manifest.json": {
+      "bytes": 7355,
+      "sha256": "8d6499c92ee7f4546f12e253bd0321072a73675f9e3a5fdd2e85fa8fcc1c3664"
+    },
+    "exports_dfm11/dfm11-fineinstructions-en/metadata/manifest.json": {
+      "bytes": 5015,
+      "sha256": "dd84ecd73d965abde386f80ae41f42c7e9b825de86dcc9782dcddd3809fabf69"
+    },
+    "exports_dfm11/dfm11-folketingets-dokumenter-error-correction/metadata/manifest.json": {
+      "bytes": 3683,
+      "sha256": "8da6b258cd675944db616f41389726468db23da5cc1b3a76296cd2ae454d0da7"
+    },
+    "exports_dfm11/dfm11-glaive-native-tool-use-repaired/metadata/manifest.json": {
+      "bytes": 3921,
+      "sha256": "7ede12a3d16f96d620599b673daef0e1c65356e71920ccb86b82f8c3bb5ff387"
+    },
+    "exports_dfm11/dfm11-koolbardi-da/metadata/manifest.json": {
+      "bytes": 6238,
+      "sha256": "90681bc4dd9e767ed985d8e37178599eba96d86a47cdae84f1a48dc4621d7099"
+    },
+    "exports_dfm11/dfm11-koolbardi-en/metadata/manifest.json": {
+      "bytes": 6239,
+      "sha256": "553c6082d5e93678ed6b698b551ee5436f34a24b04ccc34dfe8203e07419a984"
+    },
+    "exports_dfm11/dfm11-mathagentic-gsm8k-prolog/metadata/manifest.json": {
+      "bytes": 1023,
+      "sha256": "d95f6dbfc7adf017008c50d9d4f998456ce6f20ffa6246c7f436e7d78d11c90e"
+    },
+    "exports_dfm11/dfm11-mathagentic-tinygsm-python/metadata/manifest.json": {
+      "bytes": 2029,
+      "sha256": "cb822a684a4b12e721515d27aae5f7a10947b4ef6d1bb0d5969bc83a5f1e87b3"
+    },
+    "exports_dfm11/dfm11-nemotron-agentic-tool-calling-repaired/metadata/manifest.json": {
+      "bytes": 1835,
+      "sha256": "d0fc563fc29695a83f9ad97d2f4ed0b5e2cae7a6f6586a6f69d56fdf5771abe4"
+    },
+    "exports_dfm11/dfm11-synthetic-native-tool-calling-repaired/metadata/manifest.json": {
+      "bytes": 28703,
+      "sha256": "c636567a8b317238f91e1739e07907795d88b0ff667bbbbd34ada6d87a99eb8d"
+    },
+    "exports_dfm11/dfm11-toolace-native-tool-use-repaired/metadata/manifest.json": {
+      "bytes": 1936,
+      "sha256": "db34844221d78173728150c1d6348f52320cdb8f726bba40136e5b924f93cfae"
+    },
+    "docs/reports/dfm8_to_dfm13_lineage_20261006.json": {
+      "bytes": 50876,
+      "sha256": "b8bbe218f6b6319356788cabfe280cac8f753e399c21110e70d9a10da871547f"
+    },
+    "docs/reports/dfm13_hf_repository_counts_20261006.json": {
+      "bytes": 280919,
+      "sha256": "36764a9e7f6460b5707987389b10fc81105b2f5f1d924af96fb348fc6c546cf1"
+    },
+    "data/dfm14/inheritance-reconciliation/component-inventory.json": {
+      "bytes": 1836655,
+      "sha256": "9da5faac6f9b1fc55a771cf6326edf6f0abdca4f41dea1ef54ae073dcd177168"
+    },
+    "data/category_preparation/dfm15-epoch0-source-domains-published-20261020/category-manifest.json": {
+      "bytes": 20479135,
+      "sha256": "3b276dc65e08748f7a252eea2235947cf684f4de96b7c2197ec9705570a719c9"
+    }
+  },
+  "gaps": [
+    {
+      "dfm": 6,
+      "reason": "no_canonical_per_task_analytics_report"
+    },
+    {
+      "dfm": 11,
+      "reason": "no_canonical_per_task_analytics_report"
+    },
+    {
+      "dfm": 12,
+      "reason": "no_canonical_per_task_analytics_report"
+    },
+    {
+      "dfm": 13,
+      "reason": "no_canonical_per_task_analytics_report"
+    },
+    {
+      "dfm": 14,
+      "reason": "no_canonical_per_task_analytics_report"
+    },
+    {
+      "dfm": 15,
+      "reason": "no_canonical_per_task_analytics_report"
+    },
+    {
+      "reason": "canonical_analytics_are_historical_snapshots_not_certified_latest",
+      "dfm": 9,
+      "detail": "The canonical DFM9 report has the same task counts as DFM8; later extension coverage is not proved by that report."
+    },
+    {
+      "reason": "variant_configs_and_archived_sampling_reports_not_exhaustively_ingested",
+      "detail": "Canonical versions, registries, lineage, exports and DFM15 ranges are covered; mini/post/smoke/context-window variant-only membership can remain unknown."
+    },
+    {
+      "reason": "alias_resolution_incomplete",
+      "detail": "Exact names are retained; source-key, export-package and repository identity are not globally reconciled."
+    }
+  ]
+}

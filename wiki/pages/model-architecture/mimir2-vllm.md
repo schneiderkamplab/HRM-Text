@@ -5,7 +5,7 @@ description: Isolated source integration, supported serving semantics, qualifica
 tags: [architecture, mimir2, vllm, environment, inference]
 status: draft
 confidence: high
-last_updated: 2026-10-19
+last_updated: 2026-10-20
 ---
 # Mimir2 vLLM Integration
 
@@ -68,7 +68,9 @@ projections/MLPs skip unselected tokens; attention and KV allocation remain
 full-batch. Prefix-mean routing re-embeds the prompt each decode step. Do not
 claim k/n attention or memory savings. `--enforce-eager` is required.
 
-N-gram decoding remains rejected. Quantized loading, pipeline parallelism and speculative
+**Superseded (2026-10-20):** n-gram decoding now has a synchronous request-window
+implementation and CPU contracts; see [Engram preparation](engram-preparation-20261020.md).
+N-gram CUDA engine parity and graph replay remain unmeasured. Quantized loading, pipeline parallelism and speculative
 decoding are also rejected. Multi-GPU and compiled serving are not qualified.
 Production exports/scheduler are not switched to this development implementation.
 

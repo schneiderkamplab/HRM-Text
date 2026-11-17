@@ -201,7 +201,8 @@ Excluded by default:
 - Raw Oliver Kinch corpora, because the current continuation policy allows only Danish DynaWord as raw text.
 - `oliverkinch/dsk-bt`, because the card describes non-public internal DSK source material and says it is not intended for public redistribution.
 - `oliverkinch/da-bird`, because it is better treated as a text-to-SQL benchmark/eval corpus than as SFT training data.
-- `oliverkinch/dynaword-no-bt`, because it is Norwegian.
+- `oliverkinch/dynaword-no-bt`, because it is Norwegian. Superseded for
+  multilingual DFM16 on 2026-10-27; see [DFM16 preparation](../pages/dfm16-plan.md).
 
 ## Dolci
 

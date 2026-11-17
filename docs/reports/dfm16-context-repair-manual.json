@@ -1,0 +1,257 @@
+{
+  "method": "Blind assistant-manual inspection of complete repaired seeds/conversations, with identical paragraphs referenced and original differences inspected. No repair-judge verdicts used. Provisional, not independent human certification.",
+  "labels": {
+    "H001": [
+      "clear",
+      "Flagged Danish constructions corrected; narrative and requested format preserved."
+    ],
+    "H003": [
+      "bad",
+      "Repair is unchanged: Spøgelsen remains instead of Spøgelset."
+    ],
+    "H004": [
+      "clear",
+      "fusionsreaktor spelling corrected without other changes."
+    ],
+    "H010": [
+      "clear",
+      "laser and løst gulvbræt corrected; facts and plot preserved."
+    ],
+    "H022": [
+      "bad",
+      "Grammar improved but viewpoint rewrite still places Clara at the counter before the entrance and omits Elias closing his eyes, despite exact event preservation."
+    ],
+    "H023": [
+      "bad",
+      "Unchanged repair retains gangare, den anker and den indledende afsnit."
+    ],
+    "H024": [
+      "bad",
+      "Danser fixed in final reply, but the user source retains stjerneballet and publikum jublende accidental corruption."
+    ],
+    "H025": [
+      "bad",
+      "Unchanged repair retains sidde ked ud af det."
+    ],
+    "H026": [
+      "bad",
+      "Some noun agreement corrected, but tickede and stormen følte sig remain; source/request intent preserved but language defect unresolved."
+    ],
+    "H027": [
+      "borderline",
+      "evigt agreement corrected; revised opening still removes the dough introduction and leaves an awkward corridor-to-kitchen transition."
+    ],
+    "H028": [
+      "bad",
+      "Opening preservation and heart agreement repaired, but den gamle bybiblioteks and nogen katalog remain in the initial reply."
+    ],
+    "H029": [
+      "bad",
+      "Papir agreement and word order repaired, but et håbefuld afslutning and et gammelt læsepult remain; later hjertet fuld is also wrong agreement."
+    ],
+    "H030": [
+      "bad",
+      "Unchanged repair retains en generel voksenpublikum, et håbefuld, den første afsnit and et tidsmaskine."
+    ],
+    "H031": [
+      "bad",
+      "smil corrected, but user request still says slutningsafsnit ... håbefuld instead of håbefuldt. Pronoun ambiguity also remains."
+    ],
+    "H035": [
+      "clear",
+      "Only flagged user-source noun gender corrected to en skat; rewrite remains faithful and within the explicit length range."
+    ],
+    "H036": [
+      "bad",
+      "hang corrected but the purported first-person source still alternates pigen and jeg for the same protagonist."
+    ],
+    "H038": [
+      "borderline",
+      "Misled changed to forvildede, improving fidelity, but the emotional lost sense and very-young-reader phrasing remain debatable; no clear new event drift."
+    ],
+    "H039": [
+      "bad",
+      "Some grammar fixed, but det blinde, lyse rum remains a mistranslation and source Glæde er svagt retains wrong agreement."
+    ],
+    "H047": [
+      "bad",
+      "Shrugged repaired, but Med ny mod remains rather than nyt mod."
+    ],
+    "H074": [
+      "clear",
+      "Final answer now copies the requested opening verbatim and shortens the remaining events while retaining the bittersweet outcome."
+    ],
+    "H075": [
+      "borderline",
+      "Higgins now stares, but reflecting remains ambiguously attached to Henderson; board dreams may be personification within limited viewpoint."
+    ],
+    "H079": [
+      "clear",
+      "Opening and ending now preserved verbatim; middle condensed faithfully."
+    ],
+    "H090": [
+      "clear",
+      "Request now correctly asks to keep past tense; faithful 104-word simplification."
+    ],
+    "H101": [
+      "bad",
+      "Seed dangling opening and tense shift remain unchanged."
+    ],
+    "H102": [
+      "bad",
+      "Unchanged death reveal still fails to resolve future handwriting logically."
+    ],
+    "H103": [
+      "bad",
+      "Unchanged malformed final seed sentence remains."
+    ],
+    "H104": [
+      "borderline",
+      "Paddling and duplicated shapes repaired; खुद को फुसफुसाया remains awkward, and swimming versus paddling is unclear."
+    ],
+    "H105": [
+      "bad",
+      "Seed still uses masculine बड़ा for feminine चील; falling beside bird remains dubious translation."
+    ],
+    "H106": [
+      "bad",
+      "Seed shapeshifter identity still changes without explanation; मेरी नाश्ते की मछली remains malformed."
+    ],
+    "H107": [
+      "bad",
+      "Running clause still lacks finite verb in seed."
+    ],
+    "H108": [
+      "bad",
+      "Seed realization clause remains malformed; किसी किशोर पाठकों remains in user."
+    ],
+    "H109": [
+      "bad",
+      "एक सामान्य वयस्क पाठकों remains singular/plural mismatch."
+    ],
+    "H110": [
+      "bad",
+      "Seed mismatched subject remains; एक अजीब सा सांत्वना था retains gender error."
+    ],
+    "H112": [
+      "bad",
+      "Seed still abruptly shifts to present tense; transformation clarified but remaining defect unresolved."
+    ],
+    "H124": [
+      "bad",
+      "Unchanged final 170 words below explicit 180 minimum; original seed corruption remains."
+    ],
+    "H125": [
+      "bad",
+      "Final remains 252 words above explicit 240 maximum; repair changes ending that preceding instruction explicitly preserves; seed and grammar errors remain."
+    ],
+    "H126": [
+      "bad",
+      "Final expanded to 255 words above retained 240 limit; malformed final seed clause remains."
+    ],
+    "H127": [
+      "bad",
+      "Seed वह ऊपर देखी and repetitive cold remain; opening assistant उस पल को construction malformed."
+    ],
+    "H128": [
+      "bad",
+      "Final 115 words below explicit 120 minimum; रसोई की काउंटर remains."
+    ],
+    "H129": [
+      "bad",
+      "Fox dialogue still masculine सकता against feminine narration; final 182 words exceeds initial 180 bound."
+    ],
+    "H130": [
+      "bad",
+      "Third-person conversion still requested of third-person source; व्यवस्थापक adds unsupported occupation."
+    ],
+    "H132": [
+      "bad",
+      "Assistant आत्मा प्रकट हुई और पूछा remains defective construction; source tense shifts remain."
+    ],
+    "H133": [
+      "bad",
+      "Unchanged malformed source bubble and current clauses remain."
+    ],
+    "H136": [
+      "bad",
+      "Unchanged आदमी ने मुस्कुराया and missing question remain."
+    ],
+    "H131": [
+      "clear",
+      "Quote boundary and warmth agreement corrected in seed and embedded source; faithful age-appropriate 235-word rewrite."
+    ],
+    "H138": [
+      "bad",
+      "Source still has fish gender agreement and तेजी से हाथ लेकर; source perspective/tense conversion request remains mismatched."
+    ],
+    "H139": [
+      "bad",
+      "दिए गए कहानी and कैमरा ने remain; assistant retains मैंने ... तैरकर आई subject mismatch."
+    ],
+    "H140": [
+      "bad",
+      "Seed remains corrupted; embedded source still मैं बाहर कदम रखा and slingshot smell."
+    ],
+    "H141": [
+      "bad",
+      "Source still उसने आगे बढ़ाया without object and incomplete उसने देखा कि ... क्रिस्टल; repair supplies new crystal lore for unclear original."
+    ],
+    "H148": [
+      "borderline",
+      "Flagged spelling/agreement corrected, but past completed date before anticipated date and hand-shaking versus holding remain awkward/ambiguous."
+    ],
+    "H150": [
+      "bad",
+      "Unchanged extensively malformed source."
+    ],
+    "H155": [
+      "clear",
+      "Window-polishing object and second-hand sound corrected, coherent 777-character story."
+    ],
+    "H156": [
+      "bad",
+      "Unchanged melancholy story still lacks requested playful tone."
+    ],
+    "H171": [
+      "bad",
+      "All repaired responses below explicit 400-character minimum; tea/music events removed, narrator changes and third-person ending remains in first-person version."
+    ],
+    "H172": [
+      "bad",
+      "Can theft/retrieval logistics remain inconsistent; later responses exceed original 600-character maximum."
+    ],
+    "H174": [
+      "bad",
+      "Unchanged contradictory viewpoint request and pre-entry fear described inside garden; later outputs over length."
+    ],
+    "H176": [
+      "bad",
+      "Unchanged sweetness-comparison claim still followed by expiry warning."
+    ],
+    "H177": [
+      "bad",
+      "Added memory-only explanation still contradicts physical ice cream and expands initial story to 431 characters above 400 maximum."
+    ],
+    "H178": [
+      "bad",
+      "Unchanged group interiority violates limited viewpoint."
+    ],
+    "H179": [
+      "bad",
+      "Unchanged narrator inexplicably returns to ground and unexplained opposite pad effects; later outputs over length."
+    ],
+    "H186": [
+      "bad",
+      "False first-person premise fixed but 仲間を呼びかけ remains in seed and source."
+    ],
+    "H188": [
+      "borderline",
+      "False first-person claim fixed, but redundant third-to-third task and missing particle in 時間忘れて remain questionable; output itself faithful and in range."
+    ],
+    "H190": [
+      "bad",
+      "Unchanged output replaces real spaceflight with pretend play and retains malformed bucket/spacesuit clause."
+    ]
+  }
+}

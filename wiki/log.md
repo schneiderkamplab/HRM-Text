@@ -1,5 +1,213 @@
 # Knowledge Bundle Update Log
 
+- 2026-11-16: Implemented [supervised-position output heads](pages/model-architecture/supervised-output-head.md) for Embla and shared Transformer/B LMHead. User approved skipping irrelevant head work; actual FLOP savings are reported separately from prior nominal sizing. GPU comparison and Embla GAS2 qualification are in progress during a326700 memory pause.
+
+- 2026-11-16: Qualified and activated [Embla optimized kernels](pages/model-architecture/embla-optimized-kernels.md) for24 pending training boundaries:3.81x/3.91x/5.01x warm optimizer-step throughput. All24 rank receipts and63 CPU tests pass; direct CUDA restore preserves645 live tensors exactly. Historical independent-trajectory equality failure is retained. Transformer restored from memory at259300.
+
+- 2026-11-16: Implemented [Embla optimized kernels](pages/model-architecture/embla-optimized-kernels.md): FA4 windows, fused ReLU² and indexed sparse attention, and single-pass top-k ranking. Combined microbatch throughput improved about3x; full eight-GPU qualification is in progress during a temporary259K memory suspension.
+
+- 2026-11-16: Confirmed upstream Embla reference omits specialized training kernels. [FA4 window probe](pages/model-architecture/embla-experiments.md) measured 15.72x forward/backward kernel speedup with <0.3% relative L2 differences; recorded integration priorities and unchanged queue status.
+
+- 2026-11-16: Added optional compiled gathered attention for [Embla](pages/model-architecture/embla-experiments.md): full causal microbatch 5.946→4.405 seconds on shared GPU, 16 CPU tests pass. Default remains off pending full eight-rank qualification; active training and queued recipes unchanged.
+
+- 2026-11-16: Suspended Transformer PrefixLM at232000 for dedicated validation. [Sampled recurrence BP16 qualified](pages/model-architecture/cycle-variant-recursion.md); Sandwich/Ouro/MixedLM/Transformer causal-target passed full-size checks. Embla GAS1 failed OOM; memory-path and GAS4 retries are recorded in [Embla experiments](pages/model-architecture/embla-experiments.md). All variants subsequently passed validation;70528 queue rows were inserted and the original trainer resumed from memory at232000. See [final validation](pages/model-architecture/validation-232k-20261116.md).
+
+- 2026-11-16: Implemented the [three Embla architecture variants](pages/model-architecture/embla-experiments.md), native serving and suspension checks; prepared compute-matched recipes and scheduler insertion. Full-size eight-GPU qualification and live queue insertion remain pending.
+
+- 2026-11-15: Implemented the [fixed-loop Ouro-style architecture](pages/model-architecture/ouro-fixed-loop.md) and prepared its DFM11 experiment immediately after Sandwich B, as requested.
+
+- 2026-11-15: Superseded the queue priority: finish Transformer PrefixLM/target-only, then Sandwich B, then the remaining runs in their previous relative order. See [Sandwich experiment](pages/model-architecture/sandwich-looped-model.md).
+
+- 2026-11-15: Added the [single-state sandwich architecture](pages/model-architecture/sandwich-looped-model.md), its matched DFM11 recipe and serving/queue verification.
+
+- 2026-11-15: Implemented default-off mixed recurrence, weighted LR-auto and checkpoint contracts; verified compiled CUDA suspension parity. Full-size BP16/BP15 memory selection remains pending idle GPUs. See [runbook](pages/model-architecture/cycle-variant-recursion.md).
+
+- 2026-11-15: Implemented and queued target-only B/Transformer fork-style MixedLM after the existing DFM11 runs; validated compiled training and cached vLLM decoding. See [MixedLM runbook](pages/current-state/2026-11-15-dfm11-mixedlm.md).
+
+- 2026-11-14: Deleted the redundant independent rebuild tree after Mimir-owned HF cache migration and verified metadata archival; retained direct MTC proofs and production datasets. See [artifact retirement](pages/dfm13-15-hf-rebuild-recipes.md#rebuild-artifact-retirement-2026-11-14).
+
+- 2026-11-14: Scheduled DFM11 objective ablations and added verified Transformer PrefixLM export/adapter support; see [run order](pages/current-state/2026-11-14-dfm11-objective-ablation.md).
+
+- 2026-11-10: Inserted a fresh DFM11 B LR-auto/BP2→8-over-50K run through 150K ahead of Transformer200K, preserving the active full-BP control. See [comparison state](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+## 2026-11-10 — DFM13–15 serial HF rebuild launched
+
+Prepared pinned input locks, executable recipes and preflight tests. DFM13 is acquiring; DFM14 and DFM15 runners are waiting on exact predecessors. No production changes or uploads. [Runbook](pages/dfm13-15-hf-rebuild-recipes.md).
+
+## 2026-11-10 — DFM12 HF-only successor armed
+
+Prepared 369 pinned repositories covering 381 components / 1,325 tasks. Restored published DaLA chats to HF provenance pair order; OPUS and DaLA smoke arrays match history. Eleven focused tests pass. Detached runner is waiting for DFM11 exact success, replacing the earlier recipe hold. [Runbook](pages/dfm12-hf-rebuild-recipe.md).
+
+## 2026-11-10 — Restore DFM10 historical sampling mode
+
+The HF continuation omitted `default_long_context=drop`, retaining extra overlength rows. Restored the option, archived mismatching indices, and resumed ten-epoch sampling while reusing exactly verified tokens. Twenty-two focused tests pass; final index verification remains pending. See [DFM10 recipe](pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-10: Added mandatory combined generator/judge memory-budget checks, post-handoff progress verification, and a five-minute stall investigation threshold to AGENTS and [training continuity](pages/training-continuity.md#evaluation-memory-and-stall-prevention-2026-11-10), following the DFM11 B 50K stall. Distinguished operating rules from installed automation.
+
+- 2026-11-10: Armed Transformer48 disk stop after 150K evals; prepared full-backprop causal B on DFM11 and the alternating 50K schedule. See [comparison preparation](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+- 2026-11-09: Repaired Transformer48 artifact paths across all checkpoints, recovered 50K publication, bulk-synced task metrics and serialized future W&B task writers. See [baseline operations](pages/current-state/2026-11-09-transformer48-dfm11-causal.md).
+
+- 2026-11-09: Recorded Transformer48 CUDA failure at step 13658, recovery from ephemeral step 13500, and repaired scheduler restart metadata and explicit peer-identity handling. See [baseline operations](pages/current-state/2026-11-09-transformer48-dfm11-causal.md).
+
+- 2026-11-09: Enforced scheduler-first production launches; attached the Transformer48 baseline to its 50K/epoch-end CUDA suspension evaluation plan, verified causal serving, and repaired its live monitor. See [baseline operations](pages/current-state/2026-11-09-transformer48-dfm11-causal.md).
+
+- 2026-11-09: Documented [Transformer48 causal/all-token DFM11 preparation](pages/current-state/2026-11-09-transformer48-dfm11-causal.md) and corrected B final CPU publication artifact tags; all 2,203 final-block jobs done.
+
+- 2026-11-09: B epoch three completed at actual step 1,538,766. Fixed the final eval wait on the three-step-higher planned endpoint; verified DCP integrity, updated pending checkpoint/metric paths, passed preflight and restarted online dispatch. See [final epoch repair](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-09-epoch-three-finished-final-evaluation-checkpoint-repair).
+
+## 2026-11-09 — Nemotron SWE target selection
+
+Fixed DFM10 SWE rebuild adapter selection: preserve context but emit only the designated assistant target. Exact five-array prefix verification and 21 focused tests pass; full 33-task correction and continuation launched. See [DFM10 recipe](pages/dfm10-hf-rebuild-recipe.md).
+
+## 2026-11-08 — DOLCI HF-only ordering recovery
+
+Diagnosed case-insensitive template sorting ties and nondeterministic set-to-list conversion. Restored mapping order from pinned raw HF DOLCI while preserving published HF values/list order; all 13 source hashes match history exactly. Resumed DFM10 capped tokenization and full verification; DFM11 remains gated. See [DFM10 recipe](pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-07: Resumed [isolated DFM10 reconstruction](pages/dfm15-plan/hf-rebuild-recovery-assessment.md#dfm10-isolated-reconstruction-resumed-2026-11-07): fixed missing-manifest fallback and partial assembly, added DFM10-only queue ceiling, eight tests pass. Assembly matches historical task inventory; token verification running. Corrected the existing recipe’s unsupported HF-only provenance claim for its local-source additions.
+
+- 2026-11-05: User authorized the third-epoch schedule at the next evaluation. Armed the [650K checkpoint handoff](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-05-authorization-activate-epoch-three-schedule-at-650k) with pending-only reconciliation, owned trainer cleanup and post-resume verification; seven focused tests pass.
+
+- 2026-11-05: Prepared, without activation, a [B third-epoch database copy](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-05-prepared-only-full-third-epoch-cosine-alternative): full LR through 1,025,846, cosine to 1e-5 at 1,538,769; eleven additional eval blocks. Graph, 44,080-job path preflight, resolved training config and nine tests pass. Live training unchanged.
+
+- 2026-11-05: Fixed B multilingual EuroEval registry failures by pinning 18.1.0 for 2,393 remaining jobs; preserved/requeued 42 failures and refreshed averages. CLI smoke and 20,183-job preflight passed; online runner12 resumed. Verified all 1,212 fields in the finished-result sync snapshot. See [runtime repair](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-05-fix-pin-the-multilingual-euroeval-runtime).
+
+- 2026-11-05: B online coordinator resumed; finished evals are publishing through the serialized W&B queue. Added read-only verification against a fixed 124-file result snapshot and confirmed the Rich monitor in `hrm-3:7`. See [B publication state](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-05-online-publication-resumed).
+
+- 2026-11-05: B recovery W&B credentials now work. Armed graceful online transition with private TMPDIR; diagnosed moving cold-dependency reads and caught offline CLI sync history loss through cloud verification. See [B recovery state](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-05-follow-up-credentials-restored-and-online-transition).
+
+- 2026-11-05: [B 600K recovery](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#2026-11-05-600k-recovery-prepared-waiting-for-foreign-gpu-work): restored lost local SQLite state, verified complete checkpoint and requeued interrupted claims. Preflight passes. Concurrent foreign GPU work blocked restart; preserved/requeued resulting infrastructure failures and armed safe automatic resume without touching smarteval.
+
+- 2026-11-05: Repaired [B 550K eval publication](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#final-verification-550k-fully-republished): restored canonical paths for epoch-two evals, preserved saved inference, replayed CPU publication and all averages. All 2,203 jobs done; W&B confirms Danish 51.724% with 20/20 tasks. Training claim unchanged; 60 tests pass. Earlier staged-log-path repair was the source of the path regression and is now corrected.
+
+- 2026-11-04: User authorized [B DFM15 epoch-two switch](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#approved-900k1m-cooldown-and-armed-450k-switch): decay 900K–1M, flat 1e-5 to 1025846. Repaired staged cooperative commands/boundaries/log paths; both staged and simulated-live preflights pass with zero failures. Forty tests and rollback simulation pass. Identity-scoped switch watcher armed for the verified 450K pause; live schedule not yet changed.
+
+- 2026-11-04: Assessed [B DFM15 epoch-2 extension](pages/current-state/2026-11-04-epoch2-wsd-extension-b-dfm15-gemma4.md#progress-based-assessment-at-approximately-432k-2026-11-04) from complete 300K–400K evaluation groups and sampled loss. Recommend delayed decay with moderate confidence; identified 962923 versus 950000 cooldown-start distinction. No training or DB changes.
+
+- 2026-11-03 (later): Clarified the cooperative model: ONE continuous training per epoch — per-boundary train rows are suspension/resume cycle markers; pretrain.py takes the full schedule via suspend_after_steps (list). Documented the eval-block dependency shape (HF export first, judged rows, shard merges, chained averages, report, W&B sync, terminal/success gating, never gate on barriers/teardowns) and the mandatory pre-launch row audit (paths, data, code deps; /work/mimir trap — DB clean, config files pending rewrite). See [eval-block dependency structure](pages/model-architecture/eval-block-dependency-structure.md).
+
+- 2026-11-02: **Performance-optimized B + Mimir Mini 200-step smoke** (8 GPUs, compile `default`, GBS 262144/GAS 1/BP 8): median 0.234 s/step (~1.119M tokens/s, 1.47x vs unoptimized), 73.5 GiB peak allocated/rank, loss 11.59->7.67. `reduce-overhead` compile was implemented and diagnosed as per-step cudagraph re-record churn (~7 s/step) with packed variable-length batches; abandoned for training. See [vocab pruning page](pages/model-architecture/vocab-pruning-en-da-zh.md#performance-optimized-200-step-smoke-2026-11-02).
+
+- 2026-11-02: Ran the **B + Mimir Mini full-geometry 8-GPU smoke** (BP 8 / GAS 1 / GBS 262144, 4K ctx, W&B disabled): 20/20 steps, median 0.345 s/step (~759k tokens/s), 109.3 GiB torch-reserved / ~114 GiB device peak per rank, no checkpointing needed. Documented BP semantics (8 stack applications L0L1L2H0L3L4L5H1; BP 5 keeps [1st H -> 3x L -> 2nd H], BP 8 differentiates all) and the XXL OOM at the same geometry (needs l_only). See [vocab pruning page](pages/model-architecture/vocab-pruning-en-da-zh.md#full-geometry-8-gpu-smoke-b--mimir-mini-bp-8--gas-1--gbs-262144-2026-11-02).
+
+- 2026-11-02: Trained a **B + Mimir Mini smoke** (20 steps, W&B disabled, FSDP fp32 params + bf16, FA4): finite loss, median 0.461 s/step at GBS 16384/GAS 4, torch peak 18.05 GiB reserved. Documented the `distributed_strategy=none` fp32/FA4 gotcha and the post-completion GLM handoff memory state (replicas at 0.85 utilization leave only ~22.7 GiB/GPU headroom). See [vocab pruning page](pages/model-architecture/vocab-pruning-en-da-zh.md#training-smoke-b--mimir-mini-2026-11-02) and [GLM handoff](pages/dfm16-glm-handoff.md).
+
+- 2026-11-02: Built the **Mimir Mini tokenizer** at `data_io/trained_tokenizers/mimir_mini/`: the Gemma 4 tokenizer pruned to 65,536 total entries (24 special/template tokens + 256 byte tokens + 65,256 learned pieces, dense renumbering with `<bos>` kept at ID 2). Verified round-trip decoding, x1.07 EN / x1.00 DA / x1.01 ZH compression, and a production `data_io/tokenizer --template-mode gemma4-chat` run emitting `tokenizer_info.json` with `vocab_size: 65536`. See [vocabulary pruning analysis](pages/model-architecture/vocab-pruning-en-da-zh.md#mimir-mini-tokenizer-built-2026-11-02).
+
+- 2026-11-02: Added [vocabulary pruning analysis](pages/model-architecture/vocab-pruning-en-da-zh.md): measured the Gemma 262,144-token pruning frontier for English/Danish/Chinese with real re-encoded pruned tokenizers (65,536 pieces keeps >=99.9% occurrence coverage, <=6% English compression loss), and recorded per-size parameter impact. Extended [wide-model-size-presets](pages/model-architecture/wide-model-size-presets.md) with exact per-component parameter counts (blocks/embeddings/LM head) for all 13 presets.
+
+- 2026-11-02: Verified from queue state that the DFM6 historical reconstruction passed on 2026-10-22 (21 arrays plus metadata, `data/rebuild_hf_dfm/serial-queue/dfm6/verified.json`), so DFM1-6 are verified. The serial HF-only queue is stopped at the DFM7 recipe-hold blocker; DFM7-15 remain pending and no worker is running. See [DFM15 plan](pages/dfm15-plan.md#dfm6-verified-queue-blocked-at-dfm7-2026-11-02-status-check).
+
+- 2026-10-30: Rearmed the [GLM GPU handoff](pages/dfm16-glm-handoff.md#rearmed-after-workspace-outage-2026-10-30) after a workspace-access failure stopped its watcher and Odin. Resumed Odin journals, added wait-loop filesystem retry and heartbeat timestamp, and verified the watcher waiting on occupied GPUs.
+
+- 2026-10-30: Downloaded pinned GLM 5.3 Flash and armed the [automatic eight-GPU handoff](pages/dfm16-glm-handoff.md): two TP4 replicas for generation/audit, disjoint remaining-source allocation alongside Odin, mandatory-low-thinking adaptation, and additional live specialist evidence. Mistral GPU ownership remains untouched. 87 tests pass; real server startup awaits free GPUs.
+
+- 2026-10-30: User selected combined GPU auditing and full-scale execution with an approximate 300K accepted aim. Prepared and launched the [502K-source English campaign](pages/dfm16-english-fullscale.md), balanced across five tasks, with continuous per-source automated review and staged Odin generation. No exact-count replenishment or small-batch gates. 82 tests passed; historical outputs preserved; GPUs untouched.
+
+- 2026-10-30: User authorized [English production](pages/dfm16-english-production.md) despite failed qualification. Launched 759 fresh Odin candidates from reviewed sources, preserving historical outputs and the shared 100/minute rate limit. Audit-policy choice pending; no admission yet. 74 tests pass. Other languages remain held.
+
+- 2026-10-30: Completed [scope-corrected specialists v13](pages/dfm16-staged-stories.md#corrected-specialist-results-v13-2026-10-30). Specialists accept 22/136 defects and withhold 78/594 clear cases; 18 defects and 51 clear cases are unresolved, not confirmed detections. Adding original focused checks gives 16/136 and 146/594. Per-finding verification changed no conversation decisions. 71 tests pass; all receipts, source-control equivalence and actual-send costs verified; no qualification or production changes.
+
+- 2026-10-30: Completed [v12 specialists](pages/dfm16-staged-stories.md#specialist-v12-completed-confirmation-and-scope-failures-2026-10-30): raw 31/136 accepted defects, verified 32/136; verification recovered no clear examples. Found creative seeds mislabeled as authoritative audit sources. Launched isolated v13 scope correction, reusing 1,405 unchanged jobs; all original outcomes remain preserved.
+
+- 2026-10-30: Preserved v11 and resumed [specialist experiment v12](pages/dfm16-staged-stories.md#specialist-parser-and-stage-handoff-amendment-v12-2026-10-30), relaxing only the maximum coverage-line parser rule and fixing stage-client renewal. Reused 579 immutable attempt records with no ambiguous intents or regenerated calls. Eight specialist tests pass; original labels/prompts and admission limits remain unchanged.
+
+- 2026-10-30: Implemented and launched [Odin specialists plus per-allegation verification v11](pages/dfm16-staged-stories.md#independent-specialists-and-allegation-verification-v11-2026-10-30), as authorized. Three blinded scopes cover all 696 complete English examples; code supplies exact counts/preservation evidence and validates quoted findings. Six new tests pass. Uses the shared 100/minute ledger; no local GPU use or production admission.
+
+- 2026-10-29: Compared [63 saved audit combinations](pages/dfm16-staged-stories.md#saved-parallel-audit-combinations-2026-10-29), with no new model calls. Best within 20% clear withholding still accepts 24/136 defects; all six arms accept 11/136 but withhold 37% of clear examples. Flash/Odin evidence verifiers share all 39 Flash misses. Documented specialized independent checks as the next experiment, without changing admission.
+
+- 2026-10-29: Finished [Odin evidence comparison v9](pages/dfm16-staged-stories.md#odin-evidence-comparison-completed-2026-10-29): evidence rejected 24 additional semantic defects versus matched direct verdicts; eight further defects became unresolved, and 41 were still accepted. It improves the direct arm but does not beat the original focused audit. No qualification/admission changes; local GPUs remain unused. All 1,358 planned verdicts completed; aggregate Odin cap verified at 100/minute.
+
+- 2026-10-29: User made local GPUs unavailable for several hours. Stopped the [v8 local evidence trial and launched Odin-only v9](pages/dfm16-staged-stories.md#gpu-interruption-and-odin-evidence-follow-up-v9-2026-10-29), preserving completed ledgers/controls and partial verification. Odin direct versus Qwen-evidence-assisted verdicts share the 100/minute ledger; generator self-review is diagnostic only.
+
+- 2026-10-29: Completed [English untouched validation](pages/dfm16-staged-stories.md#english-untouched-validation-completed-audit-fails-2026-10-29). Frozen audit accepted 32/136 defects (23.53%; upper95 30.29%) while withholding 96/594 clear examples (16.16%). English fails qualification; sample becomes development evidence. User proposed evidence-producing reviews and a verification round; follow-up is separate from the immutable failed result. Other three languages remain held.
+
+- 2026-10-29: Sealed all [English validation labels](pages/dfm16-staged-stories.md#english-labels-sealed-and-frozen-audit-started-2026-10-29): 594 clear, 136 defective, 29 borderline, 41 unresolved intake cases. Blinded class counts require no supplementary cohort. Started the frozen Flash/Qwen audit after sealing; other languages remain held. No production changes.
+
+- 2026-10-29: Advanced [English blinded validation review](pages/dfm16-staged-stories.md#english-creative-and-summary-review-completed-2026-10-29) through creative and summary tasks (297 semantic assessments). Added the frozen audit runner with sealed-label and missing-verdict checks; 52 focused tests pass. Validation judging remains pending; other languages remain held.
+
+- 2026-10-29: Restricted active SimpleStories validation to English at the user's request; preserved [Danish/Hindi/Japanese handoffs](pages/dfm16-staged-stories.md#english-only-focus-and-other-language-handoff-2026-10-29). English's 800-family packet is complete (696 generated, 63 deterministic failures, 41 source rejections); 90 blinded semantic assessments saved, no validation judge decisions yet. Japanese's frozen sample remains held.
+
+- 2026-10-29: Completed [low-false-acceptance configuration comparison](pages/dfm16-staged-stories.md#completed-exploratory-audit-comparisons-2026-10-29): repeated 320-case generation, all labels, base and two frozen audit refinements. Observed accepted defects da 2/47, en 0/42, hi 1/49, ja 0/45 including controls; generated-only denominators and retention tradeoffs reported. All languages remain statistically unqualified. 66 tests pass; Odin peak 100/minute; requested capacity split 4/4 recorded.
+
+- 2026-10-29: Completed all 320 [staged development](pages/dfm16-staged-stories.md) classifications. User amended exploratory advancement to 10/20, removed task/legacy vetoes, and authorized ignoring reasoning-token metadata; low false acceptance is primary. v3 freezes these changes and reruns the same development families. 64 tests pass; no qualification or production promotion.
+
+- 2026-10-29: Implemented [staged SimpleStories generation](pages/dfm16-staged-stories.md), durable aggregate Odin limiting, role-specific whole-conversation gates, and independent language qualification. 59 tests and an 80-case live protocol smoke pass; 80 reviewed source families and 320 matched development jobs prepared. Qualification and production remain held.
+
+- 2026-10-28: Completed [role/source pilot](pages/dfm16-role-source-pilot.md): finer checks improved matched-control pair accuracy but remain unqualified; first-attempt generation produced 8 clear, 21 defective and 3 unresolved outputs, with 20 newly introduced defects. Recommend staged generation with vetted requests and deterministic edits. 32 tests pass; no production or validation changes.
+
+- 2026-10-28: Started authorized [role/source diagnostic pilot](pages/dfm16-role-source-pilot.md): 28 matched control pairs, three judges, and 32 first-attempt generations across four paired seed families; Odin capped at 100/minute, no validation or production admission.
+
+- 2026-10-28: Completed [context calibration and repairs](pages/dfm16-story-calibration.md#completed-development-and-diagnostic-repair-2026-10-28): all three development policies failed both targets; 63 repairs, two audit accepts, both defective. No validation sample consumed or production promotion. Recorded 100/minute API cap, corrected provider protocol, separate historical cost and provisional blind manual limits.
+
+- 2026-10-28: Sealed 200 context-calibration development labels (115 bad, 55 clear, 30 borderline), launched Qwen/Flash/Odin judging, and versioned a Hindi sentence-segmentation fix with reuse of identical judge inputs. Empirical targets remain unqualified; see [live calibration](pages/dfm16-story-calibration.md#live-development-calibration-2026-10-28).
+
+- 2026-10-28: Added [SimpleStories context calibration](pages/dfm16-story-calibration.md): immutable development inputs, blind-label gates, three policies, repair lineage and tests. Empirical qualification remains pending; no frozen policy, no production admission.
+
+- 2026-10-28: Completed blind assistant-manual labelling of every view for the 200-parent SimpleStories comparison: all 3390 checks covered (2897 clear, 300 bad, 193 borderline). Expanded per-view report consumes source-hashed labels; earlier holistic labels retained separately. No automatic dataset promotion. See [DFM16 calibration](pages/dfm16-plan.md#independent-simplestories-judge-calibration-2026-10-28).
+
+- 2026-10-28: Started atomic, multiview four-judge follow-up on the same 200 parents: seed, every message, conversation, adjacent-message and two-exchange consistency views. 3390 checks/model; existing Qwen servers untouched, temporary Mimir in spare VRAM, Odin rate-limited API. Manual ground truth remains scoped to original 200 texts. See [DFM16 calibration](pages/dfm16-plan.md#independent-simplestories-judge-calibration-2026-10-28).
+
+- 2026-10-28: Counted confirmed enabled native-thinking targets in DFM15 repairs/additions and DFM16 decision preparation: 4.635M targets / 17.049B source tokens before length admission and repetition. Verified representative prompt/channel rendering; pending candidates and disabled-mode thought channels excluded. See [inventory](../docs/reports/native-thinking-inventory-20261028.md).
+
+- 2026-10-28: Finished Odin/Qwen-27B/Flash-Next unanimity comparison on prior 20 and fresh 200 prose texts, with blind manual labels. All three reduce clear false accepts from Odin's 25 to 10, but reject 57/134 clean texts; Odin+Flash gives 17 and 10 respectively. No production policy changes. See [ensemble results](../docs/reports/simplestories-ensemble-20261028.md).
+
+- 2026-10-28: Odin accepted-text review found two clear missed issues plus one minor spelling error in 20 stratified accepted texts; no population error-rate claim. Owner prioritizes avoiding false accepts. Fixed remote Odin concurrency at 64 with rolling actual-dispatch request cap (180/minute, retries/preflights counted), superseding adaptive doubling. See [review](../docs/reports/simplestories-odin-false-accepts-20261028.md).
+
+- 2026-10-28: Finished Odin-2-Large remote comparison on the same 295 prose units: 34 language and three coherence rejects, all 590 verdicts valid. Several confirmed defects caught, but false-rejection calibration remains; no dataset admission changes. Recorded request-quota/backoff and hidden-reasoning caveats. See [Odin report](../docs/reports/simplestories-odin-judges-20261028.md).
+
+- 2026-10-28: Completed corrected Mimir v1.8 paragraph/story-level checks: 295 assistant texts, 590 independent language/coherence verdicts. Language accepted 285, rejected one, left nine invalid; coherence accepted all. A known Danish defect remains missed, so no acceptance gate promotion. See [prose-unit findings](../docs/reports/simplestories-mimir-judges-20261028.md#corrected-paragraphstory-level-run).
+
+- 2026-10-28: Completed independent Mimir v1.8 language/content judgments on 200 SimpleStories conversations and 24 short controls. Whole-conversation judging is not qualified; Danish negative controls fail, while simple content controls pass. Production remains held. See [independent judge report](../docs/reports/simplestories-mimir-judges-20261028.md).
+
+- 2026-10-28: Qwen SimpleStories pilot finished: 1,073/2,000 accepted after CPU checks and independent review. Manual triage and a separate compact language check still find material defects; production remains held, all data preserved. See [pilot findings](../docs/reports/simplestories-qwen-v3-review-20261028.md).
+
+- 2026-10-28: Reviewed 100 accepted SimpleStories v2 conversations and kept production gated. Added Qwen Flash-Next generation / Qwen 27B seed and whole-conversation review on the shared rolling runtime, 256 requests/server, CPU edit/length checks, and a queued blind comparison plus 2,000-row pilot. Original rows remain preserved. See [DFM16 Qwen roadmap](pages/dfm16-plan.md#qwen-story-remediation-and-pilot-2026-10-28).
+
+- 2026-10-27: Implemented source-specific generated-answer checks for SynLogic, calendar, Dolci math/code/IFEval and reference-guided/tool-aware review. Prepared 216,932 candidates; 64 focused tests pass. Acquired ATOMIC's external archive: 99.9958% of train triples overlap inherited ATOMIC2020 evidence; queued only 22 new relation rows. Reloaded the free-GPU waiting expansion controller, without sampling. See [verification and overlap](pages/dfm16-plan.md#verified-answer-adapters-and-atomic-review-2026-10-27).
+
+- 2026-10-27: Superseded automatic DFM16 resampling with audit/tokenize-only. Registered all additional candidates, started pinned downloads and four-source CPU conversion, and prepared the 300K SimpleStories pilot (200K EN, 50K DA, 25K JA, 25K HI) to follow Dyna auditing. UltraData access now works. Source-specific verifier holds remain explicit. See [DFM16 expansion](pages/dfm16-plan.md#expansion-and-simplestories-pilot-2026-10-27-latest-decision).
+
+- 2026-10-27: Queued 24,111 Dyna rows for audit on the next free eight-GPU window, followed by accepted-only 64-worker tokenization and full three-epoch DFM16 sampling with verified, journaled publication and backup retention. WekaFS rejects atomic directory exchange, so a recoverable two-rename fallback is used. See [queued campaign](pages/dfm16-plan.md#queued-audit-through-full-sampling-2026-10-27).
+
+- 2026-10-27: Approved Dyna refresh: prepared 6,013 Norwegian instruction pairs (3.845M tokens), began bounded NVA/Swedish report transformations using existing CPU/audit contracts, and recorded Laya's gated-access blocker. Published sampled DFM16 unchanged; see [DFM16 preparation](pages/dfm16-plan.md#approved-dyna-refresh-2026-10-27).
+
+- 2026-10-27: Refreshed 38 DynaWord/DynaInstruct Hub repositories without changing DFM16. Found 111 new Swedish payloads, Norwegian/Danish grounding additions, older Norwegian instruction and Danish decision candidates, and important Polish upstream withdrawals/replacements. See [refresh](pages/dyna-source-updates-20261027.md).
+
+- 2026-10-26: Following new sampling authorization, published three DFM16 epochs preserving DFM15 exposure and adding 3.567B eligible tokens per epoch with repeats 1-3. Mean epoch grows from 134.516B to 138.083B tokens; all epoch indices read-back verified. See [sampling policy](pages/dfm16-plan.md) and `docs/dfm16-mix.md`.
+
+- 2026-10-26: Started native-message conversion and 64-worker tokenization of DFM16 decision additions, explicitly without sampling. Curriculum complete at 90,120 examples/67.0M tokens; 16 adapter/tokenizer tests pass. See [preparation runbook](pages/dfm16-decision-preparation.md).
+
+- 2026-10-26: Owner approved all high/medium Mimir-Decide additions to DFM16. Registered 13 pinned HF sources in the downloader and converted 90,120 executable curriculum training decisions to messages. HF conversion/tokenization/sampling remain pending. See [DFM16 plan](pages/dfm16-plan.md).
+
+- 2026-10-26: Reviewed Mimir-Decide existing and expansion sources for DFM16; prioritized executable decisions, science/knowledge MCQ and grounded agent/evidence tasks, with inherited-data and benchmark safeguards. No mix changes. See [review](pages/dfm16-decision-source-review.md).
+
+- 2026-10-23: Completed Hetionet Gemma 4 HF tokenization with 64 workers: 439,906 rows, 19,114,150 tokens, no skipped rows. Owner made further audit/correction and natural-language synthesis non-blocking for DFM16; retained the 100-row review findings. See [DFM16 plan](pages/dfm16-plan.md).
+
+- 2026-10-23: Registered the pinned Hetionet synthetic QA/chat train source for DFM16 and planned natural English/Danish grounded variants, relation-fidelity checks and subject-level evaluation. See [DFM16 plan](pages/dfm16-plan.md).
+
+- 2026-10-23: Per owner request, the full decision corpus now omits evaluation-leakage filtering and uses 32-worker numeric finalization/hash partitioning plus 32 independent dedup reducers; original guarded builders remain unchanged. See [decision build policy](pages/decision-datasets/mimir-decide-build.md#outputs-and-safety).
+
+- 2026-10-23: Removed population caps for the owner-requested full Mimir-Decide rebuild, preserving the pilot and leakage guards. CPU conversion and mixture text stream to Parquet under `mimir-decide/data/full-scale`; see [build runbook](pages/decision-datasets/mimir-decide-build.md).
+
+- 2026-10-23: Started the separate Mimir-Decide corpus build from existing typed decisions and the top seven DFM clusters, with explicit owner approval for HRM sources, conservative conversions and unchanged production training. See [build runbook](pages/decision-datasets/mimir-decide-build.md).
+
+- 2026-10-22: Annotated the ranked decision-source report against the pinned Tasksource JEV sources manifest, retaining matched task keys and distinguishing source-family overlap from unproven row overlap; see [ranking methodology](pages/decision-datasets/dataset-ranking.md#tasksource-jev-overlap-check).
+
+- 2026-10-22: Expanded the seven highest-priority decision clusters into a scored dataset/subdataset report, retaining exact count reconciliation and pre-tokenization path provenance; see [individual ranking](pages/decision-datasets/dataset-ranking.md).
+
+- 2026-10-21: Added benchmark-informed decision-source clustering and volume accounting, distinguishing stored variants, repeated exposure and unknown conversion yield. Checked Typed Decisions and the current private-weighted Decision Index 0.4; see [benchmark priorities](pages/decision-datasets/benchmark-priorities.md).
+
+- 2026-10-21: Added a source-by-source DFM1-15 decision-modelling assessment, grounded in the Jev typed-decision interface and local corpus inventories. Separates existing labels, mechanical conversions, adjudication-dependent candidates and unsuitable/held-out sources; no production data or training changes. See [decision dataset assessment](pages/decision-datasets.md).
+
+- 2026-10-20: Prepared source-biased dense 2/2 MoE and MoS pilots after Engram, with token-aligned source metadata preserving normal packing/cursors, memory-qualified GAS and failure-tolerant continuation. See [pilot runbook](pages/model-architecture/biased-expert-pilots-20261020.md).
+
+- 2026-10-20: Implemented contextual multi-head HF/vLLM n-grams, CPU optimizer/EMA/FSDP resume and parity checks, bounded actual-token collisions and opt-in diagnostics. GPU qualification remains blocked by occupied devices; no pilot launched. See [Engram preparation](pages/model-architecture/engram-preparation-20261020.md).
+
+- 2026-10-20: Added opt-in contextual, multi-head n-gram memory to native v2; documented unchanged defaults, table budget, and serving/parity prerequisites before an Engram pilot in [implementation](pages/model-architecture/hrm-text-v2-implementation.md#contextual-multi-head-memory-october-20).
+
+- 2026-10-20: Added a bounded CPU metadata-category builder and full transferred DFM15 epoch-zero census. Publication remains blocked: partial math receipts cover 7,842,993 of 408,412,700 rows; uncovered provenance is not a neutral label. See [sidecar preparation](pages/dfm15-metadata-routing-sidecar.md).
+
 - 2026-10-19: Compared full 3.82M control production HRM-Text versus Mimir2 exports and compiled vLLM paths. Fixed missing special-token assignments and version-dependent regex materialization in both queued Mimir2 exports. All 131 tensors and 176 generated tokens match; remaining logprob differences are documented, including a same-environment control. See [full-weight parity evidence](pages/model-architecture/mimir2-control-serving-parity.md).
 
 - 2026-10-19: Documented eager/sparse MoS and dense-reference MoE serving limits. Tiny compiled/CUDA-graph BF16 parity passed. Exported both 3.82M EMA checkpoints as Mimir2 and installed 346 vLLM inference shards plus publication/merges in the existing SQLite plan, without eager, preserving production claims and failure-tolerant XL continuation. See [comparison schedule](pages/model-architecture/hrm-text-v2-gated-pilot.md#reauthorized-vllm-comparison-2026-10-19).
@@ -2927,3 +3135,154 @@ Historical journals and accepted rows are preserved during client migration.
 Recorded gated H/L communication, multiple recurrent-state branches and
 DeltaNet hybrids, plus other Qwen3.8-Next candidates and parity/ablation gates.
 See [the research plan](pages/model-architecture/hrm-text-v2-plan.md).
+
+- 2026-10-29: Started user-authorized untouched EN/JA SimpleStories validation; frozen v7 samples 800 families per language. See [staged validation](pages/dfm16-staged-stories.md).
+
+- 2026-10-29: User narrowed active SimpleStories validation to English. Recorded Danish/Hindi development limits and Japanese frozen-sample handoff in [staged stories](pages/dfm16-staged-stories.md).
+
+- 2026-11-01: Diagnosed the 2026-10-31 GLM startup failure as a missing CUDA toolkit for DeepGEMM JIT, resumed full-scale Odin SimpleStories generation from receipts (chunk 359 onward), hardened the GLM handoff against a dead Odin owner, and rearmed the watcher with `CUDA_HOME` fixed; GLM generation/audit still waits for genuinely free GPUs. See [GLM handoff](pages/dfm16-glm-handoff.md) and [full-scale production](pages/dfm16-english-fullscale.md).
+# 2026-11-02: DFM7 HF rebuild recipe recovered
+
+Recovered `config/data/dfm7_hf_rebuild.json` and implemented
+`scripts/rebuild_dfm7.py` plus `enable-dfm7` queue wiring (recipe `dfm7-hf-v1`,
+nine stages, six-epoch sample comparison). All 130 additions, 33 pinned inputs
+and the 4,891-link sapient inventory are cross-checked against the preserved
+historical build; the kaenguruen wrapper reproduces all 106 historical rows in
+tests. DFM7 is not yet enabled. See
+[DFM7 HF-only rebuild recipe](pages/dfm7-plan/hf-rebuild-recipe.md).
+
+- 2026-11-02 (later): Enabled DFM7 and ran the guarded rebuild. Two run
+  failures were diagnosed and fixed in-recipe: the dolci tool-call SET
+  literals require the historical `PYTHONHASHSEED=2` (pinned as
+  `CONVERSION_HASH_SEED`) and `compare_jsonl` must split on newlines only
+  (raw U+2028/U+2029 occur inside JSON strings); and the DFM7 adapter pin was
+  superseded from `038e9a5` to `cd88c93` after smoke proved the DFM7
+  tokenization ran with the later uncommitted adapter (generic
+  instruction/target parquet fallback for the nine kaenguruen/oliverkinch
+  sources; the bounded driver gained the mirrored fallback). prepare/convert/
+  verify-rows byte-match; smoke passes all ten families; later stages are
+  running. See [DFM7 HF-only rebuild recipe](pages/dfm7-plan/hf-rebuild-recipe.md).
+
+# 2026-11-02: DFM8 HF rebuild recipe recovered
+
+Recovered the DFM8 union composition from the preserved manifest (10,651 base +
+69 additions; 1,357 export-upload duplicates and 2,600 transform-expansion
+tasks intentionally skipped), pinned the eight published
+`schneiderkamplab/dfm8-*` provenance commits plus the three downloaded special
+acquisitions, and implemented `scripts/rebuild_dfm8.py` (acquire, prepare,
+convert, verify-rows, smoke, tokenize, assemble, verify) with `enable-dfm8`
+queue wiring and `SAMPLE_EPOCHS[8] = 7`. The preserved seven-epoch sample
+(epoch_6 appended 2026-07-17 without touching tokens.npy) is the comparison
+target. DFM8 stays gated on a verified DFM7 and is not enabled. See
+[DFM8 HF-only rebuild recipe](pages/dfm8-plan/hf-rebuild-recipe.md).
+
+- 2026-11-03: Launched the B DFM15 Gemma-4 epoch-1 production run under the managed cooperative scheduler: B (1024×12) + Gemma-4 262k on sampled_dfm15, GAS=1, 512,923 steps/epoch (bin capacity c = local_batch_size — GAS changes the packing, so totals must be re-simulated), eval blocks at every 50K-step boundary with the full transferred XL suite (24,244-row plan via scripts/schedule_B_dfm15_epoch1.py), fresh W&B run B-dfm15-gemma4-epoch1 (wandb_resume=auto), measured 5.85 it/s. Fixed the early failures: a mislabeled XL run (hydra default arch size is XL), dcp.load error masking (probe unwraps the pickled exception tuple), and cooperative fresh-start support (resume_from_tag now optional in run_boundary). See [B DFM15 Gemma-4 launch](pages/model-architecture/b-dfm15-gemma4-epoch1-launch.md).
+- 2026-11-02: Diagnosed the second GLM startup failure (FlashInfer JIT missing cublasLt.h), rearmed with the audit-env CUDA toolkit, and completed the handoff: GLM-5.3-Flash generation/audit replicas passed smoke, dual generation is running over the 502K campaign with 669 chunks preserved, and the hardened owner-absent path covered the overnight Odin ledger-lock death. See [GLM handoff](pages/dfm16-glm-handoff.md) and [full-scale production](pages/dfm16-english-fullscale.md).
+
+- 2026-11-02: Built the DFM9 HF-only rebuild recipe (scripts/rebuild_dfm9.py + config/data/dfm9_hf_rebuild.json): the union is recorded verbatim from the 11,415-entry link table, nine HF acquisitions are digest-pinned (allenai code-meta recovered via the cleaned-final-string-id repo and the legacy local copy; multilingual-gsm-symbolic pinned to a historical revision), 693 fresh tasks convert/tokenize under the cd88c93 adapter, and sampling runs epochs=10 seed=0 concat_workers=4 against prefix_config_dfm9 @ fe79a2d. Acquired 863 files and enabled dfm9-hf-v1; see [DFM9 HF-only rebuild recipe](pages/dfm9-plan/hf-rebuild-recipe.md).
+
+- 2026-11-02: User requested a GLM pause: workers drained and both GLM replicas stopped with all eight GPUs free; the API-only odin worker continues alone. Resume procedure documented; awaiting explicit user command. See [GLM handoff](pages/dfm16-glm-handoff.md).
+- 2026-11-02: Installed nsys 2026.5.1 (pip wheel nvidia_nsys_cli; no apt package) and profiled the B+Mimir 8-GPU run end-to-end. Found --delay/--duration silently broken on real runs (full capture works) and the torch.profiler hook SIGABRTs under 8-rank FSDP. Steady-state attribution: per GPU per step at wall 243 ms, GEMM ~102 ms over ~580 tiny launches, other ~68 ms, triton ~57 ms, NCCL ~43 ms 89% overlapped, gaps ~15 ms — small-model kernel-bound, not NVLink-bound. See [nsys steady-state attribution](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: Ran the max-autotune-no-cudagraphs 200-step control for B+Mimir (8 GPUs, GBS 262144, BP 8): median 0.2345 s/step, statistically identical to default-mode 0.234 s — autotune GEMM tile search buys nothing in this small-kernel regime, consistent with the nsys attribution. Wiki updated.
+- 2026-11-02: Diagnosed the FA4/cudagraph re-record storm (dynamo traces flash_attn.cute, fabricating int64 tensors and guarding on .item() scalars) and implemented the fix: FA4_COMPILEOP=1 registered custom ops for the FA4 PrefixLM seqused path (sm90 compileop pattern, no tracing into cute) plus FIXED_NUMSEQS/FIXED_MAXSEQ_* fixed-shape collate. Bit-exact eager+compiled parity and zero recompiles verified on 1 GPU; pitfall documented (fake kernels must not alias repeated outputs). Full-scale 8-GPU smoke pending free GPUs. See [FA4 compileop](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: Found and fixed the int32-assert root cause in the fixed-shape collate: NumPy 2 promotes `np.concatenate(([0], int32_cumsum))` to int64, producing int64 cu_seqlens that FA4 rejects (this also explains the original pre-compileop 8-GPU failure). Leading zero now np.zeros(1, dtype=np.int32); dtype+semantics re-verified on CPU. 8-GPU smoke still pending free GPUs (a bad awk unit-parse briefly mislabeled an occupied fleet as free; a mis-launched run was killed within seconds, tenant unaffected). See [FA4 compileop](pages/model-architecture/vocab-pruning-en-da-zh.md).
+
+- 2026-11-02: Prepared the DFM10 HF-only rebuild while DFM9 runs: the union is the DFM9 base minus 18 replaced tasks plus 42 components (15,748 entries); all 4,351 addition inputs survive locally and are pinned by digest (folketing via the audited tree, one scibench fallback by name/size); tokenization uses the pre-Aug-31 cd88c93 adapter for standard tasks and the ccbb215 native mode for the 29 terminal-native tasks; assembly reuses the committed ccbb215 builder over the rebuilt DFM9 union. recover-lock and enable-dfm10 wait for the DFM9 matched receipt. See [DFM10 HF-only rebuild recipe](pages/dfm10-hf-rebuild-recipe.md).
+- 2026-11-02: 8-GPU validation of fixed-shape collate + FA4 compileop: loss trajectory bit-matches the 200-step control (11.5634/11.5592/11.5169/11.4583 vs 11.5635/11.5590/11.5168/11.4583), min step 0.2375 s. reduce-overhead REJECTED: 498 cudagraph-tree recordings, 0 replays, mass eager-partition fallbacks (CPU scalar op inputs + FSDP2 pool interleave); min 0.475 s vs 0.2375 s default. Decision: keep default mode; launch order for reduce-overhead dropped. Full-scale 200-step smoke + nsys profile launched on the new env. See [FA4 compileop](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: Full-scale 200-step config matrix measured (all loss-identical to control 7.6653): control 0.2342 s/step; FIXED_* only 0.2404 (still hits recompile_limit — guard churn is inside cute tracing); FIXED_* + TORCH_DYNAMO_CACHE_SIZE=64 = 0.2339 with zero limit-hits (WINNER, env-gated knob added in pretrain.py); FIXED_* + FA4_COMPILEOP 0.2508 (+7 0.000000rom custom-op fusion-boundary elementwise; FA4 kernels unchanged per 200-step nsys profile, 642 MB capture at .tmp_vocab_probe/prof_b/b_fx200.nsys-rep); reduce-overhead rejected (0 replays, 0.475 min). Decision: FIXED_* + cache-size 64 + default mode. nsys detached-launch trap re-confirmed (331 KB report + deadlocked ranks; foreground only). See [full-scale results](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: Tried both structural levers to break 0.23 s/step. fsdp_wrap_policy=single_unit (new option): 0.2245 median / 0.2184 min (-4.0%), loss parity — WINNER, opt-in per run (whole-model all-gather buffer; default stays transformer_block). ADAM_FOREACH=1 foreach optimizer path in models/adam_atan2.py: bit-exact parity vs per-param loop (gotcha documented: atan2(y,x/c) != atan2(y,x) — keep the bias_correction2_sqrt division), DTensor dispatch verified, but NO measurable gain at B scale (0.2342) — default off. Combined = single_unit result. See [below 0.23](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: B + real Gemma 4 tokenizer (data/sampled_dfm6, vocab 262144, 62.6B tokens; rows median 125 tok, 10-180 rows/batch) with fsdp_wrap_policy=single_unit + TORCH_DYNAMO_CACHE_SIZE=64: 200-step run clean, no recompile-limit hits, FIXED_* retuned for this data (256/4096/4087/4096). median 0.3023 s/step, min 0.2892, 93.7 GiB/GPU (vs 73.5 for mimir_mini 65k vocab), final loss 7.9482/acc 0.1415 (loss not comparable across tokenizers). The +0.078 s (+35%) vs mimir_mini is the 262k-vocab output projection + embedding cost — head-dominated small-model regime. See [below 0.23](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: L probes with both tokenizers (single_unit + activation_checkpointing=full + compile off): Mimir Mini 1.2554 s/step (loss 6.6038), Gemma 4 262k 1.4398 s/step (loss 7.0100, ~135 GiB/GPU); 4x vocab costs +14.7% at L vs +35% at B. Established: L OOMs at 173 GiB without checkpointing, and compile_train_batch + activation_checkpointing=full reproducibly fails with CheckpointError (recompute metadata mismatch: transposed weight, extra rope dim) under both wrap policies and reshard settings — compile-off is the only working checkpointed regime, consistent with run_checkpoint_compile_isolation.py. See [L probes](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: Corrected the SWE merged-task semantics in the DFM9 rebuild: the union's `nemotron_swe_windowed__merged_XX.jsonl` tasks are concatenations of the tokenizations of shard group [8*XX, 8*XX+8) (proved by np.array_equal prefix match of merged_00 vs the fresh shard_00 tokenization plus the clean 475,696,096-token seam and the merged_XX receipts matching their first shard's size), NOT byte-identical single-shard renames as first inferred from the receipts. The recipe now emits swe_merge tasks, links/tokens all 64 shards, and concatenates groups of 8 with offset-shifted starts (merge_swe_group); the runner was reset to re-run prepare..verify. See [DFM9 HF-only rebuild recipe](pages/dfm9-plan/hf-rebuild-recipe.md).
+- 2026-11-02 (correction): The L checkpointed/uncompiled results (1.2554/1.4398 s/step) are SUPERSEDED — they came from a wrong-regime GAS=1 config that OOMs L, worked around with checkpointing (which breaks compile). Correct production-style config (GAS=2, activation_checkpointing=none, compiled, ema=0.9999, single_unit, FIXED_*, cache64): L Mimir Mini 0.6355 s/step, L Gemma 4 0.7825 s/step (+23% for 4x vocab), foreach noise-level (0.6344). The compile+checkpointing CheckpointError finding stands as a limitation, but resolution is GAS=2, not compile-off. See [L probes corrected](pages/model-architecture/vocab-pruning-en-da-zh.md).
+- 2026-11-02: Prepared the DFM11 HF-only rebuild: scripts/rebuild_dfm11.py stages the committed tokenize_dfm11_from_hub.py driver (4022697), the f9b588f adapter, the e9584e0 template (mapping-valued Gemma tool responses — after the DFM10-era 0483afe), the bc1e181 builder and the cfe0d19 sampling policy; recover-lock digests the eleven pinned schneiderkamplab packages (7.7 GB) from exports_dfm11 and gates on verified DFM9+DFM10 receipts; verify-rows byte-compares the nine snapshot families and decompressed content for the three derived FineInstructions families. Queue wiring adds SAMPLE_EPOCHS[11]=10, enable-dfm11 and dfm11_command, and fixes the inline compare dispatch to pass the row version for versions ≥ 10 (latent DFM1-comparison bug). Five new tests; 24 rebuild tests green. See [DFM11 HF-only rebuild recipe](pages/dfm11-hf-rebuild-recipe.md).
+- 2026-11-03: DFM9 runner7 completed — verify `matched` (693 tasks vs historical arrays; the pass-1 SWE merged-shape failure was a bad first merge, the re-merge reproduced the reference exactly), sample+compare `matched` (10 epochs, 41 files, verified.json written). The runner then fail-closed on the stale recipe-less DFM10 row ("local reservoirs forbidden" — correct guard). DFM10 recover-lock ran manually (base 11,395 + 4,351 additions = 15,748), enable-dfm10 applied, and after three first-run fixes in rebuild_dfm10.py (check_config ordering, template staged from the 0483afe pin not the 1f52b10 data_io pin — mapping-valued tool responses are DFM11-era, and symlink-tolerant source containment with digest pins) prepare staged all sources; the guarded runner is in DFM10 tokenize. See [DFM10 HF-only rebuild recipe](pages/dfm10-hf-rebuild-recipe.md).
+- 2026-11-03 (correction): The DFM10 template pin is `1f52b10` (committed with the DFM10 data_io pin; it adds the mapping/sequence tool-body handling the DFM10 sources require). The earlier `0483afe` staging crashed in the standard tokenize (`'str object' has no attribute 'get'` at the sequence-of-strings part branch) — 0483afe predates the DFM10-era template and cannot tokenize these sources; `recover-lock` was re-run (template_revision now 1f52b10), the stale `inputs-verified.json` cleared, and the row's completed_stages reset so prepare re-staged. Standing instruction recorded: never run old tokenizers or a non-Gemma-4 template. DFM10 standard tokenize re-running cleanly (4,322 tasks + 29 native).
+
+- 2026-11-07: Re-audited DFM1–9 dataset input provenance (no public-path escapes); disabled misleading local-source DFM10 recipe and launched fresh pinned HF acquisitions. See [recovery assessment](/pages/dfm15-plan/hf-rebuild-recovery-assessment.md).
+
+- 2026-11-07: Continued DFM10 HF-only reconstruction: five upstream tasks match historical arrays, export restoration and DOLCI boundaries implemented, sequential full-verification continuation armed. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-07: Prepared and armed DFM11 HF-only reconstruction behind the corrected DFM10 exact-verification gate; 11 pinned packages, 290 additions, preflight passed. [DFM11 runbook](/pages/dfm11-hf-rebuild-recipe.md).
+
+- 2026-11-07: User authorized OPUS-only rebuild-ready HF publication after exact token verification; publisher armed, immutable-pin fetch path and OPUS regrouping bypass implemented. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Corrected DFM10 excessive export scope (49 needed, 23 inherited excluded) and per-row filesystem validation overhead; restarted isolated continuation. Prior 151 GB unpack denominator/ETA superseded. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Confirmed repaired OPUS already published on HF (165 JSONL shards, 41,155,546 rows); distinguished optional 64-Parquet rebuild cache from existing repaired dataset. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Cancelled optional OPUS rebuild-ready publication at user request; stopped waiting publisher and persisted restart prohibition. DFM10/11 reconstruction unaffected. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Recovered missing nine-row Tidsskrift subset from pinned HF export, verified all five arrays exactly, completed DFM10 task map and resumed materialization with per-task receipts. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Fixed native multi-turn Parquet materialization; exact native row and five-array comparisons passed; resumed DFM10 from 162 completed conversions. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Parallelized DFM10 native math tail into 318 ordered Parquet row-group shards, preserving completed tasks and requiring exact joined-array comparison; resumed pipeline. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-08: Restored omitted 4,096-token policy for DeepDive and 13 DOLCI tasks; scheduled exact-gated retokenization and automatic DFM10 verification continuation. [DFM10 runbook](/pages/dfm10-hf-rebuild-recipe.md).
+
+- 2026-11-10: Registered requested DFM12 successor after DFM11 exact success. Queue explicitly holds for missing HF-only input lock/serial recipe; automatic launch is not armed. See [DFM11 successor state](pages/dfm11-hf-rebuild-recipe.md).
+
+- DFM12 HF-only rebuild completed: 1,325 addition tasks and all 13 final sampled arrays plus metadata match history exactly. [Receipt/runbook](pages/dfm12-hf-rebuild-recipe.md).
+
+- 2026-11-11: Scheduled fresh DFM11 PrefixLM/target-only B after causal-auto100K, with validated LR-auto/BP warmup and persistent transition watcher; see [comparison state](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+- 2026-11-11: Corrected two Persian TLPC families to historical 2,000-row, uncapped staging; 50 shards restored, two-shard exact comparison and 16 tests pass. Resumed DFM13 and rearmed gated DFM14/15. [Runbook](pages/dfm13-15-hf-rebuild-recipes.md).
+
+- 2026-11-11: Repaired PrefixLM artifact-path collisions, restarted 50K evaluation, and added plan-isolation/export-provenance guards and resume monitoring; see [comparison incident](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+- 2026-11-11: Replaced remaining full-BP B blocks with PrefixLM B, alternating with Transformer48 every50K through epoch end; see [comparison schedule](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+- 2026-11-11: DFM15 native-reasoning-v2 HF-only reconstruction passed all 83 repaired parts and all 13 final arrays plus metadata. DFM13–15 requested chain complete. [Runbook](pages/dfm13-15-hf-rebuild-recipes.md).
+
+- 2026-11-12: Prepared evaluation-only CST Danish semantic reasoning adapter and audited source manifest; [runbook](pages/danish-semantic-reasoning-evaluation.md). Training pause preserved.
+
+- 2026-11-12: Added separate Danish semantic headline and prepared three-Mimir evaluation gate before Transformer250K; see [semantic evaluation](pages/danish-semantic-reasoning-evaluation.md).
+
+- 2026-11-12: Recorded completed 21-task Mimir Danish semantic campaign, macro scores, publication SDK repair, and verified Transformer training handoff in [benchmark runbook](pages/danish-semantic-reasoning-evaluation.md).
+
+- 2026-11-12: Prepared eight pinned Gemma4/Qwen3.5 Danish semantic comparisons (56 tasks,68,008 answers), queued after Transformer250K GPU evaluations; recorded protocol and preflight in [benchmark runbook](pages/danish-semantic-reasoning-evaluation.md).
+
+- 2026-11-12: Diagnosed E2B/E4B FlashAttention head-size startup failure; switched to FlashInfer and requeued14 tasks plus2 headlines. Preserved failure evidence and recorded separate unresolved26B/31B backend issue in [semantic runbook](pages/danish-semantic-reasoning-evaluation.md).
+
+- 2026-11-12: Verified remote Transformer150K/200K headline history and numeric schemas; no sync loss. Recorded scores, checkpoint versus internal W&B axis distinction, and saved API evidence in [comparison state](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+- 2026-11-12: Inspected workspace mkrhf1q0gcj, verified all Transformer headline points via exact metric/axis queries, and applied seven-panel sampling workaround with remote spec verification. Rendering root cause remains unconfirmed.
+
+- 2026-11-12: User unpaused all seven remaining DFM11 alternating training segments. Validated suspended Transformer250K handoff and restarted the existing scheduler; PrefixLM B loaded200K checkpoint on eight ranks. See [comparison state](pages/current-state/2026-11-10-dfm11-architecture-comparison.md).
+
+- 2026-11-12: Recovered the previously documented Gemma26B Conda CPATH/LIBRARY_PATH fix; header smoke passed, requeued26B and armed an explicit success gate before in-memory Transformer restoration.
+
+- 2026-11-12: Transformer paused exactly at259K, CUDA-offloaded with original ranks alive; explicit user hold retained pending resume command.
+
+- 2026-11-12: Armed detached259K memory-resume watcher after >5 minutes of all-eight-GPU idle/free state; current occupancy keeps timer at0.
+
+- 2026-11-13: Active PrefixLM B suspended exactly296K and CUDA-offloaded; armed5-minute all-GPU-idle memory-resume watcher. Transformer had already completed300K.
+
+- 2026-11-13: PrefixLM B CUDA-offloaded exactly299K; original processes retained and five-minute idle-resume watcher verified active.
+
+- 2026-11-13: Paused all four training rows beyond300K; B300K evaluations/publication continue, with explicit trainer hold and existing final server teardown retained.
+
+- 2026-11-13: Armed remaining-training continuation once every GPU has100GiB free; current~16GiB/GPU keeps post300K pauses in place.
+
+- 2026-11-13: Recovered failed headroom-triggered scheduler launch, reset four unstarted train rows and refreshed shared window8 monitor; Transformer300K→350K launched with clean preflight.
+
+- 2026-11-14: Transformer CUDA-offloaded exactly370K; verified original ranks alive and armed five-minute all-GPU-idle memory-resume watcher.
+
+- 2026-11-14: Transformer suspended and CUDA-offloaded exactly381K; original ranks retained and five-minute idle-resume watcher verified active.
+
+- 2026-11-14: Transformer CUDA-offloaded exactly387K; armed and verified five-minute idle-resume watcher.
+
+- 2026-11-14: On explicit user request stopped identified competing Embla GPU jobs and verified original Transformer387K processes restored from memory.
+
+- 2026-11-16: Added Embla experiment policy and initial numerical-oracle status.
+
+- 2026-11-16: Completed [supervised output-head qualification](pages/model-architecture/supervised-output-head.md): activated Embla v8 GAS2 for24 pending boundaries; measured shared Transformer/B heads, retained opt-in status, restored trainer from326900.
+
+- 2026-11-17: Recorded idea-only MixedLM+ bucket semantics and added the fast dependency-ordered DFM11 experiment table generator; see [objective ablations](pages/current-state/2026-11-14-dfm11-objective-ablation.md).
+
+- 2026-11-17: Added three idea-only Minimir checkpoint continuations (sampled recursion, CausalLM, MixedLM) to the objective-ablation record and generated experiment table.
+
+- 2026-11-17: Started isolated additional-node preparation; inventory and approved SSH pin recorded in the node2 deployment runbook.
+
+- 2026-11-17: Reviewed and packaged source for main and a second B200 node; see [node deployment](pages/model-architecture/node2-deployment.md) for test evidence, external prerequisites and the push boundary.

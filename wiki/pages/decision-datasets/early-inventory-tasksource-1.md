@@ -1,0 +1,202 @@
+---
+type: Dataset Inventory
+title: Early Sapient tasksource inventory 1
+description: Original Sapient subtask identifiers and provisional bounded-decision mapping.
+tags: [data, decision-datasets, sapient, inventory]
+status: draft
+last_updated: 2026-10-21
+confidence: medium
+---
+# Early Sapient tasksource inventory 1
+
+See the [A/B/C/D rubric](../decision-datasets.md#common-assessment-scale),
+[recipes](conversion-recipes.md), and [early datasets](early-datasets.md) for route definitions, evidence, policy caveats,
+and exact path reconstruction. These are name-based candidate routes, not row audits
+or permission to train. A requires retained labels/options; B requires a valid checker.
+D-review explicitly defers a subtask whose target contract is not established here.
+Policy is today's path-filter result, not historical inclusion or legal clearance.
+
+| Exact task/file identifier | Template codes | Route | Current path filter |
+|---|---|---|---|
+| `tasksource__CONDAQA.parquet` | original | D-review | default |
+| `tasksource__ConTRoL-nli.parquet` | original | A-label | override |
+| `tasksource__FLUTE.parquet` | original | D-review | default |
+| `tasksource__HatemojiBuild.parquet` | original | D-review | default |
+| `tasksource__I2D2.parquet` | original | D-review | default |
+| `tasksource__MOH.parquet` | original | D-review | default |
+| `tasksource__MedQA-USMLE-4-options-hf.parquet` | original | A-options | override |
+| `tasksource__PARARULE-Plus.parquet` | original | A-label | override |
+| `tasksource__SpaceNLI.parquet` | original | A-label | default |
+| `tasksource__Touche23-ValueEval.parquet` | original | D-review | default |
+| `tasksource__TroFi.parquet` | original | D-review | default |
+| `tasksource__VUAC.parquet` | original | D-review | default |
+| `tasksource__WANLI.parquet` | original | A-label | override |
+| `tasksource__acronym_identification.parquet` | original | B-tags | default |
+| `tasksource__add_one_rte.parquet` | original | D-review | override |
+| `tasksource__arct.parquet` | original | D-review | default |
+| `tasksource__autotnli.parquet` | original | A-label | default |
+| `tasksource__avicenna.parquet` | original | D-review | default |
+| `tasksource__balanced-copa.parquet` | original | A-options | override |
+| `tasksource__banking77.parquet` | original | A-label | default |
+| `tasksource__breaking_nli.parquet` | original | A-label | default |
+| `tasksource__citation_intent.parquet` | original | A-label | override |
+| `tasksource__cladder.parquet` | original | D-review | default |
+| `tasksource__clcd-english.parquet` | original | D-review | default |
+| `tasksource__cloth.parquet` | original | D-review | default |
+| `tasksource__cnli.parquet` | original | A-label | default |
+| `tasksource__com2sense.parquet` | original | A-label | default |
+| `tasksource__commonsense_qa_2.0.parquet` | original | A-label | override |
+| `tasksource__conceptrules_v2.parquet` | original | D-review | default |
+| `tasksource__conj_nli.parquet` | original | A-label | override |
+| `tasksource__conll2000.parquet` | original | B-tags | default |
+| `tasksource__conll2003_chunk_tags.parquet` | original | B-tags | default |
+| `tasksource__conll2003_ner_tags.parquet` | original | B-tags | default |
+| `tasksource__conll2003_pos_tags.parquet` | original | B-tags | default |
+| `tasksource__corr2cause.parquet` | original | A-label | default |
+| `tasksource__counterfactually-augmented-imdb.parquet` | original | A-label | denied |
+| `tasksource__counterfactually-augmented-snli.parquet` | original | A-label | default |
+| `tasksource__crowdflower_airline-sentiment.parquet` | original | A-label | default |
+| `tasksource__crowdflower_political-media-audience.parquet` | original | D-review | default |
+| `tasksource__crowdflower_political-media-bias.parquet` | original | D-review | default |
+| `tasksource__crowdflower_political-media-message.parquet` | original | D-review | default |
+| `tasksource__crowdflower_sentiment_nuclear_power.parquet` | original | A-label | default |
+| `tasksource__crowdflower_text_emotion.parquet` | original | D-review | denied |
+| `tasksource__cycic_classification.parquet` | original | A-label | default |
+| `tasksource__cycic_multiplechoice.parquet` | original | A-options | default |
+| `tasksource__dadc-limit-nli.parquet` | original | A-label | default |
+| `tasksource__defeasible-nli_atomic.parquet` | original | A-label | default |
+| `tasksource__defeasible-nli_snli.parquet` | original | A-label | default |
+| `tasksource__dgen.parquet` | original | D-review | default |
+| `tasksource__dialogue_nli.parquet` | original | C-text | override |
+| `tasksource__discosense.parquet` | original | D-review | default |
+| `tasksource__dnc.parquet` | original | D-review | default |
+| `tasksource__dnd_style_intents.parquet` | original | D-review | default |
+| `tasksource__dynahate.parquet` | original | D-review | denied |
+| `tasksource__dynasent_dynabench.dynasent.r1.all_r1.parquet` | original | D-review | default |
+| `tasksource__dynasent_dynabench.dynasent.r2.all_r2.parquet` | original | D-review | default |
+| `tasksource__e-CARE.parquet` | original | A-options | override |
+| `tasksource__equate.parquet` | original | D-review | default |
+| `tasksource__esci.parquet` | original | D-review | default |
+| `tasksource__fever-evidence-related_mwong--fever-related.parquet` | original | D-review | default |
+| `tasksource__few-nerd_supervised.parquet` | original | B-tags | default |
+| `tasksource__fig-qa.parquet` | original | A-options | override |
+| `tasksource__folio.parquet` | original | A-label | override |
+| `tasksource__fool-me-twice.parquet` | original | D-review | default |
+| `tasksource__fracas.parquet` | original | A-label | override |
+| `tasksource__hate_speech18.parquet` | original | D-review | denied |
+| `tasksource__hate_speech_offensive.parquet` | original | D-review | denied |
+| `tasksource__help-nli.parquet` | original | A-label | default |
+| `tasksource__hlgd.parquet` | original | D-review | default |
+| `tasksource__implicatures.parquet` | original | D-review | default |
+| `tasksource__implicit-hate-stg1.parquet` | original | D-review | denied |
+| `tasksource__jnlpba_jnlpba.parquet` | original | B-tags | default |
+| `tasksource__language-identification.parquet` | original | A-label | default |
+| `tasksource__lex_glue_ledgar.parquet` | original | A-label | default |
+| `tasksource__lexical_relation_classification_BLESS.parquet` | original | A-label | default |
+| `tasksource__lexical_relation_classification_CogALexV.parquet` | original | A-label | default |
+| `tasksource__lexical_relation_classification_EVALution.parquet` | original | A-label | default |
+| `tasksource__lingnli.parquet` | original | A-label | default |
+| `tasksource__logical-fallacy.parquet` | original | A-label | default |
+| `tasksource__logiqa-2.0-nli.parquet` | original | A-label | override |
+| `tasksource__logiqa.parquet` | original | A-options | override |
+| `tasksource__lonli.parquet` | original | A-label | default |
+| `tasksource__lsat_qa_all.parquet` | original | A-options | default |
+| `tasksource__medmcqa.parquet` | original | A-options | override |
+| `tasksource__mindgames.parquet` | original | D-review | default |
+| `tasksource__monli.parquet` | original | A-label | default |
+| `tasksource__monotonicity-entailment.parquet` | original | A-label | override |
+| `tasksource__moral_stories_full.parquet` | original | D-review | default |
+| `tasksource__mpe.parquet` | original | D-review | default |
+| `tasksource__mutual.parquet` | original | D-review | override |
+| `tasksource__nan-nli_joey234--nan-nli.parquet` | original | A-label | default |
+| `tasksource__natural-language-satisfiability.parquet` | original | D-review | default |
+| `tasksource__naturallogic.parquet` | original | A-label | override |
+| `tasksource__ncbi_disease_ncbi_disease.parquet` | original | B-tags | default |
+| `tasksource__nli-veridicality-transitivity.parquet` | original | A-label | default |
+| `tasksource__nli_fever.parquet` | original | A-label | override |
+| `tasksource__onestop_qa.parquet` | original | A-options | default |
+| `tasksource__ontonotes_english_SpeedOfMagic--ontonotes_english.parquet` | original | B-tags | default |
+| `tasksource__open_question_type.parquet` | original | D-review | default |
+| `tasksource__parade.parquet` | original | D-review | default |
+| `tasksource__pragmeval_emergent.parquet` | original | D-review | default |
+| `tasksource__pragmeval_gum.parquet` | original | D-review | default |
+| `tasksource__pragmeval_mrda.parquet` | original | D-review | denied |
+| `tasksource__pragmeval_pdtb.parquet` | original | D-review | default |
+| `tasksource__pragmeval_sarcasm.parquet` | original | D-review | denied |
+| `tasksource__pragmeval_stac.parquet` | original | D-review | default |
+| `tasksource__pragmeval_switchboard.parquet` | original | D-review | denied |
+| `tasksource__pragmeval_verifiability.parquet` | original | D-review | default |
+| `tasksource__probability_words_nli_reasoning_1hop.parquet` | original | A-label | override |
+| `tasksource__probability_words_nli_reasoning_2hop.parquet` | original | A-label | override |
+| `tasksource__probability_words_nli_usnli.parquet` | original | A-label | override |
+| `tasksource__propsegment_nli.parquet` | original | A-label | default |
+| `tasksource__prost.parquet` | original | D-review | default |
+| `tasksource__puzzte.parquet` | original | D-review | default |
+| `tasksource__quote-repetition.parquet` | original | D-review | default |
+| `tasksource__race-c.parquet` | original | A-options | override |
+| `tasksource__recast_recast_factuality.parquet` | original | D-review | default |
+| `tasksource__recast_recast_megaveridicality.parquet` | original | D-review | default |
+| `tasksource__recast_recast_ner.parquet` | original | D-review | default |
+| `tasksource__recast_recast_puns.parquet` | original | D-review | default |
+| `tasksource__recast_recast_sentiment.parquet` | original | A-label | default |
+| `tasksource__recast_recast_verbcorner.parquet` | original | D-review | default |
+| `tasksource__recast_recast_verbnet.parquet` | original | D-review | default |
+| `tasksource__recast_white_dpr.parquet` | original | D-review | default |
+| `tasksource__recast_white_fnplus.parquet` | original | D-review | default |
+| `tasksource__recast_white_sprl.parquet` | original | D-review | default |
+| `tasksource__reclor.parquet` | original | A-options | denied |
+| `tasksource__redefine-math.parquet` | original | D-review | default |
+| `tasksource__regset.parquet` | original | D-review | default |
+| `tasksource__riddle_sense.parquet` | original | A-options | default |
+| `tasksource__robustLR.parquet` | original | D-review | default |
+| `tasksource__robust_nli_IS_CS.parquet` | original | A-label | override |
+| `tasksource__robust_nli_LI_LI.parquet` | original | A-label | override |
+| `tasksource__robust_nli_PI_CD.parquet` | original | A-label | override |
+| `tasksource__robust_nli_PI_SP.parquet` | original | A-label | override |
+| `tasksource__robust_nli_ST_LM.parquet` | original | A-label | override |
+| `tasksource__robust_nli_ST_NE.parquet` | original | A-label | override |
+| `tasksource__robust_nli_ST_SE.parquet` | original | A-label | override |
+| `tasksource__robust_nli_ST_WO.parquet` | original | A-label | override |
+| `tasksource__robust_nli_is_sd.parquet` | original | A-label | override |
+| `tasksource__robust_nli_li_ts.parquet` | original | A-label | override |
+| `tasksource__rotten_tomatoes.parquet` | original | D-review | denied |
+| `tasksource__ruletaker.parquet` | original | A-label | override |
+| `tasksource__rumoureval_2019_RumourEval2019.parquet` | original | D-review | default |
+| `tasksource__scicite.parquet` | original | A-label | override |
+| `tasksource__scientific-exaggeration-detection.parquet` | original | A-label | override |
+| `tasksource__scinli.parquet` | original | A-label | override |
+| `tasksource__scone.parquet` | original | D-review | default |
+| `tasksource__scruples.parquet` | original | D-review | default |
+| `tasksource__sem_eval_2010_task_8.parquet` | original | D-review | default |
+| `tasksource__sen-making_1.parquet` | original | D-review | default |
+| `tasksource__sen-making_2.parquet` | original | D-review | default |
+| `tasksource__sharc_modified_mod.parquet` | original | D-review | default |
+| `tasksource__sherliic.parquet` | original | D-review | default |
+| `tasksource__sms_spam.parquet` | original | D-review | denied |
+| `tasksource__snips_built_in_intents.parquet` | original | A-label | default |
+| `tasksource__spartqa-mchoice.parquet` | original | A-options | default |
+| `tasksource__spartqa-yn.parquet` | original | A-label | default |
+| `tasksource__starcon.parquet` | original | D-review | default |
+| `tasksource__subjectivity.parquet` | original | A-label | default |
+| `tasksource__summarize_from_feedback_comparisons.parquet` | original | C-text | default |
+| `tasksource__syntactic-augmentation-nli.parquet` | original | A-label | default |
+| `tasksource__temporal-nli.parquet` | original | A-label | override |
+| `tasksource__tomi-nli.parquet` | original | A-label | override |
+| `tasksource__tracie.parquet` | original | D-review | default |
+| `tasksource__tweet_eval_emoji.parquet` | original | A-label | denied |
+| `tasksource__tweet_eval_emotion.parquet` | original | A-label | denied |
+| `tasksource__tweet_eval_hate.parquet` | original | A-label | denied |
+| `tasksource__tweet_eval_irony.parquet` | original | A-label | denied |
+| `tasksource__tweet_eval_offensive.parquet` | original | A-label | denied |
+| `tasksource__tweet_eval_sentiment.parquet` | original | A-label | denied |
+| `tasksource__tweets_hate_speech_detection.parquet` | original | D-review | denied |
+| `tasksource__twentyquestions.parquet` | original | A-label | default |
+| `tasksource__twitter-financial-news-sentiment.parquet` | original | A-label | denied |
+| `tasksource__universal_dependencies_en_ewt_deprel.parquet` | original | B-tags | default |
+| `tasksource__universal_dependencies_en_gum_deprel.parquet` | original | B-tags | default |
+| `tasksource__universal_dependencies_en_lines_deprel.parquet` | original | B-tags | default |
+| `tasksource__universal_dependencies_en_partut_deprel.parquet` | original | B-tags | default |
+| `tasksource__vitaminc_tals--vitaminc.parquet` | original | A-label | override |
+| `tasksource__wikimedqa_medwiki.parquet` | original | A-options | override |
+| `tasksource__winodict.parquet` | original | D-review | default |
+| `tasksource__wnut_17_wnut_17.parquet` | original | D-review | denied |

@@ -8,7 +8,7 @@ tags:
 - catalog
 - operations
 status: stable
-last_updated: 2026-10-08
+last_updated: 2026-11-16
 confidence: high
 part_of: /entities/scripts.md
 ---
@@ -408,3 +408,136 @@ Do not substitute modified-prompt probe scores into the official bundles.
 Artifacts and scripts: `/work/dfm/euroeval-runs/mimir-v1.5-18.2-validation/squad-investigation/`.
 One temporary GPU7 server used about 12.1 GB alongside training and was
 stopped after the probes. Official submission records were unchanged.
+
+
+## Mimir v1.8 all-language validation queue (2026-10-19)
+
+The user named the original XL step 3,800,000 EMA checkpoint **Mimir v1.8**.
+This is distinct from the gated Mimir2 3.82M pilot and its controls. Source:
+`incoming/mimir-xl-20261015/checkpoints/dfm15/XL-from-dfm14-epoch1`,
+tag `step_3800000`. CPU export completed with 131 tensors and 1,786,775,040
+parameter elements. The campaign's isolated export is under
+`/work/dfm/euroeval-runs/mimir-v1.8-3800000-validation/model`.
+
+The detached launch watcher is
+`/tmp/mimir-v18-euroeval/launch_when_free.py`; scripts are backed up under
+`launch-scripts/` in the campaign directory. Its initial PID was 186567.
+`launch-status.json` is authoritative for current state. At launch all eight
+GPUs were occupied by the existing 3.82M evaluation; no process was interrupted.
+The gate requires three consecutive checks, ten seconds apart, with no GPU
+compute processes and at least 96% free memory on all eight GPUs. It does not
+modify the main scheduler or its training handoffs. The watcher survives shell
+exit but must be restored after a node reboot; `/tmp` is not durable storage.
+
+Plan: all 35 language codes with official EuroEval datasets, validation splits,
+ten iterations, zero-shot plus applicable few-shot; 444 unique zero-shot/shared
+datasets and 297 additional few-shot evaluations (741 expected records).
+Shared datasets run once. Forced-zero-shot records retain their native metadata
+and appear in both separate mode bundles, once in the combined bundle.
+The model/server/result identity is `danish-foundation-models/DFM-Mimir-v1.8`,
+a local submission label, not a claim that a Hub release already exists.
+
+Eight persistent vLLM servers use ports 8200-8207, FLASH_ATTN, 0.95 utilization,
+64 sequences/client requests, eager execution, and 8192 context with the actual
+`max_position_embeddings=8192` override. Prefix caching and chunked prefill are
+disabled. CPU RAGTruth scoring does not reserve server scheduling capacity;
+at most two preparing/generating language clients share a server. Telemetry
+records KV occupancy, request queueing, throughput, utilization, and GPU memory.
+Owned servers are stopped when the campaign finishes.
+
+The exact training-data chat template was copied from the transferred
+`data/sampled_dfm15/chat_template.jinja`. The isolated tokenizer sets
+`fix_mistral_regex=false`; token IDs match the raw training tokenizer on text
+and rendered chat probes. Weight and tokenizer SHA256s are recorded in
+`model-verification.json`. The EuroEval source commit is frozen in
+`euroeval-source.tar` and used via an isolated PYTHONPATH snapshot. Before
+benchmarking, the watcher requires successful structured JSON and finite
+logprobs on every server, server token-ID parity, and finite generation after a
+5,000-token prefill. These GPU checks are pending while GPUs remain occupied.
+The protocol keeps standard EuroEval scoring and does not apply the previous
+SQuAD diagnostic answer-only modification.
+
+Results: `submission/DFM-Mimir-v1.8__validation__zero-shot.jsonl`,
+`DFM-Mimir-v1.8__validation__few-shot.jsonl`, and
+`DFM-Mimir-v1.8__validation__all-modes.jsonl`. The submission index marks missing
+records and errors as partial. Queue preparation and CPU checks are verified;
+no new evaluation score was available at the time this entry was written.
+
+
+Shutdown monitoring update (2026-10-19): after 68/69 language/mode jobs
+completed, the user explicitly requested monitoring through GPU release.
+An independent detached verifier, `/tmp/mimir-v18-euroeval/verify_release.py`
+(initial PID 404690), records `gpu-release.json` in the campaign directory.
+It waits for scheduler completion, allows the launcher 180 seconds to release
+its allocations, and verifies GPU-process ownership by recorded session IDs
+and process start times before signalling any surviving evaluation processes.
+It never signals unrelated workloads. At installation, only Croatian zero-shot
+remained and 737/741 result records were saved. GPU release is not confirmed
+until `gpu-release.json` reports `released`.
+
+
+Completion verified (2026-10-19): all 69 language/mode jobs completed, with
+741/741 unique records, no missing records, and no submission validation errors.
+Zero-shot and few-shot bundles each contain 444 records including shared tasks;
+the combined bundle contains 741. The launcher reports `complete` and the
+independent release verifier reports `released`, with no surviving evaluation
+GPU processes and no fallback cleanup signals required.
+
+## Mimir v1.8 export transfer preparation (2026-11-15)
+
+Located and checked the original step-3,800,000 EMA export at
+`/work/dfm/euroeval-runs/mimir-v1.8-3800000-validation/model`. The export log
+confirms 131 mapped tensors and zero dropped tensors; the safetensors header
+and payload extent were checked. Its five files total 3,605,754,331 bytes.
+SHA256 checksums and the file inventory are recorded under
+`logs/analysis/mimir-v18-transfer-20261115/`.
+
+The user requested transfer to `ssh.cloud.sdu.dk`, port `6519`, destination
+`/work/arbiter/mimir/DFM-Mimir-v1.8`. Two bounded SSH attempts (including explicit
+IPv4) timed out before authentication. No remote files were transferred or
+modified. Transfer remains pending endpoint reachability; the requested
+destination and checksums are retained for resumption.
+
+Transfer completion (2026-11-15): the user supplied the working endpoint
+`130.225.164.228:8888`. Created `/work/arbiter/mimir/DFM-Mimir-v1.8` and transferred
+all five export files as `ucloud` using rsync over SSH. Remote `sha256sum -c`
+matched every file, including `model.safetensors`. This supersedes the pending
+transfer status above; the original port-6519 timeout remains historical.
+The completed receipt is
+`logs/analysis/mimir-v18-transfer-20261115/transfer-receipt.json`.
+
+## Mini release comparison: corrected full coverage (2026-11-16)
+
+The previous 37/50-language DFM14 aggregate is superseded for checkpoint
+selection: its roots omitted wave34 results and the DFM13 multilingual DFM
+root. Combining all checkpoint-specific average roots yields 396/396 valid
+metrics and 50/50 complete languages for both step 1500000 and step 1538766.
+No GPU reevaluation was necessary. The registry and weighting are unchanged.
+
+Equal-language scores are 65.740693 and 66.007505 respectively; epoch 3 wins
+33 languages versus 17. Excluding English/Danish, scores are 66.042648 and
+66.323617. This modest descriptive advantage supports retaining final epoch 3
+for DFM-Mimir-v1.8-Mini; it is not a statistical significance claim.
+
+Reproducible aggregation, source paths, full metric evidence and language
+comparison are saved under
+`logs/analysis/mini-release-checkpoint-comparison-20261116/`. Historical
+scheduler reports remain unchanged.
+
+### Public v1.8 releases (2026-11-16)
+
+- [danish-foundation-models/DFM-Mimir-v1.8-Mini](https://huggingface.co/danish-foundation-models/DFM-Mimir-v1.8-Mini), revision `bb9e93c076a2db1e14f63c3c93447dbb8abf4119`; 14 file hashes verified against Hub, anonymous public access confirmed.
+- [danish-foundation-models/DFM-Mimir-v1.8](https://huggingface.co/danish-foundation-models/DFM-Mimir-v1.8), revision `30485dbad6f3ce50d09eaa963b8a8fce53a4290c`; 12 file hashes verified against Hub, anonymous public access confirmed.
+
+Both staged tokenizers passed raw-tokenizer parity for Danish, English and Unicode probes, native chat rendering and HRM configuration loading. Existing GPU smoke evidence was packaged; no new Hub-based GPU smoke was run. Runtime requires HRM-specific PrefixLM support; version numbers alone are insufficient. Publication receipts and scripts are under `logs/releases/mimir-v1.8-20261116/`. OKF validation retains the pre-existing oversized scheduler page error and 14 link warnings.
+
+### Exact-release comparison limitation (2026-11-16)
+
+The transferred scheduler snapshot for XL step 3800000 contains 46 done,
+2093 pending and 64 running evaluation rows; all eight average rows are pending.
+No complete checkpoint-matched integrated 50-language/headline result was
+located locally for that XL checkpoint. The later standalone EuroEval
+comparison is complete on its common 32-language population and must not be
+represented as the integrated 50-language comparison. Mini final epoch-3
+integrated results are available; nearby XL step 3850000 is not the released
+checkpoint and must not silently substitute for it.
