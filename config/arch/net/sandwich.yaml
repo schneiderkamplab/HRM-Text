@@ -1,0 +1,6 @@
+name: baselines.sandwich@Sandwich
+head: lm_head@LMHead
+prelude_layers: 3
+core_layers: 6
+coda_layers: 3
+recurrence: 7
