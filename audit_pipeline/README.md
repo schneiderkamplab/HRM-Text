@@ -62,3 +62,16 @@ The retained historical references are `dfm12/european_stage.py` (bounded per-ho
 HTTP pools), `dfm12/baltic_async_io.py` (cancellation-safe owner) and
 `dfm12/wave4_disk_pipeline.py` (separate CPU/disk lanes). No AST monkeypatching is
 used here and historical pinned campaigns are not rewritten.
+
+## Independent Story Generator and Auditor
+
+The opt-in `story-seeds`, `story-generate`, and `story-review` adapters use the
+same rolling runtime and journal locks as other tasks. `--model` explicitly
+selects the served model and seals it into campaign provenance; omitting it
+preserves historical defaults. Use fresh output directories when changing models.
+
+For the DFM16 Qwen pilot, run `python -m scripts.queue_dfm16_stories_qwen`.
+It waits for externally owned generation endpoints 8800-8804 and auditor endpoints
+8805-8807, defaults to 128 requests/server (`--concurrency` overrides it), and stops
+for manual review before production.
+See `wiki/pages/dfm16-plan.md` for contracts and the full handoff.

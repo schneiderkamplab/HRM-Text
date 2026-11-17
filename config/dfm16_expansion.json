@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sampling_authorized": false,
+  "repeat": 1,
+  "simple_stories": {
+    "accepted_targets": {"en": 200000, "da": 50000, "ja": 25000, "hi": 25000},
+    "task_percentages": {"creative": 30, "revision": 30, "summary": 15, "rewrite": 15, "qa": 10},
+    "model": "google/gemma-4-26B-A4B-it",
+    "concurrency_per_server": 256,
+    "attempts_per_candidate": 2,
+    "chunk_size": 128,
+    "sources": [
+      "SimpleStories/SimpleStories",
+      "SimpleStories/SimpleStories-JA",
+      "SmallScale/Simple-Stories-Eng-Hin",
+      "SmallScale/Simple-Stories-Hindi",
+      "keenanpepper/simplestories-ja-en-endings"
+    ]
+  },
+  "sources": [
+    {"repo_id": "openbmb/UltraData-SFT-2605", "stage": "convert_audit", "priority": 1},
+    {"repo_id": "Nanbeige/ToolMind", "stage": "convert_audit", "priority": 1},
+    {"repo_id": "SWE-bench/SWE-smith-trajectories", "stage": "convert_successful_audit", "priority": 1},
+    {"repo_id": "open-thoughts/OpenThoughts3-1.2M", "stage": "convert_audit", "priority": 1},
+    {"repo_id": "nvidia/Nemotron-RL-instruction_following-structured_outputs", "stage": "generate_verify_audit", "priority": 2},
+    {"repo_id": "MiniMaxAI/SynLogic", "stage": "generate_verify_audit", "priority": 2},
+    {"repo_id": "nvidia/Nemotron-RL-Agentic-Conversational-Tool-Use-Pivot-v1", "stage": "inspect_agentic", "priority": 2},
+    {"repo_id": "nvidia/Nemotron-RL-Agentic-Function-Calling-Pivot-v1", "stage": "inspect_agentic", "priority": 2},
+    {"repo_id": "nvidia/Nemotron-RL-Agentic-SWE-Pivot-v1", "stage": "inspect_agentic", "priority": 2},
+    {"repo_id": "nvidia/Nemotron-RL-agent-calendar_scheduling", "stage": "inspect_agentic", "priority": 2},
+    {"repo_id": "nvidia/Nemotron-RL-agent-workplace_assistant", "stage": "inspect_agentic", "priority": 2},
+    {"repo_id": "allenai/Dolci-Instruct-RL-7B", "stage": "coverage_then_generate", "priority": 2},
+    {"repo_id": "allenai/atomic", "stage": "coverage_then_generate", "priority": 3}
+  ],
+  "coverage_only": [
+    "HuggingFaceTB/smoltalk", "HuggingFaceTB/smoltalk2",
+    "OpenCoder-LLM/opc-sft-stage2", "HuggingFaceH4/ultrachat_200k",
+    "allenai/IF_multi_constraints_upto5", "PleIAs/SYNTH",
+    "ATOMIC2020 (resolve existing recipe before acquisition)"
+  ]
+}

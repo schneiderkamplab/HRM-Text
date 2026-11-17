@@ -11,7 +11,7 @@ from dfm12.io import file_hash, load, lock, write_json
 from . import dfm14, review, runtime
 
 
-def verify(kind,root,output):
+def verify(kind,root,output,model=None):
     manifest=load(root/'manifest.json')
     if kind=='generate':
         from dfm14.production import pins
@@ -26,12 +26,28 @@ def verify(kind,root,output):
             raise ValueError('Input readiness changed')
         if manifest['status']!='ready_for_gpu_audit':raise ValueError('Unprepared audit')
         old=load(output/'configuration.json') if (output/'configuration.json').exists() else None
-        if old and (old['manifest_sha256']!=file_hash(root/'manifest.json') or old['model']!=dfm14.Audit.model):
+        if old and (old['manifest_sha256']!=file_hash(root/'manifest.json') or old['model']!=(model or dfm14.Audit.model)):
             raise ValueError('Wrong historical audit campaign')
     config=dict(kind=kind,source_manifest_sha256=file_hash(root/'manifest.json'),
         review_policy=review.VERSION,thinking=False,retries=1,admission_spacing=0,backoff_seconds=0,
         implementation={str(p.resolve()):file_hash(p) for p in Path(__file__).parent.glob('*.py')},
         legacy_manifest_unchanged=True)
+    if model is not None:
+        config['model'] = model
+    if kind.startswith('story-'):
+        for dependency in ('dfm16_story_v3.py', 'dfm16_story_adapter.py', 'dfm16_story_quality.py'):
+            path = Path('scripts')/dependency
+            config['implementation'][str(path.resolve())] = file_hash(path)
+        if kind.startswith('story-mimir-'):
+            path = Path('scripts/dfm16_mimir_judge.py')
+            config['implementation'][str(path.resolve())] = file_hash(path)
+    if kind in ('stories', 'answers'):
+        adapter = Path('scripts')/('dfm16_story_adapter.py' if kind == 'stories' else 'dfm16_answer_adapter.py')
+        config['implementation'][str(adapter.resolve())] = file_hash(adapter)
+        if kind == 'answers':
+            for dependency in ('dfm16_verification.py', 'dfm16_verifier_worker.py'):
+                path = Path('scripts')/dependency
+                config['implementation'][str(path.resolve())] = file_hash(path)
     path=output/'pipeline/configuration.json'
     if path.exists() and load(path)!=config:raise ValueError('Shared runtime changed; review migration before resealing')
     write_json(path,config)
@@ -39,7 +55,10 @@ def verify(kind,root,output):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('kind',choices=('audit','generate'))
+    parser.add_argument('kind',choices=('audit','generate','stories','answers',
+                                      'story-seeds','story-generate','story-review','story-language',
+                                      'story-mimir-language','story-mimir-content','story-mimir-probe'))
+    parser.add_argument('--model', help='Explicit served model ID; preserved in campaign provenance')
     parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--output',type=Path)
     parser.add_argument('--concurrency',type=int,default=256)
@@ -49,7 +68,7 @@ def main():
     if len(ports)!=len(set(ports)) or not 1<=args.concurrency<=1024:parser.error('Unique ports; concurrency 1..1024')
     root=args.root.resolve();output=(args.output or root).resolve()
     with lock(output/'.controller.lock'):
-        verify(args.kind,root,output)
+        verify(args.kind,root,output,args.model)
         ctx=mp.get_context('spawn');children=[];stopping=False
         def stop(*_):
             nonlocal stopping
@@ -60,7 +79,7 @@ def main():
         state=output/'pipeline/state.json'
         try:
             for port in ports:
-                child=ctx.Process(target=runtime.worker,args=(args.kind,root,output,f'http://127.0.0.1:{port}/v1',args.concurrency))
+                child=ctx.Process(target=runtime.worker,args=(args.kind,root,output,f'http://127.0.0.1:{port}/v1',args.concurrency,args.model))
                 child.start();children.append(child)
             write_json(state,dict(phase='running',pid=os.getpid(),worker_pids=[c.pid for c in children],
                                  concurrency_per_endpoint=args.concurrency,ports=ports))

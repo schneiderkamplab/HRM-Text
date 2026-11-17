@@ -18,10 +18,27 @@ class EndpointUnavailable(RuntimeError):
     """Stop a broken endpoint instead of exhausting a campaign's row budgets."""
 
 
-def worker(kind, root, output, endpoint, concurrency):
+def worker(kind, root, output, endpoint, concurrency, model=None):
     # Spawn targets must live in an importable module, not package __main__.
     from .dfm14 import Audit, Generation
-    adapter = (Audit if kind == 'audit' else Generation)(root, output, endpoint)
+    if kind in ('story-mimir-language', 'story-mimir-content', 'story-mimir-probe'):
+        from scripts.dfm16_mimir_judge import MimirLanguage, MimirContent, MimirProbe
+        adapter = {'story-mimir-language': MimirLanguage, 'story-mimir-content': MimirContent,
+                   'story-mimir-probe': MimirProbe}[kind](root, output, endpoint)
+    elif kind in ('story-seeds', 'story-generate', 'story-review', 'story-language'):
+        from scripts.dfm16_story_v3 import SeedAudit, Generate, ConversationAudit, LanguageAudit
+        adapter = {'story-seeds': SeedAudit, 'story-generate': Generate,
+                   'story-review': ConversationAudit, 'story-language': LanguageAudit}[kind](root, output, endpoint)
+    elif kind == 'answers':
+        from scripts.dfm16_answer_adapter import Answers
+        adapter = Answers(root, output, endpoint)
+    elif kind == 'stories':
+        from scripts.dfm16_story_adapter import Stories
+        adapter = Stories(root, output, endpoint)
+    else:
+        adapter = (Audit if kind == 'audit' else Generation)(root, output, endpoint)
+    if model is not None:
+        adapter.model = model
     asyncio.run(run(adapter, endpoint, concurrency))
 
 
@@ -159,7 +176,7 @@ async def run(adapter, endpoint, concurrency, *, client=None, signals=True, pref
     try:
         await disk.call(adapter.initialize)
         await cpu.call(adapter.initialize_cpu)
-        await transport.health(adapter.model)
+        await transport.health(adapter.model, context=getattr(adapter, 'context_length', 32768))
         tasks = [asyncio.create_task(produce())]
         tasks += [asyncio.create_task(consume()) for _ in range(workers)]
         reporter = asyncio.create_task(report())
