@@ -1,0 +1,21 @@
+{
+  "protocol": "danish_semantic_v1",
+  "revision": "dea3cb506c3d68ebb3e70b04320f094b93320607",
+  "evaluation_only": true,
+  "task_file": "evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning",
+  "families": [
+    "danwic",
+    "entailment",
+    "inference",
+    "dameta",
+    "sentiment",
+    "similarity",
+    "synonymy"
+  ],
+  "primary_danwic_subset": "danwic_poly_selection",
+  "control_danwic_subset": "danwic_mono_selection",
+  "temperature": 0,
+  "max_tokens": 16,
+  "score": "whole-answer exact match; invalid counts as wrong",
+  "automatic_training_resume": false
+}

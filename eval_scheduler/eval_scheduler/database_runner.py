@@ -72,6 +72,11 @@ class DatabaseRunner:
     def _backup(self, force=False):
         if force or time.monotonic() - self._last_backup >= 60:
             self.store.backup(self.plan_dir/'state.backup.sqlite')
+            # Keep a TSV mirror on the same cadence; atomic, read-only on the store.
+            try:
+                self.store.export_tsv(self.plan_dir/'plan.snapshot.tsv')
+            except (OSError, ValueError) as exc:
+                self.event(f'TSV_EXPORT_FAILED {type(exc).__name__}: {exc}')
             self._last_backup = time.monotonic()
 
     def _export_idle(self, futures):
@@ -299,9 +304,24 @@ class DatabaseRunner:
                                 return 'stopped'
                         elif locked:
                             pass  # Completions continue, but administrative pauses never exit as blocked.
+                        elif exclusive_active:
+                            # Training owns the GPUs, not the CPU publication lane.
+                            # Do not overlap other exclusive actions (export/teardown).
+                            if any(kind == 'exclusive' and claim.job.action == Action.TRAIN_UNTIL_STEP
+                                   for claim, _, kind in futures.values()):
+                                self._dispatch_batch([
+                                    job for job in self.store.ready_jobs()
+                                    if job.action not in EXCLUSIVE | CLIENTS | {Action.WAIT_CHECKPOINT}
+                                    and not job.requires_gpu
+                                ], executor, futures)
                         elif not exclusive_active:
                             ready = self.store.ready_jobs()
-                            exclusive = next((j for j in ready if j.action in EXCLUSIVE), None)
+                            # A redundant teardown must not hide a ready training
+                            # lease behind CPU publication. Training drains the
+                            # shared pool itself before claiming the GPUs.
+                            exclusive = next((j for j in ready if j.action == Action.TRAIN_UNTIL_STEP), None)
+                            if exclusive is None:
+                                exclusive = next((j for j in ready if j.action in EXCLUSIVE), None)
                             # CPU publication must not strand the next training lease.
                             busy = any(
                                 kind != 'wait' and not (

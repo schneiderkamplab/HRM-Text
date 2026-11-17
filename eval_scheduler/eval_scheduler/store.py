@@ -42,7 +42,12 @@ WITH RECURSIVE impossible(job_id) AS (
     WHERE j.status='pending' AND j.deps_mode='success' AND j.optional=0
 )
 SELECT j.* FROM {candidates}
-WHERE {candidate_filter} j.status='pending' AND NOT EXISTS (
+WHERE {candidate_filter} j.status='pending'
+AND NOT (
+    json_extract(j.definition, '$.action')='train_until_step'
+    AND COALESCE(json_extract(json_extract(j.definition, '$.metadata_json'), '$.user_training_pause'), 0)=1
+)
+AND NOT EXISTS (
     SELECT 1 FROM dependencies d JOIN jobs parent ON parent.job_id=d.dependency
     WHERE d.job_id=j.job_id AND parent.optional=0 AND (
         (j.deps_mode='success' AND parent.status<>'done') OR
@@ -74,6 +79,10 @@ def _validate_job(job: Job) -> None:
 
 
 def _validate_graph(jobs: list[Job]) -> None:
+    from .preflight import check_artifact_isolation
+    collisions = check_artifact_isolation(jobs, Path.cwd())
+    if collisions:
+        raise ValueError("\n".join(collisions[:10]))
     by_id = {j.job_id: j for j in jobs}
     if len(by_id) != len(jobs):
         raise ValueError("Duplicate job IDs")
@@ -347,7 +356,8 @@ class SQLiteJobStore:
     @staticmethod
     def _rearm_terminal_barriers(db):
         query = READY_SQL.format(candidates='jobs j', candidate_filter="j.deps_mode='terminal' AND ")
-        query = query.replace("j.status='pending' AND NOT EXISTS", "j.status='done' AND NOT EXISTS")
+        query = query.replace("j.status='pending'\nAND NOT (",
+                              "j.status='done'\nAND NOT (")
         while True:
             satisfied = {r['job_id'] for r in db.execute(query, {'limit': -1})}
             stale = [r['job_id'] for r in db.execute(

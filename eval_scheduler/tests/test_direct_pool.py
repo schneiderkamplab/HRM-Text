@@ -1,4 +1,4 @@
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from threading import Barrier, Event
 from types import SimpleNamespace
 from unittest.mock import Mock
@@ -152,4 +152,64 @@ def test_ready_replica_serves_clients_while_another_loads(tmp_path):
     finally:
         loaded.set()
         first.release()
+        p.shutdown()
+
+
+def test_startup_does_not_pin_queue_to_first_ready_replica(tmp_path):
+    p, backend = pool(tmp_path, [0, 1])
+    loading, loaded = Event(), Event()
+    original = backend.acquire.side_effect
+    def acquire(j, gpu):
+        if gpu == 1:
+            loading.set()
+            assert loaded.wait(5)
+        return original(j, gpu)
+    backend.acquire.side_effect = acquire
+    first = p._acquire_residency(job(tmp_path))
+    extra = None
+    futures = []
+    try:
+        with ThreadPoolExecutor(max_workers=7) as workers:
+            futures.append(workers.submit(p._acquire_residency, job(tmp_path)))
+            assert loading.wait(5)
+            extra = p._acquire_residency(job(tmp_path))
+            assert extra.gpu == 0
+            futures.extend(workers.submit(p._acquire_residency, job(tmp_path)) for _ in range(6))
+            try:
+                with pytest.raises(FutureTimeout):
+                    futures[-1].result(.1)
+                assert p.snapshot_state()['slots'][0]['residency_holds'] == 2
+            finally:
+                loaded.set()
+            leases = [f.result(5) for f in futures]
+            counts = [s['residency_holds'] for s in p.snapshot_state()['slots'].values()]
+            assert max(counts) - min(counts) <= 1
+            for lease in leases:
+                lease.release()
+    finally:
+        loaded.set()
+        first.release()
+        if extra:
+            extra.release()
+        for f in futures:
+            if f.done() and f.exception() is None:
+                f.result().release()
+        p.shutdown()
+
+
+def test_unrelated_loading_model_does_not_throttle_ready_replica(tmp_path):
+    p, _ = pool(tmp_path, [0, 1])
+    leases = []
+    try:
+        leases.append(p._acquire_residency(job(tmp_path)))
+        with p._condition:
+            p._slots[1].provisioning = True
+            p._slots[1].key = 'different-model-or-judge'
+        leases.extend(p._acquire_residency(job(tmp_path), timeout=.1) for _ in range(4))
+        assert all(lease.gpu == 0 for lease in leases)
+    finally:
+        with p._condition:
+            p._slots[1].provisioning = False
+        for lease in leases:
+            lease.release()
         p.shutdown()

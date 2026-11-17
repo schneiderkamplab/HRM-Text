@@ -214,3 +214,18 @@ def test_legacy_layout_fills_terminal_without_clipping(tmp_path,monkeypatch,widt
 @pytest.mark.parametrize('interval',[0,-1,float('nan'),float('inf')])
 def test_watch_rejects_busy_spin(tmp_path,interval):
     with pytest.raises(ValueError):monitor.watch(tmp_path,interval=interval)
+
+
+def test_adopted_cooperative_training_uses_explicit_control_log(tmp_path):
+    store,snapshot=fixture(tmp_path,training=True)
+    control=tmp_path/'control';control.mkdir()
+    (control/'training.log').write_text('20/100 [00:10<00:40, 2.00it/s]\n')
+    with sqlite3.connect(store.path) as db:
+        definition=json.loads(db.execute("SELECT definition FROM jobs WHERE job_id='train'").fetchone()[0])
+        definition['metadata_json']=json.dumps(dict(stop_after_step=100,cooperative_training={'control_root':str(control)}))
+        db.execute("UPDATE jobs SET definition=? WHERE job_id='train'",(json.dumps(definition),))
+    status=monitor.read_status(tmp_path,now=105,progress_limit=1)
+    info=status['active_jobs']['train']
+    assert info['progress']=='step 20/100'
+    assert info['eta']=='40s'
+    assert info['fraction']==.2

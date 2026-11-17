@@ -202,7 +202,11 @@ def read_status(plan_dir: Path, *, database: Path | None = None,
         elapsed = now-start if type(start) in (int,float) and math.isfinite(start) and start<=now else None
         if elapsed is not None:info['elapsed']=fmt_seconds(elapsed)
         if not info['log_dir']:
-            continue  # Do not accidentally inspect the monitor's working directory.
+            definition = definitions[job_id]
+            metadata = json.loads(definition.get('metadata_json') or '{}')
+            cooperative = metadata.get('cooperative_training') or {}
+            if definition.get('action') != 'train_until_step' or not cooperative.get('control_root'):
+                continue  # Never inspect an implicit working directory.
         try:
             progress = job_progress(Job.from_row(definitions[job_id]))
             info.update(progress=progress.text,fraction=progress.fraction)

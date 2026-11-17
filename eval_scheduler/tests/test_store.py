@@ -437,3 +437,17 @@ def test_isolated_simulation_cli(tmp_path):
     from eval_scheduler.simulation import run
     with pytest.raises(FileExistsError):run(output,jobs=160)
     assert json.loads((output/'report.json').read_text())==report
+
+
+def test_user_training_pause_blocks_claim_but_allows_publication(tmp_path):
+    store=SQLiteJobStore(tmp_path/'jobs.sqlite')
+    store.import_jobs([
+        job('train',action=Action.TRAIN_UNTIL_STEP,metadata={'user_training_pause':True}),
+        job('publication'),
+        job('future',deps=('train',),deps_mode='terminal'),
+    ])
+    assert {j.job_id for j in store.ready_jobs()}=={'publication'}
+    assert not store.claim_jobs(['train'])
+    assert store.claim_jobs(['publication'])
+    store.update_jobs({'train':{'metadata':{'user_training_pause':False}}})
+    assert store.claim_jobs(['train'])

@@ -147,6 +147,12 @@ class ControllerTests(unittest.TestCase):
             self.controller.offload()
         self.assertEqual(self.backend.actions, [])
 
+    def test_restore_before_offload_releases_without_cuda_operations(self):
+        self.controller.restore()
+        self.assertTrue((self.generation / 'cancelled.json').exists())
+        self.assertTrue((self.generation / 'resume.100').exists())
+        self.assertEqual(self.backend.actions, [])
+
     def test_cancel_before_offload(self):
         self.controller.cancel_unoffloaded()
         self.assertTrue((self.generation / 'resume.100').exists())

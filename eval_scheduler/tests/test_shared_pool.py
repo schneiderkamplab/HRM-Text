@@ -7,7 +7,7 @@ from unittest.mock import Mock
 import pytest
 
 from eval_scheduler.model import Action, Job
-from eval_scheduler.shared_pool import ClientMonitor, SharedServerPool, compatibility_key
+from eval_scheduler.shared_pool import ClientMonitor, SharedServerPool, ServerCapacityTimeout, compatibility_key
 
 
 def job(tmp_path, **metadata):
@@ -60,7 +60,7 @@ def test_replace_only_idle_and_check_actual_headroom(setup, tmp_path):
     pool, backend, _ = setup
     pool._acquire_residency(job(tmp_path)).release()
     pool.snapshot = lambda g: (10, 90, 100)
-    with pytest.raises(RuntimeError, match='headroom'):
+    with pytest.raises(ServerCapacityTimeout, match='headroom'):
         pool._acquire_residency(job(tmp_path, ckpt_tag='step_2'))
     backend.release_gpu.assert_called_once()
     assert backend.acquire.call_count == 1
@@ -145,3 +145,15 @@ def test_shared_client_log_allows_request_retries(tmp_path):
     for permanent in ('BadRequestError', 'Task interrupted'):
         log.write_text(permanent)
         assert contains_client_fatal([log], shared_client=True)
+
+
+def test_impossible_target_plus_judge_budget_is_not_retried(setup, tmp_path, monkeypatch):
+    from eval_scheduler import managed_backend
+    pool, backend, _ = setup
+    monkeypatch.setattr(managed_backend, 'judge_reserve', lambda job: 16)
+    with pytest.raises(ValueError, match='Impossible GPU memory budget'):
+        pool._acquire_residency(job(tmp_path, vllm_gpu_memory_utilization=.95))
+    backend.acquire.assert_not_called()
+    assert not pool.snapshot_state()['slots'][0]['provisioning']
+    pool._acquire_residency(job(tmp_path, vllm_gpu_memory_utilization=.8)).release()
+    backend.acquire.assert_called_once()

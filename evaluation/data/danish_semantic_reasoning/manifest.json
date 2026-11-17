@@ -1,0 +1,1119 @@
+{
+  "upstream_revision": "dea3cb506c3d68ebb3e70b04320f094b93320607",
+  "archives": [
+    {
+      "path": "danwic/danwic.zip",
+      "sha256": "9c4c281916e2dc1d08938f846a0ec5528a417ad7cfb6f650d12bfdec6d98daa2"
+    },
+    {
+      "path": "entailment/entailment.zip",
+      "sha256": "734d9c8e9a0e49a41a7592656327b87b99af7990d2442abe3a27d7b16620f5b3"
+    },
+    {
+      "path": "inference/AGENTIVE.zip",
+      "sha256": "a9dd515ef8acd2f3c0841e9be87ef8ab73727e786e0194fa7cfb92c380aaff2d"
+    },
+    {
+      "path": "inference/CONSTITUTIVE.zip",
+      "sha256": "b16e1f0c353640afba74ef78d8f76c7647eef7ca645dfb43c71ade252f62b007"
+    },
+    {
+      "path": "inference/FORMAL.zip",
+      "sha256": "1fcbccdd5eefb80d0b1e8f11acbf61c510a665724f657647d6ed4980c2d2038a"
+    },
+    {
+      "path": "inference/TELIC.zip",
+      "sha256": "567ad88d39756e5b4b1cb9bde22c8702df40910fe904e81005bd4352f1828ed4"
+    },
+    {
+      "path": "metaphor_benchmark/DAMETA_shuffled.zip",
+      "sha256": "0ac8f557d85b19d15f977cc0740f2de7f359a41cfcaf049d8ae82307bf8d9bd9"
+    },
+    {
+      "path": "sentiment/sentiment.zip",
+      "sha256": "0689591c20f7a4ca20acc17142527e878704e13f4731120ae68bff3c177caeee"
+    },
+    {
+      "path": "similarity/similarity.zip",
+      "sha256": "218f72102da97d6c9d7a8f9635c62012a9f876818ca9c534caecfede2f2993a1"
+    },
+    {
+      "path": "synonymy/synonymy.zip",
+      "sha256": "7e258e0b8138a817188f633fbcb95b0e39beafff3eb2b8eeca4dae0f10a9a872"
+    }
+  ],
+  "counts": {
+    "danwic": 2196,
+    "entailment": 319,
+    "inference": 1020,
+    "dameta": 997,
+    "sentiment": 1041,
+    "similarity": 3738,
+    "synonymy": 288
+  },
+  "subsets": {
+    "danwic_mono_selection": 1098,
+    "danwic_poly_selection": 1098,
+    "entailment_Abandonment": 22,
+    "entailment_Accomplishment": 32,
+    "entailment_Achieving_first": 17,
+    "entailment_Activity_abandoned_state": 20,
+    "entailment_Activity_finish": 12,
+    "entailment_Activity_pause": 39,
+    "entailment_Activity_prepare": 16,
+    "entailment_Bringing_20": 20,
+    "entailment_Cause_diverse_64": 63,
+    "entailment_Cogitation_13": 13,
+    "entailment_Commerce_diverse_35": 35,
+    "entailment_Cutting_11": 11,
+    "entailment_Telling_10": 10,
+    "entailment_temporary_leavestay_9": 9,
+    "inference_madeBy-II": 60,
+    "inference_madeBy": 60,
+    "inference_constitutive_domainTopic": 60,
+    "inference_constitutive_involvedPatient": 60,
+    "inference_constitutive_meroMember": 60,
+    "inference_constitutive_meroPart": 60,
+    "inference_constitutive_partWhole": 60,
+    "inference_constitutive_wholeLocation": 60,
+    "inference_constitutive_wholePart": 60,
+    "inference_formal_feeling": 60,
+    "inference_formal_liquid": 60,
+    "inference_formal_orthogonalAnimal": 60,
+    "inference_formal_orthogonalHuman": 60,
+    "inference_formal_periodOfTime": 60,
+    "inference_formal_pointInTime": 60,
+    "inference_formal_sport": 60,
+    "inference_telic_usedFor": 60,
+    "DAMETA_shuffled": 997,
+    "sentiment": 1041,
+    "outlier_similarity_corse": 1246,
+    "outlier_similarity_fine": 1246,
+    "outlier_similarity_medium": 1246,
+    "synonymy_true": 288
+  },
+  "excluded": [
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:40",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:41",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:42",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:43",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:44",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:45",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:46",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Activity_pause.txt:47",
+      "reason": "blank row",
+      "family": "entailment"
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Cause_diverse_64.txt:18",
+      "reason": "invalid/missing truth label",
+      "family": "entailment"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_corse.tsv:21",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_corse.tsv:242",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_corse.tsv:379",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_corse.tsv:1151",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_fine.tsv:21",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_fine.tsv:242",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_fine.tsv:379",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_fine.tsv:1151",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_medium.tsv:21",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_medium.tsv:242",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_medium.tsv:379",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    },
+    {
+      "id": "similarity/similarity.zip:outlier_similarity_medium.tsv:1151",
+      "reason": "ambiguous answer choices",
+      "family": "similarity"
+    }
+  ],
+  "normalizations": [
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:1",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:2",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:3",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:4",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:5",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:6",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:7",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:8",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:9",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:10",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:11",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:12",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:13",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:14",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:15",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:16",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:17",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:18",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:19",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:20",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:21",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "entailment/entailment.zip:entailment_Abandonment.txt:22",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:1",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:2",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:3",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:4",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:5",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:6",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:7",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:8",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:9",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:10",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:11",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:12",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:13",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:14",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:15",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:16",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:17",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:18",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:19",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:20",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:21",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:22",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:23",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:24",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:25",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:26",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:27",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:28",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:29",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:30",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:31",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:32",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:33",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:34",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:35",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:36",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:37",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:38",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:39",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:40",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:41",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:42",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:43",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:44",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:45",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:46",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:47",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:48",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:49",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:50",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:51",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:52",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:53",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:54",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:55",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:56",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:57",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:58",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:59",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/AGENTIVE.zip:AGENTIVE/inference_madeBy-II.txt:60",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:5",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:7",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:10",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:12",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:27",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:40",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:43",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:44",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:47",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_partWhole.txt:57",
+      "normalizations": [
+        "ignored empty TSV fields"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:1",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:2",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:3",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:4",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:5",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:6",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:7",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:8",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:9",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:10",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:11",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:12",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:13",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:14",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:15",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:16",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:17",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:18",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:19",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:20",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:21",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:22",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:23",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:24",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:25",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:26",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:27",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:28",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:29",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:30",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:31",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:32",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:33",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:34",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:35",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:36",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:37",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:38",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:39",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:40",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:41",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:42",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:43",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:44",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:45",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:46",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:47",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:48",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:49",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:50",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:51",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:52",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:53",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:54",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:55",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:56",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:57",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:58",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:59",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    },
+    {
+      "id": "inference/CONSTITUTIVE.zip:CONSTITUTIVE/inference_constitutive_wholePart.txt:60",
+      "normalizations": [
+        "split documented label/relation field"
+      ]
+    }
+  ],
+  "records_sha256": "cd0c73c52bf5dd8d8a07413c144d2cfefbd12bf0501c5b5c72f3adefe7c912f9",
+  "evaluation_only": true,
+  "protocol": "local zero-shot v1; not a reproduction of published prompting"
+}

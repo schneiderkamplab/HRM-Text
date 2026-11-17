@@ -83,6 +83,8 @@ class VLLMServerKey:
     trust_remote_code: bool
     extra_args: str
     cuda_home: str
+    server_backend: str = "vllm"
+    native_batch_size: int = 1
 
     @property
     def digest(self) -> str:
@@ -413,7 +415,8 @@ def vllm_server_key(job: Job, gpu: int) -> VLLMServerKey:
     cuda_home = str(job.metadata.get("cuda_home") or "")
     if not cuda_home and Path("/usr/local/cuda").is_dir():
         cuda_home = "/usr/local/cuda"
-    model_path = vllm_model_path(job)
+    backend = str(job.metadata.get("persistent_server_backend", "vllm"))
+    model_path = str(job.metadata["ckpt_path"]) if backend == "embla_native" else vllm_model_path(job)
     local_model_path = Path(model_path)
     if local_model_path.exists():
         model_path = str(local_model_path.resolve())
@@ -431,6 +434,8 @@ def vllm_server_key(job: Job, gpu: int) -> VLLMServerKey:
         trust_remote_code=bool(job.metadata.get("vllm_trust_remote_code")),
         extra_args=vllm_server_extra_args(job),
         cuda_home=cuda_home,
+        server_backend=backend,
+        native_batch_size=int(job.metadata.get("native_server_batch_size", 1)) if backend == "embla_native" else 1,
     )
 
 
@@ -760,6 +765,9 @@ def run_export_hf(job: Job, gpu: int) -> int:
         shutil.move(str(out_dir), str(backup))
         with log_path.open("a") as log:
             log.write(f"\n{now()}\tmoved previous incomplete export to {backup}\n")
+    (tmp_dir / "scheduler_export_source.json").write_text(
+        json.dumps(export_source_identity(job), sort_keys=True) + "\n"
+    )
     tmp_dir.replace(out_dir)
     with log_path.open("a") as log:
         log.write(f"\n{now()}\texport ready\t{out_dir}\n")
@@ -836,7 +844,20 @@ def run_prepare_hf_variant(job: Job) -> int:
     return 0
 
 
+def export_source_identity(job: Job) -> dict:
+    return {
+        "checkpoint_path": str(Path(str(job.metadata["ckpt_path"])).resolve()),
+        "checkpoint_tag": str(job.metadata["ckpt_tag"]),
+        "use_ema": not bool(job.metadata.get("no_ema")),
+    }
+
+
 def validate_export_rope_config(job: Job, export_dir: Path) -> None:
+    source = export_dir / "scheduler_export_source.json"
+    if source.exists() and json.loads(source.read_text()) != export_source_identity(job):
+        raise ValueError(f"export source checkpoint mismatch: {source}")
+    if job.metadata.get("require_export_source") and not source.exists():
+        raise ValueError(f"missing export source receipt: {source}")
     checkpoint_cfg = yaml.safe_load((Path(str(job.metadata["ckpt_path"])) / "all_config.yaml").read_text())
     arch = checkpoint_cfg["arch"]
     expected_type = arch.get("H_rope_scaling_type", arch.get("rope_scaling_type", "none"))
@@ -850,6 +871,18 @@ def validate_export_rope_config(job: Job, export_dir: Path) -> None:
         raise ValueError(f"RoPE factor mismatch: plan={plan_factor}, checkpoint={expected_factor}")
 
     export_cfg = json.loads((export_dir / "config.json").read_text())
+    # Existing exports must match the attention objective, not just RoPE.
+    # A copied artifact path can otherwise silently reuse another run's weights.
+    if "prefix_lm" in export_cfg:
+        expected_prefix = arch.get("attn_type", "prefixlm") != "causal"
+        if export_cfg["prefix_lm"] != expected_prefix:
+            raise ValueError(
+                f"attention objective mismatch: checkpoint prefix_lm={expected_prefix}, "
+                f"export prefix_lm={export_cfg['prefix_lm']}"
+            )
+    expected_mixed = arch.get("attn_type", "prefixlm") == "mixedlm"
+    if bool(export_cfg.get("mixed_lm", False)) != expected_mixed:
+        raise ValueError("MixedLM objective mismatch between checkpoint and export")
     expected_positions = job.metadata.get("expected_max_position_embeddings")
     if expected_positions is not None and int(export_cfg["max_position_embeddings"]) != int(expected_positions):
         raise ValueError(
@@ -968,6 +1001,14 @@ def find_free_port(
 
 
 def start_vllm_server(job: Job, gpu: int, *, port: int, model_name: str, log: Path) -> subprocess.Popen[bytes]:
+    backend = str(job.metadata.get("persistent_server_backend", "vllm"))
+    if backend == "embla_native":
+        if is_external_model(job):
+            raise SchedulerError("Native Embla serving requires an internal checkpoint")
+        return start_hrm_server(job, gpu, port=port, model_name=model_name,
+                                batch=int(job.metadata.get("native_server_batch_size", 1)), log=log)
+    if backend != "vllm":
+        raise SchedulerError(f"Unknown persistent server backend: {backend}")
     argv = [
         str(job.metadata.get("vllm_python") or python_bin(job)),
         "-m",
@@ -995,6 +1036,10 @@ def start_vllm_server(job: Job, gpu: int, *, port: int, model_name: str, log: Pa
     log.parent.mkdir(parents=True, exist_ok=True)
     cache_root = log.parent / f"{log.stem}.cache"
     env = env_with_gpu(gpu)
+    if job.metadata.get("transformer_single_pass") or job.metadata.get("recurrent_causal") or job.metadata.get("mixed_lm"):
+        plugin_path = str(Path("evaluation/vllm_plugins").resolve())
+        env["PYTHONPATH"] = plugin_path + os.pathsep + env.get("PYTHONPATH", "")
+        env["VLLM_PLUGINS"] = "transformer48_adapter"
     cuda_home = str(job.metadata.get("cuda_home") or "")
     if not cuda_home and Path("/usr/local/cuda").is_dir():
         cuda_home = "/usr/local/cuda"
@@ -2273,6 +2318,12 @@ def run_merge_ifeval(job: Job) -> int:
 
 
 def run_average(job: Job) -> int:
+    if job.metadata.get("average_prefix") == "headline_danish_semantic_v1":
+        return run_command([
+            python_bin(job), "scripts/log_danish_semantic_headline.py",
+            "--manifest", str(job.metadata["semantic_manifest"]),
+            "--model", str(job.metadata["semantic_model"]),
+        ], log_path=Path(job.log_dir) / "danish_semantic_headline.log")
     if job.metadata.get("average_prefix") in ("headline_avg_dala_v2", "suite_avg_dala_v2"):
         argv = [python_bin(job), "scripts/log_expanded_dala_v2_averages.py",
                 "--standard-root", str(job.metadata["log_root"]),

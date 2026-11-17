@@ -10,6 +10,48 @@ import subprocess
 import time
 
 
+def user_held(root, active):
+    hold = root / 'hold'
+    return ((hold.exists() and not hold.read_text().startswith('scheduler owns evaluation interval'))
+            or (active / 'hold').exists())
+
+
+def disk_handoff(settings):
+    """Release only a verified, offloaded predecessor before switching models."""
+    from training_suspend.protocol import atomic_write, read_json, validate_process, matches
+    root = Path(settings['control_root'])
+    active = Path(read_json(root / 'active.json')['control_dir'])
+    ready = read_json(active / 'suspend_ready.json')
+    if ready['step'] != settings['step']:
+        raise RuntimeError('Disk handoff is not at the scheduled boundary')
+    state = read_json(Path(ready['checkpoint']))
+    if state['step'] != ready['step'] or state['checkpoint_kind'] != 'regular':
+        raise RuntimeError('Disk handoff checkpoint does not match suspension')
+    generation = active / f"generation_{ready['generation']:06d}"
+    if not matches(read_json(generation / 'offloaded.json'), ready):
+        raise RuntimeError('Disk handoff requires verified GPU offload')
+    resumed = active / 'resumed.json'
+    if resumed.exists() and matches(read_json(resumed), ready):
+        raise RuntimeError('Cannot disk-stop a trainer that already resumed')
+    atomic_write(root / 'hold', 'Scheduled model switch; resume from disk\n')
+    atomic_write(root / 'stop.request', 'Scheduled model switch\n')
+    identities = [read_json(root / 'launcher.json')['identity'], *ready['ranks']]
+    deadline = time.monotonic() + 180
+    while True:
+        live = []
+        for identity in identities:
+            try:
+                validate_process(identity)
+                live.append(identity)
+            except (OSError, RuntimeError):
+                pass
+        if not live:
+            return
+        if time.monotonic() > deadline:
+            raise RuntimeError('Previous trainer did not stop for disk handoff')
+        time.sleep(1)
+
+
 def run_boundary(job, gpus):
     from training_suspend.protocol import atomic_write, exclusive, matches, read_json, process_identity, validate_process
     from training_suspend.supervisor import overrides
@@ -17,6 +59,8 @@ def run_boundary(job, gpus):
     from .ownership import spawn
 
     settings = job.metadata['cooperative_training']
+    if settings.get('disk_handoff_from'):
+        disk_handoff(settings['disk_handoff_from'])
     root = Path(settings['control_root']).resolve()
     root.mkdir(parents=True, exist_ok=True)
     target = int(job.metadata['stop_after_step'])
@@ -64,18 +108,33 @@ def run_boundary(job, gpus):
                                              '--format=csv,noheader'], text=True)
             mapping = dict(line.strip().split(', ') for line in query.splitlines())
             selected = {mapping[str(g)] for g in gpus}
-            if not settings.get('side_smoke') and any(gpu in selected for _, gpu in CudaBackend(binary).memory()):
+            allowed_peers = set()
+            for identity in settings.get('allowed_existing_peer_identities', []):
+                try:
+                    validate_process(identity)
+                    allowed_peers.add(identity['pid'])
+                except (OSError, RuntimeError):
+                    pass
+            if not settings.get('side_smoke') and any(
+                    gpu in selected and pid not in allowed_peers
+                    for pid, gpu in CudaBackend(binary).memory()):
                 raise RuntimeError('GPU workers remain; refusing duplicate cooperative launch')
             root.joinpath('hold').unlink(missing_ok=True)
             raw = settings['command']
             env, command = split_command_environment(shlex.split(raw) if isinstance(raw, str) else raw)
             environment.update(env)
-            resume = str(job.metadata['resume_from_tag'])
-            source = str(job.metadata.get('resume_ckpt_path') or job.metadata['ckpt_path'])
-            resume_job = job.with_updates(metadata={**job.metadata, 'ckpt_path': source, 'ckpt_tag': resume})
-            if not checkpoint_ready(resume_job)[0]:
-                raise RuntimeError('Incomplete cooperative launch resume checkpoint')
-            command = overrides(command, {'resume_checkpoint_path': source, 'resume_checkpoint_tag': resume})
+            resume = job.metadata.get('resume_from_tag')
+            if resume:
+                resume = str(resume)
+                source = str(job.metadata.get('resume_ckpt_path') or job.metadata['ckpt_path'])
+                resume_job = job.with_updates(metadata={**job.metadata, 'ckpt_path': source, 'ckpt_tag': resume})
+                if not checkpoint_ready(resume_job)[0]:
+                    raise RuntimeError('Incomplete cooperative launch resume checkpoint')
+                command = overrides(command, {'resume_checkpoint_path': source, 'resume_checkpoint_tag': resume})
+            if settings.get('scheduled_disk_resume'):
+                # Explicitly prepared alternating-model schedule authorizes this
+                # restart; ordinary launches must still respect a user stop.
+                root.joinpath('stop.request').unlink(missing_ok=True)
             with (root / 'training.log').open('a') as log:
                 process = spawn([backend_python, '-m', 'training_suspend.launcher',
                                  '--settings', settings['launcher_settings'], '--control-root', str(root),
@@ -89,7 +148,7 @@ def run_boundary(job, gpus):
                 ready_path = active / 'suspend_ready.json'
                 if ready_path.exists():
                     ready = read_json(ready_path)
-                    if ready['step'] < target:
+                    if ready['step'] < target and not user_held(root, active):
                         root.joinpath('hold').unlink(missing_ok=True)
                         generation = active / f"generation_{ready['generation']:06d}"
                         atomic_write(generation / 'restore.request', ready)
@@ -106,7 +165,25 @@ def run_boundary(job, gpus):
                 ready_path = active / 'suspend_ready.json'
                 if ready_path.exists():
                     ready = read_json(ready_path)
-                    if ready['step'] == target:
+                    if user_held(root, active):
+                        time.sleep(2)
+                        continue
+                    resumed = active / 'resumed.json'
+                    already = resumed.exists() and matches(read_json(resumed), ready)
+                    if ready['step'] < target:
+                        # Out-of-band suspension below this row's target: hand it
+                        # straight back unless it has already been resumed.
+                        if not already:
+                            root.joinpath('hold').unlink(missing_ok=True)
+                            generation = active / f"generation_{ready['generation']:06d}"
+                            atomic_write(generation / 'restore.request', ready)
+                    elif ready['step'] == target:
+                        if already:
+                            # Resumed out-of-band before the loop noticed; the
+                            # regular boundary checkpoint still completes the row.
+                            if complete():
+                                return finalize()
+                            raise RuntimeError('Stale suspension published before complete boundary checkpoint')
                         if not complete():
                             raise RuntimeError('Suspension published before complete disk checkpoint')
                         generation = active / f"generation_{ready['generation']:06d}"

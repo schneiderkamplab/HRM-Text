@@ -1,0 +1,99 @@
+sets:
+  danish_semantic_inference:
+    description: 'Frozen Danish semantic reasoning v1: inference'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=inference
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'
+  danish_semantic_entailment:
+    description: 'Frozen Danish semantic reasoning v1: entailment'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=entailment
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'
+  danish_semantic_danwic:
+    description: 'Frozen Danish semantic reasoning v1: danwic'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=danwic
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'
+  danish_semantic_synonymy:
+    description: 'Frozen Danish semantic reasoning v1: synonymy'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=synonymy
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'
+  danish_semantic_similarity:
+    description: 'Frozen Danish semantic reasoning v1: similarity'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=similarity
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'
+  danish_semantic_sentiment:
+    description: 'Frozen Danish semantic reasoning v1: sentiment'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=sentiment
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'
+  danish_semantic_dameta:
+    description: 'Frozen Danish semantic reasoning v1: dameta'
+    tasks:
+    - name: /work/dfm/HRM-Text/evaluation/danish_semantic_reasoning_eval.py@danish_semantic_reasoning
+      args:
+      - -T
+      - family=dameta
+    args:
+    - --model
+    - '{{target_model}}'
+    - --temperature
+    - '0'
+    - --max-retries
+    - '1'

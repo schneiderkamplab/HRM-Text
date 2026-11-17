@@ -209,30 +209,54 @@ def database_status(database: Path = typer.Option(...)) -> None:
 
 
 @database_app.command('preflight')
-def preflight_database(plan_dir: Path = typer.Option(...),
-                       gpus: str = typer.Option('0,1,2,3,4,5,6,7')) -> None:
-    """Validate pending definitions without importing, claiming, or querying GPUs."""
+def preflight_database(plan_dir: Path = typer.Option(None),
+                       database: Path = typer.Option(None),
+                       gpus: str = typer.Option('0,1,2,3,4,5,6,7'),
+                       all_rows: bool = typer.Option(False, '--all')) -> None:
+    """Validate pending definitions and availability without running anything.
+
+    Exactly one of --plan-dir (legacy TSV) or --database (authoritative SQLite
+    store) must be given. Availability checks resolve relative paths against
+    the current working directory, which must be the repository root the
+    runner would use.
+    """
     from .database_runner import DatabaseRunner
     from .model import read_plan
+    from .preflight import check_job
     from .shared_pool import SharedServerPool
     with command_errors():
+        if (plan_dir is None) == (database is None):
+            raise ValueError('Provide exactly one of --plan-dir or --database')
         gpu_ids = [int(value) for value in gpus.split(',')]
-        jobs = read_plan(plan_dir/'plan.tsv')
-        if not jobs:
-            raise ValueError('Empty or missing plan')
+        if database is not None:
+            from .store import SQLiteJobStore
+            store = SQLiteJobStore(database)
+            plan_dir = database.parent
+            jobs = store.load_jobs()
+            statuses = None if all_rows else {JobStatus.PENDING}
+            checked = [job for job in jobs if statuses is None or job.status in statuses]
+        else:
+            jobs = read_plan(plan_dir/'plan.tsv')
+            if not jobs:
+                raise ValueError('Empty or missing plan')
+            checked = [job for job in jobs if all_rows or job.status == JobStatus.PENDING]
         validate_graph(jobs)
         pool = SharedServerPool(plan_dir, gpu_ids)
         try:
             runner = DatabaseRunner(plan_dir, None, gpu_ids, pool)
-            pending = [j for j in jobs if j.status == JobStatus.PENDING]
             failures = []
-            for job in pending:
+            for job in checked:
+                issues = []
                 try:
                     runner._validate(job)
                 except (ValueError, KeyError, RuntimeError) as exc:
-                    failures.append({'job_id': job.job_id, 'error': str(exc)})
-            typer.echo(json.dumps({'pending': len(pending), 'failures': failures,
-                'scope': 'definition validation only; real-model parity and free-GPU checks separate'}))
+                    issues.append(f'definition: {exc}')
+                issues.extend(check_job(job))
+                if issues:
+                    failures.append({'job_id': job.job_id, 'issues': issues})
+            typer.echo(json.dumps({'pending': len(checked), 'failures': failures,
+                'scope': 'definition and availability checks only; no scripts run, '
+                'real-model parity and free-GPU checks separate'}))
             if failures:
                 raise typer.Exit(1)
         finally:

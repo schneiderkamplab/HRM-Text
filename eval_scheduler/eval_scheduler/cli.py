@@ -817,13 +817,14 @@ def run(
         from .cpu_budget import CpuBudget
         from .database_runner import DatabaseRunner
         from .shared_pool import SharedServerPool
-        from .store import SQLiteJobStore
+        from .store import SQLiteJobStore, _validate_graph
 
         database = plan_database(plan_path(plan_dir))
         if database is None:
             raise typer.BadParameter("Import the stopped plan using database import first")
         if not persistent_vllm:
             raise typer.BadParameter("SQLite request sharing requires --persistent-vllm")
+        _validate_graph(SQLiteJobStore(database).load_jobs())
         budget = CpuBudget(cpu_cores, reserve_cores)
         affinity = tuple(sorted(set(budget.affinity_core_ids) - set(budget.worker_core_ids)))
         if not affinity or budget.capacity < client_cpu_cores:

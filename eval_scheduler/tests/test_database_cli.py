@@ -34,6 +34,65 @@ def test_backup_and_preflight(tmp_path):
     assert not (tmp_path/'database.json').exists()
 
 
+def test_preflight_requires_single_source(tmp_path):
+    store = SQLiteJobStore(tmp_path/'state.sqlite')
+    store.import_jobs([job('a')])
+    for argv in (['preflight'], ['preflight', '--plan-dir', str(tmp_path), '--database', str(store.path)]):
+        result = CliRunner().invoke(database_app, argv)
+        assert result.exit_code == 1, result.output
+        assert 'exactly one' in result.output
+
+
+def test_preflight_database_availability(tmp_path):
+    store = SQLiteJobStore(tmp_path/'state.sqlite')
+    config = tmp_path/'cfg.yaml'
+    config.write_text('ok')
+    good = Job('good', Action.REPORT, 'test', 'good', metadata={'ckpt_path': str(config)})
+    bad = Job('bad', Action.REPORT, 'test', 'bad',
+              metadata={'ckpt_path': str(config), 'log_root': '/nonexistent-base-xyz/sub/root'})
+    done = Job('done', Action.REPORT, 'test', 'done',
+               metadata={'ckpt_path': str(config)}, status=JobStatus.DONE)
+    store.import_jobs([good, bad, done])
+    result = CliRunner().invoke(database_app, ['preflight', '--database', str(store.path)])
+    assert result.exit_code == 1, result.output
+    payload = json.loads(result.output)
+    assert payload['pending'] == 2
+    assert {f['job_id'] for f in payload['failures']} == {'bad'}
+    flat = [issue for f in payload['failures'] for issue in f['issues']]
+    assert any('unanchored' in issue for issue in flat)
+    result = CliRunner().invoke(database_app, ['preflight', '--database', str(store.path), '--all'])
+    assert result.exit_code == 1, result.output
+    assert json.loads(result.output)['pending'] == 3
+
+
+def test_preflight_train_availability(tmp_path):
+    store = SQLiteJobStore(tmp_path/'state.sqlite')
+    workdir = tmp_path/'repo'
+    workdir.mkdir()
+    py = tmp_path/'python'
+    py.write_text('#!/bin/sh\n')
+    py.chmod(0o755)
+    ckpt = tmp_path/'ckpt'
+    ckpt.mkdir()
+    (tmp_path/'settings.json').write_text('{}')
+    (tmp_path/'shim.so').write_text('')
+    base = {'command': f'{py} pretrain.py cfg=cfg_pretrain stop_after_step=100',
+            'workdir': str(workdir), 'ckpt_path': str(ckpt),
+            'cooperative_training': {'control_root': str(tmp_path/'control'), 'python': str(py),
+                                     'launcher_settings': str(tmp_path/'settings.json'),
+                                     'cuda_checkpoint': {'shim_library': str(tmp_path/'shim.so')}}}
+    good = Job('tgood', Action.TRAIN_UNTIL_STEP, 'test', 'tgood', metadata=dict(base))
+    bad = Job('tbad', Action.TRAIN_UNTIL_STEP, 'test', 'tbad',
+              metadata={**base, 'cooperative_training': {**base['cooperative_training'],
+                                                         'launcher_settings': str(tmp_path/'absent.json')}})
+    store.import_jobs([good, bad])
+    result = CliRunner().invoke(database_app, ['preflight', '--database', str(store.path)])
+    assert result.exit_code == 1, result.output
+    payload = json.loads(result.output)
+    assert {f['job_id'] for f in payload['failures']} == {'tbad'}
+    assert any('launcher_settings' in issue for issue in payload['failures'][0]['issues'])
+
+
 def test_tsv_graph_validation(tmp_path):
     path=tmp_path/'input.tsv'
     write_plan(path,[job('a'),job('b',('a',))])

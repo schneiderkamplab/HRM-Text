@@ -405,7 +405,7 @@ def test_exclusive_at_end_of_ready_list_not_starved(tmp_path):
     assert calls[0] == 'train'
 
 
-def test_idle_wait_exports_dirty_snapshot_once_not_plan(tmp_path, monkeypatch):
+def test_idle_wait_exports_backup_tsv_and_dirty_snapshot_not_plan(tmp_path, monkeypatch):
     release = threading.Event()
     exported = threading.Event()
     def execute(*args):
@@ -426,9 +426,30 @@ def test_idle_wait_exports_dirty_snapshot_once_not_plan(tmp_path, monkeypatch):
     try:
         assert exported.wait(3)
         time.sleep(.05)
-        assert calls == [tmp_path/'plan.snapshot.tsv']
+        # Backup cadence (initial _backup) plus the dirty idle export; the
+        # manual plan.tsv must never be a TSV export target.
+        assert calls and {str(path) for path in calls} == {str(tmp_path/'plan.snapshot.tsv')}
         assert 'running' in calls[0].read_text()
         assert plan.read_text() == 'preserved manual plan\n'
     finally:
         release.set(); thread.join(3)
     assert not thread.is_alive()
+
+
+def test_cpu_publication_dispatches_while_training_is_active(tmp_path):
+    trained = threading.Event()
+    published = threading.Event()
+    def execute(j, *args):
+        if j.action == Action.TRAIN_UNTIL_STEP:
+            trained.set()
+            assert published.wait(5), 'CPU publication starved behind training'
+        else:
+            assert trained.wait(5)
+            published.set()
+        return 0
+    runner, store, pool = setup(tmp_path, [
+        job('train', Action.TRAIN_UNTIL_STEP),
+        job('publish', Action.EXPORT_DFM_RESULTS),
+    ], execute)
+    assert runner.run() == 'done'
+    assert all(j.status == JobStatus.DONE for j in store.load_jobs())

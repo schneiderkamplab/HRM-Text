@@ -159,6 +159,9 @@ def training_progress(job: Job) -> Progress:
     if target <= 0:
         return Progress(None, "progress unknown")
     path = Path(job.log_dir) / f"train_until_step_{target}.log"
+    cooperative = job.metadata.get("cooperative_training") or {}
+    if not job.log_dir and cooperative.get("control_root"):
+        path = Path(cooperative["control_root"]) / "training.log"
     text = strip_ansi(tail_text(path).replace("\r", "\n"))
     matches = list(TRAINING_RATE_RE.finditer(text))
     if not matches:
@@ -168,7 +171,7 @@ def training_progress(job: Job) -> Progress:
     current = int(match.group("done"))
     start = step_from_checkpoint_tag(job.metadata.get("resume_from_tag"))
     if start is None:
-        start = min(int(matches[0].group("done")), current)
+        start = 0 if cooperative.get("control_root") else min(int(matches[0].group("done")), current)
     span = target - start
     completed = min(max(current - start, 0), max(span, 0))
     fraction = completed / span if span > 0 else None

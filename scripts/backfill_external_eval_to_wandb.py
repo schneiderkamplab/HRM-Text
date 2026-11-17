@@ -187,44 +187,49 @@ def main() -> None:
                                          overall_only=False)
                 row.update(build_row(item, metric_prefix=average_prefix, **prefix_kwargs))
 
-    import wandb
+    try:
+        from wandb_writer_lock import wandb_writer_lock
+    except ModuleNotFoundError:
+        from scripts.wandb_writer_lock import wandb_writer_lock
+    with wandb_writer_lock(args.run_id):
+        import wandb
 
-    run = wandb.init(
-        entity=args.entity,
-        project=args.project,
-        id=args.run_id,
-        name=args.run_name,
-        resume="allow",
-    )
-    assert run is not None
-    average_prefixes = (
-        ["headline_avg_v3", "suite_avg_v3", *semantic_prefixes]
-        if atomic_v3_averages
-        else [args.average_prefix, *args.extra_average_prefix]
-    )
-    from log_dfm5_headline_averages import HEADLINE_METRIC_KEYS
+        run = wandb.init(
+            entity=args.entity,
+            project=args.project,
+            id=args.run_id,
+            name=args.run_name,
+            resume="allow",
+        )
+        assert run is not None
+        average_prefixes = (
+            ["headline_avg_v3", "suite_avg_v3", *semantic_prefixes]
+            if atomic_v3_averages
+            else [args.average_prefix, *args.extra_average_prefix]
+        )
+        from log_dfm5_headline_averages import HEADLINE_METRIC_KEYS
 
-    for prefix in ("eval", "dfm_eval", "euroeval", *average_prefixes):
-        epoch_key = f"{prefix}/epoch"
-        train_step_key = f"{prefix}/train_step"
-        wandb.define_metric(epoch_key)
-        wandb.define_metric(train_step_key)
-        wandb.define_metric(f"{prefix}/*", step_metric=epoch_key)
-        for key in row:
-            is_average = prefix in average_prefixes
-            if (
-                key.startswith(f"{prefix}/")
-                and key not in {epoch_key, train_step_key}
-                and (is_average or key in HEADLINE_METRIC_KEYS
-                     or (semantic_prefixes and key == SEMANTIC_DALA_KEY))
-            ):
-                wandb.define_metric(key, step_metric=epoch_key, summary="last")
-    if args.wandb_step is None:
-        wandb.log(row, commit=True)
-    else:
-        wandb.log(row, step=args.wandb_step, commit=True)
-    run.summary.update(row)
-    wandb.finish()
+        for prefix in ("eval", "dfm_eval", "euroeval", *average_prefixes):
+            epoch_key = f"{prefix}/epoch"
+            train_step_key = f"{prefix}/train_step"
+            wandb.define_metric(epoch_key)
+            wandb.define_metric(train_step_key)
+            wandb.define_metric(f"{prefix}/*", step_metric=epoch_key)
+            for key in row:
+                is_average = prefix in average_prefixes
+                if (
+                    key.startswith(f"{prefix}/")
+                    and key not in {epoch_key, train_step_key}
+                    and (is_average or key in HEADLINE_METRIC_KEYS
+                         or (semantic_prefixes and key == SEMANTIC_DALA_KEY))
+                ):
+                    wandb.define_metric(key, step_metric=epoch_key, summary="last")
+        if args.wandb_step is None:
+            wandb.log(row, commit=True)
+        else:
+            wandb.log(row, step=args.wandb_step, commit=True)
+        run.summary.update(row)
+        wandb.finish()
 
     print(f"Logged {len(row)} keys to {args.project}/{args.run_id}")
 

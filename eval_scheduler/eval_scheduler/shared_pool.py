@@ -191,8 +191,17 @@ class SharedServerPool:
             utilization = vllm_server_key(job, gpu).gpu_memory_utilization
             required = max(int(job.metadata.get('min_gpu_free_mib') or 0),
                            math.ceil(float(total) * utilization) + judge_reserve(job))
-            if not 0 < utilization <= 1 or float(free) < required:
-                raise RuntimeError(f'Insufficient shared server startup headroom on GPU {gpu}')
+            if not 0 < utilization <= 1:
+                raise ValueError(f'Invalid shared server GPU memory utilization: {utilization}')
+            if required > float(total):
+                raise ValueError(
+                    f'Impossible GPU memory budget on GPU {gpu}: target utilization '
+                    f'{utilization} plus judge reserve {judge_reserve(job)} MiB '
+                    f'requires {required} MiB, but total capacity is {total} MiB')
+            if float(free) < required:
+                # Another workload can allocate after the initial free-memory
+                # check. No request ran; retain the job for later admission.
+                raise ServerCapacityTimeout(f'Insufficient shared server startup headroom on GPU {gpu}')
             from .ownership import process_owner
             with process_owner(self.plan_dir/'owners'/'servers', gpu=gpu, compatibility_key=key):
                 lease = self.backend.acquire(job, gpu)
@@ -226,8 +235,13 @@ class SharedServerPool:
                               and s.holders < self.capacity]
                 idle = [(gpu, s) for gpu, s in self._slots.items()
                         if gpu in keys and not s.provisioning and not s.holders]
-                # A loading replica must not prevent use of a ready one.
-                # Least-held selection spreads subsequent clients once it loads.
+                loading = [s for g, s in self._slots.items()
+                           if g in keys and s.provisioning and s.key == keys[g]]
+                # A provisioning replica already owns its first client. Permit
+                # one extra on a ready replica, but do not pin the entire queue
+                # to the first server that finishes loading.
+                if loading:
+                    compatible = [item for item in compatible if item[0] < 2]
                 # Spread ready clients across free GPUs before sharing a busy
                 # replica. Once all GPUs are occupied, reuse the least-held one.
                 if compatible and (not idle or min(s.holders for _, _, s in compatible) == 0):

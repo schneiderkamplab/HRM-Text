@@ -155,34 +155,40 @@ def main() -> None:
     print(json.dumps(payload, indent=2, sort_keys=True))
 
     if args.log_wandb:
-        if not (args.project and args.run_id and args.run_name):
-            raise ValueError("--project, --run-id, and --run-name are required with --log-wandb.")
-        import wandb
+        try:
+            from wandb_writer_lock import wandb_writer_lock
+        except ModuleNotFoundError:
+            from scripts.wandb_writer_lock import wandb_writer_lock
 
-        run = wandb.init(project=args.project, id=args.run_id, name=args.run_name, resume="allow")
-        assert run is not None
-        epoch_key = f"{args.prefix}/epoch"
-        wandb.define_metric(epoch_key)
-        wandb.define_metric(f"{args.prefix}/*", step_metric=epoch_key)
-        row = {epoch_key: args.epoch, **metrics}
-        train_step_key = f"{args.prefix}/train_step"
-        if args.step is not None:
-            wandb.define_metric(train_step_key)
-            row[train_step_key] = args.step
-        from log_dfm5_headline_averages import define_present_headline_metrics
+        with wandb_writer_lock(args.run_id):
+            if not (args.project and args.run_id and args.run_name):
+                raise ValueError("--project, --run-id, and --run-name are required with --log-wandb.")
+            import wandb
 
-        define_present_headline_metrics(wandb, row, epoch_key=epoch_key)
-        wandb.log(row, commit=True)
-        summary = {epoch_key: args.epoch, f"{args.prefix}/last_epoch": args.epoch}
-        if args.step is not None:
-            summary[train_step_key] = args.step
-            summary[f"{args.prefix}/last_train_step"] = args.step
-        label = epoch_label(args.epoch)
-        for key, value in metrics.items():
-            summary[key] = value
-            summary[f"{key}/epoch_{label}"] = value
-        run.summary.update(summary)
-        wandb.finish()
+            run = wandb.init(project=args.project, id=args.run_id, name=args.run_name, resume="allow")
+            assert run is not None
+            epoch_key = f"{args.prefix}/epoch"
+            wandb.define_metric(epoch_key)
+            wandb.define_metric(f"{args.prefix}/*", step_metric=epoch_key)
+            row = {epoch_key: args.epoch, **metrics}
+            train_step_key = f"{args.prefix}/train_step"
+            if args.step is not None:
+                wandb.define_metric(train_step_key)
+                row[train_step_key] = args.step
+            from log_dfm5_headline_averages import define_present_headline_metrics
+
+            define_present_headline_metrics(wandb, row, epoch_key=epoch_key)
+            wandb.log(row, commit=True)
+            summary = {epoch_key: args.epoch, f"{args.prefix}/last_epoch": args.epoch}
+            if args.step is not None:
+                summary[train_step_key] = args.step
+                summary[f"{args.prefix}/last_train_step"] = args.step
+            label = epoch_label(args.epoch)
+            for key, value in metrics.items():
+                summary[key] = value
+                summary[f"{key}/epoch_{label}"] = value
+            run.summary.update(summary)
+            wandb.finish()
 
 
 if __name__ == "__main__":
