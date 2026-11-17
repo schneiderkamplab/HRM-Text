@@ -481,7 +481,7 @@ class _SettingsViewState extends State<SettingsView> {
           const SizedBox(height: 12),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('OpenAI-compatible local API'),
+            title: const Text('Local HTTP API'),
             subtitle: const Text(
               'Allow applications on this computer to use Mimir.',
             ),

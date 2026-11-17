@@ -1,5 +1,16 @@
 # SDU iOS and macOS distribution
 
+## macOS build 14 resubmitted — 2026-10-19
+
+Build **0.1.5 (14)** is **Waiting for Review**, confirmed at 06:49 CEST.
+It adds Window → Show DFM Mimir (Command-0) and Dock reopen handling, and
+uses neutral “Local HTTP API” wording in Settings, description and review notes.
+Closing the window retains the app; explicit Quit shuts it down. All 75 Flutter
+tests and signed OS-TLS archive audits passed; real Metal chat worked after
+reopening with its draft preserved. China mainland availability and manual
+release remain selected. iOS build 13 is unchanged and Ready for Distribution.
+See [technical evidence](../../wiki/pages/model-architecture/mimir-apple-os-tls-packaging.md).
+
 ## macOS clarification and resubmission — 2026-10-03
 
 Apple's automated review rejected the server entitlement as apparently unused.

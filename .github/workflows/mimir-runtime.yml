@@ -168,10 +168,12 @@ jobs:
         run: |
           flags=()
           if [ '${{ matrix.mode }}' = asan ]; then
+            export CC=clang CXX=clang++
+            flags+=("-DBUILD_SHARED_LIBS=OFF")
             flags+=("-DCMAKE_C_FLAGS=-fsanitize=address -fno-omit-frame-pointer")
             flags+=("-DCMAKE_CXX_FLAGS=-fsanitize=address -fno-omit-frame-pointer")
           fi
-          cmake -S llama.cpp -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo             -DGGML_NATIVE=OFF -DGGML_OPENMP=OFF -DLLAMA_OPENSSL=OFF             -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_TESTS=ON "${flags[@]}"
+          cmake -S llama.cpp -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo             -DGGML_NATIVE=OFF -DGGML_OPENMP=OFF -DLLAMA_OPENSSL=OFF             -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_TESTS=ON -DLLAMA_FATAL_WARNINGS=ON "${flags[@]}"
           cmake --build build --parallel 3 --target test-llama-archs test-batch-alloc test-sampling test-chat llama-cli llama-server llama-bench llama-quantize
       - name: Exercise legacy and extended APIs
         shell: bash

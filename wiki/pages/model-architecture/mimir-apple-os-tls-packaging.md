@@ -183,3 +183,41 @@ superseding Pending Developer Release. Public storefront propagation was not
 independently checked. Evidence:
 `logs/sdu-store/submission-13/ios-release-2026-10-14.png`.
 macOS was last observed **In Review** and was not released.
+
+## macOS review repair — 19 October 2026 (build 14)
+
+Supersedes the 14 October macOS In Review status: Apple rejected build 13 on
+18 October for the compatibility terminology and the absence of a menu command
+to reopen the main window. A clarification was sent on 19 October explaining
+local inference and the absence of hosted language-model services. iOS remains
+Ready for Distribution; its binary was not changed.
+
+Build 14 adds Window → Show DFM Mimir (Command-0) and Dock reopen handling.
+Closing the retained window now leaves the app running, preserving the optional
+local server; explicit Quit still awaits the existing Dart shutdown path.
+The setting and macOS store description now use “Local HTTP API” / “local HTTP
+API for on-device inference”; endpoint paths and protocol behavior are unchanged.
+Review notes describe the new window command and local server test procedure,
+without the disputed compatibility terminology. Existing screenshots show
+welcome/chat/appearance, not that API setting.
+
+Validation: 75 Flutter tests passed. The signed archived app loaded its bundled
+model with Metal, preserved a draft through close/reopen, then answered the
+Danish capital question with København. Command-Q terminated the original app
+process. The macOS automation surface can reopen apps during observation, so
+process identity was checked separately rather than relying on a later window
+snapshot to establish termination. Archive signing, model hash, matching symbols,
+credential scan and OS-TLS/BoringSSL-free checks passed.
+
+Archive: logs/sdu-store/macos-signed-14/DFM Mimir.xcarchive. The first invocation
+used Apple's Python 3.9: compilation succeeded but the wrapper's hashlib.file_digest
+check requires Python 3.11+. Audits were rerun with Python 3.12 against the
+unchanged archive, skipping only directory creation and completed build commands.
+Use a Python 3.11+ interpreter for future archive_apple.py invocations.
+Evidence: macos-signed-14.log, macos-audit-14.log, build-14-flutter-tests.log and
+macos-upload-14.log under logs/sdu-store. Upload succeeded at 06:44 CEST on 19 October; Apple shows build 14 Processing.
+Processing completed; the OS-only encryption answer was saved and build 14 was
+selected. Resubmission succeeded at 06:49 CEST on 19 October: **Waiting for Review**
+under the same submission ID cdb16591-5865-4642-bf93-972f7dfb7c70. Manual release
+and China mainland availability were retained. Proof:
+logs/sdu-store/submission-14/waiting-for-review.jpg. This is not approval or release.

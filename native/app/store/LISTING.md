@@ -47,7 +47,7 @@ model makes this a large download (about 1.2 GB of model weights).
 ## macOS addition
 
 Built for Apple Silicon Macs, with Apple Metal acceleration and a CPU option.
-Advanced users can enable a configurable OpenAI-compatible local API while the
+Advanced users can enable a configurable local HTTP API for on-device inference while the
 app is running. The Mac App Store app does not include the standalone command-line
 server distributed in the GitHub desktop package.
 

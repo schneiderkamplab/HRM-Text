@@ -38,4 +38,4 @@ Mimir can make mistakes. Check important answers. Speed and usable context size 
 
 Built for Apple Silicon Macs, with Apple Metal acceleration and a CPU option. Large contexts and simultaneous apps can increase memory pressure; choose smaller settings on devices with less available memory.
 
-Advanced users can enable a configurable OpenAI-compatible local API while the app is running. The Mac App Store app does not include the standalone command-line server distributed in the GitHub desktop package.
+Advanced users can enable a configurable local HTTP API for on-device inference while the app is running. The Mac App Store app does not include the standalone command-line server distributed in the GitHub desktop package.

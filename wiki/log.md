@@ -231,6 +231,9 @@ Diagnosed case-insensitive template sorting ties and nondeterministic set-to-lis
 - 2026-10-18: After user authorization, safely checkpointed/offloaded/stopped XXL-wide at 1,147,600. Full-size v2 CUDA/FA4 smoke passed (about 157 GiB peak allocated, all eight gates learned); installed the 20K pilot/control and failure-tolerant XXL resumption in the existing SQLite scheduler. See [operational evidence](pages/model-architecture/hrm-text-v2-gated-pilot.md#authorized-launch-2026-10-18).
 
 - 2026-10-18: Implemented opt-in independent HRM v2 invocation gates, low-BP donor-delta sharing and strict v1 checkpoint migration. Prepared a separate 20K-step XL 3.8M pilot with 2K alpha warmup and matched control. CPU/FSDP tests pass; GPU qualification and HF/vLLM serving remain release gates. Live training untouched. See [the pilot runbook](pages/model-architecture/hrm-text-v2-gated-pilot.md).
+- 2026-10-19: Prepared macOS build 14 with a persistent Show DFM Mimir window command and neutral local HTTP API wording. All 75 Flutter tests and signed archive audits pass; [review repair details](pages/model-architecture/mimir-apple-os-tls-packaging.md#macos-review-repair--19-october-2026-build-14).
+
+- 2026-10-17: Used authorised B200 memory headroom to test released CUDA packages: 12.8 real-model chat passed, HRMText batch/token parity failed, and 13.4 inference hit unsupported PTX. See [release validation](pages/model-architecture/prefixlm-upstream-integration.md#gpu-headroom-experiments-2026-10-17).
 
 - 2026-10-17: Split the oversized [Mimir app reference](pages/model-architecture/mimir-app.md) into packaging, model catalog, UI defaults and native CLI concepts; retained historical heading links. The previously unavailable dfm-evals pin is now published and installed.
 

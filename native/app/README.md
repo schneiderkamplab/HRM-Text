@@ -46,7 +46,7 @@ Compaction is lossy and can require several model passes. Prompt reduction retai
 the original opening and ending when they fit, but cannot guarantee preservation
 of every detail. System instructions are never summarized; if they and the reply
 reservation leave insufficient space, the app reports an error. The stateless
-OpenAI-compatible API continues to reject oversized requests; it does not silently
+local HTTP API continues to reject oversized requests; it does not silently
 rewrite callers' messages.
 
 ## Build on Apple Silicon
@@ -255,7 +255,7 @@ in release notes rather than filenames.
 
 ## Local API and headless use
 
-Desktop apps can expose a local OpenAI-compatible text chat API, off by default.
+Desktop apps can expose a local local HTTP text chat API, off by default.
 Packages also include `dfm-mimir-server` for headless operation without a display.
 See [API.md](API.md) for Settings, commands, supported fields, limits and tests.
 
@@ -273,7 +273,7 @@ last 64 generated tokens of the current reply. Penalty history resets each reply
 and does not penalize the prompt. Settings persist and apply to the next reply
 without reloading the model; they cannot change during generation.
 Compaction retains its deterministic defaults. These UI settings do not override
-sampling parameters supplied by OpenAI-compatible API clients.
+sampling parameters supplied by local HTTP API clients.
 
 ## Markdown replies
 

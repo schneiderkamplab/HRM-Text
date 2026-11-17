@@ -88,7 +88,7 @@ not restarted. The explicit `--allow-unverified-smoke` launch option records
 this limitation rather than fabricating a verification receipt.
 
 The detached command is `python scripts/run_transformer48_dfm11.py train
---wait-for-gpus --allow-unverified-smoke`; log: 
+--wait-for-gpus --allow-unverified-smoke`; log:
 `logs/training/transformer48_dfm11_causal_20261109/train.log`. A nonblocking
 production-launch lock prevents duplicate arming. Before handing off, the
 launcher resolves Hydra and matches the preflight configuration hash, checks

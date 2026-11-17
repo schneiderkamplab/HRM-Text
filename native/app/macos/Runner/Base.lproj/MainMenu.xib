@@ -302,6 +302,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
                         <items>
+                            <menuItem title="Show DFM Mimir" keyEquivalent="0" id="mimir-show-window">
+                                <connections>
+                                    <action selector="showMainWindow:" target="Voe-Tx-rLC" id="mimir-show-action"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="mimir-show-separator"/>
                             <menuItem title="Minimize" keyEquivalent="m" id="OY7-WF-poV">
                                 <connections>
                                     <action selector="performMiniaturize:" target="-1" id="VwT-WD-YPe"/>

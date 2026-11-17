@@ -174,3 +174,166 @@ See native/binaries/LLAMA.md for operation and package limitations.
 The generator passed YAML parsing, pinned-checkout/dependency validation and
 deterministic regeneration checks. Cross-platform execution remains a CI gate;
 successful packaging must not be confused with GPU/NPU inference qualification.
+
+## Release warning fix (2026-10-17)
+
+Initial matrix run 39003251048 failed Linux CPU x64/ARM64, macOS x64 and generic
+Android builds on the same two signed/unsigned token-count comparisons in
+decode_prefix_lm. Upstream enables LLAMA_FATAL_WARNINGS; earlier qualification
+did not. The run was cancelled before publication to replace the source pin.
+
+Fork commit 4f2e25bcf bounds the token count by INT32_MAX before converting it,
+compares capacities without narrowing, and uses the checked signed count for
+both loops. No attention semantics changed. The local strict Release build
+passed for CLI, server, benchmark, quantizer and test-llama-archs. The Linux core
+qualification workflow now also sets LLAMA_FATAL_WARNINGS=ON. Release jobs are
+regenerated from the updated fork pin; no compiler warning suppression is used.
+Both local CTest PrefixLM suites (HRMText and Llama) passed after this rebuild.
+
+### Strict Linux qualification follow-up
+
+Run 39003866775 exposed another warning in the PrefixLM test: GCC rejects a
+copied range-loop pair under -Werror=range-loop-construct. Commit 1c979346d
+uses a const reference; production runtime code is unchanged. Local strict
+test compilation and both PrefixLM suites passed after the adjustment.
+
+The ASan job also stopped during compilation on GCC 13 libstdc++ regex internals
+with -Werror=maybe-uninitialized, before exercising our tests. ASan qualification
+now uses Clang; the ordinary Release job retains GCC. Both retain fatal warnings,
+and sanitizer flags and leak detection remain enabled. This is a compiler
+selection change, not evidence that GCC ASan execution passed. Release matrix
+39003864987 had no failed jobs at this check, but is superseded by a fresh run
+against the updated test/source pin so distribution and qualification match.
+
+### Shared-library ASan startup limitation
+
+Run 39005079691: GCC Release passed. Clang ASan passed all five CTest suites
+and all three ordinary architecture cases, then llama-cli --help aborted with
+an ODR violation for httplib::detail::RegexMatcher RTTI. The duplicate globals
+are in libllama-server-impl.so and libllama-common.so. Upstream's vendor target
+builds cpp-httplib STATIC and links it into both shared libraries.
+
+ASan qualification now uses the supported BUILD_SHARED_LIBS=OFF configuration
+to give each executable a single copy. This does not disable ODR checks, fatal
+warnings, leak detection or ASan. It does not establish shared-package ASan
+startup cleanliness: that upstream linkage limitation remains unresolved.
+Release qualification and published package linkage remain unchanged. No fork
+runtime changes or release-matrix restart are needed for this CI-only adjustment.
+
+Follow-up run https://github.com/schneiderkamplab/HRM-Text/actions/runs/39005968713
+passed both GCC shared Release and Clang static ASan qualification on 2026-10-17.
+Both jobs passed the five CTest suites, three ordinary architecture cases and
+CLI/server/benchmark startup checks. ASan retained halt_on_error=1:detect_leaks=1.
+The shared-library ASan limitation above is not superseded by this static result.
+At 05:35 UTC the release matrix 39005077796 had 22 successful jobs, no failures,
+and eight CUDA/ROCm jobs still running; publication remained pending.
+
+### Publication recovery
+
+All 30 build/preparation jobs in run 39005077796 passed. The publish job assembled
+the platform archives and SHA256SUMS, then uploaded the 5,002,927,742-byte
+release-packages Actions artifact (12094347352). GitHub returned HTTP 403
+Resource not accessible by integration on release creation; no binary build failed.
+An authenticated maintainer-created draft for mimir-1c979346d targets the exact
+build workflow commit c40ce8cb28d3de9c737daf9f74ed11fc82671761. Only the publish
+job was rerun, reusing all successful build artifacts. Outcome still pending.
+Future generated workflows overwrite their assembled Actions artifact on retry
+and explicitly distinguish static ASan qualification in release notes.
+
+Publication completed manually on 2026-10-17:
+https://github.com/schneiderkamplab/HRM-Text/releases/tag/mimir-1c979346d
+contains all 35 upstream-format archives (upstream b11706 names with our tag,
+excluding only s390x), SOURCE.txt and SHA256SUMS: 37 assets total. Every archive
+and SOURCE.txt matched GitHub's uploaded SHA-256 digest against the checksum file.
+The release is public and marked prerelease. Linux Release and static ASan
+qualification passed in run 39005968713.
+
+The publish retry uploaded the real assets but also downloaded the previous
+release-packages artifact, then attempted to upload that aggregate ZIP (>2 GiB).
+The Actions workflow therefore remains failed at publication even though all
+30 build/preparation jobs succeeded. Recovery removed the aggregate entry from
+SHA256SUMS, verified all actual assets, and published using maintainer credentials.
+Generated workflows now exclude release-packages from artifact downloads.
+No binaries were rebuilt or altered during recovery. Monitoring can stop.
+
+## Downloaded archive validation (2026-10-17)
+
+Tested actual release mimir-1c979346d downloads, not replacement local binaries.
+Checksums matched for macOS ARM64, Ubuntu CPU x64, Ubuntu CUDA 12.8/13.4 x64,
+their two CUDA runtime archives, and Ubuntu Vulkan x64. Test model was official
+v1.5 Q4_K_M, SHA256 82f73664e33a0369d047c69d9cdfe23082028d5539c8a2fbad8d5dbc6256e106
+(identical on Mac and dfm). Chat used the embedded template in CLI/server.
+
+- macOS 27, M2 Max: packaged CLI and server passed on CPU and Metal. Both server
+  runs answered the Danish capital question with København and an English
+  follow-up with Copenhagen. CLI/server/benchmark help and quantizer usage passed.
+- The local test-llama-archs harness loaded the downloaded macOS libraries via
+  DYLD_LIBRARY_PATH; DYLD_PRINT_LIBRARIES confirmed libllama, common and ggml
+  CPU/BLAS/Metal came from the extracted archive. HRMText and Llama each passed
+  2,144 PrefixLM/MixedLM checks. This exercises the packaged implementation,
+  although the test executable itself is locally built.
+- dfm: Ubuntu 24.04, x86_64 AMD EPYC 9655, eight NVIDIA B200 GPUs. Packaged
+  Ubuntu CPU CLI/server passed the same real-model chat and startup checks,
+  using two threads and nice priority 10. Temporary servers were shut down.
+- Both packaged CUDA versions loaded with their matching runtime directories
+  in LD_LIBRARY_PATH and enumerated all eight B200s. This includes CUDA 13.4
+  despite nvidia-smi reporting CUDA UMD 13.3. No inference compatibility claim
+  follows from successful enumeration alone.
+- Vulkan initially lacked libvulkan.so.1. Ubuntu libvulkan1 1.3.275.0-1build1
+  was downloaded and extracted into the test directory, without installing or
+  changing system packages. All plugin dependencies then resolved, but NVIDIA
+  ICD initialization failed: could not obtain vkCreateInstance through
+  vk_icdGetInstanceProcAddr; the loader reported no drivers. No Vulkan device
+  was exposed. Host driver configuration needs investigation outside training.
+
+All GPUs remained at 100% utilization with roughly 164-167 GiB occupied during
+these checks. No GPU inference or benchmark was launched on dfm, and training
+was not paused or modified. CUDA inference and performance qualification remain
+pending a coordinated idle window. Local evidence: logs/release-smoke/;
+remote files: /home/ucloud/mimir-release-smoke/. The smoke harness and JSON
+responses are retained there. These short correctness checks are not speed
+benchmarks, especially with concurrent training on dfm.
+
+### GPU headroom experiments (2026-10-17)
+
+The earlier decision to defer all GPU inference was superseded by explicit user
+permission to use available memory headroom. Sequential tests used physical B200
+GPU 1 (UUID GPU-14fd8b70-0529-1716-1700-fce6cc64f3d9), with approximately
+18,216 MiB initially free. A process-group guard sampled memory every two seconds,
+limited additional usage to 4,096 MiB, required 10,000 MiB remaining free, and
+imposed a 300-second deadline per experiment. Training was not paused or
+reconfigured; shared GPU utilization means these are correctness experiments,
+not controlled performance measurements.
+
+- Released CUDA 12.8 x64 binaries and matching runtime passed actual Mimir v1.5
+  Q4_K_M CLI inference and two-turn server chat using the embedded chat template:
+  København, then Copenhagen. Context/batch/microbatch 1,024, GPU layers 99,
+  two CPU threads. Peak observed extra GPU allocation: 2,297 MiB.
+- CUDA 13.4 x64 device enumeration succeeded earlier, but actual inference now
+  **fails** on driver 610.57.04 (CUDA UMD 13.3): CUDA reports “the provided PTX
+  was compiled with an unsupported toolchain” from
+  ggml_cuda_kernel_can_use_pdl / cudaFuncGetAttributes. CLI aborted before
+  generation; peak extra allocation 37 MiB. Enumeration is insufficient evidence
+  of compatibility. Use the tested 12.8 archive on this host; do not change the
+  training host driver merely to qualify this archive.
+- A diagnostic test-llama-archs executable built from exact fork revision
+  1c979346d and linked against downloaded Linux libraries exposed an HRMText
+  parity failure with CUDA 12.8: batched causal answer versus single-token
+  answer after the same prefix, NMSE 8.63247055533e-6 versus the unchanged 1e-6
+  limit (original tests/test-llama-archs.cpp line 1477, diagnostic line 1478).
+  Peak extra allocation 719 MiB. The temporary harness only added call-site
+  diagnostics; released libraries and test tolerance were unchanged. This
+  blocks full CUDA regression qualification despite the real-model chat pass.
+  Kernel precision versus PrefixLM-specific behavior remains to be isolated.
+
+Evidence is retained under logs/release-smoke/cuda-*-results locally and
+/home/ucloud/mimir-release-smoke on dfm, including memory samples and harness
+logs. The diagnostic executable is not part of the published archives.
+
+The Llama architecture suite subsequently passed all 2,144 PrefixLM/MixedLM
+checks (CPU plus the single visible CUDA GPU, flash attention off/on), with
+829 MiB peak additional memory. All guards completed without triggering. After
+tests, GPU 1 returned to 164,404 MiB used / 18,216 MiB free, the original training
+process 24237 was still running, and no experimental server/test process remained.
+This narrows the observed regression to HRMText in this test set, but does not
+establish whether its cause is architecture-specific arithmetic or prefix logic.

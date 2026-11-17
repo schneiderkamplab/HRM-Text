@@ -1,17 +1,19 @@
 # Desktop local API and headless server
 
-Linux, Windows and macOS support an opt-in **text Chat Completions subset** of the
-OpenAI API. The API is off by default. It runs locally and uses the loaded Mimir
+Linux, Windows and macOS support an opt-in **local HTTP API for text chat
+completions**. The API is off by default. It runs locally and uses the loaded Mimir
 model's own GGUF chat template. No cloud account is needed.
 
 ## While using the app
 
 Open **Model and settings**, choose a port (default `8080`), and enable
-**OpenAI-compatible local API**. The base URL is `http://127.0.0.1:8080/v1`.
+**Local HTTP API**. The base URL is `http://127.0.0.1:8080/v1`.
 Enable it again after restarting the app. API requests share the UI's loaded
 model and execute serially with UI work; they do not create or alter saved chats.
 Model/settings changes and new UI generation are disabled while API work is
-pending. Turning the API off cancels its requests. Closing the app stops it.
+pending. Turning the API off cancels its requests. Quitting the app stops it.
+On macOS, closing the window keeps the app running;
+use Window → Show DFM Mimir (⌘0) or click its Dock icon to reopen it.
 
 The API uses exact PrefixLM requests without automatic compaction or cross-request
 MixedLM cache reuse. API activity invalidates the UI's reusable inference cache,
@@ -80,7 +82,7 @@ includes the end token when one is sampled.
 Tools, images/audio, developer-role messages, stop strings, response formats,
 logprobs, penalties, multiple candidates and the Responses API are unsupported.
 Unsupported fields return an explicit error rather than being silently ignored.
-This is not full OpenAI API parity.
+Only the endpoints and options documented here are supported.
 
 At most eight API requests may be pending. Excess requests return HTTP 429;
 there is a ten-minute request deadline including queue time and a 2 MiB body
