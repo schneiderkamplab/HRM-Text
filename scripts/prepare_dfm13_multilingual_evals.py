@@ -17,7 +17,7 @@ from scripts.build_euroeval_dfm12_registry import METRICS, PYTHON
 LANGUAGES='lt lv sq be bs bg hr hu lb sr sk sl fa'.split()
 MODULES=dict(zip(LANGUAGES[:-1], 'lithuanian latvian albanian belarusian bosnian bulgarian croatian hungarian luxembourgish serbian slovak slovene'.split()))
 ROOT=Path(__file__).resolve().parents[1]
-CATALOG=Path('/work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval')
+CATALOG=Path('/work/dfm/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval')
 OUT=ROOT/'data/dfm13/multilingual-evals-20261006-v1'
 MANIFEST=ROOT/'config/dfm13_dala_heldout_20261006.json'
 EURO=ROOT/'config/euroeval_dfm13_multilingual_20261006.yaml'

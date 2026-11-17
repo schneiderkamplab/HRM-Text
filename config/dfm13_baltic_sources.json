@@ -12,8 +12,8 @@
     {"name": "baltic_lt_blkt", "repo": "VSSA-SDSA/LT_AI_BLKT", "revision": "4fa6c3894fd9f1f9f8db773ae844e126fa61f61d", "language": "lt", "kind": "text", "patterns": ["data/*.parquet", "README.md", "LICENSE.txt"], "license": "NewGenLTU OpenRAIL-D", "admission_hold": "custom_terms_and_source_stratification"}
   ],
   "local_source_manifests": [
-    "/work/mimir/DaLA/la_output/resources/lithuanian-extension-v7/lt/sources.json",
-    "/work/mimir/DaLA/la_output/resources/latvian-extension-v2/production/lv/sources.json"
+    "/work/dfm/DaLA/la_output/resources/lithuanian-extension-v7/lt/sources.json",
+    "/work/dfm/DaLA/la_output/resources/latvian-extension-v2/production/lv/sources.json"
   ],
   "deferred": {
     "saillab/alpaca-lithuanian-cleaned": "CC-BY-NC, not selected",

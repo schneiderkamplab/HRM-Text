@@ -15,7 +15,7 @@ from scripts.review_dfm13_arena_candidates import parse_numpy_repr
 
 ROOT = Path(__file__).resolve().parents[1]
 DOWNLOADS = ROOT / 'data/downloads/arena_review'
-HUB = Path('/work/mimir/.home/.cache/huggingface/hub')
+HUB = Path('/work/dfm/.home/.cache/huggingface/hub')
 SPECS = {
     'comparia': dict(repo='ministere-culture/comparia-fr-arena', directory='comparia-fr-arena',
         file='comparia-fr-arena_samples.jsonl', split='publisher_sample_of_train',

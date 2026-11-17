@@ -19,7 +19,7 @@ ANSWER_FIELDS = ('response1', 'response2', 'original_response', 'edited_response
                  'good_edited_response', 'bad_edited_response', 'response')
 CONTEXT_LIMIT = 32768
 REQUEST_MODULE = 'scripts.dfm13_arena_bulk_reasonfirst'
-TOKENIZER_DIR = Path('/work/mimir/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/snapshots/4d7ae4984b7db7de8f8457170b3f1a419ee76d52')
+TOKENIZER_DIR = Path('/work/dfm/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/snapshots/4d7ae4984b7db7de8f8457170b3f1a419ee76d52')
 DEPENDENCIES = [
     'scripts/screen_dfm13_pending_arena.py', 'scripts/prepare_dfm13_pending_arena.py',
     'scripts/dfm13_arena_bulk_reasonfirst.py', 'scripts/dfm13_arena_bulk_recovery.py',

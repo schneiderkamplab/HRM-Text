@@ -1,0 +1,15 @@
+{
+  "2": {
+    "repo_id": "schneiderkamplab/dfm2-dynaword-historical",
+    "revision": "06402e4b51872ea85f7c2648b720ab655ccbe87d"
+  },
+  "3": {
+    "repo_id": "schneiderkamplab/dfm3-common-pile-historical",
+    "revision": "66e018b125e28f3d46dcfcd266be65c6eff275f6"
+  },
+  "4": {
+    "repo_id": "schneiderkamplab/dfm4-historical-additions",
+    "revision": "1e4744a49693ce9b76ecad39aa479bd71f93a6b5",
+    "manifest_sha256": "75f282f855859067954fbe82ce16d0e2a4c94024ecce1af2ccdd48cc3237de8b"
+  }
+}

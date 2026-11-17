@@ -16,7 +16,7 @@ METRICS = {'sentiment-classification':'macro_f1', 'linguistic-acceptability':'ma
     'summarization':'chr_f3pp', 'knowledge':'accuracy', 'common-sense-reasoning':'accuracy',
     'instruction-following':'instruction_accuracy', 'tool-calling':'tool_calling_accuracy',
     'european-values':'european_values'}
-PYTHON = '/work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python'
+PYTHON = '/work/dfm/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python'
 
 
 def build(research):

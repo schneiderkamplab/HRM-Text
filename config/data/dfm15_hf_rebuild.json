@@ -1,0 +1,638 @@
+{
+  "recipe": "dfm15-hf-v1",
+  "version": 15,
+  "epochs": 3,
+  "reference_metadata": {
+    "tokenizer_info": {
+      "chat_template_path": "/work/dfm/HRM-Text/data/dfm15/native-reasoning-v2/chat_template.jinja",
+      "enable_thinking": false,
+      "template_mode": "jinja_chat_template",
+      "tokenizer_path": "../brainsurgery/models/gemma4_31b/tokenizer.json",
+      "vocab_size": 262144,
+      "tokenizer_path_base": "repo_root"
+    },
+    "vocab_size": null,
+    "max_seq_len": 4097,
+    "total_length": 134359356757,
+    "reasoning_policy": {
+      "mode": "per_example_native_thinking_or_direct",
+      "scope": "listed repaired sources; inherited rows unchanged",
+      "receipt": "/work/dfm/HRM-Text/data/dfm15/native-reasoning-v2/repairs.json"
+    }
+  },
+  "tokenizer_info": {
+    "chat_template_path": "data_io/chat_templates/gemma4_native_chat.jinja",
+    "enable_thinking": false,
+    "template_mode": "jinja_chat_template",
+    "tokenizer_path": "/work/dfm/brainsurgery/models/gemma4_31b/tokenizer.json",
+    "vocab_size": 262144
+  },
+  "code": {
+    "adapter.py": "64d95ba1812c580eb0484ac98f786fa108d36ed0dd73fb0a0a61a9bbaa7e46b9",
+    "sampler.py": "66150668cd91d551b3003cc693a5f7f8c51fa633663325aa3fd4dc041be3b347",
+    "combine.py": "12548453f1ee4a559bb5add9395a3602f13083663989b7ef4aa3b86c45563a1b"
+  },
+  "runtime": {
+    "scripts/rebuild_dfm13_15_hf.py": "256a51f3832cd210a0a93aa9ea5b30de80a0574c457f3702bd35ccf57663cbfe",
+    "scripts/rebuild_dfm12_hf.py": "5416ac050e9adc487ccbc6ae03e5c47c5094e1510509f13f7d354fff2e48a735",
+    "dfm12/io.py": "d2a58553e6b3f1bc81972019af12efa57ad4bbb64f46141d2916578f80d5f337"
+  },
+  "components": [],
+  "packages": {},
+  "repair_runtime": {
+    "dfm14/build_native_reasoning.py": "160941c4689e25c17580fc447f1dae890cb4475d213c47ef33ddc966fb76d9c3",
+    "dfm14/native_reasoning.py": "8e32c734a95bb6f14a812a1151374cef3a28e3cc7269a9323784b408ffea1329",
+    "dfm14/repair_reasoning.py": "59eb5bd1c6c015a6c81e2e487923ee3e9768b1f80adfe96349f26517a217b178",
+    "dfm12/build_training.py": "12548453f1ee4a559bb5add9395a3602f13083663989b7ef4aa3b86c45563a1b",
+    "dfm14/reconcile_inheritance.py": "acb7cb8445679f69fa7c130f427d9c8168cf51c89615ca908b29c2585b75af82"
+  },
+  "repair_inventory_reference": {
+    "base": "/work/dfm/HRM-Text/data/dfm14/inheritance-reconciliation/sampled_dfm14",
+    "metadata_sha256": "e4cf665ccb8a7b2d634b81733d3a10760a9da55522a90b75111f3382e078be93",
+    "tokenizer_sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+    "mode": "native_thinking_and_direct_v2",
+    "parts": [
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00000-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00000-of-00043.parquet",
+        "offset": 23577885111,
+        "tokens": 34842901,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00001-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00001-of-00043.parquet",
+        "offset": 23612728012,
+        "tokens": 24973334,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00002-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00002-of-00043.parquet",
+        "offset": 23637701346,
+        "tokens": 25306444,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00003-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00003-of-00043.parquet",
+        "offset": 23663007790,
+        "tokens": 30418249,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00004-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00004-of-00043.parquet",
+        "offset": 23693426039,
+        "tokens": 33665573,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00005-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00005-of-00043.parquet",
+        "offset": 23727091612,
+        "tokens": 25977437,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00006-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00006-of-00043.parquet",
+        "offset": 23753069049,
+        "tokens": 27354186,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00007-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00007-of-00043.parquet",
+        "offset": 23780423235,
+        "tokens": 62908911,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00008-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00008-of-00043.parquet",
+        "offset": 23843332146,
+        "tokens": 32686203,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00009-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00009-of-00043.parquet",
+        "offset": 23876018349,
+        "tokens": 72793329,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00010-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00010-of-00043.parquet",
+        "offset": 23948811678,
+        "tokens": 64745032,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00011-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00011-of-00043.parquet",
+        "offset": 24013556710,
+        "tokens": 30847012,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00012-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00012-of-00043.parquet",
+        "offset": 24044403722,
+        "tokens": 31319624,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00013-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00013-of-00043.parquet",
+        "offset": 24075723346,
+        "tokens": 30179715,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00014-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00014-of-00043.parquet",
+        "offset": 24105903061,
+        "tokens": 31222453,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00015-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00015-of-00043.parquet",
+        "offset": 24137125514,
+        "tokens": 33100645,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00016-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00016-of-00043.parquet",
+        "offset": 24170226159,
+        "tokens": 27963662,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00017-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00017-of-00043.parquet",
+        "offset": 24198189821,
+        "tokens": 22108760,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00018-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00018-of-00043.parquet",
+        "offset": 24220298581,
+        "tokens": 26214423,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00019-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00019-of-00043.parquet",
+        "offset": 24246513004,
+        "tokens": 25203827,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00020-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00020-of-00043.parquet",
+        "offset": 24271716831,
+        "tokens": 25064615,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00021-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00021-of-00043.parquet",
+        "offset": 24296781446,
+        "tokens": 88912726,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00022-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00022-of-00043.parquet",
+        "offset": 24385694172,
+        "tokens": 138920885,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00023-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00023-of-00043.parquet",
+        "offset": 24524615057,
+        "tokens": 109355380,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00024-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00024-of-00043.parquet",
+        "offset": 24633970437,
+        "tokens": 111259965,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00025-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00025-of-00043.parquet",
+        "offset": 24745230402,
+        "tokens": 112574226,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00026-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00026-of-00043.parquet",
+        "offset": 24857804628,
+        "tokens": 111762222,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00027-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00027-of-00043.parquet",
+        "offset": 24969566850,
+        "tokens": 87522987,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00028-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00028-of-00043.parquet",
+        "offset": 25057089837,
+        "tokens": 90289323,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00029-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00029-of-00043.parquet",
+        "offset": 25147379160,
+        "tokens": 78202700,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00030-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00030-of-00043.parquet",
+        "offset": 25225581860,
+        "tokens": 78307087,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00031-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00031-of-00043.parquet",
+        "offset": 25303888947,
+        "tokens": 77632464,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00032-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00032-of-00043.parquet",
+        "offset": 25381521411,
+        "tokens": 78107918,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00033-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00033-of-00043.parquet",
+        "offset": 25459629329,
+        "tokens": 77931012,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00034-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00034-of-00043.parquet",
+        "offset": 25537560341,
+        "tokens": 78763926,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00035-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00035-of-00043.parquet",
+        "offset": 25616324267,
+        "tokens": 78103727,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00036-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00036-of-00043.parquet",
+        "offset": 25694427994,
+        "tokens": 78028945,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00037-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00037-of-00043.parquet",
+        "offset": 25772456939,
+        "tokens": 77819499,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00038-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00038-of-00043.parquet",
+        "offset": 25850276438,
+        "tokens": 77532935,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00039-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00039-of-00043.parquet",
+        "offset": 25927809373,
+        "tokens": 77686949,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00040-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00040-of-00043.parquet",
+        "offset": 26005496322,
+        "tokens": 78379376,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00041-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00041-of-00043.parquet",
+        "offset": 26083875698,
+        "tokens": 78195661,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek__train-00042-of-00043.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek__train-00042-of-00043.parquet",
+        "offset": 26162071359,
+        "tokens": 77739693,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_big_reasoning_traces__DeepSeek_debug__train-00000-of-00001.parquet",
+        "name": "allenai_big_reasoning_traces__DeepSeek_debug__train-00000-of-00001.parquet",
+        "offset": 26239811052,
+        "tokens": 1770633,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_open_math_2_50k_r1__data__train-00000-of-00001.parquet",
+        "name": "allenai_open_math_2_50k_r1__data__train-00000-of-00001.parquet",
+        "offset": 27571409963,
+        "tokens": 79899750,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_gpt41__data__train-00000-of-00006.parquet",
+        "name": "allenai_verifiable_reasoning_gpt41__data__train-00000-of-00006.parquet",
+        "offset": 33652892600,
+        "tokens": 113820793,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_gpt41__data__train-00001-of-00006.parquet",
+        "name": "allenai_verifiable_reasoning_gpt41__data__train-00001-of-00006.parquet",
+        "offset": 33766713393,
+        "tokens": 113463486,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_gpt41__data__train-00002-of-00006.parquet",
+        "name": "allenai_verifiable_reasoning_gpt41__data__train-00002-of-00006.parquet",
+        "offset": 33880176879,
+        "tokens": 113338433,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_gpt41__data__train-00003-of-00006.parquet",
+        "name": "allenai_verifiable_reasoning_gpt41__data__train-00003-of-00006.parquet",
+        "offset": 33993515312,
+        "tokens": 112951370,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_gpt41__data__train-00004-of-00006.parquet",
+        "name": "allenai_verifiable_reasoning_gpt41__data__train-00004-of-00006.parquet",
+        "offset": 34106466682,
+        "tokens": 113461482,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_gpt41__data__train-00005-of-00006.parquet",
+        "name": "allenai_verifiable_reasoning_gpt41__data__train-00005-of-00006.parquet",
+        "offset": 34219928164,
+        "tokens": 109741982,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_o4mini__data__train-00000-of-00002.parquet",
+        "name": "allenai_verifiable_reasoning_o4mini__data__train-00000-of-00002.parquet",
+        "offset": 34329670146,
+        "tokens": 43839027,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm6_direct_jinja/allenai_verifiable_reasoning_o4mini__data__train-00001-of-00002.parquet",
+        "name": "allenai_verifiable_reasoning_o4mini__data__train-00001-of-00002.parquet",
+        "offset": 34373509173,
+        "tokens": 44939162,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__dataset_adapters__code.parquet",
+        "name": "nemotron_terminal_corpus_native__dataset_adapters__code.parquet",
+        "offset": 183107279011,
+        "tokens": 650261501,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__dataset_adapters__math.parquet",
+        "name": "nemotron_terminal_corpus_native__dataset_adapters__math.parquet",
+        "offset": 183757540512,
+        "tokens": 3131289911,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__dataset_adapters__swe.parquet",
+        "name": "nemotron_terminal_corpus_native__dataset_adapters__swe.parquet",
+        "offset": 186888830423,
+        "tokens": 989740812,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__data_processing__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__data_processing__data_filtered.parquet",
+        "offset": 187878571235,
+        "tokens": 93897915,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__data_querying__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__data_querying__data_filtered.parquet",
+        "offset": 187972469150,
+        "tokens": 140404151,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__data_science__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__data_science__data_filtered.parquet",
+        "offset": 188112873301,
+        "tokens": 104291747,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__debugging__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__debugging__data_filtered.parquet",
+        "offset": 188217165048,
+        "tokens": 111332210,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__dependency_management__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__dependency_management__data_filtered.parquet",
+        "offset": 188328497258,
+        "tokens": 102953858,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__file_operations__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__file_operations__data_filtered.parquet",
+        "offset": 188431451116,
+        "tokens": 98070431,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__scientific_computing__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__scientific_computing__data_filtered.parquet",
+        "offset": 188529521547,
+        "tokens": 94874934,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__security__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__security__data_filtered.parquet",
+        "offset": 188624396481,
+        "tokens": 73881260,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__software_engineering__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__easy__software_engineering__data_filtered.parquet",
+        "offset": 188698277741,
+        "tokens": 113426804,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__data_processing__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__data_processing__data_filtered.parquet",
+        "offset": 188811704545,
+        "tokens": 22737672,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__data_querying__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__data_querying__data_filtered.parquet",
+        "offset": 188834442217,
+        "tokens": 78125087,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__data_science__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__data_science__data_filtered.parquet",
+        "offset": 188912567304,
+        "tokens": 127407544,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__debugging__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__debugging__data_filtered.parquet",
+        "offset": 189039974848,
+        "tokens": 205175403,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__dependency_management__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__dependency_management__data_filtered.parquet",
+        "offset": 189245150251,
+        "tokens": 112659793,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__file_operations__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__file_operations__data_filtered.parquet",
+        "offset": 189357810044,
+        "tokens": 169941109,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__model_training__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__model_training__data_filtered.parquet",
+        "offset": 189527751153,
+        "tokens": 4819977,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__scientific_computing__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__scientific_computing__data_filtered.parquet",
+        "offset": 189532571130,
+        "tokens": 133599368,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__security__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__security__data_filtered.parquet",
+        "offset": 189666170498,
+        "tokens": 157114337,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__software_engineering__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__software_engineering__data_filtered.parquet",
+        "offset": 189823284835,
+        "tokens": 125025003,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__system_administration__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__medium__system_administration__data_filtered.parquet",
+        "offset": 189948309838,
+        "tokens": 109826309,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__data_processing__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__data_processing__data_filtered.parquet",
+        "offset": 190058136147,
+        "tokens": 7262186,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__data_science__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__data_science__data_filtered.parquet",
+        "offset": 190065398333,
+        "tokens": 9165589,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__debugging__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__debugging__data_filtered.parquet",
+        "offset": 190074563922,
+        "tokens": 15352629,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__file_operations__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__file_operations__data_filtered.parquet",
+        "offset": 190089916551,
+        "tokens": 12942230,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__scientific_computing__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__scientific_computing__data_filtered.parquet",
+        "offset": 190102858781,
+        "tokens": 7239469,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/tokenized_dfm10_nemotron_terminal_native/nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__security__data_filtered.parquet",
+        "name": "nemotron_terminal_corpus_native__synthetic_tasks__skill_based__mixed__security__data_filtered.parquet",
+        "offset": 190110098250,
+        "tokens": 16137309,
+        "norwegian": false
+      },
+      {
+        "path": "/work/dfm/HRM-Text/data/dfm14/inheritance-reconciliation/tokenized_remote/dfm12-norwegian-magpie-qwen3-bokmaal__train-00000.jsonl.gz",
+        "name": "dfm12-norwegian-magpie-qwen3-bokmaal__train-00000.jsonl.gz",
+        "offset": 233430458453,
+        "tokens": 307495,
+        "norwegian": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,443 @@
+{
+  "source_filter_revision": "a6549a836180ad7522b983865e6b48b1ef2bea53",
+  "publication_cutoff": "2026-06-18T00:00:00+00:00",
+  "epochs": 5,
+  "seed": 0,
+  "expected_tasks": 13360,
+  "sapient_tasks": 4891,
+  "mixed_tasks": 193,
+  "summary_tasks": 4019,
+  "export_tasks": 4187,
+  "synthetic_tasks": 70,
+  "synthetic_identity_provenance": "export-synth/manifest.json created 2026-06-15T20:58:09.379606+00:00; identities only",
+  "synthetic_sources": [
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-platypus-reclor",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "Platypus__reclor.jsonl"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-platypus-scibench",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "Platypus__scibench.jsonl"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-dialog-fsopt-data-qrecc",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__dialog_fsopt_data__qrecc.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-dialog-fsopt-data-qrecc-ii",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__dialog_fsopt_data__qrecc_ii.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-dialog-zsopt-data-qrecc",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__dialog_zsopt_data__qrecc.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-dialog-zsopt-data-qrecc-ii",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__dialog_zsopt_data__qrecc_ii.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-aeslc-1.0.0",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_fsnoopt_data__aeslc_1.0.0.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-opinion-abstracts-idebate",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_fsnoopt_data__opinion_abstracts_idebate.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-aeslc-1.0.0",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_fsopt_data__aeslc_1.0.0.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-opinion-abstracts-idebate",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_fsopt_data__opinion_abstracts_idebate.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-aeslc-1.0.0",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_zsnoopt_data__aeslc_1.0.0.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-opinion-abstracts-idebate",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_zsnoopt_data__opinion_abstracts_idebate.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-aeslc-1.0.0",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_zsopt_data__aeslc_1.0.0.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-opinion-abstracts-idebate",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__flan_zsopt_data__opinion_abstracts_idebate.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1309-amazonreview-summary-classification",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task1309_amazonreview_summary_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1370-newscomm-classification",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task1370_newscomm_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task589-amazonfood-summary-text-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task589_amazonfood_summary_text_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task590-amazonfood-summary-correction-classification",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task590_amazonfood_summary_correction_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task618-amazonreview-summary-text-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task618_amazonreview_summary_text_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task672-amazon-yelp-summarization",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task672_amazon_and_yelp_summarization_dataset_summarization.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task870-msmarco-answer-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task870_msmarco_answer_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task871-msmarco-question-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task871_msmarco_question_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task906-dialogre-identify-names",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task906_dialogre_identify_names.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task907-dialogre-identify-relationships",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task907_dialogre_identify_relationships.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task908-dialogre-identify-familial-relationships",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task908_dialogre_identify_familial_relationships.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task909-dialogre-prevalent-speakers",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_fsopt_data__task909_dialogre_prevalent_speakers.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1309-amazonreview-summary-classification",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task1309_amazonreview_summary_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1370-newscomm-classification",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task1370_newscomm_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task589-amazonfood-summary-text-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task589_amazonfood_summary_text_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task590-amazonfood-summary-correction-classification",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task590_amazonfood_summary_correction_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task618-amazonreview-summary-text-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task618_amazonreview_summary_text_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task672-amazon-yelp-summarization",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task672_amazon_and_yelp_summarization_dataset_summarization.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task870-msmarco-answer-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task870_msmarco_answer_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task871-msmarco-question-generation",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task871_msmarco_question_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task906-dialogre-identify-names",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task906_dialogre_identify_names.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task907-dialogre-identify-relationships",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task907_dialogre_identify_relationships.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task908-dialogre-identify-familial-relationships",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task908_dialogre_identify_familial_relationships.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task909-dialogre-prevalent-speakers",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "flan__niv2_zsopt_data__task909_dialogre_prevalent_speakers.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-tasksource-pragmeval-sarcasm",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "tasksource__pragmeval_sarcasm.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-tasksource-reclor",
+    "kind": "synth",
+    "group": "high40",
+    "task_name": "tasksource__reclor.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-fsnoopt-data-opinion-abstracts-rotten-tomatoes",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__flan_fsnoopt_data__opinion_abstracts_rotten_tomatoes.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-fsopt-data-opinion-abstracts-rotten-tomatoes",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__flan_fsopt_data__opinion_abstracts_rotten_tomatoes.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-zsnoopt-data-opinion-abstracts-rotten-tomatoes",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__flan_zsnoopt_data__opinion_abstracts_rotten_tomatoes.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-flan-zsopt-data-opinion-abstracts-rotten-tomatoes",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__flan_zsopt_data__opinion_abstracts_rotten_tomatoes.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1371-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task1371_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1373-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task1373_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1374-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task1374_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1375-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task1375_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1376-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task1376_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task1377-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task1377_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task264-paper-reviews-accept-reject",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task264_paper_reviews_accept_or_reject_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task265-paper-reviews-language-identification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task265_paper_reviews_language_identification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task266-paper-reviews-reviewer-perspective",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task266_paper_reviews_reviewer_perspective_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task634-allegro-reviews-classification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task634_allegro_reviews_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task635-allegro-reviews-answer-generation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task635_allegro_reviews_answer_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task902-deceptive-opinion-spam-classification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task902_deceptive_opinion_spam_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-fsopt-data-task903-deceptive-opinion-spam-classification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_fsopt_data__task903_deceptive_opinion_spam_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1371-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task1371_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1373-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task1373_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1374-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task1374_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1375-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task1375_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1376-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task1376_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task1377-newscomm-translation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task1377_newscomm_translation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task264-paper-reviews-accept-reject",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task264_paper_reviews_accept_or_reject_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task265-paper-reviews-language-identification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task265_paper_reviews_language_identification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task266-paper-reviews-reviewer-perspective",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task266_paper_reviews_reviewer_perspective_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task634-allegro-reviews-classification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task634_allegro_reviews_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task635-allegro-reviews-answer-generation",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task635_allegro_reviews_answer_generation.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task902-deceptive-opinion-spam-classification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task902_deceptive_opinion_spam_classification.parquet"
+  },
+  {
+    "repo_id": "schneiderkamplab/sapient-synth-flan-niv2-zsopt-data-task903-deceptive-opinion-spam-classification",
+    "kind": "synth",
+    "group": "repeat30",
+    "task_name": "flan__niv2_zsopt_data__task903_deceptive_opinion_spam_classification.parquet"
+  }
+],
+  "exports": [
+    "common-pile-denoising", "common-pile-paragraph-reordering",
+    "common-pile-prefix-continuation", "common-pile-span-filling",
+    "danish-dynaword-denoising", "danish-dynaword-paragraph-reordering",
+    "danish-dynaword-prefix-continuation", "danish-dynaword-span-filling",
+    "transformations-danish-danish", "transformations-danish-english",
+    "transformations-english-danish", "transformations-english-english"
+  ]
+}

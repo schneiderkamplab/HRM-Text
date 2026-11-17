@@ -47,6 +47,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dynaword-chars", type=int, default=12_000)
     parser.add_argument("--batch-size", type=int, default=4096)
     parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument("--require-convert-meta", action="store_true",
+                        help="Require a completion receipt; never trust output mtime alone.")
     return parser.parse_args()
 
 
@@ -86,10 +88,14 @@ def source_signature(src: Path, input_root: Path, args: argparse.Namespace) -> d
 
 def is_current_output(src: Path, input_root: Path, output_root: Path, args: argparse.Namespace) -> bool:
     out_path = output_path_for(src, input_root, output_root)
+    if src.suffix == ".jsonl" and is_ready_jsonl(src):
+        out_path = output_root / src.relative_to(input_root)
     if not out_path.exists():
         return False
     meta_path = meta_path_for(out_path)
     if not meta_path.exists():
+        if getattr(args, "require_convert_meta", False):
+            return False
         try:
             return out_path.stat().st_mtime >= src.stat().st_mtime
         except OSError:
@@ -256,6 +262,9 @@ def chunk_text(text: str, max_chars: int) -> Iterable[str]:
 def convert_dynaword(path: Path, out_path: Path, max_chars: int, batch_size: int) -> int:
     def iter_rows():
         pf = pq.ParquetFile(path)
+        if "text" not in pf.schema_arrow.names:
+            raise ValueError(f"DynaWord source has no text column: {path}; "
+                             f"columns={pf.schema_arrow.names}. Check the source revision/layout.")
         for batch in pf.iter_batches(columns=["text"], batch_size=batch_size):
             for text in batch.column(0).to_pylist():
                 for chunk in chunk_text(as_text(text), max_chars):
@@ -746,13 +755,14 @@ def convert_file(src: Path, input_root: Path, output_root: Path, args: argparse.
     return "skipped", 0
 
 
-def convert_file_worker(payload: tuple[str, str, str, bool, bool, int, int]) -> tuple[str, int]:
-    src_s, input_root_s, output_root_s, force, copy_ready, dynaword_chars, batch_size = payload
+def convert_file_worker(payload: tuple) -> tuple[str, int]:
+    src_s, input_root_s, output_root_s, force, copy_ready, dynaword_chars, batch_size, *strict = payload
     worker_args = argparse.Namespace(
         force=force,
         copy_ready=copy_ready,
         dynaword_chars=dynaword_chars,
         batch_size=batch_size,
+        require_convert_meta=bool(strict and strict[0]),
     )
     return convert_file(Path(src_s), Path(input_root_s), Path(output_root_s), worker_args)
 
@@ -788,6 +798,7 @@ def main() -> None:
                 args.copy_ready,
                 args.dynaword_chars,
                 args.batch_size,
+                args.require_convert_meta,
             )
             for src in files
         ]

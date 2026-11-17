@@ -13,7 +13,7 @@ def main():
     old = Path('data/dfm13/dala-v2-audit/manifest.json')
     previous = json.loads(old.read_text())
     assert pin(old)['sha256'] == json.loads(old.with_name('seal.json').read_text())['sha256']
-    authority = Path('/work/mimir/DaLA/wiki/artifacts/v2-cpu-completion-20261003.json')
+    authority = Path('/work/dfm/DaLA/wiki/artifacts/v2-cpu-completion-20261003.json')
     evidence = json.loads(authority.read_text())
     args.output.mkdir(parents=True, exist_ok=False)
     entries = {e['language']: e for e in previous['languages']}

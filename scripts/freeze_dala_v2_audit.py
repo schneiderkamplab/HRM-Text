@@ -24,7 +24,7 @@ def pin(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--source', type=Path, default=Path('/work/mimir/DaLA'))
+    parser.add_argument('--source', type=Path, default=Path('/work/dfm/DaLA'))
     parser.add_argument('--output', type=Path, default=Path('data/dfm13/dala-v2-audit'))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)

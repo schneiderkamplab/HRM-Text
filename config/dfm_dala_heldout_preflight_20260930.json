@@ -325,12 +325,12 @@
   "total_samples": 80000,
   "tokenizer_mode": "raw training tokenizer; no Mistral fix",
   "pins": {
-    "/work/mimir/HRM-Text/config/dfm_dala_heldout_20260930.json": "5c7e788f3081432068fc4f0c20d4caecab69e3e677a1c1706c90d1a31f20d942",
-    "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml": "511ee2b8904ef4006527b5f7df6c9c745e8e3c8654b540a6231b86865e77c34c",
-    "/work/mimir/HRM-Text/data/dfm11_tokenizer/tokenizer.json": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
-    "/work/mimir/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
-    "/work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py": "bfa194282e9b4c53d1d99e243e326cd5827fbdddca1416301736383941877cd0",
-    "/work/mimir/HRM-Text/dfm-evals/scripts/check_dala_heldout_tasks.py": "76f794ce2d42bed007d6cf45a51151dfc6e524085a65e633184ae94f39573d4c",
-    "/work/mimir/HRM-Text/config/dfm_dala_heldout_registry_20260930.json": "03460b51c7aef992702576fcd18c9fa56323f74e3c1ad5adffd96b0ef30c9df1"
+    "/work/dfm/HRM-Text/config/dfm_dala_heldout_20260930.json": "5c7e788f3081432068fc4f0c20d4caecab69e3e677a1c1706c90d1a31f20d942",
+    "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml": "511ee2b8904ef4006527b5f7df6c9c745e8e3c8654b540a6231b86865e77c34c",
+    "/work/dfm/HRM-Text/data/dfm11_tokenizer/tokenizer.json": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+    "/work/dfm/HRM-Text/data/dfm11_tokenizer/chat_template.jinja": "d8ae62ccf8e47299c8e912a86b16e93bf6b195d24e8b06fffb865e061e89f07e",
+    "/work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_multilingual_heldout.py": "bfa194282e9b4c53d1d99e243e326cd5827fbdddca1416301736383941877cd0",
+    "/work/dfm/HRM-Text/dfm-evals/scripts/check_dala_heldout_tasks.py": "76f794ce2d42bed007d6cf45a51151dfc6e524085a65e633184ae94f39573d4c",
+    "/work/dfm/HRM-Text/config/dfm_dala_heldout_registry_20260930.json": "03460b51c7aef992702576fcd18c9fa56323f74e3c1ad5adffd96b0ef30c9df1"
   }
 }

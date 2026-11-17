@@ -11,6 +11,7 @@ By default this is an inventory dry run. Pass --download to fetch data.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 from dataclasses import dataclass
@@ -40,6 +41,18 @@ class LocalDataset:
 
 
 HF_DATASETS: tuple[HFDataset, ...] = (
+    HFDataset(
+        name="dfm16_synth_kg_text_hetionet",
+        repo_id="schneiderkamplab/synth-kg-text-hetionet",
+        groups=("dfm16", "english", "instruction", "biomedical", "knowledge_graph"),
+        allow_patterns=("data/train.parquet", "README.md", "metadata/**"),
+        revision="24eed50a87b43c5bb384b3bd0204692d43506a44",
+        note=(
+            "DFM16 approved addition: Hetionet-grounded synthetic chat/QA. "
+            "Train split only; preserve graph provenance and per-row licenses. "
+            "See wiki/pages/dfm16-plan.md for natural QA/chat expansion and fidelity checks."
+        ),
+    ),
     # Sapient/data_io cleaned source, useful when reproducing or comparing.
     HFDataset(
         name="sapient_cleaned",
@@ -1067,6 +1080,20 @@ HF_DATASETS: tuple[HFDataset, ...] = (
     ),
 
 )
+
+
+_DFM16_REGISTRY = Path(__file__).resolve().parents[1] / "config/dfm16_decision_sources.json"
+if _DFM16_REGISTRY.is_file():
+    HF_DATASETS += tuple(
+        HFDataset(
+            name=source["name"], repo_id=source["repo_id"],
+            groups=("dfm16", "dfm16_decisions"),
+            allow_patterns=tuple(f["path"] for f in source["files"]) + ("README.md", "LICENSE*"),
+            revision=source["revision"],
+            note="Owner-approved DFM16 decision addition; conversion and overlap checks tracked in config/dfm16_decision_sources.json.",
+        )
+        for source in json.loads(_DFM16_REGISTRY.read_text())["sources"]
+    )
 
 
 LOCAL_DATASETS: tuple[LocalDataset, ...] = (

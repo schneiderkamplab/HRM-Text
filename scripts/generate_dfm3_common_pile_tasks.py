@@ -47,6 +47,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--span-rows-per-file", type=int, default=40_000)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--limit-files", type=int, default=None)
+    parser.add_argument("--historical-full-reconstruction", action="store_true",
+                        help="Replay original DFM3 without later target shortening")
     return parser.parse_args()
 
 
@@ -163,7 +165,8 @@ def mask_spans(text: str, rng: random.Random, target_rate: float = 0.15) -> str:
     return re.sub(r"[ \t]{2,}", " ", "".join(parts)).strip()
 
 
-def make_rows(text: str, seed: int, rel: str, row_idx: int, chunk_idx: int) -> Iterable[tuple[str, dict[str, str]]]:
+def make_rows(text: str, seed: int, rel: str, row_idx: int, chunk_idx: int,
+              historical_full_reconstruction: bool = False) -> Iterable[tuple[str, dict[str, str]]]:
     yield (
         "dfm3_common_pile_direct_continuation",
         {
@@ -191,7 +194,8 @@ def make_rows(text: str, seed: int, rel: str, row_idx: int, chunk_idx: int) -> I
         )
 
     reconstruction_limit = max_reconstruction_chars(3_000)
-    reconstruction_text = text[:reconstruction_limit].strip() if len(text) > reconstruction_limit else text
+    reconstruction_text = (text if historical_full_reconstruction else
+                           text[:reconstruction_limit].strip() if len(text) > reconstruction_limit else text)
 
     denoise_rng = random.Random(stable_seed(seed, rel, row_idx, chunk_idx, "denoise"))
     corrupted = corrupt_text(reconstruction_text, denoise_rng)
@@ -265,11 +269,16 @@ def convert_file(
     seed: int,
     force: bool,
     caps: dict[str, int],
+    historical_full_reconstruction: bool = False,
 ) -> dict[str, int]:
     rel = path.relative_to(input_root)
     meta_path = output_root / "_meta" / rel.with_suffix(rel.suffix + ".json")
     if meta_path.exists() and not force:
-        return json.loads(meta_path.read_text())["counts"]
+        cached = json.loads(meta_path.read_text())
+        if (cached.get("historical_full_reconstruction", False) != historical_full_reconstruction
+                or cached.get("max_chars", max_chars) != max_chars):
+            raise ValueError(f"Generation settings changed; pass --force: {meta_path}")
+        return cached["counts"]
 
     def caps_filled() -> bool:
         return all(counts.get(category, 0) >= cap for category, cap in caps.items())
@@ -287,7 +296,8 @@ def convert_file(
                 if not text:
                     continue
                 for chunk_idx, chunk in enumerate(split_text(text, max_chars)):
-                    for category, row in make_rows(chunk, seed, rel.as_posix(), row_base + row_offset, chunk_idx):
+                    for category, row in make_rows(chunk, seed, rel.as_posix(), row_base + row_offset,
+                                                   chunk_idx, historical_full_reconstruction):
                         if counts.get(category, 0) >= caps[category]:
                             continue
                         writers.write(category, row)
@@ -301,7 +311,10 @@ def convert_file(
         writers.close()
 
     meta_path.parent.mkdir(parents=True, exist_ok=True)
-    meta_path.write_text(json.dumps({"source": rel.as_posix(), "counts": counts}, indent=2, sort_keys=True))
+    meta_path.write_text(json.dumps({
+        "source": rel.as_posix(), "counts": counts, "max_chars": max_chars, "seed": seed,
+        "historical_full_reconstruction": historical_full_reconstruction,
+    }, indent=2, sort_keys=True))
     return counts
 
 
@@ -340,6 +353,7 @@ def main() -> None:
             args.seed,
             args.force,
             caps,
+            args.historical_full_reconstruction,
         )
         for category, count in counts.items():
             totals[category] = totals.get(category, 0) + count

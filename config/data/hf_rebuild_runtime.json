@@ -1,0 +1,4 @@
+{
+  "tokenizer_driver": "scripts/tokenize_hrm_hf.py",
+  "tokenizer_workers": 64
+}

@@ -15,7 +15,7 @@ def main():
     for entry in manifest['languages'].values():
         for pin in [entry['selected'], *entry['input_pins']]:
             old = pin['path']
-            candidates = [Path(old), Path(old.replace('/work/mimir/HRM-Text', str(root), 1))]
+            candidates = [Path(old), Path(old.replace('/work/dfm/HRM-Text', str(root), 1))]
             if '/source/work/' in old:
                 candidates.append(Path('/work/'+old.split('/source/work/', 1)[1]))
             matched = [p for p in candidates if p.is_file()
@@ -33,8 +33,8 @@ def main():
         if isinstance(value, list):
             return [localize(v) for v in value]
         if isinstance(value, str):
-            return value.replace('/work/mimir/HRM-Text/config/dfm14_dala_heldout.json', str(target)).replace(
-                '/work/mimir/HRM-Text/evaluation/', str(root/'evaluation')+'/')
+            return value.replace('/work/dfm/HRM-Text/config/dfm14_dala_heldout.json', str(target)).replace(
+                '/work/dfm/HRM-Text/evaluation/', str(root/'evaluation')+'/')
         return value
     (output/'tasks.yaml').write_text(yaml.safe_dump(localize(config), sort_keys=False))
     print(output/'tasks.yaml')

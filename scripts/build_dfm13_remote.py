@@ -16,7 +16,7 @@ import numpy as np
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-REMOTE = '/work/mimir/HRM-Text'
+REMOTE = '/work/dfm/HRM-Text'
 HOST = 'ucloud@ssh.cloud.sdu.dk'
 BUILD = ROOT / 'data/dfm13_build'
 SNAPSHOT = BUILD / 'remote'

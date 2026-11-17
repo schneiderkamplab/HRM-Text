@@ -27,12 +27,12 @@
   "samples_per_task": 2000,
   "selection": "seed4242 hash-ranked eligible pair IDs; both controls retained",
   "source_registry": {
-    "path": "/work/mimir/HRM-Text/dfm12/european_synthetic_extension.yaml",
+    "path": "/work/dfm/HRM-Text/dfm12/european_synthetic_extension.yaml",
     "sha256": "5bf01d98f0dd3b2f0d1b778c11c848acc374d7df9c3403bc7337e5c9bc693a3a",
     "bytes": 1021
   },
   "native_prompt_pin": {
-    "path": "/work/mimir/HRM-Text/config/dfm_dala_native_prompts_20260930.json",
+    "path": "/work/dfm/HRM-Text/config/dfm_dala_native_prompts_20260930.json",
     "sha256": "a1fe380d87436d74c788fbc74f485828609169f290560bb2f9b3277aef9c0f6b",
     "bytes": 4918
   },
@@ -42,7 +42,7 @@
       "language": "nb",
       "source_language": "nb",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nb",
+      "source_root": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nb",
       "repo_id": null,
       "revision": null,
       "upstream_revisions": [
@@ -52,17 +52,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nb/manifest.json",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nb/manifest.json",
         "sha256": "7611df52b077f1d01c4815c65addec820b829354d790b35bf3ae216792e1a722",
         "bytes": 55929
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nb/test/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nb/test/pairs.jsonl",
         "sha256": "e11f85527ef47f6b95c99f23d4ca60d055eee8db0efef5bd1baf216c8bc8739b",
         "bytes": 138216557
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nb/train/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nb/train/pairs.jsonl",
         "sha256": "947d6530eb8cf0eb31e0d3a786b5ef7114e5d011771dc7d766fdf7889a9cbbb1",
         "bytes": 1106983205
       },
@@ -1097,7 +1097,7 @@
       "language": "nn",
       "source_language": "nn",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nn",
+      "source_root": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nn",
       "repo_id": null,
       "revision": null,
       "upstream_revisions": [
@@ -1107,17 +1107,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nn/manifest.json",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nn/manifest.json",
         "sha256": "f2ae60957b5c50d7f99f3346af1782daea19bb6f351f8aa46cee9b234e9a8b2f",
         "bytes": 786229
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nn/test/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nn/test/pairs.jsonl",
         "sha256": "8705ef53bc8e57a3b4701dad8a9244ae7efa27c8d543117cb3b5e14c6c2059c0",
         "bytes": 134721389
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/nn/train/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/nn/train/pairs.jsonl",
         "sha256": "54cf931d8dc945d43e2e3a0fcbaa72960d76fe13949cf9583985b739a7df07bc",
         "bytes": 1074023645
       },
@@ -2152,7 +2152,7 @@
       "language": "sv",
       "source_language": "sv",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/sv",
+      "source_root": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/sv",
       "repo_id": null,
       "revision": null,
       "upstream_revisions": [
@@ -2162,17 +2162,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/sv/manifest.json",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/sv/manifest.json",
         "sha256": "4fda91c9da368795975faad4d8d06120e4477516d29c169e74054637b7378aed",
         "bytes": 152524
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/sv/test/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/sv/test/pairs.jsonl",
         "sha256": "88271af53872de3bf2b4682612b1402d2d8dffd1190d706001da3f6f105ac95a",
         "bytes": 96488504
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/sv/train/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/sv/train/pairs.jsonl",
         "sha256": "22f0480b68b65519219c597d66ba95361e13ad15dacb37bad9226b7f675cde60",
         "bytes": 773073653
       },
@@ -3207,7 +3207,7 @@
       "language": "is",
       "source_language": "is",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/is",
+      "source_root": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/is",
       "repo_id": null,
       "revision": null,
       "upstream_revisions": [
@@ -3217,17 +3217,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/is/manifest.json",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/is/manifest.json",
         "sha256": "d0d7ea1144c4a31232c85b110b0ca8ae6ce706d3702278836c7978e45fbe04b0",
         "bytes": 455874
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/is/test/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/is/test/pairs.jsonl",
         "sha256": "c680aaf0edffeca31dc2cd522d6d5452ed2d89493b02e25a61c25b0321d8f7c1",
         "bytes": 136119080
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/is/train/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/is/train/pairs.jsonl",
         "sha256": "513c060e35ba752bfb7028328d4283130806d88480761f29d4797f558fa71296",
         "bytes": 1090300271
       },
@@ -4262,7 +4262,7 @@
       "language": "fo",
       "source_language": "fo",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/fo",
+      "source_root": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/fo",
       "repo_id": null,
       "revision": null,
       "upstream_revisions": [
@@ -4272,17 +4272,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/fo/manifest.json",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/fo/manifest.json",
         "sha256": "dc045ea6fa9ff85ecedc6a1224d42d1c7ea5cddb771d3a7302486921c06506c2",
         "bytes": 88472
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/fo/test/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/fo/test/pairs.jsonl",
         "sha256": "3dbf871fbe698f322d0001c99a37810b8188169e68a0879196b79d06215e1f46",
         "bytes": 23688579
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/fo/train/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/fo/train/pairs.jsonl",
         "sha256": "47faa51ef1bb32d8930677a4f3a73d2fc770ddcce174d9ec7e3f737b12f15145",
         "bytes": 194241750
       },
@@ -5317,7 +5317,7 @@
       "language": "nl",
       "source_language": "nl",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/dala-dutch-dynaword",
+      "source_root": "/work/dfm/DaLA/export-upload/dala-dutch-dynaword",
       "repo_id": "schneiderkamplab/dala-dutch-dynaword",
       "revision": "a09dffe55c9db956f3ae39ed1916cb2d5dfaff73",
       "upstream_revisions": [
@@ -5327,17 +5327,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/dala-dutch-dynaword/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/dala-dutch-dynaword/metadata/manifest.json",
         "sha256": "45ec3f00dd3202db5e8c7c8dc81001d69d4f0dda134f1f14fe8ae6b4b7945c1a",
         "bytes": 14145
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/dala-dutch-dynaword/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/dala-dutch-dynaword/provenance/test.pairs.jsonl.gz",
         "sha256": "696b0f6ebd0dd0f69680cbea5160ee6ebf040d3cd3dc7dece4e123f384323c0d",
         "bytes": 17798119
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/dala-dutch-dynaword/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/dala-dutch-dynaword/provenance/train.pairs.jsonl.gz",
         "sha256": "a23293030291d397135a091f0117b774ed27a1d66e6b9f98eabdd051856d1096",
         "bytes": 142786307
       },
@@ -6372,7 +6372,7 @@
       "language": "pl",
       "source_language": "pl",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/pl",
+      "source_root": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/pl",
       "repo_id": null,
       "revision": null,
       "upstream_revisions": [
@@ -6382,17 +6382,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/pl/manifest.json",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/pl/manifest.json",
         "sha256": "5d9d6ec6aad8ab915784a85c6bcf2c8f0be94ad8640949090ad62ac3c8a47787",
         "bytes": 227435
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/pl/test/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/pl/test/pairs.jsonl",
         "sha256": "45c626eeed324ca5fe21e1e2ebc3fa841460c3c3178b759528f5303921f46d69",
         "bytes": 93841805
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/la_output/six_language_candidates_recovery_v1/pl/train/pairs.jsonl",
+        "path": "/work/dfm/DaLA/la_output/six_language_candidates_recovery_v1/pl/train/pairs.jsonl",
         "sha256": "5d46421ab4a58c27c350e24893ed52ace6bbc2a8d0ea8b15490db1d091f9f5aa",
         "bytes": 753066537
       },
@@ -7427,7 +7427,7 @@
       "language": "de",
       "source_language": "de",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-de-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-de-audited",
       "repo_id": "schneiderkamplab/dala-de-audited",
       "revision": "450562298520f06d4a09c54124362553346c9f32",
       "upstream_revisions": [
@@ -7437,17 +7437,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-de-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-de-audited/metadata/manifest.json",
         "sha256": "38440a4969ca039a29de258d2b3de4d2421f9b80d423b48bd43fd25a651d68e8",
         "bytes": 12076
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-de-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-de-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "d99e7dcd7974ba677a92b234053e0cbce9b48c68ad2193c5408c04cc8d0e810f",
         "bytes": 13960851
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-de-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-de-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "4319302aa39f54020e0ab981624b7ee726c1e597df9609fab2a3ab4c57719107",
         "bytes": 112307841
       },
@@ -8482,7 +8482,7 @@
       "language": "fr",
       "source_language": "fr",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fr-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fr-audited",
       "repo_id": "schneiderkamplab/dala-fr-audited",
       "revision": "5fb5fd70c21dd24dd9c0fb944d54357e4d4e7f92",
       "upstream_revisions": [
@@ -8492,17 +8492,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fr-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fr-audited/metadata/manifest.json",
         "sha256": "a2b13b6c01d53c775d1269278a2dea0357b7b4a7f0996a9d2d941941d92bc235",
         "bytes": 13002
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fr-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fr-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "7b5c10f7f9450b969c59765131a6bc64d974998af5fd5fafea98b13b7462f870",
         "bytes": 14658065
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fr-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fr-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "4c45052fe3d56939cf3e30ae0560a6efd7bb916b16025c8bf5c62b9de56cabc4",
         "bytes": 117697110
       },
@@ -9537,7 +9537,7 @@
       "language": "es",
       "source_language": "es",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-es-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-es-audited",
       "repo_id": "schneiderkamplab/dala-es-audited",
       "revision": "7cc69ca9b189dfc67a1eeadb832e061233c29f2d",
       "upstream_revisions": [
@@ -9547,17 +9547,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-es-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-es-audited/metadata/manifest.json",
         "sha256": "a7f3650193f22dfaa904e09b1f4c9a075d9a57b76f2e78406b9c27894ea9c352",
         "bytes": 13003
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-es-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-es-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "eee45438f654ae08ddb34102c56b935c4b35adea1b6bb013127d8162c13ba139",
         "bytes": 14301007
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-es-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-es-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "9f40f76b0f6d944c97e18ff47d5622e89abf3796d762c71209e2c39f414c2003",
         "bytes": 114694634
       },
@@ -10592,7 +10592,7 @@
       "language": "it",
       "source_language": "it",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-it-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-it-audited",
       "repo_id": "schneiderkamplab/dala-it-audited",
       "revision": "5b266211615910b361386ee0d4d9dceaea708838",
       "upstream_revisions": [
@@ -10602,17 +10602,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-it-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-it-audited/metadata/manifest.json",
         "sha256": "3b2c44c7efea00b0eb290ef4c3960a2df4b332f233e040161e7acd1ab67fecc1",
         "bytes": 11990
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-it-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-it-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "94f4995d31d50d62bc7aa930db6bec60bdf018dd4714e292c8e090ae33499915",
         "bytes": 14118134
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-it-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-it-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "259486764cfc13e417e36c053bdf5ecc79fc95c48427e8241960be66ab7c74da",
         "bytes": 112835496
       },
@@ -11647,7 +11647,7 @@
       "language": "cs",
       "source_language": "cs",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-cs-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-cs-audited",
       "repo_id": "schneiderkamplab/dala-cs-audited",
       "revision": "3d56d7caac362abc37bc0d047ae89e73c438ea75",
       "upstream_revisions": [
@@ -11657,17 +11657,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-cs-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-cs-audited/metadata/manifest.json",
         "sha256": "e79d54dcbb5d3ebf57fff2b31b23cf1264ebbaa21ec0e63fec98f8c730971c66",
         "bytes": 12041
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-cs-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-cs-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "0bc86490c759e31670b88abeb5dda57ae8387387270ffa72eb637ca54cf700dc",
         "bytes": 13653356
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-cs-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-cs-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "46bfb72ca90426393a32989fd81acc3d51fb51c4304309025edbb2dd67704aa1",
         "bytes": 108984924
       },
@@ -12702,7 +12702,7 @@
       "language": "pt_pt",
       "source_language": "pt-PT",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited",
       "repo_id": "schneiderkamplab/dala-pt-pt-audited",
       "revision": "7da307b3ab0cdf585a6fc85662686307afbdc96d",
       "upstream_revisions": [
@@ -12712,17 +12712,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited/metadata/manifest.json",
         "sha256": "8b359a31708218a50b2dc89d7cbd7de808ebe8a7877b528099fc4f2cfa387074",
         "bytes": 11979
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "bacd89fd231800268a741373c4120773eb784837bc80939ce2581b914c220bf2",
         "bytes": 11788983
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-pt-pt-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "37f34d9a81c29dd50c6f0549d2e44d10907fc07ccac19ad2085d47ac23416c00",
         "bytes": 116925317
       },
@@ -13757,7 +13757,7 @@
       "language": "fi",
       "source_language": "fi",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fi-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fi-audited",
       "repo_id": "schneiderkamplab/dala-fi-audited",
       "revision": "ace6308fd52e0ab84b43f5ff841b277f5b25f59d",
       "upstream_revisions": [
@@ -13767,17 +13767,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fi-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fi-audited/metadata/manifest.json",
         "sha256": "738409268067bae7cd8313eba7ffa6c20e7ebcc2218078dd59681b2edf4832ce",
         "bytes": 11916
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fi-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fi-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "dfcd86c8e8874edc2152a054323cfb2dbd6ca0f953659121c9ffa2448a4d0fe7",
         "bytes": 13113335
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-fi-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-fi-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "ed1e236c93dc07051bd52ac8be9c306b1ccaebb13ec00569ddbb4e7470259f0b",
         "bytes": 105345177
       },
@@ -14812,7 +14812,7 @@
       "language": "et",
       "source_language": "et",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-et-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-et-audited",
       "repo_id": "schneiderkamplab/dala-et-audited",
       "revision": "dfd36ae3a919526f6bf9f8ceaa7fd5db748faa0d",
       "upstream_revisions": [
@@ -14822,17 +14822,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-et-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-et-audited/metadata/manifest.json",
         "sha256": "58490aebbebe9c21f599cfaa38d4262ed1e42aa933aafc0ee68ab5962045ceae",
         "bytes": 10891
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-et-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-et-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "d3fa9b87c6ce8762717c9a7a66b79b3fa85d2e496299efe090af8b6a4cb13dfe",
         "bytes": 10879333
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-et-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-et-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "b9cda0533b2236456ae42ace835a690f70680533471a6ee911dfcc1c3102c3be",
         "bytes": 86661775
       },
@@ -15867,7 +15867,7 @@
       "language": "ca",
       "source_language": "ca",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ca-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ca-audited",
       "repo_id": "schneiderkamplab/dala-ca-audited",
       "revision": "03131da8041135eaa1c0b9b2f82bcfcc69236cb0",
       "upstream_revisions": [
@@ -15877,17 +15877,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ca-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ca-audited/metadata/manifest.json",
         "sha256": "0bc24db068d39903a84b0c1f71e795919dc19055e7acfa7b81c12882be10f66f",
         "bytes": 10965
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ca-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ca-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "5588b4b89c6f7d8b71b6b56e6b51b72866f13df5f8fab63462229c097f91e5ed",
         "bytes": 11859063
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ca-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ca-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "60251c46c1ef079888c08c4116e08d7433fdd2cc1c07634e007380327572ed69",
         "bytes": 95252070
       },
@@ -16922,7 +16922,7 @@
       "language": "el",
       "source_language": "el",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-el-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-el-audited",
       "repo_id": "schneiderkamplab/dala-el-audited",
       "revision": "44bc1d3818bfd0a552697f868f1a423e584be665",
       "upstream_revisions": [
@@ -16932,17 +16932,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-el-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-el-audited/metadata/manifest.json",
         "sha256": "6988426e0e411ce6fbe543a53402192e0ef85a6f92f288c9e356919b1350c5fd",
         "bytes": 11976
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-el-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-el-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "6899d009c5ab5c2bcc6ca866610abcfed696fc6f5db7272fea3da4fc1677a166",
         "bytes": 14375104
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-el-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-el-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "dd2987bd62d11fbe86318c8f4ccf607782199650e69839c2f46d5e2790da6a88",
         "bytes": 115680731
       },
@@ -17977,7 +17977,7 @@
       "language": "ro",
       "source_language": "ro",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ro-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ro-audited",
       "repo_id": "schneiderkamplab/dala-ro-audited",
       "revision": "0926b8044edc31e64714ab3fbaba1d45badc823a",
       "upstream_revisions": [
@@ -17987,17 +17987,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ro-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ro-audited/metadata/manifest.json",
         "sha256": "2e2b246083093c6620a9aa64ee476bdae369867e14094762624cfc5f494b9f81",
         "bytes": 9924
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ro-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ro-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "0489683609cef1a2fab6a2bcd0eb2976f92754740c3e0092143be5926c64727c",
         "bytes": 9707917
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-ro-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-ro-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "15bc050f0981c6e6775fd93511fdc9d99675c9ae6c7c3801b4e3d594f7d3f3e2",
         "bytes": 79896950
       },
@@ -19032,7 +19032,7 @@
       "language": "uk",
       "source_language": "uk",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-uk-audited",
+      "source_root": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-uk-audited",
       "repo_id": "schneiderkamplab/dala-uk-audited",
       "revision": "5fb50f3f91e21a0f1d87cdf40c533e66ff1f3f51",
       "upstream_revisions": [
@@ -19042,17 +19042,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-uk-audited/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-uk-audited/metadata/manifest.json",
         "sha256": "12378569e25735eb0894677e8a57768a3b07fcc7259aa824b5ae9dab820ab287",
         "bytes": 12013
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-uk-audited/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-uk-audited/provenance/test.pairs.jsonl.gz",
         "sha256": "c266645d2140fde861261ae1508ca87c9ea0283573ad9b5e311b094313aad5f4",
         "bytes": 16005634
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/european-audited-20260928/dala-uk-audited/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/european-audited-20260928/dala-uk-audited/provenance/train.pairs.jsonl.gz",
         "sha256": "44e048cbdf5f974ac6a48c3992afe9c5c0f992554010ac5d13d3dcf076401acd",
         "bytes": 128618563
       },
@@ -20087,7 +20087,7 @@
       "language": "en",
       "source_language": "en",
       "split": "test",
-      "source_root": "/work/mimir/DaLA/export-upload/dala-english-common-pile",
+      "source_root": "/work/dfm/DaLA/export-upload/dala-english-common-pile",
       "repo_id": "schneiderkamplab/dala-english-common-pile",
       "revision": "243eaa2b50d740611db42b6b17e67c6e2fd2cfbf",
       "upstream_revisions": [
@@ -20101,17 +20101,17 @@
         }
       ],
       "producer_manifest": {
-        "path": "/work/mimir/DaLA/export-upload/dala-english-common-pile/metadata/manifest.json",
+        "path": "/work/dfm/DaLA/export-upload/dala-english-common-pile/metadata/manifest.json",
         "sha256": "e6db639c0d317b988a0bae9ba4e283ca7c7a4395be12e1b463710df434b43704",
         "bytes": 14404
       },
       "test_file": {
-        "path": "/work/mimir/DaLA/export-upload/dala-english-common-pile/provenance/test.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/dala-english-common-pile/provenance/test.pairs.jsonl.gz",
         "sha256": "4c7e9c86a03ae5b435c99f49a3c63b8bb479351d4b1bae8b8ce649a9ed39ef7d",
         "bytes": 25661236
       },
       "train_file": {
-        "path": "/work/mimir/DaLA/export-upload/dala-english-common-pile/provenance/train.pairs.jsonl.gz",
+        "path": "/work/dfm/DaLA/export-upload/dala-english-common-pile/provenance/train.pairs.jsonl.gz",
         "sha256": "04037a96bbd6740db52377b21a7d3476ee1dad92c23faf878a07ff2eb484f5f1",
         "bytes": 137331767
       },

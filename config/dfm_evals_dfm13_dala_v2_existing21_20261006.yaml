@@ -2,12 +2,12 @@ sets:
   dala_v2_da:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=da
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -18,12 +18,12 @@ sets:
   gec_dala_v2_da:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=da
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -34,12 +34,12 @@ sets:
   dala_v2_en:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=en
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -50,12 +50,12 @@ sets:
   gec_dala_v2_en:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=en
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -66,12 +66,12 @@ sets:
   dala_v2_nb:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=nb
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -82,12 +82,12 @@ sets:
   gec_dala_v2_nb:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=nb
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -98,12 +98,12 @@ sets:
   dala_v2_nn:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=nn
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -114,12 +114,12 @@ sets:
   gec_dala_v2_nn:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=nn
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -130,12 +130,12 @@ sets:
   dala_v2_sv:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=sv
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -146,12 +146,12 @@ sets:
   gec_dala_v2_sv:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=sv
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -162,12 +162,12 @@ sets:
   dala_v2_is:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=is
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -178,12 +178,12 @@ sets:
   gec_dala_v2_is:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=is
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -194,12 +194,12 @@ sets:
   dala_v2_fo:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=fo
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -210,12 +210,12 @@ sets:
   gec_dala_v2_fo:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=fo
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -226,12 +226,12 @@ sets:
   dala_v2_nl:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=nl
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -242,12 +242,12 @@ sets:
   gec_dala_v2_nl:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=nl
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -258,12 +258,12 @@ sets:
   dala_v2_pl:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=pl
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -274,12 +274,12 @@ sets:
   gec_dala_v2_pl:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=pl
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -290,12 +290,12 @@ sets:
   dala_v2_de:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=de
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -306,12 +306,12 @@ sets:
   gec_dala_v2_de:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=de
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -322,12 +322,12 @@ sets:
   dala_v2_fr:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=fr
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -338,12 +338,12 @@ sets:
   gec_dala_v2_fr:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=fr
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -354,12 +354,12 @@ sets:
   dala_v2_es:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=es
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -370,12 +370,12 @@ sets:
   gec_dala_v2_es:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=es
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -386,12 +386,12 @@ sets:
   dala_v2_it:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=it
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -402,12 +402,12 @@ sets:
   gec_dala_v2_it:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=it
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -418,12 +418,12 @@ sets:
   dala_v2_cs:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=cs
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -434,12 +434,12 @@ sets:
   gec_dala_v2_cs:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=cs
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -450,12 +450,12 @@ sets:
   dala_v2_pt_pt:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=pt_pt
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -466,12 +466,12 @@ sets:
   gec_dala_v2_pt_pt:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=pt_pt
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -482,12 +482,12 @@ sets:
   dala_v2_fi:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=fi
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -498,12 +498,12 @@ sets:
   gec_dala_v2_fi:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=fi
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -514,12 +514,12 @@ sets:
   dala_v2_et:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=et
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -530,12 +530,12 @@ sets:
   gec_dala_v2_et:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=et
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -546,12 +546,12 @@ sets:
   dala_v2_ca:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=ca
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -562,12 +562,12 @@ sets:
   gec_dala_v2_ca:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=ca
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -578,12 +578,12 @@ sets:
   dala_v2_el:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=el
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -594,12 +594,12 @@ sets:
   gec_dala_v2_el:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=el
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -610,12 +610,12 @@ sets:
   dala_v2_ro:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=ro
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -626,12 +626,12 @@ sets:
   gec_dala_v2_ro:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=ro
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:
@@ -642,12 +642,12 @@ sets:
   dala_v2_uk:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@dala_v2_heldout
       args:
       - -T
       - language=uk
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=32
     args:
@@ -658,12 +658,12 @@ sets:
   gec_dala_v2_uk:
     description: Additional accepted-v2 test representative; historical task unchanged
     tasks:
-    - name: /work/mimir/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
+    - name: /work/dfm/HRM-Text/dfm-evals/dfm_evals/tasks/dala_v2_heldout.py@gec_dala_v2_heldout
       args:
       - -T
       - language=uk
       - -T
-      - manifest=/work/mimir/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
+      - manifest=/work/dfm/HRM-Text/config/dfm13_dala_v2_existing21_20261006.json
       - -T
       - max_gen_toks=512
     args:

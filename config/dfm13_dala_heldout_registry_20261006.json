@@ -2,7 +2,7 @@
   {
     "name": "dala_lt",
     "suite": "dala_lt",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "lt",
     "max_tokens": 32,
     "shards": 4,
@@ -11,7 +11,7 @@
   {
     "name": "gec_dala_lt",
     "suite": "gec_dala_lt",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "lt",
     "max_tokens": 512,
     "shards": 4,
@@ -20,7 +20,7 @@
   {
     "name": "dala_lv",
     "suite": "dala_lv",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "lv",
     "max_tokens": 32,
     "shards": 4,
@@ -29,7 +29,7 @@
   {
     "name": "gec_dala_lv",
     "suite": "gec_dala_lv",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "lv",
     "max_tokens": 512,
     "shards": 4,
@@ -38,7 +38,7 @@
   {
     "name": "dala_sq",
     "suite": "dala_sq",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sq",
     "max_tokens": 32,
     "shards": 4,
@@ -47,7 +47,7 @@
   {
     "name": "gec_dala_sq",
     "suite": "gec_dala_sq",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sq",
     "max_tokens": 512,
     "shards": 4,
@@ -56,7 +56,7 @@
   {
     "name": "dala_be",
     "suite": "dala_be",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "be",
     "max_tokens": 32,
     "shards": 4,
@@ -65,7 +65,7 @@
   {
     "name": "gec_dala_be",
     "suite": "gec_dala_be",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "be",
     "max_tokens": 512,
     "shards": 4,
@@ -74,7 +74,7 @@
   {
     "name": "dala_bs",
     "suite": "dala_bs",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "bs",
     "max_tokens": 32,
     "shards": 4,
@@ -83,7 +83,7 @@
   {
     "name": "gec_dala_bs",
     "suite": "gec_dala_bs",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "bs",
     "max_tokens": 512,
     "shards": 4,
@@ -92,7 +92,7 @@
   {
     "name": "dala_bg",
     "suite": "dala_bg",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "bg",
     "max_tokens": 32,
     "shards": 4,
@@ -101,7 +101,7 @@
   {
     "name": "gec_dala_bg",
     "suite": "gec_dala_bg",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "bg",
     "max_tokens": 512,
     "shards": 4,
@@ -110,7 +110,7 @@
   {
     "name": "dala_hr",
     "suite": "dala_hr",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "hr",
     "max_tokens": 32,
     "shards": 4,
@@ -119,7 +119,7 @@
   {
     "name": "gec_dala_hr",
     "suite": "gec_dala_hr",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "hr",
     "max_tokens": 512,
     "shards": 4,
@@ -128,7 +128,7 @@
   {
     "name": "dala_hu",
     "suite": "dala_hu",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "hu",
     "max_tokens": 32,
     "shards": 4,
@@ -137,7 +137,7 @@
   {
     "name": "gec_dala_hu",
     "suite": "gec_dala_hu",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "hu",
     "max_tokens": 512,
     "shards": 4,
@@ -146,7 +146,7 @@
   {
     "name": "dala_lb",
     "suite": "dala_lb",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "lb",
     "max_tokens": 32,
     "shards": 4,
@@ -155,7 +155,7 @@
   {
     "name": "gec_dala_lb",
     "suite": "gec_dala_lb",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "lb",
     "max_tokens": 512,
     "shards": 4,
@@ -164,7 +164,7 @@
   {
     "name": "dala_sr",
     "suite": "dala_sr",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sr",
     "max_tokens": 32,
     "shards": 4,
@@ -173,7 +173,7 @@
   {
     "name": "gec_dala_sr",
     "suite": "gec_dala_sr",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sr",
     "max_tokens": 512,
     "shards": 4,
@@ -182,7 +182,7 @@
   {
     "name": "dala_sk",
     "suite": "dala_sk",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sk",
     "max_tokens": 32,
     "shards": 4,
@@ -191,7 +191,7 @@
   {
     "name": "gec_dala_sk",
     "suite": "gec_dala_sk",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sk",
     "max_tokens": 512,
     "shards": 4,
@@ -200,7 +200,7 @@
   {
     "name": "dala_sl",
     "suite": "dala_sl",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sl",
     "max_tokens": 32,
     "shards": 4,
@@ -209,7 +209,7 @@
   {
     "name": "gec_dala_sl",
     "suite": "gec_dala_sl",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "sl",
     "max_tokens": 512,
     "shards": 4,
@@ -218,7 +218,7 @@
   {
     "name": "dala_fa",
     "suite": "dala_fa",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "fa",
     "max_tokens": 32,
     "shards": 4,
@@ -227,7 +227,7 @@
   {
     "name": "gec_dala_fa",
     "suite": "gec_dala_fa",
-    "config": "/work/mimir/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
+    "config": "/work/dfm/HRM-Text/config/dfm_evals_dfm13_multilingual_20261006.yaml",
     "language": "fa",
     "max_tokens": 512,
     "shards": 4,

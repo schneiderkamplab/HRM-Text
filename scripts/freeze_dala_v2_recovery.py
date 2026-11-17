@@ -20,7 +20,7 @@ def main():
     baseline = json.loads(old.read_text())
     recovery = []
     for lang, expected in [('nl', (137888, 114360)), ('fa', (58971, 48258))]:
-        root = Path('/work/mimir/DaLA/la_output/v2/grammar-recovery-production-v3')/lang/'output'
+        root = Path('/work/dfm/DaLA/la_output/v2/grammar-recovery-production-v3')/lang/'output'
         status_pin, breadth_pin = pin(root/'status.json'), pin(root/'exported-breadth.json')
         status = json.loads((root/'status.json').read_text())
         breadth = json.loads((root/'exported-breadth.json').read_text())

@@ -1,0 +1,3621 @@
+{
+  "version": 11,
+  "recipe": "dfm11-hf-v1",
+  "epochs": 10,
+  "seed": 0,
+  "concat_workers": 4,
+  "adapter_revision": "f9b588f",
+  "driver_revision": "4022697",
+  "builder_revision": "bc1e181",
+  "template_revision": "e9584e0",
+  "data_io_revision": "cfe0d19",
+  "tokenizer_repo": "google/gemma-4-31B-it",
+  "tokenizer_revision": "3548789868c5356dbf307c98e6f609007b82b3eb",
+  "tokenizer_post_processor": {
+    "type": "TemplateProcessing",
+    "single": [
+      {
+        "SpecialToken": {
+          "id": "<bos>",
+          "type_id": 0
+        }
+      },
+      {
+        "Sequence": {
+          "id": "A",
+          "type_id": 0
+        }
+      }
+    ],
+    "pair": [
+      {
+        "SpecialToken": {
+          "id": "<bos>",
+          "type_id": 0
+        }
+      },
+      {
+        "Sequence": {
+          "id": "A",
+          "type_id": 0
+        }
+      },
+      {
+        "SpecialToken": {
+          "id": "<bos>",
+          "type_id": 1
+        }
+      },
+      {
+        "Sequence": {
+          "id": "B",
+          "type_id": 1
+        }
+      }
+    ],
+    "special_tokens": {
+      "<bos>": {
+        "id": "<bos>",
+        "ids": [
+          2
+        ],
+        "tokens": [
+          "<bos>"
+        ]
+      }
+    }
+  },
+  "tokenizer_semantic_sha256": "aef4928a8b56cfc053c71168bd859cbdb63b0bf3c6fec01d0de9b1bc7934653c",
+  "tokenizer_info": {
+    "chat_template_path": "data_io/chat_templates/gemma4_native_chat.jinja",
+    "enable_thinking": false,
+    "template_mode": "jinja_chat_template",
+    "tokenizer_path": "/work/dfm/brainsurgery/models/gemma4_31b/tokenizer.json",
+    "vocab_size": 262144
+  },
+  "prefix_config_sha256": "4b5820c52addd7be06c508ed970771b431734d48f8eeb313d9c3b5c273d6108b",
+  "config_group_sha256": {
+    "tool_replacements": "17b6bf40ebae1f04e9210d6b779d875ae5c8f7bc9f787ec2e14192d310a58970",
+    "mathagentic": "e87bf2bc11b8ee8f25a766868bac3b3c85d8e186d352a3483438f18cf9815e44",
+    "koolbardi": "ce7eb9350d9dbe5055a14c26cfd04445e4f2893325b795c0d2ec0114a9a55cc0",
+    "fineinstructions_english": "a3a9847c3763e03271eeb112311dcfdcaa4ebff9846f8a9b9a0f4dcce0700159",
+    "fineinstructions_danish": "c25c9ac86fa790471922b9f3f315cd68140255fe46801ae5244c337dc7de9ef3"
+  },
+  "base_union": "data/rebuild_hf_dfm/serial-queue/dfm10-hf-v2/union",
+  "tasks": [
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00000.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00001.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00002.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00002.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00003.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00003.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00003.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00004.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00004.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00004.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00005.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00005.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00005.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00006.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00006.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00006.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00007.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00007.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00007.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00008.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00008.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00008.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00009.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00009.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00009.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-da__data__train-00010.jsonl.gz",
+      "family": "dfm11-fineinstructions-da",
+      "rel": "data/train-00010.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-da__data__train-00010.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00000.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00001.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00002.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00002.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00003.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00003.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00003.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00004.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00004.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00004.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00005.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00005.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00005.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-controlled__data__train-00006.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-controlled",
+      "rel": "data/train-00006.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-controlled__data__train-00006.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-legacy-balanced__data__train-00000.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-legacy-balanced",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-legacy-balanced__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-fineinstructions-en-legacy-balanced__data__train-00001.jsonl.gz",
+      "family": "dfm11-fineinstructions-en-legacy-balanced",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": null,
+      "reference": "data/tokenized_dfm11_additions/dfm11-fineinstructions-en-legacy-balanced__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00000.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00001.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00002.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00002.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00003.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00003.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00003.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00004.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00004.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00004.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00005.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00005.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00005.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00006.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00006.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00006.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00007.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00007.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00007.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00008.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00008.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00008.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00009.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00009.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00009.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00010.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00010.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00010.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00011.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00011.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00011.jsonl.gz"
+    },
+    {
+      "task": "dfm11-folketingets-dokumenter-error-correction__data__train-00012.jsonl.gz",
+      "family": "dfm11-folketingets-dokumenter-error-correction",
+      "rel": "data/train-00012.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction",
+      "reference": "data/tokenized_dfm11_additions/dfm11-folketingets-dokumenter-error-correction__data__train-00012.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00000.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00001.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00002.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00002.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00003.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00003.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00003.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00004.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00004.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00004.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00005.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00005.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00005.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00006.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00006.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00006.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00007.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00007.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00007.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00008.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00008.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00008.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00009.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00009.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00009.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00010.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00010.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00010.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00011.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00011.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00011.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00012.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00012.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00012.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00013.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00013.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00013.jsonl.gz"
+    },
+    {
+      "task": "dfm11-glaive-native-tool-use-repaired__data__train-00014.jsonl.gz",
+      "family": "dfm11-glaive-native-tool-use-repaired",
+      "rel": "data/train-00014.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-glaive-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-glaive-native-tool-use-repaired__data__train-00014.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00000-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00000-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00000-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00001-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00001-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00001-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00002-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00002-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00002-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00003-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00003-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00003-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00004-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00004-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00004-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00005-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00005-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00005-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00006-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00006-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00006-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00007-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00007-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00007-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00008-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00008-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00008-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00009-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00009-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00009-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00010-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00010-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00010-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00011-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00011-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00011-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00012-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00012-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00012-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00013-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00013-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00013-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00014-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00014-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00014-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00015-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00015-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00015-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00016-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00016-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00016-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00017-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00017-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00017-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00018-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00018-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00018-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00019-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00019-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00019-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00020-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00020-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00020-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00021-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00021-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00021-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00022-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00022-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00022-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00023-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00023-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00023-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00024-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00024-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00024-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00025-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00025-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00025-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00026-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00026-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00026-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00027-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00027-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00027-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00028-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00028-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00028-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00029-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00029-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00029-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00030-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00030-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00030-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-da__data__train-00031-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-da",
+      "rel": "data/train-00031-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-da",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-da__data__train-00031-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00000-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00000-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00000-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00001-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00001-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00001-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00002-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00002-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00002-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00003-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00003-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00003-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00004-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00004-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00004-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00005-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00005-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00005-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00006-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00006-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00006-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00007-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00007-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00007-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00008-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00008-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00008-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00009-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00009-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00009-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00010-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00010-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00010-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00011-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00011-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00011-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00012-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00012-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00012-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00013-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00013-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00013-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00014-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00014-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00014-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00015-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00015-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00015-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00016-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00016-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00016-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00017-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00017-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00017-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00018-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00018-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00018-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00019-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00019-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00019-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00020-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00020-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00020-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00021-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00021-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00021-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00022-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00022-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00022-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00023-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00023-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00023-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00024-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00024-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00024-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00025-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00025-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00025-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00026-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00026-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00026-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00027-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00027-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00027-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00028-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00028-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00028-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00029-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00029-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00029-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00030-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00030-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00030-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-koolbardi-en__data__train-00031-of-00032.jsonl.gz",
+      "family": "dfm11-koolbardi-en",
+      "rel": "data/train-00031-of-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-koolbardi-en",
+      "reference": "data/tokenized_dfm11_additions/dfm11-koolbardi-en__data__train-00031-of-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-mathagentic-gsm8k-prolog__data__train-00000.jsonl.gz",
+      "family": "dfm11-mathagentic-gsm8k-prolog",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-mathagentic-gsm8k-prolog",
+      "reference": "data/tokenized_dfm11_additions/dfm11-mathagentic-gsm8k-prolog__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-mathagentic-tinygsm-python__data__train-00000.jsonl.gz",
+      "family": "dfm11-mathagentic-tinygsm-python",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-mathagentic-tinygsm-python",
+      "reference": "data/tokenized_dfm11_additions/dfm11-mathagentic-tinygsm-python__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-mathagentic-tinygsm-python__data__train-00001.jsonl.gz",
+      "family": "dfm11-mathagentic-tinygsm-python",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-mathagentic-tinygsm-python",
+      "reference": "data/tokenized_dfm11_additions/dfm11-mathagentic-tinygsm-python__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-mathagentic-tinygsm-python__data__train-00002.jsonl.gz",
+      "family": "dfm11-mathagentic-tinygsm-python",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-mathagentic-tinygsm-python",
+      "reference": "data/tokenized_dfm11_additions/dfm11-mathagentic-tinygsm-python__data__train-00002.jsonl.gz"
+    },
+    {
+      "task": "dfm11-mathagentic-tinygsm-python__data__train-00003.jsonl.gz",
+      "family": "dfm11-mathagentic-tinygsm-python",
+      "rel": "data/train-00003.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-mathagentic-tinygsm-python",
+      "reference": "data/tokenized_dfm11_additions/dfm11-mathagentic-tinygsm-python__data__train-00003.jsonl.gz"
+    },
+    {
+      "task": "dfm11-nemotron-agentic-tool-calling-repaired__data__train-00000.jsonl.gz",
+      "family": "dfm11-nemotron-agentic-tool-calling-repaired",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-nemotron-agentic-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-nemotron-agentic-tool-calling-repaired__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-nemotron-agentic-tool-calling-repaired__data__train-00001.jsonl.gz",
+      "family": "dfm11-nemotron-agentic-tool-calling-repaired",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-nemotron-agentic-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-nemotron-agentic-tool-calling-repaired__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00000.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00001.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00002.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00002.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00003.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00003.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00003.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00004.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00004.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00004.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00005.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00005.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00005.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00006.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00006.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00006.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00007.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00007.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00007.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00008.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00008.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00008.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00009.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00009.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00009.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00010.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00010.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00010.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00011.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00011.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00011.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00012.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00012.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00012.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00013.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00013.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00013.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00014.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00014.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00014.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00015.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00015.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00015.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00016.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00016.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00016.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00017.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00017.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00017.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00018.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00018.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00018.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00019.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00019.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00019.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00020.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00020.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00020.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00021.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00021.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00021.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00022.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00022.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00022.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00023.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00023.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00023.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00024.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00024.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00024.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00025.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00025.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00025.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00026.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00026.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00026.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00027.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00027.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00027.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00028.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00028.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00028.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00029.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00029.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00029.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00030.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00030.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00030.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00031.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00031.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00031.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00032.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00032.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00032.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00033.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00033.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00033.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00034.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00034.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00034.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00035.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00035.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00035.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00036.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00036.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00036.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00037.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00037.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00037.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00038.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00038.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00038.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00039.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00039.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00039.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00040.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00040.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00040.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00041.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00041.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00041.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00042.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00042.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00042.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00043.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00043.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00043.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00044.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00044.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00044.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00045.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00045.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00045.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00046.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00046.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00046.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00047.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00047.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00047.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00048.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00048.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00048.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00049.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00049.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00049.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00050.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00050.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00050.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00051.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00051.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00051.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00052.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00052.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00052.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00053.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00053.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00053.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00054.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00054.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00054.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00055.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00055.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00055.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00056.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00056.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00056.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00057.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00057.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00057.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00058.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00058.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00058.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00059.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00059.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00059.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00060.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00060.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00060.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00061.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00061.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00061.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00062.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00062.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00062.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00063.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00063.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00063.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00064.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00064.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00064.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00065.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00065.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00065.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00066.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00066.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00066.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00067.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00067.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00067.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00068.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00068.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00068.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00069.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00069.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00069.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00070.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00070.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00070.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00071.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00071.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00071.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00072.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00072.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00072.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00073.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00073.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00073.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00074.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00074.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00074.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00075.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00075.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00075.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00076.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00076.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00076.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00077.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00077.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00077.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00078.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00078.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00078.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00079.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00079.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00079.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00080.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00080.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00080.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00081.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00081.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00081.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00082.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00082.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00082.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00083.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00083.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00083.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00084.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00084.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00084.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00085.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00085.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00085.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00086.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00086.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00086.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00087.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00087.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00087.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00088.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00088.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00088.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00089.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00089.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00089.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00090.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00090.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00090.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00091.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00091.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00091.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00092.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00092.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00092.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00093.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00093.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00093.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00094.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00094.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00094.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00095.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00095.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00095.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00096.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00096.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00096.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00097.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00097.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00097.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00098.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00098.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00098.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00099.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00099.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00099.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00100.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00100.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00100.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00101.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00101.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00101.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00102.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00102.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00102.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00103.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00103.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00103.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00104.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00104.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00104.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00105.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00105.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00105.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00106.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00106.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00106.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00107.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00107.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00107.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00108.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00108.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00108.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00109.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00109.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00109.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00110.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00110.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00110.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00111.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00111.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00111.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00112.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00112.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00112.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00113.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00113.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00113.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00114.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00114.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00114.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00115.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00115.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00115.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00116.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00116.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00116.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00117.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00117.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00117.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00118.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00118.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00118.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00119.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00119.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00119.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00120.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00120.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00120.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00121.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00121.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00121.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00122.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00122.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00122.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00123.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00123.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00123.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00124.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00124.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00124.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00125.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00125.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00125.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00126.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00126.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00126.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00127.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00127.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00127.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00128.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00128.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00128.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00129.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00129.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00129.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00130.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00130.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00130.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00131.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00131.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00131.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00132.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00132.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00132.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00133.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00133.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00133.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00134.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00134.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00134.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00135.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00135.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00135.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00136.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00136.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00136.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00137.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00137.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00137.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00138.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00138.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00138.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00139.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00139.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00139.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00140.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00140.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00140.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00141.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00141.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00141.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00142.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00142.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00142.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00143.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00143.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00143.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00144.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00144.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00144.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00145.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00145.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00145.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00146.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00146.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00146.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00147.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00147.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00147.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00148.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00148.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00148.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00149.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00149.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00149.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00150.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00150.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00150.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00151.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00151.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00151.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00152.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00152.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00152.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00153.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00153.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00153.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00154.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00154.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00154.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00155.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00155.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00155.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00156.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00156.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00156.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00157.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00157.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00157.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00158.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00158.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00158.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00159.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00159.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00159.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00160.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00160.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00160.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00161.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00161.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00161.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00162.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00162.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00162.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00163.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00163.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00163.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00164.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00164.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00164.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00165.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00165.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00165.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00166.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00166.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00166.jsonl.gz"
+    },
+    {
+      "task": "dfm11-synthetic-native-tool-calling-repaired__data__train-00167.jsonl.gz",
+      "family": "dfm11-synthetic-native-tool-calling-repaired",
+      "rel": "data/train-00167.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-synthetic-native-tool-calling-repaired__data__train-00167.jsonl.gz"
+    },
+    {
+      "task": "dfm11-toolace-native-tool-use-repaired__data__train-00000.jsonl.gz",
+      "family": "dfm11-toolace-native-tool-use-repaired",
+      "rel": "data/train-00000.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-toolace-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-toolace-native-tool-use-repaired__data__train-00000.jsonl.gz"
+    },
+    {
+      "task": "dfm11-toolace-native-tool-use-repaired__data__train-00001.jsonl.gz",
+      "family": "dfm11-toolace-native-tool-use-repaired",
+      "rel": "data/train-00001.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-toolace-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-toolace-native-tool-use-repaired__data__train-00001.jsonl.gz"
+    },
+    {
+      "task": "dfm11-toolace-native-tool-use-repaired__data__train-00002.jsonl.gz",
+      "family": "dfm11-toolace-native-tool-use-repaired",
+      "rel": "data/train-00002.jsonl.gz",
+      "source_package": "schneiderkamplab/dfm11-toolace-native-tool-use-repaired",
+      "reference": "data/tokenized_dfm11_additions/dfm11-toolace-native-tool-use-repaired__data__train-00002.jsonl.gz"
+    }
+  ],
+  "acquisitions": {
+    "schneiderkamplab/dfm11-fineinstructions-da": {
+      "revision": "80e37a930948c6e52bcaaffa20408842de87732c",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 724,
+          "sha256": "a1c5307e98bfc9ca80826994ad1e03d3074d7a0a5c64ccac6f216bcefa64e863"
+        },
+        "chats/train-00000.jsonl.gz": {
+          "bytes": 50353384,
+          "sha256": "eb9d371cfc72ce891741ac7ab2c9bcc1e4b47b5cd2b0d3e844cfbd1c04d72c42"
+        },
+        "chats/train-00001.jsonl.gz": {
+          "bytes": 50941257,
+          "sha256": "aa49dce59c58d9a6a62949a60df79b3bab0d4b957aae0d699e3c919260f0a306"
+        },
+        "chats/train-00002.jsonl.gz": {
+          "bytes": 50772580,
+          "sha256": "bdf3d0a22156220564b909b01de4242797e17ca30b3d5dcb2745b53b5a1c8551"
+        },
+        "chats/train-00003.jsonl.gz": {
+          "bytes": 50829367,
+          "sha256": "2c96b4555cb8364ce78b774084ac44208926383c4b43fb781d0734398a37f955"
+        },
+        "chats/train-00004.jsonl.gz": {
+          "bytes": 50826058,
+          "sha256": "e7a8330193b5cb5ef5a5103d9c68aa9848c9448ef368638b7fa6391a5bc66f0a"
+        },
+        "chats/train-00005.jsonl.gz": {
+          "bytes": 50765852,
+          "sha256": "8ec529f222697b13a2a94c33d4e20ccab6740b65c3a728f2903d3bdc96d7894c"
+        },
+        "chats/train-00006.jsonl.gz": {
+          "bytes": 51299300,
+          "sha256": "49356358f981a841fc45f9378e56683f3f4ac6cd16304ae6c77b22c2f87fb98e"
+        },
+        "chats/train-00007.jsonl.gz": {
+          "bytes": 51045367,
+          "sha256": "33a5abe4574e6c05cfe00360e140868ec1de7e8b8e785f9c6ff6588eaa176efe"
+        },
+        "chats/train-00008.jsonl.gz": {
+          "bytes": 50893350,
+          "sha256": "ca97e1d109253ea1bc78e6270138a41b0d8d7ce926b01a0dd1eb4ed8fd188940"
+        },
+        "chats/train-00009.jsonl.gz": {
+          "bytes": 55607711,
+          "sha256": "b2a0ab86b66d8e7e1fce10e4787059f1dea2e6ced1ff3f8fc16c021d981bd612"
+        },
+        "chats/train-00010.jsonl.gz": {
+          "bytes": 4439375,
+          "sha256": "16eaffd9d1ffe5fed3bf8f4996a4c432db0f9fce85e4bca44eedb81146473f8e"
+        },
+        "metadata/chat_selection/train-00000.jsonl.gz": {
+          "bytes": 4006060,
+          "sha256": "744d2834c74d433753737e27ed330acd6b9acf8d8e084fa1004d6fc0baa68092"
+        },
+        "metadata/chat_selection/train-00001.jsonl.gz": {
+          "bytes": 4006566,
+          "sha256": "5224a50de2350ac865d60091effcebcf3851eb6600158b8959872404ee631f6b"
+        },
+        "metadata/chat_selection/train-00002.jsonl.gz": {
+          "bytes": 4006580,
+          "sha256": "081df411be08092050ef330720780731777e2a2bb3be37e7c593f09b2986092b"
+        },
+        "metadata/chat_selection/train-00003.jsonl.gz": {
+          "bytes": 4006603,
+          "sha256": "e3043856e8ed1a111a596a6ac067805e1556ce67750c323eda69197077a28413"
+        },
+        "metadata/chat_selection/train-00004.jsonl.gz": {
+          "bytes": 4005896,
+          "sha256": "23bcca848f1f5aaf6460640d38ea874dc15833b89b51449da51408db85dc24c7"
+        },
+        "metadata/chat_selection/train-00005.jsonl.gz": {
+          "bytes": 4006159,
+          "sha256": "7b2baa9a3982463e1b031993c6cd96e6c1f46dbf894d10e7286569b12db65e00"
+        },
+        "metadata/chat_selection/train-00006.jsonl.gz": {
+          "bytes": 4006568,
+          "sha256": "a43ba875fa0757e950a9be89fc52555097d79686c8c81d7a73d4eeca78b59e63"
+        },
+        "metadata/chat_selection/train-00007.jsonl.gz": {
+          "bytes": 4006200,
+          "sha256": "38ff5af93892dd4174c183b75e19066406c9f9c46931b3e2ee6176a7837d929e"
+        },
+        "metadata/chat_selection/train-00008.jsonl.gz": {
+          "bytes": 4005963,
+          "sha256": "4aa8048ddee89473406548cf90f09b4101f3b99b5b7a8c6e60bfbecfc1c40886"
+        },
+        "metadata/chat_selection/train-00009.jsonl.gz": {
+          "bytes": 3996235,
+          "sha256": "c458cee9451691ea20d6ba0c1c390f5156f1aa818c200b6802275c8664f461f1"
+        },
+        "metadata/chat_selection/train-00010.jsonl.gz": {
+          "bytes": 297348,
+          "sha256": "7ab28d3cf697e9073cf80961f765644e92c1440363ba8028b00ddf0f2c5bc078"
+        },
+        "metadata/manifest.json": {
+          "bytes": 7355,
+          "sha256": "8d6499c92ee7f4546f12e253bd0321072a73675f9e3a5fdd2e85fa8fcc1c3664"
+        },
+        "pairs/train-00000.jsonl.gz": {
+          "bytes": 23458376,
+          "sha256": "d98169b32723aeec9edbfca85d8e858c4f82d4f6bff76672e16edc3a60954cb9"
+        },
+        "pairs/train-00001.jsonl.gz": {
+          "bytes": 23283447,
+          "sha256": "0d5b8985b0625b5f94dead73088bb6552850aa26166ab9a3f98854fb4d6b3951"
+        },
+        "pairs/train-00002.jsonl.gz": {
+          "bytes": 23178001,
+          "sha256": "b906f65974d158031f633dce2c8e6b908152bb6f587d873858cf8273300e15e1"
+        },
+        "pairs/train-00003.jsonl.gz": {
+          "bytes": 23168710,
+          "sha256": "f763cc2a57eaa42dbaab1c3e5478a36f60de69094579d6555f30ebb9ffe2c922"
+        },
+        "pairs/train-00004.jsonl.gz": {
+          "bytes": 22827076,
+          "sha256": "b87a5282ea999115afcfed3f896aa03cc93025227bcde60a8798f7f8eb6b1088"
+        },
+        "pairs/train-00005.jsonl.gz": {
+          "bytes": 22504314,
+          "sha256": "4db828ebf25488a91dab03c5d8b1a90c33e0eab7b42c457d674c8633599aa1ec"
+        },
+        "pairs/train-00006.jsonl.gz": {
+          "bytes": 22811784,
+          "sha256": "77fa0ee3cd52ff59f34b48ca2f7ab41239b568b1555641bb290deca460533b04"
+        },
+        "pairs/train-00007.jsonl.gz": {
+          "bytes": 23019925,
+          "sha256": "da6781dcb0637f797cbd6478e8386d9f10afc2a2342d44e5a18d19180a06191d"
+        },
+        "pairs/train-00008.jsonl.gz": {
+          "bytes": 22443910,
+          "sha256": "26c6a168955d903dc08dcf1820983f620a2caa4a5bb6eab3c5b868421daec967"
+        },
+        "pairs/train-00009.jsonl.gz": {
+          "bytes": 22529576,
+          "sha256": "732ceb9c4831626bb5407f31ebb5832b2bbe0a5f8a3804c1b6c9c9b3f1769940"
+        },
+        "pairs/train-00010.jsonl.gz": {
+          "bytes": 1712934,
+          "sha256": "2aa135fdcbfe3dd1041a4c6774c72051f0b64b624be3a6ed337423fa53c08281"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-fineinstructions-en": {
+      "revision": "80f44dfc3cbc0ac8d6e219cc65bee4275db27414",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 2230,
+          "sha256": "2b54d7c9c1f4bea1fd6b5629a5ad632702d89461b42f5ea35831d1f0f1b89c37"
+        },
+        "chats/train-00000.jsonl.gz": {
+          "bytes": 177724831,
+          "sha256": "4b78d75b27965056508021fd9c13bf63b0b6549aa842db9c882f29ff9ffaadc8"
+        },
+        "chats/train-00001.jsonl.gz": {
+          "bytes": 175922692,
+          "sha256": "e59dc378c5a3d2a3aa1e16edf2a8d84582884990268f22c2ecb9333e34362a07"
+        },
+        "chats/train-00002.jsonl.gz": {
+          "bytes": 187061767,
+          "sha256": "e0bdb0a4897cdc3c6e0230b9b77a94728b3643ffc622a6a829ced66c30664ebf"
+        },
+        "chats/train-00003.jsonl.gz": {
+          "bytes": 183413284,
+          "sha256": "2f786a361bf8350e945defa17bfe0a02017287f277973d77c6ca2641195bda6b"
+        },
+        "chats/train-00004.jsonl.gz": {
+          "bytes": 184128433,
+          "sha256": "d67d75aef0a3c41679d9c60b4f2f18a2de580a7cf874cf590ae18f008755dc04"
+        },
+        "metadata/chat_selection/train-00000.jsonl.gz": {
+          "bytes": 4000755,
+          "sha256": "f4db4d2aa7ba11e636f6db9e192c634e263c365f5d20ddeba8ac13da94e58dab"
+        },
+        "metadata/chat_selection/train-00001.jsonl.gz": {
+          "bytes": 4022736,
+          "sha256": "7216ca0d4ddea900a1cf43888391a376dbd00589dd0971aece6f63e25f96e222"
+        },
+        "metadata/chat_selection/train-00002.jsonl.gz": {
+          "bytes": 4134369,
+          "sha256": "7cc4b225bfb9225250dfceb8062a8cb87e987e252817cfb035b864e21a1a9a33"
+        },
+        "metadata/chat_selection/train-00003.jsonl.gz": {
+          "bytes": 4135014,
+          "sha256": "9b219c392ac7d5de01ec0f40179bd243bb8ba20344eb3035dfbc2014777f9537"
+        },
+        "metadata/chat_selection/train-00004.jsonl.gz": {
+          "bytes": 4134179,
+          "sha256": "7ebbfc4655a2b633bee8c2103a60a52f0823b54ff5eb56c5744657b2179251c6"
+        },
+        "metadata/manifest.json": {
+          "bytes": 5015,
+          "sha256": "dd84ecd73d965abde386f80ae41f42c7e9b825de86dcc9782dcddd3809fabf69"
+        },
+        "pairs/train-00000.jsonl.gz": {
+          "bytes": 123325756,
+          "sha256": "16e30c0775fdf3307c93af8a83163523091311de4203885f2a70ce061f338cc6"
+        },
+        "pairs/train-00001.jsonl.gz": {
+          "bytes": 122536029,
+          "sha256": "c9469d252ff58187781bccf072820f1fff9fdb47b478f83c5d3a85bd61d50500"
+        },
+        "pairs/train-00002.jsonl.gz": {
+          "bytes": 123733434,
+          "sha256": "5f81334d8ca492ab3ea1f3f1705470a253df8b0c9affc79763b24a7f319afde5"
+        },
+        "pairs/train-00003.jsonl.gz": {
+          "bytes": 122111913,
+          "sha256": "fdf57982066222e235d5c96a698c2badc15d8d427e938ceac61fb9a52000fa30"
+        },
+        "pairs/train-00004.jsonl.gz": {
+          "bytes": 122315590,
+          "sha256": "297663ee6691d8cd911b51a2851dc6cce9c50a097419c8d9fe33bfcbf671d9a6"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-folketingets-dokumenter-error-correction": {
+      "revision": "2bac151ddb2c81ff7098bd6d970ca59115a362bf",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 711,
+          "sha256": "5819ae74adfe8de5b02c21718a1ee5fd29d265cced914c26736a29f69db71538"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 148738274,
+          "sha256": "44ba1331399a59a4cf364c4d5c73921738c613d5d2fd6959ec6392960b85080d"
+        },
+        "data/train-00001.jsonl.gz": {
+          "bytes": 124009856,
+          "sha256": "f6b397685247dc75f38b93b57221266bb78f15d5df4e430f369d78e716e9ead0"
+        },
+        "data/train-00002.jsonl.gz": {
+          "bytes": 128551925,
+          "sha256": "58509b1664ee77186323a45bbd38263e4dfc10aa532f9175ba4adfeebf7a5160"
+        },
+        "data/train-00003.jsonl.gz": {
+          "bytes": 146727344,
+          "sha256": "67fe5a059ca9ee61c12d56489a736c4ecf69fdea35b023f6ad27fb892261c539"
+        },
+        "data/train-00004.jsonl.gz": {
+          "bytes": 155152192,
+          "sha256": "db38f7a52d94e2ed6eb8b954964ea0199c1f84480326d5622c1adc67891961a2"
+        },
+        "data/train-00005.jsonl.gz": {
+          "bytes": 164651858,
+          "sha256": "f36f0b98e8f447fda9ecbdde442af34e1a5367a2ab03ecce88adfc80464246dd"
+        },
+        "data/train-00006.jsonl.gz": {
+          "bytes": 186879132,
+          "sha256": "af0e2631bcee955a50ba5e8cb7b62b50b8b5ca4f30e9aa618c195c3b1474f7f4"
+        },
+        "data/train-00007.jsonl.gz": {
+          "bytes": 180945485,
+          "sha256": "ca820cc6a1e518e165e4c8500f968d80829faa825b8a5f7fa4cbbeb0376f7715"
+        },
+        "data/train-00008.jsonl.gz": {
+          "bytes": 180386076,
+          "sha256": "934fca41eeb1486f73e3e72ae7e493265cb92f1c5d17f8d292072b0a844bdd8d"
+        },
+        "data/train-00009.jsonl.gz": {
+          "bytes": 171305321,
+          "sha256": "454db50836d3296f215410359b0720740cb6407a6567776524e367bce52e4dcd"
+        },
+        "data/train-00010.jsonl.gz": {
+          "bytes": 141819824,
+          "sha256": "8309ceb9cdf995caf69b5aba0129cd3290e483a85fa85bd75d2e2200a1103ea0"
+        },
+        "data/train-00011.jsonl.gz": {
+          "bytes": 171363676,
+          "sha256": "21c1a247bf07eeb058e395944c977887876601d4e2d7d4883e5f104e743abda7"
+        },
+        "data/train-00012.jsonl.gz": {
+          "bytes": 75804980,
+          "sha256": "4c75856ba9aac9001afc16117458166cbab44f26a84aa3f32ea37ed0a9a1584b"
+        },
+        "metadata/manifest.json": {
+          "bytes": 3683,
+          "sha256": "8da6b258cd675944db616f41389726468db23da5cc1b3a76296cd2ae454d0da7"
+        },
+        "validate_dataset.py": {
+          "bytes": 1618,
+          "sha256": "8aa46b83c8c095bdb22ee6a5b3deaea9b32c6dcef5e9df5cb995aaba9a82aa99"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-glaive-native-tool-use-repaired": {
+      "revision": "270781c192980b2d32a492f92b2b1ba2d694a258",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 275,
+          "sha256": "4ec82ed613290e1be4f13b058506380725e45970bdb2b757e736e1efbd744e3f"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 891259,
+          "sha256": "9b3756c94be518e93f04b338fc3d1b6726a188c4a1623039ee16429e3c4b9d7e"
+        },
+        "data/train-00001.jsonl.gz": {
+          "bytes": 883926,
+          "sha256": "459bff25494f2ceca044e86c7d5b42cdf87b069f898e9156df3aea5710ccdc9c"
+        },
+        "data/train-00002.jsonl.gz": {
+          "bytes": 893134,
+          "sha256": "e3c4d0ddd36ae0b377388fb6cd916ae8415c0d42325adf314aff709034a772d5"
+        },
+        "data/train-00003.jsonl.gz": {
+          "bytes": 883301,
+          "sha256": "0c92b46eb88308d83bf111651b2e958deaab9604749b63a3e05bd6e18c237814"
+        },
+        "data/train-00004.jsonl.gz": {
+          "bytes": 879373,
+          "sha256": "a6a62d85d269d356c821fde3f979e8a9fb7d8efa860627f1661fd2fbad2b9aeb"
+        },
+        "data/train-00005.jsonl.gz": {
+          "bytes": 876840,
+          "sha256": "a936bfeb14cb8045f705cd5460d7adb9ca4f2d9f2a632a327889452c06fb4a6d"
+        },
+        "data/train-00006.jsonl.gz": {
+          "bytes": 896982,
+          "sha256": "1d3b39b5f23e6e105eb0ef8e542eb11757c3e199c2a0f65351ff40f35c4f00eb"
+        },
+        "data/train-00007.jsonl.gz": {
+          "bytes": 883954,
+          "sha256": "b8c5e52ec9da26201d379b2b19d6296aae8d10b11b54ea7379f7ec68587e3b1b"
+        },
+        "data/train-00008.jsonl.gz": {
+          "bytes": 885296,
+          "sha256": "690ee90ed678385e8366a41055e0c06030272ada5674a33ce157e480233a8396"
+        },
+        "data/train-00009.jsonl.gz": {
+          "bytes": 905003,
+          "sha256": "d0b9fa0a4378e54b9c1b809e80d28eb02c6effa4d5594405456a9bb7a83b1760"
+        },
+        "data/train-00010.jsonl.gz": {
+          "bytes": 880718,
+          "sha256": "1a5e740d8fbd334c04e51ed99faf9311ef5a3941d0f21a8d0a92f2404b8b3af7"
+        },
+        "data/train-00011.jsonl.gz": {
+          "bytes": 893032,
+          "sha256": "7a962af9080072e4db282145210df9dace14b4ebe31fa11490382774f40645d6"
+        },
+        "data/train-00012.jsonl.gz": {
+          "bytes": 889635,
+          "sha256": "62edec9847d2a35d06b91d0234ab8f2fce4250fa839b4c7ff553c1a46f8688a9"
+        },
+        "data/train-00013.jsonl.gz": {
+          "bytes": 886347,
+          "sha256": "e7eac9dc07fe586fd3345ef918e19dbd47ce23ee2dca2c6e299808a5e29d6009"
+        },
+        "data/train-00014.jsonl.gz": {
+          "bytes": 247464,
+          "sha256": "b72b91f809171c5108f33db7c73c70979ccc14db1fd5ece95edb6bbc4ea99e4b"
+        },
+        "metadata/manifest.json": {
+          "bytes": 3921,
+          "sha256": "7ede12a3d16f96d620599b673daef0e1c65356e71920ccb86b82f8c3bb5ff387"
+        },
+        "validate_dataset.py": {
+          "bytes": 2179,
+          "sha256": "deb5e6e0700b4cfdebbc46c9049821887e8d19522f0fcafa17721bdebd8c2675"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-koolbardi-da": {
+      "revision": "de2b92ba6684001fe2504d2b96520b394bc08897",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 1783,
+          "sha256": "b6e7a9210e5cf7f23fccba711ca33c4fb88fde23bfee6a33ff0ff33508e8179a"
+        },
+        "data/train-00000-of-00032.jsonl.gz": {
+          "bytes": 49134352,
+          "sha256": "31bf2c078ce09b277e55aa8c2c6fbf5348ecfa0accd6c007eea0e1b176adc163"
+        },
+        "data/train-00001-of-00032.jsonl.gz": {
+          "bytes": 49620865,
+          "sha256": "05e70591a0ab231d0e0fc6651d1bc133fc27a15b50eb6962f1400509d5d8f595"
+        },
+        "data/train-00002-of-00032.jsonl.gz": {
+          "bytes": 49238409,
+          "sha256": "2bc8f150b033436fcbde46f70c5609668f0799bbc34959c92fb31cc31a5900df"
+        },
+        "data/train-00003-of-00032.jsonl.gz": {
+          "bytes": 49770286,
+          "sha256": "f7a307279d8fac36e5ae4c1c65ea316c1316f5f3262c7fd92bbb92be599d3d13"
+        },
+        "data/train-00004-of-00032.jsonl.gz": {
+          "bytes": 49162844,
+          "sha256": "06f63b1d5a1be7299f617f0672b78a085638d7147247b08f657c05947f4138a4"
+        },
+        "data/train-00005-of-00032.jsonl.gz": {
+          "bytes": 48997134,
+          "sha256": "de2f089bc52deca6bf6f30332ee6a89011fe849a9a0bd204310fdaac1e8acfc3"
+        },
+        "data/train-00006-of-00032.jsonl.gz": {
+          "bytes": 49565412,
+          "sha256": "7bb4e01e22bbd6974f7904d57b6d3715ac2a39e0edd624d7b34ab1496258e84e"
+        },
+        "data/train-00007-of-00032.jsonl.gz": {
+          "bytes": 49499358,
+          "sha256": "77f92c4703fcf71befbdacc2eebf6db821ed6a60c7d1ef61df45582576bc5e00"
+        },
+        "data/train-00008-of-00032.jsonl.gz": {
+          "bytes": 49462160,
+          "sha256": "1e004381f0d47c779e6d9f4a1c82b021862341476ce68b23bb3898c629243274"
+        },
+        "data/train-00009-of-00032.jsonl.gz": {
+          "bytes": 49905982,
+          "sha256": "b1756987f50a20035d3192ea30fa111f381abc0ba08032e59614b35108b6e8b3"
+        },
+        "data/train-00010-of-00032.jsonl.gz": {
+          "bytes": 48993415,
+          "sha256": "794be037b720a1a279f59b984422416f7cdd94957a1d780b906656aa3a590be0"
+        },
+        "data/train-00011-of-00032.jsonl.gz": {
+          "bytes": 49711612,
+          "sha256": "d6e033ea657dce222c16d71a75c4bc803fb996a9c43e7abd06dbd539f745ed46"
+        },
+        "data/train-00012-of-00032.jsonl.gz": {
+          "bytes": 48942825,
+          "sha256": "372358ae50c95107dddf070685f95353f941641412f08e67309333d40072d1da"
+        },
+        "data/train-00013-of-00032.jsonl.gz": {
+          "bytes": 49700269,
+          "sha256": "e87a3b928f6459d75ef87d325bb7b8fa3eb2c1accf33aee7b2e0e23b8b68e3a1"
+        },
+        "data/train-00014-of-00032.jsonl.gz": {
+          "bytes": 49621619,
+          "sha256": "ddf62a12ca174dfdc07487655741be5bd2851edcfed26e370e5b2f16b7e2cb5e"
+        },
+        "data/train-00015-of-00032.jsonl.gz": {
+          "bytes": 48655805,
+          "sha256": "770b9979cc4cc2dd274586344bfc5f938e70a9c338393eb0468383f019537149"
+        },
+        "data/train-00016-of-00032.jsonl.gz": {
+          "bytes": 49581125,
+          "sha256": "da683d6d5d1dba252f2f0b4bb05e03347eea53497678bdec039408ae0a078cef"
+        },
+        "data/train-00017-of-00032.jsonl.gz": {
+          "bytes": 49117099,
+          "sha256": "9bb431056c9b6647ce4a7a32a7f064aa6ebd3c6870dd61522744d21e041c2aa0"
+        },
+        "data/train-00018-of-00032.jsonl.gz": {
+          "bytes": 49121447,
+          "sha256": "200a8325d0d3853312185d25010dae5ab6b7577fb8f059d76a6c6626d6ec0a5f"
+        },
+        "data/train-00019-of-00032.jsonl.gz": {
+          "bytes": 48489962,
+          "sha256": "38e5c1ef262cc80809f262be8bc022b1db6e61de437e7f9c19620d1259b8e9d2"
+        },
+        "data/train-00020-of-00032.jsonl.gz": {
+          "bytes": 49498336,
+          "sha256": "3a533dee2a8fcdd7f555eb10602714c514e4256b9ce43a86d569bfc08ceffeb6"
+        },
+        "data/train-00021-of-00032.jsonl.gz": {
+          "bytes": 49181826,
+          "sha256": "0afc983bc576d10774df50ee10a0b87882aaadb538d2e4a0e531f531737b24b9"
+        },
+        "data/train-00022-of-00032.jsonl.gz": {
+          "bytes": 49940244,
+          "sha256": "492230bfd0f192483612fe2f0b58cea19321cb172c682804b9dc779b682bf599"
+        },
+        "data/train-00023-of-00032.jsonl.gz": {
+          "bytes": 49305301,
+          "sha256": "2cfa3bafd3a5a50361eb5245e6aec915772a6a9e477cfac2ec5ef231f8f74c78"
+        },
+        "data/train-00024-of-00032.jsonl.gz": {
+          "bytes": 49495463,
+          "sha256": "e2e14ac319419e5b07edf3052aade2eee009a2c067134b325a9580f3c2013807"
+        },
+        "data/train-00025-of-00032.jsonl.gz": {
+          "bytes": 50148037,
+          "sha256": "d3ba508d455e8e7d9fd231d06a9075f6d8da40a871727bd47ed467b3dd6d2d96"
+        },
+        "data/train-00026-of-00032.jsonl.gz": {
+          "bytes": 49949179,
+          "sha256": "8f86ac39451e2cab5a3c435b26a71482ae957f8251a8fe0ecdf84362d2b6cc7a"
+        },
+        "data/train-00027-of-00032.jsonl.gz": {
+          "bytes": 49469654,
+          "sha256": "554eb1dd7b5406c679d87b3ee5b9e08185e339bea6fc3c09009549dfaf5ad298"
+        },
+        "data/train-00028-of-00032.jsonl.gz": {
+          "bytes": 49795195,
+          "sha256": "fa8e274fcd6dd17a1522181333b3638ab46c9896798d7c2290988cd687b25ee7"
+        },
+        "data/train-00029-of-00032.jsonl.gz": {
+          "bytes": 49578176,
+          "sha256": "54780533d57aaac7117430d56e3dabf8c2ecc4cb0b40952f098a078aea675506"
+        },
+        "data/train-00030-of-00032.jsonl.gz": {
+          "bytes": 49527070,
+          "sha256": "aedc049c6b073d673f765875a628c62bf08f958be398fd0824289f41d95fa1f5"
+        },
+        "data/train-00031-of-00032.jsonl.gz": {
+          "bytes": 49453468,
+          "sha256": "80c4a94a432835d257ec8b205851bd1d09338353e054962020a4d6c13ab3f149"
+        },
+        "metadata/manifest.json": {
+          "bytes": 6238,
+          "sha256": "90681bc4dd9e767ed985d8e37178599eba96d86a47cdae84f1a48dc4621d7099"
+        },
+        "validate_dataset.py": {
+          "bytes": 1908,
+          "sha256": "8e384d6d4384aecf5bc5b2ce4cfd9ba71cbc424d6fbc0b2d51653b9867fbbe3f"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-koolbardi-en": {
+      "revision": "81ad1affa1539006b04fb833664ea393fbab59c1",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 1785,
+          "sha256": "c7fc1c42ea879bd53a97e305f50678347b261e728fccb2c88cb415a8eecd2b41"
+        },
+        "data/train-00000-of-00032.jsonl.gz": {
+          "bytes": 63948415,
+          "sha256": "df16a3c8df40cef4fa859ec44a553e3661bc4bc620a992da3794d602ac09f0a8"
+        },
+        "data/train-00001-of-00032.jsonl.gz": {
+          "bytes": 63850409,
+          "sha256": "aa9ecded9ef1df1020ea17d2c44e17c1659be1411d33e3daa56a9b8c06acefc6"
+        },
+        "data/train-00002-of-00032.jsonl.gz": {
+          "bytes": 64040478,
+          "sha256": "ea6f4d2fc341b5a3965afc0b85e2eb068286041384ff7d61fbec086cb431580a"
+        },
+        "data/train-00003-of-00032.jsonl.gz": {
+          "bytes": 63437132,
+          "sha256": "098546bb40783c57102d373ce38814dc07cf0c95949cc2c5e47f34ee2cab5f0d"
+        },
+        "data/train-00004-of-00032.jsonl.gz": {
+          "bytes": 62956733,
+          "sha256": "1f493826b1440a36b9ca0238f5081b22f105151d366342670673e0dc28bb9179"
+        },
+        "data/train-00005-of-00032.jsonl.gz": {
+          "bytes": 63845259,
+          "sha256": "4dd651e32189d41730111e9503a23777afd5b59746978aeb9352b2839e1b8516"
+        },
+        "data/train-00006-of-00032.jsonl.gz": {
+          "bytes": 63449062,
+          "sha256": "685836281a3da6e235d31bf5c038206126a8ee874ac5cb1d1b6b5eec92253cbd"
+        },
+        "data/train-00007-of-00032.jsonl.gz": {
+          "bytes": 63927760,
+          "sha256": "d5a245c66276c8ae1f7e1f48230174c0e7043a372da54d67c61091fc0a77fb67"
+        },
+        "data/train-00008-of-00032.jsonl.gz": {
+          "bytes": 63641781,
+          "sha256": "bb9474cef2f94b78e79ec071bea9217bd98bfa293061ac4be1187649a19228e3"
+        },
+        "data/train-00009-of-00032.jsonl.gz": {
+          "bytes": 63637690,
+          "sha256": "9385a6d3a1237d316a7a8b8735ab9347fba977e36c99c8aec98b3b599d46853c"
+        },
+        "data/train-00010-of-00032.jsonl.gz": {
+          "bytes": 64113031,
+          "sha256": "785bcb367925cca589938e61a94bf5b93e817185c8281db49cad8c64cd1390e7"
+        },
+        "data/train-00011-of-00032.jsonl.gz": {
+          "bytes": 64112283,
+          "sha256": "cdcf17c67d274c9d3d7ec9ac62f81b241c6b4b30e4458773e913ed540fd450a6"
+        },
+        "data/train-00012-of-00032.jsonl.gz": {
+          "bytes": 63761850,
+          "sha256": "5a43afc56f8968857a4e573427f50707f7076707443d162aa1ce49d036f77816"
+        },
+        "data/train-00013-of-00032.jsonl.gz": {
+          "bytes": 64390634,
+          "sha256": "13d5a4f84a3501efb197aaaac5d5ec543e5d36ef8f262f93f74c948101e1fe8f"
+        },
+        "data/train-00014-of-00032.jsonl.gz": {
+          "bytes": 63787131,
+          "sha256": "e3c2765af7d26b2e762adb27e83ad08610e911dbfda311a1d683191091251bae"
+        },
+        "data/train-00015-of-00032.jsonl.gz": {
+          "bytes": 63763973,
+          "sha256": "697c286c9cfb70457131294461a77697f061d3991b3a8e49b2f954f573cbf3b0"
+        },
+        "data/train-00016-of-00032.jsonl.gz": {
+          "bytes": 64326163,
+          "sha256": "4a339ba0f0ea3c1aa327049b763115373e854373f56d49bacb9db65ad9c06944"
+        },
+        "data/train-00017-of-00032.jsonl.gz": {
+          "bytes": 64575898,
+          "sha256": "3206da8a873f3afcfaa84ac8ea3d087ab0edf1fd51e2edcdcaf51f21ca00342c"
+        },
+        "data/train-00018-of-00032.jsonl.gz": {
+          "bytes": 64435486,
+          "sha256": "eb83fc34594c604f408bb9939035a9d7215781bd8b0130ad4e4462dedbbfe4e3"
+        },
+        "data/train-00019-of-00032.jsonl.gz": {
+          "bytes": 64017627,
+          "sha256": "0b04d5870b9df9b12d4f7c9f7e4ac09172b7be031b9e9e3573acca715519c5ef"
+        },
+        "data/train-00020-of-00032.jsonl.gz": {
+          "bytes": 64101586,
+          "sha256": "b4951aa2b6243f249d134040025ca572f1c46cf0fbe694f3df9f184eb4f68466"
+        },
+        "data/train-00021-of-00032.jsonl.gz": {
+          "bytes": 63391857,
+          "sha256": "4522fd71ef4d0c8689b360d8e53fc4886c03a87ad0ce0f9df224fb3515c93c45"
+        },
+        "data/train-00022-of-00032.jsonl.gz": {
+          "bytes": 63211866,
+          "sha256": "a1aeb2af9493abf4ae619a32cd4efe34690aeab490c1af4939c956b2a425b167"
+        },
+        "data/train-00023-of-00032.jsonl.gz": {
+          "bytes": 64675153,
+          "sha256": "409ee053cb65a413174e03cc3f0d1e18869ff56730a59de59a1afa547f661ea0"
+        },
+        "data/train-00024-of-00032.jsonl.gz": {
+          "bytes": 64383951,
+          "sha256": "641f9f99216c6f22f6304578ff2b8ea4f540630c7578b56f6ad706a5a4e1c0d9"
+        },
+        "data/train-00025-of-00032.jsonl.gz": {
+          "bytes": 64498988,
+          "sha256": "820afc9b790f121464c00dd379b4f2c224124c02451ceb46ad8ffd818b7a42fe"
+        },
+        "data/train-00026-of-00032.jsonl.gz": {
+          "bytes": 63139909,
+          "sha256": "bfc8b41333d88e69a66814017d5d0ec63b887fa558df6c96fcafef731d7ed508"
+        },
+        "data/train-00027-of-00032.jsonl.gz": {
+          "bytes": 64130963,
+          "sha256": "2774e9c3b76f4278a423733a06189645125d686ba8de99a3c7e76fd5829f6732"
+        },
+        "data/train-00028-of-00032.jsonl.gz": {
+          "bytes": 63664523,
+          "sha256": "4d85cda7f80a50dd5df7c47185ba2aa8a04f2ee9630291807b92e1fed8b82be1"
+        },
+        "data/train-00029-of-00032.jsonl.gz": {
+          "bytes": 63684743,
+          "sha256": "7d42d301da65858af0f105c465a7330da40e4f39d71458fab13005461e1dcb7b"
+        },
+        "data/train-00030-of-00032.jsonl.gz": {
+          "bytes": 64336266,
+          "sha256": "09c8a14083122a5d4c9728218e45d46d323f288b67d8bef347cdd0d6a9c17e6a"
+        },
+        "data/train-00031-of-00032.jsonl.gz": {
+          "bytes": 63384434,
+          "sha256": "275d419db589b6035e499c447f827b9a5ae6efc2a352f949cdfb02306ea4514b"
+        },
+        "metadata/manifest.json": {
+          "bytes": 6239,
+          "sha256": "553c6082d5e93678ed6b698b551ee5436f34a24b04ccc34dfe8203e07419a984"
+        },
+        "validate_dataset.py": {
+          "bytes": 1908,
+          "sha256": "8e384d6d4384aecf5bc5b2ce4cfd9ba71cbc424d6fbc0b2d51653b9867fbbe3f"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-mathagentic-gsm8k-prolog": {
+      "revision": "1d32034d3b2467e51a6128b2cb249852969f17d0",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 1957,
+          "sha256": "6520f25a4af6b1cc0bdf8f0a78ae83c12603f82187fb42d7f630ac71d9954294"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 1940101,
+          "sha256": "98ce1fcb4a2c1ca8aed7141ca2e45bdd88f583be6d956747667cf1f99a13070f"
+        },
+        "metadata/manifest.json": {
+          "bytes": 1023,
+          "sha256": "d95f6dbfc7adf017008c50d9d4f998456ce6f20ffa6246c7f436e7d78d11c90e"
+        },
+        "validate_dataset.py": {
+          "bytes": 1432,
+          "sha256": "8531255fa3bc6bead9b0df20e4af88f6390029aee4bb96b132c6b7cebc76c956"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-mathagentic-tinygsm-python": {
+      "revision": "17a3df5ccdd70ce71983485c6c48cce54b60f05e",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 1807,
+          "sha256": "300d9b549175b1f2d0f3c96179c97beee1fa0f7588f9f42ae8188cf5f9c42193"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 16257859,
+          "sha256": "a676fa3969dcabeee142bf2b37e29d074d593a404ee5601f90311adf80136e6e"
+        },
+        "data/train-00001.jsonl.gz": {
+          "bytes": 15562648,
+          "sha256": "596789e6be5e4e2603329fe1e2d991ae52563efe7bc31e973ea86f4eb4e04a1e"
+        },
+        "data/train-00002.jsonl.gz": {
+          "bytes": 16724818,
+          "sha256": "d49ebbe480484a09c87c520d444ed27c4a03fd8aa04d8031de97ab0845b280d0"
+        },
+        "data/train-00003.jsonl.gz": {
+          "bytes": 10788975,
+          "sha256": "318ae8339303c05170259b89d57fa4abda8109884ff831fc7cd457b224d68327"
+        },
+        "metadata/manifest.json": {
+          "bytes": 2029,
+          "sha256": "cb822a684a4b12e721515d27aae5f7a10947b4ef6d1bb0d5969bc83a5f1e87b3"
+        },
+        "validate_dataset.py": {
+          "bytes": 1432,
+          "sha256": "8531255fa3bc6bead9b0df20e4af88f6390029aee4bb96b132c6b7cebc76c956"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-nemotron-agentic-tool-calling-repaired": {
+      "revision": "ad3251630ba1c0435a559fb9737267554ab208ff",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 308,
+          "sha256": "372802fea9bd66b5b84f3cb7fcf81e8c30d08260e3924379c6ed8fbe28b2fc03"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 19300896,
+          "sha256": "61b1670d8c4dc21525ab30fe73be7e9b60103214d24f3d771c9688e71842a427"
+        },
+        "data/train-00001.jsonl.gz": {
+          "bytes": 13072947,
+          "sha256": "6bfcf3bf7f6f9ac8a97d7fe8f12bdb5675e5563435a7b0f748531676e635400b"
+        },
+        "metadata/manifest.json": {
+          "bytes": 1835,
+          "sha256": "d0fc563fc29695a83f9ad97d2f4ed0b5e2cae7a6f6586a6f69d56fdf5771abe4"
+        },
+        "validate_dataset.py": {
+          "bytes": 2179,
+          "sha256": "deb5e6e0700b4cfdebbc46c9049821887e8d19522f0fcafa17721bdebd8c2675"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-synthetic-native-tool-calling-repaired": {
+      "revision": "aef80ae81d10b0bb9d9ca7e7760ba09297df4b56",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 309,
+          "sha256": "8f82fc55b2cd6d2c55d5ad34721bdac1588d232d2d9966c0ff08815eb79fb47b"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 848602,
+          "sha256": "16ad2292921a82d02d115430107d49753678453662682a005d7ca33f4c512f9a"
+        },
+        "data/train-00001.jsonl.gz": {
+          "bytes": 843026,
+          "sha256": "6e9b257ff12eb93e73fc1b057f6be0ae1619b55ec4826c5be6b73396b336af11"
+        },
+        "data/train-00002.jsonl.gz": {
+          "bytes": 844419,
+          "sha256": "8a3292318fa2c803103dfe2d0161193a0d96447c9133b3da57189c492aac4354"
+        },
+        "data/train-00003.jsonl.gz": {
+          "bytes": 851295,
+          "sha256": "dbc6d5dd88ac1e711b6056d49be0bc28832f7971a96a06b8f9cc01e8fd2e1662"
+        },
+        "data/train-00004.jsonl.gz": {
+          "bytes": 850404,
+          "sha256": "3a1608152cf7017185ed51b57e4ce91ee041b3d171efa5f37ab4061874150059"
+        },
+        "data/train-00005.jsonl.gz": {
+          "bytes": 830278,
+          "sha256": "c50f326ab3988f6f2ef38ba84d60c05449dd2358565b28f746ff895a4942dcb5"
+        },
+        "data/train-00006.jsonl.gz": {
+          "bytes": 850662,
+          "sha256": "1c0eb80e69edb7d8a4f29a611008922fae056c2ccaf0fae6ec7cdf32441c01a7"
+        },
+        "data/train-00007.jsonl.gz": {
+          "bytes": 862220,
+          "sha256": "465a5e6785d0c25432455833f43a6b8f1e342bf1dfb798724d3d9b42f8931d84"
+        },
+        "data/train-00008.jsonl.gz": {
+          "bytes": 849464,
+          "sha256": "d4e6033e162d9b49c88cf26501755955dcf0f9b3bbd6d691324d3283a00f0556"
+        },
+        "data/train-00009.jsonl.gz": {
+          "bytes": 833489,
+          "sha256": "e95f59164a9a0bde0bf98804a2314aaa322be194197aef0abdcafe633445e3a0"
+        },
+        "data/train-00010.jsonl.gz": {
+          "bytes": 847559,
+          "sha256": "d3859facb120c185026703a95d24a4dc8710b23f8b4af6f6e1d7e8476082c663"
+        },
+        "data/train-00011.jsonl.gz": {
+          "bytes": 847954,
+          "sha256": "719ea6326910fa5b949a84ede79798e753ba45385d030d32d4cc8ff256171732"
+        },
+        "data/train-00012.jsonl.gz": {
+          "bytes": 841990,
+          "sha256": "bf42cee1764c1086b6bd2aadec5416965b78a3ea94d97210129af1100f391236"
+        },
+        "data/train-00013.jsonl.gz": {
+          "bytes": 857209,
+          "sha256": "1e8d94137444e15d8a7a751653cc58c72f0497fdf5c9320c9ec98a053395af73"
+        },
+        "data/train-00014.jsonl.gz": {
+          "bytes": 839745,
+          "sha256": "cc319ba643eb2832019a74334b2926dfeb942ad35642ccf3da1ac47b85eeb37d"
+        },
+        "data/train-00015.jsonl.gz": {
+          "bytes": 848693,
+          "sha256": "9d94937fcf2bc9d9f0f1d5e2da8d4f44df33f4369126b2af817b2d83baafded7"
+        },
+        "data/train-00016.jsonl.gz": {
+          "bytes": 844821,
+          "sha256": "92b5292b7ce5bfdfef32502945701c6bd46219ef9a94b4d7589ab6a55f3822da"
+        },
+        "data/train-00017.jsonl.gz": {
+          "bytes": 851141,
+          "sha256": "89e24cc05df3ac77f31b6a749576c0a6e00e63936448fd22733e6103ff4270b8"
+        },
+        "data/train-00018.jsonl.gz": {
+          "bytes": 851860,
+          "sha256": "43cf083e1547513b3c1dc274a24689d2a397ca8d5c430b4ab4422ef05fac3dd5"
+        },
+        "data/train-00019.jsonl.gz": {
+          "bytes": 840565,
+          "sha256": "ac5abdcc79ac3a2a960c182b2c0bca5f9a9582998cc72a942e2952deecdbd6d2"
+        },
+        "data/train-00020.jsonl.gz": {
+          "bytes": 830286,
+          "sha256": "7f794a3aea8c78d085b59e7fe2cf0952c787a38d70ce71bda5742331a86cbcbc"
+        },
+        "data/train-00021.jsonl.gz": {
+          "bytes": 854074,
+          "sha256": "1ece9457880be36e34a2398520a3e207a6356b5d0062b7613227c0e1b0f26bd4"
+        },
+        "data/train-00022.jsonl.gz": {
+          "bytes": 845172,
+          "sha256": "27af0fcbb470946fdec8677c787dc9a818b1756110429fb4a4e6bb8db717db57"
+        },
+        "data/train-00023.jsonl.gz": {
+          "bytes": 857355,
+          "sha256": "1d8ca30fb333f93748d24f13cdc6e7cb7b933c3cd4644c7dd201ca8ba0cd0c7b"
+        },
+        "data/train-00024.jsonl.gz": {
+          "bytes": 853244,
+          "sha256": "d0b4cc5b22c7770f0d843a39231abda155a4394a4c6d19b4fa28d39c8b0cacf7"
+        },
+        "data/train-00025.jsonl.gz": {
+          "bytes": 855799,
+          "sha256": "69f7b7c3940a55c85aef18486a3188c64af3b7bfc4cd205d186166b59f4e541c"
+        },
+        "data/train-00026.jsonl.gz": {
+          "bytes": 863594,
+          "sha256": "608c1b2498f6c9c4438fc0e9b0e3c245b4038e2896ac0fb96cc0053e5e01b74a"
+        },
+        "data/train-00027.jsonl.gz": {
+          "bytes": 842619,
+          "sha256": "2d17523cd413bfab42665adc6fbfe5a856d21221dda01c961520d6b24d9ffd85"
+        },
+        "data/train-00028.jsonl.gz": {
+          "bytes": 856258,
+          "sha256": "a84e3098368aaf56802ac089eddc21caa6477e806b44f8495c832a95d3b1fa8a"
+        },
+        "data/train-00029.jsonl.gz": {
+          "bytes": 866831,
+          "sha256": "a9381bf2c8e5f1c43573b558e435734b23be80fc7b38297e33ea95a538c16ce2"
+        },
+        "data/train-00030.jsonl.gz": {
+          "bytes": 858503,
+          "sha256": "8f1c992a761483221de328f7a058ffbf8b38e406a16b4f80ba8809defdaf2ab7"
+        },
+        "data/train-00031.jsonl.gz": {
+          "bytes": 848900,
+          "sha256": "5dc7191fb51204bc8c49c61fe8b6a89c3f13033163d2f34c22d91241675ad498"
+        },
+        "data/train-00032.jsonl.gz": {
+          "bytes": 854043,
+          "sha256": "76adea2a129d5711c25b247a113a9fc4a960b18bc740950f00cdfb8f477f43c2"
+        },
+        "data/train-00033.jsonl.gz": {
+          "bytes": 848764,
+          "sha256": "4f4eabb322458130c7722b31dcf2c1ff5d8e2d85566136e7286715821f593ac5"
+        },
+        "data/train-00034.jsonl.gz": {
+          "bytes": 836942,
+          "sha256": "cfa92d3be7711d652edb097827d687764820107b2cdba1ac188b8aa0d41f0e0b"
+        },
+        "data/train-00035.jsonl.gz": {
+          "bytes": 854572,
+          "sha256": "06229aa226a9b1780de3694f53f9f37a4abf0c9eda5d5309276b9e4a27ec5b92"
+        },
+        "data/train-00036.jsonl.gz": {
+          "bytes": 844225,
+          "sha256": "d43eafe268607081a9fcc892f0f7a03c95bddd8c6b1a561f9b24d816b6b278d6"
+        },
+        "data/train-00037.jsonl.gz": {
+          "bytes": 851017,
+          "sha256": "dc92f08fcf26086783b1b46611c4ec21fedf27d1134f87478c685313f8bf419c"
+        },
+        "data/train-00038.jsonl.gz": {
+          "bytes": 841895,
+          "sha256": "0be123446376839caf5e3c9907fd0cf32fc47ffad54cd494f842b329f95e4bfa"
+        },
+        "data/train-00039.jsonl.gz": {
+          "bytes": 839631,
+          "sha256": "1b5a1bf642ee1408bd8e496cfb68c769eb6bc1ffdcb7913ae1c8ce22b444d17c"
+        },
+        "data/train-00040.jsonl.gz": {
+          "bytes": 850181,
+          "sha256": "10a1646a4e91a646eb05978c2fb06c197a0e08db132af18beda282495a2f30ce"
+        },
+        "data/train-00041.jsonl.gz": {
+          "bytes": 835008,
+          "sha256": "2664df61e81ba7f0ee38e94e260bf74fab04b2fa2d7844e0fa83df618f934ef5"
+        },
+        "data/train-00042.jsonl.gz": {
+          "bytes": 835728,
+          "sha256": "2322f33d5aa0a4884a388c0f53124e4b8f81f73abb8702bd2632c9793a330a4e"
+        },
+        "data/train-00043.jsonl.gz": {
+          "bytes": 834235,
+          "sha256": "b27a230771b3e1a3c8bc2678c7e8f6067ecc5b557ce9d5890e5cf23ffad2037e"
+        },
+        "data/train-00044.jsonl.gz": {
+          "bytes": 864474,
+          "sha256": "f6f9513390d373ae1c87280a6280a38579b583675857a81574b42da43975264a"
+        },
+        "data/train-00045.jsonl.gz": {
+          "bytes": 849372,
+          "sha256": "5a7ebaf5eb2184695249d19f343f19a6f9fafd70b0ddc1502e3879f55e757954"
+        },
+        "data/train-00046.jsonl.gz": {
+          "bytes": 849558,
+          "sha256": "c1f849f66914cd3ef125d59fe1dc53f9e85c4d6fada94fbace5ac21ce2304e9d"
+        },
+        "data/train-00047.jsonl.gz": {
+          "bytes": 856208,
+          "sha256": "c24fec60ddc66f61325946406c3723b38811ea13d3ee86b0155678b6c463012c"
+        },
+        "data/train-00048.jsonl.gz": {
+          "bytes": 859438,
+          "sha256": "0f690bcf32d9fde2907cc35a063ecdb3fac453d80eb5a9687e3172db4a19f88f"
+        },
+        "data/train-00049.jsonl.gz": {
+          "bytes": 854547,
+          "sha256": "4b7a5eae8e45ebe647ff138bc5083def6f6b1fad5b0b0686c31331a08a0251be"
+        },
+        "data/train-00050.jsonl.gz": {
+          "bytes": 856726,
+          "sha256": "338b09b7355e77ce6d1acf1a97baeee498ad215bebd44fd4b61053a1cec1a3a8"
+        },
+        "data/train-00051.jsonl.gz": {
+          "bytes": 844410,
+          "sha256": "8e5c6e41fa340506d0f3a8e3ea084ddd28f17f512bdb6c0f473511cf80f10e65"
+        },
+        "data/train-00052.jsonl.gz": {
+          "bytes": 851254,
+          "sha256": "d9a7644701af0bde733df3c2bc8d4dc18cc97e85c3960f2882e20eca80e680c7"
+        },
+        "data/train-00053.jsonl.gz": {
+          "bytes": 853264,
+          "sha256": "4c392ea8500027a8d73051310cad3b49c827388d2c2c7c27770fc105c68f4002"
+        },
+        "data/train-00054.jsonl.gz": {
+          "bytes": 846534,
+          "sha256": "ca55c97aa24648ae0867832937fe6151784dcf42320f59c03be35099ad8c6b4f"
+        },
+        "data/train-00055.jsonl.gz": {
+          "bytes": 848300,
+          "sha256": "57817bba2052be3a40efb385cbcc767c1d38cf0eb44778ca442487b0404f543e"
+        },
+        "data/train-00056.jsonl.gz": {
+          "bytes": 839268,
+          "sha256": "473f9b89221fd698f89f0f9534321d15a8e7b7ab95c4b9b20306b48ad656ebad"
+        },
+        "data/train-00057.jsonl.gz": {
+          "bytes": 831651,
+          "sha256": "e8d24563433f61ccf5576021384c32d0c730d1a8a7e01d18f2efe947acf1bcc9"
+        },
+        "data/train-00058.jsonl.gz": {
+          "bytes": 862816,
+          "sha256": "8f778e2628c4408741f33a02fe5f134aa46e62b7cbd8c945a1573e66a25b276a"
+        },
+        "data/train-00059.jsonl.gz": {
+          "bytes": 844149,
+          "sha256": "f224360286f487e129b3fad5380ed10e8849f7ce9ecd42ab7d6b1775526279ff"
+        },
+        "data/train-00060.jsonl.gz": {
+          "bytes": 863534,
+          "sha256": "e0a412b18bcf261afd25f3d4b3feb04eceefe8e6a02608a6795ae35cbab2a1e8"
+        },
+        "data/train-00061.jsonl.gz": {
+          "bytes": 862898,
+          "sha256": "4f0ef96839f50f517b4f9202110772674b84500aee3fc356f4cf6160ecbd865a"
+        },
+        "data/train-00062.jsonl.gz": {
+          "bytes": 838071,
+          "sha256": "baf75726ae0893b270da3022c93913128c833a16adf3becbd26cb58e3a15611c"
+        },
+        "data/train-00063.jsonl.gz": {
+          "bytes": 848103,
+          "sha256": "b246496b6c5898c20fadfe986e7fbb09d1e4b979da721794309382334dc84772"
+        },
+        "data/train-00064.jsonl.gz": {
+          "bytes": 845728,
+          "sha256": "6789be51f6d297af9850e6414883e318454ef379f424d9ed26d4273411ed3576"
+        },
+        "data/train-00065.jsonl.gz": {
+          "bytes": 858148,
+          "sha256": "79381c7ce52a67467acf1530af5ff0631a2a68aaa56cf0dc6ffe1cbf62c4440b"
+        },
+        "data/train-00066.jsonl.gz": {
+          "bytes": 837005,
+          "sha256": "0d062bf4d0fe73646287b185cd3c80d78f3a8c926b3dab9f7d72c7846f5526c7"
+        },
+        "data/train-00067.jsonl.gz": {
+          "bytes": 841609,
+          "sha256": "32046dd792ea87b66132098f43a9f59d8e8abeb60a75ff96a579fb8203bed1be"
+        },
+        "data/train-00068.jsonl.gz": {
+          "bytes": 868843,
+          "sha256": "58b0437b97a8b5e150b8a3f8320d2e24f1e87fb73c46a362684fe4299bd68f3f"
+        },
+        "data/train-00069.jsonl.gz": {
+          "bytes": 863403,
+          "sha256": "402be8cd8fac2b4584e21059f54ddeaac6f822e8a218a2ec88eaee7beefca255"
+        },
+        "data/train-00070.jsonl.gz": {
+          "bytes": 844148,
+          "sha256": "12cfc58a815053f4230c1a58f2f5b4cf82a06ff1fc99cddd51ca436cc2526cf7"
+        },
+        "data/train-00071.jsonl.gz": {
+          "bytes": 838002,
+          "sha256": "70852100c17ac70903027f96a441da7975d2dd6589b594721d39bf6615f2099c"
+        },
+        "data/train-00072.jsonl.gz": {
+          "bytes": 837783,
+          "sha256": "678f92e40cda0fa8f4278198600b2f8582489ff75e2b1e1763181a69e5dbf2a7"
+        },
+        "data/train-00073.jsonl.gz": {
+          "bytes": 854855,
+          "sha256": "e096d92587598c1a925b43c651031eb121a34ed17ccefbd5ccf34e794f2f32c5"
+        },
+        "data/train-00074.jsonl.gz": {
+          "bytes": 847989,
+          "sha256": "6b202f0a949711b59de44dd4daffdd5d79571f296d30e9c4af4b7eb1ca376554"
+        },
+        "data/train-00075.jsonl.gz": {
+          "bytes": 843629,
+          "sha256": "82115adec55a3f02ec87524f8b9f6d7c110bd8ae2baa7f2a5525a5e1a4aa7eee"
+        },
+        "data/train-00076.jsonl.gz": {
+          "bytes": 839670,
+          "sha256": "25a1b59c028edc1c5412e43693733e6331343bca36542735f1d93cfb8dc4ceb4"
+        },
+        "data/train-00077.jsonl.gz": {
+          "bytes": 850161,
+          "sha256": "19412568e3b019fb6f2074a8c8090cecb31c9b6262c0214fd850678e84c407d4"
+        },
+        "data/train-00078.jsonl.gz": {
+          "bytes": 851734,
+          "sha256": "3b35c1de1d83e0e9a364c65af3b7edf2ce58941ed5d2f97fe05446c0578f9e95"
+        },
+        "data/train-00079.jsonl.gz": {
+          "bytes": 838045,
+          "sha256": "7e72d53d2e47496d9d1aa98f7c3c1cfb3d72a9da2381ff84c50904cb8cd8729d"
+        },
+        "data/train-00080.jsonl.gz": {
+          "bytes": 846793,
+          "sha256": "844261ce7ada1ed150a099be27abdd5e32f1327e224486105f4905440b7f45ac"
+        },
+        "data/train-00081.jsonl.gz": {
+          "bytes": 844242,
+          "sha256": "79cc3df5562228ca68ae781590cdce54f7e380eb54410729ab049560e524de78"
+        },
+        "data/train-00082.jsonl.gz": {
+          "bytes": 842994,
+          "sha256": "4200a2af29947203046333eb071a0fd8a3f720223f57d9e794085b72fae1fb74"
+        },
+        "data/train-00083.jsonl.gz": {
+          "bytes": 847335,
+          "sha256": "e1914676d01f71a2194ffd6c636cc1fd405b9e2d122626a79c4c5610b366f6d0"
+        },
+        "data/train-00084.jsonl.gz": {
+          "bytes": 863343,
+          "sha256": "88c76378028424d4e89ebdc66d46746a6884dfadf1c8709ee020e8320cec7505"
+        },
+        "data/train-00085.jsonl.gz": {
+          "bytes": 846317,
+          "sha256": "0da1725b8815b9eeff2e94b677005fba233dd8d45c6fadfa73828ca0b4c810c9"
+        },
+        "data/train-00086.jsonl.gz": {
+          "bytes": 841231,
+          "sha256": "dd382ead6a2bd90e13d8d07d1ec59a20d0f29dd19836fbb45e6bdb69fea955fe"
+        },
+        "data/train-00087.jsonl.gz": {
+          "bytes": 854995,
+          "sha256": "af38ad45e199e21ff8f0dd28b609aed758be1cc891630c0b5f8076bf85a3125b"
+        },
+        "data/train-00088.jsonl.gz": {
+          "bytes": 838782,
+          "sha256": "7fa0e38f7d6852ac2ade8a16e3fdaebcd0be2b603919b7bee79ea239104c49f0"
+        },
+        "data/train-00089.jsonl.gz": {
+          "bytes": 852047,
+          "sha256": "f6ab6a1d4cf3adf19eb1dc487c2ae49215fa2e43b91547d56b00420a754875a1"
+        },
+        "data/train-00090.jsonl.gz": {
+          "bytes": 854830,
+          "sha256": "c1acf3a3ab5186f36d528523e1a109644604381f2cc1567f243df0f059553b99"
+        },
+        "data/train-00091.jsonl.gz": {
+          "bytes": 845774,
+          "sha256": "2a7cc98be926e6817d840d10180ae73cb35de6ba2861e8267dd4958e6f3f357a"
+        },
+        "data/train-00092.jsonl.gz": {
+          "bytes": 845211,
+          "sha256": "b62a7485b45128035c800dc6654ecbab5cec2afc8d64c099ce8772c9d221353d"
+        },
+        "data/train-00093.jsonl.gz": {
+          "bytes": 838262,
+          "sha256": "a193d82682ac9761822f8ed2a9b331e3e3d26cd81b1e7140498fb33c510531d8"
+        },
+        "data/train-00094.jsonl.gz": {
+          "bytes": 859054,
+          "sha256": "f56fd8bed0dc5f10d6f06f050ad7b216824f2ccbda5d9740b958d722701e0f9f"
+        },
+        "data/train-00095.jsonl.gz": {
+          "bytes": 847184,
+          "sha256": "af086a6d5392255687f522868e449eafe2643c621782d6150cb20649e54acd9b"
+        },
+        "data/train-00096.jsonl.gz": {
+          "bytes": 865060,
+          "sha256": "247b6aec00d2f9289f18e1224e5fceea51920d07c3f04955909c07f62024be89"
+        },
+        "data/train-00097.jsonl.gz": {
+          "bytes": 836996,
+          "sha256": "65c255e0a500f72f97e2893816bd55e8a83c0a0b3e6295a58549861d31694682"
+        },
+        "data/train-00098.jsonl.gz": {
+          "bytes": 853615,
+          "sha256": "84cd86d43f9a73290377c2f0357573f803a6d01a15f82689bf44fb5d6a3120f4"
+        },
+        "data/train-00099.jsonl.gz": {
+          "bytes": 849124,
+          "sha256": "d4246b3399576576eba07950bb2d5b1124bbe4d27e066e3f2beb33993f5ef6e9"
+        },
+        "data/train-00100.jsonl.gz": {
+          "bytes": 843341,
+          "sha256": "3b1058c78ec90473ce6dcdb75a61996bd7ae08973907ef71f349850f1eb53b98"
+        },
+        "data/train-00101.jsonl.gz": {
+          "bytes": 869451,
+          "sha256": "01644693175bfdb8fc08360c0d18637a6ed45b24ac74384ce56d6d769c51b298"
+        },
+        "data/train-00102.jsonl.gz": {
+          "bytes": 861472,
+          "sha256": "3ae9f4331060cabfdc17a30b1a998c409f4a4ee4f84cb48c2e996d896dfaf9c3"
+        },
+        "data/train-00103.jsonl.gz": {
+          "bytes": 851113,
+          "sha256": "e751ccd36bbc4d6c08390422300a15ae79af5c679dbfcc491a573a19b95196da"
+        },
+        "data/train-00104.jsonl.gz": {
+          "bytes": 840637,
+          "sha256": "c2bb1223409aaad3581e61b8f282747b9ef40b862201dde911166a6ac83c9d25"
+        },
+        "data/train-00105.jsonl.gz": {
+          "bytes": 845482,
+          "sha256": "95affb689777386f2a2911cdf789578ad19709420dbea08f32e988b094cde0a3"
+        },
+        "data/train-00106.jsonl.gz": {
+          "bytes": 846864,
+          "sha256": "6d68dcf9b881b1b5dd37536f12fc7f2c515d564d77490a6b8e576206f6afe390"
+        },
+        "data/train-00107.jsonl.gz": {
+          "bytes": 840746,
+          "sha256": "edbc372f41a8e79e7f717ad4d5e4d6abb58f8779076ea5567e88688bb409a243"
+        },
+        "data/train-00108.jsonl.gz": {
+          "bytes": 854751,
+          "sha256": "a0fabfbf3f463f9bfaac43d065f5a063c41785b04f9288e4b9deddfa45d789b6"
+        },
+        "data/train-00109.jsonl.gz": {
+          "bytes": 866615,
+          "sha256": "07d5f968a1de76a63ae8a72cdecf92f98532e6cdc7165cbb94874a9e03268af4"
+        },
+        "data/train-00110.jsonl.gz": {
+          "bytes": 850602,
+          "sha256": "cc7a4ce7f04044f1b5fbf7ffd129c79c9fba80c4f9af8db254728eeadbfc6eb2"
+        },
+        "data/train-00111.jsonl.gz": {
+          "bytes": 859337,
+          "sha256": "976c071cb289112ad7986d13ede554ddfbf1d4a5e2c8205c81528cee7332d704"
+        },
+        "data/train-00112.jsonl.gz": {
+          "bytes": 841656,
+          "sha256": "0ddc9d1e0409e44c8321998f1b684650744338929f0d5471c9c7a21d66127823"
+        },
+        "data/train-00113.jsonl.gz": {
+          "bytes": 864416,
+          "sha256": "d9d867bee6cf1a519ffb930a7913436a6b9830d7a18d1581a22b6cc14cf58398"
+        },
+        "data/train-00114.jsonl.gz": {
+          "bytes": 848055,
+          "sha256": "9e83d089698e929376e655c5c75806863b0a3b652723b7c6a9cece19c4b5b795"
+        },
+        "data/train-00115.jsonl.gz": {
+          "bytes": 857275,
+          "sha256": "c43f64df879b559d53a3433896209a410967fa04de4389237e71830ee08ac985"
+        },
+        "data/train-00116.jsonl.gz": {
+          "bytes": 854313,
+          "sha256": "736d8623217759ef9b94bb07b441ca55719b2e061b33f493b076a519120de0a0"
+        },
+        "data/train-00117.jsonl.gz": {
+          "bytes": 847259,
+          "sha256": "d7bec6199c68f76a3cb5ad2ee3cfae6791b4c53d4f12b4eb1cc4a89e171f29c6"
+        },
+        "data/train-00118.jsonl.gz": {
+          "bytes": 853571,
+          "sha256": "ac7f2b25e41c4d3beaf8b20a1a8e3df260ffb4332696205a65b4da242996aa6d"
+        },
+        "data/train-00119.jsonl.gz": {
+          "bytes": 853236,
+          "sha256": "b992619605dabe75502c8fa9a17f5cbaeca7228061fd322b89744c765f7dd736"
+        },
+        "data/train-00120.jsonl.gz": {
+          "bytes": 836252,
+          "sha256": "0bd33cc5cfd1061d823cd043cdd309cdddb513e84fa4b0ed0dc7fcdaea1c64f9"
+        },
+        "data/train-00121.jsonl.gz": {
+          "bytes": 844382,
+          "sha256": "2d4e94c861b962caa71919441cbf7bb93a16529b79fea7464d38e0b6fda92cc0"
+        },
+        "data/train-00122.jsonl.gz": {
+          "bytes": 846372,
+          "sha256": "c3d94ff1817332a85a51163d73689039ec1656d394e5e5bcd02a7f380c941347"
+        },
+        "data/train-00123.jsonl.gz": {
+          "bytes": 840893,
+          "sha256": "14c21cadc0aa480f602500e4d83a1ac93be9bef1b54286ff08649f1ab9617541"
+        },
+        "data/train-00124.jsonl.gz": {
+          "bytes": 837658,
+          "sha256": "ea5ec73fa133168250ebe5a92d7e3d4ae9e06627ca39e6870b6c90714f70f504"
+        },
+        "data/train-00125.jsonl.gz": {
+          "bytes": 848944,
+          "sha256": "90e6b16ce8574f3f4c57d6981f68dccf5cb573de629e4f9da0bcc586eefe00f3"
+        },
+        "data/train-00126.jsonl.gz": {
+          "bytes": 837602,
+          "sha256": "0c480ece0fe74f7bb4656fe129d6be2514e9ad4954d8279f27202716b49d24ac"
+        },
+        "data/train-00127.jsonl.gz": {
+          "bytes": 855917,
+          "sha256": "e2332f32c4d7bc192aff078483d4e91eecdf9813682b25d79348ffab1409b19c"
+        },
+        "data/train-00128.jsonl.gz": {
+          "bytes": 849009,
+          "sha256": "195bdc162eaea54dc3fade6d2794fff73e736467924aa8ad49e4ee252c60f52e"
+        },
+        "data/train-00129.jsonl.gz": {
+          "bytes": 858005,
+          "sha256": "b3f66154c590fa735e7a0e41f0b0bac01f549891de3f6ff78a0c69f99023ffc2"
+        },
+        "data/train-00130.jsonl.gz": {
+          "bytes": 841609,
+          "sha256": "c881b34113fc6af0216524c150e5be569526c7170fdd934f2da342d11b64b5bc"
+        },
+        "data/train-00131.jsonl.gz": {
+          "bytes": 850664,
+          "sha256": "ad07c01ef6fee22324dbde9882a4472f50869b0235bc57883c866558271abee9"
+        },
+        "data/train-00132.jsonl.gz": {
+          "bytes": 851696,
+          "sha256": "fc3ac5d2b4fbae41060eed2bee6431833af341d09064c245bbb0e6f921bda295"
+        },
+        "data/train-00133.jsonl.gz": {
+          "bytes": 844962,
+          "sha256": "a076f457967d344cad23afb1c36ff9d7a0beba7c1584d24ccbcd75fa06696204"
+        },
+        "data/train-00134.jsonl.gz": {
+          "bytes": 840818,
+          "sha256": "6cf67573e1c7f56a28e05631ca389085b5e2513e60e7a36a2602a151c08bd2f3"
+        },
+        "data/train-00135.jsonl.gz": {
+          "bytes": 851339,
+          "sha256": "2a3a1e3adc1471418d1769c155810c7cef255009454e36967740c3758e7992ad"
+        },
+        "data/train-00136.jsonl.gz": {
+          "bytes": 840466,
+          "sha256": "92b8642847ec8b17667271a23a5741f81d08b998ea5fe5386547f43cca241067"
+        },
+        "data/train-00137.jsonl.gz": {
+          "bytes": 841208,
+          "sha256": "452e19a84cbc432eeb55cff72a2661aa9dbbec6ab5aa74f7bbfd48b3e5f27dd3"
+        },
+        "data/train-00138.jsonl.gz": {
+          "bytes": 847695,
+          "sha256": "b82be27fc67ab860bda82cfa98433ff68e4e13a51eb53f165a77c87bb5074239"
+        },
+        "data/train-00139.jsonl.gz": {
+          "bytes": 858739,
+          "sha256": "31e43a3ddc8dc1dd79bb0c29d9f2f7c1cba06408de8a4f653ce02aab467d79a5"
+        },
+        "data/train-00140.jsonl.gz": {
+          "bytes": 853722,
+          "sha256": "67f2c66c2895502f784d0590d4806940dfff513e0e7b3d0575cd52204ecf7992"
+        },
+        "data/train-00141.jsonl.gz": {
+          "bytes": 859694,
+          "sha256": "18cd87127982e65cbf41c7e877d9fa0c1376b323bf2fb9bef85533e0c5111b45"
+        },
+        "data/train-00142.jsonl.gz": {
+          "bytes": 855967,
+          "sha256": "299ab3ca571daca2ab1ac2fadfc95b71c31f7577009bc2ee0b028d1c4bfe4951"
+        },
+        "data/train-00143.jsonl.gz": {
+          "bytes": 844383,
+          "sha256": "27966d9196d26129e2e296c5ac3584174d4442598e5ebadd3883aaed28032a02"
+        },
+        "data/train-00144.jsonl.gz": {
+          "bytes": 854341,
+          "sha256": "c956c2f122d36fe57828fa87d18336b69c09b09ba9340ee9b229e9afb1401082"
+        },
+        "data/train-00145.jsonl.gz": {
+          "bytes": 847630,
+          "sha256": "94661adff476739cb423cdc5840af4cd5c6622f9f2a2db1c97fa0e4e47835f69"
+        },
+        "data/train-00146.jsonl.gz": {
+          "bytes": 851831,
+          "sha256": "27f00633ad3357e37f1e1af6b117a4f8e105ad5503ed8cb24d9645b22eff2edd"
+        },
+        "data/train-00147.jsonl.gz": {
+          "bytes": 845597,
+          "sha256": "1013bfc8df5a8e8bb58aa8c4497aa810183a2544bf945a4f5c8aef55735c44b1"
+        },
+        "data/train-00148.jsonl.gz": {
+          "bytes": 850138,
+          "sha256": "dc421d1a47a66ce2b17832b5bc07a75a75954d70b32f924e9153fadcd9525c9d"
+        },
+        "data/train-00149.jsonl.gz": {
+          "bytes": 849045,
+          "sha256": "67e7c27668c523d34ab23d0ba3ae49d2389cd1a31eead6f75a7eecf4ac71c239"
+        },
+        "data/train-00150.jsonl.gz": {
+          "bytes": 848282,
+          "sha256": "abbf808c73676c7c8bb219c59800d5920014aecb22a1457076fbdf65c141b49b"
+        },
+        "data/train-00151.jsonl.gz": {
+          "bytes": 841356,
+          "sha256": "05d5f31f4d156ce57d9342020df3ab7f02dcb8ca7ce689d8db524d963cc06e1d"
+        },
+        "data/train-00152.jsonl.gz": {
+          "bytes": 848068,
+          "sha256": "780a00fc5e68cad068f5fda51b11cd8d3cf4917adef570c3ef2dab1e25a8e91f"
+        },
+        "data/train-00153.jsonl.gz": {
+          "bytes": 840833,
+          "sha256": "9f8dd293f6c5c5763532d1b0287cba7cb6509ec84e24033c603f5795618258a7"
+        },
+        "data/train-00154.jsonl.gz": {
+          "bytes": 840367,
+          "sha256": "43722a7383c7291aeb963cd7e6be887aa4610a605d286035cca1862559d07522"
+        },
+        "data/train-00155.jsonl.gz": {
+          "bytes": 852522,
+          "sha256": "c9503dfe9d98db797b805960f0a369252ddacdeadfaf69491e5f37b64f7a972a"
+        },
+        "data/train-00156.jsonl.gz": {
+          "bytes": 850062,
+          "sha256": "67bd3ee383b1acbb732fc826b6fa182030c3fde1c76334ce6a3f00d49b7b0b72"
+        },
+        "data/train-00157.jsonl.gz": {
+          "bytes": 860579,
+          "sha256": "c5a525d9334fc75c34da4dd939827e9390465ef52b36c6bc4f7fd15033972c4f"
+        },
+        "data/train-00158.jsonl.gz": {
+          "bytes": 851352,
+          "sha256": "e2c88a22dea146058293dc8850ae4cf225e32e5247b45d4ae8af74f97c95b712"
+        },
+        "data/train-00159.jsonl.gz": {
+          "bytes": 856000,
+          "sha256": "0b2247a973d08f0684be1f86be6caff53e8c2591432b84d53d80d9eabf2f8d69"
+        },
+        "data/train-00160.jsonl.gz": {
+          "bytes": 847316,
+          "sha256": "b2ad9018ffadeabeaa288205d0246cc79d1c8ccc3f45531f5ba4f31635b0069c"
+        },
+        "data/train-00161.jsonl.gz": {
+          "bytes": 852800,
+          "sha256": "0351da5bedef4f4cf2ff0687806e9c20dafbb440e6a16e49b22dfe5218f2a73d"
+        },
+        "data/train-00162.jsonl.gz": {
+          "bytes": 856483,
+          "sha256": "834b0bcefa84018384b9cb88f5bfb45e099bb13b070bb822dfe09b58d840ebee"
+        },
+        "data/train-00163.jsonl.gz": {
+          "bytes": 830508,
+          "sha256": "004b4cfdabc442305ca1b00ec3543c3aa96b393c19ff84ebe7710b7b3b4ceaa8"
+        },
+        "data/train-00164.jsonl.gz": {
+          "bytes": 840590,
+          "sha256": "6f6bc5bf192d927c6139c66328bdf1acaa55720e3a1fad10526a20b6b56a2d74"
+        },
+        "data/train-00165.jsonl.gz": {
+          "bytes": 840817,
+          "sha256": "0e6e243700954c272e4072bc272a69a95220c8829f74cedcb77720d6dbb702db"
+        },
+        "data/train-00166.jsonl.gz": {
+          "bytes": 857246,
+          "sha256": "bc467ff8b0b94d9de7e84055864ab177153046f6b0e06f7c397dc04a5559f03c"
+        },
+        "data/train-00167.jsonl.gz": {
+          "bytes": 289333,
+          "sha256": "170c2e7fea1dcd964ba71162ba9acb354a25af1310fcb2fc5b93dbaeb6cf0ca2"
+        },
+        "metadata/manifest.json": {
+          "bytes": 28703,
+          "sha256": "c636567a8b317238f91e1739e07907795d88b0ff667bbbbd34ada6d87a99eb8d"
+        },
+        "validate_dataset.py": {
+          "bytes": 2179,
+          "sha256": "deb5e6e0700b4cfdebbc46c9049821887e8d19522f0fcafa17721bdebd8c2675"
+        }
+      }
+    },
+    "schneiderkamplab/dfm11-toolace-native-tool-use-repaired": {
+      "revision": "2768a3ff3b65effb60d200042c8e09a10e07cc59",
+      "files": {
+        ".gitattributes": {
+          "bytes": 2504,
+          "sha256": "9e75dd981de037ec3769f24f790e126bc5a160b6871f510214e68dc70649aeeb"
+        },
+        "README.md": {
+          "bytes": 290,
+          "sha256": "c83a2159b1d899e495b52d478fb82c2a6fe5887540634b2307e76f9e45248da9"
+        },
+        "data/train-00000.jsonl.gz": {
+          "bytes": 3024350,
+          "sha256": "5893df6b53d70783f12f993404261db3762d24bde362137f44c878bd37ecd0be"
+        },
+        "data/train-00001.jsonl.gz": {
+          "bytes": 2398863,
+          "sha256": "75ec8d71d3125e7d02983fed7564245cf2777835e8b2a2a2383a395c55317206"
+        },
+        "data/train-00002.jsonl.gz": {
+          "bytes": 188623,
+          "sha256": "c7e628477bf5ac9ae49cea5288e08167fb13a6350434a6369559e8c1029a7b7e"
+        },
+        "metadata/manifest.json": {
+          "bytes": 1936,
+          "sha256": "db34844221d78173728150c1d6348f52320cdb8f726bba40136e5b924f93cfae"
+        },
+        "validate_dataset.py": {
+          "bytes": 2179,
+          "sha256": "deb5e6e0700b4cfdebbc46c9049821887e8d19522f0fcafa17721bdebd8c2675"
+        }
+      }
+    }
+  },
+  "composition": {
+    "base_entries": 15748,
+    "replaced_base": 13,
+    "base_tasks": 15733,
+    "addition_tasks": 290,
+    "total_tasks": 16025
+  }
+}

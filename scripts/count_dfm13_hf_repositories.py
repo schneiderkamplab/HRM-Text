@@ -56,7 +56,7 @@ print(json.dumps(dict(rows=rows, base_metadata_sha256=inheritance['base']['metad
 '''
     remote = subprocess.check_output(
         ['ssh', '-p', '2850', '-o', 'BatchMode=yes', 'ucloud@ssh.cloud.sdu.dk',
-         'cd /work/mimir/HRM-Text && /home/ucloud/miniforge3/envs/hrm/bin/python -'],
+         'cd /work/dfm/HRM-Text && /home/ucloud/miniforge3/envs/hrm/bin/python -'],
         input=remote_code.encode())
     remote = json.loads(remote)
     additions = remote['rows']

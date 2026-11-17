@@ -3,7 +3,7 @@
     {
       "name": "dala_nb",
       "suite": "dala_nb",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "nb",
       "max_tokens": 32,
       "shards": 4
@@ -11,7 +11,7 @@
     {
       "name": "gec_dala_nb",
       "suite": "gec_dala_nb",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "nb",
       "max_tokens": 512,
       "shards": 4
@@ -19,7 +19,7 @@
     {
       "name": "dala_nn",
       "suite": "dala_nn",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "nn",
       "max_tokens": 32,
       "shards": 4
@@ -27,7 +27,7 @@
     {
       "name": "gec_dala_nn",
       "suite": "gec_dala_nn",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "nn",
       "max_tokens": 512,
       "shards": 4
@@ -35,7 +35,7 @@
     {
       "name": "dala_sv",
       "suite": "dala_sv",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "sv",
       "max_tokens": 32,
       "shards": 4
@@ -43,7 +43,7 @@
     {
       "name": "gec_dala_sv",
       "suite": "gec_dala_sv",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "sv",
       "max_tokens": 512,
       "shards": 4
@@ -51,7 +51,7 @@
     {
       "name": "dala_is",
       "suite": "dala_is",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "is",
       "max_tokens": 32,
       "shards": 4
@@ -59,7 +59,7 @@
     {
       "name": "gec_dala_is",
       "suite": "gec_dala_is",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "is",
       "max_tokens": 512,
       "shards": 4
@@ -67,7 +67,7 @@
     {
       "name": "dala_fo",
       "suite": "dala_fo",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "fo",
       "max_tokens": 32,
       "shards": 4
@@ -75,7 +75,7 @@
     {
       "name": "gec_dala_fo",
       "suite": "gec_dala_fo",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "fo",
       "max_tokens": 512,
       "shards": 4
@@ -83,7 +83,7 @@
     {
       "name": "dala_nl",
       "suite": "dala_nl",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "nl",
       "max_tokens": 32,
       "shards": 4
@@ -91,7 +91,7 @@
     {
       "name": "gec_dala_nl",
       "suite": "gec_dala_nl",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "nl",
       "max_tokens": 512,
       "shards": 4
@@ -99,7 +99,7 @@
     {
       "name": "dala_pl",
       "suite": "dala_pl",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "pl",
       "max_tokens": 32,
       "shards": 4
@@ -107,7 +107,7 @@
     {
       "name": "gec_dala_pl",
       "suite": "gec_dala_pl",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "pl",
       "max_tokens": 512,
       "shards": 4
@@ -115,7 +115,7 @@
     {
       "name": "dala_de",
       "suite": "dala_de",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "de",
       "max_tokens": 32,
       "shards": 4
@@ -123,7 +123,7 @@
     {
       "name": "gec_dala_de",
       "suite": "gec_dala_de",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "de",
       "max_tokens": 512,
       "shards": 4
@@ -131,7 +131,7 @@
     {
       "name": "dala_fr",
       "suite": "dala_fr",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "fr",
       "max_tokens": 32,
       "shards": 4
@@ -139,7 +139,7 @@
     {
       "name": "gec_dala_fr",
       "suite": "gec_dala_fr",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "fr",
       "max_tokens": 512,
       "shards": 4
@@ -147,7 +147,7 @@
     {
       "name": "dala_es",
       "suite": "dala_es",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "es",
       "max_tokens": 32,
       "shards": 4
@@ -155,7 +155,7 @@
     {
       "name": "gec_dala_es",
       "suite": "gec_dala_es",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "es",
       "max_tokens": 512,
       "shards": 4
@@ -163,7 +163,7 @@
     {
       "name": "dala_it",
       "suite": "dala_it",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "it",
       "max_tokens": 32,
       "shards": 4
@@ -171,7 +171,7 @@
     {
       "name": "gec_dala_it",
       "suite": "gec_dala_it",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "it",
       "max_tokens": 512,
       "shards": 4
@@ -179,7 +179,7 @@
     {
       "name": "dala_cs",
       "suite": "dala_cs",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "cs",
       "max_tokens": 32,
       "shards": 4
@@ -187,7 +187,7 @@
     {
       "name": "gec_dala_cs",
       "suite": "gec_dala_cs",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "cs",
       "max_tokens": 512,
       "shards": 4
@@ -195,7 +195,7 @@
     {
       "name": "dala_pt_pt",
       "suite": "dala_pt_pt",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "pt_pt",
       "max_tokens": 32,
       "shards": 4
@@ -203,7 +203,7 @@
     {
       "name": "gec_dala_pt_pt",
       "suite": "gec_dala_pt_pt",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "pt_pt",
       "max_tokens": 512,
       "shards": 4
@@ -211,7 +211,7 @@
     {
       "name": "dala_fi",
       "suite": "dala_fi",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "fi",
       "max_tokens": 32,
       "shards": 4
@@ -219,7 +219,7 @@
     {
       "name": "gec_dala_fi",
       "suite": "gec_dala_fi",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "fi",
       "max_tokens": 512,
       "shards": 4
@@ -227,7 +227,7 @@
     {
       "name": "dala_et",
       "suite": "dala_et",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "et",
       "max_tokens": 32,
       "shards": 4
@@ -235,7 +235,7 @@
     {
       "name": "gec_dala_et",
       "suite": "gec_dala_et",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "et",
       "max_tokens": 512,
       "shards": 4
@@ -243,7 +243,7 @@
     {
       "name": "dala_ca",
       "suite": "dala_ca",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "ca",
       "max_tokens": 32,
       "shards": 4
@@ -251,7 +251,7 @@
     {
       "name": "gec_dala_ca",
       "suite": "gec_dala_ca",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "ca",
       "max_tokens": 512,
       "shards": 4
@@ -259,7 +259,7 @@
     {
       "name": "dala_el",
       "suite": "dala_el",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "el",
       "max_tokens": 32,
       "shards": 4
@@ -267,7 +267,7 @@
     {
       "name": "gec_dala_el",
       "suite": "gec_dala_el",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "el",
       "max_tokens": 512,
       "shards": 4
@@ -275,7 +275,7 @@
     {
       "name": "dala_ro",
       "suite": "dala_ro",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "ro",
       "max_tokens": 32,
       "shards": 4
@@ -283,7 +283,7 @@
     {
       "name": "gec_dala_ro",
       "suite": "gec_dala_ro",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "ro",
       "max_tokens": 512,
       "shards": 4
@@ -291,7 +291,7 @@
     {
       "name": "dala_uk",
       "suite": "dala_uk",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "uk",
       "max_tokens": 32,
       "shards": 4
@@ -299,7 +299,7 @@
     {
       "name": "gec_dala_uk",
       "suite": "gec_dala_uk",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "uk",
       "max_tokens": 512,
       "shards": 4
@@ -307,7 +307,7 @@
     {
       "name": "dala_en",
       "suite": "dala_en",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "en",
       "max_tokens": 32,
       "shards": 4
@@ -315,7 +315,7 @@
     {
       "name": "gec_dala_en",
       "suite": "gec_dala_en",
-      "config": "/work/mimir/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
+      "config": "/work/dfm/HRM-Text/config/dfm_evals_multilingual_dala_heldout.yaml",
       "language": "en",
       "max_tokens": 512,
       "shards": 4
@@ -9036,6 +9036,6 @@
       ]
     }
   ],
-  "euroeval_bin": "/work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python /work/mimir/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py",
-  "headline_manifest": "/work/mimir/HRM-Text/config/multilingual_headline_populations_20260930.json"
+  "euroeval_bin": "/work/dfm/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py",
+  "headline_manifest": "/work/dfm/HRM-Text/config/multilingual_headline_populations_20260930.json"
 }

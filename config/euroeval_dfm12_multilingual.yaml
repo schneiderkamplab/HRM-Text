@@ -8074,9 +8074,9 @@ selection_policy: One official dataset per language/category, first in pinned up
   order; all alternatives listed. Keep one dataset per execution group. Existing DA/EN
   groups unchanged.
 execution:
-  python: /work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python
-  euroeval_bin: /work/mimir/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python
-    /work/mimir/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py
+  python: /work/dfm/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python
+  euroeval_bin: /work/dfm/.home/.cache/uv/archive-v0/xPmpbGur3kEaUYAJ/bin/python
+    /work/dfm/HRM-Text/scripts/euroeval_api_no_flash_attn_guard.py
   version: 18.1.0
   help_smoke_passed: true
   no_environment_changes: true
@@ -8133,7 +8133,7 @@ source_evidence:
     dataset_configs/catalan.py: ca6db80e807c674804ba193e47a3bfac5c8cb6d14368a9aab29a22d5e4cc3bb8
     dataset_configs/czech.py: b7dac5e748eb6dd05855017ae58fa4f440db285c44f084f429e968688f6c4e9b
   cached_18_1:
-    path: /work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval
+    path: /work/dfm/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval
     file_sha256:
       tasks.py: 2c10ee33274f244de1efd736fb6ac2c4695a37bbb196288a68f9fe9d28bbfff9
       dataset_configs/danish.py: 5f7e39afff904cfe8311242774ec919abd8f98c9736a1ef6e17768d6a2b45f5f

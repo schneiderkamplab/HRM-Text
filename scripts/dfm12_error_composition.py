@@ -26,7 +26,7 @@ BUILD=ROOT/'data/dfm12/training-build-completed-campaign-20260929'
 TOKENS=ROOT/'data/tokenized_dfm12_additions-completed-campaign-20260929'
 SAMPLED=ROOT/'data/sampled_dfm12_xl_epoch11_noidentity_additions'
 ACTIVE=ROOT/'data/sampled_dfm12_xl_epoch11_noidentity'
-DALA=Path('/work/mimir/DaLA')
+DALA=Path('/work/dfm/DaLA')
 
 
 def lines(path):
