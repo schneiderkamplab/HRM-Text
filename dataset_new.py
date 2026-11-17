@@ -22,10 +22,12 @@ class V1DatasetConfig(pydantic.BaseModel):
     drop_last_batch: bool
 
     target_only: bool
+    mixed_lm: bool = False
 
     rank: int
     num_replicas: int
     homogeneous_categories: bool = False
+    routing_categories: bool = False
 
 
 class V1DatasetMeta(pydantic.BaseModel):
@@ -48,6 +50,15 @@ class V1Dataset(IterableDataset):
         super().__init__()
         self.config = config
         self.metadata = self._load_metadata()
+        if config.mixed_lm:
+            if not config.target_only:
+                raise ValueError("MixedLM requires target_only=true")
+            from tokenizers import Tokenizer
+            tokenizer = Tokenizer.from_file(self.metadata.tokenizer_info['tokenizer_path'])
+            self._mixed_header = tokenizer.encode('<|turn>model\n', add_special_tokens=False).ids
+            self._mixed_tools = [tokenizer.token_to_id(t) for t in ('<|tool_call>', '<|tool_response>')]
+            if any(t is None for t in self._mixed_tools):
+                raise ValueError("MixedLM requires the verified Gemma4 chat-token protocol")
 
         # State
         self._data: Optional[np.ndarray] = None
@@ -97,9 +108,12 @@ class V1Dataset(IterableDataset):
         # Load indices
         self._data_indices = V1DatasetIndices(**{f.name: np.load(os.path.join(self.config.dataset_path, f"epoch_{self._epoch}", f"{f.name}.npy"), mmap_mode="r")
                                                  for f in fields(V1DatasetIndices)})
-        if self.config.homogeneous_categories:
+        if self.config.homogeneous_categories or self.config.routing_categories:
             self._categories = np.load(os.path.join(self.config.dataset_path, f'epoch_{self._epoch}',
                                                     'category_id.npy'), mmap_mode='r')
+            if (self._categories.ndim != 1 or self._categories.dtype.kind not in 'iu'
+                    or len(self._categories) != len(self._data_indices.inst_len)):
+                raise ValueError('category_id.npy must be an integer vector aligned with epoch rows')
         self._epoch += 1
 
         # Re-create sampler
@@ -172,6 +186,21 @@ class V1Dataset(IterableDataset):
             if len(categories) == 0 or np.any(categories != categories[0]):
                 raise ValueError('Expected a nonempty homogeneous microbatch')
             result['routing_category'] = torch.tensor(int(categories[0]))
+        elif self.config.routing_categories:
+            categories = self._categories[indices]
+            if np.any(categories < 0):
+                raise ValueError('Routing categories must be nonnegative')
+            lengths = (self._data_indices.inst_len[indices]
+                       + self._data_indices.resp_len[indices] - 1)
+            # Preserve normal sampling/packing; all tokens of an example share
+            # its source label. Padding uses neutral category zero.
+            routed = np.repeat(categories.astype(np.int64), lengths.astype(np.int64))
+            if pad_len > 0:
+                routed = np.pad(routed, (0, pad_len), constant_values=0)
+            result['routing_category'] = torch.from_numpy(routed)
+        if self.config.mixed_lm:
+            from models.mixedlm import routing
+            result.update(routing(raw['inst'], [len(o)-1 for o in raw['resp']], self._mixed_header, self._mixed_tools))
         return result, scalars
 
     def __iter__(self):

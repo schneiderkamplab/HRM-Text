@@ -1,5 +1,7 @@
 from typing import Optional
 
+import os
+
 import torch
 import triton
 import triton.language as tl
@@ -48,6 +50,288 @@ def _fa4_varlen(
         return_lse=True,
     )
     return out
+
+
+def _fa4_varlen_lse(
+    q: Tensor,
+    k: Tensor,
+    v: Tensor,
+    *,
+    cu_seqlens_q: Tensor,
+    cu_seqlens_k: Tensor,
+    max_seqlen_q: int,
+    max_seqlen_k: int,
+    causal: bool,
+    seqused_q: Optional[Tensor] = None,
+    seqused_k: Optional[Tensor] = None,
+) -> tuple[Tensor, Tensor]:
+    try:
+        from flash_attn.cute import flash_attn_varlen_func
+    except ImportError as exc:
+        raise ImportError(
+            "accelerator_type=sm100 requires FlashAttention 4 from flash_attn.cute."
+        ) from exc
+
+    return flash_attn_varlen_func(
+        q,
+        k,
+        v,
+        cu_seqlens_q=cu_seqlens_q,
+        cu_seqlens_k=cu_seqlens_k,
+        max_seqlen_q=max_seqlen_q,
+        max_seqlen_k=max_seqlen_k,
+        seqused_q=seqused_q,
+        seqused_k=seqused_k,
+        causal=causal,
+        return_lse=True,
+    )
+
+
+@torch.library.custom_op("flash_attn::fa4_prefixlm_seqused_fwd", mutates_args=())
+def _fa4_prefixlm_seqused_fwd(
+    q: Tensor,
+    k: Tensor,
+    v: Tensor,
+    is_causal: bool,
+    cu_seqlens: Tensor,
+    prefix_lens: Tensor,
+    causal_lens: Tensor,
+    prefix_mask: Tensor,
+    causal_mask: Tensor,
+    total_seqlen: Tensor,
+    numseqs: Tensor,
+    max_seqlen_prefix: Tensor,
+    max_seqlen_causal: Tensor,
+    max_seqlen_all: Tensor,
+) -> tuple[Tensor, Tensor, Tensor]:
+    # Opaque to dynamo: all data-dependent slicing happens here at runtime.
+    with torch.no_grad():
+        if os.environ.get("FA4_DEBUG_DTYPES", "0") == "1":
+            print(f"[fwd] q={q.dtype} cu={cu_seqlens.dtype}/{cu_seqlens.shape} "
+                  f"pl={prefix_lens.dtype} cl={causal_lens.dtype} pm={prefix_mask.dtype} "
+                  f"n={int(numseqs.item())} T={q.shape[0]}", flush=True)
+        numseqs_int = int(numseqs.item())
+        max_p = int(max_seqlen_prefix.item())
+        max_c = int(max_seqlen_causal.item())
+        max_a = int(max_seqlen_all.item())
+        cu = cu_seqlens[: numseqs_int + 1]
+        pl = prefix_lens[:numseqs_int]
+        cl = causal_lens[:numseqs_int]
+        cu_shifted = cu + torch.nn.functional.pad(pl, (0, 1))
+        out_prefix, lse_bidir = _fa4_varlen_lse(
+            q, k, v,
+            cu_seqlens_q=cu, cu_seqlens_k=cu,
+            max_seqlen_q=max_p, max_seqlen_k=max_p,
+            causal=is_causal,
+            seqused_q=pl, seqused_k=pl,
+        )
+        if max_c == 0:
+            out = _combine_seqused_outputs_triton(
+                out_prefix, torch.zeros_like(out_prefix), prefix_mask, causal_mask
+            )
+            lse_causal = torch.zeros((q.shape[-3], q.shape[0]), dtype=torch.float32, device=q.device)
+        else:
+            out_causal, lse_causal = _fa4_varlen_lse(
+                q, k, v,
+                cu_seqlens_q=cu_shifted, cu_seqlens_k=cu,
+                max_seqlen_q=max_c, max_seqlen_k=max_a,
+                causal=True,
+                seqused_q=cl,
+            )
+            out = _combine_seqused_outputs_triton(out_prefix, out_causal, prefix_mask, causal_mask)
+        return out, lse_bidir, lse_causal
+
+
+@torch.library.register_fake("flash_attn::fa4_prefixlm_seqused_fwd")
+def _fake_fa4_prefixlm_seqused_fwd(
+    q: Tensor,
+    k: Tensor,
+    v: Tensor,
+    is_causal: bool,
+    cu_seqlens: Tensor,
+    prefix_lens: Tensor,
+    causal_lens: Tensor,
+    prefix_mask: Tensor,
+    causal_mask: Tensor,
+    total_seqlen: Tensor,
+    numseqs: Tensor,
+    max_seqlen_prefix: Tensor,
+    max_seqlen_causal: Tensor,
+    max_seqlen_all: Tensor,
+) -> tuple[Tensor, Tensor, Tensor]:
+    lse_bidir = torch.empty((q.shape[-2], q.shape[0]), dtype=torch.float32, device=q.device)
+    lse_causal = torch.empty((q.shape[-2], q.shape[0]), dtype=torch.float32, device=q.device)
+    return torch.empty_like(q), lse_bidir, lse_causal
+
+
+def _fa4_bwd_pass(
+    q: Tensor,
+    k: Tensor,
+    v: Tensor,
+    out: Tensor,
+    dout: Tensor,
+    lse: Tensor,
+    *,
+    is_causal: bool,
+    cu_seqlens_q: Tensor,
+    cu_seqlens_k: Tensor,
+    seqused_q: Optional[Tensor],
+    seqused_k: Optional[Tensor],
+    max_seqlen_q: int,
+    max_seqlen_k: int,
+) -> tuple[Tensor, Tensor, Tensor]:
+    try:
+        from flash_attn.cute.interface import _flash_attn_bwd
+    except ImportError as exc:
+        raise ImportError(
+            "accelerator_type=sm100 requires FlashAttention 4 from flash_attn.cute."
+        ) from exc
+
+    return _flash_attn_bwd(
+        q, k, v, out, dout, lse,
+        None,  # softmax_scale
+        is_causal,
+        0.0,  # softcap
+        window_size_left=None,
+        window_size_right=None,
+        cu_seqlens_q=cu_seqlens_q,
+        cu_seqlens_k=cu_seqlens_k,
+        seqused_q=seqused_q,
+        seqused_k=seqused_k,
+        max_seqlen_q=max_seqlen_q,
+        max_seqlen_k=max_seqlen_k,
+        deterministic=False,
+        score_mod=None,
+        score_mod_bwd=None,
+        mask_mod=None,
+        aux_tensors=None,
+        block_sparse_tensors=None,
+        dlse=None,
+    )
+
+
+@torch.library.custom_op("flash_attn::fa4_prefixlm_seqused_bwd", mutates_args=())
+def _fa4_prefixlm_seqused_bwd(
+    q: Tensor,
+    k: Tensor,
+    v: Tensor,
+    is_causal: bool,
+    out: Tensor,
+    dout: Tensor,
+    lse_bidir: Tensor,
+    lse_causal: Tensor,
+    cu_seqlens: Tensor,
+    prefix_lens: Tensor,
+    causal_lens: Tensor,
+    prefix_mask: Tensor,
+    causal_mask: Tensor,
+    total_seqlen: Tensor,
+    numseqs: Tensor,
+    max_seqlen_prefix: Tensor,
+    max_seqlen_causal: Tensor,
+    max_seqlen_all: Tensor,
+) -> tuple[Tensor, Tensor, Tensor]:
+    with torch.no_grad():
+        numseqs_int = int(numseqs.item())
+        max_p = int(max_seqlen_prefix.item())
+        max_c = int(max_seqlen_causal.item())
+        max_a = int(max_seqlen_all.item())
+        cu = cu_seqlens[: numseqs_int + 1]
+        pl = prefix_lens[:numseqs_int]
+        cl = causal_lens[:numseqs_int]
+        cu_shifted = cu + torch.nn.functional.pad(pl, (0, 1))
+        # Reconstruct per-pass outputs from the combined output (masks are disjoint).
+        out_prefix = torch.where(prefix_mask[:, None, None], out, torch.zeros_like(out))
+        prefix_dout, causal_dout = _route_seqused_output_grad_triton(dout, prefix_mask, causal_mask)
+        dq1, dk1, dv1 = _fa4_bwd_pass(
+            q, k, v, out_prefix, prefix_dout, lse_bidir,
+            is_causal=is_causal,
+            cu_seqlens_q=cu, cu_seqlens_k=cu,
+            seqused_q=pl, seqused_k=pl,
+            max_seqlen_q=max_p, max_seqlen_k=max_p,
+        )
+        dq1, dk1, dv1 = _mask_undefined_seqused_grads_triton(dq1, dk1, dv1, prefix_mask, prefix_mask)
+        if max_c == 0:
+            return dq1, dk1, dv1
+        out_causal = torch.where(causal_mask[:, None, None], out, torch.zeros_like(out))
+        dq2, dk2, dv2 = _fa4_bwd_pass(
+            q, k, v, out_causal, causal_dout, lse_causal,
+            is_causal=True,
+            cu_seqlens_q=cu_shifted, cu_seqlens_k=cu,
+            seqused_q=cl, seqused_k=None,
+            max_seqlen_q=max_c, max_seqlen_k=max_a,
+        )
+        dq2, dk2, dv2 = _mask_undefined_seqused_grads_triton(dq2, dk2, dv2, causal_mask, prefix_mask | causal_mask)
+        return dq1 + dq2, dk1 + dk2, dv1 + dv2
+
+
+@torch.library.register_fake("flash_attn::fa4_prefixlm_seqused_bwd")
+def _fake_fa4_prefixlm_seqused_bwd(
+    q: Tensor,
+    k: Tensor,
+    v: Tensor,
+    is_causal: bool,
+    out: Tensor,
+    dout: Tensor,
+    lse_bidir: Tensor,
+    lse_causal: Tensor,
+    cu_seqlens: Tensor,
+    prefix_lens: Tensor,
+    causal_lens: Tensor,
+    prefix_mask: Tensor,
+    causal_mask: Tensor,
+    total_seqlen: Tensor,
+    numseqs: Tensor,
+    max_seqlen_prefix: Tensor,
+    max_seqlen_causal: Tensor,
+    max_seqlen_all: Tensor,
+) -> tuple[Tensor, Tensor, Tensor]:
+    return torch.empty_like(q), torch.empty_like(k), torch.empty_like(v)
+
+
+class _Fa4PrefixLMSequsedFn(torch.autograd.Function):
+    """Autograd glue between the traced graph and the opaque FA4 ops."""
+
+    @staticmethod
+    def forward(
+        ctx,
+        q: Tensor,
+        k: Tensor,
+        v: Tensor,
+        is_causal: bool,
+        cu_seqlens: Tensor,
+        prefix_lens: Tensor,
+        causal_lens: Tensor,
+        prefix_mask: Tensor,
+        causal_mask: Tensor,
+        total_seqlen: Tensor,
+        numseqs: Tensor,
+        max_seqlen_prefix: Tensor,
+        max_seqlen_causal: Tensor,
+        max_seqlen_all: Tensor,
+    ) -> Tensor:
+        out, lse_bidir, lse_causal = _fa4_prefixlm_seqused_fwd(
+            q, k, v, is_causal, cu_seqlens, prefix_lens, causal_lens,
+            prefix_mask, causal_mask, total_seqlen, numseqs,
+            max_seqlen_prefix, max_seqlen_causal, max_seqlen_all,
+        )
+        ctx.save_for_backward(q, k, v, out, lse_bidir, lse_causal, cu_seqlens, prefix_lens, causal_lens,
+                              prefix_mask, causal_mask, total_seqlen, numseqs,
+                              max_seqlen_prefix, max_seqlen_causal, max_seqlen_all)
+        ctx.is_causal = is_causal
+        return out
+
+    @staticmethod
+    def backward(ctx, dout: Tensor):
+        (q, k, v, out, lse_bidir, lse_causal, cu_seqlens, prefix_lens, causal_lens,
+         prefix_mask, causal_mask, total_seqlen, numseqs,
+         max_seqlen_prefix, max_seqlen_causal, max_seqlen_all) = ctx.saved_tensors
+        dq, dk, dv = _fa4_prefixlm_seqused_bwd(
+            q, k, v, ctx.is_causal, out, dout, lse_bidir, lse_causal,
+            cu_seqlens, prefix_lens, causal_lens, prefix_mask, causal_mask,
+            total_seqlen, numseqs, max_seqlen_prefix, max_seqlen_causal, max_seqlen_all,
+        )
+        return dq, dk, dv, None, None, None, None, None, None, None, None, None, None, None
 
 
 class _MaskUndefinedSequsedGrad(torch.autograd.Function):
@@ -463,6 +747,17 @@ def flash_attn_varlen_prefixlm(
             padding = q.shape[0] - prefix_mask.shape[0]
             prefix_mask = torch.nn.functional.pad(prefix_mask, (0, padding), value=False)
             causal_mask = torch.nn.functional.pad(causal_mask, (0, padding), value=False)
+        if os.environ.get("FA4_COMPILEOP", "0") == "1":
+            # Opaque custom-op path: dynamo neither traces into flash_attn.cute
+            # (which fabricates wrong-dtype tensors) nor guards on the runtime
+            # scalars. Slicing happens inside the op; shapes stay fixed.
+            return _Fa4PrefixLMSequsedFn.apply(
+                q, k, v, is_causal,
+                cu_seqlens, prefix_lens, causal_lens,
+                prefix_mask, causal_mask,
+                total_seqlen, numseqs,
+                max_seqlen_prefix, max_seqlen_causal, max_seqlen_all,
+            )
         numseqs_int = int(numseqs.item())
         return _flash_attn_varlen_prefixlm_seqused(
             q,
@@ -541,3 +836,14 @@ def flash_attn_varlen_prefixlm(
         out[causal_idx] = out_causal
 
     return out
+
+
+# Env-gated: run the whole FA4 PrefixLM wrapper eagerly under torch.compile.
+# Dynamo otherwise traces into flash_attn.cute's python, where it fabricates
+# tensors with wrong dtypes (int64 metadata hitting FA4's int32 asserts) and
+# emits value guards on runtime scalars, defeating cudagraph replay. The
+# seqused impl keeps all tensors at fixed [batch_max_length] shapes (triton
+# grad-mask/combine), so the resulting graph break costs nothing in shape
+# stability.
+if os.environ.get("FA4_DYNAMO_DISABLE", "0") == "1":
+    flash_attn_varlen_prefixlm = torch._dynamo.disable(flash_attn_varlen_prefixlm)

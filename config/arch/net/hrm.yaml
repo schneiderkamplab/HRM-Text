@@ -8,6 +8,11 @@ H_cycles: 2
 L_cycles: 3
 H_override: {}
 
+# Optional per-microbatch full-backprop schemes within the current BP budget.
+cycle_variants: "off"
+cycle_variant_seed: null
+cycle_sampler_version: 1
+
 bp_warmup_ratio: 0.2
 bp_max_steps: 5
 

@@ -1,3 +1,4 @@
+import os
 from typing import Optional, Tuple
 
 import torch
@@ -12,6 +13,17 @@ except ImportError:
 
 from models.accelerator import get_accelerator_type
 
+# Env-gated fixed-shape packing for cudagraph replay: pin the number of packed
+# rows (zero-length dummy rows absorb the variance) and the max_seqlen scalars
+# (FA4 accepts upper bounds) so the compiled train step sees constant shapes
+# and constant int guards. Values must be dataset-wide maxima; the collate
+# raises if a batch exceeds them. Dense attention runs only.
+_FIXED_NUMSEQS = int(os.environ.get("FIXED_NUMSEQS", "0"))
+_FIXED_MAXSEQ_PREFIX = int(os.environ.get("FIXED_MAXSEQ_PREFIX", "0"))
+_FIXED_MAXSEQ_CAUSAL = int(os.environ.get("FIXED_MAXSEQ_CAUSAL", "0"))
+_FIXED_MAXSEQ_ALL = int(os.environ.get("FIXED_MAXSEQ_ALL", "0"))
+
+
 __all__ = [
     "compute_aux_seq_tensors_scalars",
     "flash_attn_varlen_prefixlm",
@@ -21,6 +33,27 @@ __all__ = [
 def compute_aux_seq_tensors_scalars(prefix_lens: np.ndarray, causal_lens: np.ndarray, batch_max_tokens: int):
     # Tensors
     total_lens = prefix_lens + causal_lens
+    if _FIXED_NUMSEQS:
+        n = prefix_lens.shape[0]
+        if n > _FIXED_NUMSEQS:
+            raise ValueError(f"Batch has {n} rows, exceeding FIXED_NUMSEQS={_FIXED_NUMSEQS}")
+        if prefix_lens.max() > _FIXED_MAXSEQ_PREFIX or causal_lens.max() > _FIXED_MAXSEQ_CAUSAL or total_lens.max() > _FIXED_MAXSEQ_ALL:
+            raise ValueError("Batch seqlen exceeds FIXED_MAXSEQ_* caps")
+        R = _FIXED_NUMSEQS
+        cu = np.concatenate((np.zeros(1, dtype=np.int32), np.cumsum(total_lens, dtype=np.int32)))
+        cu_full = np.pad(cu, (0, R + 1 - cu.shape[0]), mode="edge")
+        tensors = {
+            "prefix_lens": np.pad(prefix_lens, (0, batch_max_tokens - R)),
+            "causal_lens": np.pad(causal_lens, (0, batch_max_tokens - R)),
+            # Zero-length dummy rows repeat the final boundary; FA skips them.
+            "cu_seqlens": np.pad(cu_full, (0, batch_max_tokens - R - 1)),
+        }
+        scalars = {"total_seqlen": int(total_lens.sum()),
+                   "numseqs": R,
+                   "max_seqlen_prefix": _FIXED_MAXSEQ_PREFIX,
+                   "max_seqlen_causal": _FIXED_MAXSEQ_CAUSAL,
+                   "max_seqlen_all": _FIXED_MAXSEQ_ALL}
+        return tensors, scalars
     tensors = {
         "prefix_lens": np.pad(prefix_lens, (0, batch_max_tokens - prefix_lens.shape[0])),
         "causal_lens": np.pad(causal_lens, (0, batch_max_tokens - causal_lens.shape[0])),

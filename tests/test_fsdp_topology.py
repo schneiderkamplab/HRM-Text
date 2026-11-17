@@ -145,6 +145,7 @@ def test_world_size_change_uses_global_row_cursor(monkeypatch, tmp_path) -> None
 def test_no_carry_checkpoint_writes_atomic_sidecar_without_carry(monkeypatch, tmp_path) -> None:
     cfg = pretrain.PretrainConfig.model_construct(
         checkpoint_path=str(tmp_path),
+        arch=pretrain.ArchConfig(name="transformer@Transformer", head="lm_head@LMHead"),
         checkpoint_format="sharded",
         gradient_accumulation_steps=4,
         global_batch_size=262144,
@@ -153,7 +154,7 @@ def test_no_carry_checkpoint_writes_atomic_sidecar_without_carry(monkeypatch, tm
         fsdp_shard_degree=4,
         fsdp_reshard_after_forward=None,
     )
-    state = SimpleNamespace(step=10, carry=None)
+    state = SimpleNamespace(step=10, carry=None, total_steps=100)
     save_state = MagicMock()
     monkeypatch.setattr(pretrain, "save_sharded_train_state", save_state)
 
@@ -165,6 +166,7 @@ def test_no_carry_checkpoint_writes_atomic_sidecar_without_carry(monkeypatch, tm
     save_state.assert_called_once()
     metadata = json.loads((tmp_path / "checkpoint_state_step_10.json").read_text())
     assert metadata["carry_policy"] == "none"
+    assert metadata["cycle_sampling"] == {"mode": "off"}
     assert metadata["world_size"] == 1
     assert metadata["fsdp_shard_degree"] == 4
     assert not list(tmp_path.glob("carry_step_10.*.pt"))

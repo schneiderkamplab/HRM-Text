@@ -78,6 +78,8 @@ fsdp_reshard_after_forward: null  # null preserves current behavior; true/false 
 fsdp_accumulation_sync_mode: no_sync  # no_sync defers all FSDP comms; reduce_scatter retains HSDP shard-local reduction and defers replica all-reduce
 ddp_params_precision: fp32  # DDP only: fp32 persistent params + bf16 autocast compute, or bf16 params with fp32 EMA
 ddp_find_unused_parameters: true
+cycle_variants_prewarm: true
+cycle_variants_allow_resume_change: false
 compile_train_batch: true
 compile_train_batch_mode: default  # default or max-autotune-no-cudagraphs; graph-enabled modes need explicit integration
 memory_log_interval: 0

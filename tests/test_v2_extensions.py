@@ -420,10 +420,11 @@ def test_unsharded_optimizer_expansion(numeric):
         torch.testing.assert_close(dest.state[a][slot], value)
 
 
-@pytest.mark.parametrize('feature', ['ngram', 'memory', 'dynamic_residual', 'sparse_mlp', 'sparse_stack'])
+@pytest.mark.parametrize('feature', ['ngram', 'engram', 'memory', 'dynamic_residual', 'sparse_mlp', 'sparse_stack'])
 def test_extensions_compile_checkpoint_parity(feature):
     from models.activation_checkpointing import apply_activation_checkpointing
     settings = dict(ngram=dict(ngram_orders=[2], ngram_buckets=17),
+                    engram=dict(ngram_orders=[2, 3], ngram_buckets=31, ngram_heads=4, ngram_contextual_gate=True),
                     memory=dict(h_memory_branches=2, l_memory_branches=2),
                     dynamic_residual=dict(residual_branches=2, residual_input_dependent=True),
                     sparse_mlp=dict(moe_num_experts=2, moe_sparse=True, moe_metadata_bias=[[0., 1.]]),

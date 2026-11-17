@@ -47,7 +47,7 @@ def backward_call_counts(h_cycles, l_cycles, bp_steps):
     return h, l
 
 
-def configured_module_rates(config, bp_steps=None):
+def configured_module_rates(config, bp_steps=None, call_counts=None):
     rates = {name: getattr(config, f'lr_{name}') for name in ('embeddings', 'head', 'h', 'l')}
     if not getattr(config, 'lr_auto', False):
         return rates
@@ -57,23 +57,28 @@ def configured_module_rates(config, bp_steps=None):
         raise ValueError('lr_auto only supports hrm_nocarry_bp_warmup backward semantics')
     h, l = backward_call_counts(arch['H_cycles'], arch['L_cycles'],
                                arch.get('bp_min_steps', 2) if bp_steps is None else bp_steps)
+    if call_counts is not None:
+        h, l = call_counts
+        if any(not math.isfinite(x) or x <= 0 for x in (h, l)):
+            raise ValueError("Auto LR call counts must be finite and positive")
     automatic = dict(embeddings=config.lr, head=config.lr, h=config.lr / h, l=config.lr / l)
     return {name: automatic[name] if value is None else value for name, value in rates.items()}
 
 
-def update_auto_module_rates(config, model, optimizer, bp_steps):
+def update_auto_module_rates(config, model, optimizer, bp_steps, call_counts=None):
     if not getattr(config, 'lr_auto', False):
         return
     if bp_steps is None:
         raise ValueError('lr_auto requires the current training bp_steps')
-    if getattr(optimizer, '_auto_lr_bp_steps', None) != bp_steps:
+    if getattr(optimizer, '_auto_lr_bp_steps', None) != (bp_steps, call_counts):
         optimizer.parameter_lr_scales = module_lr_scales(
-            model, config.lr, configured_module_rates(config, bp_steps))
-        optimizer._auto_lr_bp_steps = bp_steps
+            model, config.lr, configured_module_rates(config, bp_steps, call_counts))
+        optimizer._auto_lr_bp_steps = (bp_steps, call_counts)
+        optimizer._cycle_call_counts = call_counts
 
 
-def module_lr_metrics(config, lr, bp_steps=None):
-    rates = configured_module_rates(config, bp_steps)
+def module_lr_metrics(config, lr, bp_steps=None, call_counts=None):
+    rates = configured_module_rates(config, bp_steps, call_counts)
     if not any(value is not None for value in rates.values()):
         return {}
     metrics = {f'train/lr_{name}': lr * (value / config.lr if value is not None else 1.0)

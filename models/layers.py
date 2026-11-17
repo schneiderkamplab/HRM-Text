@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 Carry = dict[str, Any]
 CosSin = Tuple[Tensor, Tensor]
-AttnType = Literal["causal", "prefixlm"]
+AttnType = Literal["causal", "prefixlm", "mixedlm"]
 
 
 def find_multiple(a, b):
@@ -218,7 +218,13 @@ class Attention(nn.Module):
                 )
 
         is_causal = self.attn_type == "causal"
-        if cache is None:
+        if self.attn_type == "mixedlm":
+            if cache is not None:
+                raise ValueError("Native MixedLM cache decoding requires the serving adapter")
+            from models.mixedlm import mixed_attention
+            attn_output = mixed_attention(query, key, value,
+                **{name: unwrap_tensor(tensor) for name, tensor in seq_info.items() if name.startswith("mixed_")})
+        elif cache is None:
             # flash attn (training)
             attn_output = flash_attn_varlen_prefixlm(
                 query,

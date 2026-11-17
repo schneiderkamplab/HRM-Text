@@ -12,8 +12,15 @@ from models.common import IGNORE_LABEL_ID, packing_sequence_sum
 from models.goldfish_loss import GoldfishLossConfig, GoldfishStrategy, apply_goldfish_loss_mask
 
 
+@torch.compile(dynamic=True)
+def _selected_projection_loss(head,hidden,labels):
+    logits=head(hidden)
+    return F.cross_entropy(logits.float(),labels,reduction="sum"),logits.argmax(-1)
+
+
 class LMHeadConfig(BaseModel):
     vocab_size: int
+    target_head_only: bool = False
     goldfish_strategy: Optional[GoldfishStrategy] = None
     goldfish_k: int = 50
     goldfish_context_width: int = 50
@@ -30,6 +37,7 @@ class LMHead(nn.Module):
         self.compute_train_extra_args = self.model.compute_train_extra_args
 
         config = LMHeadConfig(**config_dict)
+        self.target_head_only = config.target_head_only
         self.goldfish_config = GoldfishLossConfig(
             strategy=config.goldfish_strategy,
             k=config.goldfish_k,
@@ -62,6 +70,9 @@ class LMHead(nn.Module):
                                        input_embedding,
                                        **{k: v for k, v in batch.items() if k not in ("inputs", "labels")},
                                        **kwargs)
+        if self.target_head_only and "labels" in batch:
+            loss,metrics=self._supervised_head(logits,batch,stability_diagnostics)
+            return new_carry,loss,metrics
         logits = self.lm_head(logits)
         if stability_diagnostics is not None:
             stability_diagnostics.record_tensor(
@@ -108,3 +119,29 @@ class LMHead(nn.Module):
             return new_carry, loss / loss_divisor, metrics
 
         return new_carry, logits
+
+
+    @torch.compiler.disable
+    def _supervised_head(self,hidden,batch,stability_diagnostics=None):
+        # Keep data-dependent compaction outside Dynamo; the recurrent/transformer
+        # core stays compiled and returns fixed-shape loss/metric tensors here.
+        raw_labels=batch["labels"]
+        labels,masks=apply_goldfish_loss_mask(labels=raw_labels,inputs=batch["inputs"],cu_seqlens=batch["cu_seqlens"],config=self.goldfish_config)
+        selected_labels=labels[masks].long()
+        if hidden.is_cuda and stability_diagnostics is None:
+            loss,predictions=_selected_projection_loss(self.lm_head,hidden[masks],selected_labels)
+        else:
+            logits=self.lm_head(hidden[masks])
+            if stability_diagnostics is not None:
+                stability_diagnostics.record_tensor("activation/model/supervised_logits",logits,record_gradient=True)
+            loss=F.cross_entropy(logits.float(),selected_labels,reduction="sum")
+            predictions=logits.argmax(-1)
+        divisor=masks.sum().float()
+        if dist.is_available() and dist.is_initialized():dist.all_reduce(divisor,op=dist.ReduceOp.AVG)
+        with torch.no_grad():
+            correct=torch.zeros_like(masks).masked_scatter(masks,predictions==selected_labels)
+            valid_counts=masks.sum();per_valid=packing_sequence_sum(masks,batch["cu_seqlens"]);per_correct=packing_sequence_sum(correct,batch["cu_seqlens"]);active=per_valid>0
+            metrics={"loss":(loss.detach(),valid_counts),"accuracy":(correct.sum(),valid_counts),"exact_accuracy":(((per_correct==per_valid)&active).sum(),active.sum())}
+            if self.goldfish_config.enabled():
+                raw_valid=(raw_labels!=IGNORE_LABEL_ID).sum();metrics["goldfish_drop_rate"]=(raw_valid-valid_counts,raw_valid)
+        return loss/divisor.clamp_min(1),metrics

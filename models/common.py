@@ -44,6 +44,9 @@ def prepare_prefixlm_batch(
 
     if get_accelerator_type() not in ("sm100", "rocm"):
         return batch
+    for name, tensor in batch.items():
+        if name.startswith("mixed_"):
+            torch._dynamo.mark_dynamic(unwrap_tensor(tensor), 0)
     if all(name in batch for name in PREFIXLM_PREPARED_KEYS):
         return batch
 

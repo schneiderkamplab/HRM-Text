@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Tuple, Dict, Any, Optional
+from typing import Literal, TYPE_CHECKING, Tuple, Dict, Any, Optional
 
 import torch
 from torch import nn
@@ -13,6 +13,10 @@ if TYPE_CHECKING:
 
 class HierarchicalReasoningModelConfig(TransformerConfig):
     half_layers: bool = False
+
+    cycle_variants: Literal["off", "full_budget"] = "off"
+    cycle_variant_seed: Optional[int] = None
+    cycle_sampler_version: Literal[1] = 1
 
     H_cycles: int
     L_cycles: int
@@ -115,19 +119,29 @@ class HierarchicalReasoningModel(nn.Module):
         x: torch.Tensor,
         cache: Optional[dict[str, list[list[Cache]]]] = None,
         bp_steps: int = 2,
+        H_cycles: Optional[int] = None,
+        L_cycles: Optional[int] = None,
         stability_diagnostics: Optional["StabilityDiagnostics"] = None,
         **seq_info,
     ) -> Tuple[None, torch.Tensor]:
+        if (H_cycles is None) != (L_cycles is None):
+            raise ValueError("Both cycle overrides are required")
+        if H_cycles is not None and cache is not None:
+            raise ValueError("Cycle overrides cannot use inference caches")
+        h_cycles = self.H_cycles if H_cycles is None else H_cycles
+        l_cycles = self.L_cycles if L_cycles is None else L_cycles
+        if h_cycles < 1 or l_cycles < 1:
+            raise ValueError("Cycles must be positive")
         z_H, z_L = x, self.zL_init
 
         # Calculate H and L bp_steps
         # Priortize H, and at least 1 is allocated to L.
-        H_bp_steps = min(self.H_cycles, bp_steps - 1)
-        L_bp_steps = bp_steps - H_bp_steps
+        H_bp_steps = min(h_cycles, bp_steps - 1)
+        L_bp_steps = min(h_cycles * l_cycles, bp_steps - H_bp_steps)
 
-        for i in range(self.H_cycles):
-            for k in range(i * self.L_cycles, (i + 1) * self.L_cycles):
-                with torch.set_grad_enabled(torch.is_grad_enabled() and (k >= self.H_cycles * self.L_cycles - L_bp_steps)):
+        for i in range(h_cycles):
+            for k in range(i * l_cycles, (i + 1) * l_cycles):
+                with torch.set_grad_enabled(torch.is_grad_enabled() and (k >= h_cycles * l_cycles - L_bp_steps)):
                     z_L = self.L_level(
                         z_L,
                         z_H,
@@ -137,7 +151,7 @@ class HierarchicalReasoningModel(nn.Module):
                         stability_scope=f"L/cycle_{k:03d}" if stability_diagnostics is not None else None,
                     )
             
-            with torch.set_grad_enabled(torch.is_grad_enabled() and (i >= self.H_cycles - H_bp_steps)):
+            with torch.set_grad_enabled(torch.is_grad_enabled() and (i >= h_cycles - H_bp_steps)):
                 z_H = self.H_level(
                     z_H,
                     z_L,

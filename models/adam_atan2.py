@@ -1,5 +1,7 @@
 from typing import Tuple, Optional
 
+import os
+
 import torch
 from torch import Tensor
 from torch.optim.optimizer import Optimizer, ParamsT
@@ -83,6 +85,8 @@ class AdamATan2(Optimizer):
     def step(self, closure=None):  # pyright: ignore[reportIncompatibleMethodOverride]
         """Perform a single optimization step."""
         assert closure is None, "Closure is not supported"
+        if os.environ.get("ADAM_FOREACH", "0") == "1":
+            return self._step_foreach()
 
         shared_updates = getattr(self, "shared_parameter_updates", None)
         if shared_updates:
@@ -130,6 +134,68 @@ class AdamATan2(Optimizer):
                     if ema_param.dtype != state["param_ema"].dtype:
                         ema_param = ema_param.to(dtype=state["param_ema"].dtype)
                     state["param_ema"].lerp_(ema_param, 1 - group["ema"])
+
+        if shared_updates:
+            from models.gate_updates import apply_shared_updates
+            apply_shared_updates(self, donor_snapshots)
+
+    @torch.no_grad()
+    def _step_foreach(self):
+        """Foreach variant of step(): bucketed multi-tensor ops for weight decay,
+        momentum and second-moment updates; per-param residual only for the
+        atan2 update (no _foreach_atan2 exists) and EMA. Semantically identical
+        to step(): same math per parameter, including per-param step counters,
+        lr scales and skipped (grad-less / shared) parameters."""
+        shared_updates = getattr(self, "shared_parameter_updates", None)
+        if shared_updates:
+            from models.gate_updates import snapshot_donors
+            donor_snapshots = snapshot_donors(self)
+
+        buckets: dict[tuple, list] = {}
+        for group in self.param_groups:
+            for param in group["params"]:
+                if shared_updates and param in shared_updates:
+                    continue
+                if param.grad is None:
+                    continue
+                lr = group["lr"]
+                if self.parameter_lr_scales is not None:
+                    lr = lr * self.parameter_lr_scales[param]
+                state = self.state[param]
+                key = (lr, group["weight_decay"], group["betas"], group["ema"], group["ema_dtype"],
+                       "exp_avg" in state, "param_ema" in state)
+                buckets.setdefault(key, []).append(param)
+
+        for (lr, weight_decay, betas, ema, ema_dtype, has_exp_avg, has_ema), params in buckets.items():
+            grads = [p.grad for p in params]
+            if weight_decay != 0:
+                torch._foreach_mul_(params, 1 - lr * weight_decay)
+            if has_exp_avg:
+                torch.ops.aten._foreach_lerp_.Scalar(
+                    [self.state[p]["exp_avg"] for p in params], grads, 1 - betas[0])
+            exp_avg_sq = [self.state[p]["exp_avg_sq"] for p in params]
+            torch._foreach_mul_(exp_avg_sq, betas[1])
+            torch.ops.aten._foreach_addcmul_(
+                exp_avg_sq, grads, grads, value=1 - betas[1])
+            denoms = torch.ops.aten._foreach_sqrt(exp_avg_sq)
+            for param, denom in zip(params, denoms):
+                state = self.state[param]
+                state["step"] += 1
+                bias_correction1 = 1 - betas[0] ** state["step"]
+                bias_correction2_sqrt = (1 - betas[1] ** state["step"]).sqrt()
+                step_size = lr / bias_correction1
+                denom = denom / bias_correction2_sqrt
+                if has_exp_avg:
+                    param.add_(torch.atan2(state["exp_avg"], denom), alpha=-step_size)
+                else:
+                    param.add_(torch.atan2(param.grad, denom), alpha=-lr)
+            if has_ema:
+                for param in params:
+                    state = self.state[param]
+                    ema_param = param
+                    if ema_param.dtype != state["param_ema"].dtype:
+                        ema_param = ema_param.to(dtype=state["param_ema"].dtype)
+                    state["param_ema"].lerp_(ema_param, 1 - ema)
 
         if shared_updates:
             from models.gate_updates import apply_shared_updates

@@ -333,6 +333,11 @@ def _batched_decode(model: nn.Module, carry: Carry, inputs: Tensor, cache: Any, 
 
 @torch.inference_mode()
 def inference_generate(ckpt: InferenceCheckpoint, iterator: Iterator[tuple[int, tuple[str, str]]], max_tokens: int, max_generation: int, batch_size: int, temp: float = 0.0) -> Generator[tuple[int, str], None]:
+    if getattr(getattr(ckpt.model, 'model', None), 'is_embla', False):
+        from models.embla.inference import generate
+        yield from generate(ckpt, iterator, max_tokens, max_generation, batch_size, temp)
+        return
+
     def fetch_next():
         for pid, p_tuple in iterator:
             tok = ckpt.tokenize_prompt(*p_tuple)

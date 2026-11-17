@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 from dataclasses import dataclass
 from pathlib import Path
 from contextlib import nullcontext
@@ -49,6 +49,8 @@ from models.accelerator import (
 from models.transformer import Transformer, TransformerBlock
 from models.adam_atan2 import AdamATan2
 from models.module_learning_rates import configured_module_rates, module_lr_scales, module_lr_metrics, update_auto_module_rates, windowed_cosine_lr
+from models.cycle_schedule import (arch_dict, validate_cycle_config, step_schemes,
+                                   weighted_call_counts, cycle_contract, validate_cycle_resume)
 from models.lr_rewarm import resolve_rewarm, rewarm_lr, rewarm_metadata
 from models.lr_piecewise import piecewise_lr, validate_lr_points
 from utils.functions import load_model_class, get_model_source_path
@@ -70,6 +72,7 @@ class DataConfig(pydantic.BaseModel):
     validation_path: Optional[str] = None
     target_only: bool = True  # Only supervise Answer.
     homogeneous_categories: bool = False
+    routing_categories: bool = False
 
 
 class PretrainConfig(pydantic.BaseModel):
@@ -116,7 +119,7 @@ class PretrainConfig(pydantic.BaseModel):
     accelerator_type: AcceleratorType = "sm100"
     distributed_strategy: Literal["fsdp", "ddp", "none"] = "fsdp"
     fsdp_params_precision: Literal["fp32", "bf16"] = "fp32"
-    fsdp_wrap_policy: Literal["transformer_block", "recurrent_level"] = "transformer_block"
+    fsdp_wrap_policy: Literal["transformer_block", "recurrent_level", "single_unit"] = "transformer_block"
     fsdp_shard_degree: Optional[int] = pydantic.Field(default=None, ge=2)
     fsdp_reshard_after_forward: Optional[bool] = None
     fsdp_accumulation_sync_mode: Literal["no_sync", "reduce_scatter"] = "no_sync"
@@ -124,8 +127,10 @@ class PretrainConfig(pydantic.BaseModel):
     ddp_find_unused_parameters: bool = True
     compile_train_batch: bool = True
     compile_train_batch_mode: Literal[
-        "default", "max-autotune-no-cudagraphs"
+        "default", "max-autotune-no-cudagraphs", "reduce-overhead"
     ] = "default"
+    cycle_variants_prewarm: bool = True
+    cycle_variants_allow_resume_change: bool = False
     memory_log_interval: int = 0
     empty_cache_interval: int = 0
     resume_trace: bool = False
@@ -170,6 +175,7 @@ class PretrainConfig(pydantic.BaseModel):
 
     @pydantic.model_validator(mode='after')
     def check_intervals(self):
+        validate_cycle_config(self)
         from training_suspend.protocol import steps
         self.suspend_after_steps = steps(self.suspend_after_steps)
         if self.suspend_after_steps and not self.suspend_control_dir:
@@ -232,6 +238,12 @@ def trace_print(config: PretrainConfig, rank: int, message: str):
         print(f"[resume_trace rank={rank}] {message}", flush=True)
 
 
+# Env-gated torch.profiler hook (nsys unavailable on this host).
+_PROF_START_STEP = int(os.environ.get("PROF_START_STEP", "0"))
+_PROF_STOP_STEP = int(os.environ.get("PROF_STOP_STEP", "0"))
+_PROF_TRACE_DIR = os.environ.get("PROF_TRACE_DIR", "")
+
+
 def create_dataloader(
     config: PretrainConfig,
     local_batch_size: int,
@@ -247,11 +259,13 @@ def create_dataloader(
         drop_last_batch=drop_last_batch,
 
         target_only=config.data.target_only,
+        mixed_lm=getattr(config.arch, "attn_type", "prefixlm") == "mixedlm",
 
         batch_max_length=local_batch_size,
         rank=rank,
         num_replicas=world_size,
         homogeneous_categories=config.data.homogeneous_categories if dataset_path is None else False,
+        routing_categories=config.data.routing_categories if dataset_path is None else False,
     ))
     num_workers = 0 if config.accelerator_type in ("mps", "cpu", "none") else 1
     dataloader_kwargs = {
@@ -335,6 +349,10 @@ def fsdp_wrap_modules(model: nn.Module, policy: str) -> list[nn.Module]:
         return [module for module in model.modules() if isinstance(module, TransformerBlock)]
     if policy == "recurrent_level":
         return [module for module in model.modules() if isinstance(module, Transformer)]
+    if policy == "single_unit":
+        # Whole model as one FSDP unit: only the root wrap remains, collapsing
+        # per-block all-gathers/reduce-scatters into a single collective pair.
+        return []
     raise ValueError(f"Unsupported fsdp_wrap_policy: {policy}")
 
 
@@ -400,8 +418,8 @@ def create_model_and_carry(config: PretrainConfig, train_metadata: V1DatasetMeta
     )
     fwd_bwd_dtype = getattr(torch, config.fwd_bwd_dtype)
     is_v2 = config.arch.name == 'baselines.hrm_v2@HierarchicalReasoningModel'
-    if config.data.homogeneous_categories and not is_v2:
-        raise ValueError('Metadata-guided homogeneous batches currently require HRM v2')
+    if (config.data.homogeneous_categories or config.data.routing_categories) and not is_v2:
+        raise ValueError('Metadata-guided routing currently requires HRM v2')
     if is_v2 and config.fsdp_wrap_policy == 'recurrent_level' and (
         model_cfg.get('gates_enabled', False) or model_cfg.get('mos_num_experts', 1) > 1
         or model_cfg.get('h_memory_branches', 1) > 1 or model_cfg.get('l_memory_branches', 1) > 1
@@ -546,8 +564,13 @@ def update_lr(config: PretrainConfig, train_state: TrainState, cooldown_ratio: O
     elif config.lr_rewarm_steps:
         lr = rewarm_lr(config, train_state.step)
     elif config.lr_decay_start_step is not None or config.lr_decay_end_step is not None:
-        lr = windowed_cosine_lr(config.lr, config.lr_min_ratio, train_state.step,
-                               config.lr_decay_start_step, config.lr_decay_end_step)
+        if train_state.step < config.lr_warmup_steps:
+            # Linear warmup from the decay floor (lr_min_ratio * lr) up to the full lr.
+            lr = config.lr * (config.lr_min_ratio + (1 - config.lr_min_ratio)
+                              * train_state.step / config.lr_warmup_steps)
+        else:
+            lr = windowed_cosine_lr(config.lr, config.lr_min_ratio, train_state.step,
+                                   config.lr_decay_start_step, config.lr_decay_end_step)
     elif train_state.step < config.lr_warmup_steps:
         lr = config.lr * min(1.0, train_state.step / config.lr_warmup_steps)
     else:
@@ -697,6 +720,15 @@ def load_train_checkpoint(config: PretrainConfig, train_state: TrainState, rank:
     if os.path.isfile(previous_config):
         with open(previous_config) as handle:
             previous = yaml.safe_load(handle)
+    old_cycles = metadata.get('cycle_sampling', cycle_contract(previous, previous.get('training_total_steps')))
+    validate_cycle_resume(old_cycles, cycle_contract(config, train_state.total_steps),
+                          config.cycle_variants_allow_resume_change)
+    if old_cycles != cycle_contract(config, train_state.total_steps):
+        train_state._cycle_resume_contract_change = dict(previous=old_cycles,
+            current=cycle_contract(config, train_state.total_steps), source_tag=resume_state.tag)
+        if rank == 0:
+            print(f"Explicit cycle sampling continuation: {train_state._cycle_resume_contract_change}", flush=True)
+
     if metadata.get('optimizer', previous.get('optimizer', 'adam_atan2')) != getattr(config, 'optimizer', 'adam_atan2'):
         raise ValueError('Optimizer changes require an explicit offline state conversion')
     old_homogeneous = metadata.get('homogeneous_categories', previous.get('data', {}).get('homogeneous_categories', False))
@@ -947,6 +979,11 @@ def forward_backward_batch_uncompiled(train_state: TrainState, batch: dict[str, 
 
 
 forward_backward_batch = torch.compile(forward_backward_batch_uncompiled, dynamic=False)
+if os.environ.get("TORCH_DYNAMO_CACHE_SIZE"):
+    torch._dynamo.config.cache_size_limit = int(os.environ["TORCH_DYNAMO_CACHE_SIZE"])
+    torch._dynamo.config.accumulated_recompile_limit = max(
+        int(os.environ["TORCH_DYNAMO_CACHE_SIZE"]), torch._dynamo.config.accumulated_recompile_limit
+    )
 _COMPILED_FORWARD_BACKWARD = {
     "default": forward_backward_batch,
     "max-autotune-no-cudagraphs": torch.compile(
@@ -957,11 +994,21 @@ _COMPILED_FORWARD_BACKWARD = {
 }
 
 
+compiled_forward_backward_batch_cache: dict[str, Any] = {}
+
 def compiled_forward_backward_batch(mode: str):
     try:
         return _COMPILED_FORWARD_BACKWARD[mode]
     except KeyError as exc:
-        raise ValueError(f"Unsupported compile_train_batch_mode: {mode}") from exc
+        if mode != "reduce-overhead":
+            raise ValueError(f"Unsupported compile_train_batch_mode: {mode}") from exc
+        if "reduce-overhead" not in compiled_forward_backward_batch_cache:
+            compiled_forward_backward_batch_cache["reduce-overhead"] = torch.compile(
+                forward_backward_batch_uncompiled,
+                dynamic=False,
+                mode="reduce-overhead",
+            )
+        return compiled_forward_backward_batch_cache["reduce-overhead"]
 
 
 def train_batch(train_state: TrainState, batch: dict[str, Tensor], **kwargs):
@@ -999,6 +1046,77 @@ def _supervised_token_count(config: PretrainConfig, rank: int, batch: dict[str, 
     return count
 
 
+def prewarm_cycle_variants(config, train_state, batches):
+    """Compile the full pool on retained real batches, with no training update."""
+    from models.cycle_schedule import scheme_pool
+    import random
+    import numpy as np
+    arch = arch_dict(config)
+    if (arch.get('cycle_variants', 'off') == 'off' or not config.compile_train_batch
+            or not config.cycle_variants_prewarm or getattr(train_state, '_cycles_prewarmed', False)):
+        return None
+    validate_cycle_config(config)
+    if train_state.carry is not None:
+        raise ValueError('Cycle prewarm requires stateless training')
+    pool = scheme_pool(arch.get('bp_max_steps', 5))
+    needed = len(pool) * max(1, len(batches)) + 8
+    if os.environ.get('TORCH_DYNAMO_CACHE_SIZE'):
+        if int(os.environ['TORCH_DYNAMO_CACHE_SIZE']) < needed:
+            raise ValueError(f'Cycle prewarm needs TORCH_DYNAMO_CACHE_SIZE >= {needed}')
+    else:
+        torch._dynamo.config.cache_size_limit = max(torch._dynamo.config.cache_size_limit, needed)
+    torch._dynamo.config.accumulated_recompile_limit = max(
+        torch._dynamo.config.accumulated_recompile_limit, needed * 4)
+    params = list(train_state.model.parameters())
+    # Gradients are normally None at launch, but preserve them for standalone callers.
+    gradients = [None if p.grad is None else p.grad.detach().clone() for p in params]
+    buffers = [(b, b.detach().clone()) for b in train_state.model.buffers()]
+    python_rng, numpy_rng = random.getstate(), np.random.get_state()
+    device = batches[0]['inputs'].device
+    devices = [device.index if device.index is not None else torch.cuda.current_device()] if device.type == 'cuda' else []
+    from torch._dynamo.utils import counters
+    before_graphs = counters['stats']['unique_graphs']
+    started = time.monotonic()
+    warmed = []
+    try:
+        with torch.random.fork_rng(devices=devices):
+            backward = compiled_forward_backward_batch(config.compile_train_batch_mode)
+            for h, l in pool:
+                for batch in batches:
+                    train_state.optim.zero_grad(set_to_none=True)
+                    backward(train_state, batch, torch.ones((), device=device),
+                             H_cycles=h, L_cycles=l, bp_steps=h*(l+1))
+                warmed.append([h, l])
+            synchronize_device(device)
+    finally:
+        random.setstate(python_rng)
+        np.random.set_state(numpy_rng)
+        with torch.no_grad():
+            for buffer, saved in buffers:
+                buffer.copy_(saved)
+        for param, gradient in zip(params, gradients):
+            param.grad = gradient
+        train_state.carry = None
+    report = dict(sampler_version=1, schemes=warmed, representative_batches=len(batches),
+                  seconds=time.monotonic()-started,
+                  unique_graphs=counters['stats']['unique_graphs']-before_graphs,
+                  cache_size_limit=torch._dynamo.config.cache_size_limit,
+                  step=train_state.step,
+                  memory=memory_stats_for_device(device))
+    train_state._cycles_prewarmed = True
+    train_state._cycle_prewarm_report = report
+    if config.checkpoint_path:
+        rank = dist.get_rank() if dist.is_available() and dist.is_initialized() else 0
+        path = Path(config.checkpoint_path) / f'cycle_prewarm.rank{rank}.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(report, indent=2, default=str) + '\n')
+    return report
+
+
+from models.optimizer_lifecycle import accumulated_step_lifecycle
+
+
+@accumulated_step_lifecycle
 def train_accumulated_batches(
     config: PretrainConfig,
     rank: int,
@@ -1017,6 +1135,14 @@ def train_accumulated_batches(
         )
     supervised_counts = [_supervised_token_count(config, rank, batch) for batch in batches]
     total_supervised = torch.stack(supervised_counts).sum().clamp_min(1.0)
+    schemes = step_schemes(config, train_state.step, len(batches), kwargs.get("bp_steps"))
+    if schemes is not None:
+        if train_state.carry is not None:
+            raise ValueError("Cycle sampling requires stateless training")
+        counts = weighted_call_counts(schemes, [float(x.item()) for x in supervised_counts])
+        if optimizer_step_enabled:
+            update_auto_module_rates(config, train_state.model, train_state.optim,
+                                     kwargs["bp_steps"], counts)
     backward_step = (
         compiled_forward_backward_batch(config.compile_train_batch_mode)
         if use_compiled
@@ -1056,13 +1182,26 @@ def train_accumulated_batches(
                     f"forward_backward_begin step={train_state.step} microbatch={microbatch_idx} loss_scale={loss_scale.item()}",
                 )
             with sync_context:
-                metrics = _add_metrics(metrics, backward_step(train_state, batch, loss_scale, **kwargs))
+                call_kwargs = dict(kwargs)
+                if schemes is not None:
+                    h, l = schemes[microbatch_idx - 1]
+                    call_kwargs.update(H_cycles=h, L_cycles=l, bp_steps=h*(l+1))
+                metrics = _add_metrics(metrics, backward_step(train_state, batch, loss_scale, **call_kwargs))
             trace_print(config, rank, f"forward_backward_end step={train_state.step} microbatch={microbatch_idx}")
     finally:
         if isinstance(train_state.model, FSDPModule):
             train_state.model.set_requires_gradient_sync(True, recurse=True)
             train_state.model.set_requires_all_reduce(True, recurse=True)
 
+    if schemes is not None:
+        one = total_supervised.new_ones(())
+        for name, value in (("h_calls", counts[0]), ("l_calls", counts[1]),
+                            ("bp_budget", kwargs["bp_steps"]),
+                            ("h_cycles", sum(h for h, l in schemes) / len(schemes)),
+                            ("l_cycles", sum(l for h, l in schemes) / len(schemes))):
+            metrics["cycles/" + name] = (one * value, one)
+        for h, l in set(schemes):
+            metrics[f"cycles/draw_h{h}_l{l}"] = (one * schemes.count((h, l)), one)
     stability_diagnostics = kwargs.get("stability_diagnostics")
     if stability_diagnostics is not None:
         stability_diagnostics.record_model_state(
@@ -1273,10 +1412,13 @@ def save_checkpoint_metadata(
         "local_world_size": int(os.environ.get("LOCAL_WORLD_SIZE", 1)),
         "carry_policy": carry_policy,
         "carry_schema_version": 1,
+        "cycle_sampling": cycle_contract(config, train_state.total_steps),
         "fsdp_shard_degree": config.fsdp_shard_degree,
         "fsdp_reshard_after_forward": config.fsdp_reshard_after_forward,
         "fsdp_accumulation_sync_mode": config.fsdp_accumulation_sync_mode,
     }
+    if hasattr(train_state, '_cycle_resume_contract_change'):
+        metadata['cycle_sampling_continuation'] = train_state._cycle_resume_contract_change
     if config.lr_rewarm_steps:
         metadata['lr_rewarm'] = rewarm_metadata(config)
     if config.lr_piecewise_points is not None:
@@ -1544,6 +1686,13 @@ def launch(hydra_config: DictConfig):
         )
         val_iter = iter(val_loader)
     resume_state = load_train_checkpoint(config, train_state, rank=RANK, local_batch_size=local_batch_size)
+    if resume_state is not None and suspend_hook is not None:
+        # Static boundaries already covered by the disk checkpoint must not
+        # replay as an immediate suspension on the first resumed step.
+        suspend_hook.consumed.update(s for s in suspend_hook.queue if s <= train_state.step)
+        suspend_hook.queue = [s for s in suspend_hook.queue if s > train_state.step]
+        if RANK == 0:
+            suspend_hook.save_queue()
     resolve_rewarm(config, train_state.step if resume_state is not None else None,
                    load_checkpoint_metadata(config.resume_checkpoint_path, resume_state.tag)
                    if resume_state is not None and config.lr_rewarm_steps else {})
@@ -1650,6 +1799,7 @@ def launch(hydra_config: DictConfig):
             if len(accumulation_batches) < config.gradient_accumulation_steps:
                 continue
 
+            prewarm_cycle_variants(config, train_state, accumulation_batches)
             train_state.step += 1            
             cooldown_ratio = (lr_cooldown.ratio(epoch, accumulation_resume_info)
                               if lr_cooldown is not None else None)
@@ -1726,6 +1876,12 @@ def launch(hydra_config: DictConfig):
             if config.experiment_metrics_output is not None:
                 synchronize_device(device)
                 experiment_train_start = time.perf_counter()
+            _prof = None
+            if _PROF_TRACE_DIR and _PROF_START_STEP and train_state.step == _PROF_START_STEP:
+                _prof = torch.profiler.profile(
+                    activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
+                )
+                _prof.start()
             metrics, optimizer_step_skipped = train_accumulated_batches(
                 config,
                 RANK,
@@ -1734,6 +1890,16 @@ def launch(hydra_config: DictConfig):
                 config.compile_train_batch,
                 **train_call_args,
             )
+            if _prof is not None and train_state.step == _PROF_STOP_STEP:
+                _prof.stop()
+                os.makedirs(_PROF_TRACE_DIR, exist_ok=True)
+                _trace = os.path.join(_PROF_TRACE_DIR, f"rank{RANK}_steps{_PROF_START_STEP}_{_PROF_STOP_STEP}.json")
+                _prof.export_chrome_trace(_trace)
+                print(f"[prof] wrote {_trace}", flush=True)
+                if RANK == 0:
+                    _table = _prof.key_averages().table(sort_by="cuda_time_total", row_limit=30)
+                    print(f"[prof] rank 0 key averages (steps {_PROF_START_STEP}-{_PROF_STOP_STEP}):\n{_table}", flush=True)
+                _prof = None
             accumulation_batches = []
             if config.experiment_metrics_output is not None:
                 synchronize_device(device)
@@ -1795,7 +1961,7 @@ def launch(hydra_config: DictConfig):
                 metrics = reduce_metrics(metrics, prefix="train/")
                 trace_print(config, RANK, f"reduce_metrics_end step={train_state.step}")
                 if RANK == 0:
-                    metrics.update(module_lr_metrics(config, lr, train_extra_args.get('bp_steps')))
+                    metrics.update(module_lr_metrics(config, lr, train_extra_args.get('bp_steps'), getattr(train_state.optim, '_cycle_call_counts', None)))
                     if hasattr(backbone, "gate_alpha"):
                         metrics["train/gate_alpha"] = float(backbone.gate_alpha.item())
                         metrics["train/lr_gates"] = lr

@@ -43,6 +43,8 @@ memory_warmup_steps: 2000
 memory_warmup_start_step: 0
 ngram_orders: []
 ngram_buckets: 4096
+ngram_heads: 1
+ngram_contextual_gate: false
 ngram_warmup_steps: 2000
 ngram_warmup_start_step: 0
 moe_metadata_bias: []

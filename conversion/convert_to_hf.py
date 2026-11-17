@@ -71,6 +71,27 @@ def convert_state_dict(
     *,
     weight_layout: str = "vllm_packed",
 ) -> tuple[dict[str, torch.Tensor], list[str]]:
+    if cfg.get("name") in ("baselines.sandwich@Sandwich", "baselines.ouro@Ouro"):
+        if weight_layout != "vllm_packed":
+            raise ValueError("Sandwich/Ouro export currently supports vllm_packed only")
+        return {("model.embed_tokens.weight" if k == "embed_tokens.embedding_weight" else k): v.contiguous()
+                for k, v in state_dict.items() if not k.startswith("model.rotary_emb.")}, []
+    if cfg.get("name") == "baselines.transformer_wrapper@TransformerWrapper":
+        # A single H pass with zero L passes and zero initial L state is
+        # exactly a non-recurrent Transformer stack. L weights are never used,
+        # but both installed HF/vLLM implementations declare their tensors.
+        mapped = {}
+        for key, value in state_dict.items():
+            if key.startswith("model.layers."):
+                suffix = key.removeprefix("model.layers.")
+                mapped["model.H_module.layers." + suffix] = value
+                mapped["model.L_module.layers." + suffix] = torch.zeros_like(value)
+            elif not key.startswith("model.rotary_emb."):
+                mapped[key] = value
+        mapped["model.z_L_init"] = torch.zeros(
+            cfg["hidden_size"], dtype=next(iter(state_dict.values())).dtype
+        )
+        state_dict = mapped
     if any("invocation_gates" in key.split(".") for key in state_dict):
         raise ValueError("HRM v2 gates require a gate-aware HF/vLLM architecture; use native inference until supported")
     out, skipped = {}, []
@@ -127,8 +148,8 @@ def validate_hf_state(out_dir: Path, hf_state: dict[str, torch.Tensor]) -> None:
 def validate_vllm_packed_state(hf_state: dict[str, torch.Tensor]) -> None:
     split_markers = (".self_attn.q_proj.", ".self_attn.k_proj.", ".self_attn.v_proj.", ".self_attn.gate_proj.", ".mlp.gate_proj.", ".mlp.up_proj.")
     split_keys = [key for key in hf_state if any(marker in key for marker in split_markers)]
-    packed_attention = [key for key in hf_state if ATTN_PACKED_RE.match(key)]
-    packed_mlp = [key for key in hf_state if MLP_PACKED_RE.match(key)]
+    packed_attention = [key for key in hf_state if ATTN_PACKED_RE.match(key) or re.fullmatch(r"model\.layers\.\d+\.attn\.gqkv_proj\.weight", key)]
+    packed_mlp = [key for key in hf_state if MLP_PACKED_RE.match(key) or re.fullmatch(r"model\.layers\.\d+\.mlp\.gate_up_proj\.weight", key)]
     if split_keys or not packed_attention or not packed_mlp:
         details = []
         if split_keys:
@@ -186,6 +207,29 @@ def _build_rope_parameters(cfg: dict, rope_theta: float) -> dict:
 
 
 def build_hf_config(cfg: dict, tokenizer) -> dict:
+    ouro = cfg.get("name") == "baselines.ouro@Ouro"
+    if ouro:
+        if cfg.get("norm_type") != "pre" or cfg.get("pos_emb_type") != "rope" or cfg.get("attn_type", "prefixlm") not in ("causal", "prefixlm"):
+            raise ValueError("Ouro export requires prenorm, RoPE, causal or PrefixLM attention")
+        cfg = {"recurrence": 4} | cfg
+        if type(cfg["recurrence"]) is not int or cfg["recurrence"] < 1 or cfg["n_layers"] < 1:
+            raise ValueError("Invalid Ouro depths")
+        cfg = cfg | {"H_cycles": 1, "L_cycles": 0, "half_layers": False, "bp_max_steps": 1}
+    sandwich = cfg.get("name") == "baselines.sandwich@Sandwich"
+    original_cfg = cfg
+    if sandwich:
+        if cfg.get("norm_type") != "pre" or cfg.get("pos_emb_type") != "rope" or cfg.get("attn_type", "prefixlm") not in ("causal", "prefixlm"):
+            raise ValueError("Sandwich export requires prenorm, RoPE, causal or PrefixLM attention")
+        cfg = {"prelude_layers": 3, "core_layers": 6, "coda_layers": 3, "recurrence": 7} | cfg
+        if min(cfg[k] for k in ("prelude_layers", "core_layers", "coda_layers", "recurrence")) < 1 or cfg["n_layers"] != sum(cfg[k] for k in ("prelude_layers", "core_layers", "coda_layers")):
+            raise ValueError("Invalid Sandwich depths")
+        original_cfg = cfg
+        cfg = cfg | {"H_cycles": 1, "L_cycles": 0, "half_layers": False, "bp_max_steps": 1}
+    transformer = cfg.get("name") == "baselines.transformer_wrapper@TransformerWrapper"
+    if transformer:
+        if cfg.get("norm_type") != "pre" or cfg.get("attn_type") not in ("causal", "prefixlm", "mixedlm") or cfg.get("pos_emb_type") != "rope":
+            raise ValueError("Transformer export currently requires prenorm, causal, PrefixLM or MixedLM attention, and RoPE")
+        cfg = cfg | {"H_cycles": 1, "L_cycles": 0, "half_layers": False, "bp_max_steps": 1}
     if cfg.get("name") == "baselines.hrm_v2@HierarchicalReasoningModel":
         raise ValueError("HRM v2 HF/vLLM export is not yet supported; native inference preserves gates")
     hidden_size = cfg["hidden_size"]
@@ -225,9 +269,29 @@ def build_hf_config(cfg: dict, tokenizer) -> dict:
         "tie_word_embeddings": False,
         "initializer_range": in_std,
         "embedding_scale": 1.0 / in_std,
-        "prefix_lm": True,
+        "prefix_lm": cfg.get("attn_type", "prefixlm") != "causal",
         "pad_token_id": getattr(tokenizer, "pad_token_id", None) or 0,
     }
+    if cfg.get("attn_type") == "mixedlm":
+        hf_cfg["mixed_lm"] = True
+        hf_cfg["mixed_lm_policy"] = "assistant-header-blocks-v1-tool-full-refresh"
+        hf_cfg["mixed_lm_header_tokens"] = tokenizer.encode('<|turn>model\n', add_special_tokens=False)
+        hf_cfg["mixed_lm_tool_tokens"] = [tokenizer.convert_tokens_to_ids(t) for t in ('<|tool_call>', '<|tool_response>')]
+        if not hf_cfg["mixed_lm_header_tokens"] or any(t is None or t == getattr(tokenizer, 'unk_token_id', None) for t in hf_cfg["mixed_lm_tool_tokens"]):
+            raise ValueError("MixedLM export requires the verified Gemma4 chat-token protocol")
+    if ouro:
+        hf_cfg.update(ouro_fixed_architecture=True, architectures=["OuroFixedForCausalLM"],
+            recurrence=cfg["recurrence"], num_layers_per_stack=cfg["n_layers"],
+            num_hidden_layers=cfg["n_layers"] * cfg["recurrence"])
+    if sandwich:
+        hf_cfg.update(sandwich_architecture=True, architectures=["SandwichForCausalLM"],
+            num_layers_per_stack=cfg["n_layers"],
+            num_hidden_layers=cfg["prelude_layers"] + cfg["core_layers"] * cfg["recurrence"] + cfg["coda_layers"])
+        for key in ("prelude_layers", "core_layers", "coda_layers", "recurrence"):
+            hf_cfg[key] = original_cfg[key]
+    if transformer:
+        hf_cfg["source_architecture"] = "TransformerWrapper"
+        hf_cfg["transformer_single_pass"] = True
     for key, token_name in (("bos_token_id", "boq"), ("eos_token_id", "eoa")):
         if token_name in cfg:
             if (token_id := _token_id(tokenizer, cfg[token_name])) is not None:
@@ -328,8 +392,31 @@ def main():
     tokenizer = load_tokenizer(tok_path)
     tokenizer = set_tokenizer_special_tokens(tokenizer, metadata.tokenizer_info)
 
+    if cfg.get("name") == "baselines.embla@Embla":
+        if args.config_only:
+            raise ValueError("Embla config-only export is not yet supported; export a verified checkpoint")
+        from models.embla.export import export_pretrained
+        ckpt = inference_load_checkpoint(
+            str(args.ckpt_path), args.ckpt_epoch, args.ckpt_use_ema,
+            ckpt_tag=args.ckpt_tag, tokenizer_path_override=tok_path,
+        )
+        export_pretrained(ckpt.model.model, args.out_dir)
+        tokenizer.save_pretrained(args.out_dir)
+        print(f"[convert] wrote Embla portable checkpoint to {args.out_dir}")
+        return
+
     args.out_dir.mkdir(parents=True, exist_ok=True)
-    (args.out_dir / "config.json").write_text(json.dumps(build_hf_config(cfg | metadata.tokenizer_info, tokenizer), indent=2))
+    hf_config = build_hf_config(cfg | metadata.tokenizer_info, tokenizer)
+    if hf_config.get("sandwich_architecture") or hf_config.get("ouro_fixed_architecture"):
+        if args.weight_layout != "vllm_packed":
+            raise ValueError("Sandwich/Ouro export currently supports vllm_packed only")
+    elif hf_config.get("mixed_lm") and args.weight_layout == "vllm_packed":
+        hf_config["architectures"] = ["MixedLMForCausalLM"]
+    elif hf_config.get("transformer_single_pass") and args.weight_layout == "vllm_packed":
+        hf_config["architectures"] = ["Transformer48ForCausalLM"]
+    elif not hf_config["prefix_lm"] and args.weight_layout == "vllm_packed":
+        hf_config["architectures"] = ["RecurrentCausalForCausalLM"]
+    (args.out_dir / "config.json").write_text(json.dumps(hf_config, indent=2))
     tokenizer.save_pretrained(args.out_dir)
     tokenizer_config_path = args.out_dir / "tokenizer_config.json"
     if tokenizer_config_path.is_file() and metadata.tokenizer_info.get("template_mode") == "jinja_chat_template":

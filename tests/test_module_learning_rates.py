@@ -227,3 +227,14 @@ def test_compiled_optimizer_step_matches_eager():
     for p, q in zip(m.parameters(), ref.parameters()):
         torch.testing.assert_close(p, q)
         torch.testing.assert_close(opt.state[p]['param_ema'], other.state[q]['param_ema'])
+
+
+def test_weighted_cycle_rates_respect_explicit_overrides():
+    c=auto_config();c.lr_l=1e-5
+    rates=configured_module_rates(c,16,(1.5,4.5))
+    assert rates['h']==pytest.approx(c.lr/1.5)
+    assert rates['l']==1e-5
+    assert backward_call_counts(2,6,15)==(2,12)
+    assert configured_module_rates(c,16,(2,6))['h']==configured_module_rates(c,8)['h']
+    for counts in ((0,2),(1,float('nan'))):
+        with pytest.raises(ValueError):configured_module_rates(c,16,counts)

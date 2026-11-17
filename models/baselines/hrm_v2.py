@@ -51,6 +51,8 @@ class GateConfig(BaselineConfig):
     memory_warmup_start_step: int = Field(default=0, ge=0)
     ngram_orders: list[int] = Field(default_factory=list)
     ngram_buckets: int = Field(default=4096, ge=2)
+    ngram_heads: int = Field(default=1, ge=1)
+    ngram_contextual_gate: bool = False
     ngram_warmup_steps: int = Field(default=2000, ge=0)
     ngram_warmup_start_step: int = Field(default=0, ge=0)
     moe_metadata_bias: list[list[float]] = Field(default_factory=list)
@@ -155,7 +157,8 @@ class HierarchicalReasoningModel(Baseline):
             self.register_buffer('routing_bias_scale', torch.tensor(1.0))
         self.ngram_enabled = bool(config.ngram_orders)
         if self.ngram_enabled:
-            self.ngram = NGramMemory(self.hidden_size, config.ngram_orders, config.ngram_buckets)
+            self.ngram = NGramMemory(self.hidden_size, config.ngram_orders, config.ngram_buckets,
+                                    config.ngram_heads, config.ngram_contextual_gate)
             self._attention_create_cache = self.create_cache
             self.create_cache = self._create_ngram_cache
         if (config.ngram_orders or config.h_memory_branches > 1 or config.l_memory_branches > 1
