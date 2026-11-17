@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 PYTHON="${PYTHON:-/home/ucloud/miniforge3/envs/audit/bin/python}"
-MODEL="${MODEL:-/work/mimir/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/snapshots/4d7ae4984b7db7de8f8457170b3f1a419ee76d52}"
+MODEL="${MODEL:-/work/dfm/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/snapshots/4d7ae4984b7db7de8f8457170b3f1a419ee76d52}"
 SAMPLE_ROOT="${SAMPLE_ROOT:-data/dfm11_folketing_error_correction/audit_sample/folketingets-dokumenter-error-correction}"
 RUN_ROOT="${RUN_ROOT:-logs/dfm11_folketing_error_correction}"
 CONCURRENCY_PER_ENDPOINT="${CONCURRENCY_PER_ENDPOINT:-64}"

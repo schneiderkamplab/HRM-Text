@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "exports_dfm11"
 DEFAULT_CACHE = ROOT / "data/dfm11_source_cache"
 NEMOTRON_PINNED = (
-    Path("/work/mimir/.home/.cache/huggingface/hub/")
+    Path("/work/dfm/.home/.cache/huggingface/hub/")
     / "datasets--nvidia--Nemotron-SFT-Agentic-v2/snapshots"
     / "49e79a3be5ab8cf7511a12958b95cfd6408cd8db/data/tool_calling.jsonl"
 )

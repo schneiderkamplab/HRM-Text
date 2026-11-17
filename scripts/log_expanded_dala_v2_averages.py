@@ -158,17 +158,22 @@ def collect(item, recipe):
 
 
 def log_atomic(wandb, row, args):
-    run = wandb.init(project=args.project, id=args.run_id, name=args.run_name,
-                     entity=args.entity, resume='must')
     try:
-        for prefix in sorted({k.split('/')[0] for k in row}):
-            axis = prefix+'/epoch'
-            wandb.define_metric(axis)
-            for key in sorted(k for k in row if k.startswith(prefix+'/') and k != axis):
-                wandb.define_metric(key, step_metric=axis, summary='last')
-        wandb.log(row, commit=True)
-    finally:
-        run.finish()
+        from wandb_writer_lock import wandb_writer_lock
+    except ModuleNotFoundError:
+        from scripts.wandb_writer_lock import wandb_writer_lock
+    with wandb_writer_lock(args.run_id):
+        run = wandb.init(project=args.project, id=args.run_id, name=args.run_name,
+                         entity=args.entity, resume='must')
+        try:
+            for prefix in sorted({k.split('/')[0] for k in row}):
+                axis = prefix+'/epoch'
+                wandb.define_metric(axis)
+                for key in sorted(k for k in row if k.startswith(prefix+'/') and k != axis):
+                    wandb.define_metric(key, step_metric=axis, summary='last')
+            wandb.log(row, commit=True)
+        finally:
+            run.finish()
 
 
 def main(argv=None):

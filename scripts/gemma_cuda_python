@@ -1,0 +1,10 @@
+#!/bin/bash
+# Conda CUDA host-compiler paths required by FlashInfer MoE JIT.
+set -euo pipefail
+export CUDA_HOME=/home/ucloud/miniforge3/envs/audit
+export CUDA_PATH="$CUDA_HOME"
+export PATH="$CUDA_HOME/bin:$PATH"
+export CPATH="$CUDA_HOME/targets/x86_64-linux/include${CPATH:+:$CPATH}"
+export LIBRARY_PATH="$CUDA_HOME/targets/x86_64-linux/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"
+export MAX_JOBS=16
+exec /home/ucloud/miniforge3/envs/hrm/bin/python "$@"

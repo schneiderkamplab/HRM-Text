@@ -1,5 +1,6 @@
 """CPU-only strict EMA export into the companion Mimir2 Transformers model."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -18,6 +19,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--tokenizer-reference', type=Path,
                         help='Production export whose effective tokenizer pipeline must be materialized')
+    parser.add_argument('--chat-template-path', type=Path,
+                        help='Explicit relocated training template; must match the reference tokenizer')
     args = parser.parse_args()
     if args.output.exists():
         raise RuntimeError(f'Refusing existing output: {args.output}')
@@ -55,9 +58,12 @@ def main():
             if token not in tokenizer.get_vocab():
                 raise RuntimeError(f'Missing required Gemma token: {token}')
             setattr(tokenizer, field, token)
-    template = meta['tokenizer_info'].get('chat_template_path')
+    template = args.chat_template_path or meta['tokenizer_info'].get('chat_template_path')
     if template:
-        tokenizer.chat_template = Path(template).read_text()
+        text = Path(template).read_text()
+        if args.chat_template_path and tokenizer.chat_template != text:
+            raise RuntimeError('Relocated training template differs from tokenizer reference')
+        tokenizer.chat_template = text
     for target in (model.config, model.generation_config):
         for key in ('bos_token_id', 'eos_token_id', 'pad_token_id'):
             setattr(target, key, getattr(tokenizer, key))
@@ -75,6 +81,9 @@ def main():
         'ema_tensors': sum(s.startswith('optim.') for s in sources.values()),
         'model_tensors': len(state), 'dtype': 'bfloat16',
         'tokenizer_reference': str(args.tokenizer_reference) if args.tokenizer_reference else None,
+        'chat_template_path': str(template) if template else None,
+        'chat_template_sha256': hashlib.sha256(tokenizer.chat_template.encode()).hexdigest()
+            if isinstance(tokenizer.chat_template, str) else None,
     }, indent=2) + '\n')
     temp.rename(args.output)
     print(args.output, flush=True)

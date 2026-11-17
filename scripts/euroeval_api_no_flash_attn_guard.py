@@ -13,6 +13,13 @@ import importlib.util
 import os
 import sys
 
+# NLTK refuses to load data from group/world-writable directories
+# (security check against planted files). The default shared-filesystem
+# umask here is 0002, which makes every created directory g+w. Force a
+# private umask so cache/nltk_data and its contents are owner-writable
+# only. Must happen before any download or cache creation.
+os.umask(0o022)
+
 
 _real_find_spec = importlib.util.find_spec
 

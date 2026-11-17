@@ -14,7 +14,7 @@ from transformers import AutoTokenizer
 
 ROOT = Path('data/dfm12/multilingual-calibration-strong-penalty-20260927/raw')
 OUT = Path('data/dfm12/reviewer-boundary-probe-20260927')
-MODEL = '/work/mimir/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/snapshots/4d7ae4984b7db7de8f8457170b3f1a419ee76d52'
+MODEL = '/work/dfm/.home/.cache/huggingface/hub/models--google--gemma-4-26B-A4B-it/snapshots/4d7ae4984b7db7de8f8457170b3f1a419ee76d52'
 
 
 def main():

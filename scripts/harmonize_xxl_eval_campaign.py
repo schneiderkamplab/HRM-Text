@@ -105,7 +105,7 @@ def build(jobs, reference, assets, plan, minimum_step=1000000, defer_first_to=No
                     value = source.metadata[k]
                     if k in ('multilingual_manifest', 'dfm_single_tasks_config'):
                         value = mapping_paths.get(value, value)
-                        if str(value).startswith('/work/mimir/'):
+                        if str(value).startswith('/work/dfm/'):
                             raise ValueError('Unprepared reference input: ' + value)
                     meta[k] = value
             meta.update(campaign_parity_reference=source.job_id, fix_mistral_regex=False)

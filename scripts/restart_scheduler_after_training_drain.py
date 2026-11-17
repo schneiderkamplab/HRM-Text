@@ -18,6 +18,7 @@ def main():
     parser.add_argument('--plan-dir', type=Path, required=True)
     parser.add_argument('--database', type=Path, required=True)
     parser.add_argument('--after-job', required=True)
+    parser.add_argument('--max-clients', type=int, default=128)
     args = parser.parse_args()
     identity = process_identity(args.old_pid)
     plan = args.plan_dir.resolve()
@@ -26,6 +27,7 @@ def main():
         raise RuntimeError('A stop request already exists; do not override user intent')
     token = {'source': 'reload-after-training', 'token': uuid.uuid4().hex}
     atomic_write(stop, token)
+    atomic_write(plan / 'cooperative-reload-armed.json', {'watcher': process_identity(), 'old_runner': identity, 'after_job': args.after_job, 'stop_token': token})
     print('Requested scheduler drain; current training continues', flush=True)
     while True:
         if not stop.exists() or read_json(stop) != token:
@@ -52,7 +54,7 @@ def main():
     with (plan / 'runner-cooperative-20261012.log').open('a') as log:
         proc = subprocess.Popen([sys.executable, '-m', 'eval_scheduler', 'run',
              '--plan-dir', str(plan), '--backend', 'sqlite', '--persistent-vllm',
-             '--gpus', '0,1,2,3,4,5,6,7', '--max-clients', '64',
+             '--gpus', '0,1,2,3,4,5,6,7', '--max-clients', str(args.max_clients),
              '--server-concurrency', '1024', '--cpu-cores', '256', '--reserve-cores', '8'],
              env=env, stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
              start_new_session=True)

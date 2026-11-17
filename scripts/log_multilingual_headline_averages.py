@@ -28,20 +28,28 @@ class PopulationItem:
 
 def log_atomic(wandb_module: Any, row: dict, *, project: str, run_id: str,
                run_name: str, entity: str | None = None) -> None:
-    """One checkpoint row, explicit metric registration, one committed log call."""
-    kwargs = dict(project=project, id=run_id, name=run_name, resume='must')
-    if entity is not None:
-        kwargs['entity'] = entity
-    run = wandb_module.init(**kwargs)
+    """One checkpoint row, explicit metric registration, one committed log call.
+
+    Serialized via wandb_writer_lock from resume to finish: concurrent writers
+    resuming the same run must not race on the next internal history step."""
     try:
-        epoch_key = 'avg_population/epoch'
-        wandb_module.define_metric(epoch_key)
-        for key in sorted(row):
-            if key != epoch_key:
-                wandb_module.define_metric(key, step_metric=epoch_key, summary='last')
-        wandb_module.log(row, commit=True)
-    finally:
-        run.finish()
+        from wandb_writer_lock import wandb_writer_lock
+    except ModuleNotFoundError:
+        from scripts.wandb_writer_lock import wandb_writer_lock
+    with wandb_writer_lock(run_id):
+        kwargs = dict(project=project, id=run_id, name=run_name, resume='must')
+        if entity is not None:
+            kwargs['entity'] = entity
+        run = wandb_module.init(**kwargs)
+        try:
+            epoch_key = 'avg_population/epoch'
+            wandb_module.define_metric(epoch_key)
+            for key in sorted(row):
+                if key != epoch_key:
+                    wandb_module.define_metric(key, step_metric=epoch_key, summary='last')
+            wandb_module.log(row, commit=True)
+        finally:
+            run.finish()
 
 
 def parse_args(argv=None):

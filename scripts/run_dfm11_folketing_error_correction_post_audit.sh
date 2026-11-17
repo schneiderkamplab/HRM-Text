@@ -71,7 +71,7 @@ echo "Verifying the remote package and pinning its revision..."
 
 echo "Tokenizing the audited replacement into the DFM11 additions store..."
 "$HRM_PYTHON" scripts/tokenize_chat_template.py "$PACKAGE" \
-  --tokenizer-path /work/mimir/brainsurgery/models/gemma4_31b/tokenizer.json \
+  --tokenizer-path /work/dfm/brainsurgery/models/gemma4_31b/tokenizer.json \
   --chat-template data_io/chat_templates/gemma4_native_chat.jinja \
   --output-dir data/tokenized_dfm11_additions \
   --workers 13 \

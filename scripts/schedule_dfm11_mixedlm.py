@@ -1,0 +1,80 @@
+"""Append matched MixedLM runs to the live SQLite plan without editing existing rows."""
+import argparse,copy,hashlib,json,os,sqlite3,subprocess,sys,time,shlex
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+from eval_scheduler.model import Job,JobStatus,write_plan
+from eval_scheduler.store import _validate_graph,_definition
+from eval_scheduler.preflight import check_job,check_artifact_isolation
+from scripts.prepare_transformer48_eval_plan import replace
+from training_suspend.supervisor import overrides
+DB=Path('/var/tmp/dfm11-architecture-comparison/jobs.sqlite');PLAN=ROOT/'logs/scheduler/dfm11_architecture_comparison_20261110'
+OUT=PLAN/'mixedlm-20261115';PY='/home/ucloud/miniforge3/envs/hrm/bin/python';FINAL=393732
+STEPS=[50000,100000,150000,200000,250000,300000,350000,FINAL]
+def tag(s):return 'epoch_1' if s==FINAL else f'step_{s}'
+def work(j):return j.action.startswith('eval_') or j.action in ('wait_checkpoint','export_hf')
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--execute',action='store_true');args=ap.parse_args();OUT.mkdir(exist_ok=True)
+    c=sqlite3.connect(DB,timeout=60);rows=c.execute('select * from jobs order by position').fetchall()
+    original={r[0]:Job.from_row(json.loads(r[2])).with_updates(status=JobStatus(r[5]),attempt=r[6],log_dir=r[7]) for r in rows}
+    assert not any(k.startswith(('bmixed-dfm11-','tmixed-dfm11-')) for k in original)
+    # Works with the already-running runner as well as new runner versions.
+    wrapper=OUT/'vllm-python'
+    wrapper.write_text('#!/bin/bash\nexport PYTHONPATH='+shlex.quote(str(ROOT/'evaluation/vllm_plugins')+':'+str(ROOT))+':"${PYTHONPATH:-}"\nexport VLLM_PLUGINS=transformer48_adapter\nexec '+PY+' "$@"\n');wrapper.chmod(0o755)
+    additions=[];specs={};configs={}
+    for name,source in [('bmixed','btarget'),('tmixed','tprefix')]:
+        template=original[source+'-dfm11-step_50000-train'];old=template.metadata;oldco=old['cooperative_training'];oldrun=old['wandb_run_id'];oldout=Path(oldco['control_root']).parent
+        run=('B-dfm11-mixedlm-lrauto-bpwarmup-targetonly-epoch1' if name=='bmixed' else 'transformer48-dfm11-mixedlm-targetonly-epoch1')
+        out=ROOT/'logs/training'/('B_dfm11_mixedlm_targetonly_20261115' if name=='bmixed' else 'transformer48_dfm11_mixedlm_targetonly_20261115')
+        ckpt=ROOT/'checkpoints'/('hrm' if name=='bmixed' else 'transformer')/run
+        out.mkdir(exist_ok=True);ckpt.mkdir(exist_ok=True);assert not any(ckpt.iterdir())
+        settings=json.loads(Path(oldco['launcher_settings']).read_text());assert not settings['allow_existing_peers'];(out/'launcher-settings.json').write_text(json.dumps(settings,indent=2))
+        pairs=[(source+'-dfm11',name+'-dfm11'),(oldrun,run),(oldout.name,out.name),(oldout.name.rsplit('_',1)[0],out.name.rsplit('_',1)[0])]
+        cmd=replace([x for x in oldco['command'] if not x.lstrip('+').startswith(('resume_','suspend_control_dir='))],pairs)
+        cmd=overrides(cmd,{'arch.attn_type':'mixedlm','data.target_only':'true','checkpoint_path':str(ckpt),'run_name':run,'wandb_run_id':run})
+        cmd=[('+'+x) if x=='arch.attn_type=mixedlm' else x for x in cmd]
+        i=cmd.index('pretrain.py');cfg=subprocess.check_output([PY,'pretrain.py',*cmd[i+1:],'--cfg','job','--resolve'],cwd=ROOT,env={**os.environ,'TMPDIR':'/dev/shm/hrm-b-recovery','PATH':str(Path(PY).parent)+':'+os.environ['PATH']})
+        (out/'resolved-config.yaml').write_bytes(cfg);configs[name]=hashlib.sha256(cfg).hexdigest();specs[name]={'out':out,'run':run}
+        for step in STEPS:
+            block=[j for j in original.values() if j.job_id.startswith(source+'-dfm11-'+tag(step)+'-')];assert len(block)==2204,len(block)
+            for j in block:
+                m=replace(copy.deepcopy(j.metadata),pairs);jid=replace(j.job_id,pairs);log=replace(j.log_dir,pairs)
+                m.pop('recurrent_causal',None);m['mixed_lm']=True;m['user_training_pause']=False;m['vllm_python']=str(wrapper)
+                extra=m.get('vllm_extra_args','')
+                if '--enforce-eager' not in extra:extra+=' --enforce-eager --no-enable-prefix-caching --no-enable-chunked-prefill'
+                m['vllm_extra_args']=extra.strip()
+                if j.action=='train_until_step':
+                    co=m['cooperative_training'];co.update(command=cmd,control_root=str(out/'control'),launcher_settings=str(out/'launcher-settings.json'),allowed_existing_peer_identities=[],scheduled_disk_resume=True)
+                    co.pop('disk_handoff_from',None)
+                    if step==50000:m.pop('resume_from_tag',None);m.pop('resume_ckpt_path',None)
+                    else:m.update(resume_from_tag=f'step_{350000 if step==FINAL else step-50000}',resume_ckpt_path=str(ckpt))
+                    if step==FINAL:co['finalize_command']=[PY,str(ROOT/'scripts/finalize_transformer48_epoch.py'),str(DB),str(ckpt)]
+                    log=str(PLAN/'runs'/jid)
+                additions.append(j.with_updates(job_id=jid,metadata=m,deps=tuple(replace(d,pairs) for d in j.deps),status=JobStatus.PENDING,attempt=0,log_dir=log))
+    byid={**original,**{j.job_id:j for j in additions}}
+    previous=[k for k,v in original.items() if k.startswith('ttarget-dfm11-epoch_1-eval') and (work(v) or v.action in ('average','report'))];assert previous
+    prior=None;prior_step=None;order=[]
+    for step in STEPS:
+        for model in ('bmixed','tmixed'):
+            prefix=model+'-dfm11-'+tag(step);jid=prefix+'-train';j=byid[jid];m=copy.deepcopy(j.metadata);co=m['cooperative_training']
+            if prior and prior_step!=FINAL:co['disk_handoff_from']={'control_root':str(specs[prior]['out']/'control'),'step':prior_step}
+            byid[jid]=j.with_updates(metadata=m,deps=tuple(previous),deps_mode='terminal')
+            previous=[k for k,v in byid.items() if k.startswith(prefix+'-eval') and work(v)];assert previous
+            prior=model;prior_step=step;order.append(jid)
+    additions=[byid[j.job_id] for j in additions];candidates=list(byid.values());_validate_graph(candidates)
+    errors={j.job_id:e for j in additions if (e:=check_job(j,ROOT))};collisions=check_artifact_isolation(candidates,ROOT)
+    report={'added_rows':len(additions),'changed_existing_rows':0,'order':order,'errors':errors,'artifact_collisions':collisions,'config_sha256':configs,'executed':False}
+    (OUT/'preflight.json').write_text(json.dumps(report,indent=2));assert not errors and not collisions
+    write_plan(OUT/'additions.tsv',additions)
+    if args.execute:
+        for kind in ('B','T'):
+            assert json.loads((ROOT/f'logs/diagnostics/mixedlm-20261115/tiny-{kind}/parity.json').read_text())['passed']
+        assert json.loads((ROOT/'logs/diagnostics/mixedlm-20261115/training-smoke.json').read_text())['passed']
+        backup=sqlite3.connect(OUT/f'before-{int(time.time())}.sqlite');c.backup(backup);backup.close()
+        c.execute('begin immediate');assert c.execute("select count(*) from jobs where job_id like 'bmixed-dfm11-%' or job_id like 'tmixed-dfm11-%'").fetchone()[0]==0
+        pos=c.execute('select max(position) from jobs').fetchone()[0]+1
+        for i,j in enumerate(additions):
+            c.execute('insert into jobs values (?,?,?,?,?,?,?,?,?)',(j.job_id,pos+i,_definition(j),j.deps_mode,int(j.action=='eval_euroeval' and j.name.startswith('valeu-')),'pending',0,j.log_dir,None));c.executemany('insert into dependencies values (?,?)',[(j.job_id,d) for d in j.deps])
+        c.commit();report['executed']=True
+    (OUT/('receipt.json' if args.execute else 'dry-run.json')).write_text(json.dumps(report,indent=2));print(json.dumps(report))
+if __name__=='__main__':main()

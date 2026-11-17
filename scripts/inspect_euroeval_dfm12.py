@@ -65,7 +65,7 @@ def main():
         project = tar.extractfile(members['pyproject.toml']).read().decode()
     local = {}
     for version, root in [('17.3.0','/home/ucloud/miniforge3/envs/hrm/lib/python3.13/site-packages/euroeval'),
-                          ('18.1.0','/work/mimir/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval')]:
+                          ('18.1.0','/work/dfm/.home/.cache/uv/archive-v0/20ddS3xsiCOjW0qI/euroeval')]:
         local[version] = inspect(lambda relative:(Path(root)/relative).read_text(), root)
         local[version]['path'] = root
     result = dict(commit=COMMIT, archive_sha256=hashlib.sha256(archive).hexdigest(),

@@ -9,7 +9,7 @@ import subprocess
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-REMOTE = '/work/mimir/HRM-Text'
+REMOTE = '/work/dfm/HRM-Text'
 
 
 def sha(path):

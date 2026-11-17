@@ -10,12 +10,13 @@ from eval_scheduler.model import Action, Job, JobStatus
 NAME = 'hrm-branches-memory-XL-from-3800000'
 
 
-def command():
+def command(name=NAME, gas=2):
     args = prepare.command('control')
     overrides = {
         'arch/net@arch': 'hrm_v2',
-        'checkpoint_path': str(prepare.ROOT / 'checkpoints/hrm_v2' / NAME),
-        'run_name': NAME, 'wandb_run_id': NAME, 'wandb_resume': 'never',
+        'checkpoint_path': str(prepare.ROOT / 'checkpoints/hrm_v2' / name),
+        'run_name': name, 'wandb_run_id': name, 'wandb_resume': 'never',
+        'gradient_accumulation_steps': str(gas),
     }
     args = [f'{a.split("=", 1)[0]}={overrides[a.split("=", 1)[0]]}'
             if '=' in a and a.split('=', 1)[0] in overrides else a for a in args]
@@ -30,7 +31,7 @@ def command():
     return args
 
 
-def preflight():
+def preflight(name=NAME, gas=2):
     import torch
     import yaml
     import torch.distributed.checkpoint as dcp
@@ -43,7 +44,7 @@ def preflight():
 
     assert prepare.complete(prepare.SOURCE, 'step_3800000')
     with initialize_config_dir(config_dir=str(prepare.ROOT / 'config'), version_base=None):
-        cfg = compose(config_name='cfg_pretrain', overrides=command()[3:])
+        cfg = compose(config_name='cfg_pretrain', overrides=command(name, gas)[3:])
         parsed = PretrainConfig(**OmegaConf.to_container(cfg, resolve=True))
     metadata = yaml.safe_load((prepare.SOURCE / 'train_metadata.yaml').read_text())
     combined = parsed.arch.model_dump() | metadata | parsed.data.model_dump()
@@ -61,15 +62,22 @@ def preflight():
         else:
             assert is_new_v2_key(name), name
     assert used == set(source)
-    assert not (prepare.ROOT / 'checkpoints/hrm_v2' / NAME).exists()
+    assert parsed.global_batch_size == 262144
+    assert parsed.gradient_accumulation_steps == gas
+    state = json.loads((prepare.SOURCE / 'checkpoint_state_step_3800000.json').read_text())
+    assert state['carry_policy'] == 'none', 'Changing GAS requires carry-free resume'
+    assert not (prepare.ROOT / 'checkpoints/hrm_v2' / name).exists()
     print('CPU preflight passed: configuration and full-size checkpoint key/shape mapping')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--install', action='store_true')
+    parser.add_argument('--gas', type=int, choices=(2, 4, 8), default=2)
+    parser.add_argument('--after-3850k', action='store_true')
     args = parser.parse_args()
-    preflight()
+    name = NAME if args.gas == 2 else NAME + f'-gas{args.gas}'
+    preflight(name, args.gas)
     store = schedule.SQLiteJobStore(schedule.plan_database(schedule.base.PLAN / 'plan.tsv'))
     if args.install:
         if store.get_admin_lock():
@@ -77,25 +85,37 @@ def main():
         store.set_admin_lock(True)
     try:
         jobs = store.load_jobs()
-        assert not any(j.job_id == NAME for j in jobs)
-        successor = next(j for j in jobs if j.job_id == 'xl-dfm15-resume-3800000-to-3850000')
+        assert not any(j.job_id == name for j in jobs)
+        successor_id = ('xl-dfm15-train-3900000' if args.after_3850k
+                        else 'xl-dfm15-resume-3800000-to-3850000')
+        successor = next(j for j in jobs if j.job_id == successor_id)
         assert successor.status == JobStatus.PENDING
-        pilot = Job(NAME, Action.TRAIN_UNTIL_STEP, 'training', NAME,
-            deps=successor.deps, deps_mode='terminal', gpu_policy='all', gpu_count=8,
-            max_retries=0, log_dir=str(prepare.ROOT / 'logs/training/hrm_v2' / NAME),
-            metadata={'command': ['OMP_NUM_THREADS=1', 'MKL_NUM_THREADS=1', *command()],
+        before = []
+        deps = successor.deps
+        if args.after_3850k:
+            eval_ids = tuple(j.job_id for j in jobs if j.job_id.startswith('xl-dfm15-3850000-'))
+            assert eval_ids
+            finished = Job(name + '-after-3850k-evals', Action.TERMINAL_BARRIER,
+                           'control', 'Finish 3.85M evaluation before branching pilot',
+                           deps=eval_ids, deps_mode='terminal')
+            before.append(finished)
+            deps = ('xl-dfm15-resume-3800000-to-3850000', finished.job_id)
+        pilot = Job(name, Action.TRAIN_UNTIL_STEP, 'training', name,
+            deps=deps, deps_mode='success' if args.after_3850k else 'terminal', gpu_policy='all', gpu_count=8,
+            max_retries=0, log_dir=str(prepare.ROOT / 'logs/training/hrm_v2' / name),
+            metadata={'command': ['OMP_NUM_THREADS=1', 'MKL_NUM_THREADS=1', *command(name, args.gas)],
                 'workdir': str(prepare.ROOT), 'stop_after_step': 3820000,
-                'ckpt_path': str(prepare.ROOT / 'checkpoints/hrm_v2' / NAME),
+                'ckpt_path': str(prepare.ROOT / 'checkpoints/hrm_v2' / name),
                 'ckpt_tag': 'step_3820000', 'checkpoint_carry_ranks': 8,
                 'resume_ckpt_path': str(prepare.SOURCE), 'resume_from_tag': 'step_3800000',
                 'min_gpu_free_mib': 178000})
-        barrier = Job(NAME + '-terminal', Action.TERMINAL_BARRIER, 'control',
+        barrier = Job(name + '-terminal', Action.TERMINAL_BARRIER, 'control',
                       'Continue ordinary XL even if combined pilot fails',
-                      deps=(NAME,), deps_mode='terminal')
+                      deps=(name,), deps_mode='terminal')
         updated = []
         for j in jobs:
             if j.job_id == successor.job_id:
-                updated.extend([pilot, barrier])
+                updated.extend([*before, pilot, barrier])
                 j = j.with_updates(deps=(*j.deps, barrier.job_id))
             updated.append(j)
         if args.install:
@@ -103,7 +123,7 @@ def main():
             store.import_jobs(updated, require_admin_lock=True)
             store.export_tsv(schedule.base.PLAN / 'plan.tsv')
             store.backup(schedule.base.PLAN / 'state.backup.sqlite')
-        print(json.dumps({'installed': args.install, 'pilot': NAME,
+        print(json.dumps({'installed': args.install, 'pilot': name,
                           'after': pilot.deps, 'before': successor.job_id}, indent=2))
     finally:
         if args.install:

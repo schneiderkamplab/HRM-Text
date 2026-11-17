@@ -6,7 +6,7 @@ import re
 import jsonschema
 
 
-def validate(messages, tools):
+def validate(messages, tools, *, allow_terminal_tool_calls=False):
     schemas = {}
     for tool in tools:
         if tool.get('type') != 'function':
@@ -49,11 +49,11 @@ def validate(messages, tools):
         for key in ('content', 'reasoning_content'):
             if re.search(r'</?(?:think|tool_call)>|<\|(?:tool|turn|channel)', message.get(key) or ''):
                 raise ValueError('unconverted_control_markup')
-    if pending:
+    if pending and not allow_terminal_tool_calls:
         raise ValueError('unresolved_terminal_tool_call')
 
 
-def convert(row):
+def convert(row, *, allow_terminal_tool_calls=False):
     kwargs = row.get('chat_template_kwargs') or {}
     if any(k not in {'custom_instructions','enable_thinking','python_tools','xml_tools'} and v
            for k,v in kwargs.items()) or kwargs.get('python_tools'):
@@ -127,7 +127,7 @@ def convert(row):
         last['content'] = call['function']['arguments']['answer']
         last.pop('tool_calls')
         tools = [t for t in tools if t['function']['name'] != 'final_answer']
-    validate(messages, tools)
+    validate(messages, tools, allow_terminal_tool_calls=allow_terminal_tool_calls)
     return dict(language='en', task='instruction', messages=messages, tools=tools,
                 format_contract='gemma4-native-structured-tools-v1')
 

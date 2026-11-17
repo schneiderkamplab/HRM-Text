@@ -148,6 +148,14 @@ class Controller:
             supervisor_hold = (Path(read_json(managed)['supervisor_root']) / 'hold').exists() if managed.exists() else False
             if (self.root / 'hold').exists() or supervisor_hold:
                 raise RestoreDeferred('Explicit user hold exists; remove it before restoration')
+            if not (directory / 'offload.json').exists():
+                # A below-target suspension can be released without ever
+                # offloading. Never invent a CUDA restore receipt for it.
+                if any(self.backend.state(r['pid']) != 'running' for r in ready['ranks']):
+                    raise RuntimeError('Cannot release unoffloaded suspension: CUDA state is not running')
+                atomic_write(directory / 'cancelled.json', ready)
+                self.release(directory, ready)
+                return
             receipt = read_json(directory / 'offload.json')
             if not matches(receipt, ready):
                 raise RuntimeError('Offload receipt mismatch')

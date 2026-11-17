@@ -101,7 +101,7 @@ def main():
         suite = yaml.safe_load((ROOT/'config'/f'{suite_name}.yaml').read_text())
         for group in suite['sets'].values():
             for task in group['tasks']:
-                task['name'] = task['name'].replace('/work/mimir/HRM-Text', str(ROOT))
+                task['name'] = task['name'].replace('/work/dfm/HRM-Text', str(ROOT))
                 task['args'] = ['manifest='+str(local_manifest) if s.startswith('manifest=') else s
                                 for s in task['args']]
         local_suite = OUT/f'{suite_name}.yaml'

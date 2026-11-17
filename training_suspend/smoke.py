@@ -94,6 +94,11 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--gpus', required=True, help='Explicit physical GPU indices, e.g. 1 or 1,2')
     parser.add_argument('--compile', action='store_true')
+    parser.add_argument('--embla-kernels', action='store_true', help='Enable validated fused Embla attention candidates')
+    parser.add_argument('--embla', action='store_true', help='Bounded four-loop Embla PrefixLM architecture smoke')
+    parser.add_argument('--ouro', action='store_true', help='Bounded fixed-loop Ouro architecture smoke')
+    parser.add_argument('--sandwich', action='store_true', help='Bounded single-state sandwich architecture smoke')
+    parser.add_argument('--cycle-budget', type=int, choices=[15,16], help='Test full-budget cycle sampling on the small baseline')
     parser.add_argument('--full-size', action='store_true',
                         help='Dedicated eight-GPU XXL-wide/4K/262144-vocab BP8 GAS4 test')
     parser.add_argument('--nccl-shim', action='store_true',
@@ -104,6 +109,8 @@ def main():
     parser.add_argument('--pause-seconds', type=float, default=2,
                         help='Host-only wait in each of the two offload cycles')
     args = parser.parse_args()
+    if args.embla_kernels and not args.embla:
+        parser.error('--embla-kernels requires --embla')
     if args.pause_seconds < 0 or args.timeout <= 0:
         parser.error('pause-seconds must be nonnegative and timeout positive')
     if args.nccl_shim and args.legacy_nccl:
@@ -147,6 +154,42 @@ def main():
                    'benchmark_state_fingerprint=true', 'memory_log_interval=1',
                    f'compile_train_batch={str(args.compile).lower()}', 'run_name=suspend-smoke',
                    f'hydra.run.dir={directory}', 'dataloader_prefetch_factor=1']
+        if args.embla:
+            if args.full_size or args.cycle_budget or args.ouro or args.sandwich or args.compile:
+                raise ValueError('Embla smoke uses its dedicated eager small profile')
+            command = [x for x in command if not x.startswith('arch.bp_')]
+            command += ['arch/net@arch=embla', 'arch.decoder_loops=4', '+arch.attn_type=prefixlm',
+                        'lr_auto=false', 'fsdp_wrap_policy=single_unit']
+            fields = dict(hidden_size=128, head_dim=16, num_attention_heads=8, num_key_value_heads=2,
+                          sliding_num_attention_heads=8, sliding_num_key_value_heads=2,
+                          intermediate_size=128, num_experts=4, num_experts_per_tok=2,
+                          moe_intermediate_size=64, shared_expert_intermediate_size=64,
+                          engram_pages=4, engram_head_dim=64, engram_heads=4, engram_page_heads=4,
+                          sparse_topk=8, sparse_recent=4)
+            if args.embla_kernels:
+                fields.update(head_dim=64,num_attention_heads=2,num_key_value_heads=1,sliding_num_attention_heads=2,sliding_num_key_value_heads=1)
+                command += ['++arch.embla_fa4_window=true','++arch.embla_fused_relu=true','++arch.embla_fused_sparse=true','++arch.embla_single_topk=true']
+            command += [f'++arch.embla_config.{key}={value}' for key,value in fields.items()]
+        if args.sandwich:
+            if args.full_size or args.cycle_budget or args.ouro:
+                raise ValueError('Sandwich smoke cannot combine other architecture profiles')
+            command = [x for x in command if not x.startswith('arch.bp_')]
+            command += ['arch/net@arch=sandwich', 'arch.n_layers=4',
+                        'arch.prelude_layers=1', 'arch.core_layers=2', 'arch.coda_layers=1',
+                        'arch.recurrence=3', 'arch.hidden_size=128', 'arch.num_heads=1',
+                        'lr_auto=false', 'fsdp_wrap_policy=single_unit']
+        if args.ouro:
+            if args.full_size or args.cycle_budget:
+                raise ValueError('Ouro smoke cannot combine other architecture profiles')
+            command = [x for x in command if not x.startswith('arch.bp_')]
+            command += ['arch/net@arch=ouro', 'arch.n_layers=2', 'arch.recurrence=4',
+                        'arch.hidden_size=128', 'arch.num_heads=1',
+                        'lr_auto=false', 'fsdp_wrap_policy=single_unit']
+        if args.cycle_budget:
+            if args.full_size:
+                raise ValueError('Cycle smoke uses the bounded small model; use the separate full-recipe qualifier')
+            command += ['arch.cycle_variants=full_budget', f'arch.bp_max_steps={args.cycle_budget}',
+                        'arch.n_layers=2', 'arch.hidden_size=128', 'arch.num_heads=1']
         if args.full_size:
             overrides = {'arch/size@arch': 'XXL_wide', 'global_batch_size': '262144',
                          'gradient_accumulation_steps': '4', 'arch.bp_max_steps': '8',
@@ -169,7 +212,7 @@ def main():
         atomic_write(directory / 'launch.json', {'command': command, 'gpus': gpu_ids,
                      'compile': args.compile, 'legacy_nccl': args.legacy_nccl,
                      'nccl_shim': args.nccl_shim, 'ld_preload': env.get('LD_PRELOAD'),
-                     'full_size': args.full_size,
+                     'full_size': args.full_size, 'cycle_budget': args.cycle_budget, 'sandwich': args.sandwich, 'ouro': args.ouro, 'embla': args.embla,
                      'pause_seconds': args.pause_seconds,
                      'nccl_environment': {k: v for k, v in env.items() if k.startswith('NCCL_') or k.startswith('TORCH_NCCL_')},
                      'allocator_fraction': None})
